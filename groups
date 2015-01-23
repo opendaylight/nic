@@ -1,0 +1,6 @@
+# UUID                                  	Group Name
+#
+f33462099e461bbe0f0a111c3c402caa56000036	Non-Interactive nic users
+global:Anonymous-Users                  	Anonymous Users
+global:Registered-Users                 	Registered Users
+ldap:cn=gerrit-nic-committers,ou=Groups,dc=opendaylight,dc=org	ldap/gerrit-nic-committers
