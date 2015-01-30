@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+
+     This program is made available under the terms of the 
+     Eclipse Public License v1.0 which accompanies this distribution,
+     and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>nic-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>../parent</relativePath>
+  </parent>
+
+  <artifactId>features-nic</artifactId>
+  <packaging>jar</packaging>
+
+  <properties>
+    <features.file>features.xml</features.file>
+    <branding.version>1.0.0-SNAPSHOT</branding.version>
+    <karaf.resources.version>1.4.2-SNAPSHOT</karaf.resources.version>
+    <karaf.version>3.0.1</karaf.version>
+    <feature.test.version>${yangtools.version}</feature.test.version>
+    <karaf.empty.version>${controller.version}</karaf.empty.version>
+    <surefire.version>2.16</surefire.version>
+
+    <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>features-yangtools</artifactId>
+      <version>${yangtools.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-mdsal</artifactId>
+      <version>${mdsal.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-flow</artifactId>
+      <version>${mdsal.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>features-test</artifactId>
+      <version>${feature.test.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>opendaylight-karaf-empty</artifactId>
+      <version>${karaf.empty.version}</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.2</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <id>filter</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+         <groupId>org.codehaus.mojo</groupId>
+         <artifactId>build-helper-maven-plugin</artifactId>
+         <version>1.8</version>
+         <executions>
+           <execution>
+             <id>attach-artifacts</id>
+             <phase>package</phase>
+             <goals>
+               <goal>attach-artifact</goal>
+             </goals>
+             <configuration>
+               <artifacts>
+                 <artifact>
+                   <file>${project.build.directory}/classes/${features.file}</file>
+                   <type>xml</type>
+                   <classifier>features</classifier>
+                 </artifact>
+               </artifacts>
+             </configuration>
+           </execution>
+         </executions>
+      </plugin>
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-surefire-plugin</artifactId>
+         <version>${surefire.version}</version>
+         <configuration>
+           <systemPropertyVariables>
+             <karaf.distro.groupId>org.opendaylight.controller</karaf.distro.groupId>
+             <karaf.distro.artifactId>opendaylight-karaf-empty</karaf.distro.artifactId>
+             <karaf.distro.version>${karaf.empty.version}</karaf.distro.version>
+           </systemPropertyVariables>
+           <dependenciesToScan>
+            <dependency>org.opendaylight.yangtools:features-test</dependency>
+           </dependenciesToScan>
+         </configuration>
+       </plugin>
+     </plugins>
+  </build>
+
+</project>
