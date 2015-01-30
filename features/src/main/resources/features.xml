@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+
+     This program is made available under the terms of the 
+     Eclipse Public License v1.0 which accompanies this distribution,
+     and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<features name="odl-nic-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+
+    <!-- https://wiki.opendaylight.org/view/Runtime:Karaf_Features_Guidelines#Feature_Best_Practices -->
+    <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-flow/${mdsal.version}/xml/features</repository>
+
+    <!-- the 'all' feature does not include the testapp -->
+    <feature name='odl-nic-all' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: All'>
+        <!-- <feature version='${project.version}'>odl-nic-api</feature> -->
+    </feature>
+
+    <!-- Sample API feature ...
+    <feature name='odl-nic-api' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: API'>
+        <bundle>mvn:org.opendaylight.nic/nic-api/${project.version}</bundle>
+        <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile>
+    </feature>
+    -->
+
+</features>
