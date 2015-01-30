@@ -1,0 +1,32 @@
+#########################################################################
+# .gitignore file for NIC
+
+# Temp files
+.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.settings
+MANIFEST.MF
+*~
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Java/Maven files
+.classpath
+.project
+target/
+*.class
+
+# lib files from maven
+/lib/
+
+# Yang generated files
+**/src/main/yang-gen-config/
+**/src/main/yang-gen-sal/
