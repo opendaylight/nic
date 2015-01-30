@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+
+     This program is made available under the terms of the 
+     Eclipse Public License v1.0 which accompanies this distribution,
+     and is available at http://www.eclipse.org/legal/epl-v10.html
+
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>nic-aggregator</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <prerequisites>
+       <maven>3.1.1</maven>
+    </prerequisites>
+
+    <scm>
+       <connection>scm:git:ssh://git.opendaylight.org:29418/nic.git</connection>
+       <developerConnection>scm:git:ssh://git.opendaylight.org:29418/nic.git</developerConnection>
+       <url>https://wiki.opendaylight.org/view/Network_Intent_Composition:Main</url>
+       <tag>HEAD</tag>
+    </scm>
+
+    <build>
+      <plugins>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <configuration>
+             <skip>true</skip>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+
+    <modules>
+      <!-- Well-known -->
+      <module>features</module>
+      <module>parent</module>
+      <module>artifacts</module>
+    </modules>
 
     <parent>
         <artifactId>odlparent</artifactId>
@@ -9,11 +50,6 @@
         <version>1.4.3-Helium-SR1.1</version>
         <relativePath></relativePath>
     </parent>
-
-    <groupId>org.opendaylight.nic</groupId>
-    <artifactId>parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
