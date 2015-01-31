@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_7a72924a",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-01-31T01:30:25Z",
+      "side": 1,
+      "message": "Since we don’t have nic-api and nic-simple modules now, I think we should comment out or remove these lines.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "cae1964d655d00ca6e639b65bb874adac2ca1700",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_5a77963a",
+        "filename": "features/src/main/resources/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-01-31T01:30:25Z",
+      "side": 1,
+      "message": "I think it should be nic.",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "cae1964d655d00ca6e639b65bb874adac2ca1700",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
