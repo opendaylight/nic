@@ -144,25 +144,32 @@ module intent {
     }
 
     grouping intent {
-        description "An intent specifies two or more end point groups and the connectivity
-                between those end point groups. The connectivity between the end
-                point groups is specified in the form of policies.";
-        leaf-list end-point-groups {
+        description "A principle which applications (or administrators) specify
+                     to guide decisions on the treatment of traffic on the network.
+                     It is a statement of intent with respect to specific communications
+                     from any specified source endpoint to any specified destination
+                     endpoint.";
+        leaf-list source-end-point-groups {
             type types:uuid;
-            min-elements 2;
-            description "List of end ponts that are part of the intent request. There
-                        is an implicit many to many connection between all end points
-                        selected.";
+            min-elements 1;
+            description "A set of source end points for which the intent applies.";
         }
-        leaf-list intra-policies {
+        leaf-list destination-end-point-groups {
             type types:uuid;
-            description "List of policy references to apply to the connections between
-                        entities within a single end point groups.";
+            min-elements 1;
+            description "A set of destination end points for which the intent applies.";
         }
-        leaf-list inter-policies {
+        leaf bidirectional {
+            type boolean;
+            mandatory false;
+            description "Specifies the directionality of the intent.
+                         True indicates bi-directional, false indicates uni-directional.
+                         Uni-directional if omitted.";
+        }
+        leaf-list policies {
             type types:uuid;
-            description "List of policy references to apply to the connections between
-                        entities in different end point groups.";
+            description "List of policy references which apply to connections from
+                         the source endpoints to the destination endpoints.";
         }
     }
 
