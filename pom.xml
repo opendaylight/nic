@@ -10,7 +10,7 @@
         <relativePath></relativePath>
     </parent>
 
-    <groupId>org.opendaylight.intent</groupId>
+    <groupId>org.opendaylight.nic</groupId>
     <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
