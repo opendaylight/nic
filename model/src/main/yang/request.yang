@@ -1,0 +1,69 @@
+module request {
+    namespace "urn:opendaylight:request";
+    prefix "request";
+
+    import types { prefix types; revision-date 2015-01-22; }
+
+    revision 2015-01-22 {
+        description "Initial revision";
+    }
+
+    identity request-type {
+        description "Base request type. Used to help identify and extend the request
+                type name space.";
+    }
+
+    grouping request-def {
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifies the request.";
+        }
+        leaf parent {
+            type types:uuid;
+            mandatory false;
+            description "Uniquely identifies the parent request of this request, if there
+                        is one.";
+        }
+        leaf request-type {
+            type identityref {
+                base request-type;
+            }
+            mandatory true;
+            description "Uniquely identifies the type of the request. This value is used
+                        to route requests and notifications associated with this request.";
+        }
+        leaf state {
+            type enumeration {
+                enum "running";
+                enum "completed-success";
+                enum "completed-error";
+            }
+            config false;
+            mandatory true;
+            description "Represents the operational state of the request maintained by
+                        the system.";
+        }
+        leaf detailed-state {
+            type types:identifier;
+            mandatory false;
+            description "Optional state that may be set by the handler of requests for
+                        a given type. This can be used to provide more detailed state
+                        information beyond the system state. The state maintained by the
+                        system takes precidence over any value set in this attribute";
+        }
+        leaf detailed-state-description {
+            type string;
+            mandatory false;
+            description "Additional state information that is available to the client
+                        such as a reason for a failure.";
+        }
+    }
+
+    container requests {
+        list request {
+            key id;
+            uses request-def;
+        }
+    }
+}

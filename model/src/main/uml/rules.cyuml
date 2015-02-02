@@ -1,0 +1,9 @@
+[Condition||]
+[Condition]^-[EULA Violation||]
+[Condition]^-[...||]
+
+[Context||]
+
+[Rule|+id:uuid|]
+[Rule]<>-1..*>[Condition]
+[Rule]<>-1..*>[Intent||]

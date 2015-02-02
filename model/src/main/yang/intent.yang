@@ -1,0 +1,203 @@
+module intent {
+    namespace "urn:opendaylight:intent";
+    prefix "intent";
+
+    import types { prefix types; revision-date 2015-01-22; }
+    import request { prefix request; revision-date 2015-01-22; }
+
+    revision 2015-01-22 {
+        description "Initial revision";
+    }
+
+    grouping end-point-group-def {
+        description "An end point group (EPG) specifies 1 or more network end points
+                using a selection (query) mechanism. The specific attributes used
+                in the query will vary depending on netowkr layer the EPG definition
+                leverages. For example, an L2 end point could be specified as
+                node-id:mac-address, where a L1 end porint could be specified
+                as node-id:bay/shelf/slot/port.";
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifies the end point group";
+        }
+        leaf alias {
+            type types:identifier;
+            mandatory false;
+            description "Human digestable name for an end point group";
+        }
+        leaf selector {
+            type types:selector-specification;
+            mandatory true;
+            description "Specifies the end points that should be included in this group
+                        via a query capability.";
+        }
+    }
+
+    identity policy-constraint {
+        description "Base policy constraint. Used to identify and extend the name
+                space of policy constraints.";
+    }
+
+    identity qos-constraint {
+        description "Used to specify a QoS policy constraint.";
+        base policy-constraint;
+    }
+
+    identity bandwidth-constraint {
+        description "Used to specify a bandwidth policy constraint.";
+        base policy-constraint;
+    }
+
+    identity availability-constraint {
+        description "Used to specify a availability policy constraint.";
+        base policy-constraint;
+    }
+
+    grouping statement-def {
+        description "Defines a policy statement that includes an name, that quality
+                of the policy to set, and a value for that quality. Values can
+                be a literal, range, or selection set.";
+
+        /*
+         * Name is being done as a container / choice so that it can easily be extended
+         * via augmentations.
+         */
+        leaf name {
+            type identityref {
+                base policy-constraint;
+            }
+        }
+
+        choice value-type {
+            description "A constraint value can take multiple forms as detailed below.
+                        It is recommended that the value for a constraint be specified
+                        in abstract form (e.g., for a bandwidth constraints the value
+                        might be 'high', 'medium', or 'low' as opposed to a specifc value
+                        such as 10Gbps). Specifing values in this abstract form allows
+                        for the abstract value to be mapped to a specific value by policy
+                        or definitions that are deployment specific, while the intent
+                        constraints remain more portable.";
+            case literal {
+                description "Used to indicate that the value of the constraint is a single
+                                acceptable value. Either this value can be met when rendering
+                                the intent to the network or it cannot and the intent fails.";
+                leaf value {
+                    type string;
+                }
+            }
+            case range {
+                description "Used to indicate that a range of values is acceptable for the
+                                constaint. Any value in the the range is acceptable and if can
+                                be met the intent succeeds.";
+                container lower-bound {
+                    leaf value {
+                        type string;
+                    }
+                    leaf inclusive {
+                        type boolean;
+                    }
+                }
+                container upper-bound {
+                    leaf value {
+                        type string;
+                    }
+                    leaf inclusive {
+                        type boolean;
+                    }
+                }
+            }
+            case option {
+                description "Used to indicate a set of values are acceptable for the constraint.
+                                If any of the values can be met when rendering the intent then
+                                the intent succeeds.";
+                leaf-list value {
+                    type string;
+                }
+            }
+        }
+    }
+
+    grouping policy-def {
+        description "A policy is used to specify resource constraint requirements
+                for a connection between end point groups. Terms in a policy can
+                be abstract leaving the realization of those terms to an entity
+                that translates the policy to network configuraiton or can be
+                very specify and used to influence or specify directly some of
+                the implementation detail. Policies that contain abstractions
+                are typically more portable than policies that contains implementation
+                specifics; as such it is recommended that these are in separate
+                policies.";
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifies a policy";
+        }
+        leaf alias {
+            type types:identifier;
+            mandatory false;
+            description "Human digestable name for a policy";
+        }
+        list statements {
+            uses statement-def;
+        }
+    }
+
+    grouping intent {
+        description "An intent specifies two or more end point groups and the connectivity
+                between those end point groups. The connectivity between the end
+                point groups is specified in the form of policies.";
+        leaf-list end-point-groups {
+            type types:uuid;
+            min-elements 2;
+            description "List of end ponts that are part of the intent request. There
+                        is an implicit many to many connection between all end points
+                        selected.";
+        }
+        leaf-list intra-policies {
+            type types:uuid;
+            description "List of policy references to apply to the connections between
+                        entities within a single end point groups.";
+        }
+        leaf-list inter-policies {
+            type types:uuid;
+            description "List of policy references to apply to the connections between
+                        entities in different end point groups.";
+        }
+    }
+
+    container end-point-groups {
+        list end-point-group {
+            key id;
+            unique "id alias";
+            uses end-point-group-def;
+        }
+    }
+
+    container policies {
+        list policy {
+            key id;
+            unique "id alias";
+            uses policy-def;
+        }
+    }
+
+    /*
+     * Extend the request type name space for intents
+     */
+    identity add-intent {
+        base request:request-type;
+    }
+
+    augment /request:requests/request:request {
+        when "request-type = add-intent";
+        uses intent;
+    }
+
+    /*
+     * Sample way to extend the name space of the policy statements
+     */
+    identity my-constraint {
+        base policy-constraint;
+    }
+}

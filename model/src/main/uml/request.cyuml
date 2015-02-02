@@ -1,0 +1,16 @@
+[RequestType||]
+[RequestType||]^-[IntentRequest||]
+[RequestType||]^-[...||]
+[Context||]
+[Intent||]
+
+[Request|+id:uuid|+detailedState:identifier;+detailedStateDescription:string]
+[Request]<parent-child>[Request]
+[Request]<>->[RequestType||]
+
+[enumeration\nState|running;success;error]
+
+[Request]++->[enumeration\nState]
+
+[IntentRequest]<>->[Context]
+[IntentRequest]<>->[Intent]
