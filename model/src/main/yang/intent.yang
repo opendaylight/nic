@@ -12,9 +12,9 @@ module intent {
     grouping end-point-group-def {
         description "An end point group (EPG) specifies 1 or more network end points
                 using a selection (query) mechanism. The specific attributes used
-                in the query will vary depending on netowkr layer the EPG definition
+                in the query will vary depending on network layer the EPG definition
                 leverages. For example, an L2 end point could be specified as
-                node-id:mac-address, where a L1 end porint could be specified
+                node-id:mac-address, where a L1 end point could be specified
                 as node-id:bay/shelf/slot/port.";
         leaf id {
             type types:uuid;
@@ -122,7 +122,7 @@ module intent {
         description "A policy is used to specify resource constraint requirements
                 for a connection between end point groups. Terms in a policy can
                 be abstract leaving the realization of those terms to an entity
-                that translates the policy to network configuraiton or can be
+                that translates the policy to network configuration or can be
                 very specify and used to influence or specify directly some of
                 the implementation detail. Policies that contain abstractions
                 are typically more portable than policies that contains implementation
