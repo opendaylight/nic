@@ -54,6 +54,26 @@ module intent {
         base policy-constraint;
     }
 
+    identity allow-operation {
+       description "Allow matching traffic.";
+       base policy-constraint;
+    }
+
+    identity block-operation {
+       description "Block matching traffic.";
+       base policy-constraint;
+    }
+
+    identity redirect-operation {
+       description "Redirect matching traffic to a specified service/endpoint.";
+       base policy-constraint;
+    }
+
+    identity statistics-operation {
+       description "Gather statistics for matching traffic.";
+       base policy-constraint;
+    }
+
     grouping statement-def {
         description "Defines a policy statement that includes an name, that quality
                 of the policy to set, and a value for that quality. Values can
