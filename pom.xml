@@ -35,10 +35,10 @@
     </modules>
 
     <parent>
-        <artifactId>odlparent</artifactId>
-        <groupId>org.opendaylight.odlparent</groupId>
-        <version>1.4.3-Helium-SR1.1</version>
-        <relativePath></relativePath>
+        <groupId>org.opendaylight.nic</groupId>
+        <artifactId>nic-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>parent</relativePath>
     </parent>
 
     <properties>
