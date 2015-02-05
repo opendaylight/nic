@@ -24,7 +24,7 @@ module intent {
         leaf alias {
             type types:identifier;
             mandatory false;
-            description "Human digestable name for an end point group";
+            description "Human-readable name for an end point group";
         }
         leaf selector {
             type types:selector-specification;
@@ -136,7 +136,7 @@ module intent {
         leaf alias {
             type types:identifier;
             mandatory false;
-            description "Human digestable name for a policy";
+            description "Human-readable name for a policy";
         }
         list statements {
             uses statement-def;
