@@ -21,8 +21,98 @@
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <sal.version>0.8.2-Helium-SR1.1</sal.version>
+    <sal.connection.version>0.1.3-Helium-SR1.1</sal.connection.version>
+    <yangtools.version>0.6.3-Helium-SR1.1</yangtools.version>
+    <yangtools.generator.version>0.6.3-Helium-SR1.1</yangtools.generator.version>
+    <yangtools.jmx.generator.version>0.2.6-Helium-SR1.1</yangtools.jmx.generator.version>
+    <controller.model.version>1.1.1-Helium-SR1.1</controller.model.version>
+    <opendaylight.checkstyle.version>0.0.4-Helium-SR1.1</opendaylight.checkstyle.version>
+
+    <config.version>0.2.6-Helium-SR1.1</config.version>
+    <mdsal.version>1.1.1-Helium-SR1.1</mdsal.version>
+
+    <generatedConfigPath>target/generated-sources/config</generatedConfigPath>
+    <generatedSalPath>target/generated-sources/sal</generatedSalPath>
+    <generatedDocPath>target/generated-sources/restconf</generatedDocPath>
+
+    <nexusproxy>https://nexus.opendaylight.org/content</nexusproxy>
+    <nexus.opendaylight.snapshot>opendaylight.snapshot</nexus.opendaylight.snapshot>
+    <nexus.opendaylight.release>opendaylght.release</nexus.opendaylight.release>
+
+    <maven.eclipse.m2e.plugin.version>1.0.0</maven.eclipse.m2e.plugin.version>
+    <maven.lifecycle-mapping.plugin.version>1.0.0</maven.lifecycle-mapping.plugin.version>
+
+    <static.analysis.skip>true</static.analysis.skip>
+    <checkstyle.in.log>false</checkstyle.in.log>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>config-api</artifactId>
+        <version>${config.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>sal-binding-config</artifactId>
+        <version>${mdsal.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller.model</groupId>
+        <artifactId>model-flow-base</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller.model</groupId>
+        <artifactId>model-flow-management</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller.model</groupId>
+        <artifactId>model-flow-service</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller.model</groupId>
+        <artifactId>model-flow-statistics</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller.model</groupId>
+        <artifactId>model-inventory</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>sal-binding-api</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>sal-binding-util</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>sal</artifactId>
+        <version>${sal.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>sal.connection</artifactId>
+        <version>${sal.connection.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>sal-common-util</artifactId>
+        <version>${controller.model.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.opendaylight.nic</groupId>
         <artifactId>nic-artifacts</artifactId>
