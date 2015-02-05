@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_fe93e44c",
+        "filename": "model/src/main/yang/intent.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-02-05T22:48:37Z",
+      "side": 1,
+      "message": "Are policy constraints meant to define qualities of the connection or actions of the connection? bandwidth is a quality, redirect is an action. I keep coming back to what the \"intent\" is behind \"redirect\" and is \"redirect\" too low a primitive for a policy, as an example. What I want is all traffic from end point group 192.168.1.x:80 to go to end point group 192.168.2.1:80.\n\nI am wondering if there is a similar parallel to the others. such that a block is i want all traffic from EPG 192.168.1.x to go to /dev/null.",
+      "revId": "fd96bacb16505dbfb0c569418d7fed5f4398a24c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
