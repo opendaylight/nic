@@ -4,6 +4,7 @@ module intent {
 
     import types { prefix types; revision-date 2015-01-22; }
     import request { prefix request; revision-date 2015-01-22; }
+    description "";
 
     revision 2015-01-22 {
         description "Initial revision";
@@ -143,10 +144,21 @@ module intent {
         }
     }
 
-    grouping intent {
-        description "An intent specifies two or more end point groups and the connectivity
-                between those end point groups. The connectivity between the end
-                point groups is specified in the form of policies.";
+    grouping desired-network-state {
+        description "Used to specify the behavior that the network should exhibit
+                after the intent is applied.";
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifies the desired network state";
+        }
+
+        leaf alias {
+            type types:identifier;
+            mandatory false;
+            description "Human-readable name for a desired network state";
+        }
+
         leaf-list end-point-groups {
             type types:uuid;
             min-elements 2;
@@ -159,10 +171,47 @@ module intent {
             description "List of policy references to apply to the connections between
                         entities within a single end point groups.";
         }
-        leaf-list inter-policies {
+    }
+
+    grouping condition-def {
+        description "Base condition type. Used to identify and extend the name space
+                of the intent conditions.";
+    }
+
+    grouping sample-condition-def {
+        description "Sample condition extension";
+        leaf my-value {
+            type string;
+        }
+    }
+
+    grouping intent {
+        description "Specifies one or more desired network states and the conditions
+                under which those networks sates should be applied and by extranpolation
+                un-applied.";
+
+        leaf id {
             type types:uuid;
-            description "List of policy references to apply to the connections between
-                        entities in different end point groups.";
+            mandatory false;
+            description "Uniquely identifies the intent";
+        }
+
+        leaf alias {
+            type types:identifier;
+            mandatory false;
+            description "Human-readable name for an intent";
+        }
+
+        leaf-list desired-network-states {
+            type types:uuid;
+            min-elements 1;
+            description "List of desired network states to be applied to the network.";
+        }
+
+        list conditions {
+            uses condition-def;
+            min-elements 0;
+            description "Conditions under which the desired network states should be active.";
         }
     }
 
@@ -174,11 +223,27 @@ module intent {
         }
     }
 
+    container desired-network-states {
+        list desired-network-state {
+            key id;
+            unique "id";
+            uses desired-network-state;
+        }
+    }
+
     container policies {
         list policy {
             key id;
             unique "id alias";
             uses policy-def;
+        }
+    }
+
+    container intents {
+        list intent {
+            key id;
+            unique "id alias";
+            uses intent;
         }
     }
 
@@ -189,7 +254,7 @@ module intent {
         base request:request-type;
     }
 
-    augment /request:requests/request:request {
+    augment /request:requests/request:request/request:detail {
         when "request-type = add-intent";
         uses intent;
     }

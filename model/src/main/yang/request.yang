@@ -58,6 +58,8 @@ module request {
             description "Additional state information that is available to the client
                         such as a reason for a failure.";
         }
+        container detail {
+        }
     }
 
     container requests {
