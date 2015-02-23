@@ -1,0 +1,66 @@
+module policy-compiler {
+
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:controller:config:policy-compiler:impl";
+    prefix "ibv-compiler";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+
+    organization "Hewlett-Packard";
+
+    contact
+      "Shaun and Duane";
+
+    description
+        "This module contains the base YANG definitions for
+        policy-compiler implementation.";
+
+    revision "2014-12-08" {
+        description 
+          "Initial revision.";
+    }
+
+    // This is the definition of the service implementation as a module identity.
+    identity policy-compiler-id {
+            base config:module-type;
+            
+            // Specifies the prefix for generated java classes.
+            config:java-name-prefix PolicyCompiler;
+    }
+
+    // Augments the 'configuration' choice node under modules/module.
+    // We consume the three main services, RPCs, DataStore, and Notifications
+    augment "/config:modules/config:module/config:configuration" {
+        case policy-compiler-id {
+            when "/config:modules/config:module/config:type = 'policy-compiler-id'";
+
+            //container rpc-registry {
+            //    uses config:service-ref {
+            //        refine type {
+            //            mandatory true;
+            //            config:required-identity mdsal:binding-rpc-registry;
+            //        }
+            //    }
+            //}
+
+            //container notification-service {
+            //     uses config:service-ref {
+            //        refine type {
+            //            mandatory true;
+            //            config:required-identity mdsal:binding-notification-service;
+            //        }
+            //    }
+            //}
+
+            container data-broker {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity mdsal:binding-async-data-broker;
+                    }
+                }
+            }
+        }
+    }
+}

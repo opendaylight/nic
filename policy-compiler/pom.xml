@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) Copyright 2014 Hewlett-Packard Development Company, L.P. This program 
+ is made available under the terms of the Eclipse Public License v1.0 which 
+ accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+ <modelVersion>4.0.0</modelVersion>
+
+ <parent>
+  <groupId>org.opendaylight.nic</groupId>
+  <artifactId>nic-parent</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <relativePath>../parent</relativePath>
+ </parent>
+
+ <!-- <groupId>org.opendaylight.nic.pc</groupId> -->
+ <artifactId>nic-policy-compiler</artifactId>
+ <packaging>bundle</packaging>
+
+ <build>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.felix</groupId>
+    <artifactId>maven-bundle-plugin</artifactId>
+    <version>${bundle.plugin.version}</version>
+    <extensions>true</extensions>
+    <configuration>
+     <instructions>
+      <!-- <Bundle-Activator>org.opendaylight.nic.pm.Activator</Bundle-Activator> -->
+      <Export-Package>
+       org.opendaylight.nic.common,
+       org.opendaylight.nic.compiler,
+       org.opendaylight.nic.compiler.impl, <!-- FIXME: Remove usage of PolicyFrameworkImpl from policy-manager -->
+       org.opendaylight.nic.extensibility,
+       org.opendaylight.nic.extensibility.actions,
+       org.opendaylight.nic.extensibility.terms,
+       org.opendaylight.nic.intent,
+       org.opendaylight.nic.intent.impl, <!-- FIXME: Remove usage of *Impl classes in policy-manager -->
+       org.opendaylight.nic.services,
+       org.opendaylight.nic.services.impl, <!-- FIXME: Remove usage of *Impl 
+        classes in policy-manager -->
+       org.opendaylight.nic.translator.action,
+       org.opendaylight.nic.translator.term,
+      </Export-Package>
+      <Import-Package>*</Import-Package>
+     </instructions>
+    </configuration>
+   </plugin>
+   <plugin>
+    <groupId>org.opendaylight.yangtools</groupId>
+    <artifactId>yang-maven-plugin</artifactId>
+    <version>${yangtools.version}</version>
+    <executions>
+     <execution>
+      <id>config</id>
+      <goals>
+       <goal>generate-sources</goal>
+      </goals>
+      <configuration>
+       <codeGenerators>
+        <generator>
+         <codeGeneratorClass>org.opendaylight.controller.config.yangjmxgenerator.plugin.JMXGenerator</codeGeneratorClass>
+         <outputBaseDir>${generatedConfigPath}</outputBaseDir>
+         <additionalConfiguration>
+          <namespaceToPackage1>urn:opendaylight:params:xml:ns:yang:controller==org.opendaylight.controller.config.yang</namespaceToPackage1>
+         </additionalConfiguration>
+        </generator>
+        <generator>
+         <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
+         <outputBaseDir>${generatedSalPath}</outputBaseDir>
+        </generator>
+       </codeGenerators>
+       <inspectDependencies>true</inspectDependencies>
+      </configuration>
+     </execution>
+    </executions>
+
+    <dependencies>
+     <dependency>
+      <groupId>org.opendaylight.yangtools</groupId>
+      <artifactId>maven-sal-api-gen-plugin</artifactId>
+      <version>${yangtools.version}</version>
+      <type>jar</type>
+     </dependency>
+
+     <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>yang-jmx-generator-plugin</artifactId>
+      <version>${yangtools.jmx.generator.version}</version>
+     </dependency>
+    </dependencies>
+   </plugin>
+
+   <!-- put config file in m2 repository -->
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <executions>
+     <execution>
+      <id>attach-artifacts</id>
+      <goals>
+       <goal>attach-artifact</goal>
+      </goals>
+      <phase>package</phase>
+      <configuration>
+       <artifacts>
+        <artifact>
+         <file>${project.build.directory}/classes/configuration/initial/${nic.policy-compiler.configfile}</file>
+         <type>xml</type>
+         <classifier>config</classifier>
+        </artifact>
+       </artifacts>
+      </configuration>
+     </execution>
+    </executions>
+   </plugin>
+
+  </plugins>
+ </build>
+
+ <dependencies>
+
+  <dependency>
+   <groupId>org.opendaylight.controller</groupId>
+   <artifactId>sal-binding-config</artifactId>
+   <version>${mdsal.version}</version>
+  </dependency>
+
+  <dependency>
+   <groupId>org.opendaylight.controller.model</groupId>
+   <artifactId>model-flow-service</artifactId>
+   <version>${mdsal.version}</version>
+  </dependency>
+
+  <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <version>4.8</version>
+   <scope>test</scope>
+  </dependency>
+
+
+
+ </dependencies>
+
+</project>

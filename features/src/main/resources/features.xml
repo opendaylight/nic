@@ -17,14 +17,25 @@
 
     <!-- the 'all' feature does not include the testapp -->
     <feature name='odl-nic-all' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: All'>
-        <!-- <feature version='${project.version}'>odl-nic-api</feature> -->
+        <feature version='${project.version}'>odl-nic-policy-manager</feature>
+        <feature version='${project.version}'>odl-nic-policy-compiler</feature>
     </feature>
 
-    <!-- Sample API feature ...
-    <feature name='odl-nic-api' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: API'>
-        <bundle>mvn:org.opendaylight.nic/nic-api/${project.version}</bundle>
-        <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile>
+    <feature name='odl-nic-policy-manager' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: PolicyManager'>
+        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${mdsal.version}'>odl-flow-model</feature>
+        <feature version='${project.version}'>odl-nic-policy-compiler</feature>
+
+        <bundle>mvn:org.opendaylight.nic/nic-policy-manager/${project.version}</bundle>
+        <configfile finalname="${config.configfile.directory}/${nic.policy-manager.configfile}">mvn:org.opendaylight.nic/nic-policy-manager/${project.version}/xml/config</configfile>
     </feature>
-    -->
+
+    <feature name='odl-nic-policy-compiler' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: PolicyCompiler'>
+        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${mdsal.version}'>odl-flow-model</feature>
+
+        <bundle>mvn:org.opendaylight.nic/nic-policy-compiler/${project.version}</bundle>
+        <configfile finalname="${config.configfile.directory}/${nic.policy-compiler.configfile}">mvn:org.opendaylight.nic/nic-policy-compiler/${project.version}/xml/config</configfile>
+    </feature>
 
 </features>
