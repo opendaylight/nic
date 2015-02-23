@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_796584b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-02-23T23:44:11Z",
+      "side": 1,
+      "message": "Commit messages should really be formatted to a reasonable length (e.g., 72 characters) and have a subject header.",
+      "revId": "9a14a70fbdfbeec949fa6bc8f100d9224b0afa99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_1956c0ce",
+        "filename": "features/src/main/resources/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-02-23T23:44:11Z",
+      "side": 1,
+      "message": "It would be really nice if we could avoid seeing non-changes like adding an extra blank line.",
+      "revId": "9a14a70fbdfbeec949fa6bc8f100d9224b0afa99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_790ca4ed",
+        "filename": "policy-compiler/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-02-23T23:44:11Z",
+      "side": 1,
+      "message": "Can these FIXMEs be fixed easily?",
+      "revId": "9a14a70fbdfbeec949fa6bc8f100d9224b0afa99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_39129c09",
+        "filename": "policy-compiler/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-02-23T23:44:11Z",
+      "side": 1,
+      "message": "This version should not be hard-coded.",
+      "revId": "9a14a70fbdfbeec949fa6bc8f100d9224b0afa99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_99aad06f",
+        "filename": "policy-compiler/src/main/resources/configuration/initial/#99-policy-compiler.xml#",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-02-23T23:44:11Z",
+      "side": 1,
+      "message": "This should not be committed.",
+      "revId": "9a14a70fbdfbeec949fa6bc8f100d9224b0afa99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_d9a4d8a7",
+        "filename": "policy-manager/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-02-23T23:44:11Z",
+      "side": 1,
+      "message": "versions should not be hard-coded",
+      "revId": "9a14a70fbdfbeec949fa6bc8f100d9224b0afa99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_f9a19494",
+        "filename": "policy-manager/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-02-23T23:44:11Z",
+      "side": 1,
+      "message": "version should not be hard-coded",
+      "revId": "9a14a70fbdfbeec949fa6bc8f100d9224b0afa99",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
