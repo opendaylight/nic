@@ -33,6 +33,11 @@
         <module>parent</module>
         <module>artifacts</module>
         <module>model</module>
+
+        <!-- Prototype -->
+        <module>policy-compiler</module>
+        <module>policy-manager</module>
+
     </modules>
 
     <parent>

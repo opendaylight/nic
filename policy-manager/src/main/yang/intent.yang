@@ -1,0 +1,169 @@
+module nic-api {
+
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:controller:config:nic-api:impl";
+    prefix "nic";
+
+    import config { prefix config; revision-date 2013-04-05; }
+
+    revision "2015-01-26" {
+       description "Initial revision of a proposal for the NIC framework.";
+    }
+
+    identity nic-identity {
+       base config:module-type;
+       config:java-name-prefix NetworkIntentComposition;
+    }
+
+    /**
+     * ENDPOINTS
+     */
+    grouping endpoint-group {
+       description "A group of one or more endpoints.";
+
+       leaf id {
+          description "A unique group identifier.";
+          type string;
+       }
+
+       leaf selector {
+          description "Selection critieria which identifies the set of endpoints included in this group.";
+          type string;
+       }
+    }
+
+    /**
+     * ACTIONS
+     */
+    identity action {
+       description "An action which should be taken for matching traffic.";
+    }
+
+    identity allow-action {
+       description "Allow matching traffic.";
+       base action;
+    }
+
+    identity block-action {
+       description "Block matching traffic.";
+       base action;
+    }
+
+    identity qos-action {
+       description "Define QoS characteristics (such as bandwidth or latency) for matching traffic.";
+       base action;
+    }
+
+    identity redirect-action {
+       description "Redirect matching traffic to a specified endpoint.";
+       base action;
+    }
+
+    identity stat-action {
+       description "Gather statistics for matching traffic.";
+       base action;
+    }
+
+    /**
+     * CLASSIFIERS
+     */
+    identity classifier {
+       description "A classifier of network traffic which determines whether an intent will apply to the given traffic.";
+    }
+
+    identity vlan-classifier {
+       description "Matches traffic on a specific vlan or set of vlans.";
+       base classifier;
+    }
+
+    identity eth-classifier {
+       description "Matches traffic with a given ethernet type.";
+       base classifier;
+    }
+
+    identity ip-proto-classifier {
+       description "Matches traffic with a given IP protocol number.";
+       base classifier;
+    }
+
+    identity l4-source-classifier {
+       description "Matches traffic with a given source L4 port.";
+       base classifier;
+    }
+
+    identity l4-destination-classifier {
+       description "Matches traffic with a given destination L4 port.";
+       base classifier;
+    }
+
+    /**
+     * CONTEXTS
+     */
+    identity context {
+       description "The situational context within which thisn intent should apply.
+                    The context can be thought of as a global condition which must be met before the intent will apply.";
+    }
+
+    identity time-context {
+       description "Time of day, date, or any other time-oriented designation of the
+                    time period during which this intent should be applied.";
+       base context;
+    }
+
+    identity state-context {
+       description "The network state or condition during which this intent should be applied.";
+       base context;
+    }
+
+    /**
+     * INTENT
+     */
+    grouping intent {
+       description "A principle which applications (or administrators) specify to guide
+                    decisions on the treatment of traffic on the network. It is a
+                    statement of intent with respect to specific communications between
+                    endpoints on the network. It consists of a source endpoint group,
+                    a destination endpoint group, a classifier, a context, and a set of actions.";
+
+       leaf-list action {
+          description "The set of actions for this intent.";
+          type identityref {
+             base action;
+          }
+       }
+
+       leaf-list classifier {
+          description "The set of classifiers for this intent.";
+          type identityref {
+             base classifier;
+          }
+       }
+
+       leaf-list context {
+          description "The set of contexts for this intent.";
+          type identityref {
+             base context;
+          }
+       }
+
+       list source-endpoints {
+          description "The set of source endpoints for this intent.";
+          uses endpoint-group;
+       }
+
+       list destination-endpoints {
+          description "The set of destination endpoints for this intent.";
+          uses endpoint-group;
+       }
+
+    }
+
+    // Augments the 'configuration' choice node under modules/module.
+    augment "/config:modules/config:module/config:configuration" {
+        case nic-identity {
+            when "/config:modules/config:module/config:type = 'nic-identity'";
+            uses intent;
+        }
+    }
+
+}

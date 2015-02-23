@@ -1,0 +1,298 @@
+module policy-manager {
+
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:controller:config:policy-manager:impl";
+    prefix "ibv-pm";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+    import ietf-inet-types { prefix ietf; }
+
+    organization "Hewlett-Packard";
+
+    contact
+      "Shaun and Duane";
+
+    description
+        "This module contains the base YANG definitions for
+        policy-manager implementation.";
+
+    revision "2014-12-08" {
+        description 
+          "Initial revision.";
+    }
+
+    // This is the definition of the service implementation as a module identity.
+    identity policy-manager-identity {
+        base config:module-type;
+            
+        // Specifies the prefix for generated java classes.
+        config:java-name-prefix PolicyManager;
+    }
+
+    typedef ActionType {
+       type string;
+       description "A label which identifies the type of action. All action types
+                    must be registered prior to use.";
+    }
+
+    typedef TermType {
+       type string;
+       description "A label which identifies the type of this classifier term.
+                    All term types must be registered prior to use.";
+    }
+
+    typedef TermValue {
+       type int32;
+       description "The value corresponding to a classifier term.";
+    }
+
+    typedef ContextAttribute {
+       type string;
+       description "An attribute which describes a condition, situation, or global state.";
+    }
+
+    typedef PolicyId {
+       type string;
+       description "An identifier which uniquely identifies a specific policy within the context
+                    of a specific application and specific domain. This identifier is not guaranteed
+                    to be unique outside of that scope.";
+    }
+
+    typedef AppId {
+       type string;
+       description "An identifier which uniquely identifies a specific application within the context
+                    of a specific domain. This identifier is not guaranteed to be unique outside
+                    of that scope.";
+    }
+
+    typedef DomainId {
+       type string;
+       description "A globally unique identifier for a specific domain.";
+    }
+
+    container domains {
+       description "The set of configured policies on a per-domain, per-application basis.";
+
+       list domain {
+          description "The set of configured policies, for a specific domain, on a per-application basis.";
+          key "domain-id";
+
+          leaf domain-id {
+             type DomainId;
+             description "The identifier for this domain.";
+          }
+
+          list application {
+             description "An application within this domain.";
+             key "app-id";
+
+             leaf app-id {
+                type AppId;
+                description "The identifier for this application, within the domain.";
+             }
+
+             list app-policy {
+                description "A policy which has been applied by this application within this domain.";
+                key "policy-id";
+
+                leaf policy-id {
+                   type PolicyId;
+                   description "The identifier for this policy, within this domain and application.";
+                }
+
+                container policy {
+                   description
+                       "A principle which applications (or administrators) specify to guide
+                       decisions on the treatment of traffic on the network. A policy is a
+                       statement of intent with respect to specific communications between
+                       endpoints on the network.";
+
+                   list action {
+                      key "type";
+                      description "The set of actions for this policy.";
+
+                      leaf type {
+                         type ActionType;
+                         mandatory true;
+                         description "The type of this action.";
+                      }
+                      list data {
+                         key "name";
+                         description "Auxiliary data for this action. Content depends upon action type.";
+                         leaf name {
+                            type string;
+                            description "The name of the parameter in this name-value pair.";
+                         }
+                         leaf value {
+                            type string;
+                            description "The value for the parameter in this name-value pair.";
+                         }
+                      }
+                   }
+
+                   container classifier {
+                      description "A classifier of network traffic which determines whether a policy will apply to
+                                   the given traffic. Each classifier is a collection of expressions, ANY of which
+                                   may match for the policy to be applied.";
+
+                      list expression {
+                         description "An expression within a classifier. The expression is a collection of terms,
+                                      ALL of which must match the traffic for the expression to be considered a match.";
+                         key "id";
+
+                         leaf id {
+                            description "An ID for this expression. If it isn't here,
+                                         the onDataChange notifications will contain an unusable object (ie: toString
+                                         on the object throws an exception). See bug #2562.";
+                            type uint32;
+                         }
+
+                         list term {
+                            description "A term within a classifier expression. The term is a collection of
+                                         single values and ranges, ANY of which may match for the term to be
+                                         considered a match.";
+                            key "type";
+
+                            leaf type {
+                               type TermType;
+                               description "The type of this classifier term.";
+                            }
+
+                            leaf-list value {
+                               type TermValue;
+                               description "A single value corresponding to this classifier term.";
+                            }
+
+                            list range {
+                               description "A range of values corresponding to this classifier term.";
+                               key "start";
+
+                               leaf start {
+                                  type TermValue;
+                                  description "The start of this range.";
+                               }
+                               leaf end {
+                                  type TermValue;
+                                  description "The end of this range.";
+                               }
+                            }
+                         }
+                      }
+                   }
+
+                   list context {
+                      description "The situational context within which this policy should apply.
+                                   The context can be thought of as a global condition which must be met
+                                   before the policy will apply.";
+
+                      container time {
+                         description "Time of day, date, or any other time-oriented designation of the
+                                      time period during which this policy should be applied.";
+
+                         leaf start {
+                            type string;
+                            description "The start of the time period during which the policy would apply.";
+                         }
+
+                         leaf end {
+                            type string;
+                            description "The end of the time period during which the policy would apply.";
+                         }
+                      }
+
+                      leaf-list condition {
+                         type ContextAttribute;
+                         description "A collection of attributes which describe condition, situation,
+                                      or global state. The context is considered to match if ALL conditions
+                                      are met.";
+                      }
+                   }
+
+                   leaf source-endpoints {
+                      type string;
+                      description "A logical expression which describes the attributes of source
+                                   endpoint(s) to which this policy applies. The logical expression
+                                   may consist of attribute values combined via the logical constructs
+                                   of 'AND', 'OR', 'NOT' (or !). Logical expressions may use parenthesis
+                                   for the purpose of grouping. An empty or unspecified value implies
+                                   that all source endpoints should be considered a match";
+                   }
+
+                   leaf destination-endpoints {
+                      type string;
+                      description "A logical expression which describes the attributes of destination
+                                   endpoint(s) to which this policy applies. The logical expression
+                                   may consist of attribute values combined via the logical constructs
+                                   of 'AND', 'OR', 'NOT' (or !). Logical expressions may use parenthesis
+                                   for the purpose of grouping. An empty or unspecified value implies
+                                   that all source endpoints should be considered a match";
+                   }
+                }
+             }
+          }
+       }
+    }
+
+    container endpoints {
+       description "A TEMPORARY framework for the endpoint database, which will eventually store
+                    all endpoints known to the controller, facilitates attribute registration,
+                    and allows the marking of individual endpoints with individual attributes.
+                    Note that attribute registration is not supported by this TEMPORARY framework.";
+       list endpoint {
+          description "A specific endpoint on the network.";
+          key "id";
+
+          leaf id {
+             description "A unique identifier for an endpoint.";
+             type string;
+          }
+
+          list attributes {
+             description "A list of attributes which are applied to the endpoint.";
+             key "attribute";
+
+             leaf attribute {
+                description "A single attribute which is applied to the endpoint.";
+                type string;
+             }
+          }
+       }
+    }
+
+    // Augments the 'configuration' choice node under modules/module.
+    // We consume the three main services, RPCs, DataStore, and Notifications
+    augment "/config:modules/config:module/config:configuration" {
+        case policy-manager-identity {
+            when "/config:modules/config:module/config:type = 'policy-manager-identity'";
+
+            container rpc-registry {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity mdsal:binding-rpc-registry;
+                    }
+                }
+            }
+
+            container notification-service {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity mdsal:binding-notification-service;
+                    }
+                }
+            }
+
+            container data-broker {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity mdsal:binding-async-data-broker;
+                    }
+                }
+            }
+        }
+    }
+
+}
