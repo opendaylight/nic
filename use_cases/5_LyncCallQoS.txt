@@ -1,0 +1,90 @@
+# Lync call QoS
+# ====================================================
+# Set up enhanced QoS for an MS Lync call between two hosts, along with prioritized traffic to/from the lync server.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "caller1",
+   "attributes": [
+      { "attribute":"172.10.20.30" },
+   ] } }
+{"endpoint": { "id": "caller2",
+   "attributes": [
+      { "attribute":"168.10.25.31" },
+   ] } }
+{"endpoint": { "id": "MSLyncServerA",
+   "attributes": [
+      { "attribute":"1.2.3.4" },
+      { "attribute":"lync_server" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_dscp", "value":"medium" }, # medium=18
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"tcp" },  # tcp=6
+         { "type":"L4_SRC",   "value":"21058" },
+         { "type":"L4_DST",   "value":"28273" },
+       ] } ] },
+   "source-endpoints": "caller1",
+   "destination-endpoints": "caller2"
+ }}
+
+{"policy": {
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_dscp", "value":"medium" }, # medium=18
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"tcp" },  # tcp=6
+         { "type":"L4_SRC",   "value":"28273" },
+         { "type":"L4_DST",   "value":"21058" },
+       ] } ] },
+   "source-endpoints": "caller2",
+   "destination-endpoints": "caller1"
+ }}
+
+{"policy": {
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_dscp", "value":"high" }, # high=25
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"tcp" },  # tcp=6
+       ] } ] },
+   "source-endpoints": "",
+   "destination-endpoints": "lync_server"
+ }}
+
+{"policy": {
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_dscp", "value":"high" }, # high=25
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"tcp" },  # tcp=6
+       ] } ] },
+   "source-endpoints": "lync_server",
+   "destination-endpoints": ""
+ }}
+

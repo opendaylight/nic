@@ -1,0 +1,61 @@
+# End Point / Policy Resolution
+# ====================================================
+# All members of an endpoint group are inter-connected, with some restrictions.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "endhost1",
+   "attributes": [
+      { "attribute":"172.10.20.1" },
+      { "attribute":"developers" },
+   ] } }
+{"endpoint": { "id": "endhost2",
+   "attributes": [
+      { "attribute":"172.10.20.2" },
+      { "attribute":"developers" },
+   ] } }
+{"endpoint": { "id": "endhost3",
+   "attributes": [
+      { "attribute":"168.10.20.3" },
+      { "attribute":"developers" },
+      { "attribute":"testers" },
+   ] } }
+{"endpoint": { "id": "endhost4",
+   "attributes": [
+      { "attribute":"168.10.20.4" },
+      { "attribute":"testers" },
+   ] } }
+{"endpoint": { "id": "WebserverA",
+   "attributes": [
+      { "attribute":"1.2.3.4" },
+      { "attribute":"web_server" },
+   ] } }
+{"endpoint": { "id": "WebserverB",
+   "attributes": [
+      { "attribute":"5.6.7.8" },
+      { "attribute":"web_server" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"allow",
+     "data": [ ]
+     },
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_latency", "value":"low" },
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"tcp" }, # tcp=6
+         { "type":"L4_DST",   "value":"http" }, # http=80
+       ] } ] },
+   "source-endpoints": "developers && !testers",
+   "destination-endpoints": "web_server"          # Not sure how to specify proximity
+ }}
+

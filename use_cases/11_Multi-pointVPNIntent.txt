@@ -1,0 +1,56 @@
+# Multi-point VPN Intent
+# ====================================================
+# Establish private, secure bi-directional communications between multiple endpoints.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "endhost1",
+   "attributes": [
+      { "attribute":"172.10.20.1" },
+      { "attribute":"sanjose" },
+   ] } }
+{"endpoint": { "id": "endhost2",
+   "attributes": [
+      { "attribute":"172.10.20.2" },
+      { "attribute":"sanjose" },
+   ] } }
+{"endpoint": { "id": "endhost3",
+   "attributes": [
+      { "attribute":"168.10.20.3" },
+      { "attribute":"texas" },
+   ] } }
+{"endpoint": { "id": "endhost4",
+   "attributes": [
+      { "attribute":"168.10.20.4" },
+      { "attribute":"texas" },
+   ] } }
+{"endpoint": { "id": "endhost5",
+   "attributes": [
+      { "attribute":"153.10.20.5" },
+      { "attribute":"hawaii" },
+   ] } }
+{"endpoint": { "id": "endhost6",
+   "attributes": [
+      { "attribute":"153.10.20.6" },
+      { "attribute":"hawaii" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"allow",
+     "data": [
+        { "name":"", "value":"" }, # Not sure how to mark as 'secure' or 'private'. Is that the responsibility of intent?
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"tcp" }, # tcp=6
+         { "type":"L4_SRC",   "value":"ftp" }, # ftp=21
+       ] } ] },
+   "source-endpoints": "sanjose || texas || hawaii",
+   "destination-endpoints": "sanjose || texas || hawaii"
+ }}
+

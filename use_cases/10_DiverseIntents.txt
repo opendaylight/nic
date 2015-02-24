@@ -1,0 +1,102 @@
+# Diverse Intents
+# ====================================================
+# Adjacencies formed are guaranteed to be divergent from eachother, to minimize shared risk.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "endhost1",
+   "attributes": [
+      { "attribute":"nodeA/1/2/3" },
+   ] } }
+{"endpoint": { "id": "endhost2",
+   "attributes": [
+      { "attribute":"nodeA/2/2/3" },
+   ] } }
+{"endpoint": { "id": "endhost3",
+   "attributes": [
+      { "attribute":"nodeA/3/2/3" },
+   ] } }
+{"endpoint": { "id": "endhost4",
+   "attributes": [
+      { "attribute":"nodeB/4/3/4" },
+   ] } }
+{"endpoint": { "id": "endhost5",
+   "attributes": [
+      { "attribute":"nodeB/5/3/4" },
+   ] } }
+{"endpoint": { "id": "endhost6",
+   "attributes": [
+      { "attribute":"nodeB/6/3/4" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "id":"intent-1234",
+   "action": {
+     "type":"allow",
+     "data": [ ]
+     },
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_latency", "value":"low" },
+        { "name":"qos_bandwidth", "value":"high" },
+     ] },
+   "action": {
+     "type":"divergence",
+     "data": [
+        { "name":"diverge", "value":"intent-5678" }, # Admin must install 'divergence' action, along with corresponding translator
+        { "name":"diverge", "value":"intent-9012" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "nodeA/1/2/3",
+   "destination-endpoints": "nodeB/4/3/4"
+ }}
+
+{"policy": {
+   "id":"intent-5678",
+   "action": {
+     "type":"allow",
+     "data": [ ]
+     },
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_latency", "value":"low" },
+        { "name":"qos_bandwidth", "value":"high" },
+     ] },
+   "action": {
+     "type":"divergence",
+     "data": [
+        { "name":"diverge", "value":"intent-1234" },
+        { "name":"diverge", "value":"intent-9012" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "nodeA/2/2/3",
+   "destination-endpoints": "nodeB/5/3/4"
+ }}
+
+{"policy": {
+   "id":"intent-9012",
+   "action": {
+     "type":"allow",
+     "data": [ ]
+     },
+   "action": {
+     "type":"qos",
+     "data": [
+        { "name":"qos_latency", "value":"low" },
+        { "name":"qos_bandwidth", "value":"high" },
+     ] },
+   "action": {
+     "type":"divergence",
+     "data": [
+        { "name":"diverge", "value":"intent-1234" },
+        { "name":"diverge", "value":"intent-5678" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "nodeA/3/2/3",
+   "destination-endpoints": "nodeB/6/3/4"
+ }}
+

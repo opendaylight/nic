@@ -1,0 +1,29 @@
+# Sample
+# ====================================================
+# 
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "",
+   "attributes": [
+      { "attribute":"" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"",
+     "data": [
+        { "name":"", "value":"" },
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"", "value":"" },
+       ] } ] },
+   "source-endpoints": "",
+   "destination-endpoints": ""
+ }}
+

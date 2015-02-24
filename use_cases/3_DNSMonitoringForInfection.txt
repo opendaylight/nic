@@ -1,0 +1,48 @@
+# DNS monitoring for infection
+# ====================================================
+# Inspect all DNS packets and if infection is detected then block the host from the network.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "InspectionServer1",
+   "attributes": [
+      { "attribute":"DNSInspector" },
+      { "attribute":"172.1.2.3" },
+   ] } }
+{"endpoint": { "id": "endhost1",
+   "attributes": [
+      { "attribute":"168.10.20.1" },
+   ] } }
+# ... then some time later, the InspectionServer1 adds 'infected' ...
+{"endpoint": { "id": "endhost1",
+   "attributes": [
+      { "attribute":"infected" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"inspect",
+     "data": [
+        { "name":"servicegroup", "value":"DNSInspector" },
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"udp" }, # udp=17
+         { "type":"L4_DST",   "value":"dns" }, # dns=53
+       ] } ] },
+   "source-endpoints": "",
+   "destination-endpoints": ""
+ }}
+{"policy": {
+   "action": {
+     "type":"block",
+     "data": [ ] },
+   "classifier": { },
+   "source-endpoints": "infected",
+   "destination-endpoints": ""
+ }}
+

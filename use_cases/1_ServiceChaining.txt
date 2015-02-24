@@ -1,0 +1,50 @@
+# Service Chaining
+# ====================================================
+# Send traffic from 172.255.255.1 port 10 to 172.255.253.2 port 12 through a service chain which includes a Firewall server and Parental control server.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "host1",
+   "attributes": [
+      { "attribute":"172.255.255.1" },
+      { "attribute":"port10" },
+   ] } }
+{"endpoint": { "id": "host2",
+   "attributes": [
+      { "attribute":"172.255.253.2" },
+      { "attribute":"port12" },
+   ] } }
+{"endpoint": { "id": "FirewallA",
+   "attributes": [
+      { "attribute":"firewall" },
+      { "attribute":"1.2.3.4" },
+   ] } }
+{"endpoint": { "id": "PCServerA",
+   "attributes": [
+      { "attribute":"parental_control" },
+      { "attribute":"5.6.7.8" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"inspect",
+     "data": [
+        { "name":"servicegroup", "value":"firewall" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "host1",
+   "destination-endpoints": "host2"
+ }}
+{"policy": {
+   "action": {
+     "type":"inspect",
+     "data": [
+        { "name":"servicegroup", "value":"parental_control" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "host1",
+   "destination-endpoints": "host2"
+ }}
+

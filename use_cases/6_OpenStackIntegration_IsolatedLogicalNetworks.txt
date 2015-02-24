@@ -1,0 +1,49 @@
+# OpenStack Integration: Isolated logical networks
+# ====================================================
+# OpenStack requests intents which allow communication between two groups of endpoints (a logical network).
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "vm1",
+   "attributes": [
+      { "attribute":"172.10.20.1" },
+      { "attribute":"networkA" },
+   ] } }
+{"endpoint": { "id": "vm2",
+   "attributes": [
+      { "attribute":"172.10.20.2" },
+      { "attribute":"networkA" },
+   ] } }
+{"endpoint": { "id": "vm3",
+   "attributes": [
+      { "attribute":"168.10.20.3" },
+      { "attribute":"networkB" },
+   ] } }
+{"endpoint": { "id": "vm4",
+   "attributes": [
+      { "attribute":"168.10.20.4" },
+      { "attribute":"networkB" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"allow",
+     "data": [ ]
+     },
+   "classifier": { },
+   "source-endpoints": "networkA",
+   "destination-endpoints": "networkA"
+ }}
+
+{"policy": {
+   "action": {
+     "type":"allow",
+     "data": [ ]
+     },
+   "classifier": { },
+   "source-endpoints": "networkB",
+   "destination-endpoints": "networkB"
+ }}
+

@@ -1,0 +1,28 @@
+# Network Monitoring of a Single User
+# ====================================================
+# Monitor the traffic from a single user
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "enduser1",
+   "attributes": [
+      { "attribute":"10.0.0.1" },
+   ] } }
+{"endpoint": { "id": "NSA_Server1",
+   "attributes": [
+      { "attribute":"listener" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"audit",
+     "data": [
+        { "name":"servicegroup", "value":"listener" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "enduser1",
+   "destination-endpoints": ""
+ }}
+

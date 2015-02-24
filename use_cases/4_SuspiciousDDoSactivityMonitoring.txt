@@ -1,0 +1,62 @@
+# Suspicious DDos activity monitoring
+# ====================================================
+# Audit all traffic ingressing from internet gateways. If any one destination is getting too much traffic, inspect all traffic destined for that destination with a DDoS server.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "InetGatewayA",
+   "attributes": [
+      { "attribute":"internet_gateway" },
+   ] } }
+{"endpoint": { "id": "InetGatewayB",
+   "attributes": [
+      { "attribute":"internet_gateway" },
+   ] } }
+{"endpoint": { "id": "ConnectionCountingServerX",
+   "attributes": [
+      { "attribute":"shallow_ddos_inspector" },
+   ] } }
+{"endpoint": { "id": "DeepInspectionServerY",
+   "attributes": [
+      { "attribute":"deep_ddos_inspector" },
+   ] } }
+{"endpoint": { "id": "endhost1",
+   "attributes": [
+      { "attribute":"172.10.20.100" },
+   ] } }
+{"endpoint": { "id": "endhost2",
+   "attributes": [
+      { "attribute":"168.5.6.10" },
+   ] } }
+# ... then some time later, the InspectionServer1 adds 'ddos_suspect' ...
+{"endpoint": { "id": "endhost2",
+   "attributes": [
+      { "attribute":"168.5.6.10" },
+      { "attribute":"ddos_suspect" },
+   ] } }
+
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"audit",
+     "data": [
+        { "name":"servicegroup", "value":"shallow_ddos_inspector" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "internet_gateway",
+   "destination-endpoints": ""
+ }}
+
+{"policy": {
+   "action": {
+     "type":"inspect",
+     "data": [
+        { "name":"servicegroup", "value":"deep_ddos_inspector" },
+     ] },
+   "classifier": { },
+   "source-endpoints": "internet_gateway",
+   "destination-endpoints": "ddos_suspect"
+ }}
+

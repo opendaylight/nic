@@ -1,0 +1,37 @@
+# Multilayer Adjacency
+# ====================================================
+# Specify an adjacency with restrictions about which parts of the network should/shouldn't be traversed. Also allow conditional constraints.
+# NOTE: Not sure how to specify a conditional constraint with our model.
+
+# Endpoints
+# ====================================================
+{"endpoint": { "id": "endhost1",
+   "attributes": [
+      { "attribute":"nodeA/1/2/4" },
+   ] } }
+{"endpoint": { "id": "endhost2",
+   "attributes": [
+      { "attribute":"nodeZ/4/2/1" },
+   ] } }
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"allow",
+     "data": [ ]
+     },
+   "action": {
+     "type":"waypoint",
+     "data": [
+        { "name":"include", "value":"nodeC" },
+        { "name":"exclude", "value":"nodeB" },
+     ] },
+   "classifier": { },
+       "term" : [
+         { "type":"APP_INSTALLED_TERM", "value":"HD_Video_Stream" }, # app supplies translator for HD_Video_Stream -> OpenFlow fields
+       ] } ] },
+   "source-endpoints": "nodeA/1/2/4",
+   "destination-endpoints": "nodeZ/4/2/1"
+ }}
+

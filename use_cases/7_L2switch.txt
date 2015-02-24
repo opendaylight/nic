@@ -1,0 +1,78 @@
+# L2switch (host & link discovery)
+# ====================================================
+# L2switch discovers end-hosts on the network by listening to ARP and DHCP packets. L2switch also discovers links on the network by listening to LLDP packets which it generates on switch ports.
+
+# Endpoints
+# ====================================================
+N/A
+
+# Policies
+# ====================================================
+{"policy": {
+   "action": {
+     "type":"audit",
+     "data": [
+        { "name":"servicegroup", "value":"controller" },
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"ETH_TYPE", "value":"arp" }, # arp=0x806
+       ] } ] },
+   "source-endpoints": "",
+   "destination-endpoints": ""
+ }}
+
+{"policy": {
+   "action": {
+     "type":"audit",
+     "data": [
+        { "name":"servicegroup", "value":"controller" },
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"udp" }, # udp=17
+         { "type":"L4_SRC",   "value":"dhcp_server" }, # dhcp_server=67
+         { "type":"L4_DST",   "value":"dhcp_client" }, # dhcp_client=68
+       ] } ] },
+   "source-endpoints": "",
+   "destination-endpoints": ""
+ }}
+
+{"policy": {
+   "action": {
+     "type":"audit",
+     "data": [
+        { "name":"servicegroup", "value":"controller" },
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"IP_PROTO", "value":"udp" }, # udp=17
+         { "type":"L4_SRC",   "value":"dhcp_client" }, # dhcp_client=68
+         { "type":"L4_DST",   "value":"dhcp_server" }, # dhcp_server=67
+       ] } ] },
+   "source-endpoints": "",
+   "destination-endpoints": ""
+ }}
+
+{"policy": {
+   "action": {
+     "type":"redirect",
+     "data": [
+        { "name":"servicegroup", "value":"controller" },
+     ] },
+   "classifier": {
+     "expression" : [ {
+       "id":0,
+       "term" : [
+         { "type":"ETH_TYPE", "value":"lldp" }, # lldp=0x88CC
+       ] } ] },
+   "source-endpoints": "",
+   "destination-endpoints": ""
+ }}
+
