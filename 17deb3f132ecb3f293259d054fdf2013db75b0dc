@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_23f10101",
+        "filename": "features/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3403
+      },
+      "writtenOn": "2015-02-25T20:28:52Z",
+      "side": 1,
+      "message": "These values should be using properties from the parent/pom.xml, rather than hard-coded values (like was done in the other commits).",
+      "revId": "17deb3f132ecb3f293259d054fdf2013db75b0dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
