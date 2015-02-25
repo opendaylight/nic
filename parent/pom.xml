@@ -48,6 +48,7 @@
 
     <static.analysis.skip>true</static.analysis.skip>
     <checkstyle.in.log>false</checkstyle.in.log>
+    <feature.test.version>${odlparent.version}</feature.test.version>
   </properties>
 
   <dependencyManagement>
