@@ -16,6 +16,24 @@
       "revId": "815d267c0b94a4fc8d7213b8c2c8a8f612e53495",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_63014904",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-02-25T18:29:34Z",
+      "side": 1,
+      "message": "I think we should define the version of the \"features-test\" in the \u003cdependencyManagement\u003e element of parent/pom.xml.\nAnd, we should skip the version definition here (in the features.pom.xml).\n\nBut, anyway, this change has been already merged.\nLet\u0027s fix it in another patch.\n\nAnd please note that these lines (from L.21 to L.136) are commented out.\nTherefore, the change of this patch doesn\u0027t affect anything.",
+      "parentUuid": "7a96c907_28580089",
+      "revId": "815d267c0b94a4fc8d7213b8c2c8a8f612e53495",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
