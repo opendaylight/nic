@@ -16,6 +16,24 @@
       "revId": "17deb3f132ecb3f293259d054fdf2013db75b0dc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_639709ed",
+        "filename": "features/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2246
+      },
+      "writtenOn": "2015-02-26T05:50:14Z",
+      "side": 1,
+      "message": "I actually debut about this myself as well. But since Karaf probably only related to feature module.\n\nOn the other hand, I think we should move those Helium SR 1.1 dependencies from parent to model module.",
+      "parentUuid": "7a96c907_23f10101",
+      "revId": "17deb3f132ecb3f293259d054fdf2013db75b0dc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
