@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_7222d902",
+        "filename": "distribution-karaf/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-03-30T23:12:27Z",
+      "side": 1,
+      "message": "I think we should use nic-parent as its parent, since there is no reason to use nic-aggregator as its parent.\n\nPlease see the following page.\nhttps://wiki.opendaylight.org/view/CrossProject:HouseKeeping_Best_Practices_Group:Project_layout#.2Fparent.2Fpom.xml",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 30
+      },
+      "revId": "a39a8ee3453dd0a54a8c3be7305545d9f8cf8518",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_b21061a9",
+        "filename": "distribution-karaf/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-03-30T23:12:27Z",
+      "side": 1,
+      "message": "I think, in the Lithium development, we should use 1.1.0-SNAPSHOT of the karaf.branding.",
+      "range": {
+        "startLine": 16,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 36
+      },
+      "revId": "a39a8ee3453dd0a54a8c3be7305545d9f8cf8518",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_52279d12",
+        "filename": "distribution-karaf/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-03-30T23:12:27Z",
+      "side": 1,
+      "message": "I think, in the Lithium development, we should use 1.5.0-SNAPSHOT of the karaf.resouces.",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "a39a8ee3453dd0a54a8c3be7305545d9f8cf8518",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_f216e9a6",
+        "filename": "distribution-karaf/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-03-30T23:12:27Z",
+      "side": 1,
+      "message": "Since the \u003ckaraf.version\u003e is defined in odlparent, we should not overwrite it here to avoid version conflict.\nCould you remove this line?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "a39a8ee3453dd0a54a8c3be7305545d9f8cf8518",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
