@@ -10,12 +10,7 @@ module intent {
     }
 
     grouping end-point-group-def {
-        description "An end point group (EPG) specifies 1 or more network end points
-                using a selection (query) mechanism. The specific attributes used
-                in the query will vary depending on network layer the EPG definition
-                leverages. For example, an L2 end point could be specified as
-                node-id:mac-address, where a L1 end point could be specified
-                as node-id:bay/shelf/slot/port.";
+        description "An end point group (EPG) specifies 1 or more network end points.";
         leaf id {
             type types:uuid;
             mandatory true;
@@ -34,7 +29,7 @@ module intent {
         }
     }
 
-    identity policy-constraint {
+    identity constraint {
         description "Base policy constraint. Used to identify and extend the name
                 space of policy constraints.";
     }
@@ -54,6 +49,7 @@ module intent {
         base policy-constraint;
     }
 
+    
     grouping statement-def {
         description "Defines a policy statement that includes an name, that quality
                 of the policy to set, and a value for that quality. Values can
@@ -118,53 +114,47 @@ module intent {
         }
     }
 
-    grouping policy-def {
-        description "A policy is used to specify resource constraint requirements
-                for a connection between end point groups. Terms in a policy can
-                be abstract leaving the realization of those terms to an entity
-                that translates the policy to network configuration or can be
-                very specify and used to influence or specify directly some of
-                the implementation detail. Policies that contain abstractions
-                are typically more portable than policies that contains implementation
-                specifics; as such it is recommended that these are in separate
-                policies.";
-        leaf id {
-            type types:uuid;
-            mandatory true;
-            description "Uniquely identifies a policy";
-        }
-        leaf alias {
-            type types:identifier;
-            mandatory false;
-            description "Human-readable name for a policy";
-        }
-        list statements {
-            uses statement-def;
-        }
-    }
+   
 
-    grouping intent {
-        description "An intent specifies two or more end point groups and the connectivity
-                between those end point groups. The connectivity between the end
-                point groups is specified in the form of policies.";
-        leaf-list end-point-groups {
-            type types:uuid;
-            min-elements 2;
-            description "List of end ponts that are part of the intent request. There
-                        is an implicit many to many connection between all end points
-                        selected.";
-        }
-        leaf-list intra-policies {
-            type types:uuid;
-            description "List of policy references to apply to the connections between
-                        entities within a single end point groups.";
-        }
-        leaf-list inter-policies {
-            type types:uuid;
-            description "List of policy references to apply to the connections between
-                        entities in different end point groups.";
-        }
-    }
+	/* 
+	 * Intent
+     */
+		grouping intent {
+			description ".";
+			leaf id {
+	    	  type intent-id;
+	      	  mandatory true;
+	      	  description "Uniquely identifies a intent.";    
+	   	   	}
+			leaf name {
+	      	  type string;
+	          description "A human-readable intent name.";	
+	        }
+			container subject-id {
+			  leaf-list subject-id{
+				  type subject-id;
+				  description "Uniquely identifies the subject (what) of this intent.";
+				}
+			}
+			leaf verb {
+	      		type verb-type;
+	      	  	description "A verb (action) describing what is being acomplished.";               
+	    	}
+		
+			list preposition {
+			    description "The preposition of the intent.";
+				leaf-list condition-expressions {
+					type condition-expression;
+					mandatory true;	
+					default "";
+					description "The condition expression (when) for the intent.";				
+				}
+				leaf-list constraints-expressions {
+					type operation-parameter-type;
+					description "The contraints expression (how) for the intent.";			
+				}
+			}
+		}
 
     container end-point-groups {
         list end-point-group {
