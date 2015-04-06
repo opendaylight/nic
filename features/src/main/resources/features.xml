@@ -14,17 +14,20 @@
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-flow/${mdsal.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-restconf/${mdsal.version}/xml/features</repository>
 
     <!-- the 'all' feature does not include the testapp -->
     <feature name='odl-nic-all' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: All'>
-        <!-- <feature version='${project.version}'>odl-nic-api</feature> -->
+        <feature version='${project.version}'>odl-nic-api</feature>
     </feature>
 
-    <!-- Sample API feature ...
+    <!-- Sample API feature -->
     <feature name='odl-nic-api' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: API'>
+        <feature version="${mdsal.version}">odl-restconf</feature>
+        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <bundle>mvn:org.opendaylight.nic/nic-api/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/model/${project.version}</bundle>
         <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile>
     </feature>
-    -->
 
 </features>
