@@ -111,7 +111,7 @@ module intent {
                 description "Used to indicate a set of values are acceptable for the constraint.
                                 If any of the values can be met when rendering the intent then
                                 the intent succeeds.";
-                leaf-list value {
+                leaf-list value2 {
                     type string;
                 }
             }
