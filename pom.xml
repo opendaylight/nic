@@ -33,6 +33,7 @@
         <module>parent</module>
         <module>artifacts</module>
         <module>model</module>
+        <module>onf-intent-model</module>
         <module>distribution-karaf</module>
     </modules>
 
