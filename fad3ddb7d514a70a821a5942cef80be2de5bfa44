@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_0586f8b9",
+        "filename": "model/src/main/yang/intent.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-04-14T12:48:17Z",
+      "side": 1,
+      "message": "Fixing the error but maybe another word would\u0027ve been better here. Will merge anyways.",
+      "range": {
+        "startLine": 114,
+        "startChar": 26,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "fad3ddb7d514a70a821a5942cef80be2de5bfa44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
