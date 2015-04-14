@@ -1,0 +1,82 @@
+/*
+ * Copyright (c) 2015 Inocybe Technologies, Inc. and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
+module intent {
+    namespace "urn:opendaylight:intent";
+    prefix "intent";
+
+    revision 2015-05-22 {
+        description "Initial revision";
+    }
+
+    typedef uuid {
+        type string {
+            pattern "([0-9a-fA-F]{8})-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}";
+        }
+    }
+          
+    identity subject {
+        description "A subject (what) on which the intent will have to be applied.";
+    }
+    
+    identity action {
+        description "The action (verb) of what is to be performed by this intent.";
+    }
+    
+    identity constraint {
+        description "The contraints (how) provide more guidelines on how the intent will have to be realized.";
+    }
+
+    identity condition {
+        description "The condition (when) determines the conditions that determine when this intent will be applied.";
+    }
+
+    
+   
+		
+    grouping intent {
+        description "An intent specifies at behavior that has to be applied on the network.";
+        
+        leaf-list subject {
+            type uuid;
+            min-elements 1;
+            description "The subject to which the intent is applied";
+        }
+		
+		leaf action {
+		description "Defines the action to perform for specific intent.";
+            type identityref {
+                base action;
+               }
+           }
+	    }
+        
+        grouping contraints-def {
+        description "Defines the list of contraints for that specific intent";
+        
+        leaf name {
+            type identityref {
+                base constraint;
+               }
+           }
+	    }
+
+    	grouping conditions-def {
+        description "Defines the list of conditions for that specific intent";
+
+        leaf name {
+            type identityref {
+                base condition;
+            }
+        }
+		
+	}        
+    }
+
+
+}
