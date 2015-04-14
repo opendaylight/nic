@@ -32,8 +32,9 @@
         <module>artifacts</module>
         <module>intentengine-api</module>
         <module>intentengine-impl</module>
+        <module>onf-intent-model</module>
         <module>distribution</module>
-  </modules>
+    </modules>
 
     <parent>
         <groupId>org.opendaylight.nic</groupId>
