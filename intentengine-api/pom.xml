@@ -9,7 +9,7 @@
         <relativePath>../parent</relativePath>
     </parent>
 
-    <artifactId>model</artifactId>
+    <artifactId>intentengine-api</artifactId>
     <packaging>bundle</packaging>
 
     <build>

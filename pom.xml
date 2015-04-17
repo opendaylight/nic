@@ -32,8 +32,8 @@
         <module>features</module>
         <module>parent</module>
         <module>artifacts</module>
-        <module>model</module>
-        <module>distribution-karaf</module>
+        <module>intentengine-api</module>
+        <module>distribution</module>
     </modules>
 
     <parent>
