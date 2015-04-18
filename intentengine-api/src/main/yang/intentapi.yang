@@ -1,0 +1,21 @@
+module intentapi {
+    namespace "urn:opendaylight:intentapi";
+    prefix "intentapi";
+
+    revision 2015-04-17 {
+        description "Initial revision";
+    }
+
+    rpc get-intent-status {
+        input {
+            leaf intent {
+                type string;
+            }
+        }
+        output {
+            leaf accepted {
+                type boolean;
+             }
+        }
+    }
+}
