@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_b7a168ab",
+        "filename": "intentengine-api/src/main/yang/intentapi.yang",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-04-18T00:54:26Z",
+      "side": 1,
+      "message": "CR or whitespace",
+      "revId": "87acf41bfa43cd3ef029471cf11bab780bd0537f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_17c5bc5a",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/IntentapiServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-04-18T00:54:26Z",
+      "side": 1,
+      "message": "End of line whitepace",
+      "range": {
+        "startLine": 5,
+        "startChar": 30,
+        "endLine": 5,
+        "endChar": 31
+      },
+      "revId": "87acf41bfa43cd3ef029471cf11bab780bd0537f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_f7c7f062",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-04-18T00:54:26Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "87acf41bfa43cd3ef029471cf11bab780bd0537f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_d7a674c1",
+        "filename": "pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-04-18T00:54:26Z",
+      "side": 1,
+      "message": "Fix trailing whitespaces in license header",
+      "revId": "87acf41bfa43cd3ef029471cf11bab780bd0537f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
