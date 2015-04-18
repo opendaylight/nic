@@ -20,8 +20,8 @@
 
   <properties>
     <features.file>features.xml</features.file>
-    <branding.version>1.0.0-SNAPSHOT</branding.version>
-    <karaf.resources.version>1.4.2-SNAPSHOT</karaf.resources.version>
+    <branding.version>1.1.0-SNAPSHOT</branding.version>
+    <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
     <karaf.version>3.0.1</karaf.version>
     <karaf.empty.version>1.5.0-SNAPSHOT</karaf.empty.version>
     <surefire.version>2.16</surefire.version>
@@ -53,6 +53,14 @@
       <type>xml</type>
     </dependency>
     <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>features-restconf</artifactId>
+      <classifier>features</classifier>
+      <version>${mdsal.version}</version>
+      <type>xml</type>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.opendaylight.odlparent</groupId>
       <artifactId>features-test</artifactId>
       <version>${feature.test.version}</version>
@@ -68,6 +76,16 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>${org.slf4j.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.opendaylight.nic</groupId>
+        <artifactId>intentengine-api</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.opendaylight.nic</groupId>
+        <artifactId>intentengine-impl</artifactId>
+        <version>${project.version}</version>
     </dependency>
   </dependencies>
 
