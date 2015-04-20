@@ -62,11 +62,6 @@
                     </dependencies>
                 </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${checkstyle.version}</version>
-                </plugin>
                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
@@ -186,7 +181,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>2.13</version>
+              <version>${checkstyle.version}</version>
               <configuration>
                 <skip>${static.analysis.skip}</skip>
                 <failOnViolation>false</failOnViolation>
@@ -227,10 +222,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.opendaylight.yangtools</groupId>
-                <artifactId>yang-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 
