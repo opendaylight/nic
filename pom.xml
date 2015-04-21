@@ -34,6 +34,11 @@
         <module>artifacts</module>
         <module>model</module>
         <module>distribution-karaf</module>
+
+        <!-- Prototype -->
+        <module>policy-compiler</module>
+        <module>policy-manager</module>
+
     </modules>
 
     <parent>
