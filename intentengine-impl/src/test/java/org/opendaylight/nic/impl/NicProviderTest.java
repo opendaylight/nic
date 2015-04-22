@@ -9,8 +9,6 @@ package org.opendaylight.nic.impl;
 
 import org.junit.Test;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.RpcRegistration;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intentapi.rev150417.IntentapiService;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,17 +29,6 @@ public class NicProviderTest {
     public void testClose() throws Exception {
         NicProvider provider = new NicProvider();
 
-        // ensure no exceptions
-        
-        RpcRegistration<IntentapiService> serviceMock = mock(RpcRegistration.class);
-        provider.intentapiService = serviceMock;
-        
-        //expectation
-        serviceMock.close();
-                
         provider.close();
-        
-        //verification
-        verify(serviceMock, times(1)).close();
     }
 }
