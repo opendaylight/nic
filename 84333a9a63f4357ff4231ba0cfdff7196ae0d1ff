@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_9f179a51",
+        "filename": "onf-intent-model/src/main/yang/intent.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-04-22T01:15:53Z",
+      "side": 1,
+      "message": "I think that should be \"verb\" instead of \"action\".",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "84333a9a63f4357ff4231ba0cfdff7196ae0d1ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_5f091230",
+        "filename": "onf-intent-model/src/main/yang/intent.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-04-22T01:15:53Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this bracket.\nThis file has one extra \"}\".",
+      "range": {
+        "startLine": 78,
+        "startChar": 1,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "84333a9a63f4357ff4231ba0cfdff7196ae0d1ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
