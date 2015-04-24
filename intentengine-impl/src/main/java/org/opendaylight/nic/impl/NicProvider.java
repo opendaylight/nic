@@ -10,20 +10,16 @@ package org.opendaylight.nic.impl;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.RpcRegistration;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intentapi.rev150417.IntentapiService;
-import org.opendaylight.nic.impl.IntentapiServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NicProvider implements BindingAwareProvider, AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
-    protected RpcRegistration<IntentapiService> intentapiService;
 
     @Override
     public void onSessionInitiated(ProviderContext session) {
         LOG.info("NicProvider Session Initiated");
-        intentapiService = session.addRpcImplementation(IntentapiService.class, new IntentapiServiceImpl());
     }
 
     @Override
