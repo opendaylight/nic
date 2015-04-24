@@ -9,32 +9,14 @@ module intent {
     namespace "urn:opendaylight:intent";
     prefix "intent";
 
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import intent-subjects { prefix subjects; revision-date 2015-01-22; }
+    import intent-actions { prefix actions; revision-date 2015-01-22; }
+    import intent-conditions { prefix conditions; revision-date 2015-01-22; }
+    import intent-constraints { prefix constraints; revision-date 2015-01-22; }
+
     revision 2015-01-22 {
         description "Initial revision";
-    }
-
-    typedef uuid {
-        type string {
-            pattern "([0-9a-fA-F]{8})-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}";
-        }
-    }
-
-    identity subject {
-        description "A subject (what) on which the intent will have to be applied.";
-    }
-
-    identity action {
-        description "The action (verb) of what is to be performed by this intent.";
-    }
-
-    identity constraint {
-        description "The contraints (how) provide more guidelines on how the intent
-                will have to be realized.";
-    }
-
-    identity condition {
-        description "The condition (when) determines the conditions that determine
-                when this intent will be applied.";
     }
 
     grouping intent {
@@ -42,7 +24,7 @@ module intent {
                 between those end point groups. The connectivity between the end
                 point groups is specified in the form of policies.";
             leaf id {
-                type uuid;
+                type types:uuid;
                 mandatory true;
                 description "Uniquely identifies the intent";
             }
@@ -67,9 +49,17 @@ module intent {
                         such as a reason for a failure.";
         }
 
-        leaf-list subjects {
-            type identityref {
-                base intent:subject;
+        list subjects {
+            choice subject {
+                case end-point-selector {
+                    uses subjects:end-point-selector;
+                }
+                case end-point-group-selector {
+                    uses subjects:end-point-group-selector;
+                }
+                case end-point-group {
+                    users subject:end-point-group;
+                }
             }
             min-elements 2;
             max-elements 2;
@@ -77,24 +67,70 @@ module intent {
                         is an implicit many to many connection between all subjects
                         selected.";
         }
-        leaf-list actions {
-            type identityref {
-                base intent:action;
+        list actions {
+            choice action {
+                case allow {
+                    uses actions:allow;
+                }
+                case redirect {
+                    uses actions:redirect;
+                }
+                case inject {
+                    uses actions:inject;
+                }
+                case audit {
+                    uses actions:audit;
+                }
+                case log {
+                    uses actions:log;
+                }
+                case latency {
+                    uses actions:latency;
+                }
+                case bandwidth {
+                    uses actions:bandwidth;
+                }
+                case loss {
+                    uses actions:loss;
+                }
+                case protect {
+                    uses actions:protect;
+                }
+                case secure {
+                    uses actions:secure;
+                }
+                case qos {
+                    uses actions:qos;
+                }
+                case block {
+                    uses actions:block;
+                }
             }
+
             description "List of action references to apply to the connections between
                         the subjects.";
         }
-        leaf-list constraints {
-            type identityref {
-                base intent:constraint;
+        list constraints {
+            choice constraints {
+                case include-node {
+                    uses constraints:include-node;
+                }
+                case exclude-node {
+                    uses constraints:exclude-node;
+                }
             }
             description "List of additional constraints to apply to the when implementing
                         the intent.";
         }
 
-        leaf-list conditions {
-            type identityref {
-                base intent:condition;
+        list conditions {
+            choice condition {
+                case scheduled {
+                    uses conditions:scheduled;
+                }
+                case weekly {
+                    uses conditions:weekly;
+                }
             }
             description "List of conditions when this intent will be applied.";
         }

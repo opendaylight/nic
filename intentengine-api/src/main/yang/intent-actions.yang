@@ -1,0 +1,122 @@
+//------------------------------------------------------------------------------
+// Copyright (c) 2015 Ciena and others.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//------------------------------------------------------------------------------
+module intent-actions {
+    namespace "urn:opendaylight:intent:actions";
+    prefix "intent-actions";
+
+    revision 2015-01-22 {
+        description "Initial revision";
+    }
+
+    typedef duration-specification {
+            type string {
+            pattern "[1-9][0-9]*(ms|s|m)";
+        }
+    }
+
+    typedef rate-specification {
+        type string {
+            pattern "[1-9][0-9]*[bBkKmMgGtTpPeEzZ]";
+        }
+    }
+
+    typedef subject-specification {
+        type string;
+    }
+
+    typedef priority-specification {
+        type enumeration {
+            enum LOW {
+                value "0";
+            }
+            enum MEDIUM {
+                value "1";
+            }
+            enum HIGHT {
+                value "2";
+            }
+        }
+    }
+
+    grouping action {
+        description "The action (verb) of what is to be performed by this intent.";
+    }
+
+    grouping allow {
+        uses action;
+    }
+
+    grouping redirect {
+        uses action;
+        leaf target {
+            type subject-specification;
+        }
+    }
+
+    grouping inject {
+        uses action;
+    }
+
+    grouping inspect {
+        uses action;
+        leaf inspect-listener {
+            type subject-specification;
+        }
+    }
+
+    grouping audit {
+        uses action;
+        leaf audit-listener {
+            type subject-specification;
+        }
+    }
+
+    grouping log {
+        uses action;
+    }
+
+    grouping latency {
+        uses action;
+        leaf delay {
+            type duration-specification;
+        }
+    }
+
+    grouping bandwidth {
+        uses action;
+        leaf rate {
+            type rate-specification;
+        }
+    }
+
+    grouping loss {
+        uses action;
+        leaf priority {
+            type priority-specification;
+        }
+    }
+
+    grouping protect {
+        uses action;
+    }
+
+    grouping secure {
+        uses action;
+    }
+
+    grouping qos {
+        uses action;
+        leaf level {
+            type priority-specification;
+        }
+    }
+
+    grouping block {
+        uses action;
+    }
+}
