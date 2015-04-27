@@ -46,3 +46,8 @@ hs_err_pid*
 **/src/main/yang-gen-config/
 **/src/main/yang-gen-sal/
 >>>>>>> initial.pom
+
+# static analysis files
+.checkstyle
+.pmd
+.pmdruleset.xml

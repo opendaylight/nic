@@ -8,7 +8,6 @@
 package org.opendaylight.nic.impl;
 
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.RpcRegistration;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

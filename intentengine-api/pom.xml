@@ -181,7 +181,6 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-checkstyle-plugin</artifactId>
-              <version>${checkstyle.version}</version>
               <configuration>
                 <skip>${static.analysis.skip}</skip>
                 <failOnViolation>false</failOnViolation>
