@@ -58,7 +58,7 @@ module intent {
                     uses subjects:end-point-group-selector;
                 }
                 case end-point-group {
-                    users subject:end-point-group;
+                    uses subjects:end-point-group;
                 }
             }
             min-elements 2;

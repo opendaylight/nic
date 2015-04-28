@@ -40,14 +40,14 @@ module intent-conditions {
 
     	leaf initiate {
     		type yang:date-and-time;
-    		manditory true;
+    		mandatory true;
     	}
     	leaf terminate {
     		type yang:date-and-time;
-    		manditory false;
+    		mandatory false;
     	}
 
-    	description "Represents a schedule condition with a manditory start
+    	description "Represents a schedule condition with a mandatory start
     			time, but with an option end time.";
     }
 
