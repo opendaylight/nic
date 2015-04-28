@@ -1,0 +1,18 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+    <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
+        <command>
+            <action class="org.opendaylight.nic.cli.IntentAddShellCommand"/>
+        </command>
+        <command>
+            <action class="org.opendaylight.nic.cli.IntentRemoveShellCommand"/>
+        </command>
+        <command>
+            <action class="org.opendaylight.nic.cli.IntentListShellCommand"/>
+        </command>
+        <command>
+            <action class="org.opendaylight.nic.cli.IntentShowShellCommand"/>
+        </command>
+    </command-bundle>
+
+</blueprint>

@@ -157,7 +157,8 @@
         <configuration>
           <bootFeatures>
             <feature>standard</feature>
-            <feature>odl-nic-all</feature>
+            <feature>odl-nic-core</feature>
+            <feature>odl-nic-console</feature>
           </bootFeatures>
         </configuration>
         <executions>
