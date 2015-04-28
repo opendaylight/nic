@@ -78,12 +78,12 @@
     </dependency>
     <dependency>
         <groupId>org.opendaylight.nic</groupId>
-        <artifactId>intentengine-api</artifactId>
+        <artifactId>odl-nic-api</artifactId>
         <version>${project.version}</version>
     </dependency>
     <dependency>
         <groupId>org.opendaylight.nic</groupId>
-        <artifactId>intentengine-impl</artifactId>
+        <artifactId>odl-nic-core</artifactId>
         <version>${project.version}</version>
     </dependency>
   </dependencies>

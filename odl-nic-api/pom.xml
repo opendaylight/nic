@@ -9,7 +9,7 @@
         <relativePath>../parent</relativePath>
     </parent>
 
-    <artifactId>intentengine-api</artifactId>
+    <artifactId>odl-nic-api</artifactId>
     <packaging>bundle</packaging>
 
     <build>

@@ -17,7 +17,7 @@
     <repository>mvn:org.opendaylight.controller/features-restconf/${mdsal.version}/xml/features</repository>
 
     <!-- the 'all' feature does not include the testapp -->
-    <feature name='odl-nic-all' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: All'>
+    <feature name='odl-nic-service' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: All'>
         <feature version='${project.version}'>odl-nic-api</feature>
     </feature>
 
@@ -25,8 +25,8 @@
     <feature name='odl-nic-api' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: API'>
         <feature version="${mdsal.version}">odl-restconf</feature>
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-impl/${project.version}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intentengine-api/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/odl-nic-core/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/odl-nic-api/${project.version}</bundle>
         <!-- <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile> -->
     </feature>
 

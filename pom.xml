@@ -38,8 +38,8 @@
         <module>features</module>
         <module>parent</module>
         <module>artifacts</module>
-        <module>intentengine-api</module>
-        <module>intentengine-impl</module>
+        <module>odl-nic-api</module>
+        <module>odl-nic-core</module>
         <module>distribution</module>
     </modules>
 
