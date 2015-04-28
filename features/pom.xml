@@ -86,6 +86,11 @@
         <artifactId>intentengine-impl</artifactId>
         <version>${project.version}</version>
     </dependency>
+    <dependency>
+        <groupId>org.opendaylight.nic</groupId>
+        <artifactId>intentengine-cli</artifactId>
+        <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
