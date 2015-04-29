@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_cf6f9891",
+        "filename": "intentengine-cli/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-04-29T04:55:01Z",
+      "side": 1,
+      "message": "just remove that extra space in the end of the line",
+      "range": {
+        "startLine": 2,
+        "startChar": 4,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "b456844c5cab0d968ae3c1aa514cbd1fc3d8f2d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_af724c7a",
+        "filename": "intentengine-cli/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-04-29T04:55:01Z",
+      "side": 1,
+      "message": "just remove that extra space in the end of the line",
+      "range": {
+        "startLine": 5,
+        "startChar": 58,
+        "endLine": 5,
+        "endChar": 59
+      },
+      "revId": "b456844c5cab0d968ae3c1aa514cbd1fc3d8f2d3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
