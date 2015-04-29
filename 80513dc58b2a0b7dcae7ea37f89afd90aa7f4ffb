@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_bcb0488c",
+        "filename": "intentengine-cli/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2246
+      },
+      "writtenOn": "2015-04-29T00:00:52Z",
+      "side": 1,
+      "message": "Since this is a new file, you might want to use Ciena as copyright, remove the two white space after \u003c!-- and after \u0027under the terms of the\u0027",
+      "revId": "80513dc58b2a0b7dcae7ea37f89afd90aa7f4ffb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
