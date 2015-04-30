@@ -42,6 +42,16 @@ module intent-actions {
             }
         }
     }
+    
+    typedef TermType {
+        type string;
+        description "A label which identifies the type of this classifier term.";
+    }
+    
+    typedef TermValue {
+        type int32;
+        description "The value corresponding to the classifier term.";
+    }        
 
     grouping action {
         description "The action (verb) of what is to be performed by this intent.";
