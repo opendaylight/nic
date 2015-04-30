@@ -134,6 +134,54 @@ module intent {
             }
             description "List of conditions when this intent will be applied.";
         }
+    
+        container classifier {
+            description "A classifier of network traffic which determines whether a policy will apply to
+                         the given traffic. Each classifier is a collection of expressions, ANY of which
+                         may match for the policy to be applied.";
+
+            list expression {
+               description "An expression within a classifier. The expression is a collection of terms,
+                            ALL of which must match the traffic for the expression to be considered a match.";
+               key "id";
+
+               leaf id {
+                  description "An ID for this expression.";
+                  type uint32;
+               }
+
+               list term {
+                  description "A term within a classifier expression. The term is a collection of
+                               single values and ranges, ANY of which may match for the term to be
+                               considered a match.";
+                  key "type";
+
+                  leaf type {
+                     type TermType;
+                     description "The type of this classifier term.";
+                  }
+
+                  leaf-list value {
+                     type TermValue;
+                     description "A single value corresponding to this classifier term.";
+                  }
+
+                  list range {
+                     description "A range of values corresponding to this classifier term.";
+                     key "start";
+
+                     leaf start {
+                        type TermValue;
+                        description "The start of this range.";
+                     }
+                     leaf end {
+                        type TermValue;
+                        description "The end of this range.";
+                     }
+                  }
+               }
+            }
+        }
     }
 
     container intents {
