@@ -153,6 +153,7 @@
       <plugin>
         <groupId>org.apache.karaf.tooling</groupId>
         <artifactId>karaf-maven-plugin</artifactId>
+        <version>${karaf.maven.version}</version>
         <extensions>true</extensions>
         <configuration>
           <bootFeatures>
