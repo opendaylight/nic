@@ -1,33 +1,33 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2015 Ciena and others.  All rights reserved.
+//------------------------------------------------------------------------------------
+// Copyright (c) 2015 Ciena, Hewlett-Packard, Inocybe and others. All rights reserved.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
-//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------
 module intent-conditions {
     namespace "urn:opendaylight:intent:conditions";
     prefix "intent-conditions";
 
-	import ietf-yang-types { prefix yang; }
+  import ietf-yang-types { prefix yang; }
 
     revision 2015-01-22 {
         description "Initial revision";
     }
 
     typedef time-of-day {
-    	type string {
-    		pattern '\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})';
-    	}
-    	description "Represents a time of day in IETF format with option time
-    			sone information.";
+      type string {
+        pattern '\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})';
+      }
+      description "Represents a time of day in IETF format with option time
+          sone information.";
     }
 
     typedef duration {
-    	type string {
-    		pattern '[1-9][0-9]*[smdwMyx]';
-    	}
-    	description "Represents a duration and a duration unit.";
+      type string {
+        pattern '[1-9][0-9]*[smdwMyx]';
+      }
+      description "Represents a duration and a duration unit.";
     }
 
     grouping condition {
@@ -36,39 +36,39 @@ module intent-conditions {
     }
 
     grouping scheduled {
-    	uses condition;
+      uses condition;
 
-    	leaf initiate {
-    		type yang:date-and-time;
-    		mandatory true;
-    	}
-    	leaf terminate {
-    		type yang:date-and-time;
-    		mandatory false;
-    	}
+      leaf initiate {
+        type yang:date-and-time;
+        mandatory true;
+      }
+      leaf terminate {
+        type yang:date-and-time;
+        mandatory false;
+      }
 
-    	description "Represents a schedule condition with a mandatory start
-    			time, but with an option end time.";
+      description "Represents a schedule condition with a mandatory start
+          time, but with an option end time.";
     }
 
     grouping weekly {
-    	uses condition;
+      uses condition;
 
-    	leaf days-of-week {
-    		type string {
-    			pattern "[xmM][xtT][xwW][xtT][xfF][xsS][xsS]";
-    		}
-    	}
-    	leaf every-n-weeks {
-    		type yang:counter32;
-    	}
-    	leaf start-time {
-    		type time-of-day;
-    	}
-    	leaf duraction {
-    		type duration;
-    	}
+      leaf days-of-week {
+        type string {
+          pattern "[xmM][xtT][xwW][xtT][xfF][xsS][xsS]";
+        }
+      }
+      leaf every-n-weeks {
+        type yang:counter32;
+      }
+      leaf start-time {
+        type time-of-day;
+      }
+      leaf duraction {
+        type duration;
+      }
 
-    	description "Represents a weekly recurring condition.";
+      description "Represents a weekly recurring condition.";
     }
 }
