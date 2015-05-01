@@ -13,7 +13,6 @@ module intent-types {
         description "Initial revision";
     }
 
-
     // This should be pulled from yang-types, but for some reason that was
     // not working, so here is a definition.
     typedef uuid {
