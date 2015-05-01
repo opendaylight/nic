@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_7d02b370",
+        "filename": "intentengine-api/src/main/yang/intent-actions.yang",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-01T17:08:31Z",
+      "side": 0,
+      "message": "This is just for your information.\n\nI also think this space is not needed.\nBut, the general code header which is available at the following wiki page has two spaces here.\n\n\u003chttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines\u003e\n\nTherefore, we don\u0027t have to remove this space.\nAnyway, that\u0027s really trivial thing. I\u0027m OK with either way.",
+      "range": {
+        "startLine": 2,
+        "startChar": 40,
+        "endLine": 2,
+        "endChar": 41
+      },
+      "revId": "ffaa201feac15991bb96b87dc68ee3a6ce3f0df5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
