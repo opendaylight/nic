@@ -1,10 +1,10 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2015 Ciena and others.  All rights reserved.
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2015 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 module intent-subjects {
     namespace "urn:opendaylight:intent:subjects";
     prefix "intent-subjects";
@@ -20,49 +20,49 @@ module intent-subjects {
     }
 
     grouping end-point-selector {
-    	uses subject;
+      uses subject;
 
-    	leaf end-point-selector {
-    		type string;
-    	}
+      leaf end-point-selector {
+        type string;
+      }
 
-    	description "Selects a list of end points to be included in the
-    			subject based on a (yet to be defined) selection syntax
-    			(think jquery-like).";
+      description "Selects a list of end points to be included in the
+          subject based on a (yet to be defined) selection syntax
+          (think jquery-like).";
     }
 
     grouping end-point-group-selector {
-    	uses subject;
+      uses subject;
 
-    	leaf end-point-group-selector {
-    		type string;
-    	}
+      leaf end-point-group-selector {
+        type string;
+      }
 
-    	description "Selects a list of end point groups to be included in the
-    			subject based on a (yet to be defined) selection syntax.";
+      description "Selects a list of end point groups to be included in the
+          subject based on a (yet to be defined) selection syntax.";
     }
 
     grouping end-point-group {
-    	uses subject;
+      uses subject;
 
-    	leaf name {
-    		type string;
-    	}
+      leaf name {
+        type string;
+      }
 
-    	description "Select a specificly defined end point group.";
+      description "Select a specificly defined end point group.";
     }
 
     container end-point-groups {
-    	list end-point-group {
-    		key "id";
-    		leaf id {
-    			type types:uuid;
-    		}
-    		choice selector {
-    			case end-point-selector {
-    				uses end-point-selector;
-    			}
-    		}
-    	}
+      list end-point-group {
+        key "id";
+        leaf id {
+          type types:uuid;
+        }
+        choice selector {
+          case end-point-selector {
+            uses end-point-selector;
+          }
+        }
+      }
     }
 }

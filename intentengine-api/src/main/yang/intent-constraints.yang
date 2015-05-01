@@ -1,10 +1,10 @@
-//------------------------------------------------------------------------------
-// Copyright (c) 2015 Ciena and others.  All rights reserved.
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2015 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
-//------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 module intent-constraints {
     namespace "urn:opendaylight:intent:constraints";
     prefix "intent-constraints";
@@ -19,24 +19,24 @@ module intent-constraints {
     }
 
     grouping include-node {
-    	uses constraint;
+      uses constraint;
 
-    	leaf include-selector {
-    		type string;
-    	}
+      leaf include-selector {
+        type string;
+      }
 
-    	description "Constraint that requires a specific node to be included
-    			in a path computation.";
+      description "Constraint that requires a specific node to be included
+          in a path computation.";
     }
 
     grouping exclude-node {
-    	uses constraint;
+      uses constraint;
 
-    	leaf exclude-selector {
-    		type string;
-    	}
+      leaf exclude-selector {
+        type string;
+      }
 
-    	description "Constraint that requires a specific node to be excluded
-    			from a path computation.";
+      description "Constraint that requires a specific node to be excluded
+          from a path computation.";
     }
 }
