@@ -20,9 +20,8 @@ module intent {
     }
 
     grouping intent {
-        description "An intent specifies two or more end point groups and the connectivity
-                between those end point groups. The connectivity between the end
-                point groups is specified in the form of policies.";
+        description "An intent specifies two subjects and a list of actions that
+                specific the desired connectivity state between those subjects.";
             leaf id {
                 type types:uuid;
                 mandatory true;
@@ -71,36 +70,6 @@ module intent {
             choice action {
                 case allow {
                     uses actions:allow;
-                }
-                case redirect {
-                    uses actions:redirect;
-                }
-                case inject {
-                    uses actions:inject;
-                }
-                case audit {
-                    uses actions:audit;
-                }
-                case log {
-                    uses actions:log;
-                }
-                case latency {
-                    uses actions:latency;
-                }
-                case bandwidth {
-                    uses actions:bandwidth;
-                }
-                case loss {
-                    uses actions:loss;
-                }
-                case protect {
-                    uses actions:protect;
-                }
-                case secure {
-                    uses actions:secure;
-                }
-                case qos {
-                    uses actions:qos;
                 }
                 case block {
                     uses actions:block;
