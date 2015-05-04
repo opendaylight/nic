@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_fb2fa89f",
+        "filename": "intentengine-api/src/main/yang/intent-actions.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-04T17:21:08Z",
+      "side": 1,
+      "message": "These whitespaces should be removed.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 4
+      },
+      "revId": "c63bd82179fc3f1accbaf8659a456243098c1986",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
