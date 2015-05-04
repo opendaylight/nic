@@ -22,6 +22,24 @@
       "revId": "c63bd82179fc3f1accbaf8659a456243098c1986",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_bb19208a",
+        "filename": "intentengine-api/src/main/yang/intent-actions.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-04T17:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa0d159_fb2fa89f",
+      "revId": "c63bd82179fc3f1accbaf8659a456243098c1986",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
