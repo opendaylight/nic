@@ -20,13 +20,13 @@ module intent {
     }
 
     grouping intent {
-        description "An intent specifies two subjects and a list of actions that
-                specific the desired connectivity state between those subjects.";
-            leaf id {
-                type types:uuid;
-                mandatory true;
-                description "Uniquely identifies the intent";
-            }
+        description "An intent specifies two subjects and a list of actions that specific
+                the desired connectivity state between those subjects.";
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifies the intent";
+        }
 
         leaf status {
             type enumeration {
@@ -49,30 +49,48 @@ module intent {
         }
 
         list subjects {
+            key "order";
+            leaf order {
+                type uint8;
+            }
+
             choice subject {
                 case end-point-selector {
-                    uses subjects:end-point-selector;
+                    container end-point-selector {
+                        uses subjects:end-point-selector;
+                    }
                 }
                 case end-point-group-selector {
-                    uses subjects:end-point-group-selector;
+                    container end-point-group-selector {
+                        uses subjects:end-point-group-selector;
+                    }
                 }
                 case end-point-group {
-                    uses subjects:end-point-group;
+                    container end-point-group {
+                        uses subjects:end-point-group;
+                    }
                 }
             }
             min-elements 2;
             max-elements 2;
             description "List of subjectss that are part of the intent request. There
-                        is an implicit many to many connection between all subjects
-                        selected.";
+                        is an implicit many to many connection between all subjects selected.";
         }
         list actions {
+            key "order";
+            leaf order {
+                type uint8;
+            }
             choice action {
                 case allow {
-                    uses actions:allow;
+                    container allow {
+                        uses actions:allow;
+                    }
                 }
                 case block {
-                    uses actions:block;
+                    container block {
+                        uses actions:block;
+                    }
                 }
             }
 
@@ -80,12 +98,20 @@ module intent {
                         the subjects.";
         }
         list constraints {
+            key "order";
+            leaf order {
+                type uint8;
+            }
             choice constraints {
                 case include-node {
-                    uses constraints:include-node;
+                    container include-node {
+                        uses constraints:include-node;
+                    }
                 }
                 case exclude-node {
-                    uses constraints:exclude-node;
+                    container exclude-node {
+                        uses constraints:exclude-node;
+                    }
                 }
             }
             description "List of additional constraints to apply to the when implementing
@@ -93,12 +119,20 @@ module intent {
         }
 
         list conditions {
+            key "order";
+            leaf order {
+                type uint8;
+            }
             choice condition {
                 case scheduled {
-                    uses conditions:scheduled;
+                    container scheduled {
+                        uses conditions:scheduled;
+                    }
                 }
                 case weekly {
-                    uses conditions:weekly;
+                    container weekly {
+                        uses conditions:weekly;
+                    }
                 }
             }
             description "List of conditions when this intent will be applied.";
