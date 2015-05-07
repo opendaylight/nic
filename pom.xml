@@ -42,6 +42,7 @@
         <module>intentengine-impl</module>
         <module>intentengine-cli</module>
         <module>distribution</module>
+        <module>intentcompiler</module>
     </modules>
 
     <build>
