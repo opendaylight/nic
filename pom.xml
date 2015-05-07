@@ -44,6 +44,7 @@
         <module>features</module>
         <module>distribution</module>
         <module>artifacts</module>
+        <module>intentcompiler</module>
     </modules>
 
     <build>
