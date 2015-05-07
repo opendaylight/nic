@@ -230,46 +230,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal</artifactId>
+            <groupId>org.opendaylight.yangtools.model</groupId>
+            <artifactId>ietf-yang-types</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal.connection</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller.model</groupId>
-            <artifactId>model-flow-base</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller.model</groupId>
-            <artifactId>model-flow-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller.model</groupId>
-            <artifactId>model-flow-statistics</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller.model</groupId>
-            <artifactId>model-inventory</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-binding-api</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-common-util</artifactId>
         </dependency>
     </dependencies>
 </project>
