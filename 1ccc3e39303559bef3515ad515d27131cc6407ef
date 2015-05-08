@@ -151,6 +151,29 @@
     },
     {
       "key": {
+        "uuid": "3aa0d159_e1d607f1",
+        "filename": "intent-vtnrenderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T20:47:09Z",
+      "side": 1,
+      "message": "Remove the manager.implmentation.\nThat is the implementation of VTN Manager services, and not supposed to be exposed to other bundles.\nPlease use the manager.api instead of the manager.implementatino.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_30919b52",
         "filename": "intent-vtnrenderer/src/main/java/org/opendaylight/vtnrender/impl/VTNRenderProvider.java",
         "patchSetId": 1
