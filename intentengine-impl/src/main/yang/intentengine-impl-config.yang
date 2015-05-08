@@ -1,28 +1,27 @@
-module intentimpl {
-    yang-version 1;
-    namespace "urn:opendaylight:params:xml:ns:yang:nic:impl";
-    prefix "nic-impl";
+module intentengine-impl-config {
+    namespace "urn:opendaylight:params:xml:ns:yang:intentengine:impl:config";
+    prefix "intentengine-impl-config";
 
     import config { prefix config; revision-date 2013-04-05; }
     import opendaylight-md-sal-binding { prefix md-sal-binding; revision-date 2013-10-28;}
 
     description
-        "Service definition for nic project";
+        "Service definition for the EntityEngine API project";
 
-    revision "2014-12-10" {
+    revision "2015-05-07" {
         description
             "Initial revision";
     }
 
-    identity intentimpl {
+    identity intentengine-impl-config {
         base config:module-type;
-        config:java-name-prefix IntentImpl;
+        config:java-name-prefix IntentengineImpl;
     }
 
     augment "/config:modules/config:module/config:configuration" {
-        case nic-all {
-            when "/config:modules/config:module/config:type = 'nic'";
-            container broker {
+        case intentengine-impl-config {
+            when "/config:modules/config:module/config:type = 'intentengine-impl-config'";
+            container binding-aware-broker {
                 uses config:service-ref {
                     refine type {
                         mandatory true;
@@ -33,3 +32,4 @@ module intentimpl {
         }
     }
 }
+
