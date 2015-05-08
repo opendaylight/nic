@@ -22,11 +22,13 @@
     <features.file>features.xml</features.file>
     <branding.version>1.1.0-SNAPSHOT</branding.version>
     <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
+    <karaf.version>3.0.1</karaf.version>
     <karaf.empty.version>1.5.0-SNAPSHOT</karaf.empty.version>
     <surefire.version>2.16</surefire.version>
     <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
     <feature.test.version>1.5.0-SNAPSHOT</feature.test.version>
     <org.slf4j.version>1.7.2</org.slf4j.version>
+	<vtn.manager.version>0.3.0-SNAPSHOT</vtn.manager.version>
   </properties>
 
   <dependencies>
@@ -90,7 +92,12 @@
         <artifactId>intentengine-cli</artifactId>
         <version>${project.version}</version>
     </dependency>
-  </dependencies>
+    <dependency>
+        <groupId>org.opendaylight.nic</groupId>
+        <artifactId>intent-vtnrenderer</artifactId>
+        <version>${project.version}</version>
+    </dependency>
+	</dependencies>
 
   <build>
     <resources>
@@ -145,7 +152,7 @@
              <karaf.distro.version>${karaf.empty.version}</karaf.distro.version>
            </systemPropertyVariables>
            <dependenciesToScan>
-            <dependency>org.opendaylight.odlparent:features-test</dependency>
+           <!--  <dependency>org.opendaylight.odlparent:features-test</dependency>--> 
            </dependenciesToScan>
          </configuration>
        </plugin>
