@@ -31,6 +31,9 @@
     <controller.model.version>1.2.0-SNAPSHOT</controller.model.version>
     <opendaylight.checkstyle.version>0.1.0-SNAPSHOT</opendaylight.checkstyle.version>
 
+    <!-- ODL Branding -->
+    <branding.version>1.1.0-SNAPSHOT</branding.version>
+
     <config.version>0.3.0-SNAPSHOT</config.version>
     <mdsal.version>1.2.0-SNAPSHOT</mdsal.version>
 
@@ -65,6 +68,12 @@
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>sal-binding-api</artifactId>
         <version>${controller.model.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>karaf.branding</artifactId>
+        <version>${branding.version}</version>
       </dependency>
 
       <!-- OpenDaylight YANG Tools -->

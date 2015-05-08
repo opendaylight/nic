@@ -21,7 +21,6 @@
     <maven>3.0</maven>
   </prerequisites>
   <properties>
-    <branding.version>1.1.0-SNAPSHOT</branding.version>
     <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
   </properties>
 
@@ -46,7 +45,6 @@
     <dependency>
       <groupId>org.opendaylight.controller</groupId>
       <artifactId>karaf.branding</artifactId>
-      <version>${branding.version}</version>
       <scope>compile</scope>
     </dependency>
 
