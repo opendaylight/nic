@@ -47,6 +47,10 @@
 
     <static.analysis.skip>true</static.analysis.skip>
     <checkstyle.in.log>false</checkstyle.in.log>
+    <karaf.maven.version>3.0.1</karaf.maven.version>
+
+    <salGeneratorPath>target/generated-sources/sal</salGeneratorPath>
+    <jmxGeneratorPath>target/generated-sources/config</jmxGeneratorPath>
   </properties>
 
   <dependencyManagement>
