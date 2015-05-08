@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_d0f157ce",
+        "filename": "intent-vtnrenderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T18:04:50Z",
+      "side": 1,
+      "message": "This should be removed, since the exact same depedency exists right above.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_30919b52",
+        "filename": "intent-vtnrenderer/src/main/java/org/opendaylight/vtnrender/impl/VTNRenderProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T18:04:50Z",
+      "side": 1,
+      "message": "Seems to be changed.",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 75
+      },
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
