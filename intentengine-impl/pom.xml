@@ -46,6 +46,19 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <artifactId>mockito-all</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>config-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-config</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -57,10 +70,74 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
               <configuration>
                   <instructions>
                       <Import-Package>*</Import-Package>
-                      <!-- <Export-Package>org.opendaylight.yang.gen.v1.urn.opendaylight.intent.*</Export-Package> -->
+                      <Export-Package>org.opendaylight.yang.gen.v1.*</Export-Package>
                   </instructions>
               </configuration>
           </plugin>
+          <plugin>
+              <groupId>org.opendaylight.yangtools</groupId>
+              <artifactId>yang-maven-plugin</artifactId>
+              <version>${yangtools.version}</version>
+              <executions>
+                  <execution>
+                      <id>config</id>
+                      <goals>
+                          <goal>generate-sources</goal>
+                      </goals>
+                      <configuration>
+                          <codeGenerators>
+                              <generator>
+                                  <codeGeneratorClass>org.opendaylight.controller.config.yangjmxgenerator.plugin.JMXGenerator</codeGeneratorClass>
+                                  <outputBaseDir>src/main/yang-gen-config</outputBaseDir>
+                                  <additionalConfiguration>
+                                      <namespaceToPackage1>urn:opendaylight:params:xml:ns:yang:controller==org.opendaylight.controller.config.yang</namespaceToPackage1>
+                                  </additionalConfiguration>
+                              </generator>
+                              <generator>
+                                  <codeGeneratorClass>org.opendaylight.yangtools.maven.sal.api.gen.plugin.CodeGeneratorImpl</codeGeneratorClass>
+                                  <outputBaseDir>src/main/yang-gen-sal</outputBaseDir>
+                              </generator>
+                          </codeGenerators>
+                          <inspectDependencies>true</inspectDependencies>
+                      </configuration>
+                  </execution>
+              </executions>
+              <dependencies>
+                  <dependency>
+                      <groupId>org.opendaylight.yangtools</groupId>
+                      <artifactId>maven-sal-api-gen-plugin</artifactId>
+                      <version>${yangtools.generator.version}</version>
+                      <type>jar</type>
+                  </dependency>
+                  <dependency>
+                      <groupId>org.opendaylight.controller</groupId>
+                      <artifactId>yang-jmx-generator-plugin</artifactId>
+                      <version>${yangtools.jmx.generator.version}</version>
+                  </dependency>
+              </dependencies>
+          </plugin>
+          <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/classes/intentengine-impl-config.xml</file>
+                                    <type>xml</type>
+                                    <classifier>config</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
       </plugins>
   </build>
 
