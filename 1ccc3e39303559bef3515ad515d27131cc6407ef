@@ -2,6 +2,132 @@
   "comments": [
     {
       "key": {
+        "uuid": "3aa0d159_864b9986",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T19:57:26Z",
+      "side": 1,
+      "message": "The dependency to features-vtn-manager is needed in the file.",
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_b0084b92",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T19:57:26Z",
+      "side": 1,
+      "message": "It seems to me that the features-nic does not need the \u003ckaraf.version\u003e property.\nEven if features-nic needs the property, it should be added into the parent/pom.xml.",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_5036a753",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T19:57:26Z",
+      "side": 1,
+      "message": "I think what you need is the property of the version of the VTN Manager features.\nSo I think \u003cfeature.vtn-manager.version\u003e is better as the property name.\n\nAnd, first of all, it should be added in the parent/pom.xml.",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_70396340",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T19:57:26Z",
+      "side": 1,
+      "message": "That should be two white spaces.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 1
+      },
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_265ac550",
+        "filename": "features/src/main/resources/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T19:57:26Z",
+      "side": 1,
+      "message": "The repository for VTN features is need to be added in the file.\n\n\u003crepository\u003emvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features\u003c/repository\u003e",
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_c658c158",
+        "filename": "features/src/main/resources/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-08T19:57:26Z",
+      "side": 1,
+      "message": "I think it should be odl-vtn-manager, since the intent-vtnrenderer does not need the REST API of the VTN Manager.",
+      "range": {
+        "startLine": 38,
+        "startChar": 50,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "1ccc3e39303559bef3515ad515d27131cc6407ef",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0d159_d0f157ce",
         "filename": "intent-vtnrenderer/pom.xml",
         "patchSetId": 1
