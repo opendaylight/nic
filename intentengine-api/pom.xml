@@ -216,7 +216,9 @@
                 <configuration>
                     <instructions>
                         <Import-Package>*</Import-Package>
-                        <Export-Package>org.opendaylight.yang.gen.v1.urn.opendaylight.intentapi.*</Export-Package>
+                        <Export-Package>
+                          org.opendaylight.yang.gen.v1.urn.opendaylight.intent.*
+                        </Export-Package>
                     </instructions>
                 </configuration>
             </plugin>
