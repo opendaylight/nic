@@ -15,6 +15,7 @@
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-flow/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-restconf/${mdsal.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
 
     <!-- Core feature -->
     <feature name='odl-nic-core' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core'>
@@ -30,6 +31,13 @@
         <feature version="${project.version}">odl-nic-core</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-cli/${project.version}</bundle>
         <!-- <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile> -->
+    </feature>
+
+    <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
+        <feature version="${project.version}">odl-nic-core</feature>
+        <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
+        <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer.config/${project.version}/xml/config</configfile>
     </feature>
 
 </features>
