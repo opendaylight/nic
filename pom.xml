@@ -35,13 +35,15 @@
 
     <modules>
         <!-- Well-known -->
-        <module>features</module>
         <module>parent</module>
-        <module>artifacts</module>
         <module>intentengine-api</module>
         <module>intentengine-impl</module>
         <module>intentengine-cli</module>
+        <module>vtn-renderer</module>
+        <module>vtn-renderer-config</module>
+        <module>features</module>
         <module>distribution</module>
+        <module>artifacts</module>
     </modules>
 
     <build>

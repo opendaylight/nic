@@ -72,47 +72,88 @@
       <type>zip</type>
     </dependency>
     <dependency>
+      <groupId>org.opendaylight.vtn</groupId>
+      <artifactId>features-vtn-manager</artifactId>
+      <version>${feature.vtn-manager.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
     </dependency>
+
     <dependency>
-        <groupId>org.opendaylight.nic</groupId>
-        <artifactId>intentengine-api</artifactId>
-        <version>${project.version}</version>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-api</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
-        <groupId>org.opendaylight.nic</groupId>
-        <artifactId>intentengine-impl</artifactId>
-        <version>${project.version}</version>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-impl</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
-        <groupId>org.opendaylight.nic</groupId>
-        <artifactId>intentengine-cli</artifactId>
-        <version>${project.version}</version>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-cli</artifactId>
+      <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>vtn-renderer</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>vtn-renderer.config</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+
   </dependencies>
 
   <build>
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
         <filtering>true</filtering>
+        <directory>src/main/resources</directory>
       </resource>
     </resources>
+
     <plugins>
+      <plugin>
+        <groupId>org.apache.karaf.tooling</groupId>
+        <artifactId>karaf-maven-plugin</artifactId>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>features-create-kar</id>
+            <goals>
+              <goal>features-create-kar</goal>
+            </goals>
+            <configuration>
+              <featuresFile>${project.build.directory}/classes/${features.file}</featuresFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
             <id>filter</id>
-            <phase>generate-resources</phase>
             <goals>
               <goal>resources</goal>
             </goals>
+            <phase>generate-resources</phase>
           </execution>
         </executions>
       </plugin>
+
       <plugin>
          <groupId>org.codehaus.mojo</groupId>
          <artifactId>build-helper-maven-plugin</artifactId>
@@ -130,11 +171,17 @@
                    <type>xml</type>
                    <classifier>features</classifier>
                  </artifact>
+                 <artifact>
+                   <file>${project.build.directory}/${project.artifactId}-${project.version}.kar</file>
+                   <type>kar</type>
+                   <classifier>features</classifier>
+                </artifact>
                </artifacts>
              </configuration>
            </execution>
          </executions>
       </plugin>
+
       <plugin>
          <groupId>org.apache.maven.plugins</groupId>
          <artifactId>maven-surefire-plugin</artifactId>
