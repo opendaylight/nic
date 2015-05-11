@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_e1692026",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T20:01:27Z",
+      "side": 1,
+      "message": "remove trailing space",
+      "revId": "4334085ba260726c660974d0a255e16cfd779c66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
