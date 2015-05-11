@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_4107b4ca",
+        "filename": "features/src/main/resources/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-11T18:23:14Z",
+      "side": 1,
+      "message": "what are your thoughts about naming this as odl-nic-renderer-vtn, just scoping so the when we have multiple renderers, the variable is at the end of the feature name (i.e. odl-nic-renderer-gbp)",
+      "revId": "c6e8b28c1e9bdb936feeb87943842942587a6ab1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
