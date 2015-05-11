@@ -16,6 +16,24 @@
       "revId": "fe49ad6b826225d0efce89dd2ef159ef7357f1da",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_ac478f4a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-11T21:53:45Z",
+      "side": 1,
+      "message": "In Lithium, we can still use the org.opendaylight.controller.sal.utils.ServiceHelper.\nIn fact, it works well.\nThat makes it easy to get OSGi services.\nHere, we don\u0027t have to use it, but that\u0027s easy way to get OSGi services.\n\nAre you talking about AD-SAL?\nAD-SAL is not supported in Beryllium.\n\nPlease note that, in Lithium, VTN Manager does not yet provide a way to change its configuration via MD-SAL.\nTherefore, to change the configuration, the VTN Renderer needs to get the reference to the OSGi service exposed by VTN Manager.\nTo easily get the reference, here we use org.opendaylight.controller.sal.utils.ServiceHelper.\n\nIn Beryllium, VTN Renderer might not need to use this package, since VTN Manger would provide a way to change its configuration via MD-SAL.",
+      "parentUuid": "3aa0d159_21170853",
+      "revId": "fe49ad6b826225d0efce89dd2ef159ef7357f1da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
