@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_1e5d89e9",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 1,
+      "message": "remove tabs everywhere",
+      "revId": "f60021210f86dc561b988a7ed14a8d80eb30152a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_be73357f",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 1,
+      "message": "remove trailing space",
+      "revId": "f60021210f86dc561b988a7ed14a8d80eb30152a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_de6e4196",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 1,
+      "message": "remove trailing spaces",
+      "revId": "f60021210f86dc561b988a7ed14a8d80eb30152a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_7e6dad97",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/intentengine/IntentengineImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 1,
+      "message": "same here, remove tab and trailing spaces",
+      "revId": "f60021210f86dc561b988a7ed14a8d80eb30152a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_3e0725cc",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/intentengine/IntentengineImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s the way you want to bring to dataBroker, you should gather it through the *Module class (i\u0027ll comment there)",
+      "revId": "f60021210f86dc561b988a7ed14a8d80eb30152a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_1e14a9f3",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/intentengine/impl/config/rev150507/IntentengineImplModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 1,
+      "message": "remove trailing spaces",
+      "revId": "f60021210f86dc561b988a7ed14a8d80eb30152a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_befa55bb",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/intentengine/impl/config/rev150507/IntentengineImplModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 1,
+      "message": "here you could get the databroker by doing something like getDataBrokerDependency()",
+      "revId": "f60021210f86dc561b988a7ed14a8d80eb30152a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}

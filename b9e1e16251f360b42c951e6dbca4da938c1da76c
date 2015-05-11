@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_5e0a31d3",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 0,
+      "message": "You need the NiceProvider class, why would you erase it?",
+      "revId": "b9e1e16251f360b42c951e6dbca4da938c1da76c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_3e2e4544",
+        "filename": "intentengine-impl/src/test/java/org/opendaylight/nic/impl/NicProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-11T15:17:09Z",
+      "side": 0,
+      "message": "You could keep this class as unit test will be really useful to test functionality",
+      "revId": "b9e1e16251f360b42c951e6dbca4da938c1da76c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
