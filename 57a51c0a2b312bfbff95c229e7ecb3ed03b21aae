@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_7e828d95",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/util/IntentRunningRegistry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-11T16:44:03Z",
+      "side": 1,
+      "message": "Should this logger be scoped to IntentRunningRegistry?",
+      "revId": "57a51c0a2b312bfbff95c229e7ecb3ed03b21aae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
