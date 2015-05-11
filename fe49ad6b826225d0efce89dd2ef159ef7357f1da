@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_21170853",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-05-11T21:31:43Z",
+      "side": 1,
+      "message": "Are we supposed to still use SAL code?",
+      "revId": "fe49ad6b826225d0efce89dd2ef159ef7357f1da",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
