@@ -9,7 +9,7 @@ module intent-conditions {
     namespace "urn:opendaylight:intent:conditions";
     prefix "intent-conditions";
 
-    import ietf-yang-types { prefix yang; }
+    import ietf-yang-types { prefix yang; revision-date "2013-07-15";}
 
     revision 2015-01-22 {
         description "Initial revision";
