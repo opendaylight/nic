@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_e26fdbc3",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-12T17:52:37Z",
+      "side": 1,
+      "message": "One positive comment from me.\nI like this change.\nThe package name for these files should be like this rather than \"org.opendaylight.intentengine\".",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 34
+      },
+      "revId": "8523acd585ac729c44a0f73df7cfac31996893aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
