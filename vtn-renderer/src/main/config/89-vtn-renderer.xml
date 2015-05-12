@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration for VTN Renderer module. -->
+<snapshot>
+ <configuration>
+  <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+   <modules xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
+    <module>
+     <type xmlns:nic="urn:opendaylight:nic:vtn:renderer">
+      nic:vtn-renderer
+     </type>
+     <name>vtn-renderer</name>
+     <data-broker>
+      <type
+       xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
+       binding:binding-async-data-broker
+      </type>
+      <name>binding-data-broker</name>
+     </data-broker>
+    </module>
+   </modules>
+  </data>
+ </configuration>
+ <required-capabilities>
+  <capability>
+   urn:opendaylight:nic:vtn:renderer?module=vtn-renderer&amp;revision=2015-05-08
+  </capability>
+ </required-capabilities>
+</snapshot>
