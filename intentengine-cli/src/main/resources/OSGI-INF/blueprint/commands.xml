@@ -1,18 +1,31 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
 
+    <reference id="nicConsoleProvider" availability="mandatory"
+        activation="eager" interface="org.opendaylight.nic.api.NicConsoleProvider">
+    </reference>
+
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
         <command>
-            <action class="org.opendaylight.nic.cli.IntentAddShellCommand"/>
+            <action class="org.opendaylight.nic.cli.IntentAddShellCommand">
+                <argument ref="nicConsoleProvider" />
+            </action>
+            <completers>
+                <null />
+                <null />
+                <ref component-id="actionCompleter" />
+            </completers>
         </command>
         <command>
-            <action class="org.opendaylight.nic.cli.IntentRemoveShellCommand"/>
+            <action class="org.opendaylight.nic.cli.IntentRemoveShellCommand">
+            </action>
         </command>
         <command>
-            <action class="org.opendaylight.nic.cli.IntentListShellCommand"/>
+            <action class="org.opendaylight.nic.cli.IntentListShellCommand" />
         </command>
         <command>
-            <action class="org.opendaylight.nic.cli.IntentShowShellCommand"/>
+            <action class="org.opendaylight.nic.cli.IntentShowShellCommand" />
         </command>
     </command-bundle>
 
+    <bean id="actionCompleter" class="org.opendaylight.nic.cli.completers.ActionCompleter" />
 </blueprint>
