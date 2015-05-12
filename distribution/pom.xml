@@ -65,13 +65,17 @@
       <type>xml</type>
       <scope>runtime</scope>
     </dependency>
-
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>vtn-renderer.config</artifactId>
       <classifier>config</classifier>
       <type>xml</type>
       <version>${project.version}</version>
+    </dependency>
+    <!-- Group policy dependency -->
+    <dependency>
+      <groupId>org.opendaylight.groupbasedpolicy</groupId>
+      <artifactId>groupbasedpolicy</artifactId>
     </dependency>
   </dependencies>
 
