@@ -1,0 +1,9 @@
+<!-- (c) Copyright 2014 Hewlett-Packard Development Company, L.P. This program
+ is made available under the terms of the Eclipse Public License v1.0 which
+ accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html -->
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+    <bean id="intentCompilerImpl" class="org.opendaylight.nic.compiler.IntentCompilerImpl"/>
+    <service id="intentCompiler" interface="org.opendaylight.nic.compiler.api.IntentCompiler" ref="intentCompilerImpl"/>
+</blueprint>
