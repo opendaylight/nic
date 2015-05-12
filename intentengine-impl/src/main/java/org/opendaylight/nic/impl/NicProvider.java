@@ -1,12 +1,18 @@
-package org.opendaylight.intentengine;
+package org.opendaylight.nic.impl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
+import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-public class NicProvider implements BindingAwareProvider, AutoCloseable {
+public class NicProvider implements BindingAwareProvider, AutoCloseable, NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
 
@@ -75,9 +81,9 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable {
     }
 
     /**
-     * Populates Intents' default config data into the MD-SAL configuration
-     * data store. Note the database write to the tree are done in a
-     * synchronous fashion
+     * Populates Intents' default config data into the MD-SAL configuration data
+     * store. Note the database write to the tree are done in a synchronous
+     * fashion
      */
     protected void initIntentsConfiguration() {
         // Build the default Intents config data
@@ -90,5 +96,59 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable {
         tx.submit();
 
         LOG.info("initIntentsConfiguration: default config populated: {}", intents);
+    }
+
+    @Override
+    public boolean addIntent(Intent intent) {
+
+        Intents intents;
+        List<Intent> listOfIntents = new ArrayList<Intent>();
+
+        try {
+            listOfIntents.add(intent);
+            intents = new IntentsBuilder().setIntent(listOfIntents).build();
+
+            // Place default config data in data store tree
+            WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
+            tx.put(LogicalDatastoreType.CONFIGURATION, INTENTS_IID, intents);
+            // Perform the tx.submit synchronously
+            tx.submit();
+        } catch (Exception e) {
+            LOG.info("addIntent: failed: {}", e);
+            return false;
+        }
+
+        LOG.info("initIntentsConfiguration: default config populated: {}", intents);
+        return true;
+    }
+
+    @Override
+    public boolean addIntents(Intents intents) {
+        // TODO MultiAdd will be added in a further commit
+        return false;
+    }
+
+    @Override
+    public boolean removeIntent(Intent intent) {
+        // TODO Remove will be added in a further commit
+        return false;
+    }
+
+    @Override
+    public boolean removeIntents(Intents intents) {
+        // TODO MultiRemove will be added in a further commit
+        return false;
+    }
+
+    @Override
+    public Intents listIntents() {
+        // TODO List will be added in a further commit
+        return null;
+    }
+
+    @Override
+    public Intent show(Uuid id) {
+        // TODO Show will be added in a further commit
+        return null;
     }
 }
