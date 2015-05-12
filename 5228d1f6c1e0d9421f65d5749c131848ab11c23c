@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_1f010005",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-05-12T15:21:40Z",
+      "side": 1,
+      "message": "You need to bring it the features from GBP here \n\u003cdependency\u003e\n      \u003cgroupId\u003eorg.opendaylight.groupbasedpolicy\u003c/groupId\u003e\n      \u003cartifactId\u003efeatures-groupbasedpolicy\u003c/artifactId\u003e\n      \u003cversion\u003e${gbp.version}\u003c/version\u003e\n      \u003cclassifier\u003efeatures\u003c/classifier\u003e\n      \u003ctype\u003exml\u003c/type\u003e\n    \u003c/dependency\u003e",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "5228d1f6c1e0d9421f65d5749c131848ab11c23c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_df0ab820",
+        "filename": "features/src/main/resources/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-05-12T15:21:40Z",
+      "side": 1,
+      "message": "need to have that property set.. it is failing",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 116
+      },
+      "revId": "5228d1f6c1e0d9421f65d5749c131848ab11c23c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_9f143045",
+        "filename": "gbp-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-05-12T15:21:40Z",
+      "side": 1,
+      "message": "remove all red spaces and tabs",
+      "revId": "5228d1f6c1e0d9421f65d5749c131848ab11c23c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_bf0fac2d",
+        "filename": "intentengine-api/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-05-12T15:21:40Z",
+      "side": 1,
+      "message": "REmove Trailing space.. set your IDE to remove them",
+      "revId": "5228d1f6c1e0d9421f65d5749c131848ab11c23c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_5f1ea864",
+        "filename": "parent/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-05-12T15:21:40Z",
+      "side": 1,
+      "message": "this one doesn\u0027t resolve for some reason.. check inheritence",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 4
+      },
+      "revId": "5228d1f6c1e0d9421f65d5749c131848ab11c23c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
