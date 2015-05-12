@@ -30,7 +30,7 @@
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-impl/${project.version}</bundle>
-        <!-- <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile> -->
+        <!-- <configfile finalname="etc/opendaylight/karaf/88-intentengine-impl.xml">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile> -->
     </feature>
 
     <!-- CLI feature -->
