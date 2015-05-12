@@ -15,6 +15,7 @@
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-flow/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-restconf/${mdsal.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-base/${feature.base.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
 
     <!-- Core feature -->
@@ -35,9 +36,21 @@
 
     <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
+        <feature>adsal-archetypes</feature>
         <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
         <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle>
         <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer.config/${project.version}/xml/config</configfile>
+    </feature>
+
+    <feature name='adsal-archetypes' version='${clustering.version}'>
+      <feature version='${eclipse.link.version}'>odl-base-eclipselink-persistence</feature>
+      <bundle>mvn:org.apache.commons/commons-lang3/${commons.lang3.version}</bundle>
+      <bundle>mvn:org.osgi/org.osgi.compendium/${osgi.compendium.version}</bundle>
+      <bundle>mvn:org.apache.felix/org.apache.felix.dependencymanager/${felix.dm.version}</bundle>
+      <bundle>mvn:org.opendaylight.controller/sal/${sal.version}</bundle>
+      <bundle>mvn:org.opendaylight.controller/clustering.services/${clustering.version}</bundle>
+      <bundle>mvn:org.opendaylight.controller/clustering.services-implementation/${clustering.impl.version}</bundle>
+      <bundle>mvn:org.jboss.spec.javax.transaction/jboss-transaction-api_1.1_spec/${javax.transaction.version}</bundle>
     </feature>
 
 </features>
