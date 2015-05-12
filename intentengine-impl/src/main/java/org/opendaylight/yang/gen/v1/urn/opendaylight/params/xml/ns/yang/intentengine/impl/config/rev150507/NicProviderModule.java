@@ -1,6 +1,6 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intentengine.impl.config.rev150507;
 
-import org.opendaylight.intentengine.NicProvider;
+import org.opendaylight.nic.impl.NicProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
