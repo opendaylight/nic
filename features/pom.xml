@@ -106,7 +106,7 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
-      <artifactId>vtn-renderer.config</artifactId>
+      <artifactId>vtn-renderer</artifactId>
       <version>${project.version}</version>
       <classifier>config</classifier>
       <type>xml</type>
