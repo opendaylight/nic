@@ -5,6 +5,7 @@ import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-public class NicProvider implements BindingAwareProvider, AutoCloseable {
+public class NicProvider implements BindingAwareProvider, AutoCloseable, NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
 
@@ -90,5 +91,35 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable {
         tx.submit();
 
         LOG.info("initIntentsConfiguration: default config populated: {}", intents);
+    }
+
+    @Override
+    public boolean addIntents(Intent intent) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean addIntents(Intents intents) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean removeIntent(Intent intent) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean removeIntents(Intents intents) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public Intents listIntents() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

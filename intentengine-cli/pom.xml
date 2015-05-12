@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>intentengine-api</artifactId>
+            <artifactId>intentengine-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -61,6 +61,7 @@
                             org.apache.felix.service.command,
                             org.apache.karaf.shell.commands,
                             org.apache.karaf.shell.console,
+                            org.opendaylight.intentengine.NicConsoleProvider,
                             *
                         </Import-Package>
                         <!-- <Export-Package>org.opendaylight.yang.gen.v1.urn.opendaylight.intent.*</Export-Package> -->
