@@ -20,13 +20,6 @@
 
   <properties>
     <features.file>features.xml</features.file>
-    <branding.version>1.1.0-SNAPSHOT</branding.version>
-    <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
-    <karaf.empty.version>1.5.0-SNAPSHOT</karaf.empty.version>
-    <surefire.version>2.16</surefire.version>
-    <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
-    <feature.test.version>1.5.0-SNAPSHOT</feature.test.version>
-    <org.slf4j.version>1.7.2</org.slf4j.version>
   </properties>
 
   <dependencies>
@@ -78,7 +71,13 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
-
+    <dependency>
+      <groupId>org.opendaylight.groupbasedpolicy</groupId>
+      <artifactId>features-groupbasedpolicy</artifactId>
+      <version>${groupbasedpolicy.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -111,7 +110,18 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
-
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>gbp-renderer</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>gbp-renderer.config</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
   </dependencies>
 
   <build>

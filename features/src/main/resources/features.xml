@@ -17,6 +17,13 @@
     <repository>mvn:org.opendaylight.controller/features-restconf/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
 
+    <!-- Repository for GBP -->
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/${openflowplugin.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-extension/${openflowplugin.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.ovsdb/southbound-features/${ovsdb.southbound.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.neutron/features-neutron/${neutron.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features</repository>
+
     <!-- Core feature -->
     <feature name='odl-nic-core' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core'>
         <feature version="${mdsal.version}">odl-restconf</feature>
@@ -40,4 +47,11 @@
         <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer.config/${project.version}/xml/config</configfile>
     </feature>
 
+    <!-- GBP Renderer -->
+    <feature name='odl-nic-renderer-gbp' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
+        <feature version="${project.version}">odl-nic-core</feature>
+        <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-base</feature>
+        <bundle>mvn:org.opendaylight.nic/gbp-renderer/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/gbp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer.config/${project.version}/xml/config</configfile>
+    </feature>
 </features>

@@ -65,10 +65,16 @@
       <type>xml</type>
       <scope>runtime</scope>
     </dependency>
-
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>vtn-renderer.config</artifactId>
+      <classifier>config</classifier>
+      <type>xml</type>
+      <version>${project.version}</version>
+    </dependency>    
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>gbp-renderer.config</artifactId>
       <classifier>config</classifier>
       <type>xml</type>
       <version>${project.version}</version>
