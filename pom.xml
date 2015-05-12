@@ -39,6 +39,8 @@
         <module>intentengine-api</module>
         <module>intentengine-impl</module>
         <module>intentengine-cli</module>
+        <module>gbp-renderer</module>
+        <module>gbp-renderer-config</module>
         <module>vtn-renderer</module>
         <module>vtn-renderer-config</module>
         <module>features</module>
