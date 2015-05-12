@@ -16,6 +16,41 @@
       "revId": "57a51c0a2b312bfbff95c229e7ecb3ed03b21aae",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_ac722f47",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/util/IntentRunningRegistry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-05-12T00:32:41Z",
+      "side": 1,
+      "message": "Yes it should",
+      "parentUuid": "3aa0d159_7e828d95",
+      "revId": "57a51c0a2b312bfbff95c229e7ecb3ed03b21aae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_6c942737",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/util/SingletonTask.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1788
+      },
+      "writtenOn": "2015-05-12T00:32:41Z",
+      "side": 1,
+      "message": "I\u0027d recommend using Akka for this... it has much nicer facilities... http://doc.akka.io/docs/akka/snapshot/java/scheduler.html infact I would think reactive approach should use that..moreover the library is already available from controller.",
+      "revId": "57a51c0a2b312bfbff95c229e7ecb3ed03b21aae",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
