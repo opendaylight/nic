@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa0d159_49e272d6",
+        "filename": "distribution/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-13T12:45:12Z",
+      "side": 1,
+      "message": "remove trailing space",
+      "revId": "252d38401d3a222f75d0cc15c8e185b3b8917e8d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_29dfe60e",
+        "filename": "gbp-renderer-config/src/main/resources/initial/gbp-renderer.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-13T12:45:12Z",
+      "side": 1,
+      "message": "Add the xml header:\n\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e",
+      "revId": "252d38401d3a222f75d0cc15c8e185b3b8917e8d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_c9f44289",
+        "filename": "gbp-renderer-config/src/main/resources/initial/gbp-renderer.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-13T12:45:12Z",
+      "side": 1,
+      "message": "this doesn\u0027t need to be under another package, you could move it gbp-renderer/src/main/config",
+      "revId": "252d38401d3a222f75d0cc15c8e185b3b8917e8d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa0d159_89ee3ab3",
+        "filename": "pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-13T12:45:12Z",
+      "side": 1,
+      "message": "remove gbp-renderer-config as per of the package removal",
+      "revId": "252d38401d3a222f75d0cc15c8e185b3b8917e8d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
