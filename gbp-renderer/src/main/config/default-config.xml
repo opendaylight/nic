@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration for BGP Renderer module. -->
+<snapshot>
+ <configuration>
+  <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+   <modules xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
+    <module>
+     <type xmlns:nic="urn:opendaylight:params:xml:ns:yang:gbp:renderer">
+      prefix:gbp-renderer
+     </type>
+     <name>gbp-renderer</name>
+     <data-broker>
+      <type
+       xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
+       binding:binding-async-data-broker
+      </type>
+      <name>binding-data-broker</name>
+     </data-broker>
+    </module>
+   </modules>
+  </data>
+ </configuration>
+ <required-capabilities>
+  <capability>
+   urn:opendaylight:params:xml:ns:yang:gbp:renderer?module=gbp-renderer&amp;revision=2015-05-08
+  </capability>
+  <capability>urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?module=opendaylight-md-sal-binding&amp;revision=2013-10-28
+  </capability>
+ </required-capabilities>
+</snapshot>
