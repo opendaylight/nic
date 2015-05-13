@@ -10,7 +10,12 @@
 package org.opendaylight.nic.vtn.renderer;
 
 import java.util.List;
-
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.lang.String;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +29,39 @@ import org.opendaylight.vtn.manager.VTenant;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
+
+import org.opendaylight.controller.sal.utils.ServiceHelper;
+import org.opendaylight.controller.sal.utils.Status;
+import org.opendaylight.vtn.manager.IVTNManager;
+import org.opendaylight.vtn.manager.VBridgeConfig;
+import org.opendaylight.vtn.manager.VBridgePath;
+import org.opendaylight.vtn.manager.VTNException;
+import org.opendaylight.vtn.manager.VTenantConfig;
+import org.opendaylight.vtn.manager.VTenantPath;
+import org.opendaylight.vtn.manager.VlanMapConfig;
+import org.opendaylight.vtn.manager.flow.cond.FlowCondition;
+import org.opendaylight.vtn.manager.flow.cond.FlowMatch;
+import org.opendaylight.vtn.manager.flow.cond.Inet4Match;
+import org.opendaylight.vtn.manager.flow.cond.InetMatch;
+import org.opendaylight.vtn.manager.flow.filter.FlowFilter;
+import org.opendaylight.vtn.manager.flow.filter.FlowFilterId;
+import org.opendaylight.vtn.manager.flow.filter.PassFilter;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.Allow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
+
 public class VTNRenderer implements AutoCloseable, DataChangeListener {
     /**
      * Logger instance.
      */
-    private static final Logger  LOG =
-        LoggerFactory.getLogger(VTNRenderer.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(VTNRenderer.class);
+  
 
     /**
      * {@inheritDoc}
@@ -45,31 +77,101 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
         // TODO: Change the log level to TRACE.
         LOG.info("Intent configuration changed.");
-
-        IVTNManager mgr = getVTNManager();
+		
+        for (DataObject dao : ev.getCreatedData().values()) {
+			LOG.info("Data change For Loop ENTER:::");
+			if (dao instanceof Intents) {
+				LOG.info("FOR LOOP enter Intents :::");
+                try {
+					Intents lcl_iB = (Intents)dao;					
+					List<Intent> lcl_intent = lcl_iB.getIntent();
+					for(Intent intent : lcl_intent) {
+			            LOG.info("intents itertion :{} ",intent.getId());
+					    intentParser(intent);
+					}
+				} catch (Exception e) {
+                    LOG.error("Could not create VTN Renderer", e);
+				}
+			}
+        }
+		
+		for (DataObject dao : ev.getUpdatedData().values()) {
+			LOG.info("Data change For Loop ENTER:::");
+			if (dao instanceof Intents) {
+				LOG.info("FOR LOOP enter Intents :::");
+                try {
+					Intents lcl_iB = (Intents)dao;					
+					List<Intent> lcl_intent = lcl_iB.getIntent();
+					for(Intent intent : lcl_intent) {
+			            LOG.info("intents itertion :{} ",intent.getId());
+					    intentParser(intent);
+					}
+				} catch (Exception e) {
+                    LOG.error("Could not create VTN Renderer", e);
+				}
+			}
+        }
 
         /**
-         *  Delete the following lines, and implements the renderer.
+         * Delete the following lines, and implements the renderer.
+         * 
+         * try { List<VTenant> vtns = mgr.getTenants(); for (VTenant vtn: vtns)
+         * { LOG.info("{}", vtn); } } catch (Exception e) {
+         * LOG.info("Failed to get tenants: {}", e); }
          */
-        try {
-            List<VTenant> vtns = mgr.getTenants();
-            for (VTenant vtn: vtns) {
-                LOG.info("{}", vtn);
-            }
-        } catch (Exception e) {
-            LOG.info("Failed to get tenants: {}", e);
-        }
     }
 
     /**
-     * Return the VTN manager service.
-     *
-     * @return  The VTN manager service associated with the specified
-     *          container.
+     * This method parse the intent and calls the VTN renderer
+     * 
+     * @param intents
      */
-    protected IVTNManager getVTNManager() {
-        IVTNManager mgr = (IVTNManager)ServiceHelper.
-            getInstance(IVTNManager.class, "default", this);
-        return mgr;
+    public void intentParser(Intent intent) {
+        String endPointSrc = "";
+        String endPointDst = "";
+		HashMap hashMap = new HashMap<String, ArrayList<IntentWrapper>>();
+		ArrayList<IntentWrapper> arrayList = new ArrayList<IntentWrapper>();
+		ArrayList<String> subject = new ArrayList<String>();
+        String intentID = "";
+		VtnIntentParser renderer = new VtnIntentParser();
+		LOG.info(":::Intent Parser :::");
+        //if (intent.getStatus() != null) {
+		
+			for(Subjects subjects : intent.getSubjects()) {
+				EndPointGroup endPointGroup = (EndPointGroup)subjects.getSubject();
+				LOG.info("intents itertion Subjects:{} ",endPointGroup.getEndPointGroup().getName());
+				subject.add(endPointGroup.getEndPointGroup().getName());
+			}
+		
+			
+            //if (intent.getSubjects().size() == 2) {
+			    LOG.info(":::Intent Subjects :::");
+                endPointSrc = subject.get(0).toString();
+                endPointDst = subject.get(1).toString();
+                if (intent.getActions() != null) {
+				    LOG.info(":::Intent Actions :::{}",intent.getActions());
+
+					try {
+                        //action = intent.getActions().get(0);
+                        for(Actions actions : intent.getActions()) {
+                            Action action = actions.getAction();
+                            if (action instanceof org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow) {
+                                Allow allow = ((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow) action).getAllow();
+                                if ( allow != null) {
+                                    renderer.rendering(endPointSrc, endPointDst, "allow", arrayList);
+                                } 
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            //}
+            hashMap.put(intentID, arrayList);
+		    VTNRendererUtility.storeIntentDetail(hashMap);
+        //}
     }
+
+
 }
