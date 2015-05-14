@@ -52,6 +52,6 @@
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-base</feature>
         <bundle>mvn:org.opendaylight.nic/gbp-renderer/${project.version}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/default-config.xml">mvn:org.opendaylight.nic/gbp-renderer/${project.version}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer/${project.version}/xml/config</configfile>
     </feature>
 </features>

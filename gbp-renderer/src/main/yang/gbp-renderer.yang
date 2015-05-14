@@ -9,23 +9,34 @@
 
 module gbp-renderer {
     yang-version 1;
-    namespace "urn:opendaylight:nic:gbp-renderer";
+    namespace "urn:opendaylight:nic:gbp:renderer";
     prefix gbp-renderer;
 
-    import config { prefix config; revision-date 2013-04-05; }
-    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28;}
+    import config {
+        prefix config;
+        revision-date 2013-04-05;
+    }
+    import opendaylight-md-sal-binding {
+        prefix mdsal;
+        revision-date 2013-10-28;
+    }
 
-    description "This module contains the initial yang model for the group based policy renderer implementation";
+    description
+      "This module contains the base YANG definition for the gbp Renderer
+       implementation.";
 
     revision 2015-05-11 {
-        description "Initial revision";
+        description "Initial revision.";
     }
 
     identity gbp-renderer {
         base config:module-type;
+
+        // Specifies the prefix for generated Java classes.
         config:java-name-prefix GBPRenderer;
     }
 
+    // Augments the 'configuration' choice node under modules/module.
     augment "/config:modules/config:module/config:configuration" {
         case gbp-renderer {
             when "/config:modules/config:module/config:type = 'gbp-renderer'";
@@ -34,11 +45,13 @@ module gbp-renderer {
                 uses config:service-ref {
                     refine type {
                         mandatory true;
-                        config:required-identity mdsal:binding-async-data-broker;
+                        config:required-identity
+                          mdsal:binding-async-data-broker;
                     }
                 }
             }
         }
     }
 }
+
 
