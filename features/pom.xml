@@ -9,17 +9,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.opendaylight.nic</groupId>
-    <artifactId>nic-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
+    <groupId>org.opendaylight.odlparent</groupId>
+    <artifactId>features-parent</artifactId>
+    <version>1.5.0-SNAPSHOT</version>
+    <relativePath/>
   </parent>
 
+  <groupId>org.opendaylight.nic</groupId>
   <artifactId>features-nic</artifactId>
+  <name>${project.artifactId}</name>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
+  <prerequisites>
+    <maven>3.1.1</maven>
+  </prerequisites>
+
   <properties>
-    <features.file>features.xml</features.file>
+    <commons.lang3.version>3.1</commons.lang3.version>
+    <clustering.version>0.6.0-SNAPSHOT</clustering.version>
+    <clustering.impl.version>0.5.0-SNAPSHOT</clustering.impl.version>
+    <eclipse.link.version>2.0.4.v201112161009</eclipse.link.version>
+    <felix.dm.version>3.1.0</felix.dm.version>
+    <feature.base.version>1.5.0-SNAPSHOT</feature.base.version>
+    <feature.test.version>1.5.0-SNAPSHOT</feature.test.version>
+    <feature.vtn-manager.version>0.3.0-SNAPSHOT</feature.vtn-manager.version>
+    <groupbasedpolicy.version>0.2.0-SNAPSHOT</groupbasedpolicy.version>
+    <javax.transaction.version>1.0.1.Final</javax.transaction.version>
+    <osgi.compendium.version>5.0.0</osgi.compendium.version>
+    <ovsdb.southbound.version>1.1.0-SNAPSHOT</ovsdb.southbound.version>
+    <openflowplugin.version>0.1.0-SNAPSHOT</openflowplugin.version>
+    <mdsal.version>1.2.0-SNAPSHOT</mdsal.version>
+    <neutron.version>0.5.0-SNAPSHOT</neutron.version>
+    <sal.version>0.9.0-SNAPSHOT</sal.version>
+    <yangtools.version>0.7.0-SNAPSHOT</yangtools.version>
   </properties>
 
   <dependencies>
@@ -117,90 +140,5 @@
       <type>xml</type>
     </dependency>
   </dependencies>
-
-  <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.karaf.tooling</groupId>
-        <artifactId>karaf-maven-plugin</artifactId>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>features-create-kar</id>
-            <goals>
-              <goal>features-create-kar</goal>
-            </goals>
-            <configuration>
-              <featuresFile>${project.build.directory}/classes/${features.file}</featuresFile>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>filter</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>resources</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-         <groupId>org.codehaus.mojo</groupId>
-         <artifactId>build-helper-maven-plugin</artifactId>
-         <executions>
-           <execution>
-             <id>attach-artifacts</id>
-             <phase>package</phase>
-             <goals>
-               <goal>attach-artifact</goal>
-             </goals>
-             <configuration>
-               <artifacts>
-                 <artifact>
-                   <file>${project.build.directory}/classes/${features.file}</file>
-                   <type>xml</type>
-                   <classifier>features</classifier>
-                 </artifact>
-                 <artifact>
-                   <file>${project.build.directory}/${project.artifactId}-${project.version}.kar</file>
-                   <type>kar</type>
-                   <classifier>features</classifier>
-                </artifact>
-               </artifacts>
-             </configuration>
-           </execution>
-         </executions>
-      </plugin>
-
-      <plugin>
-         <groupId>org.apache.maven.plugins</groupId>
-         <artifactId>maven-surefire-plugin</artifactId>
-         <configuration>
-           <systemPropertyVariables>
-             <karaf.distro.groupId>org.opendaylight.controller</karaf.distro.groupId>
-             <karaf.distro.artifactId>opendaylight-karaf-empty</karaf.distro.artifactId>
-             <karaf.distro.version>${karaf.empty.version}</karaf.distro.version>
-           </systemPropertyVariables>
-           <dependenciesToScan>
-            <dependency>org.opendaylight.odlparent:features-test</dependency>
-           </dependenciesToScan>
-         </configuration>
-       </plugin>
-     </plugins>
-  </build>
 
 </project>
