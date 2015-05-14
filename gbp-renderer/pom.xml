@@ -37,7 +37,7 @@
    <artifactId>sal-binding-config</artifactId>
   </dependency>
 
-  <!-- OpenDaylight VTN Manager -->
+  <!-- OpenDaylight GBP Manager -->
   <dependency>
    <groupId>org.opendaylight.groupbasedpolicy</groupId>
    <artifactId>features-groupbasedpolicy</artifactId>
