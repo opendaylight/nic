@@ -20,12 +20,12 @@
 
   <properties>
     <features.file>features.xml</features.file>
-    <branding.version>1.1.0-SNAPSHOT</branding.version>
-    <karaf.resources.version>1.5.0-SNAPSHOT</karaf.resources.version>
-    <karaf.empty.version>1.5.0-SNAPSHOT</karaf.empty.version>
+    <branding.version>1.2.0-SNAPSHOT</branding.version>
+    <karaf.resources.version>1.6.0-SNAPSHOT</karaf.resources.version>
+    <karaf.empty.version>1.6.0-SNAPSHOT</karaf.empty.version>
     <surefire.version>2.16</surefire.version>
     <config.configfile.directory>etc/opendaylight/karaf</config.configfile.directory>
-    <feature.test.version>1.5.0-SNAPSHOT</feature.test.version>
+    <feature.test.version>1.6.0-SNAPSHOT</feature.test.version>
     <org.slf4j.version>1.7.2</org.slf4j.version>
   </properties>
 
