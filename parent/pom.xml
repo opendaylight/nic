@@ -56,7 +56,7 @@
     <generatedSalPath>target/generated-sources/sal</generatedSalPath>
     <generatedDocPath>target/generated-sources/restconf</generatedDocPath>
 
-    <nexusproxy>https://nexus.opendaylight.org/content/repositories</nexusproxy>
+    <nexusproxy>https://nexus.opendaylight.org/content</nexusproxy>
     <nexus.opendaylight.snapshot>opendaylight.snapshot</nexus.opendaylight.snapshot>
     <nexus.opendaylight.release>opendaylght.release</nexus.opendaylight.release>
 
