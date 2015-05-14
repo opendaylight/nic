@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-# Copyright (c) 2015 NEC Corporation
+# Copyright (c) 2015, Inocybe Technologies
 # All rights reserved.
 #
 # This program and the accompanying materials are made available under the
@@ -31,7 +31,7 @@
  </configuration>
  <required-capabilities>
   <capability>
-   urn:opendaylight:params:xml:ns:yang:gbp:renderer?module=gbp-renderer&amp;revision=2015-05-08
+   urn:opendaylight:params:xml:ns:yang:gbp:renderer?module=gbp-renderer&amp;revision=2015-05-11
   </capability>
   <capability>urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?module=opendaylight-md-sal-binding&amp;revision=2013-10-28
   </capability>
