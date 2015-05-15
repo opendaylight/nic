@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_55b58ccb",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-15T15:29:47Z",
+      "side": 1,
+      "message": "If this is listing the intents in the system, shouldn\u0027t this read from the operational, i.e. the intents that are \"actual\" as opposed to those that have been configured? It is the responsibility of the renderer to update the operational store.",
+      "revId": "f58b94363ab6ab61897e0d02d0dbd571c89a2115",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
