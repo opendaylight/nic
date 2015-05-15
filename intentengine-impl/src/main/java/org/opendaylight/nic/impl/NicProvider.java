@@ -7,8 +7,6 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
-import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
@@ -22,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-public class NicProvider implements BindingAwareProvider, AutoCloseable, NicConsoleProvider {
+public class NicProvider implements AutoCloseable, NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
 
@@ -44,13 +42,12 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
         LOG.info("IntentengineImpl: registrations closed");
     }
 
-    @Override
-    public void onSessionInitiated(ProviderContext session) {
+    public void init(DataBroker dataBroker) {
         // Initialize operational and default config data in MD-SAL data store
-        setDataBroker(session.getSALService(DataBroker.class));
+        setDataBroker(dataBroker);
         initIntentsOperational();
         initIntentsConfiguration();
-        LOG.info("onSessionInitiated: initialization done");
+        LOG.info("Initialization done");
     }
 
     /**

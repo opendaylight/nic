@@ -12,16 +12,12 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 
 public class NicProviderTest {
 
     @Test
     public void testOnSessionInitiated() throws Exception {
         try (NicProvider provider = new NicProvider()) {
-            ProviderContext context = mock(BindingAwareBroker.ProviderContext.class);
-            when(context.getSALService(DataBroker.class)).thenReturn(mock(DataBroker.class));
             DataBroker broker = mock(DataBroker.class);
             provider.setDataBroker(broker);
 
@@ -32,7 +28,7 @@ public class NicProviderTest {
 
             // ensure no exceptions
             // currently this method is empty
-            spy.onSessionInitiated(context);
+            spy.init(broker);
         }
     }
 

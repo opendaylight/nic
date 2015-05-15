@@ -111,6 +111,13 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-impl</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
       <artifactId>intentengine-cli</artifactId>
       <version>${project.version}</version>
     </dependency>

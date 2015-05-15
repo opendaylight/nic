@@ -32,12 +32,13 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
-            <artifactId>sal-binding-config</artifactId>
-            <version>${mdsal.version}</version>
+            <artifactId>sal-binding-api</artifactId>
+            <version>0.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>sal-binding-config</artifactId>
+            <version>${mdsal.version}</version>
         </dependency>
 
         <!-- Testing Dependencies -->
@@ -54,21 +55,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <configuration>
-                    <instructions>
-                        <Export-Package>org.opendaylight.yang.gen.v1.*,
-                            org.opendaylight.nic.api.*</Export-Package>
-                        <Import-Package>*</Import-Package>
-                        <Export-Service>org.opendaylight.nic.api.NicConsoleProvider
-                        </Export-Service>
-                    </instructions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
