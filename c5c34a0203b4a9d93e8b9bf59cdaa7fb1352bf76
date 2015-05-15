@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_f5c37888",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-05-15T14:47:26Z",
+      "side": 1,
+      "message": "space.",
+      "revId": "c5c34a0203b4a9d93e8b9bf59cdaa7fb1352bf76",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
