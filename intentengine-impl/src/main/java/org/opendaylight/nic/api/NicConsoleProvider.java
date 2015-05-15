@@ -11,6 +11,8 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.api;
 
+import java.util.List;
+
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -25,7 +27,7 @@ public interface NicConsoleProvider {
 
     public boolean removeIntents(Intents intents);
 
-    public Intents listIntents();
+    public List<Intent> listIntents();
 
     public Intent show(Uuid id);
 }
