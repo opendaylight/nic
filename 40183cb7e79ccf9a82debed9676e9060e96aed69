@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_c4800f8e",
+        "filename": "intentengine-impl/src/main/config/default-config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-15T22:25:18Z",
+      "side": 1,
+      "message": "IMHO, I\u0027m thinking it should be binding:binding-async-data-broker",
+      "range": {
+        "startLine": 19,
+        "startChar": 85,
+        "endLine": 19,
+        "endChar": 121
+      },
+      "revId": "40183cb7e79ccf9a82debed9676e9060e96aed69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_c457af25",
+        "filename": "intentengine-impl/src/main/config/default-config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-15T22:25:18Z",
+      "side": 1,
+      "message": "I think this capability does not have to be explicitly specified.\n\nI can see such an information in the \"Define the initial XML configuration\" section of the following page.\n\nhttps://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:Toaster_Step-By-Step",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "40183cb7e79ccf9a82debed9676e9060e96aed69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
