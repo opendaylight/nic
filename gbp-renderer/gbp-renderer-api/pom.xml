@@ -20,4 +20,26 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   <version>1.0.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
+  <properties>
+    <gbp.version>0.2.0-SNAPSHOT</gbp.version>
+    <intent.version>1.0.0-SNAPSHOT</intent.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-api</artifactId>
+      <version>${intent.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.yangtools.model</groupId>
+      <artifactId>yang-ext</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.groupbasedpolicy</groupId>
+      <artifactId>groupbasedpolicy</artifactId>
+      <version>${gbp.version}</version>
+    </dependency>
+  </dependencies>
+
 </project>

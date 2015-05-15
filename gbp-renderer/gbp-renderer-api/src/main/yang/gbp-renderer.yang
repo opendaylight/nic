@@ -1,0 +1,42 @@
+/*
+* Copyright (c) 2015 Inocybe Technologies
+* All rights reserved.
+*
+* This program and the accompanying materials are made available under then
+* terms of the Eclipse Public License v1.0 which accompanies this distribution,
+* and is available at http://www.eclipse.org/legal/epl-v10.html
+*/
+
+module gbp-renderer {
+    yang-version 1;
+    namespace "urn:opendaylight:gbp:renderer";
+    prefix "gbp-renderer";
+
+    import intent { prefix intent; revision-date "2015-01-22"; }
+    import yang-ext { prefix "ext"; }
+    import policy {prefix policy; revision-date "2014-04-21";}
+
+    description
+        "This module contains the base YANG definition for the gbp Renderer.";
+
+    revision 2015-05-11 {
+        description "Initial revision";
+    }
+
+    typedef gbp-node-ref {
+        description "A reference to a group policy node.";
+        type instance-identifier;
+    }
+
+    augment "/intent:intents" {
+        description "Augmentation of intent module with gbp renderer augmentation.";
+        ext:augment-identifier "gbp-renderer-augmentation";
+        uses gbp-renderer-grouping ;
+    }
+
+    grouping gbp-renderer-grouping {
+        leaf gbp-node-ref {
+            type gbp-node-ref;
+        }
+    }
+}
