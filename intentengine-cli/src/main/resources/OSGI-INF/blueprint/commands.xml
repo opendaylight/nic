@@ -19,7 +19,10 @@
             </action>
         </command>
         <command>
-            <action class="org.opendaylight.nic.cli.IntentListShellCommand" />
+            <action class="org.opendaylight.nic.cli.IntentListShellCommand" >
+
+                <argument ref="nicConsoleProvider" />
+            </action>
         </command>
         <command>
             <action class="org.opendaylight.nic.cli.IntentShowShellCommand" />
