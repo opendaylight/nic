@@ -37,7 +37,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
     protected NicConsoleProvider provider;
 
-    @Option(name = "-f", aliases = { "--from" }, description = "First subject.\n-f / --from] <subject>", required = false, multiValued = false)
+    @Option(name = "-f", aliases = { "--from" }, description = "First subject.\n-f / --from <subject>", required = false, multiValued = false)
     String from = "any";
 
     @Option(name = "-t", aliases = { "--to" }, description = "Second Subject.\n-t / --to <subject>", required = false, multiValued = false)

@@ -7,16 +7,38 @@
  */
 package org.opendaylight.nic.cli;
 
+import java.util.List;
+
 import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
+import org.opendaylight.nic.api.NicConsoleProvider;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 @Command(name = "list", scope = "intent", description = "Lists all intents in the controller.")
 public class IntentListShellCommand extends OsgiCommandSupport {
 
-    @Override
-    protected Object doExecute() throws Exception {
-        System.out.println("INTENT:LIST");
-        return null;
+    protected NicConsoleProvider provider;
+
+    @Option(name = "-c", aliases = { "--config" }, description = "List Configuration Data (optional).\n-c / --config <ENTER>", required = false, multiValued = false)
+    Boolean isConfigurationData = false;
+
+    public IntentListShellCommand(NicConsoleProvider provider) {
+        this.provider = provider;
     }
 
+    @Override
+    protected Object doExecute() throws Exception {
+
+        List<Intent> listIntents = provider.listIntents(isConfigurationData);
+
+        if (listIntents.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (Intent intent : listIntents) {
+                sb.append(String.format("%s\n", intent.getId().toString()));
+            }
+            return sb.toString();
+        } else
+            return String.format("No intents found. Check the logs for more details.");
+    }
 }
