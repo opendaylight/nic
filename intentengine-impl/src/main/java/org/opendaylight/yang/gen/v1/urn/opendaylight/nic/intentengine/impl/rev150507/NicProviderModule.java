@@ -1,10 +1,10 @@
-package org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intentengine.impl.config.rev150507;
+package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507;
 
 import org.opendaylight.nic.impl.NicProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intentengine.impl.config.rev150507.AbstractNicProviderModule {
+public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507.AbstractNicProviderModule {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProviderModule.class);
 
@@ -12,8 +12,7 @@ public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendayl
         super(identifier, dependencyResolver);
     }
 
-    public NicProviderModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver,
-                             org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intentengine.impl.config.rev150507.NicProviderModule oldModule, java.lang.AutoCloseable oldInstance) {
+    public NicProviderModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver, org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507.NicProviderModule oldModule, java.lang.AutoCloseable oldInstance) {
         super(identifier, dependencyResolver, oldModule, oldInstance);
     }
 
@@ -30,4 +29,5 @@ public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendayl
 
         return provider;
     }
+
 }
