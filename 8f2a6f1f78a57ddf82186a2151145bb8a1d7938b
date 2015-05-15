@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_e4d74bec",
+        "filename": "gbp-renderer/gbp-renderer-api/src/main/yang/gbp-renderer.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-15T19:49:31Z",
+      "side": 1,
+      "message": "you shouldn\u0027t have *-* in the namespace, but *:* instead",
+      "revId": "8f2a6f1f78a57ddf82186a2151145bb8a1d7938b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
