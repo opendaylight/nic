@@ -11,7 +11,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <artifactId>nic-parent</artifactId>
     <groupId>org.opendaylight.nic</groupId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath>../</relativePath>
+    <relativePath>../parent</relativePath>
   </parent>
   <artifactId>gbp-renderer-aggregator</artifactId>
   <version>1.0.0-SNAPSHOT</version>
@@ -38,7 +38,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
   </prerequisites>
 
   <modules>
-  	<module>gbp-renderer-api</module>
-  	<module>gbp-renderer-impl</module>
+    <module>gbp-renderer-api</module>
+    <module>gbp-renderer-impl</module>
   </modules>
 </project>
