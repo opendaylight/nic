@@ -15,6 +15,7 @@
         </command>
         <command>
             <action class="org.opendaylight.nic.cli.IntentRemoveShellCommand">
+                 <argument ref="nicConsoleProvider" />
             </action>
         </command>
         <command>
