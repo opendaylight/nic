@@ -1,54 +1,44 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2015 Inocybe and others.  All rights reserved.
 
-<!-- # # Copyright (c) 2015 NEC Corporation # All rights reserved. # # This 
- program and the accompanying materials are made available under the # terms 
- of the Eclipse Public License v1.0 which accompanies this # distribution, 
- and is available at http://www.eclipse.org/legal/epl-v10.html # -->
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
- <parent>
-  <groupId>org.opendaylight.controller</groupId>
-  <artifactId>config-parent</artifactId>
-  <version>0.3.0-SNAPSHOT</version>
-  <relativePath />
- </parent>
+  <parent>
+    <artifactId>nic-parent</artifactId>
+    <groupId>org.opendaylight.nic</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../</relativePath>
+  </parent>
+  <artifactId>gbp-renderer-aggregator</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>${project.artifactId}</name>
+  <packaging>pom</packaging>
+  <description>The gbp-renderer (Group-Based Policy renderer) is a sub-project for the Network Intent Compisition (NIC). Its goal is to add GBP support for the NIC project.</description>
+  <url>https://wiki.opendaylight.org/view/Project_Proposals:Network_Intent_Composition</url>
+  <licenses>
+    <license>
+      <name>Eclipse Public License v1.0</name>
+      <url>http://www.eclipse.org/legal/epl-v10.html</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Gabriel Robitaille-Montpetit</name>
+      <email>grmontpetit@gmail.com</email>
+      <url>https://github.com/sniggel</url>
+    </developer>
+   </developers>
+  <modelVersion>4.0.0</modelVersion>
+  <prerequisites>
+    <maven>3.1.1</maven>
+  </prerequisites>
 
- <modelVersion>4.0.0</modelVersion>
- <groupId>org.opendaylight.nic</groupId>
- <artifactId>gbp-renderer</artifactId>
- <version>1.0.0-SNAPSHOT</version>
- <packaging>bundle</packaging>
-
- <dependencies>
-  <dependency>
-   <groupId>${project.groupId}</groupId>
-   <artifactId>intentengine-api</artifactId>
-   <version>${project.version}</version>
-  </dependency>
-
-  <!-- OpenDaylight Controller -->
-  <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>sal-binding-api</artifactId>
-  </dependency>
-  <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>sal-binding-config</artifactId>
-  </dependency>
-
-  <!-- OpenDaylight GBP Manager -->
-  <dependency>
-   <groupId>org.opendaylight.groupbasedpolicy</groupId>
-   <artifactId>features-groupbasedpolicy</artifactId>
-   <version>0.2.0-SNAPSHOT</version>
-  </dependency>
-
-  <!-- OpenDaylight YANG Tools -->
-  <dependency>
-   <groupId>org.opendaylight.yangtools</groupId>
-   <artifactId>yang-common</artifactId>
-  </dependency>
-
- </dependencies>
+  <modules>
+  	<module>gbp-renderer-api</module>
+  	<module>gbp-renderer-impl</module>
+  </modules>
 </project>

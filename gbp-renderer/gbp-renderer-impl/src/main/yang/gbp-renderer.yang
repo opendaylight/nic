@@ -7,19 +7,13 @@
 * and is available at http://www.eclipse.org/legal/epl-v10.html
 */
 
-module gbp-renderer {
+module gbp-renderer-impl {
     yang-version 1;
-    namespace "urn:opendaylight:nic:gbp:renderer";
-    prefix gbp-renderer;
+    namespace "urn:opendaylight:nic:gbp:renderer:impl";
+    prefix "gbp-renderer-impl";
 
-    import config {
-        prefix config;
-        revision-date 2013-04-05;
-    }
-    import opendaylight-md-sal-binding {
-        prefix mdsal;
-        revision-date 2013-10-28;
-    }
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
 
     description
       "This module contains the base YANG definition for the gbp Renderer
@@ -29,7 +23,7 @@ module gbp-renderer {
         description "Initial revision.";
     }
 
-    identity gbp-renderer {
+    identity gbp-renderer-impl {
         base config:module-type;
 
         // Specifies the prefix for generated Java classes.
@@ -38,8 +32,8 @@ module gbp-renderer {
 
     // Augments the 'configuration' choice node under modules/module.
     augment "/config:modules/config:module/config:configuration" {
-        case gbp-renderer {
-            when "/config:modules/config:module/config:type = 'gbp-renderer'";
+        case gbp-renderer-impl {
+            when "/config:modules/config:module/config:type = 'gbp-renderer-impl'";
 
             container data-broker {
                 uses config:service-ref {

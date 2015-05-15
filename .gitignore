@@ -51,3 +51,6 @@ hs_err_pid*
 .checkstyle
 .pmd
 .pmdruleset.xml
+
+yang-yen-sal
+yang-gen-config

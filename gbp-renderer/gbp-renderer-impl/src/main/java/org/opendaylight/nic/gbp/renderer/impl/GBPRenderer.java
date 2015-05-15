@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.gbp.renderer;
+package org.opendaylight.nic.gbp.renderer.impl;
 
 import java.util.Map;
 import java.util.Map.Entry;
