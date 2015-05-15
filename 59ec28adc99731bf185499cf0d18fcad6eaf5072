@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_702696bc",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-15T16:26:43Z",
+      "side": 1,
+      "message": "Same comment about listing what is config v. what is in operational, Should this be listing what is in operational? or operational by default with config as an option.",
+      "revId": "59ec28adc99731bf185499cf0d18fcad6eaf5072",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
