@@ -27,7 +27,7 @@ public interface NicConsoleProvider {
 
     public boolean removeIntents(List<Uuid> intents);
 
-    public Intents listIntents();
+    public List<Intent> listIntents(boolean isConfigurationDatastore);
 
     public Intent show(Uuid id);
 }

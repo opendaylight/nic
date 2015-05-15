@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
@@ -115,7 +116,7 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
             // Perform the tx.submit synchronously
             tx.submit();
         } catch (Exception e) {
-            LOG.info("addIntent: failed: {}", e);
+            LOG.error("addIntent: failed: {}", e);
             return false;
         }
 
@@ -132,7 +133,6 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
     @Override
     public boolean removeIntent(Uuid intent) {
         try {
-
             InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class).child(Intent.class, new IntentKey(intent));
             // Removes default config data in data store tree
             WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
@@ -144,7 +144,7 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
             return false;
         }
 
-        return false;
+        return true;
     }
 
     @Override
@@ -154,9 +154,19 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
     }
 
     @Override
-    public Intents listIntents() {
-        // TODO List will be added in a further commit
-        return null;
+    public List<Intent> listIntents(boolean isConfigurationDatastore) {
+        List<Intent> listOfIntents = new ArrayList<Intent>();
+
+        try {
+            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
+            listOfIntents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet().get().getIntent();
+        } catch (Exception e) {
+            LOG.error("ListIntents: failed: {}", e);
+            return listOfIntents;
+        }
+
+        LOG.info("ListIntentsConfiguration: list of intents retrieved sucessfully");
+        return listOfIntents;
     }
 
     @Override
