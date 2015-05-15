@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
@@ -114,7 +115,7 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
             // Perform the tx.submit synchronously
             tx.submit();
         } catch (Exception e) {
-            LOG.info("addIntent: failed: {}", e);
+            LOG.error("addIntent: failed: {}", e);
             return false;
         }
 
@@ -141,9 +142,19 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
     }
 
     @Override
-    public Intents listIntents() {
-        // TODO List will be added in a further commit
-        return null;
+    public List<Intent> listIntents() {
+        List<Intent> listOfIntents = new ArrayList<Intent>();
+
+        try {
+            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
+            listOfIntents = tx.read(LogicalDatastoreType.CONFIGURATION, INTENTS_IID).checkedGet().get().getIntent();
+        } catch (Exception e) {
+            LOG.error("ListIntents: failed: {}", e);
+            return listOfIntents;
+        }
+
+        LOG.info("ListIntentsConfiguration: list of intents retrieved sucessfully");
+        return listOfIntents;
     }
 
     @Override
