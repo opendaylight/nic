@@ -12,6 +12,7 @@ import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -129,13 +130,25 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
     }
 
     @Override
-    public boolean removeIntent(Intent intent) {
-        // TODO Remove will be added in a further commit
+    public boolean removeIntent(Uuid intent) {
+        try {
+
+            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class).child(Intent.class, new IntentKey(intent));
+            // Removes default config data in data store tree
+            WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
+            tx.delete(LogicalDatastoreType.CONFIGURATION, iid);
+            // Perform the tx.submit synchronously
+            tx.submit();
+        } catch (Exception e) {
+            LOG.info("RemoveIntent: failed: {}", e);
+            return false;
+        }
+
         return false;
     }
 
     @Override
-    public boolean removeIntents(Intents intents) {
+    public boolean removeIntents(List<Uuid> intents) {
         // TODO MultiRemove will be added in a further commit
         return false;
     }
