@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
      (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
 
-     This program is made available under the terms of the 
+     This program is made available under the terms of the
      Eclipse Public License v1.0 which accompanies this distribution,
      and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
@@ -11,13 +11,8 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <parent>
-        <groupId>org.opendaylight.nic</groupId>
-        <artifactId>nic-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>parent</relativePath>
-    </parent>
-
+    <groupId>org.opendaylight.nic</groupId>
+    <version>1.0.0-SNAPSHOT</version>
     <artifactId>nic-aggregator</artifactId>
     <name>nic</name> <!-- Used by Sonar to set project name -->
     <packaging>pom</packaging>
