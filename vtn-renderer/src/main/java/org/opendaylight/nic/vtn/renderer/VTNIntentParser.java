@@ -130,7 +130,7 @@ public class VTNIntentParser {
 
     /**
      * Delete a particular intent
-     * 
+     *
      * @param intentID
      */
     public void Delete(String intentID) {
@@ -177,7 +177,7 @@ public class VTNIntentParser {
 
     /**
      * To obtain VTN manager Instance
-     * 
+     *
      * @param containerName
      * @return
      * @throws Exception
@@ -227,7 +227,7 @@ public class VTNIntentParser {
      * This method will return if the tenant with the same name is already
      * created, if tenant with same name already exists false is returned else
      * return true.
-     * 
+     *
      * @param tenantName
      * @return
      */
@@ -243,7 +243,7 @@ public class VTNIntentParser {
             }
         } catch (Exception e) {
             status = true;
-			LOG.error("Unable to check the tenant status", e);
+            LOG.error("Unable to check the tenant status", e);
         }
         return status;
     }
@@ -330,7 +330,7 @@ public class VTNIntentParser {
 
     /**
      * Delete the given flow condition
-     * 
+     *
      * @param condName
      *            returns true on successfully deletion
      * @return
@@ -358,7 +358,7 @@ public class VTNIntentParser {
     /**
      * This method will return if the bridge already exists, if tenant with same
      * name already exists false is returned else return true.
-     * 
+     *
      * @param bridgeName
      * @return
      */
@@ -372,15 +372,15 @@ public class VTNIntentParser {
                 }
             }
         } catch (Exception e) {
-			 status = true;
-             LOG.error("Unable to check Flow Condition Creation", e);            
+             status = true;
+             LOG.error("Unable to check Flow Condition Creation", e);
         }
         return status;
     }
 
     /**
      * Creates flow filter for the given flow condition
-     * 
+     *
      * @param tenantName
      * @param bridgeName
      * @param type
@@ -428,7 +428,7 @@ public class VTNIntentParser {
 
     /**
      * Delete an Existing flow filter with received ID
-     * 
+     *
      * @param index
      * @return
      */
@@ -447,8 +447,8 @@ public class VTNIntentParser {
     }
 
     /**
-     * Create a virtual bridge .
-     * 
+     * Create a virtual bridge.
+     *
      * @param tenantName
      * @param bridgeName
      * @param vlanMap
@@ -479,7 +479,7 @@ public class VTNIntentParser {
 
         } catch (Exception exception) {
             bridgeStatus = false;
-            LOG.error(" Failed to create Bridge.", exception);
+            LOG.error("Failed to create Bridge.", exception);
         }
         return bridgeStatus;
     }
@@ -487,7 +487,7 @@ public class VTNIntentParser {
     /**
      * This method will return if the bridge already exists, if tenant with same
      * name already exists false is returned else return true.
-     * 
+     *
      * @param bridgeName
      * @return
      */
@@ -503,7 +503,7 @@ public class VTNIntentParser {
         } catch (Exception e) {
 
             status = true;
-            LOG.error(" Unable to get bridge status.", e);
+            LOG.error("Unable to get bridge status.", e);
 
         }
         return status;
@@ -511,7 +511,7 @@ public class VTNIntentParser {
 
     /**
      * Validates the received IP address
-     * 
+     *
      * @param ip
      * @return true on success
      */
@@ -528,7 +528,7 @@ public class VTNIntentParser {
 
     /**
      * Validate the given Mac address
-     * 
+     *
      * @param macAddress
      * @return true on valid MAC address
      */

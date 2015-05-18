@@ -16,10 +16,9 @@ public class VTNRendererUtility {
      * Stores the Intent details as a map
      */
     static HashMap<String, ArrayList<IntentWrapper>> hashMapIntentUtil = new HashMap<String, ArrayList<IntentWrapper>>();
+
     public static void storeIntentDetail(HashMap hashmapIntent)
     {
         hashMapIntentUtil.putAll(hashmapIntent);
     }
-    
-    
 }
