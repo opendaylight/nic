@@ -34,8 +34,10 @@ public class IntentListShellCommand extends OsgiCommandSupport {
 
         if (listIntents.size() > 0) {
             StringBuilder sb = new StringBuilder();
+            Integer counter = 1;
             for (Intent intent : listIntents) {
-                sb.append(String.format("%s\n", intent.getId().toString()));
+                sb.append(String.format("#%d - id: %s\n", counter, intent.getId().getValue()));
+                counter++;
             }
             return sb.toString();
         } else

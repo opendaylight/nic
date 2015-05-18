@@ -105,7 +105,7 @@ public class NicProvider implements NicConsoleProvider {
     public boolean addIntent(Intent intent) {
 
         Intents intents;
-        List<Intent> listOfIntents = new ArrayList<Intent>();
+        List<Intent> listOfIntents = listIntents(true);
 
         try {
             listOfIntents.add(intent);
@@ -156,15 +156,17 @@ public class NicProvider implements NicConsoleProvider {
 
     @Override
     public List<Intent> listIntents(boolean isConfigurationDatastore) {
-        List<Intent> listOfIntents = new ArrayList<Intent>();
+        List<Intent> listOfIntents = null;
 
         try {
             ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
             listOfIntents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet().get().getIntent();
         } catch (Exception e) {
             LOG.error("ListIntents: failed: {}", e);
-            return listOfIntents;
         }
+
+        if (listOfIntents == null)
+            listOfIntents = new ArrayList<Intent>();
 
         LOG.info("ListIntentsConfiguration: list of intents retrieved sucessfully");
         return listOfIntents;
