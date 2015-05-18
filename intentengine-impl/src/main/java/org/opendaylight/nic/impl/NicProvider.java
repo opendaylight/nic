@@ -7,8 +7,6 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
-import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
@@ -16,23 +14,24 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-public class NicProvider implements BindingAwareProvider, AutoCloseable, NicConsoleProvider {
+public class NicProvider implements NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
 
     protected DataBroker dataBroker;
 
-    public DataBroker getDataBroker() {
-        return dataBroker;
-    }
+    protected ServiceRegistration<NicConsoleProvider> nicConsoleRegistration;
 
-    protected void setDataBroker(DataBroker dataBroker) {
+    public NicProvider(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
     }
 
@@ -41,16 +40,18 @@ public class NicProvider implements BindingAwareProvider, AutoCloseable, NicCons
     @Override
     public void close() throws Exception {
         // Close active registrations
+        nicConsoleRegistration.unregister();
         LOG.info("IntentengineImpl: registrations closed");
     }
 
-    @Override
-    public void onSessionInitiated(ProviderContext session) {
+    public void init() {
         // Initialize operational and default config data in MD-SAL data store
-        setDataBroker(session.getSALService(DataBroker.class));
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        nicConsoleRegistration = context.registerService(NicConsoleProvider.class, this, null);
+
         initIntentsOperational();
         initIntentsConfiguration();
-        LOG.info("onSessionInitiated: initialization done");
+        LOG.info("Initialization done");
     }
 
     /**
