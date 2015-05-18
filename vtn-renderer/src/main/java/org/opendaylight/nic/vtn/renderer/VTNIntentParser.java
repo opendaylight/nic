@@ -10,7 +10,6 @@ package org.opendaylight.nic.vtn.renderer;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -41,28 +40,38 @@ import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.
 
 public class VTNIntentParser {
 
-    private static final String TENANTNAME = "VTNRenderer";
-    private static final String BRIDGENAME = "default";
-    private static final Logger LOG = LoggerFactory
-            .getLogger(VTNIntentParser.class);
+    private final String TENANT_NAME = "vtnRenderer";
+    private final String BRIDGE_NAME = "default";
+    private final String CONTAINER_NAME = "default";
+    private final Logger LOG = LoggerFactory.getLogger(VTNIntentParser.class);
     int flow_index = 1;
     int flowcond_index = 1;
     IVTNManager mgr;
 
     /**
-     * Creates a default Virtual Tenant and default bridge with vlan mapping
+     * Creates a default Virtual Tenant and default bridge with Vlan mapping
      */
     public void createDefault() {
+
         try {
+            mgr = getVTNManager(CONTAINER_NAME);
+            boolean status = createTenant(TENANT_NAME, mgr);
 
-            mgr = getVTNManager("default");
-            boolean status = createTenant(TENANTNAME, mgr);
-            status = createBridge(TENANTNAME, BRIDGENAME, true);
-            LOG.info(" Bridge creation status", status);
+            if (status != true) {
+                LOG.error("Tenant creation failed");
+                return;
+            }
 
+            status = createBridge(TENANT_NAME, BRIDGE_NAME, true);
+
+            if (status != true) {
+                LOG.error("Bridge creation failed");
+                return;
+            }
+
+            LOG.info("Bridge creation status {}", status);
         } catch (Exception e) {
-            e.printStackTrace();
-
+            LOG.error("Exception occured in VTNIntentParser {}", e);
         }
     }
 
@@ -83,77 +92,61 @@ public class VTNIntentParser {
 
                 createDefault();
 
-                action = action.toLowerCase();
                 String condNameSrcDst = constructCondName(adressSrc, adressDst);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc);
-                switch (action) {
 
-                case "allow":
-
-                    boolean condStatus = createFlowCond(adressSrc, adressDst,
-                            condNameSrcDst);
-
-                    createFlowCond(adressDst, adressSrc, condNameDstSrc);
-                    createFlowCond("0.0", "0.0", "match_any");
-                    createFlowFilter(TENANTNAME, BRIDGENAME, "DROP",
-                            "match_any", false, intentList);
-                    createFlowFilter(TENANTNAME, BRIDGENAME, "PASS",
-                            condNameSrcDst, true, intentList);
-                    createFlowFilter(TENANTNAME, BRIDGENAME, "PASS",
-                            condNameDstSrc, true, intentList);
-
-                    break;
-                case "block":
-                    createFlowCond(adressSrc, adressDst, condNameSrcDst);
-                    createFlowCond(adressDst, adressSrc, condNameDstSrc);
-                    createFlowCond("0.0", "0.0", "match_any");
-                    createFlowFilter(TENANTNAME, BRIDGENAME, "DROP",
-                            "match_any", false, intentList);
-                    createFlowFilter(TENANTNAME, BRIDGENAME, "DROP",
-                            condNameSrcDst, true, intentList);
-                    createFlowFilter(TENANTNAME, BRIDGENAME, "DROP",
-                            condNameDstSrc, true, intentList);
-
-                    break;
-                default:
-                    LOG.info("{} Operation NOT SUPPORTED", action);
-
+                action = action.equalsIgnoreCase("allow") ? "PASS" : action
+                        .equalsIgnoreCase("drop") ? "DROP" : "NA";
+                if (action.equalsIgnoreCase("NA")) {
+                    LOG.error("Unsupported Action {}", action);
+                    return;
                 }
 
+                createFlowCond(adressSrc, adressDst, condNameSrcDst);
+                createFlowCond(adressDst, adressSrc, condNameDstSrc);
+                createFlowCond("0.0", "0.0", "match_any");
+
+                createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
+                    "match_any", false, intentList);
+                createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                    condNameSrcDst, true, intentList);
+                createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                    condNameDstSrc, true, intentList);
             } else {
                 LOG.error("Invalid Address");
             }
+
         } catch (Exception e) {
-            LOG.error("Unable to create VTN Objects", e);
+            LOG.error("Unable to create VTN Objects {}", e);
         }
     }
 
     /**
      * Delete a particular intent
-     * 
+     *
      * @param intentID
      */
     public void Delete(String intentID) {
         try {
             ArrayList<IntentWrapper> list = VTNRendererUtility.hashMapIntentUtil
                     .get(intentID);
+
             for (IntentWrapper intentWrapper : list) {
                 if (intentWrapper.getEntityDescription().equalsIgnoreCase(
                         "FlowFilter")) {
                     deleteFlowCond(intentWrapper.entityName);
                     deleteFlowFilter(intentWrapper.getEntityValue());
-
                 }
             }
-        } catch (Exception e) {
-            LOG.error(intentID + ":Unable to Delete", e);
-        }
 
+        } catch (Exception e) {
+            LOG.error("{} : Unable to Delete, {}", intentID, e);
+        }
     }
 
     /**
      * This method creates a flow condition name
-     * 
+     *
      * @param adressSrc
      * @param addressDst
      * @return flow condition name on valid IP Address or Mac Address
@@ -161,6 +154,7 @@ public class VTNIntentParser {
     public String constructCondName(final String adressSrc,
             final String addressDst) {
         String cond_name = null;
+
         if (validateIP(adressSrc) && (validateIP(addressDst))) {
             cond_name = adressSrc.replace(".", "");
             cond_name = cond_name.concat(addressDst.replace(".", ""));
@@ -172,12 +166,13 @@ public class VTNIntentParser {
             cond_name = cond_name.concat(addressDst.replace(":", ""));
             cond_name = "cond_" + cond_name;
         }
+
         return cond_name;
     }
 
     /**
      * To obtain VTN manager Instance
-     * 
+     *
      * @param containerName
      * @return
      * @throws Exception
@@ -185,6 +180,7 @@ public class VTNIntentParser {
     protected IVTNManager getVTNManager(String containerName) throws Exception {
         IVTNManager mgr = (IVTNManager) ServiceHelper.getInstance(
                 IVTNManager.class, containerName, this);
+
         if (mgr == null) {
             throw new Exception("VTN Manager Service unavailable");
         }
@@ -198,81 +194,69 @@ public class VTNIntentParser {
      * @return
      */
     public boolean createTenant(String tenantName, IVTNManager mgr) {
-        boolean created = false;
+
         try {
-
             VTenantPath path = new VTenantPath(tenantName);
-            VTenantConfig tconf = new VTenantConfig(tenantName + " "
-                    + "created ");
+            VTenantConfig tconf = new VTenantConfig(tenantName + " created ");
 
-            if (!checkTenantStatus(tenantName)) {
+            if (!isTenantExist(tenantName)) {
                 Status status = mgr.addTenant(path, tconf);
-                if (status.isSuccess()) {
-                    created = true;
-
-                } else {
-                    created = false;
-                }
-            } else {
-                created = true;
+                return status.isSuccess();
             }
         } catch (Exception ex) {
-            LOG.error("Tenant creation Error", ex);
+            LOG.error("Tenant creation error {}", ex);
+            return false;
         }
 
-        return created;
+        return true;
     }
 
     /**
      * This method will return if the tenant with the same name is already
      * created, if tenant with same name already exists false is returned else
      * return true.
-     * 
+     *
      * @param tenantName
      * @return
      */
-    public boolean checkTenantStatus(String tenantName) {
-        boolean status = false;
+    public boolean isTenantExist(String tenantName) {
+
         try {
-            mgr = getVTNManager("default");
+            mgr = getVTNManager(CONTAINER_NAME);
 
             for (VTenant vTenant : mgr.getTenants()) {
                 if (vTenant.getName().equalsIgnoreCase(tenantName)) {
-                    status = true;
+                    return true;
                 }
             }
         } catch (Exception e) {
-            status = true;
-			LOG.error("Unable to check the tenant status", e);
+            LOG.error("Tenant creation error {}", e);
         }
-        return status;
+        return false;
     }
 
     /**
      * This method creates flow condition
      *
-     * @param IP1
-     * @param IP2
+     * @param addressSrc
+     * @param addressDst
      */
     public boolean createFlowCond(final String addressSrc,
             final String addressDst, String condName) {
-        boolean created = false;
-        try {
 
-            if (!checkFlowCondCreation(condName)) {
+        try {
+            if (!isFlowCondExist(condName)) {
                 ArrayList<FlowMatch> matchList = new ArrayList<FlowMatch>();
-                mgr = getVTNManager("default");
+                mgr = getVTNManager(CONTAINER_NAME);
                 FlowCondition fcond;
 
                 if (addressSrc.equalsIgnoreCase("0.0")) {
-                    //matchList = null;
                     EtherAddress addr = null;
-                    EthernetMatch ethernetMatch = new EthernetMatch(addr,
-                            addr, 2048, (short) 0, null);
+                    EthernetMatch ethernetMatch = new EthernetMatch(addr, addr,
+                            2048, (short) 0, null);
                     FlowMatch flowmatch = new FlowMatch(flowcond_index++,
                             ethernetMatch, null, null);
                     matchList.add(flowmatch);
-
                 } else if ((validateIP(addressSrc))
                         && (validateIP(addressDst))
                         || ((validateMacAddress(addressSrc)) && (validateMacAddress(addressDst)))) {
@@ -310,77 +294,69 @@ public class VTNIntentParser {
 
                 if (status.getName().equalsIgnoreCase("added")) {
                     LOG.info("Flow Condition created:");
-                    created = true;
+                    return true;
 
                 } else {
-                    created = false;
+                    return false;
                 }
-
-            } else {
-                created = true;
-                return created;
             }
         } catch (Exception ex) {
-            created = false;
-            LOG.error("Unable to create Flow Condition", ex);
+            LOG.error("Unable to create Flow Condition {}", ex);
+            return false;
         }
 
-        return created;
+        return true;
     }
 
     /**
      * Delete the given flow condition
-     * 
+     *
      * @param condName
-     *            returns true on successfully deletion
+     *            returns true on deletion.
      * @return
      */
     public boolean deleteFlowCond(String condName) {
         try {
-            mgr = getVTNManager("default");
-            if (checkFlowCondCreation(condName)) {
+            mgr = getVTNManager(CONTAINER_NAME);
+            if (isFlowCondExist(condName)) {
                 Status status = mgr.removeFlowCondition(condName);
-                if (status.isSuccess()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return true;
+
+                return status.isSuccess();
             }
         } catch (Exception e) {
-            LOG.error("Unable to delete Flow Condition", e);
+            LOG.error("Unable to delete Flow Condition {}", e);
+            return false;
         }
-        return false;
 
+        return true;
     }
 
     /**
      * This method will return if the bridge already exists, if tenant with same
-     * name already exists false is returned else return true.
-     * 
+     * name already exists, false is returned else returns true.
+     *
      * @param bridgeName
      * @return
      */
-    public boolean checkFlowCondCreation(String condName) {
-        boolean status = false;
+    public boolean isFlowCondExist(String condName) {
+
         try {
-            mgr = getVTNManager("default");
+            mgr = getVTNManager(CONTAINER_NAME);
             for (FlowCondition condition : mgr.getFlowConditions()) {
                 if (condition.getName().equalsIgnoreCase(condName)) {
-                    status = true;
+                    return true;
                 }
             }
         } catch (Exception e) {
-			 status = true;
-             LOG.error("Unable to check Flow Condition Creation", e);            
+            LOG.error("Unable to check Flow Condition {}", e);
         }
-        return status;
+
+        return false;
     }
 
     /**
      * Creates flow filter for the given flow condition
-     * 
+     *
      * @param tenantName
      * @param bridgeName
      * @param type
@@ -388,11 +364,12 @@ public class VTNIntentParser {
      * @throws Exception
      */
     public void createFlowFilter(String tenantName, String bridgeName,
-            String type, String cond_name, boolean add,
+            String type, String cond_name, boolean canAdd,
             ArrayList<IntentWrapper> arrayList) throws Exception {
         boolean in = false;
         boolean out = true;
         int index = 0;
+
         if (cond_name.equalsIgnoreCase("match_any")) {
             index = 65535;
         } else {
@@ -400,7 +377,7 @@ public class VTNIntentParser {
         }
 
         FlowFilter filter = null;
-        mgr = getVTNManager("default");
+        mgr = getVTNManager(CONTAINER_NAME);
         VBridgePath path = new VBridgePath(tenantName, bridgeName);
 
         if (type.equalsIgnoreCase("PASS")) {
@@ -416,39 +393,40 @@ public class VTNIntentParser {
 
         FlowFilterId fid = new FlowFilterId(path, in);
         mgr.setFlowFilter(fid, index, filter);
-        if (add) {
+
+        if (canAdd) {
             IntentWrapper intentWrapper = new IntentWrapper();
             intentWrapper.setEntityValue(index);
             intentWrapper.setEntityDescription(cond_name);
             intentWrapper.setEntityName("FlowFilter");
             arrayList.add(intentWrapper);
         }
-
     }
 
     /**
      * Delete an Existing flow filter with received ID
-     * 
+     *
      * @param index
      * @return
      */
     public boolean deleteFlowFilter(int index) {
+
         try {
-            mgr = getVTNManager("default");
-            VBridgePath path = new VBridgePath(TENANTNAME, BRIDGENAME);
+            mgr = getVTNManager(CONTAINER_NAME);
+            VBridgePath path = new VBridgePath(TENANT_NAME, BRIDGE_NAME);
             FlowFilterId fid = new FlowFilterId(path, false);
             mgr.removeFlowFilter(fid, index);
         } catch (Exception e) {
-            LOG.error("Unable to delete Flow Filter ", e);
-
+            LOG.error("Unable to delete Flow Filter {}", e);
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
-     * Create a virtual bridge .
-     * 
+     * Create a virtual bridge.
+     *
      * @param tenantName
      * @param bridgeName
      * @param vlanMap
@@ -458,64 +436,65 @@ public class VTNIntentParser {
      */
     public boolean createBridge(String tenantName, String bridgeName,
             boolean vlanMap) {
-        boolean bridgeStatus = false;
+
         try {
-            mgr = getVTNManager("default");
+            mgr = getVTNManager(CONTAINER_NAME);
             VBridgePath bridgePath = new VBridgePath(tenantName, bridgeName);
-            VBridgeConfig bconf = new VBridgeConfig(bridgeName + " "
-                    + "description");
-            if (!checkBridgeCreation(bridgeName, bridgePath)) {
+            VBridgeConfig bconf = new VBridgeConfig(bridgeName + " description");
+
+            if (!isBridgeExist(bridgeName, bridgePath)) {
                 Status status = mgr.addBridge(bridgePath, bconf);
                 VlanMapConfig vlconf = new VlanMapConfig(null, (short) 0);
                 mgr.addVlanMap(bridgePath, vlconf);
-                if (status.isSuccess()) {
-                    bridgeStatus = true;
-                } else {
-                    bridgeStatus = false;
-                }
+
+                return status.isSuccess();
             } else {
-                bridgeStatus = true;
+                // Already Bridge existing
+                return true;
             }
 
         } catch (Exception exception) {
-            bridgeStatus = false;
-            LOG.error(" Failed to create Bridge.", exception);
+            LOG.error("Failed to create Bridge {}", exception);
         }
-        return bridgeStatus;
+
+        return false;
     }
 
     /**
      * This method will return if the bridge already exists, if tenant with same
      * name already exists false is returned else return true.
-     * 
+     *
      * @param bridgeName
      * @return
      */
-    public boolean checkBridgeCreation(String bridgeName, VBridgePath path) {
-        boolean status = false;
+    public boolean isBridgeExist(String bridgeName, VBridgePath path) {
+
         try {
-            mgr = getVTNManager("default");
+            mgr = getVTNManager(CONTAINER_NAME);
             for (VBridge vBridge : mgr.getBridges(path)) {
                 if (vBridge.getName().equalsIgnoreCase(bridgeName)) {
-                    status = true;
+                    return true;
                 }
             }
         } catch (Exception e) {
-
-            status = true;
-            LOG.error(" Unable to get bridge status.", e);
-
+            LOG.error("Unable to get bridge status {}", e);
         }
-        return status;
+
+        return false;
     }
 
     /**
      * Validates the received IP address
-     * 
+     *
      * @param ip
      * @return true on success
      */
     private boolean validateIP(final String ip) {
+        if (ip == null) {
+            LOG.error("IP address is null");
+            throw new NullPointerException();
+        }
+
         String ipAddressPattern = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
                 + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
                 + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
@@ -527,35 +506,51 @@ public class VTNIntentParser {
     }
 
     /**
-     * Validate the given Mac address
-     * 
+     * Validates the given Mac address
+     *
      * @param macAddress
      * @return true on valid MAC address
      */
     private boolean validateMacAddress(final String macAddress) {
+        if (macAddress == null) {
+            LOG.error("MAC address is null");
+            throw new NullPointerException();
+        }
 
         String macAdrressPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
         Pattern pattern = Pattern.compile(macAdrressPattern);
         Matcher matcher = pattern.matcher(macAddress);
         return matcher.matches();
-
     }
 
     /**
      * This method verifies if both the ip exists on the same subnet
      *
-     * @param IP1
-     * @param IP2
+     * @param srcIp
+     * @param dstIp
      * @return
      */
-    private boolean validateSubnet(String IP1, String IP2) {
-        boolean result = false;
-        if (!IP1.equalsIgnoreCase(IP2)) {
-            result = IP1.substring(0, IP1.lastIndexOf('.')).equalsIgnoreCase(
-                    IP2.substring(0, IP2.lastIndexOf('.')));
+    private boolean validateSubnet(String srcIp, String dstIp) {
+
+        if (!srcIp.equalsIgnoreCase(dstIp)) {
+            String[] srcIpDigits = srcIp.split("\\.");
+            String[] dstIpDigits = dstIp.split("\\.");
+
+            for (int index = 0; index < 3; index++) {
+                if (!(Byte.parseByte(srcIpDigits[index]) == Byte
+                        .parseByte(dstIpDigits[index]))) {
+                    LOG.error(
+                            "Source and Destination IP addresses are not in same subnet {} - {}",
+                            srcIp, dstIp);
+                    return false;
+                }
+            }
+            return true;
         }
-        return result;
 
+        LOG.error(
+                "Source and Destination IP addresses have same IP addresses {} - {}",
+                srcIp, dstIp);
+        return false;
     }
-
 }
