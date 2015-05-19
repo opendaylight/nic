@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_413ce42f",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-05-19T20:05:14Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s a good idea to hardcode a version (ie using a property seems a like a better idea)",
+      "revId": "fd24bbf8b58161ad170898737448c497ac51d498",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
