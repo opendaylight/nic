@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_3641dc39",
+        "filename": "gbp-renderer/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-19T12:51:01Z",
+      "side": 1,
+      "message": "I would use config-parent from org.opendaylight.controller regarding all the rework we have made to stop using nic-parent",
+      "revId": "0396fabb5181aac7c934800de7f770b19f07bf27",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
