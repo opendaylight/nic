@@ -145,6 +145,11 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentcompiler</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
