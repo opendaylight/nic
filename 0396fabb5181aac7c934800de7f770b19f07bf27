@@ -34,6 +34,24 @@
       "revId": "0396fabb5181aac7c934800de7f770b19f07bf27",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_164620c0",
+        "filename": "gbp-renderer/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-19T14:21:06Z",
+      "side": 1,
+      "message": "nvm, they removed it here https://git.opendaylight.org/gerrit/#/c/20669/\nBut yeah I agree with you, we need a common pom file for the whole project",
+      "parentUuid": "1a9dcd25_d630b858",
+      "revId": "0396fabb5181aac7c934800de7f770b19f07bf27",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
