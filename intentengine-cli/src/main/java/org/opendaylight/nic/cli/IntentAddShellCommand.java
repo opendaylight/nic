@@ -20,9 +20,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.AllowBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.BlockBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.AllowBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.BlockBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroupBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -70,7 +69,14 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
         short order = 1;
         for (String a : this.actions) {
-            Action action = (a.equalsIgnoreCase("ALLOW")) ? new AllowBuilder().build() : new BlockBuilder().build();
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action = null;
+            if (a.equalsIgnoreCase("ALLOW"))
+                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.AllowBuilder().setAllow(new AllowBuilder().build()).build();
+            else if (a.equalsIgnoreCase("BLOCK"))
+                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.BlockBuilder().setBlock(new BlockBuilder().build()).build();
+            else
+                continue;
+
             Actions actions = new ActionsBuilder().setOrder(order).setAction(action).build();
             actionsList.add(actions);
             order++;
