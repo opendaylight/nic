@@ -193,4 +193,14 @@ public class NicProvider implements NicConsoleProvider {
         LOG.info("getIntent: Intent retrieved sucessfully");
         return intent;
     }
+
+    @Override
+    public String compile() {
+        // returning formatted string
+        List<Intent> intents = listIntents(true);
+        // convert intents to compiler nodes
+        // call the compiler code
+        // returning formatted compilation string
+        return "";
+    }
 }
