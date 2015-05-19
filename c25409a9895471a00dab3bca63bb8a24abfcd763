@@ -33,6 +33,24 @@
       "revId": "c25409a9895471a00dab3bca63bb8a24abfcd763",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_56cee85b",
+        "filename": "gbp-renderer/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-05-19T14:13:19Z",
+      "side": 1,
+      "message": "Yeah, we should use a common pom file for nic",
+      "parentUuid": "1a9dcd25_b6740c9d",
+      "revId": "c25409a9895471a00dab3bca63bb8a24abfcd763",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
