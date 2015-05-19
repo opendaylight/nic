@@ -16,6 +16,24 @@
       "revId": "0396fabb5181aac7c934800de7f770b19f07bf27",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_d630b858",
+        "filename": "gbp-renderer/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-05-19T14:19:28Z",
+      "side": 1,
+      "message": "Not for the aggregator, it should refer to a common pom file for the entire nic project.",
+      "parentUuid": "1a9dcd25_3641dc39",
+      "revId": "0396fabb5181aac7c934800de7f770b19f07bf27",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
