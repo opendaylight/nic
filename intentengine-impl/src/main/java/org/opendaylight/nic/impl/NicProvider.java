@@ -132,9 +132,9 @@ public class NicProvider implements NicConsoleProvider {
     }
 
     @Override
-    public boolean removeIntent(Uuid intent) {
+    public boolean removeIntent(Uuid id) {
         try {
-            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class).child(Intent.class, new IntentKey(intent));
+            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class).child(Intent.class, new IntentKey(id));
             // Removes default config data in data store tree
             WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
             tx.delete(LogicalDatastoreType.CONFIGURATION, iid);
@@ -173,8 +173,23 @@ public class NicProvider implements NicConsoleProvider {
     }
 
     @Override
-    public Intent show(Uuid id) {
-        // TODO Show will be added in a further commit
-        return null;
+    public Intent getIntent(Uuid id) {
+        Intent intent = null;
+
+        try {
+            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class).child(Intent.class, new IntentKey(id));
+            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
+            intent = tx.read(LogicalDatastoreType.CONFIGURATION, iid).checkedGet().get();
+
+            if (intent == null) {
+                intent = tx.read(LogicalDatastoreType.OPERATIONAL, iid).checkedGet().get();
+            }
+
+        } catch (Exception e) {
+            LOG.error("getIntent: failed: {}", e);
+        }
+
+        LOG.info("getIntent: Intent retrieved sucessfully");
+        return intent;
     }
 }
