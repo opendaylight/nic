@@ -1,15 +1,27 @@
 package org.opendaylight.nic.impl;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.api.NicConsoleProvider;
+import org.opendaylight.nic.compiler.api.Action;
+import org.opendaylight.nic.compiler.api.Endpoint;
+import org.opendaylight.nic.compiler.api.IntentCompiler;
+import org.opendaylight.nic.compiler.api.IntentCompilerFactory;
+import org.opendaylight.nic.compiler.api.Policy;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -192,5 +204,57 @@ public class NicProvider implements NicConsoleProvider {
 
         LOG.info("getIntent: Intent retrieved sucessfully");
         return intent;
+    }
+
+    @Override
+    public String compile() {
+        List<Intent> intents = listIntents(true);
+        IntentCompiler compiler = IntentCompilerFactory.createIntentCompiler();
+
+        Collection<Policy> policies = new LinkedList<>();
+
+        for (Intent intent : intents) {
+            EndPointGroup sourceContainer = (EndPointGroup) intent.getSubjects().get(0).getSubject();
+            EndPointGroup destinationContainer = (EndPointGroup) intent.getSubjects().get(1).getSubject();
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action actionContainer =
+                    (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action)
+                            intent.getActions().get(0).getAction();
+            Set<Endpoint> sources, destinations;
+            try {
+                sources = compiler.parseEndpointGroup(sourceContainer.getEndPointGroup().getName());
+                destinations = compiler.parseEndpointGroup(destinationContainer.getEndPointGroup().getName());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+                return "ERROR";
+            }
+            Action action;
+            if (actionContainer instanceof Allow) {
+                action = Action.ALLOW;
+            } else if (actionContainer instanceof Block) {
+                action = Action.BLOCK;
+            } else {
+                return "ERROR";
+            }
+            policies.add(compiler.createPolicy(sources, destinations, action));
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(">>> Original policies:\n");
+        stringBuilder.append(formatPolicies(policies));
+        stringBuilder.append('\n');
+        stringBuilder.append(">>> Compiled policies:\n");
+        Collection<Policy> compiledPolicies = compiler.compile(policies);
+        stringBuilder.append(formatPolicies(compiledPolicies));
+
+        return stringBuilder.toString();
+    }
+
+    private String formatPolicies(Collection<Policy> policies) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Policy policy : policies) {
+            stringBuilder.append(policy.toString());
+            stringBuilder.append('\n');
+        }
+        return stringBuilder.toString();
     }
 }
