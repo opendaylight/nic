@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_acaa78d2",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/PolicyImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-20T21:39:55Z",
+      "side": 1,
+      "message": "Should not use wildcard imports",
+      "revId": "83ec9375dd01c9515d0e6f0d4eaaf1e1518c96eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_2cb6683e",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/api/Action.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-20T21:39:55Z",
+      "side": 1,
+      "message": "Worry this is sustainable, basically the code has to keep the YANG generated actions in sync with the compiler defined actions.",
+      "revId": "83ec9375dd01c9515d0e6f0d4eaaf1e1518c96eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_4caf34e4",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-20T21:39:55Z",
+      "side": 1,
+      "message": "should not use wildcard imports",
+      "revId": "83ec9375dd01c9515d0e6f0d4eaaf1e1518c96eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_6cac70ee",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-20T21:39:55Z",
+      "side": 1,
+      "message": "wildcard",
+      "revId": "83ec9375dd01c9515d0e6f0d4eaaf1e1518c96eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
