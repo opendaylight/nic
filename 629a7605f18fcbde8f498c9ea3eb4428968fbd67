@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_02e49a39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-05-20T10:45:12Z",
+      "side": 1,
+      "message": "Please Modify the comment , it looks odd in CAPS. \nPlease make it \"Implement review comments in renderer code\"",
+      "revId": "629a7605f18fcbde8f498c9ea3eb4428968fbd67",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
