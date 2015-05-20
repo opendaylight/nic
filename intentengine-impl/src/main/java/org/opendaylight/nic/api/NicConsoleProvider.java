@@ -30,4 +30,6 @@ public interface NicConsoleProvider extends AutoCloseable {
     public List<Intent> listIntents(boolean isConfigurationDatastore);
 
     public Intent getIntent(Uuid id);
+
+    public String compile();
 }
