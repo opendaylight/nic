@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_3ca0db8f",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-20T05:02:04Z",
+      "side": 1,
+      "message": "I thought we were going to parent the root pom from odlparent and then remove the nic-parent project.",
+      "revId": "97cf6954a172cea4110dac8da15e4f8c21c9a1c3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
