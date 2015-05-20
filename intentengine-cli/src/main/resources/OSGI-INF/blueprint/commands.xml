@@ -28,6 +28,11 @@
                 <argument ref="nicConsoleProvider" />
             </action>
         </command>
+         <command>
+            <action class="org.opendaylight.nic.cli.IntentCompileShellCommand" >
+                <argument ref="nicConsoleProvider" />
+            </action>
+        </command>
     </command-bundle>
 
     <bean id="actionCompleter" class="org.opendaylight.nic.cli.completers.ActionCompleter" />
