@@ -2,14 +2,19 @@ package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.gbp.renderer.impl.rev1
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.gbp.renderer.impl.GBPRenderer;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GBPRendererModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.gbp.renderer.impl.rev150511.AbstractGBPRendererModule {
+
+    private static final Logger LOG = LoggerFactory.getLogger(GBPRendererModule.class);
+
     public GBPRendererModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
     }
@@ -30,11 +35,26 @@ public class GBPRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
         LogicalDatastoreType store = LogicalDatastoreType.CONFIGURATION;
         InstanceIdentifier<Intents> path = InstanceIdentifier.builder(Intents.class).build();
 
-        GBPRenderer renderer = new GBPRenderer();
+        final GBPRenderer renderer = new GBPRenderer();
         DataChangeScope scope = DataChangeScope.SUBTREE;
-        ListenerRegistration<DataChangeListener> reg = broker.registerDataChangeListener(store, path, renderer, scope);
+        final ListenerRegistration<DataChangeListener> reg = broker.registerDataChangeListener(store, path, renderer, scope);
 
-        return renderer;
+        final class CloseResources implements AutoCloseable {
+            @Override
+            public void close() throws Exception {
+                if (renderer != null) {
+                    renderer.close();
+                }
+                if (reg != null) {
+                    reg.close();
+                }
+                LOG.info("GBG Renderer (instance {}) torn down.", this);
+            }
+        }
+
+        AutoCloseable ret = new CloseResources();
+        LOG.info("GBG Renderer: (instance {}) initialized.", ret);
+        return ret;
     }
 
 }
