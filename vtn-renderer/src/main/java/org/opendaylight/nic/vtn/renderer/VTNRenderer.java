@@ -10,7 +10,8 @@
 package org.opendaylight.nic.vtn.renderer;
 
 import java.util.List;
-import java.net.InetAddress;
+import java.util.Map;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +37,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
+
 
 public class VTNRenderer implements AutoCloseable, DataChangeListener {
     /**
@@ -43,6 +47,8 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      */
     private static final Logger LOG = LoggerFactory
             .getLogger(VTNRenderer.class);
+
+    VTNIntentParser renderer = new VTNIntentParser();
 
     /**
      * {@inheritDoc}
@@ -56,8 +62,9 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      */
     public void onDataChanged(
             AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
-        // TODO: Change the log level to TRACE.
+
         LOG.info("Intent configuration changed.");
+
 
         for (DataObject dao : ev.getCreatedData().values()) {
             LOG.info("Data change For Loop ENTER:::");
@@ -93,13 +100,23 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             }
         }
 
-        /**
-         * Delete the following lines, and implements the renderer.
-         *
-         * try { List<VTenant> vtns = mgr.getTenants(); for (VTenant vtn: vtns)
-         * { LOG.info("{}", vtn); } } catch (Exception e) {
-         * LOG.info("Failed to get tenants: {}", e); }
-         */
+        Map<InstanceIdentifier<?>, DataObject> originalDataObject = ev.getOriginalData();
+        Set<InstanceIdentifier<?>> iiD = ev.getRemovedPaths();
+        for (InstanceIdentifier instanceIdentifier : iiD) {
+            LOG.info(" Data change was removed ");
+            try {
+                if (originalDataObject.get(instanceIdentifier) instanceof Intent) {
+                    Intent lcl_intent = (Intent) originalDataObject.get(instanceIdentifier);
+                    IntentKey lcl_intentKey = (IntentKey) lcl_intent.getKey();
+                    Uuid uuid = (Uuid) lcl_intentKey.getId();
+                    LOG.info(" Data change was removed with intent :{} " ,uuid.getValue());
+                    renderer.delete(uuid.getValue());
+                }
+            } catch (Exception e) {
+                LOG.error("Could not update VTN Renderer :{} ", e);
+            }
+       }
+
     }
 
     /**
@@ -110,13 +127,14 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
     public void intentParser(Intent intent) {
         String endPointSrc = "";
         String endPointDst = "";
-        HashMap hashMap = new HashMap<String, ArrayList<IntentWrapper>>();
-        ArrayList<IntentWrapper> arrayList = new ArrayList<IntentWrapper>();
-        ArrayList<String> subject = new ArrayList<String>();
-        String intentID = "";
-        VTNIntentParser renderer = new VTNIntentParser();
-        LOG.info(":::Intent Parser :::");
-        //if (intent.getStatus() != null) {
+        Map intentMap = new HashMap<String, List<IntentWrapper>>();
+        List<IntentWrapper> intentList = new ArrayList<IntentWrapper>();
+        List<String> subject = new ArrayList<String>();
+        if (intent.getId() == null){
+            return;
+        }
+        Uuid uuid = intent.getId();
+        String intentID = uuid.getValue();
 
         for(Subjects subjects : intent.getSubjects()) {
             EndPointGroup endPointGroup = (EndPointGroup)subjects.getSubject();
@@ -124,7 +142,6 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             subject.add(endPointGroup.getEndPointGroup().getName());
         }
 
-        //if (intent.getSubjects().size() == 2) {
         LOG.info(":::Intent Subjects :::");
         endPointSrc = subject.get(0).toString();
         endPointDst = subject.get(1).toString();
@@ -132,7 +149,6 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             LOG.info(":::Intent Actions :::{}",intent.getActions());
 
             try {
-                //action = intent.getActions().get(0);
 
                 for(Actions actions : intent.getActions()) {
                     Action action = actions.getAction();
@@ -140,25 +156,23 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
                         Allow allow = ((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow) action).getAllow();
                         LOG.info(":::Intent Actions :::{}",allow);
                         if ( allow != null) {
-                            renderer.rendering(endPointSrc, endPointDst, "allow", arrayList);
+                            renderer.rendering(endPointSrc, endPointDst, "allow", intentList);
                         }
                     } else if (action instanceof org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block) {
                         Block block =((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block)action).getBlock();
                         LOG.info(":::Intent Actions :::{}",block);
                         if ( block != null) {
-                            renderer.rendering(endPointSrc, endPointDst, "block", arrayList);
+                            renderer.rendering(endPointSrc, endPointDst, "block", intentList);
                         }
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Could not parse the intent action :{} ", e);
             }
         }
 
-        //}
+        intentMap.put(intentID, intentList);
+        VTNRendererUtility.storeIntentDetail(intentMap);
 
-        hashMap.put(intentID, arrayList);
-        VTNRendererUtility.storeIntentDetail(hashMap);
-        //}
     }
 }

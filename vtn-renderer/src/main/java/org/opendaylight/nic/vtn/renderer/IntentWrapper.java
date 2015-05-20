@@ -16,12 +16,20 @@ public class IntentWrapper {
     public String getEntityDescription() {
         return entityDescription;
     }
+
+    /*
+    * Sets the flow condition name that is created.
+    */
     public void setEntityDescription(String entityDescription) {
         this.entityDescription = entityDescription;
     }
     public String getEntityName() {
         return entityName;
     }
+
+    /*
+    * THe entity type to be stored.
+    */
     public void setEntityName(String entityName) {
         this.entityName = entityName;
     }
@@ -29,6 +37,9 @@ public class IntentWrapper {
     public int getEntityValue() {
         return entityValue;
     }
+    /*
+    * Sets the Flowindex of flowfilter that is created.
+    */
     public void setEntityValue(int index) {
         this.entityValue = index;
     }

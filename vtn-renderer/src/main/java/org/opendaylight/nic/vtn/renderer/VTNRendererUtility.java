@@ -8,6 +8,8 @@
  */
 package org.opendaylight.nic.vtn.renderer;
 
+import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,9 +17,9 @@ public class VTNRendererUtility {
     /*
      * Stores the Intent details as a map
      */
-    static HashMap<String, ArrayList<IntentWrapper>> hashMapIntentUtil = new HashMap<String, ArrayList<IntentWrapper>>();
+    static Map<String, List<IntentWrapper>> hashMapIntentUtil = new HashMap<String, List<IntentWrapper>>();
 
-    public static void storeIntentDetail(HashMap hashmapIntent)
+    public static void storeIntentDetail(Map hashmapIntent)
     {
         hashMapIntentUtil.putAll(hashmapIntent);
     }
