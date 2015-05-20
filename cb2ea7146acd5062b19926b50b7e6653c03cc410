@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_b97398b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "This does not clearly explain what the patch changes.\n\nPlease explain what the patch changes as the commit message.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_1962ccd8",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/IntentWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "A white space should be added before the \"*\".\n\nThis should be applied to other your comments.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 5
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_596854ba",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/IntentWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "h",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 8
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_f9a040f6",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "Why does this patch change the location of this import?\nThis breaks the alphabetical order.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_b9cf18b0",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "The log level should be \"TRACE\" instead of \"INFO\".",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 60
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_3969c88b",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "Since this is a private method and only methods in this class can call the method, I don\u0027t think the null check is necessary in the private method.\nI think null check should be performed in public methods which are given parameters from external classes.",
+      "range": {
+        "startLine": 495,
+        "startChar": 0,
+        "endLine": 498,
+        "endChar": 9
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_d9ba24e1",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "I think this private method should not output such an error message.\nThis method should just focus to check if two IP addresses on the same IP subnet or not.\nAnd, this method should not have the logic that \"Source and Destination IP addresses are not in same subnet\" is error or not.\nThat logic should be implemented in a caller of this method.",
+      "range": {
+        "startLine": 544,
+        "startChar": 20,
+        "endLine": 546,
+        "endChar": 42
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_f9a600c1",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "This logic should be implemented in a caller if needed.",
+      "range": {
+        "startLine": 553,
+        "startChar": 8,
+        "endLine": 555,
+        "endChar": 30
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_3900e8a9",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "The log level should be \"TRACE\" instead of \"INFO\".\n\nI think the following wiki page helps you.\nhttps://wiki.opendaylight.org/view/BestPractices/Logging_Best_Practices",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 50
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_9926dc67",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-20T18:17:34Z",
+      "side": 1,
+      "message": "The log level should be \"TRACE\" instead of \"INFO\".",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 91
+      },
+      "revId": "cb2ea7146acd5062b19926b50b7e6653c03cc410",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
