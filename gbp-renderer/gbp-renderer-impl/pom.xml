@@ -28,6 +28,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
    <version>${project.version}</version>
   </dependency>
 
+  <dependency>
+   <groupId>${project.groupId}</groupId>
+   <artifactId>gbp-renderer-api</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+
   <!-- OpenDaylight Controller -->
   <dependency>
    <groupId>org.opendaylight.controller</groupId>

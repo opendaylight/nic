@@ -1,15 +1,15 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.gbp.renderer.impl.rev150511;
 
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.nic.gbp.renderer.impl.GBPRenderer;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yangtools.concepts.ListenerRegistration;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.nic.gbp.renderer.impl.GBPRendererDataChangeListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GBPRendererModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.gbp.renderer.impl.rev150511.AbstractGBPRendererModule {
+    
+    private GBPRendererDataChangeListener gBPRendererDataChangeListener;
+    private static final Logger LOG = LoggerFactory.getLogger(GBPRendererModule.class);
+
     public GBPRendererModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
     }
@@ -25,15 +25,20 @@ public class GBPRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
 
     @Override
     public java.lang.AutoCloseable createInstance() {
-        DataBroker broker = getDataBrokerDependency();
-
-        LogicalDatastoreType store = LogicalDatastoreType.CONFIGURATION;
-        InstanceIdentifier<Intents> path = InstanceIdentifier.builder(Intents.class).build();
-
-        GBPRenderer renderer = new GBPRenderer();
-        DataChangeScope scope = DataChangeScope.SUBTREE;
-        ListenerRegistration<DataChangeListener> reg = broker.registerDataChangeListener(store, path, renderer, scope);
-
+        final GBPRenderer renderer = new GBPRenderer(getDataBrokerDependency());
+        gBPRendererDataChangeListener = new GBPRendererDataChangeListener(getDataBrokerDependency());
+        final class CloseResources implements AutoCloseable {
+            @Override
+            public void close() throws Exception {
+                if (renderer != null) {
+                    renderer.close();
+                }
+                if (gBPRendererDataChangeListener != null) {
+                    gBPRendererDataChangeListener.close();
+                }
+                LOG.info("Avaya (instance {}) torn down.", this);
+            }
+        }
         return renderer;
     }
 
