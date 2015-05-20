@@ -6,22 +6,34 @@
  * terms of the Eclipse Public License v1.0 which accompanies this
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
  */
+
 package org.opendaylight.nic.vtn.renderer;
 
+/**
+ *The IntentWrapper class creates the VTN entity's to be stored.
+ */
 public class IntentWrapper {
 
-    String entityName;
     int entityValue;
+    String entityName;
     String entityDescription;
     public String getEntityDescription() {
         return entityDescription;
     }
+
+    /**
+     * Sets the flow condition name that is created.
+     */
     public void setEntityDescription(String entityDescription) {
         this.entityDescription = entityDescription;
     }
     public String getEntityName() {
         return entityName;
     }
+
+    /**
+     * The entity type to be stored.
+     */
     public void setEntityName(String entityName) {
         this.entityName = entityName;
     }
@@ -29,6 +41,10 @@ public class IntentWrapper {
     public int getEntityValue() {
         return entityValue;
     }
+
+    /**
+     * Sets the Flowindex of flowfilter that is created.
+     */
     public void setEntityValue(int index) {
         this.entityValue = index;
     }
@@ -46,6 +62,7 @@ public class IntentWrapper {
         result = prime * result + entityValue;
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
