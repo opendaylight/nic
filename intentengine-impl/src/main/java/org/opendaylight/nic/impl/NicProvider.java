@@ -8,8 +8,11 @@ import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.api.NicConsoleProvider;
+import org.opendaylight.nic.compiler.api.IntentCompiler;
+import org.opendaylight.nic.compiler.api.IntentCompilerFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -192,5 +195,20 @@ public class NicProvider implements NicConsoleProvider {
 
         LOG.info("getIntent: Intent retrieved sucessfully");
         return intent;
+    }
+
+    @Override
+    public String compile() {
+        // returning formatted string
+        List<Intent> intents = listIntents(true);
+        IntentCompiler compiler = IntentCompilerFactory.createIntentCompiler();
+
+        for (Intent intent : intents) {
+            intent.getSubjects().get(0).getSubject();
+        }
+        // convert intents to compiler nodes
+        // call the compiler code
+        // returning formatted compilation string
+        return "";
     }
 }
