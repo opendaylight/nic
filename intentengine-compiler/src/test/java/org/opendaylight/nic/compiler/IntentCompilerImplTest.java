@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
+import org.opendaylight.nic.compiler.api.IntentCompiler;
 import org.opendaylight.nic.compiler.api.Policy;
 
 import java.net.InetAddress;
@@ -23,7 +24,7 @@ import static org.junit.Assert.*;
 
 public class IntentCompilerImplTest {
     Set<Policy> policies;
-    IntentCompilerImpl intentCompiler;
+    IntentCompiler intentCompiler;
 
     private Set<Endpoint> endpoints(String... hosts) throws UnknownHostException {
         Set<Endpoint> endpoints = new LinkedHashSet<>();
@@ -34,10 +35,14 @@ public class IntentCompilerImplTest {
         return endpoints;
     }
 
+    protected IntentCompiler getIntentCompiler() {
+        return new IntentCompilerImpl();
+    }
+
     @Before
     public void setUp() throws Exception {
         policies = new LinkedHashSet<>();
-        intentCompiler = new IntentCompilerImpl();
+        intentCompiler = getIntentCompiler();
     }
 
     @Test
