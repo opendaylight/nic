@@ -12,9 +12,9 @@ module gbp-renderer {
     namespace "urn:opendaylight:gbp:renderer";
     prefix "gbp-renderer";
 
-    import intent { prefix intent; revision-date "2015-01-22"; }
+    import intent { prefix "intents"; revision-date "2015-01-22"; }
     import yang-ext { prefix "ext"; }
-    import policy {prefix policy; revision-date "2014-04-21";}
+    import policy {prefix "policy"; revision-date "2014-04-21";}
 
     description
         "This module contains the base YANG definition for the gbp Renderer.";
@@ -28,7 +28,7 @@ module gbp-renderer {
         type instance-identifier;
     }
 
-    augment "/intent:intents" {
+    augment "/intents:intents/intents:intent/intents:node" {
         description "Augmentation of intent module with gbp renderer augmentation.";
         ext:augment-identifier "gbp-renderer-augmentation";
         uses gbp-renderer-grouping ;
