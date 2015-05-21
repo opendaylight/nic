@@ -141,7 +141,12 @@ module intent {
 
     container intents {
         list intent {
-            key "id";
+            key "intent-id";
+            leaf intent-id {
+                type string;
+            }
+            list node {
+            }
             uses intent;
         }
     }
