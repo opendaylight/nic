@@ -7,19 +7,21 @@ terms of the Eclipse Public License v1.0 which accompanies this distribution,
 and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>nic-parent</artifactId>
-    <groupId>org.opendaylight.nic</groupId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
-  </parent>
-  <artifactId>gbp-renderer-aggregator</artifactId>
+  <groupId>org.opendaylight.nic</groupId>
   <version>1.0.0-SNAPSHOT</version>
+  <artifactId>gbp-renderer-aggregator</artifactId>
   <name>${project.artifactId}</name>
   <packaging>pom</packaging>
+
+  <prerequisites>
+    <maven>3.1.1</maven>
+  </prerequisites>
+
   <description>The gbp-renderer (Group-Based Policy renderer) is a sub-project for the Network Intent Compisition (NIC). Its goal is to add GBP support for the NIC project.</description>
   <url>https://wiki.opendaylight.org/view/Project_Proposals:Network_Intent_Composition</url>
+
   <licenses>
     <license>
       <name>Eclipse Public License v1.0</name>
@@ -31,12 +33,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
       <name>Gabriel Robitaille-Montpetit</name>
       <email>grmontpetit@gmail.com</email>
       <url>https://github.com/sniggel</url>
-    </developer>
-   </developers>
-  <modelVersion>4.0.0</modelVersion>
-  <prerequisites>
-    <maven>3.1.1</maven>
-  </prerequisites>
+   </developer>
+  </developers>
 
   <modules>
     <module>gbp-renderer-api</module>
