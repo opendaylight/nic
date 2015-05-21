@@ -12,5 +12,5 @@ import java.util.Set;
 public interface Policy {
     Set<Endpoint> src();
     Set<Endpoint> dst();
-    Action action();
+    Set<Action> action();
 }

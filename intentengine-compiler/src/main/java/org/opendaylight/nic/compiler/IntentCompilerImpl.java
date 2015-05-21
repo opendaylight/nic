@@ -7,15 +7,21 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler;
 
-import com.google.common.collect.Sets;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.IntentCompiler;
 import org.opendaylight.nic.compiler.api.Policy;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.*;
+import com.google.common.collect.Sets;
 
 public class IntentCompilerImpl implements IntentCompiler {
     @Override
@@ -30,7 +36,8 @@ public class IntentCompilerImpl implements IntentCompiler {
                 Policy policy2 = iterator2.next();
                 if (conflicts(policy, policy2)) {
                     iterator2.remove();
-                    results.addAll(transform(policy, policy2));
+                    Transform transform = new Transform(policy, policy2);
+                    results.addAll(transform.resolve());
                 }
             }
             if (results.isEmpty()) {
@@ -43,7 +50,8 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     @Override
-    public Set<Endpoint> parseEndpointGroup(String csv) throws UnknownHostException {
+    public Set<Endpoint> parseEndpointGroup(String csv)
+            throws UnknownHostException {
         Set<Endpoint> endpoints = new LinkedHashSet<>();
         String[] ipAdresses = csv.split(",");
         for (String ipAddress : ipAdresses) {
@@ -53,59 +61,9 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     @Override
-    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Action action) {
+    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
+            Set<Action> action) {
         return new PolicyImpl(source, destination, action);
-    }
-
-    private Collection<Policy> transform(Policy p1, Policy p2) {
-        Collection<Policy> policies = new LinkedList<>();
-        Sets.SetView<Endpoint> src, dst;
-
-        src = Sets.difference(p1.src(), p2.src());
-        if (!src.isEmpty()) {
-            dst = Sets.difference(p1.dst(), p2.dst());
-            if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
-            }
-            dst = Sets.intersection(p1.dst(), p2.dst());
-            if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
-            }
-        }
-        src = Sets.intersection(p1.src(), p2.src());
-        if (!src.isEmpty()) {
-            dst = Sets.intersection(p1.dst(), p2.dst());
-            if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, merge(p1.action(), p2.action())));
-            }
-            dst = Sets.difference(p1.dst(), p2.dst());
-            if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
-            }
-            dst = Sets.difference(p2.dst(), p1.dst());
-            if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
-            }
-        }
-        src = Sets.difference(p2.src(), p1.src());
-        if (!src.isEmpty()) {
-            dst = Sets.intersection(p1.dst(), p2.dst());
-            if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
-            }
-            dst = Sets.difference(p2.dst(), p1.dst());
-            if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
-            }
-        }
-
-        return policies;
-    }
-
-    private Action merge(Action a1, Action a2) {
-        if (Action.BLOCK.equals(a1) || Action.BLOCK.equals(a2))
-            return Action.BLOCK;
-        return Action.ALLOW;
     }
 
     private boolean conflicts(Policy p1, Policy p2) {
