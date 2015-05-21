@@ -3,6 +3,7 @@ package org.opendaylight.nic.impl;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,8 @@ import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.compiler.api.Action;
+import org.opendaylight.nic.compiler.api.ActionConflictType;
+import org.opendaylight.nic.compiler.api.BasicAction;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.IntentCompiler;
 import org.opendaylight.nic.compiler.api.IntentCompilerFactory;
@@ -38,6 +41,8 @@ import com.google.common.util.concurrent.Futures;
 public class NicProvider implements NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
+    public static final String ACTION_ALLOW = "ALLOW";
+    public static final String ACTION_BLOCK = "BLOCK";
 
     protected DataBroker dataBroker;
 
@@ -210,6 +215,8 @@ public class NicProvider implements NicConsoleProvider {
     public String compile() {
         List<Intent> intents = listIntents(true);
         IntentCompiler compiler = IntentCompilerFactory.createIntentCompiler();
+        BasicAction allow = new BasicAction(ACTION_ALLOW, ActionConflictType.COMPOSABLE);
+        BasicAction block = new BasicAction(ACTION_BLOCK, ActionConflictType.EXCLUSIVE);
 
         Collection<Policy> policies = new LinkedList<>();
 
@@ -229,13 +236,15 @@ public class NicProvider implements NicConsoleProvider {
             }
             Action action;
             if (actionContainer instanceof Allow) {
-                action = Action.ALLOW;
+                action = allow;
             } else if (actionContainer instanceof Block) {
-                action = Action.BLOCK;
+                action = block;
             } else {
                 return "ERROR";
             }
-            policies.add(compiler.createPolicy(sources, destinations, action));
+            Set<Action> actions = new LinkedHashSet<>();
+            actions.add(action);
+            policies.add(compiler.createPolicy(sources, destinations, actions));
         }
 
         StringBuilder stringBuilder = new StringBuilder();

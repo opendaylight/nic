@@ -16,6 +16,7 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
+import org.opendaylight.nic.impl.NicProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
@@ -43,7 +44,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
     String to = "any";
 
     @Option(name = "-a", aliases = { "--actions" }, description = "Action to be performed.\n-a / --actions BLOCK/ALLOW", required = true, multiValued = true)
-    List<String> actions = new ArrayList<String>(Arrays.asList("BLOCK"));
+    List<String> actions = new ArrayList<String>(Arrays.asList(NicProvider.ACTION_BLOCK));
 
     public IntentAddShellCommand(NicConsoleProvider provider) {
         this.provider = provider;
@@ -70,9 +71,9 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         short order = 1;
         for (String a : this.actions) {
             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action = null;
-            if (a.equalsIgnoreCase("ALLOW"))
+            if (a.equalsIgnoreCase(NicProvider.ACTION_ALLOW))
                 action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.AllowBuilder().setAllow(new AllowBuilder().build()).build();
-            else if (a.equalsIgnoreCase("BLOCK"))
+            else if (a.equalsIgnoreCase(NicProvider.ACTION_BLOCK))
                 action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.BlockBuilder().setBlock(new BlockBuilder().build()).build();
             else
                 continue;

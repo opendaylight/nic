@@ -7,6 +7,6 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler.api;
 
-public enum Action {
-    ALLOW, BLOCK
+public interface Action {
+    ActionConflictType getType();
 }

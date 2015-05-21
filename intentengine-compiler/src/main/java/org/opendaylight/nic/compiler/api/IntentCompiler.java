@@ -14,5 +14,5 @@ import java.util.Set;
 public interface IntentCompiler {
     Collection<Policy> compile(Collection<Policy> policies);
     Set<Endpoint> parseEndpointGroup(String csv) throws UnknownHostException;
-    Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Action action);
+    Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Set<Action> action);
 }
