@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_e063a1af",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRenderer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-05-21T17:49:28Z",
+      "side": 1,
+      "message": "why not remove this code, since it\u0027s commented out?",
+      "revId": "bf4cd828d04707728cde3da769dd829eddef43bf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
