@@ -11,6 +11,7 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
+import org.opendaylight.nic.impl.NicProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
@@ -54,9 +55,9 @@ public class IntentShowShellCommand extends OsgiCommandSupport {
                 Action action = actions.getAction();
                 sb.append(String.format("   Order: %d\n", actions.getOrder()));
                 if(action instanceof Allow)
-                    sb.append(String.format("   Value: %s\n", "ALLOW" ));
+                    sb.append(String.format("   Value: %s\n", NicProvider.ACTION_ALLOW));
                 else if(action instanceof Block)
-                    sb.append(String.format("   Value: %s\n", "BLOCK" ));
+                    sb.append(String.format("   Value: %s\n", NicProvider.ACTION_BLOCK));
                 else
                     sb.append(String.format("   Value: %s\n", "UNKNOWN"));
             }
