@@ -5,9 +5,25 @@
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
 //------------------------------------------------------------------------------
-package org.opendaylight.nic.compiler.api;
 
-public interface Action {
-    String getName();
-    ActionType getType();
+package org.opendaylight.nic.impl.actions;
+
+import org.opendaylight.nic.compiler.api.Action;
+import org.opendaylight.nic.compiler.api.ActionType;
+
+public class Block implements Action {
+    @Override
+    public String getName() {
+        return "BLOCK";
+    }
+
+    @Override
+    public ActionType getType() {
+        return ActionType.EXCLUSIVE;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
