@@ -16,9 +16,9 @@ import java.util.Set;
 public class PolicyImpl implements Policy {
     private Set<Endpoint> src;
     private Set<Endpoint> dst;
-    Action action;
+    private Set<Action> action;
 
-    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Action action) {
+    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action) {
         this.src = src;
         this.dst = dst;
         this.action = action;
@@ -35,7 +35,7 @@ public class PolicyImpl implements Policy {
     }
 
     @Override
-    public Action action() {
+    public Set<Action> action() {
         return action;
     }
 
@@ -48,7 +48,7 @@ public class PolicyImpl implements Policy {
 
         if (src != null ? !src.equals(policy.src) : policy.src != null) return false;
         if (dst != null ? !dst.equals(policy.dst) : policy.dst != null) return false;
-        return action == policy.action;
+        return !(action != null ? !action.equals(policy.action) : policy.action != null);
 
     }
 
