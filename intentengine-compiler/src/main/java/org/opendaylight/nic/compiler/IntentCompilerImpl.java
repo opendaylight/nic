@@ -53,7 +53,7 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     @Override
-    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Action action) {
+    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Set<Action> action) {
         return new PolicyImpl(source, destination, action);
     }
 
@@ -102,10 +102,32 @@ public class IntentCompilerImpl implements IntentCompiler {
         return policies;
     }
 
-    private Action merge(Action a1, Action a2) {
-        if (Action.BLOCK.equals(a1) || Action.BLOCK.equals(a2))
-            return Action.BLOCK;
-        return Action.ALLOW;
+    private Set<Action> merge(Set<Action> a1, Set<Action> a2) {
+        Set<Action> composebleActions = new LinkedHashSet<>();
+        Set<Action> observableActions = new LinkedHashSet<>();
+        Set<Action> exclusiveActions = new LinkedHashSet<>();
+        for (Action action : Sets.union(a1, a2)) {
+            switch (action.getType()) {
+                case COMPOSABLE:
+                    composebleActions.add(action);
+                    break;
+                case OBSERVER:
+                    observableActions.add(action);
+                    break;
+                case EXCLUSIVE:
+                    exclusiveActions.add(action);
+                    break;
+            }
+        }
+        if (!exclusiveActions.isEmpty()) {
+            if (exclusiveActions.size() == 1) {
+                return Sets.union(exclusiveActions, observableActions);
+            } else {
+                // TODO: Better handle that case
+                throw new RuntimeException("Unable to merge exclusive actions");
+            }
+        }
+        return Sets.union(composebleActions, observableActions);
     }
 
     private boolean conflicts(Policy p1, Policy p2) {

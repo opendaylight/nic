@@ -3,6 +3,7 @@ package org.opendaylight.nic.impl;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,8 @@ import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.compiler.api.Action;
+import org.opendaylight.nic.compiler.api.ActionType;
+import org.opendaylight.nic.compiler.api.BasicAction;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.IntentCompiler;
 import org.opendaylight.nic.compiler.api.IntentCompilerFactory;
@@ -210,6 +213,8 @@ public class NicProvider implements NicConsoleProvider {
     public String compile() {
         List<Intent> intents = listIntents(true);
         IntentCompiler compiler = IntentCompilerFactory.createIntentCompiler();
+        BasicAction allow = new BasicAction("ALLOW", ActionType.COMPOSABLE);
+        BasicAction block = new BasicAction("BLOCK", ActionType.EXCLUSIVE);
 
         Collection<Policy> policies = new LinkedList<>();
 
@@ -229,13 +234,15 @@ public class NicProvider implements NicConsoleProvider {
             }
             Action action;
             if (actionContainer instanceof Allow) {
-                action = Action.ALLOW;
+                action = allow;
             } else if (actionContainer instanceof Block) {
-                action = Action.BLOCK;
+                action = block;
             } else {
                 return "ERROR";
             }
-            policies.add(compiler.createPolicy(sources, destinations, action));
+            Set<Action> actions = new LinkedHashSet<>();
+            actions.add(action);
+            policies.add(compiler.createPolicy(sources, destinations, actions));
         }
 
         StringBuilder stringBuilder = new StringBuilder();
