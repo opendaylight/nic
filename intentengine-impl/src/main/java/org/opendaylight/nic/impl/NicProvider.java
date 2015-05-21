@@ -3,6 +3,7 @@ package org.opendaylight.nic.impl;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -210,6 +211,8 @@ public class NicProvider implements NicConsoleProvider {
     public String compile() {
         List<Intent> intents = listIntents(true);
         IntentCompiler compiler = IntentCompilerFactory.createIntentCompiler();
+        org.opendaylight.nic.impl.actions.Allow allow = new org.opendaylight.nic.impl.actions.Allow();
+        org.opendaylight.nic.impl.actions.Block block = new org.opendaylight.nic.impl.actions.Block();
 
         Collection<Policy> policies = new LinkedList<>();
 
@@ -229,13 +232,15 @@ public class NicProvider implements NicConsoleProvider {
             }
             Action action;
             if (actionContainer instanceof Allow) {
-                action = Action.ALLOW;
+                action = allow;
             } else if (actionContainer instanceof Block) {
-                action = Action.BLOCK;
+                action = block;
             } else {
                 return "ERROR";
             }
-            policies.add(compiler.createPolicy(sources, destinations, action));
+            Set<Action> actions = new LinkedHashSet<>();
+            actions.add(action);
+            policies.add(compiler.createPolicy(sources, destinations, actions));
         }
 
         StringBuilder stringBuilder = new StringBuilder();

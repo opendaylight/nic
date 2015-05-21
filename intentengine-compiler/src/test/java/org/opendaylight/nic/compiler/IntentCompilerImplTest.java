@@ -10,6 +10,7 @@ package org.opendaylight.nic.compiler;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.nic.compiler.api.Action;
+import org.opendaylight.nic.compiler.api.ActionType;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.Policy;
 
@@ -24,6 +25,7 @@ import static org.junit.Assert.*;
 public class IntentCompilerImplTest {
     Set<Policy> policies;
     IntentCompilerImpl intentCompiler;
+    Action allow, block, redirect, monitor;
 
     private Set<Endpoint> endpoints(String... hosts) throws UnknownHostException {
         Set<Endpoint> endpoints = new LinkedHashSet<>();
@@ -34,10 +36,70 @@ public class IntentCompilerImplTest {
         return endpoints;
     }
 
+    private Set<Action> actions(Action... actions) {
+        Set<Action> actionSet = new LinkedHashSet<>();
+        for (Action action : actions) {
+            actionSet.add(action);
+        }
+        return actionSet;
+    }
+
+    class Allow implements Action {
+        @Override
+        public String getName() {
+            return "ALLOW";
+        }
+
+        @Override
+        public ActionType getType() {
+            return ActionType.COMPOSABLE;
+        }
+    }
+
+    class Block implements Action {
+        @Override
+        public String getName() {
+            return "BLOCK";
+        }
+
+        @Override
+        public ActionType getType() {
+            return ActionType.EXCLUSIVE;
+        }
+    }
+
+    class Redirect implements Action {
+        @Override
+        public String getName() {
+            return "REDIRECT";
+        }
+
+        @Override
+        public ActionType getType() {
+            return ActionType.COMPOSABLE;
+        }
+    }
+
+    class Monitor implements Action {
+        @Override
+        public String getName() {
+            return "MONITOR";
+        }
+
+        @Override
+        public ActionType getType() {
+            return ActionType.OBSERVER;
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         policies = new LinkedHashSet<>();
         intentCompiler = new IntentCompilerImpl();
+        allow = new Allow();
+        block = new Block();
+        redirect = new Redirect();
+        monitor = new Monitor();
     }
 
     @Test
@@ -49,7 +111,7 @@ public class IntentCompilerImplTest {
 
     @Test
     public void testEmptyEndpointsCompile() throws Exception {
-        policies.add(new PolicyImpl(endpoints(), endpoints(), Action.ALLOW));
+        policies.add(new PolicyImpl(endpoints(), endpoints(), actions(allow)));
         Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
         assertNotNull(compiledPolicies);
         assertEquals(policies.size(), compiledPolicies.size());
@@ -58,8 +120,8 @@ public class IntentCompilerImplTest {
 
     @Test
     public void testNonConflictCompile() throws Exception {
-        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), Action.ALLOW));
-        policies.add(new PolicyImpl(endpoints("10.0.0.3"), endpoints("10.0.0.4"), Action.BLOCK));
+        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(allow)));
+        policies.add(new PolicyImpl(endpoints("10.0.0.3"), endpoints("10.0.0.4"), actions(block)));
         Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
         assertNotNull(compiledPolicies);
         assertEquals(policies.size(), compiledPolicies.size());
@@ -68,33 +130,33 @@ public class IntentCompilerImplTest {
 
     @Test
     public void testConflictCompile() throws Exception {
-        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), Action.ALLOW));
-        Policy block = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), Action.BLOCK);
-        policies.add(block);
+        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(allow)));
+        Policy block1 = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(block));
+        policies.add(block1);
         Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
         assertNotNull(compiledPolicies);
         assertEquals(1, compiledPolicies.size());
-        assertTrue(compiledPolicies.contains(block));
+        assertTrue(compiledPolicies.contains(block1));
     }
 
     @Test
     public void testConflictMergeCompile() throws Exception {
-        policies.add(new PolicyImpl(endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"), Action.ALLOW));
-        Policy block = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), Action.BLOCK);
-        policies.add(block);
+        policies.add(new PolicyImpl(endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"), actions(allow)));
+        Policy block1 = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(block));
+        policies.add(block1);
         Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
         assertNotNull(compiledPolicies);
         assertEquals(2, compiledPolicies.size());
-        assertTrue(compiledPolicies.contains(block));
-        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.2"), endpoints("10.0.0.3"), Action.ALLOW)));
+        assertTrue(compiledPolicies.contains(block1));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.2"), endpoints("10.0.0.3"), actions(allow))));
     }
 
     @Test
     public void testConflictThreeCompile() throws Exception {
-        policies.add(new PolicyImpl(endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"), Action.ALLOW));
-        Policy block1 = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), Action.BLOCK);
+        policies.add(new PolicyImpl(endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"), actions(allow)));
+        Policy block1 = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(block));
         policies.add(block1);
-        PolicyImpl block2 = new PolicyImpl(endpoints("10.0.0.2"), endpoints("10.0.0.3"), Action.BLOCK);
+        PolicyImpl block2 = new PolicyImpl(endpoints("10.0.0.2"), endpoints("10.0.0.3"), actions(block));
         policies.add(block2);
         Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
         assertNotNull(compiledPolicies);
@@ -105,25 +167,40 @@ public class IntentCompilerImplTest {
 
     @Test
     public void testConflictDestinationCompile() throws Exception {
-        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2", "10.0.0.3"), Action.ALLOW));
-        Policy block = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), Action.BLOCK);
-        policies.add(block);
+        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2", "10.0.0.3"), actions(allow)));
+        Policy block1 = new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(block));
+        policies.add(block1);
         Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
         assertNotNull(compiledPolicies);
         assertEquals(2, compiledPolicies.size());
-        assertTrue(compiledPolicies.contains(block));
-        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), Action.ALLOW)));
+        assertTrue(compiledPolicies.contains(block1));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(allow))));
     }
 
     @Test
     public void testConflictDestination2Compile() throws Exception {
-        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2", "10.0.0.3"), Action.ALLOW));
-        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2", "10.0.0.5"), Action.BLOCK));
+        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2", "10.0.0.3"), actions(allow)));
+        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2", "10.0.0.5"), actions(block)));
         Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
         assertNotNull(compiledPolicies);
         assertEquals(3, compiledPolicies.size());
-        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), Action.ALLOW)));
-        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), Action.BLOCK)));
-        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.5"), Action.BLOCK)));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(allow))));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(block))));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.5"), actions(block))));
+    }
+
+    @Test
+    public void testConflictMergeActionsCompile() throws Exception {
+        policies.add(new PolicyImpl(endpoints("10.0.0.1", "10.0.0.2", "10.0.0.10"), endpoints("10.0.0.3"), actions(allow)));
+        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3", "10.0.0.20"), actions(block)));
+        policies.add(new PolicyImpl(endpoints("10.0.0.2"), endpoints("10.0.0.3"), actions(redirect)));
+        policies.add(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.20"), actions(monitor)));
+        Collection<Policy> compiledPolicies = intentCompiler.compile(policies);
+        assertNotNull(compiledPolicies);
+        assertEquals(4, compiledPolicies.size());
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(block))));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.10"), endpoints("10.0.0.3"), actions(allow))));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.2"), endpoints("10.0.0.3"), actions(allow, redirect))));
+        assertTrue(compiledPolicies.contains(new PolicyImpl(endpoints("10.0.0.1"), endpoints("10.0.0.20"), actions(block, monitor))));
     }
 }
