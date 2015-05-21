@@ -45,6 +45,8 @@ hs_err_pid*
 # Yang generated files
 **/src/main/yang-gen-config/
 **/src/main/yang-gen-sal/
+yang-gen-sal
+yang-gen-config
 >>>>>>> initial.pom
 
 # static analysis files
