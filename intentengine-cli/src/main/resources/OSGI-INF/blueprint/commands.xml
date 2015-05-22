@@ -17,6 +17,9 @@
             <action class="org.opendaylight.nic.cli.IntentRemoveShellCommand">
                  <argument ref="nicConsoleProvider" />
             </action>
+            <completers>
+                <ref component-id="uuidCompleter" />
+            </completers>
         </command>
         <command>
             <action class="org.opendaylight.nic.cli.IntentListShellCommand" >
@@ -27,6 +30,9 @@
             <action class="org.opendaylight.nic.cli.IntentShowShellCommand" >
                 <argument ref="nicConsoleProvider" />
             </action>
+            <completers>
+                <ref component-id="uuidCompleter" />
+            </completers>
         </command>
          <command>
             <action class="org.opendaylight.nic.cli.IntentCompileShellCommand" >
@@ -35,5 +41,9 @@
         </command>
     </command-bundle>
 
-    <bean id="actionCompleter" class="org.opendaylight.nic.cli.completers.ActionCompleter" />
+    <bean id="actionCompleter" class="org.opendaylight.nic.cli.completers.ActionCompleter" >
+    </bean>
+    <bean id="uuidCompleter" class="org.opendaylight.nic.cli.completers.UuidCompleter" >
+        <argument ref="nicConsoleProvider" />
+    </bean>
 </blueprint>
