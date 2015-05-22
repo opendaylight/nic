@@ -7,7 +7,15 @@ import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.gbp.renderer.rev150511.GbpNodeRef;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.gbp.renderer.rev150511.GbpRendererAugmentation;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.gbp.renderer.rev150511.GbpRendererAugmentationBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.endpoint.rev140421.endpoints.Endpoint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.yang.binding.Augmentation;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -61,6 +69,14 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
                 .getCreatedData().entrySet()) {
             LOG.info("New intent added with id {}.", created.getKey());
             // TODO implement create
+            if (created.getValue() != null) {
+                if (created instanceof Intent) {
+                    Intent intent = (Intent)created.getValue();
+                    IntentBuilder ib = new IntentBuilder();
+                    ib.addAugmentation(GbpRendererAugmentation.class,
+                            createGbpRendererAugmentation(intent.getKey()));
+                }
+            }
         }
     }
 
@@ -73,4 +89,14 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
         }
     }
 
+    private Augmentation<Intent> createGbpRendererAugmentation(IntentKey key) {
+        GbpRendererAugmentationBuilder gbpRendererAugmentationBuilder = new GbpRendererAugmentationBuilder();
+        gbpRendererAugmentationBuilder.setGbpNodeRef(new GbpNodeRef(createGbpIID()));
+        return gbpRendererAugmentationBuilder.build();
+    }
+
+    private InstanceIdentifier<Endpoint> createGbpIID() {
+        // TODO
+        return null;
+    }
 }
