@@ -35,8 +35,10 @@ module gbp-renderer {
     }
 
     grouping gbp-renderer-grouping {
-        leaf gbp-node-ref {
-            type gbp-node-ref;
+        list gbp-nodes-ref {
+            leaf gbp-node-ref {
+                type gbp-node-ref;
+            }
         }
     }
 }
