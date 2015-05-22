@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_8813df5b",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/api/ActionType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3813
+      },
+      "writtenOn": "2015-05-22T23:27:20Z",
+      "side": 1,
+      "message": "Better to change OBSERVABLE -\u003e OBSERVER",
+      "revId": "4378c7999b8487df94b3d72d6d3fb32afa7c7d3c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
