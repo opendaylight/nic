@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_de88b824",
+        "filename": "intentengine-impl/src/test/resources/intent.postman",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-26T21:32:25Z",
+      "side": 1,
+      "message": "ok, so this isn\u0027t just a generic JSON request, sorry, i didn\u0027t look close enough. it is an export of a postman collection.\n\nTo be honest, not completely convinced that we want a postman collection as part of the distribution, but fairly harmless i guess. would rather see some automated tests using the REST API ;)",
+      "parentUuid": "1a9dcd25_febfb4ce",
+      "revId": "e5ad9c63f596de3cfc3a3ce2bcfca6084d6a7f53",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_ded0b855",
         "filename": "intentengine-impl/src/test/resources/intent.postman",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "writtenOn": "2015-05-26T20:22:41Z",
       "side": 1,
       "message": "Why embedded new line characters?",
+      "revId": "e5ad9c63f596de3cfc3a3ce2bcfca6084d6a7f53",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_fe8d7432",
+        "filename": "intentengine-impl/src/test/resources/intent.postman",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-26T21:32:25Z",
+      "side": 1,
+      "message": "ok, so newlines are so the request is pretty printed in the postman UI",
+      "parentUuid": "1a9dcd25_ded0b855",
       "revId": "e5ad9c63f596de3cfc3a3ce2bcfca6084d6a7f53",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
