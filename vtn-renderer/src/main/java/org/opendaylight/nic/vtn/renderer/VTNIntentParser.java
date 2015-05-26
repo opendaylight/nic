@@ -81,6 +81,26 @@ public class VTNIntentParser {
     }
 
     /**
+     * Deletes the default virtual VTN Manager objects after deletion of all intents
+     * creation.
+     * @return  {@code = true} default VTN Manager objects created will be deleted in VTN Manager.
+     */
+    public boolean deleteDefault() {
+        try {
+            boolean status = deleteTenant(TENANT_NAME);
+            if (!deleteTenant(TENANT_NAME)) {
+                LOG.error("Tenant Deletion Failed");
+                return status;
+            }
+            return status;
+
+        } catch (Exception e) {
+            LOG.error("Exception occurred in Deletion of virtual Tenant {}", e);
+            return false;
+        }
+    }
+
+    /**
      * Creates VTN elements based on the intent action
      *
      * @param IP1
@@ -144,6 +164,10 @@ public class VTNIntentParser {
                     deleteFlowCond(intentWrapper.getEntityDescription());
                     deleteFlowFilter(intentWrapper.getEntityValue());
                 }
+            }
+            VTNRendererUtility.hashMapIntentUtil.remove(intentID);
+            if (VTNRendererUtility.hashMapIntentUtil.isEmpty()) {
+                deleteDefault();
             }
 
         } catch (Exception e) {
@@ -212,6 +236,30 @@ public class VTNIntentParser {
             }
         } catch (Exception ex) {
             LOG.error("Tenant creation error {}", ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Deletes the Virtual Tenant created.
+     *
+     * @param tenantName
+     * @return  {@code = true} deletes the default virtual tenant created in VTN Manager.
+     */
+    public boolean deleteTenant(String tenantName) {
+
+        try {
+            mgr = getVTNManager(CONTAINER_NAME);
+            VTenantPath path = new VTenantPath(tenantName);
+
+            if (isTenantExist(tenantName)) {
+                Status status = mgr.removeTenant(path);
+                return status.isSuccess();
+            }
+        } catch (Exception ex) {
+            LOG.error("Tenant Dleteion error {}", ex);
             return false;
         }
 
