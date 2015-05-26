@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_fed57443",
+        "filename": "intentengine-impl/src/test/resources/intent.postman",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-26T20:22:41Z",
+      "side": 1,
+      "message": "nit really. this represents a JSON request. I might not name it .postman as it could be posted with anything, including curl, correct?",
+      "revId": "e5ad9c63f596de3cfc3a3ce2bcfca6084d6a7f53",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_ded0b855",
+        "filename": "intentengine-impl/src/test/resources/intent.postman",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-26T20:22:41Z",
+      "side": 1,
+      "message": "Why embedded new line characters?",
+      "revId": "e5ad9c63f596de3cfc3a3ce2bcfca6084d6a7f53",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
