@@ -1,0 +1,259 @@
+{
+   "id":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+   "name":"Intent",
+   "timestamp":1432659711911,
+   "requests":[
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"043588a4-8fa0-9c57-1ee5-0f695d9e7221",
+         "name":"Get intents",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/",
+         "method":"GET",
+         "headers":"",
+         "data":"",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"1b987a5b-7cb1-1bb7-14f0-a6c02c423e3c",
+         "name":"Delete specific intent constraint",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922/intent:constraints/2",
+         "method":"DELETE",
+         "headers":"",
+         "data":"",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"232c53b5-7f73-4c71-e19e-3aebd10c2b5d",
+         "name":"Get specific intent constraints",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922/intent:constraints/2",
+         "method":"GET",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:constraints\":[  \n         {  \n            \"order\":1,\n            \"include-node\":{  \n               \"include-selector\":\"node1\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"exclude-node\":{  \n               \"exclude-selector\":\"node2\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"2803499e-e0e6-9b14-5877-b7ccd9fe51b4",
+         "name":"Add intent constraints",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:constraints\":[  \n         {  \n            \"order\":1,\n            \"include-node\":{  \n\n            }\n         },\n         {  \n            \"order\":2,\n            \"exclude-node\":{  \n\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"2928a719-ae10-58d8-6cb3-bf5b3901f913",
+         "name":"Add intent with subjects and actions",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436033",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436033\",\n      \"intent:actions\":[  \n         {  \n            \"order\":2,\n            \"allow\":{  \n\n            }\n         },\n         {  \n            \"order\":1,\n            \"block\":{  \n\n            }\n         }\n      ],\n      \"intent:subjects\":[  \n         {  \n            \"order\":1,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.20\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.21\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"29f0c4e8-1739-c6aa-df6f-925975b68077",
+         "name":"Add intent with 1 action",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436033",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436921\",\n      \"intent:actions\":[  \n         {  \n            \"order\":1,\n            \"block\":{  \n\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1432660347557
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"31f58665-6b24-0671-c808-2535b1cec4c0",
+         "name":"Add intent conditions",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:conditions\":[  \n         {  \n            \"order\":1,\n            \"scheduled\":{  \n\n            }\n         },\n         {  \n            \"order\":2,\n            \"weekly\":{  \n\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"381cdb80-606f-0615-758e-58b05bf72688",
+         "name":"Add intent with 2 endpoint groups and names",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436033",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:subjects\":[  \n         {  \n            \"order\":1,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.20\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.21\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1432661391501
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"3b6ab9ad-26ae-65d9-23e2-5321c80d9a74",
+         "name":"Add intent conditions 2",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:conditions\":[  \n         {  \n            \"order\":1,\n            \"scheduled\":{  \n               \"initiate\":\"2015-05-13T05:17:00+00:00\",\n               \"terminate\":\"2015-05-15T04:13:00+00:00\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"weekly\":{  \n               \"days-of-week\":\"October 10, 2011\",\n               \"every-n-weeks\":\"\",\n               \"start-time\":\"\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"47d83356-a6b8-012f-8a10-b33317e513b3",
+         "name":"Add intent with subjects, actions and constraints",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436033",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436033\",\n      \"intent:actions\":[  \n         {  \n            \"order\":2,\n            \"allow\":{  \n\n            }\n         },\n         {  \n            \"order\":1,\n            \"block\":{  \n\n            }\n         }\n      ],\n      \"intent:constraints\":[  \n         {  \n            \"order\":1,\n            \"include-node\":{  \n               \"include-selector\":\"node1\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"exclude-node\":{  \n               \"exclude-selector\":\"node2\"\n            }\n         }\n      ],\n      \"intent:subjects\":[  \n         {  \n            \"order\":1,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.20\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.21\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"4ce1b92c-ae0e-d0f5-f728-5cac1de71cc1",
+         "name":"Get specific intent conditions 2",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922/intent:conditions/2",
+         "method":"GET",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:conditions\":[  \n         {  \n            \"order\":1,\n            \"scheduled\":{  \n               \"initiate\":\"2015-05-13T05:17:00+00:00\",\n               \"terminate\":\"2015-05-15T04:13:00+00:00\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"weekly\":{  \n               \"days-of-week\":\"October 10, 2011\",\n               \"every-n-weeks\":\"\",\n               \"start-time\":\"\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"6bcf284c-3651-87e4-cae9-0b8028d33fd4",
+         "name":"Get specific intent subject 1",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922/intent:subjects/1",
+         "method":"GET",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:subjects\":[  \n         {  \n            \"order\":1,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.20\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.21\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"6f7d1b21-ccda-a922-30f7-c2aa2e844a46",
+         "name":"WARNING: Delete all intents",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/",
+         "method":"DELETE",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436033\",\n      \"intent:actions\":[  \n         {  \n            \"order\":2,\n            \"allow\":{  \n\n            }\n         },\n         {  \n            \"order\":1,\n            \"block\":{  \n\n            }\n         }\n      ],\n      \"intent:constraints\":[  \n         {  \n            \"order\":1,\n            \"include-node\":{  \n               \"include-selector\":\"node1\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"exclude-node\":{  \n               \"exclude-selector\":\"node2\"\n            }\n         }\n      ],\n      \"intent:subjects\":[  \n         {  \n            \"order\":1,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.20\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"end-point-group\":{  \n               \"name\":\"10.100.89.21\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"77b7bad7-3351-6635-76e4-8a167a29d99b",
+         "name":"Get specific intent",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436033",
+         "method":"GET",
+         "headers":"",
+         "data":"",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"8f51d148-c45d-0789-e8e4-6c0a685eaa1d",
+         "name":"Add intent constraint 2",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436922",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:constraints\":[  \n         {  \n            \"order\":1,\n            \"include-node\":{  \n               \"include-selector\":\"node1\"\n            }\n         },\n         {  \n            \"order\":2,\n            \"exclude-node\":{  \n               \"exclude-selector\":\"node2\"\n            }\n         }\n      ]\n   }\n}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"0b8c66b3-1617-e423-9f1d-8b3994447385",
+         "id":"cf4e72ab-4082-6368-386f-b50bdc40554e",
+         "name":"Add intent with 2 endpoint groups",
+         "description":"",
+         "url":"http://localhost:8181/restconf/config/intent:intents/intent/b9a13232-525e-4d8c-be21-cd65e3436033",
+         "method":"PUT",
+         "headers":"",
+         "data":"{  \n   \"intent:intent\":{  \n      \"intent:id\":\"b9a13232-525e-4d8c-be21-cd65e3436922\",\n      \"intent:subjects\":[  \n         {  \n            \"order\":1,\n            \"end-point-group\":{  \n\n            }\n         },\n         {  \n            \"order\":2,\n            \"end-point-group\":{  \n\n            }\n         }\n      ]\n   }",
+         "dataMode":"raw",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      }
+   ]
+}
