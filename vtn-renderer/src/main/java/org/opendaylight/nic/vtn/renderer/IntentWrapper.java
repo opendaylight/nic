@@ -60,7 +60,7 @@ public class IntentWrapper {
 
     /**
      * Sets the index value of entity.
-     * @param entityValue  index value of the entity.
+     * @param index  index value of the entity.
      */
     public void setEntityValue(int index) {
         this.entityValue = index;

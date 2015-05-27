@@ -118,7 +118,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
     /**
      * This method parse the intent and calls the VTN renderer
      *
-     * @param intents
+     * @param intent
      */
     public void intentParser(Intent intent) {
         String endPointSrc = "";
