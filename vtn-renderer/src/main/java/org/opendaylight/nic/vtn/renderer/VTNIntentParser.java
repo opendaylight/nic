@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import org.opendaylight.controller.sal.utils.ServiceHelper;
 import org.opendaylight.controller.sal.utils.Status;
+import org.opendaylight.controller.sal.utils.StatusCode;
 import org.opendaylight.controller.sal.core.UpdateType;
 import org.opendaylight.vtn.manager.flow.cond.EthernetMatch;
 import org.opendaylight.vtn.manager.flow.cond.FlowCondition;
@@ -59,8 +60,7 @@ public class VTNIntentParser {
     public void createDefault() {
 
         try {
-            mgr = getVTNManager(CONTAINER_NAME);
-            boolean status = createTenant(TENANT_NAME, mgr);
+            boolean status = createTenant(TENANT_NAME);
 
             if (status != true) {
                 LOG.error("Tenant creation failed");
@@ -81,23 +81,12 @@ public class VTNIntentParser {
     }
 
     /**
-     * Deletes the default virtual VTN Manager objects after deletion of all intents
-     * creation.
+     * Delete the default configuration in VTN Manager.
+     *
      * @return  {@code = true} default VTN Manager objects created will be deleted in VTN Manager.
      */
     public boolean deleteDefault() {
-        try {
-            boolean status = deleteTenant(TENANT_NAME);
-            if (!deleteTenant(TENANT_NAME)) {
-                LOG.error("Tenant Deletion Failed");
-                return status;
-            }
-            return status;
-
-        } catch (Exception e) {
-            LOG.error("Exception occurred in Deletion of virtual Tenant {}", e);
-            return false;
-        }
+        return deleteTenant(TENANT_NAME);
     }
 
     /**
@@ -220,70 +209,64 @@ public class VTNIntentParser {
     }
 
     /**
-     * @param tenantName
-     * @param mgr
+     * Create a new tenant in VTN Manager.
+     *
+     * @param tenantName  The name of the tenant to be created.
      * @return  {@code = true} tenant will be created in VTN Manager.
      */
-    public boolean createTenant(String tenantName, IVTNManager mgr) {
-
+    public boolean createTenant(String tenantName) {
         try {
-            VTenantPath path = new VTenantPath(tenantName);
-            VTenantConfig tconf = new VTenantConfig(tenantName + " created ");
-
-            if (!isTenantExist(tenantName)) {
-                Status status = mgr.addTenant(path, tconf);
-                return status.isSuccess();
-            }
-        } catch (Exception ex) {
-            LOG.error("Tenant creation error {}", ex);
+            mgr = getVTNManager(CONTAINER_NAME);
+        } catch (Exception e) {
+            LOG.error("Failed to get the VTN Manager instance: {}", e);
             return false;
         }
 
-        return true;
+        Status status = mgr.addTenant(new VTenantPath(tenantName), null);
+        if (status.isSuccess()) {
+            return true;
+        }
+
+        if (status.getCode().equals(StatusCode.CONFLICT)) {
+            LOG.debug("The specified tenant has been already created: Tenant={}",
+                      tenantName);
+            return true;
+        }
+
+
+        LOG.error("Failed to create the tenant: Tenant={}: {}",
+                  tenantName, status);
+        return false;
     }
 
     /**
-     * Deletes the Virtual Tenant created.
+     * Delete the specified tenant in VTN Manager.
      *
-     * @param tenantName
+     * @param tenantName  The name of the tenant to be deleted.
      * @return  {@code = true} deletes the default virtual tenant created in VTN Manager.
      */
     public boolean deleteTenant(String tenantName) {
-
         try {
             mgr = getVTNManager(CONTAINER_NAME);
-            VTenantPath path = new VTenantPath(tenantName);
-
-            if (isTenantExist(tenantName)) {
-                Status status = mgr.removeTenant(path);
-                return status.isSuccess();
-            }
-        } catch (Exception ex) {
-            LOG.error("Tenant Dleteion error {}", ex);
+        } catch (Exception e) {
+            LOG.error("Failed to get the VTN Manager instance: {}", e);
             return false;
         }
 
-        return true;
-    }
+        Status status = mgr.removeTenant(new VTenantPath(tenantName));
 
-    /**
-     * If tenant with same name already exists false is returned else
-     * return true.
-     *
-     * @param tenantName
-     * @return  {@code = false} the tenant is not existing in VTN Manager.
-     */
-    public boolean isTenantExist(String tenantName) {
-        try {
-            mgr = getVTNManager(CONTAINER_NAME);
-            for (VTenant vTenant : mgr.getTenants()) {
-                if (vTenant.getName().equalsIgnoreCase(tenantName)) {
-                    return true;
-                }
-            }
-        } catch (Exception e) {
-            LOG.error("Tenant creation error {}", e);
+        if (status.isSuccess()) {
+            return true;
         }
+
+        if (status.getCode().equals(StatusCode.NOTFOUND)) {
+            LOG.debug("The specified tenant has been already deleted: Tenant={}",
+                      tenantName);
+            return true;
+        }
+
+        LOG.error("Failed to delete the tenant: Tenant={}: {}",
+                  tenantName, status);
         return false;
     }
 
@@ -343,12 +326,14 @@ public class VTNIntentParser {
                 }
 
                 fcond = new FlowCondition(condName, matchList);
-                UpdateType status = mgr.setFlowCondition(condName, fcond);
+                UpdateType result = mgr.setFlowCondition(condName, fcond);
 
-                if (status.getName().equalsIgnoreCase("added")) {
-                    LOG.info("Flow Condition created:");
+                if (result == null) {
+                    LOG.trace("A Flow Condition has been already created.");
                     return true;
-
+                } else if (result.equals(UpdateType.ADDED)) {
+                    LOG.trace("A Flow Condition is newly created.");
+                    return true;
                 } else {
                     return false;
                 }
@@ -487,7 +472,6 @@ public class VTNIntentParser {
      */
     public boolean createBridge(String tenantName, String bridgeName,
             boolean vlanMap) {
-
         try {
             mgr = getVTNManager(CONTAINER_NAME);
             VBridgePath bridgePath = new VBridgePath(tenantName, bridgeName);
