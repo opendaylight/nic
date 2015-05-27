@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_cdb56cce",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/IntentWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-27T20:46:09Z",
+      "side": 1,
+      "message": "Seems to me that this variable should be a private variable.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "3b060047e2e6f4ae5b5a2e50b99c4a6944e5de61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_0dbcb4ba",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-27T20:46:09Z",
+      "side": 1,
+      "message": "The names of parameters are wrong. This causes Javadoc Warning messages during build. Please fix them.",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 17
+      },
+      "revId": "3b060047e2e6f4ae5b5a2e50b99c4a6944e5de61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
