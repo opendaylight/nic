@@ -30,7 +30,6 @@
 
     <modules>
         <!-- Well-known -->
-        <module>parent</module>
         <module>intentengine-api</module>
         <module>intentengine-impl</module>
         <module>intentengine-cli</module>
