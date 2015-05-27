@@ -74,7 +74,6 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
                         LOG.trace("Received intent id :{} ", intent.getId());
                         intentParser(intent);
                     }
-                    LOG.info("Intents Created ");
                 } catch (Exception e) {
                     LOG.error("Could not create VTN Renderer", e);
                 }
@@ -82,7 +81,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         }
 
         for (DataObject dao : ev.getUpdatedData().values()) {
-            LOG.info("Update data change ");
+            LOG.trace("Parsing an updated data object.");
             if (dao instanceof Intents) {
                 try {
                     Intents lcl_iB = (Intents)dao;
@@ -160,9 +159,10 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
                             renderer.rendering(endPointSrc, endPointDst, "block", intentList);
                         }
                     }
+
                     if ((intent.getActions().size()) != 1) {
-                            LOG.info("Supports only one action");
-                            return;
+                        LOG.warn("VTN Renderer supports only one action per Intent.");
+                        return;
                     }
                 }
             } catch (Exception e) {

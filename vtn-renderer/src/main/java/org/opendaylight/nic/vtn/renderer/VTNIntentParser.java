@@ -138,6 +138,8 @@ public class VTNIntentParser {
                         condNameSrcDst, true, intentList);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
                         condNameDstSrc, true, intentList);
+
+                LOG.info("VTN configuration is successfully updated for user Intents.");
             } else {
                 LOG.error("Invalid Address");
             }
@@ -167,7 +169,10 @@ public class VTNIntentParser {
             }
             VTNRendererUtility.hashMapIntentUtil.remove(intentID);
             if (VTNRendererUtility.hashMapIntentUtil.isEmpty()) {
-                deleteDefault();
+                boolean result = deleteDefault();
+                if (result) {
+                    LOG.info("All VTN configuration associated with Intents are removed.");
+                }
             }
 
         } catch (Exception e) {
