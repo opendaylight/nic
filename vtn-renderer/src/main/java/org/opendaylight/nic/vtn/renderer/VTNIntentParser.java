@@ -148,6 +148,69 @@ public class VTNIntentParser {
     }
 
     /**
+     * Updates VTN elements based on the intent action
+     *
+     * @param IP1
+     * @param IP2
+     * @param action
+     * @param intentList
+     * @param intentID
+     */
+    public void updateRendering(final String adressSrc, final String adressDst,
+            String action, List<IntentWrapper> intentList, String intentID) {
+        try {
+            if ((utility.validateIP(adressSrc))
+                    && (utility.validateIP(adressDst))
+                    && (utility.validateSubnet(adressSrc, adressDst))
+                    || ((utility.validateMacAddress(adressSrc)) && (utility
+                            .validateMacAddress(adressDst)))) {
+
+                String condNameSrcDst = constructCondName(adressSrc, adressDst);
+                String condNameDstSrc = constructCondName(adressDst, adressSrc);
+                action = action.equalsIgnoreCase("allow") ? "PASS" : action
+                            .equalsIgnoreCase("block") ? "DROP" : "NA";
+                    if (action.equalsIgnoreCase("NA")) {
+                        LOG.error("Unsupported Action {}", action);
+                        return;
+                    }
+                List<IntentWrapper> list = VTNRendererUtility.hashMapIntentUtil
+                    .get(intentID);
+                for (IntentWrapper intentWrapper : list) {
+                    if (!(intentWrapper.getEntityDescription().equals(condNameSrcDst))
+                            || !(intentWrapper.getEntityDescription().equals(condNameDstSrc))) {
+                        deleteFlowCond(intentWrapper.getEntityDescription());
+                        deleteFlowFilter(intentWrapper.getEntityValue());
+
+                        createFlowCond(adressSrc, adressDst, condNameSrcDst);
+                        createFlowCond(adressDst, adressSrc, condNameDstSrc);
+                        createFlowCond("0.0", "0.0", "match_any");
+
+                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
+                            "match_any", false, intentList);
+                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            condNameSrcDst, true, intentList);
+                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            condNameDstSrc, true, intentList);
+                    } else if (!intentWrapper.getAction().equals(action)){
+                        deleteFlowFilter(intentWrapper.getEntityValue());
+                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
+                            "match_any", false, intentList);
+                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            condNameSrcDst, true, intentList);
+                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            condNameDstSrc, true, intentList);
+                    }
+                }
+            } else {
+                LOG.error("Invalid Address");
+            }
+
+        } catch (Exception e) {
+            LOG.error("Unable to update VTN Objects {}", e);
+        }
+    }
+
+    /**
      * Delete a particular intent
      *
      * @param intentID
@@ -259,7 +322,7 @@ public class VTNIntentParser {
                 return status.isSuccess();
             }
         } catch (Exception ex) {
-            LOG.error("Tenant Dleteion error {}", ex);
+            LOG.error("Tenant Deletion error {}", ex);
             return false;
         }
 

@@ -17,6 +17,7 @@ public class IntentWrapper {
     int entityValue;
     String entityName;
     String entityDescription;
+    String action;
 
     /**
      * Returns the value for the entity.
@@ -66,6 +67,21 @@ public class IntentWrapper {
         this.entityValue = index;
     }
 
+    /**
+     * Retrieves the action of entity
+     * @return the action
+     */
+    public String getAction() {
+        return action;
+    }
+
+    /**
+     * @param action the action to set
+     */
+    public void setAction(String action) {
+        this.action = action;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -77,6 +93,7 @@ public class IntentWrapper {
         result = prime * result
                 + ((entityName == null) ? 0 : entityName.hashCode());
         result = prime * result + entityValue;
+        result = prime * result + ((action == null) ? 0 : action.hashCode());
         return result;
     }
 
@@ -94,6 +111,11 @@ public class IntentWrapper {
                 return false;
         } else if (!entityDescription.equals(other.entityDescription))
             return false;
+        if (action == null) {
+            if (other.action != null)
+                return false;
+        } else if (!action.equals(other.action))
+            return false;
         if (entityName == null) {
             if (other.entityName != null)
                 return false;
@@ -108,6 +130,6 @@ public class IntentWrapper {
     public String toString() {
         return "IntentWrapper [entityName=" + entityName + ", entityValue="
                 + entityValue + ", entityDescription=" + entityDescription
-                + "]";
+                + ", action="+ action +"]";
     }
 }
