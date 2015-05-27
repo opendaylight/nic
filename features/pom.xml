@@ -140,12 +140,17 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
-      <artifactId>gbp-renderer</artifactId>
+      <artifactId>gbp-renderer-api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
-      <artifactId>gbp-renderer</artifactId>
+      <artifactId>gbp-renderer-impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>gbp-renderer-impl</artifactId>
       <version>${project.version}</version>
       <classifier>config</classifier>
       <type>xml</type>

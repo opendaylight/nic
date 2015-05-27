@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-#
-# Copyright (c) 2015 NEC Corporation
-# All rights reserved.
-#
-# This program and the accompanying materials are made available under the
-# terms of the Eclipse Public License v1.0 which accompanies this
-# distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
-#
+ Copyright (c) 2015 Inocybe Technologies Inc. and others.  All rights reserved.
+
+ This program and the accompanying materials are made available under the
+ terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 
 <!-- Configuration for gbp Renderer module. -->
-  <required-capabilities>
-    <capability>urn:opendaylight:nic:gbp:renderer:impl?module=gbp-renderer-impl&amp;revision=2015-05-11</capability>
-  </required-capabilities>
-
 <snapshot>
   <configuration>
     <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
       <modules xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
         <module>
-          <type xmlns:nic="urn:opendaylight:nic:gbp:renderer">prefix:gbp-renderer-impl</type>
-          <name>gbp-renderer-default</name>
+          <type xmlns:nic="urn:opendaylight:nic:gbp:renderer:impl">
+            nic:gbp-renderer-impl
+          </type>
+
+          <name>gbp-renderer-impl</name>
 
           <data-broker>
-            <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">binding:binding-async-data-broker</type>
+            <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
+              binding:binding-async-data-broker
+            </type>
             <name>binding-data-broker</name>
           </data-broker>
 
@@ -33,4 +31,10 @@
       </modules>
     </data>
   </configuration>
+
+  <required-capabilities>
+    <capability>
+      urn:opendaylight:nic:gbp:renderer:impl?module=gbp-renderer-impl&amp;revision=2015-05-11
+    </capability>
+  </required-capabilities>
 </snapshot>
