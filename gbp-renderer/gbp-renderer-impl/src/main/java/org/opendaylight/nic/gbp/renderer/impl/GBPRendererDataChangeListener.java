@@ -53,7 +53,9 @@ import com.google.common.collect.Lists;
 public class GBPRendererDataChangeListener implements DataChangeListener,
         AutoCloseable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GBPRendererDataChangeListener.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(GBPRendererDataChangeListener.class);
+    @SuppressWarnings("unused")
     private DataBroker dataBroker;
     private ListenerRegistration<DataChangeListener> gbpRendererListener = null;
     private final ReadWriteTransaction transaction;
@@ -61,7 +63,6 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
     public GBPRendererDataChangeListener(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
         this.transaction = dataBroker.newReadWriteTransaction();
-
         gbpRendererListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.CONFIGURATION,
                 GBPRendererConstants.INTENTS_IID, this, DataChangeScope.SUBTREE);
