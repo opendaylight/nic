@@ -56,6 +56,11 @@
    <artifactId>features-groupbasedpolicy</artifactId>
    <version>0.2.0-SNAPSHOT</version>
   </dependency>
+  <dependency>
+   <groupId>org.opendaylight.groupbasedpolicy</groupId>
+   <artifactId>ofoverlay-renderer</artifactId>
+   <version>0.2.0-SNAPSHOT</version>
+  </dependency> 
 
   <!-- OpenDaylight YANG Tools -->
   <dependency>
