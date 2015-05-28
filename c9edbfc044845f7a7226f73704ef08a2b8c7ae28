@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_854e58c0",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-28T19:27:22Z",
+      "side": 1,
+      "message": "Ben, it seems that this action is breaking your build. \n\nOutput from jenkins job:\n\n[ERROR] /opt/jenkins/workspace/nic-verify-master/jdk/openjdk7/nodes/dynamic_verify/gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java:[219,24] method setSubject in class org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.ContractBuilder cannot be applied to given types;\n  required: java.util.List\u003corg.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.Subject\u003e\n  found: com.google.common.collect.ImmutableList\u003cjava.util.List\u003corg.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.Subject\u003e\u003e\n  reason: actual argument com.google.common.collect.ImmutableList\u003cjava.util.List\u003corg.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.Subject\u003e\u003e cannot be converted to java.util.List\u003corg.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.Subject\u003e by method invocation conversion",
+      "revId": "c9edbfc044845f7a7226f73704ef08a2b8c7ae28",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
