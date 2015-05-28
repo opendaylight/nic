@@ -44,14 +44,14 @@ import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.
  */
 public class VTNIntentParser {
 
-    private final String TENANT_NAME = "vtnRenderer";
-    private final String BRIDGE_NAME = "default";
-    private final String CONTAINER_NAME = "default";
-    private final Logger LOG = LoggerFactory.getLogger(VTNIntentParser.class);
-    int flow_index = 1;
-    int flowcond_index = 1;
-    IVTNManager mgr;
-    VTNRendererUtility utility = new VTNRendererUtility();
+    private static final String TENANT_NAME = "vtnRenderer";
+    private static final String BRIDGE_NAME = "default";
+    private static final String CONTAINER_NAME = "default";
+    private static final Logger LOG = LoggerFactory.getLogger(VTNIntentParser.class);
+    private int flow_index = 1;
+    private int flowcond_index = 1;
+    private IVTNManager mgr;
+    private VTNRendererUtility utility = new VTNRendererUtility();
 
     /**
      * Creates a default Virtual Tenant and default bridge with Vlan mapping
@@ -83,7 +83,8 @@ public class VTNIntentParser {
     /**
      * Deletes the default virtual VTN Manager objects after deletion of all intents
      * creation.
-     * @return  {@code = true} default VTN Manager objects created will be deleted in VTN Manager.
+     *
+     * @return  {@code true} is returned if the objects are deleted in VTN Manager.
      */
     public boolean deleteDefault() {
         try {
@@ -103,8 +104,8 @@ public class VTNIntentParser {
     /**
      * Creates VTN elements based on the intent action
      *
-     * @param IP1
-     * @param IP2
+     * @param adressSrc
+     * @param adressDst
      * @param action
      */
     public void rendering(final String adressSrc, final String adressDst,
@@ -229,7 +230,7 @@ public class VTNIntentParser {
     /**
      * @param tenantName
      * @param mgr
-     * @return  {@code = true} tenant will be created in VTN Manager.
+     * @return  {@code true} is returned if tenant is created in VTN Manager.
      */
     public boolean createTenant(String tenantName, IVTNManager mgr) {
 
@@ -253,7 +254,7 @@ public class VTNIntentParser {
      * Deletes the Virtual Tenant created.
      *
      * @param tenantName
-     * @return  {@code = true} deletes the default virtual tenant created in VTN Manager.
+     * @return  {@code true} is returned if the tenant is deleted.
      */
     public boolean deleteTenant(String tenantName) {
 
@@ -278,7 +279,7 @@ public class VTNIntentParser {
      * return true.
      *
      * @param tenantName
-     * @return  {@code = false} the tenant is not existing in VTN Manager.
+     * @return  {@code true} is returned if the tenant exists in VTN Manager.
      */
     public boolean isTenantExist(String tenantName) {
         try {
@@ -299,7 +300,7 @@ public class VTNIntentParser {
      *
      * @param addressSrc
      * @param addressDst
-     * @return  {@code = true} only flow condition is created in VTN Manager.
+     * @return  {@code true} is returned if only flow condition is created in VTN Manager.
      */
     public boolean createFlowCond(final String addressSrc,
             final String addressDst, String condName) {
@@ -372,7 +373,7 @@ public class VTNIntentParser {
      * Delete the given flow condition
      *
      * @param condName
-     * returns true on successful deletion
+     * @return  {@code true} on successful deletion
      */
     public boolean deleteFlowCond(String condName) {
         try {
@@ -394,8 +395,8 @@ public class VTNIntentParser {
      * This method will return if the bridge already exists, if tenant with same
      * name already exists false is returned else return true.
      *
-     * @param bridgeName
-     * @return  {@code = false} flow condition is not present in VTN Manager.
+     * @param condName
+     * @return  {@code false} is returned if flow condition is not present in VTN Manager.
      */
     public boolean isFlowCondExist(String condName) {
 
@@ -426,7 +427,6 @@ public class VTNIntentParser {
             String type, String cond_name, boolean canAdd,
             List<IntentWrapper> intentList) throws Exception {
         boolean in = false;
-        boolean out = true;
         int index = 0;
 
         if (cond_name.equalsIgnoreCase("match_any")) {
