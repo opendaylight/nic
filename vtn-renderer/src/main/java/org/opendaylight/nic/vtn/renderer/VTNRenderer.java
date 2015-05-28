@@ -47,6 +47,8 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             .getLogger(VTNRenderer.class);
 
     VTNIntentParser renderer = new VTNIntentParser();
+    private static final String INTENT_CREATE = "create";
+    private static final String INTENT_UPDATE = "update";
 
     /**
      * {@inheritDoc}
@@ -72,7 +74,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
                     List<Intent> lcl_intent = lcl_iB.getIntent();
                     for(Intent intent : lcl_intent) {
                         LOG.trace("Received intent id :{} ", intent.getId());
-                        intentParser(intent);
+                        intentParser(intent, INTENT_CREATE);
                     }
                 } catch (Exception e) {
                     LOG.error("Could not create VTN Renderer", e);
@@ -88,7 +90,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
                     List<Intent> lcl_intent = lcl_iB.getIntent();
                     for(Intent intent : lcl_intent) {
                         LOG.trace("Update intent id  :{} ",intent.getId());
-                        intentParser(intent);
+                        intentParser(intent, INTENT_UPDATE);
                     }
                 } catch (Exception e) {
                     LOG.error("Could not update VTN Renderer", e);
@@ -119,7 +121,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      *
      * @param intent
      */
-    public void intentParser(Intent intent) {
+    public void intentParser(Intent intent, String intentType) {
         String endPointSrc = "";
         String endPointDst = "";
         Map intentMap = new HashMap<String, List<IntentWrapper>>();
@@ -150,13 +152,21 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
                         Allow allow = ((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow) action).getAllow();
                         LOG.trace("Intent Action :{}", allow);
                         if ( allow != null) {
-                            renderer.rendering(endPointSrc, endPointDst, "allow", intentList);
+                            if (intentType.equals(INTENT_CREATE)) {
+                                renderer.rendering(endPointSrc, endPointDst, "allow", intentList);
+                            }
+                            else if (intentType.equals(INTENT_UPDATE)) {
+                                renderer.updateRendering(endPointSrc, endPointDst, "allow", intentList, intentID);
+                            }
                         }
                     } else if (action instanceof org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block) {
                         Block block =((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block)action).getBlock();
                         LOG.trace("Intent Actions :{} ", block);
                         if ( block != null) {
-                            renderer.rendering(endPointSrc, endPointDst, "block", intentList);
+                            if (intentType.equals(INTENT_CREATE))
+                                renderer.rendering(endPointSrc, endPointDst, "block", intentList);
+                            else if (intentType.equals(INTENT_UPDATE))
+                                renderer.updateRendering(endPointSrc, endPointDst, "block", intentList, intentID);
                         }
                     }
 
