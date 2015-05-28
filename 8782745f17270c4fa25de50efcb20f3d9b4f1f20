@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_11cb6ea6",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-28T01:10:33Z",
+      "side": 1,
+      "message": "Thanks!\nWe will apply this change in another patch.",
+      "parentUuid": "1a9dcd25_71a192f7",
+      "revId": "8782745f17270c4fa25de50efcb20f3d9b4f1f20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_d1af46e2",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_d1966694",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-28T01:10:33Z",
+      "side": 1,
+      "message": "I strongly agree with you.\nHowever, this method does not have a way to get the Intent ID.\n\nActually, I\u0027m not sure if here is the right place to output this information.\n\nAnyway, more better log messages require a big refactoring on VTN Renderer.\nFor Lithium, I think this change is reasonable.",
+      "parentUuid": "1a9dcd25_d1af46e2",
+      "revId": "8782745f17270c4fa25de50efcb20f3d9b4f1f20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_f1acc2ef",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-05-28T00:11:49Z",
       "side": 1,
       "message": "If you have the intent ID (the UUID) this could be useful in the log message.",
+      "revId": "8782745f17270c4fa25de50efcb20f3d9b4f1f20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_d1c42694",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-28T01:10:33Z",
+      "side": 1,
+      "message": "That log message is not directly related to any intent ID.\n\nThat being said, this method deletes VTN configuration with associated the deleted Intent.\nTherefore, I\u0027ve decided to put another LOG.info above with the Intent ID.",
+      "parentUuid": "1a9dcd25_f1acc2ef",
       "revId": "8782745f17270c4fa25de50efcb20f3d9b4f1f20",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
