@@ -16,6 +16,24 @@
       "revId": "5107019a52e43bc45f0648470d55b7396fd93a1d",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_2504247a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-28T18:34:35Z",
+      "side": 1,
+      "message": "Hi Alexis,\nThank you for your comment.\nThis is helpful!\nYour guess is correct. I should have removed the try catch close. But, since we were close to the code freeze, I asked David Bainbridge to merge the patch without changing this part.\nActually, it seems to me that the usage of try catch close are not appropriate in the file, and I think we need a big refactoring in Beryllium. I will address your comment in another patch.\nThanks!",
+      "parentUuid": "1a9dcd25_5a758b96",
+      "revId": "5107019a52e43bc45f0648470d55b7396fd93a1d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
