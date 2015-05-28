@@ -29,7 +29,7 @@ public class UuidCompleter implements Completer {
         String query = (buffer == null) ? ".*" : buffer;
 
         if (!query.contains("*"))
-            query.concat("*");
+            query = query.concat(".*");
 
         StringsCompleter delegate = new StringsCompleter();
 
