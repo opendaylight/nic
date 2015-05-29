@@ -292,7 +292,8 @@ public class VTNIntentParser {
             return false;
         }
 
-        Status status = mgr.addTenant(new VTenantPath(tenantName), null);
+        Status status = mgr.addTenant(new VTenantPath(tenantName),
+                                      new VTenantConfig(null));
         if (status.isSuccess()) {
             return true;
         }
