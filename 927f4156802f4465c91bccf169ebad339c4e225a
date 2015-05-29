@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_5a1826d3",
+        "filename": "gbp-renderer/gbp-renderer-impl/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-05-29T19:29:40Z",
+      "side": 1,
+      "message": "here it is groupbasedpolicy only not features-groupbasedpolicy",
+      "revId": "927f4156802f4465c91bccf169ebad339c4e225a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
