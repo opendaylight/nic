@@ -1,23 +1,27 @@
 //------------------------------------------------------------------------------
 // Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
-//
+// 
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler.api;
 
-import java.net.UnknownHostException;
-import java.util.Collection;
-import java.util.Set;
+public interface TermType {
 
-import org.opendaylight.nic.compiler.ClassifierImpl;
+    /** identification of TermType */
+    public TermLabel label();
 
-public interface IntentCompiler {
-    Collection<Policy> compile(Collection<Policy> policies);
+    /** minimum value of the TermType */
+    public int min();
 
-    Set<Endpoint> parseEndpointGroup(String csv) throws UnknownHostException;
+    /** maximum value of the TermTYpe */
+    public int max();
 
-    Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
-            Set<Action> action, ClassifierImpl classifier);
+    /** determines if interval is legal for TermType */
+    public boolean isLegal(Interval interval);
+
+    /** returns an interval with the maximum interval for the TermTYpe */
+    public boolean isMax(Interval interval);
+
 }

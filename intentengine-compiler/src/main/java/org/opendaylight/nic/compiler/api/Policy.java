@@ -9,8 +9,14 @@ package org.opendaylight.nic.compiler.api;
 
 import java.util.Set;
 
+import org.opendaylight.nic.compiler.ClassifierImpl;
+
 public interface Policy {
     Set<Endpoint> src();
+
     Set<Endpoint> dst();
+
     Set<Action> action();
+
+    ClassifierImpl classifier();
 }
