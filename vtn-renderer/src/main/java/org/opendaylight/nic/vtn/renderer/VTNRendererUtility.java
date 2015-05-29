@@ -37,6 +37,15 @@ public class VTNRendererUtility {
     }
 
     /**
+     * Return {@code true} if it contains the specified intent.
+     *
+     * @param intentId  The ID of the intent
+     */
+    public static boolean containsIntent(String intentId) {
+        return hashMapIntentUtil.containsKey(intentId);
+    }
+
+    /**
      * Validates the received IP address
      *
      * @param ip
