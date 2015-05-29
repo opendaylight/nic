@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.opendaylight.controller.sal.utils.ServiceHelper;
 import org.opendaylight.controller.sal.utils.Status;
 import org.opendaylight.controller.sal.utils.StatusCode;
@@ -34,7 +33,6 @@ import org.opendaylight.vtn.manager.VBridge;
 import org.opendaylight.vtn.manager.VBridgeConfig;
 import org.opendaylight.vtn.manager.VBridgePath;
 import org.opendaylight.vtn.manager.VlanMapConfig;
-import org.opendaylight.vtn.manager.VTenant;
 import org.opendaylight.vtn.manager.VTenantConfig;
 import org.opendaylight.vtn.manager.VTenantPath;
 import org.opendaylight.vtn.manager.util.EtherAddress;
@@ -58,26 +56,22 @@ public class VTNIntentParser {
      * Creates a default Virtual Tenant and default bridge with Vlan mapping
      */
     public void createDefault() {
+        boolean status = createTenant(TENANT_NAME);
 
-        try {
-            boolean status = createTenant(TENANT_NAME);
-
-            if (status != true) {
-                LOG.error("Tenant creation failed");
-                return;
-            }
-
-            status = createBridge(TENANT_NAME, BRIDGE_NAME, true);
-
-            if (status != true) {
-                LOG.error("Bridge creation failed");
-                return;
-            }
-
-            LOG.trace("Bridge creation status {}", status);
-        } catch (Exception e) {
-            LOG.error("Exception occurred in VTNIntentParser {}", e);
+        if (status != true) {
+            LOG.error("Tenant creation failed");
+            return;
         }
+
+        status = createBridge(TENANT_NAME, BRIDGE_NAME, true);
+
+        if (status != true) {
+            LOG.error("Bridge creation failed");
+            return;
+        }
+
+        LOG.trace("Bridge creation status {}", status);
+
     }
 
     /**
@@ -86,7 +80,10 @@ public class VTNIntentParser {
      * @return  {@code true} is returned if the default configuration is deleted in VTN Manager.
      */
     public boolean deleteDefault() {
-        return deleteTenant(TENANT_NAME);
+        if (deleteTenant(TENANT_NAME)) {
+            return deleteFlowCond("match_any");
+        }
+        return false;
     }
 
     /**
@@ -158,42 +155,55 @@ public class VTNIntentParser {
 
                 String condNameSrcDst = constructCondName(adressSrc, adressDst);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc);
+                // Acts as a flag value to create specific flow condition.
+                boolean isSrcDstCond = false;
+                boolean isDstSrcCond = false;
+
                 action = action.equalsIgnoreCase("allow") ? "PASS" : action
-                            .equalsIgnoreCase("block") ? "DROP" : "NA";
-                    if (action.equalsIgnoreCase("NA")) {
-                        LOG.error("Unsupported Action {}", action);
-                        return;
-                    }
+                        .equalsIgnoreCase("block") ? "DROP" : "NA";
+                if (action.equalsIgnoreCase("NA")) {
+                    LOG.error("Unsupported Action {}", action);
+                    return;
+                }
                 List<IntentWrapper> list = VTNRendererUtility.hashMapIntentUtil
-                    .get(intentID);
+                        .get(intentID);
                 for (IntentWrapper intentWrapper : list) {
-                    if (!(intentWrapper.getEntityDescription().equals(condNameSrcDst))
-                            || !(intentWrapper.getEntityDescription().equals(condNameDstSrc))) {
-                        deleteFlowCond(intentWrapper.getEntityDescription());
-                        deleteFlowFilter(intentWrapper.getEntityValue());
+                    String descript = intentWrapper.getEntityDescription();
+                    boolean isSrcDstCondName = descript.equals(condNameSrcDst);
+                    boolean isDstSrcCondName = descript.equals(condNameDstSrc);
 
-                        createFlowCond(adressSrc, adressDst, condNameSrcDst);
-                        createFlowCond(adressDst, adressSrc, condNameDstSrc);
-                        createFlowCond("0.0", "0.0", "match_any");
-
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
-                            "match_any", false, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameSrcDst, true, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameDstSrc, true, intentList);
-                    } else if (!intentWrapper.getAction().equals(action)){
+                    if (!(containsName(list, condNameSrcDst))
+                            || !(containsName(list, condNameDstSrc))) {
+                        deleteFlowCond(descript);
                         deleteFlowFilter(intentWrapper.getEntityValue());
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
-                            "match_any", false, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameSrcDst, true, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameDstSrc, true, intentList);
+                        if (!(isSrcDstCondName) && !(isSrcDstCond)) {
+                            createFlowCond(adressSrc, adressDst, condNameSrcDst);
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameSrcDst, true, intentList);
+                            isSrcDstCond = true;
+                        }
+                        if (!(isDstSrcCondName) && !(isDstSrcCond)) {
+                            createFlowCond(adressDst, adressSrc, condNameDstSrc);
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameDstSrc, true, intentList);
+                            isDstSrcCond = true;
+                        }
+                    } else if (!(intentWrapper.getAction().equals(action))) {
+                        deleteFlowFilter(intentWrapper.getEntityValue());
+                        if (isSrcDstCondName) {
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameSrcDst, true, intentList);
+                        }
+                        if (isDstSrcCondName) {
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameDstSrc, true, intentList);
+                        }
                     }
                 }
             } else {
-                LOG.warn("Invalid address is specified in Intent configuration: {}", intentID);
+                LOG.warn(
+                        "Invalid address is specified in Intent configuration: {}",
+                        intentID);
             }
 
         } catch (Exception e) {
@@ -451,7 +461,7 @@ public class VTNIntentParser {
         try {
             mgr = getVTNManager(CONTAINER_NAME);
             for (FlowCondition condition : mgr.getFlowConditions()) {
-                if (condition.getName().equalsIgnoreCase(condName)) {
+                if (condition.getName().equals(condName)) {
                     return true;
                 }
             }
@@ -505,6 +515,7 @@ public class VTNIntentParser {
             IntentWrapper intentWrapper = new IntentWrapper();
             intentWrapper.setEntityValue(index);
             intentWrapper.setEntityDescription(cond_name);
+            intentWrapper.setAction(type);
             intentWrapper.setEntityName("FlowFilter");
             intentList.add(intentWrapper);
         }
@@ -514,7 +525,7 @@ public class VTNIntentParser {
      * Delete an Existing flow filter with received ID
      *
      * @param index
-     * @return  {@code = true} flow filter is deleted in VTN Manager.
+     * @return  {@code true} flow filter is deleted in VTN Manager.
      */
     public boolean deleteFlowFilter(int index) {
 
@@ -537,7 +548,7 @@ public class VTNIntentParser {
      * @param tenantName
      * @param bridgeName
      * @param vlanMap
-     * @return {@code = true} only bridge is created in VTN Manager.
+     * @return {@code true} only bridge is created in VTN Manager.
      * @throws Exception
      */
     public boolean createBridge(String tenantName, String bridgeName,
@@ -569,14 +580,14 @@ public class VTNIntentParser {
      * This method will return true if the bridge already exists else return false.
      *
      * @param bridgeName
-     * @return  {@code = false} only bridge is not present in VTN Manager.
+     * @return  {@code false} only bridge is not present in VTN Manager.
      */
     public boolean isBridgeExist(String bridgeName, VBridgePath path) {
 
         try {
             mgr = getVTNManager(CONTAINER_NAME);
             for (VBridge vBridge : mgr.getBridges(path)) {
-                if (vBridge.getName().equalsIgnoreCase(bridgeName)) {
+                if (vBridge.getName().equals(bridgeName)) {
                     return true;
                 }
             }
@@ -587,4 +598,21 @@ public class VTNIntentParser {
         return false;
     }
 
+    /**
+     * Iterates over all List until a specified condition name is found that has
+     * the same name as specified in search
+     *
+     * @param intentWrappers
+     * @param search
+     * @return  {@code false} only if search string is not present in the list
+     */
+    private static boolean containsName(
+            final List<IntentWrapper> intentWrappers, final String search) {
+        for (final IntentWrapper wrapper : intentWrappers) {
+            if (wrapper.getEntityDescription().equals(search)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
