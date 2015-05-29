@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_5a534617",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-05-29T16:42:28Z",
+      "side": 0,
+      "message": "Not part of this change, but could be in another patch. I thought with exceptions in LOG.error you didn\u0027t have to insert {}, instead if the last parameter is a Throwable it adds the stack trace to the log.",
+      "revId": "5107019a52e43bc45f0648470d55b7396fd93a1d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
