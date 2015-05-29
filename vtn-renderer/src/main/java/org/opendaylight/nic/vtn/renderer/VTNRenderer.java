@@ -9,13 +9,10 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -23,7 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
-import org.opendaylight.controller.sal.utils.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
@@ -32,8 +28,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -62,39 +56,30 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      */
     public void onDataChanged(
             AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
+        if (ev == null) {
+            LOG.warn("Null data change event.");
+            return;
+        }
 
         LOG.info("Intent configuration changed.");
 
-        for (DataObject dao : ev.getCreatedData().values()) {
-            LOG.trace("Create Intent called", ev.getCreatedData().values() );
-            if (dao instanceof Intents) {
-                LOG.trace("Intents received ");
-                try {
-                    Intents lcl_iB = (Intents)dao;
-                    List<Intent> lcl_intent = lcl_iB.getIntent();
-                    for(Intent intent : lcl_intent) {
-                        LOG.trace("Received intent id :{} ", intent.getId());
-                        intentParser(intent, INTENT_CREATE);
-                    }
-                } catch (Exception e) {
-                    LOG.error("Could not create VTN Renderer", e);
-                }
+        for (DataObject dao: ev.getCreatedData().values()) {
+            LOG.trace("A new data object is created: {}", dao);
+
+            if (dao instanceof Intent) {
+                Intent intent = (Intent) dao;
+                LOG.debug("A new intent is created: {}", intent.getId());
+                intentParser(intent);
             }
         }
 
-        for (DataObject dao : ev.getUpdatedData().values()) {
-            LOG.trace("Parsing an updated data object.");
-            if (dao instanceof Intents) {
-                try {
-                    Intents lcl_iB = (Intents)dao;
-                    List<Intent> lcl_intent = lcl_iB.getIntent();
-                    for(Intent intent : lcl_intent) {
-                        LOG.trace("Update intent id  :{} ",intent.getId());
-                        intentParser(intent, INTENT_UPDATE);
-                    }
-                } catch (Exception e) {
-                    LOG.error("Could not update VTN Renderer", e);
-                }
+        for (DataObject dao: ev.getUpdatedData().values()) {
+            LOG.trace("A data object is updated: {}", dao);
+
+            if (dao instanceof Intent) {
+                Intent intent = (Intent) dao;
+                LOG.debug("An intent is updated: {}", intent.getId());
+                intentParser(intent);
             }
         }
 
@@ -121,7 +106,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      *
      * @param intent
      */
-    public void intentParser(Intent intent, String intentType) {
+    private void intentParser(Intent intent) {
         String endPointSrc = "";
         String endPointDst = "";
         Map intentMap = new HashMap<String, List<IntentWrapper>>();
@@ -152,21 +137,21 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
                         Allow allow = ((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow) action).getAllow();
                         LOG.trace("Intent Action :{}", allow);
                         if ( allow != null) {
-                            if (intentType.equals(INTENT_CREATE)) {
-                                renderer.rendering(endPointSrc, endPointDst, "allow", intentList);
-                            }
-                            else if (intentType.equals(INTENT_UPDATE)) {
+                            if (hasRendered(intentID)) {
                                 renderer.updateRendering(endPointSrc, endPointDst, "allow", intentList, intentID);
+                            } else {
+                                renderer.rendering(endPointSrc, endPointDst, "allow", intentList);
                             }
                         }
                     } else if (action instanceof org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block) {
                         Block block =((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block)action).getBlock();
                         LOG.trace("Intent Actions :{} ", block);
                         if ( block != null) {
-                            if (intentType.equals(INTENT_CREATE))
-                                renderer.rendering(endPointSrc, endPointDst, "block", intentList);
-                            else if (intentType.equals(INTENT_UPDATE))
+                            if (hasRendered(intentID)) {
                                 renderer.updateRendering(endPointSrc, endPointDst, "block", intentList, intentID);
+                            } else {
+                                renderer.rendering(endPointSrc, endPointDst, "block", intentList);
+                            }
                         }
                     }
 
@@ -183,5 +168,14 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         intentMap.put(intentID, intentList);
         VTNRendererUtility.storeIntentDetail(intentMap);
 
+    }
+
+    /**
+     * Return {@code true} if it has already rendered the specified intent.
+     *
+     * @param intentId  The ID of the intent
+     */
+    private boolean hasRendered(String intentId) {
+        return VTNRendererUtility.containsIntent(intentId);
     }
 }
