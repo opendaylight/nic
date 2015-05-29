@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.Allow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
@@ -41,8 +41,6 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             .getLogger(VTNRenderer.class);
 
     VTNIntentParser renderer = new VTNIntentParser();
-    private static final String INTENT_CREATE = "create";
-    private static final String INTENT_UPDATE = "update";
 
     /**
      * {@inheritDoc}
@@ -107,67 +105,67 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      * @param intent
      */
     private void intentParser(Intent intent) {
-        String endPointSrc = "";
-        String endPointDst = "";
-        Map intentMap = new HashMap<String, List<IntentWrapper>>();
-        List<IntentWrapper> intentList = new ArrayList<IntentWrapper>();
-        List<String> subject = new ArrayList<String>();
-        if (intent.getId() == null){
+        // Retrieve the ID.
+        Uuid uuid = intent.getId();
+        if (uuid == null){
+            LOG.info("ID is not specified: {}", intent);
             return;
         }
-        Uuid uuid = intent.getId();
         String intentID = uuid.getValue();
 
-        for(Subjects subjects : intent.getSubjects()) {
+        // Retrieve the end points.
+        List<Subjects> listSubjects = intent.getSubjects();
+        if (listSubjects == null) {
+            LOG.info("Subjects are not specified: {}", intentID);
+            return;
+        }
+        List<String> subject = new ArrayList<String>();
+        for (Subjects subjects: listSubjects) {
             EndPointGroup endPointGroup = (EndPointGroup)subjects.getSubject();
+            if (endPointGroup == null) {
+                LOG.info("End Point Group is not specified: {}", intentID);
+                return;
+            }
+
             subject.add(endPointGroup.getEndPointGroup().getName());
         }
+        String endPointSrc = subject.get(0);
+        String endPointDst = subject.get(1);
 
-        LOG.trace(":::Intent Subjects :::");
-        endPointSrc = subject.get(0).toString();
-        endPointDst = subject.get(1).toString();
-        if (intent.getActions() != null) {
-            LOG.trace("Intent Actions {}", intent.getActions());
+        // Retrieve the action.
+        List<Actions> listActions = intent.getActions();
+        if (listActions == null) {
+            LOG.info("Actions are not specified: {}", intentID);
+            return;
+        } else if (listActions.size() != 1) {
+            LOG.warn("VTN Renderer supports only one action per Intent: {}", intentID);
+            return;
+        }
+        Action action = listActions.get(0).getAction();
 
-            try {
-                for(Actions actions : intent.getActions()) {
-                    Action action = actions.getAction();
-
-                    if (action instanceof org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow) {
-                        Allow allow = ((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow) action).getAllow();
-                        LOG.trace("Intent Action :{}", allow);
-                        if ( allow != null) {
-                            if (hasRendered(intentID)) {
-                                renderer.updateRendering(endPointSrc, endPointDst, "allow", intentList, intentID);
-                            } else {
-                                renderer.rendering(endPointSrc, endPointDst, "allow", intentList);
-                            }
-                        }
-                    } else if (action instanceof org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block) {
-                        Block block =((org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block)action).getBlock();
-                        LOG.trace("Intent Actions :{} ", block);
-                        if ( block != null) {
-                            if (hasRendered(intentID)) {
-                                renderer.updateRendering(endPointSrc, endPointDst, "block", intentList, intentID);
-                            } else {
-                                renderer.rendering(endPointSrc, endPointDst, "block", intentList);
-                            }
-                        }
-                    }
-
-                    if ((intent.getActions().size()) != 1) {
-                        LOG.warn("VTN Renderer supports only one action per Intent.");
-                        return;
-                    }
-                }
-            } catch (Exception e) {
-                LOG.error("Could not parse the intent action :{} ", e);
-            }
+        // Get the type of the action.
+        String actionType;
+        if (action instanceof Allow) {
+            actionType = "allow";
+        } else if (action instanceof Block) {
+            actionType = "block";
+        } else {
+            LOG.warn("VTN Renderer supports only allow or block: {}", intentID);
+            return;
         }
 
+        // Convert the intent to VTN configuration.
+        List<IntentWrapper> intentList = new ArrayList<IntentWrapper>();
+        if (hasRendered(intentID)) {
+            renderer.updateRendering(endPointSrc, endPointDst, actionType, intentList, intentID);
+        } else {
+            renderer.rendering(endPointSrc, endPointDst, actionType, intentList);
+        }
+
+        // Store the VTN configuration for the intent.
+        Map intentMap = new HashMap<String, List<IntentWrapper>>();
         intentMap.put(intentID, intentList);
         VTNRendererUtility.storeIntentDetail(intentMap);
-
     }
 
     /**
