@@ -34,7 +34,6 @@ import org.opendaylight.vtn.manager.VBridge;
 import org.opendaylight.vtn.manager.VBridgeConfig;
 import org.opendaylight.vtn.manager.VBridgePath;
 import org.opendaylight.vtn.manager.VlanMapConfig;
-import org.opendaylight.vtn.manager.VTenant;
 import org.opendaylight.vtn.manager.VTenantConfig;
 import org.opendaylight.vtn.manager.VTenantPath;
 import org.opendaylight.vtn.manager.util.EtherAddress;
@@ -58,26 +57,22 @@ public class VTNIntentParser {
      * Creates a default Virtual Tenant and default bridge with Vlan mapping
      */
     public void createDefault() {
+        boolean status = createTenant(TENANT_NAME);
 
-        try {
-            boolean status = createTenant(TENANT_NAME);
-
-            if (status != true) {
-                LOG.error("Tenant creation failed");
-                return;
-            }
-
-            status = createBridge(TENANT_NAME, BRIDGE_NAME, true);
-
-            if (status != true) {
-                LOG.error("Bridge creation failed");
-                return;
-            }
-
-            LOG.trace("Bridge creation status {}", status);
-        } catch (Exception e) {
-            LOG.error("Exception occurred in VTNIntentParser {}", e);
+        if (status != true) {
+            LOG.error("Tenant creation failed");
+            return;
         }
+
+        status = createBridge(TENANT_NAME, BRIDGE_NAME, true);
+
+        if (status != true) {
+            LOG.error("Bridge creation failed");
+            return;
+        }
+
+        LOG.trace("Bridge creation status {}", status);
+
     }
 
     /**
@@ -159,41 +154,53 @@ public class VTNIntentParser {
                 String condNameSrcDst = constructCondName(adressSrc, adressDst);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc);
                 action = action.equalsIgnoreCase("allow") ? "PASS" : action
-                            .equalsIgnoreCase("block") ? "DROP" : "NA";
-                    if (action.equalsIgnoreCase("NA")) {
-                        LOG.error("Unsupported Action {}", action);
-                        return;
-                    }
+                        .equalsIgnoreCase("block") ? "DROP" : "NA";
+                if (action.equalsIgnoreCase("NA")) {
+                    LOG.error("Unsupported Action {}", action);
+                    return;
+                }
                 List<IntentWrapper> list = VTNRendererUtility.hashMapIntentUtil
-                    .get(intentID);
+                        .get(intentID);
+                boolean srcDst = false;
+                boolean DstSrc = false;
                 for (IntentWrapper intentWrapper : list) {
-                    if (!(intentWrapper.getEntityDescription().equals(condNameSrcDst))
-                            || !(intentWrapper.getEntityDescription().equals(condNameDstSrc))) {
-                        deleteFlowCond(intentWrapper.getEntityDescription());
-                        deleteFlowFilter(intentWrapper.getEntityValue());
+                    String descript = intentWrapper.getEntityDescription();
+                    boolean isCondSrcDst = utility.isEquals(descript,
+                            condNameSrcDst);
 
-                        createFlowCond(adressSrc, adressDst, condNameSrcDst);
-                        createFlowCond(adressDst, adressSrc, condNameDstSrc);
-                        createFlowCond("0.0", "0.0", "match_any");
-
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
-                            "match_any", false, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameSrcDst, true, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameDstSrc, true, intentList);
-                    } else if (!intentWrapper.getAction().equals(action)){
+                    boolean isCondDstSrc = utility.isEquals(descript,
+                            condNameDstSrc);
+                    if (!utility.isEquals(intentWrapper.getAction(), action)) {
                         deleteFlowFilter(intentWrapper.getEntityValue());
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
-                            "match_any", false, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameSrcDst, true, intentList);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
-                            condNameDstSrc, true, intentList);
+                        if (isCondSrcDst) {
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameSrcDst, true, intentList);
+                        }
+                        if (isCondDstSrc) {
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameDstSrc, true, intentList);
+                        }
+                    } else if (!(isCondSrcDst) || !(isCondDstSrc)) {
+                        deleteFlowCond(descript);
+                        deleteFlowFilter(intentWrapper.getEntityValue());
+                        if (!(isCondSrcDst) && !srcDst) {
+                            createFlowCond(adressSrc, adressDst, condNameSrcDst);
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameSrcDst, true, intentList);
+                            srcDst = true;
+                        }
+                        if (!(isCondDstSrc) && !DstSrc) {
+                            createFlowCond(adressDst, adressSrc, condNameDstSrc);
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                                    condNameDstSrc, true, intentList);
+                            DstSrc = true;
+                        }
                     }
                 }
             } else {
-                LOG.warn("Invalid address is specified in Intent configuration: {}", intentID);
+                LOG.warn(
+                        "Invalid address is specified in Intent configuration: {}",
+                        intentID);
             }
 
         } catch (Exception e) {
@@ -451,7 +458,7 @@ public class VTNIntentParser {
         try {
             mgr = getVTNManager(CONTAINER_NAME);
             for (FlowCondition condition : mgr.getFlowConditions()) {
-                if (condition.getName().equalsIgnoreCase(condName)) {
+                if (utility.isEquals(condition.getName(),condName)) {
                     return true;
                 }
             }
@@ -505,6 +512,7 @@ public class VTNIntentParser {
             IntentWrapper intentWrapper = new IntentWrapper();
             intentWrapper.setEntityValue(index);
             intentWrapper.setEntityDescription(cond_name);
+            intentWrapper.setAction(type);
             intentWrapper.setEntityName("FlowFilter");
             intentList.add(intentWrapper);
         }
@@ -576,9 +584,10 @@ public class VTNIntentParser {
         try {
             mgr = getVTNManager(CONTAINER_NAME);
             for (VBridge vBridge : mgr.getBridges(path)) {
-                if (vBridge.getName().equalsIgnoreCase(bridgeName)) {
+                if (utility.isEquals(vBridge.getName(), bridgeName)) {
                     return true;
                 }
+                
             }
         } catch (Exception e) {
             LOG.error("Unable to get bridge status {}", e);
@@ -586,5 +595,4 @@ public class VTNIntentParser {
 
         return false;
     }
-
 }

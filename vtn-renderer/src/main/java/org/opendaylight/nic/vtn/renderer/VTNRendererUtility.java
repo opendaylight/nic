@@ -119,4 +119,19 @@ public class VTNRendererUtility {
                 srcIp, dstIp);
         return false;
     }
+
+    /**
+     * This method will return true if the both the string are equals.
+     * 
+     * @param srcName
+     * @param dstName
+     * @return {@code = false} only if both the strings are not equal.
+     */
+    public boolean isEquals(String srcName, String dstName) {
+        if (srcName != null && dstName != null) {
+            return srcName.equals(dstName);
+        }
+        return false;
+    }
+
 }
