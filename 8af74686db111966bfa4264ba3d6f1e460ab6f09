@@ -22,6 +22,30 @@
       "revId": "8af74686db111966bfa4264ba3d6f1e460ab6f09",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_705503c5",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2015-05-31T16:19:18Z",
+      "side": 0,
+      "message": "The \u0027match_any\u0027 condition is a default condition created only \nonce and will not be deleted until all intents are deleted, so we need not create it again during update.",
+      "parentUuid": "1a9dcd25_3d199488",
+      "range": {
+        "startLine": 176,
+        "startChar": 1,
+        "endLine": 180,
+        "endChar": 60
+      },
+      "revId": "8af74686db111966bfa4264ba3d6f1e460ab6f09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_503d678e",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2015-05-31T16:19:18Z",
+      "side": 1,
+      "message": "This is a flag variable to distinguish between source to destination and destination to source flow condition.The same is addressed in the code.Thank you.",
+      "parentUuid": "1a9dcd25_5d1ee071",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 39
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_fd124c61",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-05-31T00:03:50Z",
       "side": 1,
       "message": "I don\u0027t think VTNRendererUtility.isEquals() is needed here. Since, here the variable condNameSrcDst never been null, I think we can simply use condNameSrcDst.equals(descript).",
+      "range": {
+        "startLine": 168,
+        "startChar": 20,
+        "endLine": 169,
+        "endChar": 44
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_1047df20",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2015-05-31T16:19:18Z",
+      "side": 1,
+      "message": "We thought redundancy can be avoided by using equals method \nin the classes. Now We have removed the equals method from VTNRendererUtility class and used default equals method as suggested.",
+      "parentUuid": "1a9dcd25_fd124c61",
       "range": {
         "startLine": 168,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_507fa7e0",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2015-05-31T16:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_1d41385a",
+      "range": {
+        "startLine": 173,
+        "startChar": 25,
+        "endLine": 173,
+        "endChar": 76
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_3d4bd488",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2015-05-31T00:03:50Z",
       "side": 1,
       "message": "Remove the white spaces.",
+      "range": {
+        "startLine": 590,
+        "startChar": 0,
+        "endLine": 590,
+        "endChar": 16
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_d048972f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2015-05-31T16:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9dcd25_3d4bd488",
       "range": {
         "startLine": 590,
         "startChar": 0,
