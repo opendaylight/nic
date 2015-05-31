@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_3d199488",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 0,
+      "message": "This patch seems to delete the implementation to create flow filter named \"match_any\". Is this really intended?\nOr does VTN Renderer create the flow filter \"match_any\" in other place? Am I missing something?",
+      "range": {
+        "startLine": 176,
+        "startChar": 1,
+        "endLine": 180,
+        "endChar": 60
+      },
+      "revId": "8af74686db111966bfa4264ba3d6f1e460ab6f09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}

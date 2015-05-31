@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_5d1ee071",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the role of these variables from the name. Could you change the names, or could you add comments to explain about the vriables.",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 39
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_fd124c61",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 1,
+      "message": "I don\u0027t think VTNRendererUtility.isEquals() is needed here. Since, here the variable condNameSrcDst never been null, I think we can simply use condNameSrcDst.equals(descript).",
+      "range": {
+        "startLine": 168,
+        "startChar": 20,
+        "endLine": 169,
+        "endChar": 44
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_1d41385a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 1,
+      "message": "I don\u0027t think VTNRendererUtility.isEquals() is needed here.\nSince, here the variable action never been null, I think we can simply use action.equals(intentWrapper.getAction()).",
+      "range": {
+        "startLine": 173,
+        "startChar": 25,
+        "endLine": 173,
+        "endChar": 76
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_3d4bd488",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 1,
+      "message": "Remove the white spaces.",
+      "range": {
+        "startLine": 590,
+        "startChar": 0,
+        "endLine": 590,
+        "endChar": 16
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_9d7ea8ad",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 1,
+      "message": "Remove the white space.",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 7
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_7d815c8e",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 1,
+      "message": "This is converted into \"\u003d false\" in Javadoc.\nTherefore, it should be {@code false}.",
+      "range": {
+        "startLine": 128,
+        "startChar": 15,
+        "endLine": 128,
+        "endChar": 30
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_5d502032",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-05-31T00:03:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this method is really needed, since this method is almost the same with String.equals(String). It seems to me that using String.equals(String) method is much more readable than using this method.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 5
+      },
+      "revId": "11260a697e51c0bc5c3f9e659d4756b448829844",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
