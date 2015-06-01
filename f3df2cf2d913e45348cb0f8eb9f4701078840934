@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_93aa196f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-06-01T03:10:23Z",
+      "side": 1,
+      "message": "Fix the VTN Renderer implementation for updatig an exiting intent",
+      "revId": "f3df2cf2d913e45348cb0f8eb9f4701078840934",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
