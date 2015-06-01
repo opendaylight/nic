@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_c93eb2b8",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T13:41:07Z",
+      "side": 1,
+      "message": "Here I\u0027m not sure you\u0027re checking NPE in the best way: what I would have done is the following:\n\n if (subject.getSubject() !\u003d null \u0026\u0026 subject.getSubject() instanceOf EndPointGroup) {\n   EndPointGroup endPointGroup \u003d (EndPointGroup) subjects.getSubject();\n   if (endPointGroup.getEndPointGroup() !\u003d null) {\n      subject.add(endPointGroup.getEndPointGroup().getName())\n   }\n }\n\nThis to make sure subjects.getSubject doesn\u0027t triggered a NPE when cast to EndPointGroup, and endPointGroup.getEndPointGroup() doesn\u0027t triggered a NPE.\n\nWhat do you think?",
+      "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_898d0a7e",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T13:41:07Z",
+      "side": 1,
+      "message": "If subject.get(0) is always going to be the endPointSrc and subject.get(1) the endPointDst there is two things I\u0027m thinking of:\n\nEither we create two distinct methods for each endPointSrc and endPointDst, either we create constants specifying something like:\nprivate static final int END_POINT_SRC \u003d 0;\nprivate static final int END_POINT_DST \u003d 1;\n\nWhat do you think?",
+      "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_6990be95",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T13:41:07Z",
+      "side": 1,
+      "message": "Maybe we could define constant for the whole project for the action type, or even better, declare an Enum - ActionType?\n\nWhat do you think?",
+      "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
