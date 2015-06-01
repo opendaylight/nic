@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_295f16e7",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/PolicyImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T14:20:33Z",
+      "side": 1,
+      "message": "Hey, would you mind making this condition more readable, or more easily readable, like the ones above?\nThis would be really nice :)\n\nSomething like:\n\n if (action !\u003d null ? !action.equals(policy.action) : policy.action !\u003d null) return false;\n\nWhat do you think?",
+      "revId": "ada3d746d42b7086bd96e8c2eb7d2b2388768273",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_89698a8d",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/api/ActionType.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T14:20:33Z",
+      "side": 1,
+      "message": "To be discuss:\n\nDon\u0027t you think we could name this enum something more related to the compiler actions?  Like ActionCompilerType or something like that. Because, personally, I would like to have this enum for the ActionType.ALLOW, ActionType.BLOCK action.\n\nLet\u0027s bring this discussion within the IRC channel if you\u0027re ok with that.\nThanks",
+      "revId": "ada3d746d42b7086bd96e8c2eb7d2b2388768273",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_e90feedf",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T14:20:33Z",
+      "side": 1,
+      "message": "I\u0027m going to repeat a bit what I said but this would be to have an enum for the ActionType ALLOW and BLOCK",
+      "revId": "ada3d746d42b7086bd96e8c2eb7d2b2388768273",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
