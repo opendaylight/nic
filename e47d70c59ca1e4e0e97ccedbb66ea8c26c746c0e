@@ -50,6 +50,24 @@
       "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_c9cb1271",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T15:20:11Z",
+      "side": 1,
+      "message": "Nevermind, we will discuss this at the meeting on Friday. \nThis is the output of the discussion I have with dbainbri this morning: \nhttps://gist.github.com/adetalhouet/afb218fb5ab4620cb497",
+      "parentUuid": "1a9dcd25_6990be95",
+      "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
