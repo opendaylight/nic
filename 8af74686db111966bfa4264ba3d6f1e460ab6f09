@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_53957131",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-06-01T02:45:56Z",
+      "side": 1,
+      "message": "Could be reworded as \nFix Exception while handlinng partial Intents (without subject)",
+      "revId": "8af74686db111966bfa4264ba3d6f1e460ab6f09",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
