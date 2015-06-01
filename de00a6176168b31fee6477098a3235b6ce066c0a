@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_4932a2a8",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentAddShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T14:32:47Z",
+      "side": 1,
+      "message": "you could add a string to explain the assert you\u0027re doing here, as the first parameter of the assert\n\nAlso you could define the string within the expected statement",
+      "revId": "de00a6176168b31fee6477098a3235b6ce066c0a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_a920064a",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentAddShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T14:32:47Z",
+      "side": 1,
+      "message": "you could add a string to explain the assert you\u0027re doing here, as the first parameter of the assert",
+      "revId": "de00a6176168b31fee6477098a3235b6ce066c0a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_89174aed",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentAddShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T14:32:47Z",
+      "side": 1,
+      "message": "you could add a string to explain the assert you\u0027re doing here, as the first parameter of the assert",
+      "revId": "de00a6176168b31fee6477098a3235b6ce066c0a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
