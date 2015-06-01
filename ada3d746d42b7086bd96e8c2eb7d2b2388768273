@@ -50,6 +50,24 @@
       "revId": "ada3d746d42b7086bd96e8c2eb7d2b2388768273",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_49a702be",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T15:20:27Z",
+      "side": 1,
+      "message": "Nevermind, we will discuss this at the meeting on Friday. This is the output of the discussion I have with dbainbri this morning: https://gist.github.com/adetalhouet/afb218fb5ab4620cb497",
+      "parentUuid": "1a9dcd25_e90feedf",
+      "revId": "ada3d746d42b7086bd96e8c2eb7d2b2388768273",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
