@@ -43,35 +43,75 @@ import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.
  */
 public class VTNIntentParser {
 
+    /**
+     * Setting the name for virtual tenant created during first intent request.
+     */
     private static final String TENANT_NAME = "vtnRenderer";
+
+    /**
+     * Setting the virtual Bridge name created during first intent request.
+     */
     private static final String BRIDGE_NAME = "default";
+
+    /**
+     * The default Container name used in VTN Manager.
+     */
     private static final String CONTAINER_NAME = "default";
+
+    /**
+     * Setting the lowest index value for match_any flow condition used by flow filter.
+     */
+    private static final int LOW_PRIORITY = 65535;
+
+    /**
+     * Setting the EtherType value to match only IPV4 packets, in flow conditions.
+     */
+    private static final int ETHER_TYPE = 0x800;
+
     private static final Logger LOG = LoggerFactory.getLogger(VTNIntentParser.class);
+
+    /**
+     * Setting the index of flow filter.
+     */
     private int flow_index = 1;
+
+    /**
+     * Setting the index of flow condition.
+     */
     private int flowcond_index = 1;
+
     private IVTNManager mgr;
+
     private VTNRendererUtility utility = new VTNRendererUtility();
 
     /**
-     * Creates a default Virtual Tenant and default bridge with Vlan mapping
+     * Creates a default Virtual Tenant and default bridge with Vlan mapping and flow condition
      */
-    public void createDefault() {
+    public boolean createDefault() {
         boolean status = createTenant(TENANT_NAME);
 
-        if (status != true) {
+        if (!status) {
             LOG.error("Tenant creation failed");
-            return;
+            return false;
         }
 
-        status = createBridge(TENANT_NAME, BRIDGE_NAME, true);
+        status = createBridge(TENANT_NAME, BRIDGE_NAME);
 
-        if (status != true) {
+        if (!status) {
             LOG.error("Bridge creation failed");
-            return;
+            return false;
         }
 
         LOG.trace("Bridge creation status {}", status);
-
+        /**
+         * Creates a default flow condition
+         */
+        status = createFlowCond("0.0", "0.0", "match_any");
+        if(!status){
+            LOG.error("Flow condiiton creation failed");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -102,7 +142,11 @@ public class VTNIntentParser {
                     || ((utility.validateMacAddress(adressSrc)) && (utility
                             .validateMacAddress(adressDst)))) {
 
-                createDefault();
+                boolean status = createDefault();
+                if (!status) {
+                     LOG.trace("Default VTN configuration creation failed");
+                     return;
+                }
 
                 String condNameSrcDst = constructCondName(adressSrc, adressDst);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc);
@@ -116,7 +160,6 @@ public class VTNIntentParser {
 
                 createFlowCond(adressSrc, adressDst, condNameSrcDst);
                 createFlowCond(adressDst, adressSrc, condNameDstSrc);
-                createFlowCond("0.0", "0.0", "match_any");
 
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
                     "match_any", false, intentList);
@@ -370,7 +413,7 @@ public class VTNIntentParser {
                 if (addressSrc.equalsIgnoreCase("0.0")) {
                     EtherAddress addr = null;
                     EthernetMatch ethernetMatch = new EthernetMatch(addr, addr,
-                            2048, (short) 0, null);
+                            ETHER_TYPE, (short) 0, null);
                     FlowMatch flowmatch = new FlowMatch(flowcond_index++,
                             ethernetMatch, null, null);
                     matchList.add(flowmatch);
@@ -385,7 +428,7 @@ public class VTNIntentParser {
                                 (short) 1, null);
                         EtherAddress addr = null;
                         EthernetMatch ethernetMatch = new EthernetMatch(addr,
-                                addr, 2048, (short) 0, null);
+                                addr, ETHER_TYPE, (short) 0, null);
                         FlowMatch flowmatch = new FlowMatch(flowcond_index++,
                                 ethernetMatch, match, null);
                         matchList.add(flowmatch);
@@ -488,7 +531,7 @@ public class VTNIntentParser {
         int index = 0;
 
         if (cond_name.equalsIgnoreCase("match_any")) {
-            index = 65535;
+            index = LOW_PRIORITY;
         } else {
             index = flow_index++;
         }
@@ -551,8 +594,7 @@ public class VTNIntentParser {
      * @return {@code true} only bridge is created in VTN Manager.
      * @throws Exception
      */
-    public boolean createBridge(String tenantName, String bridgeName,
-            boolean vlanMap) {
+    public boolean createBridge(String tenantName, String bridgeName) {
         try {
             mgr = getVTNManager(CONTAINER_NAME);
             VBridgePath bridgePath = new VBridgePath(tenantName, bridgeName);
