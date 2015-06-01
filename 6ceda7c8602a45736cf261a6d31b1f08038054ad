@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_a44b4d2a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-01T20:36:29Z",
+      "side": 1,
+      "message": "What you mention makes sense.\n\nI could not find any documents which tell the parameter of onDataChanged() never be null. And putting a value onto the parameter is out of control of VTN Renderer. So I put the null check on the parameter just in case.\nThat being said, considering this method is invoked only when there is data change, the null check might be too much worried.",
+      "parentUuid": "1a9dcd25_29d15657",
+      "revId": "6ceda7c8602a45736cf261a6d31b1f08038054ad",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_49d62251",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_64aa251b",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-01T20:36:29Z",
+      "side": 1,
+      "message": "I think ev.getCreatedData() never return null.\nSo I think the null check is not needed here.\n\nFor example, the comment for this method in AsyncDataChangeEvent.java says that it returns a map which is empty when there is no new objects.",
+      "parentUuid": "1a9dcd25_49d62251",
+      "revId": "6ceda7c8602a45736cf261a6d31b1f08038054ad",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_e9ca8ea0",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2015-06-01T13:50:59Z",
       "side": 1,
       "message": "Same here, maybe you want to test before this statement if ev.getUpdatedData !\u003d null",
+      "revId": "6ceda7c8602a45736cf261a6d31b1f08038054ad",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_84a7314f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-01T20:36:29Z",
+      "side": 1,
+      "message": "Same here. I don\u0027t think the null check is needed.\n\nI think the ev.getUpdatedData() never return null, but return an empty map when there is no updated objects.",
+      "parentUuid": "1a9dcd25_e9ca8ea0",
       "revId": "6ceda7c8602a45736cf261a6d31b1f08038054ad",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
