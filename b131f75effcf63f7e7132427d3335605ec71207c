@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_13ba89de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 824
+      },
+      "writtenOn": "2015-06-01T01:26:04Z",
+      "side": 1,
+      "message": "Small typos in the commit message \"Second\"",
+      "revId": "b131f75effcf63f7e7132427d3335605ec71207c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
