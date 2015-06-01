@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_c9c1d281",
+        "filename": "gbp-renderer/gbp-renderer-impl/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T13:53:12Z",
+      "side": 1,
+      "message": "Could you declare a property here?",
+      "revId": "e6da3cd698ae965f9081bd9e1bf3579232c807bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_69be7e01",
+        "filename": "gbp-renderer/gbp-renderer-impl/pom.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-01T13:53:12Z",
+      "side": 1,
+      "message": "And use it here also?",
+      "revId": "e6da3cd698ae965f9081bd9e1bf3579232c807bd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
