@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_f9c33755",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-02T14:12:27Z",
+      "side": 1,
+      "message": "FYI, Subject can be one of those 3 types:\nEndPointSelector\nEndPointGroupSelector\nEndPointGroup\n\nI don\u0027t want you to forget those types as you might have issue without considering them.",
+      "revId": "e30922be342aa9b70a82edb66148f4e966e09c50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_59acaba0",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-02T14:12:27Z",
+      "side": 1,
+      "message": "Would be nice to declare a constant as you did for #Subjects",
+      "revId": "e30922be342aa9b70a82edb66148f4e966e09c50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
