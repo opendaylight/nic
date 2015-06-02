@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_a74eea6d",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-02T18:33:09Z",
+      "side": 1,
+      "message": "Thanks! Great catch! I totally forget about it, and it seems that the implementation of the VTN Renderer does not support other two types at all.\n\nThey might be supported in Beryllium.",
+      "parentUuid": "1a9dcd25_f9c33755",
+      "revId": "e30922be342aa9b70a82edb66148f4e966e09c50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_59acaba0",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-02T14:12:27Z",
       "side": 1,
       "message": "Would be nice to declare a constant as you did for #Subjects",
+      "revId": "e30922be342aa9b70a82edb66148f4e966e09c50",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_87240eb0",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-02T18:33:09Z",
+      "side": 1,
+      "message": "I totally agree with you. And, I fixed it in the patch set 5.\n\nTo be honest, I noticed this issue before, but just skipped to change it.\n\nMy intention was as follows.\nThe main goal of this patch is to fix the problem on handling partial intents. But, when I fixed this method, I noticed the implementation of this method is not good. The code readability is bad. So I changed the implementation better in the patch. But, to make reviewing the patch easier, I tried to basically just move lines, since I thought a big change makes reviewing a little difficult.\n\nThat being said, your comment is absolutely correct. So I addressed it in the patch set 5.",
+      "parentUuid": "1a9dcd25_59acaba0",
       "revId": "e30922be342aa9b70a82edb66148f4e966e09c50",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
