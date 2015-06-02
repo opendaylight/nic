@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9dcd25_39643fe4",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-02T13:01:57Z",
+      "side": 1,
+      "message": "Condition instead of conditions",
+      "revId": "10363cbb8155d5c4a1871c915a9219b2a923c1c3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_196943be",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-02T13:01:57Z",
+      "side": 1,
+      "message": "I would suggest having a more specific name like the one bellow. Maybe flowFilter_index",
+      "revId": "10363cbb8155d5c4a1871c915a9219b2a923c1c3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_9975539a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-02T13:01:57Z",
+      "side": 1,
+      "message": "You might want to remove this useless @param as per of its deletation",
+      "revId": "10363cbb8155d5c4a1871c915a9219b2a923c1c3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
