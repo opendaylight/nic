@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a9dcd25_9f6d3835",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-02T01:30:27Z",
+      "side": 1,
+      "message": "You are right.\nI add some null checks and instanceof.\n\nWe may need more null checks around here, but I\u0027m kind of tired to insert these things here :) I might insert these checks in other patches.",
+      "parentUuid": "1a9dcd25_c93eb2b8",
+      "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9dcd25_898d0a7e",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-01T13:41:07Z",
       "side": 1,
       "message": "If subject.get(0) is always going to be the endPointSrc and subject.get(1) the endPointDst there is two things I\u0027m thinking of:\n\nEither we create two distinct methods for each endPointSrc and endPointDst, either we create constants specifying something like:\nprivate static final int END_POINT_SRC \u003d 0;\nprivate static final int END_POINT_DST \u003d 1;\n\nWhat do you think?",
+      "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_ff88fce8",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-02T01:30:27Z",
+      "side": 1,
+      "message": "I pick the latter way.\nTough I\u0027m not sure which way is better.",
+      "parentUuid": "1a9dcd25_898d0a7e",
       "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "Nevermind, we will discuss this at the meeting on Friday. \nThis is the output of the discussion I have with dbainbri this morning: \nhttps://gist.github.com/adetalhouet/afb218fb5ab4620cb497",
       "parentUuid": "1a9dcd25_6990be95",
+      "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a9dcd25_df83c0ca",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-02T01:30:27Z",
+      "side": 1,
+      "message": "Good catch.\nI totally, strongly agree with that the current approach is not good at all.\n\nHowever, since this patch has already had a big change, I would like to skip to improve this part on this patch.",
+      "parentUuid": "1a9dcd25_c9cb1271",
       "revId": "e47d70c59ca1e4e0e97ccedbb66ea8c26c746c0e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
