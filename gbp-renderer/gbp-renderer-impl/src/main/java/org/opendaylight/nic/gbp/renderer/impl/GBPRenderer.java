@@ -49,7 +49,7 @@ public class GBPRenderer implements AutoCloseable {
     public void close() throws Exception {
         LOG.info("GBPRenderer Closed");
         if (dataBroker != null) {
-            deleteNode(GBPRendererConstants.INTENTS_IID);
+            deleteNode(GBPRendererHelper.createIntentIid());
         }
         if (nicConsoleRegistration!= null) {
             nicConsoleRegistration.unregister();

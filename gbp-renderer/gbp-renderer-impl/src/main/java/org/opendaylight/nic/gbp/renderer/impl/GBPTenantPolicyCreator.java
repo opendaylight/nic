@@ -267,7 +267,7 @@ public class GBPTenantPolicyCreator {
 
     private void insertTenant(Tenant tenant) {
 
-        InstanceIdentifier<Tenant> tiid = this.createTenantIid(tenant.getId());
+        InstanceIdentifier<Tenant> tiid = GBPRendererHelper.createTenantIid(tenant.getId());
         WriteTransaction transaction = dataProvider.newWriteOnlyTransaction();
 
 
@@ -288,7 +288,7 @@ public class GBPTenantPolicyCreator {
         Optional<EndpointGroup> node = Optional.absent();
 
         EndpointGroupId endPointGroupId = new EndpointGroupId(endpointGroup);
-        InstanceIdentifier<EndpointGroup> nodePath = this.createEndPointGroupIid(endPointGroupId);
+        InstanceIdentifier<EndpointGroup> nodePath = GBPRendererHelper.createEndPointGroupIid(endPointGroupId);
         try {
             node = transaction.read(LogicalDatastoreType.CONFIGURATION, nodePath)
                     .checkedGet();
@@ -297,19 +297,6 @@ public class GBPTenantPolicyCreator {
         }
 
         return node;
-    }
-
-    public InstanceIdentifier<Tenant> createTenantIid(TenantId tenantId) {
-        return InstanceIdentifier.builder(Tenants.class)
-                .child(Tenant.class, new TenantKey(tenantId))
-                .build();
-    }
-
-    public InstanceIdentifier<EndpointGroup> createEndPointGroupIid(EndpointGroupId endPointGroupId) {
-        return InstanceIdentifier
-                .create(Tenants.class)
-                .child(Tenant.class)
-                .child(EndpointGroup.class, new EndpointGroupKey(endPointGroupId));
     }
 }
 
