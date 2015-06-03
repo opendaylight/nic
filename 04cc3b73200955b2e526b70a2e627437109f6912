@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_ebe63916",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-06-03T18:32:55Z",
+      "side": 1,
+      "message": "Is there a reason to pass all the changes to each of these functions? It seems like it would make a lot more sense to pass just the subset of the changes that are created, updated and deleted, e.g., just .getCreatedData() sent to create().",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "04cc3b73200955b2e526b70a2e627437109f6912",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_2babd18a",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-06-03T18:32:55Z",
+      "side": 1,
+      "message": "Add a todo to handle more than one action or throw an error if there\u0027s more than one action?",
+      "revId": "04cc3b73200955b2e526b70a2e627437109f6912",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_4bb085f4",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 48
+      },
+      "writtenOn": "2015-06-03T18:32:55Z",
+      "side": 1,
+      "message": "Given that actions are (I believe) extensible, you probably want to explicitly check that this is Allow, no?",
+      "revId": "04cc3b73200955b2e526b70a2e627437109f6912",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
