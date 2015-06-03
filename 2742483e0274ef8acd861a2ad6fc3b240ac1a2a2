@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_4b5c0526",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/IntentCompilerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-06-03T17:40:59Z",
+      "side": 1,
+      "message": "The Transform class does not need to depend on policies. So you could remove the attributes from the constructor and include them in the resolve() method. In this way, you could create only one Transform instance in the IntentCompiler constructor and reuse that instance for all compilations.",
+      "revId": "2742483e0274ef8acd861a2ad6fc3b240ac1a2a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
