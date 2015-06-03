@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_8b8d3d34",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-03T19:09:01Z",
+      "side": 1,
+      "message": "Absolutely, create() and update() can have their subset of changes, but delete() does need all of it as it will verify odl vs new data.",
+      "parentUuid": "9a6a9dd7_ebe63916",
+      "revId": "04cc3b73200955b2e526b70a2e627437109f6912",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_2babd18a",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -42,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_eb7b9927",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-03T19:09:01Z",
+      "side": 1,
+      "message": "This is handled in the verifyIntent() method that is at the top of this class.",
+      "parentUuid": "9a6a9dd7_2babd18a",
+      "revId": "04cc3b73200955b2e526b70a2e627437109f6912",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_4bb085f4",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -53,6 +89,24 @@
       "writtenOn": "2015-06-03T18:32:55Z",
       "side": 1,
       "message": "Given that actions are (I believe) extensible, you probably want to explicitly check that this is Allow, no?",
+      "revId": "04cc3b73200955b2e526b70a2e627437109f6912",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_0b792d2f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-03T19:09:01Z",
+      "side": 1,
+      "message": "Sure, will correct that. Thanks.",
+      "parentUuid": "9a6a9dd7_4bb085f4",
       "revId": "04cc3b73200955b2e526b70a2e627437109f6912",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
