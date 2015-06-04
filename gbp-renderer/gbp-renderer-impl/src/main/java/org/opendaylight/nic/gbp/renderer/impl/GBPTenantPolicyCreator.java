@@ -58,12 +58,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.subject.feature.instances.ActionInstanceBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.subject.feature.instances.ClassifierInstanceBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupSelector;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointSelector;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.selector.EndPointGroupSelector;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.selector.EndPointSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -195,17 +193,17 @@ public class GBPTenantPolicyCreator {
         //Retrieve the appropriate endpointgroup identifier
         if (subject.getSubject() instanceof EndPointSelector) {
             EndPointSelector endPointSelector = (EndPointSelector) subject.getSubject();
-            endpointGroupIdentifier = endPointSelector.getEndPointSelector().getEndPointSelector();
+            endpointGroupIdentifier = endPointSelector.getEndPointSelector();
         }
 
         if (subject.getSubject() instanceof EndPointGroupSelector) {
             EndPointGroupSelector endPointGroupSelector = (EndPointGroupSelector) subject.getSubject();
-            endpointGroupIdentifier = endPointGroupSelector.getEndPointGroupSelector().getEndPointGroupSelector();
+            endpointGroupIdentifier = endPointGroupSelector.getEndPointGroupSelector();
         }
 
         if (subject.getSubject() instanceof EndPointGroup) {
             EndPointGroup endPointGroup = (EndPointGroup) subject.getSubject();
-            endpointGroupIdentifier = endPointGroup.getEndPointGroup().getName();
+            endpointGroupIdentifier = endPointGroup.getName();
         }
 
         return endpointGroupIdentifier;
@@ -226,15 +224,12 @@ public class GBPTenantPolicyCreator {
         ContractBuilder contractBuilder = new ContractBuilder().setId(new ContractId(CONTRACT_ID));
 
         Subject subject = null;
-        Action action = intent.getActions().get(0).getAction();
-        if (action instanceof Block) {
+
+        if (intent.getActions().get(0).getAction() instanceof Block) {
             subject = this.getBlockSubject();
         }
-        else if (action instanceof Allow) {
-            subject = this.getAllowSubject();
-        }
         else {
-            LOG.warn("The specified action is not recognized {}", action);
+            subject = this.getAllowSubject();
         }
 
         List<SubjectName> subjectNames = new ArrayList<>();
@@ -272,7 +267,7 @@ public class GBPTenantPolicyCreator {
 
     private void insertTenant(Tenant tenant) {
 
-        InstanceIdentifier<Tenant> tiid = this.createTenantIid(tenant.getId());
+        InstanceIdentifier<Tenant> tiid = GBPRendererHelper.createTenantIid(tenant.getId());
         WriteTransaction transaction = dataProvider.newWriteOnlyTransaction();
 
 
@@ -293,7 +288,7 @@ public class GBPTenantPolicyCreator {
         Optional<EndpointGroup> node = Optional.absent();
 
         EndpointGroupId endPointGroupId = new EndpointGroupId(endpointGroup);
-        InstanceIdentifier<EndpointGroup> nodePath = this.createEndPointGroupIid(endPointGroupId);
+        InstanceIdentifier<EndpointGroup> nodePath = GBPRendererHelper.createEndPointGroupIid(endPointGroupId);
         try {
             node = transaction.read(LogicalDatastoreType.CONFIGURATION, nodePath)
                     .checkedGet();
@@ -302,19 +297,6 @@ public class GBPTenantPolicyCreator {
         }
 
         return node;
-    }
-
-    public InstanceIdentifier<Tenant> createTenantIid(TenantId tenantId) {
-        return InstanceIdentifier.builder(Tenants.class)
-                .child(Tenant.class, new TenantKey(tenantId))
-                .build();
-    }
-
-    public InstanceIdentifier<EndpointGroup> createEndPointGroupIid(EndpointGroupId endPointGroupId) {
-        return InstanceIdentifier
-                .create(Tenants.class)
-                .child(Tenant.class)
-                .child(EndpointGroup.class, new EndpointGroupKey(endPointGroupId));
     }
 }
 
