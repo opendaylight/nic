@@ -16,6 +16,24 @@
       "revId": "3a10ac3af2b301b74bb99938bcbb3900b30a46f3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_03d111fb",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-04T17:41:49Z",
+      "side": 1,
+      "message": "This is handle in the coming patch ;) We use it",
+      "parentUuid": "9a6a9dd7_c3c31937",
+      "revId": "3a10ac3af2b301b74bb99938bcbb3900b30a46f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
