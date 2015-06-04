@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_567345b1",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-04T20:19:52Z",
+      "side": 1,
+      "message": "Sure, that was more of an FYI regarding the change in the log level you made before. It\u0027s fine for me :)",
+      "parentUuid": "9a6a9dd7_d647554a",
+      "revId": "48a722836e176d3c7d82de5f91f0df57c601dd66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_562585a9",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 6
