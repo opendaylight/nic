@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_c3c31937",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-04T17:39:35Z",
+      "side": 1,
+      "message": "One might ask why have them if you are not going to use them",
+      "revId": "3a10ac3af2b301b74bb99938bcbb3900b30a46f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
