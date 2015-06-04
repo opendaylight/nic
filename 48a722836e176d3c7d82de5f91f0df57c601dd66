@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_3620119b",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-04T19:48:42Z",
+      "side": 1,
+      "message": "You might want to update the log level here also.",
+      "revId": "48a722836e176d3c7d82de5f91f0df57c601dd66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_562585a9",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-04T19:48:42Z",
+      "side": 1,
+      "message": "You might want to update the log level here also.",
+      "revId": "48a722836e176d3c7d82de5f91f0df57c601dd66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_16370de5",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-04T19:48:42Z",
+      "side": 1,
+      "message": "You might want to update the log level here also.",
+      "revId": "48a722836e176d3c7d82de5f91f0df57c601dd66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
