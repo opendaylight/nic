@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_b6b8a12b",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-04T20:35:05Z",
+      "side": 1,
+      "message": "Thanks. As I mentioned in another comment to David before, I think all intents are supposed to have its ID. So I think we should use the error in the case that this method receives intents missing its ID. In my understanding, users cannot create an intent without the ID.\n\nMissing other attributes such as subjects are different thing.\n\nThat being said, at this point, I\u0027m not sure if these log levels are useful enough for users to manage networks via the intents.\nThrough some POCs in the future, we would figure out how the log levels should be and what messages we should output.",
+      "parentUuid": "9a6a9dd7_567345b1",
+      "revId": "48a722836e176d3c7d82de5f91f0df57c601dd66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_562585a9",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 6
