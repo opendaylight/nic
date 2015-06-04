@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_c3e479ae",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-04T18:57:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it is better to use Preconditions.checkNotNull() here.\n\nTo control the log level and log messages finely, I think the current approach is reasonable. (Or am I missing something about the Preconditions.checkNotNull?)\n\nAnyway, the main goal of this patch is to fix the problem on handling partial intents. Therefore, even if we should use Preconditions.checkNotNull() here, I would like to do it in another patch.",
+      "parentUuid": "9a6a9dd7_bd2ba793",
+      "revId": "0814c7c656a852f0f9be15ede94cbd35450b0354",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_2009b02c",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-04T17:48:21Z",
       "side": 1,
       "message": "Are these infos, or warnings? or errors?",
+      "revId": "0814c7c656a852f0f9be15ede94cbd35450b0354",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_e3541d23",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-04T18:57:50Z",
+      "side": 1,
+      "message": "I modified it in the new patch set.\n\nIt should be error, since I think all intents are supposed to have its ID.\n\n\nBut, I think the log level of messages for a partial intent (e.g. missing other attributes such as subjects) should be not errors, since users sometimes may submit an intent in separate PUT messages. It causes a partial intent. I think such events should be handled as warning or info. (This patch uses the info level for partial intents.)",
+      "parentUuid": "9a6a9dd7_2009b02c",
       "revId": "0814c7c656a852f0f9be15ede94cbd35450b0354",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
