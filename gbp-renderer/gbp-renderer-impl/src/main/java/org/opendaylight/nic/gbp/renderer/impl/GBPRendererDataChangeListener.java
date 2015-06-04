@@ -53,7 +53,9 @@ import com.google.common.collect.Lists;
 public class GBPRendererDataChangeListener implements DataChangeListener,
         AutoCloseable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GBPRendererDataChangeListener.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(GBPRendererDataChangeListener.class);
+    @SuppressWarnings("unused")
     private DataBroker dataBroker;
     private ListenerRegistration<DataChangeListener> gbpRendererListener = null;
     private final ReadWriteTransaction transaction;
@@ -61,7 +63,6 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
     public GBPRendererDataChangeListener(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
         this.transaction = dataBroker.newReadWriteTransaction();
-
         gbpRendererListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.CONFIGURATION,
                 GBPRendererConstants.INTENTS_IID, this, DataChangeScope.SUBTREE);
@@ -101,10 +102,22 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
             if (created.getValue() != null) {
                 if (created instanceof Intent) {
                     Intent intent = (Intent)created.getValue();
-                    IntentBuilder ib = new IntentBuilder();
-                    ib.addAugmentation(GbpRendererAugmentation.class,
-                            createGbpRendererAugmentation(intent));
-                    // TODO Add intent the new intent node
+
+                    //Pull the components of the intent and activate the process to process the intent
+                    List<Subjects> subjects = intent.getSubjects();
+                    List<Actions> actions = intent.getActions();
+                    List<Conditions> conditions = intent.getConditions();
+                    List<Constraints> constraints = intent.getConstraints();
+
+                    //This may generate conflicts since actions tend to oppose each other
+                    for (Actions action: actions) {
+                        GBPTenantPolicyCreator createGBPolicy = new GBPTenantPolicyCreator(this.dataBroker,
+                                subjects,
+                                action, conditions,
+                                constraints);
+
+                        createGBPolicy.processIntentToGBP();
+                    }
                 }
             }
         }
@@ -114,106 +127,8 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
     public void close() throws Exception {
         // TODO Auto-generated method stub
         LOG.info("GBPDataChangeListener closed.");
-        if (gbpRendererListener != null) {
+        if (gbpRendererListener != null) {;
             gbpRendererListener.close();
         }
     }
-
-    private Augmentation<Intent> createGbpRendererAugmentation(Intent intent) {
-        List<Subjects> subjects = intent.getSubjects();
-        List<Actions> actions = intent.getActions();
-        List<Conditions> conditions = intent.getConditions();
-        List<Constraints> constraints = intent.getConstraints();
-        for (Actions action: actions) {
-            applyActions(action, subjects, conditions, constraints);
-        }
-        GbpRendererAugmentationBuilder gbpRendererAugmentationBuilder = new GbpRendererAugmentationBuilder();
-        //gbpRendererAugmentationBuilder.setGbpNodeRef(new GbpNodeRef(createGbpIID()));
-        return gbpRendererAugmentationBuilder.build();
-    }
-
-    private void applyActions(Actions action, List<Subjects> subjects,
-            List<Conditions> conditions, List<Constraints> constraints) {
-        List<EndpointGroup> endpointGroups = translateToGBPEndpoints(subjects);
-        // Create contracts
-        Contract contract = createContract(endpointGroups);
-        contract.getId();
-        // Submit contract
-    }
-
-    private Contract createContract(List<EndpointGroup> endpointGroups) {
-        ContractBuilder cb = new ContractBuilder();
-        List<Target> targets = Lists.newArrayList();
-        Target target = new TargetBuilder().setName(new TargetName("asdf")).build();
-        targets.add(target);
-        cb.setTarget(targets);
-        return null;
-    }
-
-    private List<EndpointGroup> translateToGBPEndpoints(List<Subjects> subjects) {
-        List<EndpointGroup> enpointsGroup = Lists.newArrayList();
-        // We assume the selector is a UUID corresponding to the
-        // GBP endpoint group UUID because the typedef is string
-        for (Subjects subs: subjects) {
-            if (subs.getSubject() instanceof EndPointSelector) {
-                EndPointSelector endPointSelector = (EndPointSelector) subs.getSubject();
-                String endpointGroupUUID = endPointSelector.getEndPointSelector();
-                Optional<EndpointGroup> node = readNode(transaction, endpointGroupUUID);
-                if (node.isPresent()) {
-                    enpointsGroup.add(node.get());
-                }
-                else {
-                    LOG.info("Could not create intent because the EndpointGroup doesn't exist.");
-                }
-            }
-            if (subs.getSubject() instanceof EndPointGroupSelector) {
-                EndPointGroupSelector endPointGroupSelector = (EndPointGroupSelector) subs.getSubject();
-                String endPointGroupSelectorUUID = endPointGroupSelector.getEndPointGroupSelector();
-                Optional<EndpointGroup> node = readNode(transaction, endPointGroupSelectorUUID);
-                if (node.isPresent()) {
-                    enpointsGroup.add(node.get());
-                }
-                else {
-                    LOG.info("Could not create intent because the EndpointGroup doesn't exist.");
-                }
-            }
-            if (subs.getSubject() instanceof EndPointGroup) {
-                EndPointGroup endPointGroup = (EndPointGroup) subs.getSubject();
-                String endPointGroupUUID = endPointGroup.getName();
-                Optional<EndpointGroup> node = readNode(transaction, endPointGroupUUID);
-                if (node.isPresent()) {
-                    enpointsGroup.add(node.get());
-                }
-                else {
-                    LOG.info("Could not create intent because the EndpointGroup doesn't exist.");
-                }
-            }
-        }
-        return enpointsGroup;
-    }
-
-    private Optional<EndpointGroup> readNode(ReadWriteTransaction transaction,
-            String endpointGroupUUID) {
-        Optional<EndpointGroup> node = Optional.absent();
-        InstanceIdentifier<EndpointGroup> nodePath = InstanceIdentifier
-                .create(Tenants.class)
-                .child(Tenant.class)
-                .child(EndpointGroup.class,
-                        new EndpointGroupKey(
-                                buildEndpointGroupId(endpointGroupUUID)));
-        try {
-            node = transaction.read(LogicalDatastoreType.OPERATIONAL, nodePath)
-                    .checkedGet();
-        } catch (final ReadFailedException e) {
-            LOG.warn("Read Operational/DS for Node fail! {}",
-                    nodePath, e);
-        }
-        return node;
-    }
-
-    private EndpointGroupId buildEndpointGroupId(String uuid) {
-        EndpointGroupId endpointGroupId = new EndpointGroupId(new UniqueId(uuid));
-        return endpointGroupId;
-    }
-
 }
