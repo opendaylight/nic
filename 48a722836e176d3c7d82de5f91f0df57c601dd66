@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_d647554a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-04T20:18:27Z",
+      "side": 1,
+      "message": "I think info is enough for these messages.\n\nI think the log level of messages for a partial intent (e.g. missing other attributes such as subjects) should be not errors, since users sometimes may intentionally submit an intent in separate PUT messages. I think such events should be handled as info or warning.",
+      "parentUuid": "9a6a9dd7_3620119b",
+      "revId": "48a722836e176d3c7d82de5f91f0df57c601dd66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_562585a9",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 6
