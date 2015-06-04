@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_96879d61",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-04T20:39:03Z",
+      "side": 1,
+      "message": "Absolutely. POC will help us figure out the real utility of those. \nIn gbp-renderer I implemented a function verifying the intent, maybe you could just look at it and tell me if you think it is alright or not?\n\nHere is the link:\nhttps://git.opendaylight.org/gerrit/#/c/21690/4/gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+      "parentUuid": "9a6a9dd7_b6b8a12b",
+      "revId": "48a722836e176d3c7d82de5f91f0df57c601dd66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_562585a9",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 6
