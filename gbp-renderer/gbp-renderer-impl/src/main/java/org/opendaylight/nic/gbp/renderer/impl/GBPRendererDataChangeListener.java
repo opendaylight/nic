@@ -35,7 +35,7 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
         this.dataBroker = dataBroker;
         gbpRendererListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.CONFIGURATION,
-                GBPRendererConstants.INTENTS_IID, this, DataChangeScope.SUBTREE);
+                GBPRendererHelper.createIntentIid(), this, DataChangeScope.SUBTREE);
     }
 
     @Override
