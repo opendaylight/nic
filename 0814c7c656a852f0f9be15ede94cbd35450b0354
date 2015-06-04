@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_bd2ba793",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-04T17:48:21Z",
+      "side": 1,
+      "message": "Wonder if we want to start using Preconditions.checkNotNull(uuid, \"msg\")",
+      "revId": "0814c7c656a852f0f9be15ede94cbd35450b0354",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_2009b02c",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-04T17:48:21Z",
+      "side": 1,
+      "message": "Are these infos, or warnings? or errors?",
+      "revId": "0814c7c656a852f0f9be15ede94cbd35450b0354",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_fd083f2f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-04T17:48:21Z",
+      "side": 1,
+      "message": "Preconditions.checkNotNull(listSubject, \"msg\")?",
+      "revId": "0814c7c656a852f0f9be15ede94cbd35450b0354",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
