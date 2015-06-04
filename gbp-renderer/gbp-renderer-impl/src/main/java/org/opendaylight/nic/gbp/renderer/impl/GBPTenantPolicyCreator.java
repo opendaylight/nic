@@ -13,11 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadWriteTransaction;
-import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
-import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.groupbasedpolicy.renderer.ofoverlay.sf.AllowAction;
 import org.opendaylight.groupbasedpolicy.renderer.ofoverlay.sf.Classifier;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.ActionName;
@@ -66,16 +62,15 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.util.concurrent.CheckedFuture;
 
 public class GBPTenantPolicyCreator {
 
     private static final Logger LOG = LoggerFactory.getLogger(GBPTenantPolicyCreator.class);
 
     private DataBroker dataProvider;
+    private MdsalUtils mdsalUtils;
 
     private Intent intent;
 
@@ -99,6 +94,8 @@ public class GBPTenantPolicyCreator {
 
         this.dataProvider = dataBroker;
         this.intent = intent;
+
+        this.mdsalUtils = new MdsalUtils(dataProvider);
     }
 
     public void processIntentToGBP(){
@@ -173,10 +170,10 @@ public class GBPTenantPolicyCreator {
             String endpointGroupIdentifier = this.getEndpointIdentifier(subjects);
 
             //Pull the node from the groupbasedpolicy config datastore
-            Optional<EndpointGroup> node = readEPGNode(endpointGroupIdentifier);
+            EndpointGroup endPointGroup = readEPGNode(endpointGroupIdentifier);
 
-            if (node.isPresent()) {
-                endPointGroups.add(node.get());
+            if (endPointGroup != null) {
+                endPointGroups.add(endPointGroup);
             }
             else {
                 // else create the EndPointGroup
@@ -268,37 +265,13 @@ public class GBPTenantPolicyCreator {
     }
 
     private void insertTenant(Tenant tenant) {
-
-        InstanceIdentifier<Tenant> tiid = GBPRendererHelper.createTenantIid(tenant.getId());
-        WriteTransaction transaction = dataProvider.newWriteOnlyTransaction();
-
-
-        transaction.put(LogicalDatastoreType.OPERATIONAL, tiid, tenant, true);
-        CheckedFuture<Void, TransactionCommitFailedException> future = transaction.submit();
-
-        try {
-            future.checkedGet();
-        } catch (TransactionCommitFailedException e) {
-            LOG.warn("Write Operational/DS for Tenant fail! {}", tenant, e);
-        }
+        InstanceIdentifier<Tenant> tenantInstanceIdentifier = GBPRendererHelper.createTenantIid(tenant.getId());
+        mdsalUtils.put(LogicalDatastoreType.OPERATIONAL, tenantInstanceIdentifier, tenant);
     }
 
-    private Optional<EndpointGroup> readEPGNode(String endpointGroup) {
-
-        ReadWriteTransaction transaction = dataProvider.newReadWriteTransaction();
-
-        Optional<EndpointGroup> node = Optional.absent();
-
+    private EndpointGroup readEPGNode(String endpointGroup) {
         EndpointGroupId endPointGroupId = new EndpointGroupId(endpointGroup);
         InstanceIdentifier<EndpointGroup> nodePath = GBPRendererHelper.createEndPointGroupIid(endPointGroupId);
-        try {
-            node = transaction.read(LogicalDatastoreType.CONFIGURATION, nodePath)
-                    .checkedGet();
-        } catch (final ReadFailedException e) {
-            LOG.warn("Read Operational/DS for Node fail! {}", nodePath, e);
-        }
-
-        return node;
+        return mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, nodePath);
     }
 }
-
