@@ -8,7 +8,6 @@
 
 package org.opendaylight.nic.gbp.renderer.impl;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -35,20 +34,21 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
         this.dataBroker = dataBroker;
         gbpRendererListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.CONFIGURATION,
-                GBPRendererConstants.INTENTS_IID, this, DataChangeScope.SUBTREE);
+                GBPRendererHelper.createIntentIid(), this, DataChangeScope.SUBTREE);
     }
 
     @Override
     public void onDataChanged(
             AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
-        create(changes.getCreatedData());
-        update(changes.getUpdatedData());
+        create(changes);
+        update(changes);
         delete(changes);
     }
 
-    private void create(Map<InstanceIdentifier<?>, DataObject> changes) {
-
-        for (Entry<InstanceIdentifier<?>, DataObject> created : changes.entrySet()) {
+    private void create(
+            AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
+        for (Entry<InstanceIdentifier<?>, DataObject> created : changes
+                .getCreatedData().entrySet()) {
 
             if (created.getValue() != null && created.getValue() instanceof Intent) {
 
@@ -64,7 +64,8 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
         }
     }
 
-    private void update(Map<InstanceIdentifier<?>, DataObject> changes) {
+    private void update(
+            AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
         // TODO implement update
     }
 
