@@ -5,12 +5,9 @@
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
 //------------------------------------------------------------------------------
+
 package org.opendaylight.nic.compiler.api;
 
-import java.util.Set;
-
-public interface Policy {
-    Set<Endpoint> src();
-    Set<Endpoint> dst();
-    Set<Action> action();
+public enum ActionConflictType {
+    COMPOSABLE, OBSERVER, EXCLUSIVE
 }
