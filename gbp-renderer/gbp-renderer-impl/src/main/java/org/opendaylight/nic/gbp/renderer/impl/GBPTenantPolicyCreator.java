@@ -34,18 +34,15 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.SubjectName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.TenantId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.HasDirection.Direction;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.Tenants;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.has.action.refs.ActionRefBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.has.classifier.refs.ClassifierRefBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.subject.feature.instance.ParameterValueBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.Tenant;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.TenantBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.TenantKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.Contract;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.ContractBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.EndpointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.EndpointGroupBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.EndpointGroupKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L2BridgeDomainBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L2FloodDomainBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L3ContextBuilder;
@@ -272,7 +269,7 @@ public class GBPTenantPolicyCreator {
 
     private void insertTenant(Tenant tenant) {
 
-        InstanceIdentifier<Tenant> tiid = this.createTenantIid(tenant.getId());
+        InstanceIdentifier<Tenant> tiid = GBPRendererHelper.createTenantIid(tenant.getId());
         WriteTransaction transaction = dataProvider.newWriteOnlyTransaction();
 
 
@@ -293,7 +290,7 @@ public class GBPTenantPolicyCreator {
         Optional<EndpointGroup> node = Optional.absent();
 
         EndpointGroupId endPointGroupId = new EndpointGroupId(endpointGroup);
-        InstanceIdentifier<EndpointGroup> nodePath = this.createEndPointGroupIid(endPointGroupId);
+        InstanceIdentifier<EndpointGroup> nodePath = GBPRendererHelper.createEndPointGroupIid(endPointGroupId);
         try {
             node = transaction.read(LogicalDatastoreType.CONFIGURATION, nodePath)
                     .checkedGet();
@@ -302,19 +299,6 @@ public class GBPTenantPolicyCreator {
         }
 
         return node;
-    }
-
-    public InstanceIdentifier<Tenant> createTenantIid(TenantId tenantId) {
-        return InstanceIdentifier.builder(Tenants.class)
-                .child(Tenant.class, new TenantKey(tenantId))
-                .build();
-    }
-
-    public InstanceIdentifier<EndpointGroup> createEndPointGroupIid(EndpointGroupId endPointGroupId) {
-        return InstanceIdentifier
-                .create(Tenants.class)
-                .child(Tenant.class)
-                .child(EndpointGroup.class, new EndpointGroupKey(endPointGroupId));
     }
 }
 
