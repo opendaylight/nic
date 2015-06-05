@@ -13,15 +13,19 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.3.0-SNAPSHOT</version>
+  <version>0.4.0-SNAPSHOT</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>gbp-renderer-impl</artifactId>
- <version>1.0.0-SNAPSHOT</version>
+ <version>1.1.0-SNAPSHOT</version>
  <packaging>bundle</packaging>
+
+  <properties>
+    <groupbasedpolicy.version>0.3.0-SNAPSHOT</groupbasedpolicy.version>
+ </properties>
 
  <dependencies>
   <dependency>
@@ -53,8 +57,13 @@
   <!-- OpenDaylight GBP Manager -->
   <dependency>
    <groupId>org.opendaylight.groupbasedpolicy</groupId>
-   <artifactId>features-groupbasedpolicy</artifactId>
-   <version>0.2.0-SNAPSHOT</version>
+   <artifactId>groupbasedpolicy</artifactId>
+   <version>${groupbasedpolicy.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>org.opendaylight.groupbasedpolicy</groupId>
+   <artifactId>ofoverlay-renderer</artifactId>
+   <version>${groupbasedpolicy.version}</version>
   </dependency>
 
   <!-- OpenDaylight YANG Tools -->

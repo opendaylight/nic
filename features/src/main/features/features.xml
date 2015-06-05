@@ -17,10 +17,6 @@
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
 
     <!-- Repository for GBP -->
-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/${openflowplugin.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-extension/${openflowplugin.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.ovsdb/southbound-features/${ovsdb.southbound.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.neutron/features-neutron/${neutron.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features</repository>
 
     <!-- Core feature -->
@@ -42,15 +38,16 @@
 
     <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
-        <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
-        <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/${project.version}/xml/config</configfile>
+        <!-- TODO: Add the following dependents after the wiring issue around sun.reflect is fixed -->
+        <!-- <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature> -->
+        <!-- <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle> -->
+        <!-- <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/${project.version}/xml/config</configfile> -->
     </feature>
 
     <!-- GBP Renderer -->
     <feature name='odl-nic-renderer-gbp' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
-        <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-base</feature>
+        <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-ofoverlay</feature>
         <bundle>mvn:org.opendaylight.nic/gbp-renderer-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}</bundle>
         <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config</configfile>
