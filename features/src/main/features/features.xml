@@ -38,10 +38,9 @@
 
     <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
-        <!-- TODO: Add the following dependents after the wiring issue around sun.reflect is fixed -->
-        <!-- <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature> -->
-        <!-- <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle> -->
-        <!-- <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/${project.version}/xml/config</configfile> -->
+        <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
+        <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/${project.version}/xml/config</configfile>
     </feature>
 
     <!-- GBP Renderer -->
