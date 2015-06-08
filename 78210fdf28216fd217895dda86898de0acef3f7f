@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_03e4a439",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/IntentCompilerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-08T20:58:14Z",
+      "side": 1,
+      "message": "Do we want a final statement here?",
+      "revId": "78210fdf28216fd217895dda86898de0acef3f7f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_23dd2871",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Transform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-08T20:58:14Z",
+      "side": 1,
+      "message": "I would suggest logging the error here",
+      "revId": "78210fdf28216fd217895dda86898de0acef3f7f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
