@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_2372087d",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/IntentCompilerImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-06-08T21:17:02Z",
+      "side": 1,
+      "message": "I think it\u0027s ok.\n\nCurrently we do not support multiple conflict resolution logic. Even if we support that in the future, the users should not be allowed to keep changing it in runtime, after application startup.",
+      "parentUuid": "9a6a9dd7_03e4a439",
+      "revId": "78210fdf28216fd217895dda86898de0acef3f7f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_23dd2871",
         "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Transform.java",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-08T20:58:14Z",
       "side": 1,
       "message": "I would suggest logging the error here",
+      "revId": "78210fdf28216fd217895dda86898de0acef3f7f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_e36bb083",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Transform.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-06-08T21:17:02Z",
+      "side": 1,
+      "message": "This commit is just extracting some code from IntentCompilerImpl to make it easier to extend to support classifiers in the intent.\n\nI agree we should improve this error handling, but in a different commit. I would suggest creating a task on Trello to keep track of it. Anyway there\u0027s already a TODO comment in the code.",
+      "parentUuid": "9a6a9dd7_23dd2871",
       "revId": "78210fdf28216fd217895dda86898de0acef3f7f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
