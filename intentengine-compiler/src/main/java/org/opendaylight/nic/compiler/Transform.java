@@ -24,6 +24,7 @@ public class Transform {
 
         Collection<Policy> policies = new LinkedList<>();
         Sets.SetView<Endpoint> src, dst;
+        ClassifierImpl c;
 
         // All the possible cases below
 
@@ -33,13 +34,33 @@ public class Transform {
             // Case: S1 and not S2 , D1 and not D2
             dst = Sets.difference(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
+
+                // C1 and not C2
+                c = (p1.classifier()).sub(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), c));
+                }
+                // C1 and C2
+                c = (p1.classifier()).and(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), c));
+                }
             }
 
             // Case: S1 and not S2 , D1 and D2
             dst = Sets.intersection(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
+
+                // C1 and not C2
+                c = (p1.classifier()).sub(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), c));
+                }
+                // C1 and C2
+                c = (p1.classifier()).and(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), c));
+                }
             }
         }
         src = Sets.intersection(p1.src(), p2.src());
@@ -48,20 +69,58 @@ public class Transform {
             // Case: S1 and S2 , D1 and D2
             dst = Sets.intersection(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, merge(p1.action(),
-                        p2.action())));
+
+                // C1 and not C2
+                c = (p1.classifier()).sub(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, merge(p1.action(),
+                            p2.action()), c));
+                }
+                // C1 and C2
+                c = (p1.classifier()).and(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, merge(p1.action(),
+                            p2.action()), ((p1.classifier()).and(p2
+                            .classifier()))));
+                }
+                // C2 and not C1
+                c = (p2.classifier()).sub(p1.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, merge(p1.action(),
+                            p2.action()), c));
+                }
             }
 
             // Case: S1 and S2 , D1 and not D2
             dst = Sets.difference(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
+
+                // C1 and not C2
+                c = (p1.classifier()).sub(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), c));
+                }
+                // C1 and C2
+                c = (p1.classifier()).and(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), c));
+                }
             }
 
             // Case: S1 and S2 , D2 and not D1
             dst = Sets.difference(p2.dst(), p1.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
+
+                // C1 and C2
+                c = (p1.classifier()).and(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), c));
+                }
+                // C2 and not C1
+                c = (p2.classifier()).sub(p1.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), c));
+                }
             }
         }
         src = Sets.difference(p2.src(), p1.src());
@@ -70,13 +129,33 @@ public class Transform {
             // Case: S2 and not S1 , D1 and D2
             dst = Sets.intersection(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
-            }
 
+                // C1 and C2
+                c = (p1.classifier()).and(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), c));
+                }
+                // C2 and not C1
+                c = (p2.classifier()).sub(p1.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), c));
+                }
+
+            }
             // Case: S2 and not S1 , D2 and not D1
             dst = Sets.difference(p2.dst(), p1.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
+
+                // C2 and C1
+                c = (p1.classifier()).and(p2.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), c));
+                }
+                // C2 and not C1
+                c = (p2.classifier()).sub(p1.classifier());
+                if (!c.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), c));
+                }
             }
         }
         return policies;

@@ -9,12 +9,7 @@ package org.opendaylight.nic.compiler;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
@@ -63,9 +58,14 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     @Override
+    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Set<Action> action) {
+        return createPolicy(source, destination, action, ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL));
+    }
+
+    @Override
     public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
-            Set<Action> action) {
-        return new PolicyImpl(source, destination, action);
+            Set<Action> action, ClassifierImpl classifier) {
+        return new PolicyImpl(source, destination, action, classifier);
     }
 
     public IntentCompilerImpl() {
