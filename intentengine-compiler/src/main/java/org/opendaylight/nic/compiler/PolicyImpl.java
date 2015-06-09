@@ -7,25 +7,32 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler;
 
+import java.util.Set;
+
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.Policy;
 
-import java.util.Set;
-
 public class PolicyImpl implements Policy {
-    private Set<Endpoint> src;
-    private Set<Endpoint> dst;
-    private Set<Action> action;
+    private final Set<Endpoint> src;
+    private final Set<Endpoint> dst;
+    private final Set<Action> action;
+    private final ClassifierImpl classifier;
 
-    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action) {
+    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action,
+            ClassifierImpl classifier) {
         this.src = src;
         this.dst = dst;
         this.action = action;
+        this.classifier = classifier;
+    }
+
+    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action) {
+        this(src, dst, action, ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL));
     }
 
     @Override
-    public Set<Endpoint> src(){
+    public Set<Endpoint> src() {
         return src;
     }
 
@@ -40,9 +47,16 @@ public class PolicyImpl implements Policy {
     }
 
     @Override
+    public ClassifierImpl classifier() {
+        return classifier;
+    }
+
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         PolicyImpl policy = (PolicyImpl) o;
 
