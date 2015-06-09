@@ -29,7 +29,8 @@ public class IntentCompilerImpl implements IntentCompiler {
     private final Transform transform;
 
     @Override
-    public Collection<Policy> compile(Collection<Policy> policies) throws IntentCompilerException {
+    public Collection<Policy> compile(Collection<Policy> policies)
+            throws IntentCompilerException {
         Queue<Policy> conflictingPolicies = new LinkedList<>(policies);
         Collection<Policy> compiledPolicies = new LinkedList<>();
         while (!conflictingPolicies.isEmpty()) {
@@ -65,6 +66,12 @@ public class IntentCompilerImpl implements IntentCompiler {
 
     @Override
     public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
+            Set<Action> action, ClassifierImpl classifier) {
+        return new PolicyImpl(source, destination, action, classifier);
+    }
+
+    @Override
+    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
             Set<Action> action) {
         return new PolicyImpl(source, destination, action);
     }
@@ -74,9 +81,23 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     private boolean conflicts(Policy p1, Policy p2) {
-        if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
-                && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()) {
-            return true;
+        ClassifierImpl ci;
+
+        if ((p1.classifier().equals(ClassifierImpl
+                .getInstance(ExpressionImpl.EXPRESSION_NULL)))
+                && (p2.classifier().equals(ClassifierImpl
+                        .getInstance(ExpressionImpl.EXPRESSION_NULL)))) {
+            if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
+                    && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()) {
+                return true;
+            }
+        } else {
+            ci = (p1.classifier()).and(p2.classifier());
+            if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
+                    && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()
+                    && !ci.isEmpty()) {
+                return true;
+            }
         }
         return false;
     }
