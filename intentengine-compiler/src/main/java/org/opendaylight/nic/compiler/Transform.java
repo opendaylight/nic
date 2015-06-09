@@ -22,11 +22,14 @@ import com.google.common.collect.Sets;
 
 public class Transform {
 
-    public Collection<Policy> resolve(Policy p1, Policy p2) throws IntentCompilerException {
+    public Collection<Policy> resolve(Policy p1, Policy p2)
+            throws IntentCompilerException {
 
         Collection<Policy> policies = new LinkedList<>();
         Sets.SetView<Endpoint> src;
         Sets.SetView<Endpoint> dst;
+        ClassifierImpl ci;
+        boolean nc = true;
 
         // All the possible cases below
 
@@ -36,13 +39,43 @@ public class Transform {
             // Case: S1 and not S2 , D1 and not D2
             dst = Sets.difference(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new PolicyImpl(src, dst, p1.action()));
+                }
             }
 
             // Case: S1 and not S2 , D1 and D2
             dst = Sets.intersection(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new PolicyImpl(src, dst, p1.action()));
+                }
             }
         }
         src = Sets.intersection(p1.src(), p2.src());
@@ -51,23 +84,84 @@ public class Transform {
             // Case: S1 and S2 , D1 and D2
             dst = Sets.intersection(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                Set<Action> mergedActions = merge(p1.action(), p2.action());
-                if (mergedActions == null) {
-                    throw new IntentCompilerException("Unable to merge exclusive actions", Arrays.asList(p1, p2));
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), ci));
+                    nc = false;
                 }
-                policies.add(new PolicyImpl(src, dst, mergedActions));
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    Set<Action> mergedActions = merge(p1.action(), p2.action());
+                    if (mergedActions == null) {
+                        throw new IntentCompilerException(
+                                "Unable to merge exclusive actions",
+                                Arrays.asList(p1, p2));
+                    }
+
+                    policies.add(new PolicyImpl(src, dst, mergedActions, ((p1
+                            .classifier()).and(p2.classifier()))));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    Set<Action> mergedActions = merge(p1.action(), p2.action());
+                    if (mergedActions == null) {
+                        throw new IntentCompilerException(
+                                "Unable to merge exclusive actions",
+                                Arrays.asList(p1, p2));
+                    }
+                    policies.add(new PolicyImpl(src, dst, mergedActions));
+                }
             }
 
             // Case: S1 and S2 , D1 and not D2
             dst = Sets.difference(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p1.action()));
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new PolicyImpl(src, dst, p1.action()));
+                }
             }
 
             // Case: S1 and S2 , D2 and not D1
             dst = Sets.difference(p2.dst(), p1.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
+
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new PolicyImpl(src, dst, p2.action()));
+                }
             }
         }
         src = Sets.difference(p2.src(), p1.src());
@@ -76,19 +170,50 @@ public class Transform {
             // Case: S2 and not S1 , D1 and D2
             dst = Sets.intersection(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
-            }
 
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new PolicyImpl(src, dst, p2.action()));
+                }
+
+            }
             // Case: S2 and not S1 , D2 and not D1
             dst = Sets.difference(p2.dst(), p1.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, p2.action()));
+
+                // C2 and C1
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new PolicyImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new PolicyImpl(src, dst, p2.action()));
+                }
             }
         }
         return policies;
     }
 
-    private Set<Action> merge(Set<Action> a1, Set<Action> a2) throws IntentCompilerException {
+    private Set<Action> merge(Set<Action> a1, Set<Action> a2)
+            throws IntentCompilerException {
         Set<Action> composebleActions = new LinkedHashSet<>();
         Set<Action> observableActions = new LinkedHashSet<>();
         Set<Action> exclusiveActions = new LinkedHashSet<>();
