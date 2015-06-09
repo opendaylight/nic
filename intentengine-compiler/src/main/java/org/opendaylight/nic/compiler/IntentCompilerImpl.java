@@ -64,7 +64,12 @@ public class IntentCompilerImpl implements IntentCompiler {
 
     @Override
     public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
-            Set<Action> action) {
+            Set<Action> action, ClassifierImpl classifier) {
+        return new PolicyImpl(source, destination, action, classifier);
+    }
+
+    @Override
+    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Set<Action> action) {
         return new PolicyImpl(source, destination, action);
     }
 
