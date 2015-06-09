@@ -64,6 +64,12 @@ public class IntentCompilerImpl implements IntentCompiler {
 
     @Override
     public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
+            Set<Action> action, ClassifierImpl classifier) {
+        return new PolicyImpl(source, destination, action, classifier);
+    }
+
+    @Override
+    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
             Set<Action> action) {
         return new PolicyImpl(source, destination, action);
     }
@@ -73,9 +79,22 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     private boolean conflicts(Policy p1, Policy p2) {
-        if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
-                && !Sets.intersection(p1.dst(), p2.dst()).isEmpty())
-            return true;
+        ClassifierImpl c;
+
+        if ((p1.classifier().equals(ClassifierImpl
+                .getInstance(ExpressionImpl.EXPRESSION_NULL)))
+                && (p2.classifier().equals(ClassifierImpl
+                        .getInstance(ExpressionImpl.EXPRESSION_NULL)))) {
+            if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
+                    && !Sets.intersection(p1.dst(), p2.dst()).isEmpty())
+                return true;
+        } else {
+            c = (p1.classifier()).and(p2.classifier());
+            if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
+                    && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()
+                    && !c.isEmpty())
+                return true;
+        }
         return false;
     }
 }
