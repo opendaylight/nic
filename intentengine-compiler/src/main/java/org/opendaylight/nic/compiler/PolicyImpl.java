@@ -7,21 +7,29 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler;
 
+import java.util.Set;
+
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.Policy;
 
-import java.util.Set;
-
 public class PolicyImpl implements Policy {
-    private Set<Endpoint> src;
-    private Set<Endpoint> dst;
-    private Set<Action> action;
+    private final Set<Endpoint> src;
+    private final Set<Endpoint> dst;
+    private final Set<Action> action;
+    private final ClassifierImpl classifier;
 
-    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action) {
+    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action,
+            ClassifierImpl classifier) {
         this.src = src;
         this.dst = dst;
         this.action = action;
+        this.classifier = classifier;
+    }
+
+    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action) {
+        this(src, dst, action, ClassifierImpl
+                .getInstance(ExpressionImpl.EXPRESSION_NULL));
     }
 
     @Override
@@ -40,15 +48,20 @@ public class PolicyImpl implements Policy {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
+    public ClassifierImpl classifier() {
+        return classifier;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
-        PolicyImpl policy = (PolicyImpl) object;
+        PolicyImpl policy = (PolicyImpl) o;
 
         if (src != null ? !src.equals(policy.src) : policy.src != null) {
             return false;
@@ -56,7 +69,15 @@ public class PolicyImpl implements Policy {
         if (dst != null ? !dst.equals(policy.dst) : policy.dst != null) {
             return false;
         }
-        if (action != null ? !action.equals(policy.action) : policy.action != null) {
+        if (action != null ? !action.equals(policy.action)
+                : policy.action != null) {
+            return false;
+        }
+        if (classifier == null) {
+            if (policy.classifier != null) {
+                return false;
+            }
+        } else if (!classifier.equals(policy.classifier)) {
             return false;
         }
         return true;
@@ -67,11 +88,13 @@ public class PolicyImpl implements Policy {
         int result = src != null ? src.hashCode() : 0;
         result = 31 * result + (dst != null ? dst.hashCode() : 0);
         result = 31 * result + (action != null ? action.hashCode() : 0);
+        result = 31 * result + (classifier != null ? classifier.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("from %s to %s apply %s", src, dst, action);
+        return String.format("from %s to %s apply %s when %s ", src, dst,
+                action, classifier);
     }
 }
