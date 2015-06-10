@@ -7,12 +7,8 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler.api;
 
-import java.net.UnknownHostException;
-import java.util.Collection;
-import java.util.Set;
-
-public interface IntentCompiler {
-    Collection<Policy> compile(Collection<Policy> policies) throws IntentCompilerException;
-    Set<Endpoint> parseEndpointGroup(String csv) throws UnknownHostException;
-    Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Set<Action> action);
+public class IntentCompilerException extends Exception {
+    public IntentCompilerException(String message) {
+        super(message);
+    }
 }

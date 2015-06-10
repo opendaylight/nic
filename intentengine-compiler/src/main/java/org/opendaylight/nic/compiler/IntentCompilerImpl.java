@@ -19,6 +19,7 @@ import java.util.Set;
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.IntentCompiler;
+import org.opendaylight.nic.compiler.api.IntentCompilerException;
 import org.opendaylight.nic.compiler.api.Policy;
 
 import com.google.common.collect.Sets;
@@ -28,7 +29,7 @@ public class IntentCompilerImpl implements IntentCompiler {
     private final Transform transform;
 
     @Override
-    public Collection<Policy> compile(Collection<Policy> policies) {
+    public Collection<Policy> compile(Collection<Policy> policies) throws IntentCompilerException {
         Queue<Policy> conflictingPolicies = new LinkedList<>(policies);
         Collection<Policy> compiledPolicies = new LinkedList<>();
         while (!conflictingPolicies.isEmpty()) {

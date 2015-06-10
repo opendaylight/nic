@@ -18,6 +18,7 @@ import org.opendaylight.nic.compiler.api.ActionConflictType;
 import org.opendaylight.nic.compiler.api.BasicAction;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.IntentCompiler;
+import org.opendaylight.nic.compiler.api.IntentCompilerException;
 import org.opendaylight.nic.compiler.api.IntentCompilerFactory;
 import org.opendaylight.nic.compiler.api.Policy;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
@@ -231,8 +232,8 @@ public class NicProvider implements NicConsoleProvider {
                 sources = compiler.parseEndpointGroup(sourceContainer.getEndPointGroup().getName());
                 destinations = compiler.parseEndpointGroup(destinationContainer.getEndPointGroup().getName());
             } catch (UnknownHostException e) {
-                e.printStackTrace();
-                return "ERROR";
+                LOG.error("Invalid subject", e);
+                return "[ERROR] Invalid subject";
             }
             Action action;
             if (actionContainer instanceof Allow) {
@@ -240,7 +241,8 @@ public class NicProvider implements NicConsoleProvider {
             } else if (actionContainer instanceof Block) {
                 action = block;
             } else {
-                return "ERROR";
+                LOG.error("Invalid action");
+                return "[ERROR] Invalid action";
             }
             Set<Action> actions = new LinkedHashSet<>();
             actions.add(action);
@@ -252,7 +254,13 @@ public class NicProvider implements NicConsoleProvider {
         stringBuilder.append(formatPolicies(policies));
         stringBuilder.append('\n');
         stringBuilder.append(">>> Compiled policies:\n");
-        Collection<Policy> compiledPolicies = compiler.compile(policies);
+        Collection<Policy> compiledPolicies;
+        try {
+            compiledPolicies = compiler.compile(policies);
+        } catch (IntentCompilerException e) {
+            LOG.error("Compilation failure", e);
+            return "[ERROR] Compilation failure";
+        }
         stringBuilder.append(formatPolicies(compiledPolicies));
 
         return stringBuilder.toString();
