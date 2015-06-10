@@ -7,12 +7,23 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler.api;
 
-import java.net.UnknownHostException;
-import java.util.Collection;
-import java.util.Set;
+import com.google.common.collect.ImmutableList;
 
-public interface IntentCompiler {
-    Collection<Policy> compile(Collection<Policy> policies) throws IntentCompilerException;
-    Set<Endpoint> parseEndpointGroup(String csv) throws UnknownHostException;
-    Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Set<Action> action);
+import java.util.Collection;
+
+public class IntentCompilerException extends Exception {
+    private Collection<Policy> relatedPolicies;
+
+    public IntentCompilerException(String message) {
+        this(message, null);
+    }
+
+    public IntentCompilerException(String message, Collection<Policy> relatedPolicies) {
+        super(message);
+        this.relatedPolicies = relatedPolicies;
+    }
+
+    public Collection<Policy> getRelatedPolicies() {
+        return ImmutableList.copyOf(relatedPolicies);
+    }
 }

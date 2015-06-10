@@ -18,6 +18,7 @@ import org.opendaylight.nic.compiler.api.ActionConflictType;
 import org.opendaylight.nic.compiler.api.BasicAction;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.IntentCompiler;
+import org.opendaylight.nic.compiler.api.IntentCompilerException;
 import org.opendaylight.nic.compiler.api.IntentCompilerFactory;
 import org.opendaylight.nic.compiler.api.Policy;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
@@ -226,13 +227,21 @@ public class NicProvider implements NicConsoleProvider {
             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action actionContainer =
                     (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action)
                             intent.getActions().get(0).getAction();
-            Set<Endpoint> sources, destinations;
+            String sourceSubject = sourceContainer.getEndPointGroup().getName();
+            String destinationSubject = destinationContainer.getEndPointGroup().getName();
+            Set<Endpoint> sources;
             try {
-                sources = compiler.parseEndpointGroup(sourceContainer.getEndPointGroup().getName());
-                destinations = compiler.parseEndpointGroup(destinationContainer.getEndPointGroup().getName());
+                sources = compiler.parseEndpointGroup(sourceSubject);
             } catch (UnknownHostException e) {
-                e.printStackTrace();
-                return "ERROR";
+                LOG.error("Invalid source subject: {}", sourceSubject, e);
+                return "[ERROR] Invalid subject: " + sourceSubject;
+            }
+            Set<Endpoint> destinations;
+            try {
+                destinations = compiler.parseEndpointGroup(destinationSubject);
+            } catch (UnknownHostException e) {
+                LOG.error("Invalid destination subject: {}", destinationSubject, e);
+                return "[ERROR] Invalid subject: " + destinationSubject;
             }
             Action action;
             if (actionContainer instanceof Allow) {
@@ -240,7 +249,9 @@ public class NicProvider implements NicConsoleProvider {
             } else if (actionContainer instanceof Block) {
                 action = block;
             } else {
-                return "ERROR";
+                String actionClass = actionContainer.getClass().getName();
+                LOG.error("Invalid action: {}", actionClass);
+                return "[ERROR] Invalid action: " + actionClass;
             }
             Set<Action> actions = new LinkedHashSet<>();
             actions.add(action);
@@ -252,7 +263,22 @@ public class NicProvider implements NicConsoleProvider {
         stringBuilder.append(formatPolicies(policies));
         stringBuilder.append('\n');
         stringBuilder.append(">>> Compiled policies:\n");
-        Collection<Policy> compiledPolicies = compiler.compile(policies);
+        Collection<Policy> compiledPolicies;
+        try {
+            compiledPolicies = compiler.compile(policies);
+        } catch (IntentCompilerException e) {
+            LOG.error("Compilation failure", e);
+            StringBuilder builder = new StringBuilder();
+            builder.append("[ERROR] Compilation failure: ");
+            builder.append(e.getMessage());
+            builder.append("\nRelated policies:\n");
+            for (Policy p : e.getRelatedPolicies()) {
+                builder.append("    ");
+                builder.append(p.toString());
+            }
+            builder.append('\n');
+            return builder.toString();
+        }
         stringBuilder.append(formatPolicies(compiledPolicies));
 
         return stringBuilder.toString();

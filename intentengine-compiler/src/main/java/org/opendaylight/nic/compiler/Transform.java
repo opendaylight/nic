@@ -7,20 +7,23 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
+import org.opendaylight.nic.compiler.api.IntentCompilerException;
 import org.opendaylight.nic.compiler.api.Policy;
 
 import com.google.common.collect.Sets;
 
 public class Transform {
 
-    public Collection<Policy> resolve(Policy p1, Policy p2) {
+    public Collection<Policy> resolve(Policy p1, Policy p2) throws IntentCompilerException {
 
         Collection<Policy> policies = new LinkedList<>();
         Sets.SetView<Endpoint> src, dst;
@@ -48,8 +51,11 @@ public class Transform {
             // Case: S1 and S2 , D1 and D2
             dst = Sets.intersection(p1.dst(), p2.dst());
             if (!dst.isEmpty()) {
-                policies.add(new PolicyImpl(src, dst, merge(p1.action(),
-                        p2.action())));
+                Set<Action> mergedActions = merge(p1.action(), p2.action());
+                if (mergedActions == null) {
+                    throw new IntentCompilerException("Unable to merge exclusive actions", Arrays.asList(p1, p2));
+                }
+                policies.add(new PolicyImpl(src, dst, mergedActions));
             }
 
             // Case: S1 and S2 , D1 and not D2
@@ -82,7 +88,7 @@ public class Transform {
         return policies;
     }
 
-    private Set<Action> merge(Set<Action> a1, Set<Action> a2) {
+    private Set<Action> merge(Set<Action> a1, Set<Action> a2) throws IntentCompilerException {
         Set<Action> composebleActions = new LinkedHashSet<>();
         Set<Action> observableActions = new LinkedHashSet<>();
         Set<Action> exclusiveActions = new LinkedHashSet<>();
@@ -103,8 +109,7 @@ public class Transform {
             if (exclusiveActions.size() == 1) {
                 return Sets.union(exclusiveActions, observableActions);
             } else {
-                // TODO: Better handle that case
-                throw new RuntimeException("Unable to merge exclusive actions");
+                return null;
             }
         }
         return Sets.union(composebleActions, observableActions);
