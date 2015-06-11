@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_3976ab3f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "Is there ever a chance of getStringIpAddress(a.getIpAddress()) returning null? If so a NPE will be thrown",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f98fd321",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "every a change of a.getValue() \u003d\u003d null",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_1995e732",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "a.getValue() \u003d\u003d null?",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_b9995b70",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "why not just:\n\nif (!verifyIntent()) {\nreturn\n}",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_19bc07bb",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "else {\nreturn null;\n}\n\n(brackets are ODL style guide compliant, I believe.)",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_d9b52fce",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "brackets {}",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_79cae350",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "brackets {}, ODL style guidelines",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_39db0b1d",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "why not use the format capabilities of the logger as opposed to String.format.",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_99c7b745",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "brackets",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_39c46b3f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "brackets",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_79d183fa",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "Why not use the format capability of the logger as opposed to String.format?",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_59c11f2d",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "brackets",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f9dd9315",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "brackets",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_19e3a7da",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "brackets",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_d9ec4fca",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-11T12:50:11Z",
+      "side": 1,
+      "message": "why not use the format capability of the logger as opposed to string.format?",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
