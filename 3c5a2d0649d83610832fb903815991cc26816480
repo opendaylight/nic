@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_2718c6d2",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T21:07:48Z",
+      "side": 1,
+      "message": "Of course, that was just a FYI/suggestion",
+      "parentUuid": "9a6a9dd7_873f5225",
+      "revId": "3c5a2d0649d83610832fb903815991cc26816480",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_9c3ec5b7",
         "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
         "patchSetId": 1
