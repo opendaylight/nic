@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_d940cf58",
+        "filename": "intentengine-cli/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "You could declare a property here",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_792503c1",
+        "filename": "intentengine-cli/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "You could declare a property here",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_592cbfab",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentCompileShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "you could also make an assertEquals(result, (String) output);\nI think this would be a more accurate test than just testing that the return statement is not null",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f9183386",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentListShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "The method doesn\u0027t test anything as there is no verify nor assert",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_790c2343",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentListShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "you could get the return statement here and make an assertEquals:\n\nthe doExecute will return a string with the following message:\nString.format(\"#%d - id: %s\\n\", counter, intent.getId().getValue())\n\nThus what I suggest is to create a constant defining this string.\nIn order to properly test, you should define the return statement for the intent.getId().getValue()\n\nwhen(intent.getId()).thenReturn(intentId);\nwhen(intentId.getValue()).thenReturn(INTENT_ID);\n\nHope this is clear",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_9909f733",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentRemoveShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "instead of Mockito.isA() you could use any()",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_3906ab21",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentRemoveShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "you could make an assertEquals here with the desired String.\nBecause the result will never be null, either the result will say it succeed, either it will say it fails",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_59035f0f",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentRemoveShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "same here for the assertEquals",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_7c13b15c",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentShowShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "I would have personally mock the following:\nIntentKey\nAllow\nBlock\nActions\nEndPointGroup\nSubject\nSubjects\nIntent\n\nI know you don\u0027t have to mock that, but the purpose of UT is to test the functionality within the class, you don\u0027t want to test the functionality of the above classes. Thus mocking them would make sure those classes won\u0027t triggered any issue within this particular UT.\n\nMy philosophy is the following: mock everything you can that is outside the class you\u0027re testing.\n\nThat being say, I don\u0027t except you to change this, that was more a FYI/good practice, IMHO.",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_fcffc1ff",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentShowShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "You should make an assertEquals and verify that the return string is the expected one",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_1c05d510",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentShowShellCommandTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_3c1d3967",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/completers/ActionCompleterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "There is no test in this method. you could make an assertEquals with the return statement of the ActionCompleter#complete() method",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_1c2cf598",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/completers/ActionCompleterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "Here you just test that the method didn\u0027t fail, you don\u0027t test that its behavior is the expected one",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_dc251dac",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/completers/UuidCompleterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:19:56Z",
+      "side": 1,
+      "message": "You should test with assertEquals() using the return statement of the UuidCompleter#complete() method.\n\nI don\u0027t think there is any tests as it is now.",
+      "revId": "8e587c2aa3c71d09a3463649362570f13bb7c5db",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
