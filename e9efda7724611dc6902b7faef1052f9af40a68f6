@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_39fc6b3e",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:53:22Z",
+      "side": 1,
+      "message": "You could declare a property here",
+      "revId": "e9efda7724611dc6902b7faef1052f9af40a68f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_59f91f4c",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:53:22Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "e9efda7724611dc6902b7faef1052f9af40a68f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_199ba719",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNIntentParserTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:53:22Z",
+      "side": 1,
+      "message": "Is there any tests run within this method. From my understanding you only make calls to intentParser.createFlowFilter(), you\u0027re not asserting anything or verifying that some calls are made.\n\nIs that right?\n\nMaybe you could make sure the flow is created by checking that the intentList is incremented.\n\nI would suggest passing an instance of List\u003cIntentWrapper\u003e to the function, then after the call, check if the size of the list has incremented, and also check is the content of the added object is compliant with the given parameters.",
+      "revId": "e9efda7724611dc6902b7faef1052f9af40a68f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f99593e4",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNIntentParserTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:53:22Z",
+      "side": 1,
+      "message": "You could declare this as a constant",
+      "revId": "e9efda7724611dc6902b7faef1052f9af40a68f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_79b0a38b",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNIntentParserTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:53:22Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re testing anything here, there is no assert or vefiry",
+      "revId": "e9efda7724611dc6902b7faef1052f9af40a68f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_39aa2b1a",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNIntentParserTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:53:22Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re testing anything here, there is no assert or vefiry",
+      "revId": "e9efda7724611dc6902b7faef1052f9af40a68f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f9635318",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNIntentParserTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:53:22Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re testing anything here, there is no assert or vefiry",
+      "revId": "e9efda7724611dc6902b7faef1052f9af40a68f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
