@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_dc5c3d28",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:25:20Z",
+      "side": 1,
+      "message": "Could you pass the Subject in the log msg please. Also, could the log message be more precise. Something regarding UnknwonHostException?",
+      "revId": "3c5a2d0649d83610832fb903815991cc26816480",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_fc4d8173",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:25:20Z",
+      "side": 1,
+      "message": "Could you pass the Action in the log msg please",
+      "revId": "3c5a2d0649d83610832fb903815991cc26816480",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_7c417138",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:25:20Z",
+      "side": 1,
+      "message": "Suggestion here: maybe the following hard coding strings could be declare as constants",
+      "revId": "3c5a2d0649d83610832fb903815991cc26816480",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_9c3ec5b7",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T14:25:20Z",
+      "side": 1,
+      "message": "Maybe you could pass the policies within the log message, in order to have a track and to see what policies make the compiler failed",
+      "revId": "3c5a2d0649d83610832fb903815991cc26816480",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
