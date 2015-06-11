@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_d9720fe5",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:58:26Z",
+      "side": 1,
+      "message": "You could declare a property",
+      "revId": "ced7e630472934435d2783d146c8df8e544b256a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_797743d5",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:58:26Z",
+      "side": 1,
+      "message": "You could declare a property",
+      "revId": "ced7e630472934435d2783d146c8df8e544b256a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_3981cb8f",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:58:26Z",
+      "side": 1,
+      "message": "I don\u0027t see any assert or verify, not sure of what you\u0027re testing. Maybe my understanding is wonrg",
+      "revId": "ced7e630472934435d2783d146c8df8e544b256a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_597effaf",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:58:26Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "ced7e630472934435d2783d146c8df8e544b256a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f94a7382",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:58:26Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "ced7e630472934435d2783d146c8df8e544b256a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
