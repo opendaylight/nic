@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_1c1875d2",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Its unlikely if the L3Address object itself is not null. However, I will change the code to check for nulls before calling getStringIpAddress()",
+      "parentUuid": "9a6a9dd7_3976ab3f",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_f98fd321",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_bc0ce995",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Will check for null",
+      "parentUuid": "9a6a9dd7_f98fd321",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_1995e732",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2015-06-11T12:50:11Z",
       "side": 1,
       "message": "a.getValue() \u003d\u003d null?",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_dc119dad",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_1995e732",
       "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -88,6 +142,42 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_7c265118",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_b9995b70",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_9c232505",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_f9c7d310",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_19cde731",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 1
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_3c20d9f6",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "You are right. I forgot that constant. Done.",
+      "parentUuid": "9a6a9dd7_19cde731",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_f9eef38a",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 1
@@ -116,6 +224,24 @@
       "writtenOn": "2015-06-11T13:37:54Z",
       "side": 1,
       "message": "You could use the declared constant NUM_OF_SUPPORTED_EPG instead of hard coding *2* here",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_5c1d8dbc",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_f9eef38a",
       "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -150,6 +276,24 @@
       "writtenOn": "2015-06-11T13:37:54Z",
       "side": 1,
       "message": "Also, I\u0027m not sure the else is needed here. return null is enough i guess",
+      "parentUuid": "9a6a9dd7_19bc07bb",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_fc7901fd",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "9a6a9dd7_19bc07bb",
       "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
@@ -208,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_dc88bde9",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_d9ed2f8d",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_39db0b1d",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 1
@@ -237,6 +399,24 @@
       "side": 1,
       "message": "Right, it should look something like\n\nLOG.error(\"Subject id: {} has no matching endpoints\", subjectId));",
       "parentUuid": "9a6a9dd7_39db0b1d",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_7c6df131",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-11T17:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_b9e87b7d",
       "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
