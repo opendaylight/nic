@@ -70,6 +70,58 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_f9c7d310",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:37:54Z",
+      "side": 1,
+      "message": "Yeah, my bad on this one. I did that. I agree with you David",
+      "parentUuid": "9a6a9dd7_b9995b70",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_19cde731",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:37:54Z",
+      "side": 1,
+      "message": "You could use the declared constant NUM_OF_SUPPORTED_EPG instead of hard coding *2* here",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_f9eef38a",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:37:54Z",
+      "side": 1,
+      "message": "You could use the declared constant NUM_OF_SUPPORTED_EPG instead of hard coding *2* here",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_19bc07bb",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 1
@@ -81,6 +133,24 @@
       "writtenOn": "2015-06-11T12:50:11Z",
       "side": 1,
       "message": "else {\nreturn null;\n}\n\n(brackets are ODL style guide compliant, I believe.)",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_19f4075a",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:37:54Z",
+      "side": 1,
+      "message": "Also, I\u0027m not sure the else is needed here. return null is enough i guess",
+      "parentUuid": "9a6a9dd7_19bc07bb",
       "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -121,6 +191,23 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_d9ed2f8d",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:37:54Z",
+      "side": 1,
+      "message": "same as the comment bellow",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_39db0b1d",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 1
@@ -132,6 +219,24 @@
       "writtenOn": "2015-06-11T12:50:11Z",
       "side": 1,
       "message": "why not use the format capabilities of the logger as opposed to String.format.",
+      "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_b9e87b7d",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-11T13:37:54Z",
+      "side": 1,
+      "message": "Right, it should look something like\n\nLOG.error(\"Subject id: {} has no matching endpoints\", subjectId));",
+      "parentUuid": "9a6a9dd7_39db0b1d",
       "revId": "a6ef24d67b40ae1fd7779b2491f63a7c9dbf43ff",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
