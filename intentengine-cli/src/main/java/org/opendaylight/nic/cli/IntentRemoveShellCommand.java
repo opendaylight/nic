@@ -29,9 +29,10 @@ public class IntentRemoveShellCommand extends OsgiCommandSupport {
     protected Object doExecute() throws Exception {
 
         Uuid uuid = Uuid.getDefaultInstance(id);
-        if (provider.removeIntent(uuid))
+        if (provider.removeIntent(uuid)) {
             return String.format("Intent successfully removed (id: %s)", uuid.toString());
-        else
+        } else {
             return String.format("Error removing intent (id: %s)", uuid.toString());
+        }
     }
 }

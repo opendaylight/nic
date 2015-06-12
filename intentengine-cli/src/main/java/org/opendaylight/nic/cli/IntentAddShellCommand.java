@@ -29,7 +29,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 
-@Command(name = "add", scope = "intent", description = "Adds an intent to the controller.\nExamples: --actions [ALLOW] --from <subject> --to <subject>\n          --actions [BLOCK] --from <subject>")
+@Command(name = "add",
+         scope = "intent",
+         description = "Adds an intent to the controller."
+                 + "\nExamples: --actions [ALLOW] --from <subject> --to <subject>"
+                 + "\n          --actions [BLOCK] --from <subject>")
 public class IntentAddShellCommand extends OsgiCommandSupport {
 
     private static final int FIRST_SUBJECT = 1;
@@ -37,13 +41,25 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
     protected NicConsoleProvider provider;
 
-    @Option(name = "-f", aliases = { "--from" }, description = "First subject.\n-f / --from <subject>", required = false, multiValued = false)
+    @Option(name = "-f",
+            aliases = { "--from" },
+            description = "First subject.\n-f / --from <subject>",
+            required = false,
+            multiValued = false)
     String from = "any";
 
-    @Option(name = "-t", aliases = { "--to" }, description = "Second Subject.\n-t / --to <subject>", required = false, multiValued = false)
+    @Option(name = "-t",
+            aliases = { "--to" },
+            description = "Second Subject.\n-t / --to <subject>",
+            required = false,
+            multiValued = false)
     String to = "any";
 
-    @Option(name = "-a", aliases = { "--actions" }, description = "Action to be performed.\n-a / --actions BLOCK/ALLOW", required = true, multiValued = true)
+    @Option(name = "-a",
+            aliases = { "--actions" },
+            description = "Action to be performed.\n-a / --actions BLOCK/ALLOW",
+            required = true,
+            multiValued = true)
     List<String> actions = new ArrayList<String>(Arrays.asList(NicProvider.ACTION_BLOCK));
 
     public IntentAddShellCommand(NicConsoleProvider provider) {
@@ -58,25 +74,33 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         List<Subjects> subjects = createSubjects();
         List<Actions> actions = createActions();
 
-        Intent intent = new IntentBuilder().setId(new Uuid(uuid.toString())).setSubjects(subjects).setActions(actions).build();
-        if (provider.addIntent(intent))
+        Intent intent = new IntentBuilder().
+                setId(new Uuid(uuid.toString()))
+                .setSubjects(subjects)
+                .setActions(actions)
+                .build();
+        if (provider.addIntent(intent)) {
             return String.format("Intent created (id: %s)", uuid.toString());
-        else
+        } else {
             return new String("Error creating new intent");
+        }
     }
 
     protected List<Actions> createActions() {
         List<Actions> actionsList = new ArrayList<Actions>();
 
         short order = 1;
-        for (String a : this.actions) {
+        for (String intentAction : this.actions) {
             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action = null;
-            if (a.equalsIgnoreCase(NicProvider.ACTION_ALLOW))
-                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.AllowBuilder().setAllow(new AllowBuilder().build()).build();
-            else if (a.equalsIgnoreCase(NicProvider.ACTION_BLOCK))
-                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.BlockBuilder().setBlock(new BlockBuilder().build()).build();
-            else
+            if (intentAction.equalsIgnoreCase(NicProvider.ACTION_ALLOW)) {
+                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
+                        .AllowBuilder().setAllow(new AllowBuilder().build()).build();
+            } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_BLOCK)) {
+                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
+                        .BlockBuilder().setBlock(new BlockBuilder().build()).build();
+            } else {
                 continue;
+            }
 
             Actions actions = new ActionsBuilder().setOrder(order).setAction(action).build();
             actionsList.add(actions);
@@ -90,11 +114,15 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         List<Subjects> subjectList = new ArrayList<Subjects>();
 
         EndPointGroup endpointGroupFrom = new EndPointGroupBuilder().setName(this.from).build();
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup from = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupBuilder().setEndPointGroup(endpointGroupFrom).build();
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup from =
+                new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject
+                .EndPointGroupBuilder().setEndPointGroup(endpointGroupFrom).build();
         Subjects subjects1 = new SubjectsBuilder().setOrder((short) FIRST_SUBJECT).setSubject(from).build();
 
         EndPointGroup endpointGroupTo = new EndPointGroupBuilder().setName(this.to).build();
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup to = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupBuilder().setEndPointGroup(endpointGroupTo).build();
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup to =
+                new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject
+                .EndPointGroupBuilder().setEndPointGroup(endpointGroupTo).build();
         Subjects subjects2 = new SubjectsBuilder().setOrder((short) SECOND_SUBJECT).setSubject(to).build();
 
         subjectList.add(subjects1);
