@@ -25,14 +25,13 @@ public class VTNRendererUtility {
 
     static Map<String, List<IntentWrapper>> hashMapIntentUtil = new HashMap<String, List<IntentWrapper>>();
 
-    private final Logger LOG = LoggerFactory.getLogger(VTNRendererUtility.class);
+    private final Logger log = LoggerFactory.getLogger(VTNRendererUtility.class);
 
     /**
      * Stores the Intent details as a map
      * @param hashmapIntent
      */
-    public static void storeIntentDetail(Map hashmapIntent)
-    {
+    public static void storeIntentDetail(Map hashmapIntent) {
         hashMapIntentUtil.putAll(hashmapIntent);
     }
 
@@ -53,7 +52,7 @@ public class VTNRendererUtility {
      */
     public boolean validateIP(final String ip) {
         if (ip == null) {
-            LOG.error("IP address is null");
+            log.error("IP address is null");
             throw new NullPointerException();
         }
 
@@ -75,7 +74,7 @@ public class VTNRendererUtility {
      */
     public boolean validateMacAddress(final String macAddress) {
         if (macAddress == null) {
-            LOG.error("MAC address is null");
+            log.error("MAC address is null");
             throw new NullPointerException();
         }
 
@@ -94,7 +93,7 @@ public class VTNRendererUtility {
      */
     public boolean validateSubnet(String srcIp, String dstIp) {
         if (srcIp == null || dstIp == null) {
-            LOG.error("Source or Destination IP address is null");
+            log.error("Source or Destination IP address is null");
             throw new NullPointerException();
         }
 
@@ -105,7 +104,7 @@ public class VTNRendererUtility {
             for (int index = 0; index < 3; index++) {
                 if (!(Byte.parseByte(srcIpDigits[index]) == Byte
                         .parseByte(dstIpDigits[index]))) {
-                    LOG.trace(
+                    log.trace(
                             "Source and Destination IP addresses are not in same subnet {} - {}",
                             srcIp, dstIp);
                     return false;
@@ -114,7 +113,7 @@ public class VTNRendererUtility {
             return true;
         }
 
-        LOG.trace(
+        log.trace(
                 "Source and Destination IP addresses have same IP addresses {} - {}",
                 srcIp, dstIp);
         return false;
