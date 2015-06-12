@@ -73,12 +73,12 @@ public class VTNIntentParser {
     /**
      * Setting the index of flow filter.
      */
-    private int flowFilter_index = 1;
+    private int flowFilterIndex = 1;
 
     /**
      * Setting the index of flow condition.
      */
-    private int flowcond_index = 1;
+    private int flowcondIndex = 1;
 
     private IVTNManager mgr;
 
@@ -109,7 +109,7 @@ public class VTNIntentParser {
          * Creates a default flow condition
          */
         status = createFlowCond("0.0", "0.0", "match_any");
-        if(!status){
+        if (!status) {
             LOG.error("Flow condiiton creation failed");
             return false;
         }
@@ -147,8 +147,8 @@ public class VTNIntentParser {
 
                 boolean status = createDefault();
                 if (!status) {
-                     LOG.trace("Default VTN configuration creation failed");
-                     return;
+                    LOG.trace("Default VTN configuration creation failed");
+                    return;
                 }
 
                 String condNameSrcDst = constructCondName(adressSrc, adressDst);
@@ -299,21 +299,21 @@ public class VTNIntentParser {
      */
     public String constructCondName(final String adressSrc,
             final String addressDst) {
-        String cond_name = null;
+        String condName = null;
 
         if (utility.validateIP(adressSrc) && (utility.validateIP(addressDst))) {
-            cond_name = adressSrc.replace(".", "");
-            cond_name = cond_name.concat(addressDst.replace(".", ""));
-            cond_name = "cond_" + cond_name;
+            condName = adressSrc.replace(".", "");
+            condName = condName.concat(addressDst.replace(".", ""));
+            condName = "cond_" + condName;
 
         } else if (utility.validateMacAddress(adressSrc)
                 && (utility.validateMacAddress(addressDst))) {
-            cond_name = adressSrc.replace(":", "");
-            cond_name = cond_name.concat(addressDst.replace(":", ""));
-            cond_name = "cond_" + cond_name;
+            condName = adressSrc.replace(":", "");
+            condName = condName.concat(addressDst.replace(":", ""));
+            condName = "cond_" + condName;
         }
 
-        return cond_name;
+        return condName;
     }
 
     /**
@@ -418,7 +418,7 @@ public class VTNIntentParser {
                     EtherAddress addr = null;
                     EthernetMatch ethernetMatch = new EthernetMatch(addr, addr,
                             ETHER_TYPE, (short) 0, null);
-                    FlowMatch flowmatch = new FlowMatch(flowcond_index++,
+                    FlowMatch flowmatch = new FlowMatch(flowcondIndex++,
                             ethernetMatch, null, null);
                     matchList.add(flowmatch);
                 } else if ((utility.validateIP(addressSrc))
@@ -433,7 +433,7 @@ public class VTNIntentParser {
                         EtherAddress addr = null;
                         EthernetMatch ethernetMatch = new EthernetMatch(addr,
                                 addr, ETHER_TYPE, (short) 0, null);
-                        FlowMatch flowmatch = new FlowMatch(flowcond_index++,
+                        FlowMatch flowmatch = new FlowMatch(flowcondIndex++,
                                 ethernetMatch, match, null);
                         matchList.add(flowmatch);
                     } else {
@@ -444,7 +444,7 @@ public class VTNIntentParser {
                         EthernetMatch ethernetMatch = new EthernetMatch(src,
                                 dst, null, (short) 0, null);
 
-                        FlowMatch flowmatch = new FlowMatch(flowcond_index++,
+                        FlowMatch flowmatch = new FlowMatch(flowcondIndex++,
                                 ethernetMatch, null, null);
                         matchList.add(flowmatch);
                     }
@@ -525,21 +525,21 @@ public class VTNIntentParser {
      * @param tenantName
      * @param bridgeName
      * @param type
-     * @param cond_name
+     * @param condName
      * @param canAdd
      * @param intentList
      * @throws Exception
      */
     public void createFlowFilter(String tenantName, String bridgeName,
-            String type, String cond_name, boolean canAdd,
+            String type, String condName, boolean canAdd,
             List<IntentWrapper> intentList) throws Exception {
         boolean in = false;
         int index = 0;
 
-        if (cond_name.equalsIgnoreCase("match_any")) {
+        if (condName.equalsIgnoreCase("match_any")) {
             index = LOW_PRIORITY;
         } else {
-            index = flowFilter_index++;
+            index = flowFilterIndex++;
         }
 
         FlowFilter filter = null;
@@ -548,10 +548,10 @@ public class VTNIntentParser {
 
         if (type.equalsIgnoreCase("PASS")) {
             PassFilter passFilter = new PassFilter();
-            filter = new FlowFilter(index, cond_name, passFilter, null);
+            filter = new FlowFilter(index, condName, passFilter, null);
         } else if (type.equalsIgnoreCase("DROP")) {
             DropFilter dropFilter = new DropFilter();
-            filter = new FlowFilter(index, cond_name, dropFilter, null);
+            filter = new FlowFilter(index, condName, dropFilter, null);
 
         } else {
             return;
@@ -563,7 +563,7 @@ public class VTNIntentParser {
         if (canAdd) {
             IntentWrapper intentWrapper = new IntentWrapper();
             intentWrapper.setEntityValue(index);
-            intentWrapper.setEntityDescription(cond_name);
+            intentWrapper.setEntityDescription(condName);
             intentWrapper.setAction(type);
             intentWrapper.setEntityName("FlowFilter");
             intentList.add(intentWrapper);
@@ -633,8 +633,8 @@ public class VTNIntentParser {
 
         try {
             mgr = getVTNManager(CONTAINER_NAME);
-            for (VBridge vBridge : mgr.getBridges(path)) {
-                if (vBridge.getName().equals(bridgeName)) {
+            for (VBridge bridge : mgr.getBridges(path)) {
+                if (bridge.getName().equals(bridgeName)) {
                     return true;
                 }
             }
