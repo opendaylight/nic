@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_a7da9676",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "i really hate being the style guide jerk, but brackets ?",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_67e47e3b",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "styleguide jerk, brackets on separate lines",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_07d10257",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "why create a variable for one call?\n\nthis.insertTenant(tenantBuilder.build())?",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_27d68650",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "style guide jerk, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_c7ca2aa1",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "no need for an else clause here. just return null.",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_87c43293",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "why aren\u0027t these initialized in the constructor?",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_8d269115",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "how about declaring this variable outside the loop so that it isn\u0027t allocated on the stack each iteration?",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_ad235504",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "styleguide police, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_6d1d3dbd",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "styleguide police, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_4d2079f7",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "styleguide police, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_0d7a81f1",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1045
+      },
+      "writtenOn": "2015-06-12T09:14:56Z",
+      "side": 1,
+      "message": "styleguide police, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
