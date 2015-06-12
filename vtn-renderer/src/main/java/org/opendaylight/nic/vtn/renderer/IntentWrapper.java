@@ -99,30 +99,40 @@ public class IntentWrapper {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         IntentWrapper other = (IntentWrapper) obj;
         if (entityDescription == null) {
-            if (other.entityDescription != null)
+            if (other.entityDescription != null) {
                 return false;
-        } else if (!entityDescription.equals(other.entityDescription))
+            }
+        } else if (!entityDescription.equals(other.entityDescription)) {
             return false;
+        }
         if (action == null) {
-            if (other.action != null)
+            if (other.action != null) {
                 return false;
-        } else if (!action.equals(other.action))
+            }
+        } else if (!action.equals(other.action)) {
             return false;
+        }
         if (entityName == null) {
-            if (other.entityName != null)
+            if (other.entityName != null) {
                 return false;
-        } else if (!entityName.equals(other.entityName))
+            }
+        } else if (!entityName.equals(other.entityName)) {
             return false;
-        if (entityValue != other.entityValue)
+        }
+        if (entityValue != other.entityValue) {
             return false;
+        }
         return true;
     }
 
@@ -130,6 +140,6 @@ public class IntentWrapper {
     public String toString() {
         return "IntentWrapper [entityName=" + entityName + ", entityValue="
                 + entityValue + ", entityDescription=" + entityDescription
-                + ", action="+ action +"]";
+                + ", action=" + action + "]";
     }
 }
