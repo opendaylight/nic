@@ -106,9 +106,9 @@ public class GBPTenantPolicyCreator {
     private static final String CLASSIFIER_NAME = "etherType";
     private static final String SUBJECT_NAME = "s1";
     private static final String ACTION_ALLOW = "allow";
-    private static final String PROVIDER_NETWORK_NAME="pns1";
-    private static final String CONSUMER_NETWORK_NAME="cns1";
-    private static final String DEFAULT_CONTRACT="default-nic-contract";
+    private static final String PROVIDER_NETWORK_NAME = "pns1";
+    private static final String CONSUMER_NETWORK_NAME = "cns1";
+    private static final String DEFAULT_CONTRACT = "default-nic-contract";
 
     //Attributes of the tenant policy
     private List<L3Address> providerL3Addresses;
@@ -140,18 +140,17 @@ public class GBPTenantPolicyCreator {
         this.consumerFloodDomainId = new L2FloodDomainId(GBPRendererHelper.createUniqueId());
     }
 
-    public void processIntentToGBP(){
+    public void processIntentToGBP() {
 
-        if(!this.verifyIntent()){
+        if (!this.verifyIntent()) {
             return;
         }
 
         TenantBuilder tenantBuilder = this.getTenant();
 
-        if(tenantBuilder == null) {
+        if (tenantBuilder == null) {
             return;
-        }
-        else{
+        } else {
             Tenant tenant = tenantBuilder.build();
 
             //TODO - Add modules to support tenant update and delete
@@ -168,11 +167,13 @@ public class GBPTenantPolicyCreator {
             return false;
         }
         if (intent.getActions() == null || intent.getActions().size() > NUM_OF_SUPPORTED_ACTION) {
-            LOG.warn("Intent's action is either null or there is more than {} action {}", NUM_OF_SUPPORTED_ACTION, intent);
+            LOG.warn("Intent's action is either null or there is more than {} action {}"
+                    , NUM_OF_SUPPORTED_ACTION, intent);
             return false;
         }
         if (intent.getSubjects() == null || intent.getSubjects().size() > NUM_OF_SUPPORTED_EPG) {
-            LOG.warn("Intent's subjects is either null or there is more than {} subjects {}", NUM_OF_SUPPORTED_EPG, intent);
+            LOG.warn("Intent's subjects is either null or there is more than {} subjects {}"
+                    , NUM_OF_SUPPORTED_EPG, intent);
             return false;
         }
         return true;
@@ -190,20 +191,20 @@ public class GBPTenantPolicyCreator {
         //Prepare all the components of a tenant
         List<EndpointGroup> endpointGroups = this.createEndpointGroups();
 
-        if(endpointGroups == null || endpointGroups.size() < NUM_OF_SUPPORTED_EPG){
+        if (endpointGroups == null || endpointGroups.size() < NUM_OF_SUPPORTED_EPG) {
             LOG.error("Tenant policy creation failed because of two few endpoint groups");
             return null;
         }
 
 
         //Most endpoint definitions will present only one l3context
-        for(L3ContextId contextId: l3ContextIds){
+        for (L3ContextId contextId: l3ContextIds) {
             l3Contexts.add(new L3ContextBuilder()
                 .setId(contextId).build());
         }
 
         //Most endpoint definitions will present only one bridge domain
-        for(L2BridgeDomainId bridgeDomainId : this.bridgeDomainIds){
+        for (L2BridgeDomainId bridgeDomainId : this.bridgeDomainIds) {
             l2BridgeDomains.add(
                     new L2BridgeDomainBuilder()
                     .setId(bridgeDomainId)
@@ -216,9 +217,9 @@ public class GBPTenantPolicyCreator {
                 .build());
 
             l2FloodDomains.add(new L2FloodDomainBuilder()
-            .setId(this.providerFloodDomainId)
-            .setParent(bridgeDomainId)
-            .build());
+                .setId(this.providerFloodDomainId)
+                .setParent(bridgeDomainId)
+                .build());
         }
 
         return new TenantBuilder()
@@ -248,7 +249,7 @@ public class GBPTenantPolicyCreator {
                         , this.createSubnet(providerL3Addresses, providerNetworkDomainId, providerFloodDomainId)));
     }
 
-    private String getEndpointIdentifier(Subjects subject){
+    private String getEndpointIdentifier(Subjects subject) {
         String endpointGroupIdentifier = "";
 
         //Retrieve the appropriate endpoint group identifier
@@ -277,11 +278,9 @@ public class GBPTenantPolicyCreator {
         Action action = intent.getActions().get(0).getAction();
         if (action instanceof Block) {
             subject = this.getBlockSubject();
-        }
-        else if (action instanceof Allow) {
+        } else if (action instanceof Allow) {
             subject = this.getAllowSubject();
-        }
-        else {
+        } else {
             LOG.warn("The specified action is not recognized {}", action);
         }
 
@@ -320,13 +319,13 @@ public class GBPTenantPolicyCreator {
             .build();
     }
 
-    private List<EndpointGroup> createEndpointGroups(){
+    private List<EndpointGroup> createEndpointGroups() {
         EndpointGroup epgConsumer;
         EndpointGroup epgProvider;
         List<EndpointGroup> endpointGroups = new ArrayList<>();
 
 
-        if(intent.getSubjects().size() == NUM_OF_SUPPORTED_EPG){
+        if (intent.getSubjects().size() == NUM_OF_SUPPORTED_EPG) {
             //Create new endpoint groups based on the subjects
             List<Subjects> subjects = intent.getSubjects();
 
@@ -334,7 +333,7 @@ public class GBPTenantPolicyCreator {
             Subjects subjects2 = subjects.get(1);
 
             //If we do not find matching endpoints to the consumer subject, we are done
-            if(!this.getTenantEndpointAttributes(this.getEndpointIdentifier(subjects1), false)){
+            if (!this.getTenantEndpointAttributes(this.getEndpointIdentifier(subjects1), false)) {
                 return null;
             }
 
@@ -349,7 +348,7 @@ public class GBPTenantPolicyCreator {
 
 
           //If we do not find matching endpoints for the provider subject, we are done
-            if(!this.getTenantEndpointAttributes(this.getEndpointIdentifier(subjects2), true)){
+            if (!this.getTenantEndpointAttributes(this.getEndpointIdentifier(subjects2), true)) {
                 return null;
             }
 
@@ -372,7 +371,8 @@ public class GBPTenantPolicyCreator {
         return null;
     }
 
-    private Subnet createSubnet(List<L3Address> endPoints, NetworkDomainId networkDomainId, L2FloodDomainId floodDomainId){
+    private Subnet createSubnet(List<L3Address> endPoints, NetworkDomainId networkDomainId
+            , L2FloodDomainId floodDomainId) {
         L3Address endPoint = endPoints.get(0);
         String ip = endPoint.getIpAddress().getIpv4Address().getValue();
         ip = ip.substring(0, ip.lastIndexOf('.')) + ".1";
@@ -391,57 +391,54 @@ public class GBPTenantPolicyCreator {
      * @param subjectId
      *                  Unique identifier to the endpoint group
      * @param provider
-     *                  If set to TRUE, associate the subject and endpoints with the provider ELSE associate with the consumer.
+     *                  If set to TRUE, associate the subject and endpoints
+     *                  with the provider ELSE associate with the consumer.
      * @return Returns
      *                  TRUE if there are endpoints associated with this subject
      */
-    private Boolean getTenantEndpointAttributes(String subjectId, Boolean provider){
+    private Boolean getTenantEndpointAttributes(String subjectId, Boolean provider) {
 
         List<Endpoint> matchingEndpoints = this.readEPNodes(subjectId);
         LOG.info("Matching endpoints for {}: {}",subjectId, matchingEndpoints.size());
 
         //Pull details from one of the endpoints
-        if(matchingEndpoints == null || matchingEndpoints.size() == 0){
+        if (matchingEndpoints == null || matchingEndpoints.size() == 0) {
             LOG.error("Subject id: {} has no matching endpoints", subjectId);
             return false;
         }
 
-        for(Endpoint e: matchingEndpoints){
+        for (Endpoint endpoint: matchingEndpoints) {
 
-            if(this.tenantId == null){
-                this.tenantId = e.getTenant();
+            if (this.tenantId == null) {
+                this.tenantId = endpoint.getTenant();
             }
 
-            if(!GBPRendererHelper.contains(this.bridgeDomainIds,  e.getL2Context())){
-                this.bridgeDomainIds.add(e.getL2Context());
+            if (!GBPRendererHelper.contains(this.bridgeDomainIds,  endpoint.getL2Context())) {
+                this.bridgeDomainIds.add(endpoint.getL2Context());
             }
 
-            for(L3Address address : e.getL3Address()){
+            for (L3Address address : endpoint.getL3Address()) {
                 LOG.info("{} address: {}"
                         , provider ? "Provider" : "Consumer"
-                        , GBPRendererHelper.getStringIpAddress(address.getIpAddress())
-                        );
+                        , GBPRendererHelper.getStringIpAddress(address.getIpAddress()));
 
-                if(provider){
-                    if(!GBPRendererHelper.contains(providerL3Addresses, address)){
+                if (provider) {
+                    if (!GBPRendererHelper.contains(providerL3Addresses, address)) {
                         providerL3Addresses.add(address);
                     }
-                }else{
-                    if(!GBPRendererHelper.contains(consumerL3Addresses, address)){
-                        consumerL3Addresses.add(address);
-                    }
+                } else if (!GBPRendererHelper.contains(consumerL3Addresses, address)) {
+                    consumerL3Addresses.add(address);
                 }
 
-                if(!GBPRendererHelper.contains(this.l3ContextIds, address.getL3Context())){
-                        this.l3ContextIds.add(address.getL3Context());
+                if (!GBPRendererHelper.contains(this.l3ContextIds, address.getL3Context())) {
+                    this.l3ContextIds.add(address.getL3Context());
                 }
             }
         }
 
         LOG.info("L3 Address for {}: {}"
                 , subjectId
-                , provider? providerL3Addresses.size(): consumerL3Addresses.size()
-        );
+                , provider ? providerL3Addresses.size() : consumerL3Addresses.size());
 
         return true;
     }
@@ -452,19 +449,19 @@ public class GBPTenantPolicyCreator {
      * @param subjectId
      * @return
      */
-    private List<Endpoint> readEPNodes(String subjectId){
+    private List<Endpoint> readEPNodes(String subjectId) {
         List<Endpoint> matchingGroup = new ArrayList<>();
 
         InstanceIdentifier<Endpoints> nodePath = GBPRendererHelper.createEndpointsIdentifier();
         Endpoints node = mdsalUtils.read(LogicalDatastoreType.OPERATIONAL, nodePath);
 
         if (node != null) {
-            for(Endpoint e : node.getEndpoint()){
-                if(e.getEndpointGroup().getValue().equalsIgnoreCase(subjectId)){
-                    matchingGroup.add(e);
+            for (Endpoint endpoint : node.getEndpoint()) {
+                if (endpoint.getEndpointGroup().getValue().equalsIgnoreCase(subjectId)) {
+                    matchingGroup.add(endpoint);
                 }
             }
-        }else{
+        } else {
             LOG.error("Endpoints not found for the path {}", nodePath);
         }
 

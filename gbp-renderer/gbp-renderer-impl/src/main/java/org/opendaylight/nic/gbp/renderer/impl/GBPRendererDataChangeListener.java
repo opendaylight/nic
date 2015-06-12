@@ -77,7 +77,7 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
     public void close() throws Exception {
         // TODO Auto-generated method stub
         LOG.info("GBPDataChangeListener closed.");
-        if (gbpRendererListener != null) {;
+        if (gbpRendererListener != null) {
             gbpRendererListener.close();
         }
     }
