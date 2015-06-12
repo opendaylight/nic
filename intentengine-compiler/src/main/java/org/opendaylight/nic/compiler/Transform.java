@@ -9,7 +9,6 @@ package org.opendaylight.nic.compiler;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -26,7 +25,8 @@ public class Transform {
     public Collection<Policy> resolve(Policy p1, Policy p2) throws IntentCompilerException {
 
         Collection<Policy> policies = new LinkedList<>();
-        Sets.SetView<Endpoint> src, dst;
+        Sets.SetView<Endpoint> src;
+        Sets.SetView<Endpoint> dst;
 
         // All the possible cases below
 
@@ -94,15 +94,17 @@ public class Transform {
         Set<Action> exclusiveActions = new LinkedHashSet<>();
         for (Action action : Sets.union(a1, a2)) {
             switch (action.getType()) {
-            case COMPOSABLE:
-                composebleActions.add(action);
-                break;
-            case OBSERVER:
-                observableActions.add(action);
-                break;
-            case EXCLUSIVE:
-                exclusiveActions.add(action);
-                break;
+                case COMPOSABLE:
+                    composebleActions.add(action);
+                    break;
+                case OBSERVER:
+                    observableActions.add(action);
+                    break;
+                case EXCLUSIVE:
+                    exclusiveActions.add(action);
+                    break;
+                default:
+                    return null;
             }
         }
         if (!exclusiveActions.isEmpty()) {
