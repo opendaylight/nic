@@ -29,7 +29,7 @@ public class GBPRenderer implements AutoCloseable {
 
     protected ServiceRegistration nicConsoleRegistration;
 
-    private GBPRendererDataChangeListener gBPRendererDataChangeListener;
+    private GBPRendererDataChangeListener gbpRendererDataChangeListener;
 
     public GBPRenderer(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
@@ -42,7 +42,7 @@ public class GBPRenderer implements AutoCloseable {
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         nicConsoleRegistration = context.registerService(GBPRenderer.class, this, null);
 
-        gBPRendererDataChangeListener = new GBPRendererDataChangeListener(dataBroker);
+        gbpRendererDataChangeListener = new GBPRendererDataChangeListener(dataBroker);
     }
 
     @Override
@@ -51,11 +51,11 @@ public class GBPRenderer implements AutoCloseable {
         if (dataBroker != null) {
             deleteNode(GBPRendererHelper.createIntentIid());
         }
-        if (nicConsoleRegistration!= null) {
+        if (nicConsoleRegistration != null) {
             nicConsoleRegistration.unregister();
         }
-        if (gBPRendererDataChangeListener != null) {
-            gBPRendererDataChangeListener.close();
+        if (gbpRendererDataChangeListener != null) {
+            gbpRendererDataChangeListener.close();
         }
     }
 
@@ -69,8 +69,8 @@ public class GBPRenderer implements AutoCloseable {
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                LOG.error("Delete failed", t);
+            public void onFailure(Throwable throwable) {
+                LOG.error("Delete failed", throwable);
             }
         });
     }
