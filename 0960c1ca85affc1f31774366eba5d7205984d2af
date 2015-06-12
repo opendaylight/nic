@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_e887fb0d",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-12T13:08:28Z",
+      "side": 1,
+      "message": "the bracket should be on the right side of the if statement",
+      "revId": "0960c1ca85affc1f31774366eba5d7205984d2af",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
