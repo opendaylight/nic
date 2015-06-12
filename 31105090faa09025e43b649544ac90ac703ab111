@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_88c43f93",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_a7da9676",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_67e47e3b",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-12T09:14:56Z",
       "side": 1,
       "message": "styleguide jerk, brackets on separate lines",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_a8c10382",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_67e47e3b",
       "revId": "31105090faa09025e43b649544ac90ac703ab111",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_48be2701",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Moved the module codes into this section",
+      "parentUuid": "9a6a9dd7_07d10257",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_27d68650",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2015-06-12T09:14:56Z",
       "side": 1,
       "message": "style guide jerk, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_08382f9f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_27d68650",
       "revId": "31105090faa09025e43b649544ac90ac703ab111",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_283df38f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_c7ca2aa1",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_87c43293",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2015-06-12T09:14:56Z",
       "side": 1,
       "message": "why aren\u0027t these initialized in the constructor?",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_c841d70c",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_87c43293",
       "revId": "31105090faa09025e43b649544ac90ac703ab111",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_e8461b23",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "If you meant inside the loop - that is fixed",
+      "parentUuid": "9a6a9dd7_8d269115",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_ad235504",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2015-06-12T09:14:56Z",
       "side": 1,
       "message": "styleguide police, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_884bdf2a",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_ad235504",
       "revId": "31105090faa09025e43b649544ac90ac703ab111",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_a848232e",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_6d1d3dbd",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_4d2079f7",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "9a6a9dd7_68520bdf",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_4d2079f7",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6a9dd7_0d7a81f1",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
         "patchSetId": 2
@@ -183,6 +363,24 @@
       "writtenOn": "2015-06-12T09:14:56Z",
       "side": 1,
       "message": "styleguide police, brackets",
+      "revId": "31105090faa09025e43b649544ac90ac703ab111",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_085fcfe6",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 3848
+      },
+      "writtenOn": "2015-06-12T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a9dd7_0d7a81f1",
       "revId": "31105090faa09025e43b649544ac90ac703ab111",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
