@@ -93,7 +93,7 @@ public class NicProvider implements NicConsoleProvider {
             }
 
             @Override
-            public void onFailure(final Throwable t) {
+            public void onFailure(final Throwable throwable)  {
                 LOG.error("initIntentsOperational: transaction failed");
             }
         });
@@ -152,7 +152,8 @@ public class NicProvider implements NicConsoleProvider {
     @Override
     public boolean removeIntent(Uuid id) {
         try {
-            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class).child(Intent.class, new IntentKey(id));
+            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class)
+                    .child(Intent.class, new IntentKey(id));
             // Removes default config data in data store tree
             WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
             tx.delete(LogicalDatastoreType.CONFIGURATION, iid);
@@ -178,14 +179,15 @@ public class NicProvider implements NicConsoleProvider {
 
         try {
             ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
-            listOfIntents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet().get().getIntent();
+            listOfIntents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION
+                    : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet().get().getIntent();
         } catch (Exception e) {
             LOG.error("ListIntents: failed: {}", e);
         }
 
-        if (listOfIntents == null)
+        if (listOfIntents == null) {
             listOfIntents = new ArrayList<Intent>();
-
+        }
         LOG.info("ListIntentsConfiguration: list of intents retrieved sucessfully");
         return listOfIntents;
     }
@@ -195,7 +197,8 @@ public class NicProvider implements NicConsoleProvider {
         Intent intent = null;
 
         try {
-            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class).child(Intent.class, new IntentKey(id));
+            InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class)
+                    .child(Intent.class, new IntentKey(id));
             ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
             intent = tx.read(LogicalDatastoreType.CONFIGURATION, iid).checkedGet().get();
 
@@ -272,9 +275,9 @@ public class NicProvider implements NicConsoleProvider {
             builder.append("[ERROR] Compilation failure: ");
             builder.append(e.getMessage());
             builder.append("\nRelated policies:\n");
-            for (Policy p : e.getRelatedPolicies()) {
+            for (Policy policy : e.getRelatedPolicies()) {
                 builder.append("    ");
-                builder.append(p.toString());
+                builder.append(policy.toString());
             }
             builder.append('\n');
             return builder.toString();
