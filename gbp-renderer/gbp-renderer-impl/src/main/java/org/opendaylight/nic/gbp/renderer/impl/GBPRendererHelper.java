@@ -60,41 +60,41 @@ public class GBPRendererHelper {
                 .build();
     }
 
-    public static InstanceIdentifier<Endpoints> createEndpointsIdentifier(){
+    public static InstanceIdentifier<Endpoints> createEndpointsIdentifier() {
         return InstanceIdentifier.builder(Endpoints.class).build();
     }
 
-    public static Boolean contains(List<L3Address> addresses, L3Address address){
-        for(L3Address a : addresses)
-            if(a.getIpAddress() != null && address.getIpAddress() != null
-                && getStringIpAddress(a.getIpAddress()).equals(getStringIpAddress(address.getIpAddress()))){
+    public static Boolean contains(List<L3Address> addresses, L3Address address) {
+        for (L3Address l3Address : addresses) {
+            if (l3Address.getIpAddress() != null && address.getIpAddress() != null
+                && getStringIpAddress(l3Address.getIpAddress()).equals(getStringIpAddress(address.getIpAddress()))) {
                 return true;
             }
-
+        }
         return false;
     }
 
-    public static Boolean contains(List<L2BridgeDomainId> l2Domains, L2BridgeDomainId l2Domain){
-        for(L2BridgeDomainId a : l2Domains)
-            if(a.getValue() != null && l2Domain.getValue() != null
-                && a.getValue().equalsIgnoreCase(l2Domain.getValue())){
+    public static Boolean contains(List<L2BridgeDomainId> l2Domains, L2BridgeDomainId l2Domain) {
+        for (L2BridgeDomainId l2BridgeDomain : l2Domains) {
+            if (l2BridgeDomain.getValue() != null && l2Domain.getValue() != null
+                && l2BridgeDomain.getValue().equalsIgnoreCase(l2Domain.getValue())) {
                 return true;
             }
-
+        }
         return false;
     }
 
-    public static Boolean contains(List<L3ContextId> l3ContextIds, L3ContextId l3Context){
-        for(L3ContextId a: l3ContextIds)
-            if(a.getValue() != null && l3Context.getValue() != null
-                && a.getValue().equalsIgnoreCase(l3Context.getValue())){
+    public static Boolean contains(List<L3ContextId> l3ContextIds, L3ContextId l3Context) {
+        for (L3ContextId l3ContextId: l3ContextIds) {
+            if (l3ContextId.getValue() != null && l3Context.getValue() != null
+                && l3ContextId.getValue().equalsIgnoreCase(l3Context.getValue())) {
                 return true;
             }
-
+        }
         return false;
     }
 
-    public static String createUniqueId(){
+    public static String createUniqueId() {
         return java.util.UUID.randomUUID().toString();
     }
 
