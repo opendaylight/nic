@@ -15,12 +15,18 @@ import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
-@Command(name = "list", scope = "intent", description = "Lists all intents in the controller.")
+@Command(name = "list",
+         scope = "intent",
+         description = "Lists all intents in the controller.")
 public class IntentListShellCommand extends OsgiCommandSupport {
 
     protected NicConsoleProvider provider;
 
-    @Option(name = "-c", aliases = { "--config" }, description = "List Configuration Data (optional).\n-c / --config <ENTER>", required = false, multiValued = false)
+    @Option(name = "-c",
+            aliases = { "--config" },
+            description = "List Configuration Data (optional).\n-c / --config <ENTER>",
+            required = false,
+            multiValued = false)
     Boolean isConfigurationData = false;
 
     public IntentListShellCommand(NicConsoleProvider provider) {
@@ -40,7 +46,8 @@ public class IntentListShellCommand extends OsgiCommandSupport {
                 counter++;
             }
             return sb.toString();
-        } else
+        } else {
             return String.format("No intents found. Check the logs for more details.");
+        }
     }
 }
