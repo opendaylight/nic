@@ -1,0 +1,8 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+1: Alexis de Talhouët <adetalhouet@inocybe.com>
+Code-Review+2: Hideyuki Tai <Hideyuki.Tai@necam.com>
+Submitted-by: Hideyuki Tai <Hideyuki.Tai@necam.com>
+Submitted-at: Sat, 13 Jun 2015 00:24:13 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/22477
+Project: nic
+Branch: refs/heads/stable/lithium
