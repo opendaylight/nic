@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_6a60df35",
+        "filename": "gbp-renderer/gbp-renderer-impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-15T20:31:26Z",
+      "side": 1,
+      "message": "I think this change makes it worse. This should be reverted or fixed in another patch.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 80
+      },
+      "revId": "8d6a4ef1bd2bc3869370cfe1a0cd2e58e400cd14",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_8a653b47",
+        "filename": "gbp-renderer/gbp-renderer-impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-15T20:31:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this plugin is really needed here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "8d6a4ef1bd2bc3869370cfe1a0cd2e58e400cd14",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
