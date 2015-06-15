@@ -75,8 +75,9 @@ public class IntentCompilerImpl implements IntentCompiler {
 
     private boolean conflicts(Policy p1, Policy p2) {
         if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
-                && !Sets.intersection(p1.dst(), p2.dst()).isEmpty())
+                && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()) {
             return true;
+        }
         return false;
     }
 }
