@@ -102,16 +102,16 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         for (InstanceIdentifier instanceIdentifier : iiD) {
             try {
                 if (originalDataObject.get(instanceIdentifier) instanceof Intent) {
-                    Intent lcl_intent = (Intent) originalDataObject.get(instanceIdentifier);
-                    IntentKey lcl_intentKey = (IntentKey) lcl_intent.getKey();
-                    Uuid uuid = (Uuid) lcl_intentKey.getId();
+                    Intent lclIntent = (Intent) originalDataObject.get(instanceIdentifier);
+                    IntentKey lclIntentKey = (IntentKey) lclIntent.getKey();
+                    Uuid uuid = (Uuid) lclIntentKey.getId();
                     LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
                     renderer.delete(uuid.getValue());
                 }
             } catch (Exception e) {
                 LOG.error("Could not delete VTN Renderer :{} ", e);
             }
-       }
+        }
 
     }
 
@@ -123,7 +123,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
     private void intentParser(Intent intent) {
         // Retrieve the ID.
         Uuid uuid = intent.getId();
-        if (uuid == null){
+        if (uuid == null) {
             LOG.error("Intent ID is not specified: {}", intent);
             return;
         }
@@ -147,8 +147,8 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             }
             EndPointGroup endPointGroup = (EndPointGroup)subject;
 
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup
-                epg = endPointGroup.getEndPointGroup();
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
+                .EndPointGroup epg = endPointGroup.getEndPointGroup();
             if (epg == null) {
                 LOG.info("End Point Group is not specified: {}", intentID);
                 return;
