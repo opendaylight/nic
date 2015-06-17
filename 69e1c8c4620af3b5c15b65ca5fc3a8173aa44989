@@ -62,6 +62,52 @@
       "revId": "69e1c8c4620af3b5c15b65ca5fc3a8173aa44989",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_2210c34d",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-17T17:11:23Z",
+      "side": 1,
+      "message": "Here, assertEquals(initialSize + 1, newSize) is more reasonable to me.",
+      "range": {
+        "startLine": 208,
+        "startChar": 8,
+        "endLine": 208,
+        "endChar": 42
+      },
+      "revId": "69e1c8c4620af3b5c15b65ca5fc3a8173aa44989",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_620ebb36",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-17T17:11:23Z",
+      "side": 1,
+      "message": "Using assertEquals(initialSize, newSize) is more reasonable to me.",
+      "range": {
+        "startLine": 236,
+        "startChar": 8,
+        "endLine": 236,
+        "endChar": 42
+      },
+      "revId": "69e1c8c4620af3b5c15b65ca5fc3a8173aa44989",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
