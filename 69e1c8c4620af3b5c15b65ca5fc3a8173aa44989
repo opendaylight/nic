@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_8731a90d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-17T16:53:36Z",
+      "side": 1,
+      "message": "In the commit message, you should explain clearly the change of this patch.\n\nI think the following page helps you.\nhttp://git-scm.com/book/ch5-2.html#Commit-Guidelines",
+      "revId": "69e1c8c4620af3b5c15b65ca5fc3a8173aa44989",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_6749ed8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-17T16:53:36Z",
+      "side": 1,
+      "message": "It should be removed, since this comment is not an explanation of the change of this patch.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "69e1c8c4620af3b5c15b65ca5fc3a8173aa44989",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_4744f173",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/TestUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-17T16:53:36Z",
+      "side": 1,
+      "message": "I think this variable should be declared in the createActions() method as a local variable, since this variable is used only in the method.\nDeclaring this variable as instance variable here does not make any sense to me.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "69e1c8c4620af3b5c15b65ca5fc3a8173aa44989",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
