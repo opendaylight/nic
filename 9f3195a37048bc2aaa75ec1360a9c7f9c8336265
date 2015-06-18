@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_33d814ef",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-18T21:13:17Z",
+      "side": 1,
+      "message": "I think it should be 1.6.0-SNAPSHOT, since the master branch is for Beryllium release and the version of this artifact is 1.6.0-SNAPSHOT for Beryllium.",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "9f3195a37048bc2aaa75ec1360a9c7f9c8336265",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
