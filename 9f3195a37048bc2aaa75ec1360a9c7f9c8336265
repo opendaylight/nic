@@ -22,6 +22,24 @@
       "revId": "9f3195a37048bc2aaa75ec1360a9c7f9c8336265",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b3f3c472",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-18T21:16:23Z",
+      "side": 1,
+      "message": "You are absolutely right, will correct that",
+      "parentUuid": "7a7fa997_33d814ef",
+      "revId": "9f3195a37048bc2aaa75ec1360a9c7f9c8336265",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
