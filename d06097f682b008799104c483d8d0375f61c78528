@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_2e1ae66e",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-19T14:11:38Z",
+      "side": 1,
+      "message": "You might want to add the version:\n\u003cversion\u003e${jacoco.version}\u003c/version\u003e\n\nThe version is define in odlparent:\nhttps://github.com/opendaylight/odlparent/blob/master/odlparent/pom.xml#L80\n\nFYI: \nconfig-parent (Controller) has binding-parent (Yangtools) as parent\nbinding-parent (Yangtools) has bundle-parent (Odlparent) as parent\nbundle-parent (Odlparent) has odlparent (Odlparent) as parent\n\nBottom line, the jacoco version is accessible through config-parent.",
+      "revId": "d06097f682b008799104c483d8d0375f61c78528",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
