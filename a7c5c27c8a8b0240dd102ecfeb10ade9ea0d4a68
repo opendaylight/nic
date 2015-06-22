@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_55ad6d30",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-22T22:06:06Z",
+      "side": 1,
+      "message": "include: A list of class files to include in instrumentation/analysis/reports. May use wildcard characters (* and ?). When not specified everything will be included. [1]\n\nSo I\u0027m not sure we need this tag as we want all the code of VTN Renderer module to be part of the coverage.\n\n[1] http://www.eclemma.org/jacoco/trunk/doc/prepare-agent-mojo.html#includes",
+      "parentUuid": "7a7fa997_154b75b1",
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_b5ee418a",
         "filename": "vtn-renderer/pom.xml",
         "patchSetId": 2
@@ -42,6 +60,24 @@
         "endLine": 100,
         "endChar": 14
       },
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_d5c17de5",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-22T22:06:06Z",
+      "side": 1,
+      "message": "You\u0027re right, it\u0027s not needed now, but we will definitely need it later. And later is not that far away ;)",
+      "parentUuid": "7a7fa997_b5ee418a",
       "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_756d0904",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-22T22:06:06Z",
+      "side": 1,
+      "message": "append: If set to true and the execution data file already exists, coverage data is appended to the existing file. If set to false, an existing execution data file will be replaced. [1]\n\nIt depends on what you want, but IMO we want to keep track of the previous coverage also, so append true seems ok to me.\n\n[1] http://www.eclemma.org/jacoco/trunk/doc/prepare-agent-mojo.html#append",
+      "parentUuid": "7a7fa997_1574d5fb",
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_55d80def",
         "filename": "vtn-renderer/pom.xml",
         "patchSetId": 2
@@ -88,6 +142,24 @@
         "endLine": 125,
         "endChar": 17
       },
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_957225e4",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-22T22:06:06Z",
+      "side": 1,
+      "message": "You\u0027re right, it\u0027s not needed now, but we will definitely need it later. And later is not that far away ;)",
+      "parentUuid": "7a7fa997_55d80def",
       "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
