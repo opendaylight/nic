@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_5ac7dc45",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3576
+      },
+      "writtenOn": "2015-06-22T16:31:32Z",
+      "side": 1,
+      "message": "It is not useful to have an @After method in a unit test, and it\u0027s even more pointless to set variables to null when a process is about to exit.",
+      "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_fac34836",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3576
+      },
+      "writtenOn": "2015-06-22T16:31:32Z",
+      "side": 1,
+      "message": "You have several different tests in this single test method.  It is much better to have each test just test a single thing. It makes test failures much clearer.",
+      "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_5acefc5b",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 3576
+      },
+      "writtenOn": "2015-06-22T16:31:32Z",
+      "side": 1,
+      "message": "It seems to me like you\u0027ve misunderstood the point of Mocking with Mockito.  You should be creating a mock instance of AsyncDataChangeEvent (although I\u0027m not sure what it will do with a generic parameter), not specifying the definition of this class.",
+      "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
