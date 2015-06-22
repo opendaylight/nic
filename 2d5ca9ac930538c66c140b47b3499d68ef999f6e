@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_b5608136",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3576
+      },
+      "writtenOn": "2015-06-22T21:36:03Z",
+      "side": 1,
+      "message": "Of course it\u0027s harmless.  The more \"harmless\" cruft you add to your code, the harder it is to maintain the code that needs to be maintained.  You may know that it\u0027s harmless and irrelevant, but other people maintaining this code may not.  Don\u0027t write code that serves no purpose.",
+      "parentUuid": "7a7fa997_b5dde116",
+      "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_fac34836",
         "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
         "patchSetId": 4
