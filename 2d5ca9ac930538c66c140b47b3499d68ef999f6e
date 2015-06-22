@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_b5dde116",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-22T21:12:06Z",
+      "side": 1,
+      "message": "Right, this is useless. But my thinking while reviewing was: \"it\u0027s harmless\"",
+      "parentUuid": "7a7fa997_5ac7dc45",
+      "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_fac34836",
         "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_15aa9570",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-22T21:12:06Z",
+      "side": 1,
+      "message": "I agree with you, but all the tests made here are regarding intent creation. Thus, IMO, they can reside in the same test function. But in order to have clearer test failures, here is my comment:\n\nAlexis de Talhouët\t\tJun 19 9:43 AM\nPatch Set 3:\n... FYI: Regarding Assert in Junit, you can have a String as first param for any Assert.assert* methods, see [1]. This allow having a scope for the test, instead of having a comment above the tests. \n\n[1] http://junit.sourceforge.net/javadoc/org/junit/Assert.html",
+      "parentUuid": "7a7fa997_fac34836",
+      "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_5acefc5b",
         "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2015-06-22T16:31:32Z",
       "side": 1,
       "message": "It seems to me like you\u0027ve misunderstood the point of Mocking with Mockito.  You should be creating a mock instance of AsyncDataChangeEvent (although I\u0027m not sure what it will do with a generic parameter), not specifying the definition of this class.",
+      "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_55c7ad45",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNRendererTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-06-22T21:12:06Z",
+      "side": 1,
+      "message": "This comment is valid for all the objects used within VTNRenderer. All of them should be mock instead of \"newing\" them. \n\nThe purpose of UT is to test the functionality within the class, you don\u0027t want to test the functionality of the others classes. Thus mocking them would make sure those others classes won\u0027t triggered any issue within this particular UT.\n\nMy philosophy is the following: mock everything you can that is outside the class you\u0027re testing.\n\nSo for instance, all the create* function in TestUtils should use \"mock\" objects instead of \"new\" objects.",
+      "parentUuid": "7a7fa997_5acefc5b",
       "revId": "2d5ca9ac930538c66c140b47b3499d68ef999f6e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
