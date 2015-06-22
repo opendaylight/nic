@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_154b75b1",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-22T21:46:46Z",
+      "side": 1,
+      "message": "I think we should set \u003cincludes\u003e configuration to show only the result for the VTN Renderer.\n\nThe following page help us.\nhttps://wiki.opendaylight.org/view/CrossProject:Integration_Group:Code_Coverage_using_Jacoco",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b5ee418a",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-22T21:46:46Z",
+      "side": 1,
+      "message": "Since VTN Renderer does not have its integration test yet, I don\u0027t think we need this configuration now.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 14
+      },
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_1574d5fb",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-22T21:46:46Z",
+      "side": 1,
+      "message": "Why do we need to set true the append attribute here?",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_55d80def",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-06-22T21:46:46Z",
+      "side": 1,
+      "message": "Since VTN Renderer does not have its integration test yet, I don\u0027t think we need this configuration now.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 17
+      },
+      "revId": "a7c5c27c8a8b0240dd102ecfeb10ade9ea0d4a68",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
