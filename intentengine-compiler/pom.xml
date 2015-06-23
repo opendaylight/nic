@@ -9,14 +9,14 @@
     <parent>
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>config-parent</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
+        <version>0.3.0-Lithium</version>
         <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>intentengine-compiler</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-Lithium</version>
     <packaging>bundle</packaging>
 
     <dependencies>
