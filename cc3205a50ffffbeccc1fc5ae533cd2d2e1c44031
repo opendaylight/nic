@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_72b73887",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You don\u0027t need this",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_d2c08ce2",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_32b1c08f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_d2672c24",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b264f022",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION.",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_9271b4e2",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You don\u0027t need this",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_3278e0c3",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_52731ce7",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_f2810890",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_127da4b1",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION ... same for every where you used logicalDatastoreType[0].\n\nIt\u0027s much more easy to read.",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b24b9086",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_7245f86e",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_9248d488",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_325f8043",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_525a3c51",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b219508a",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "This can be a global variable since you use it in each function. It can be setup in the setUp() function.",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_f2582858",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_1254c41f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_d235ecf7",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b232b00e",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_5221dcb2",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_923f74d6",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-06T14:22:03Z",
+      "side": 1,
+      "message": "You should use LogicalDatastoreType.CONFIGURATION",
+      "revId": "cc3205a50ffffbeccc1fc5ae533cd2d2e1c44031",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
