@@ -29,7 +29,8 @@ public class IntentCompilerImpl implements IntentCompiler {
     private final Transform transform;
 
     @Override
-    public Collection<Policy> compile(Collection<Policy> policies) throws IntentCompilerException {
+    public Collection<Policy> compile(Collection<Policy> policies)
+            throws IntentCompilerException {
         Queue<Policy> conflictingPolicies = new LinkedList<>(policies);
         Collection<Policy> compiledPolicies = new LinkedList<>();
         while (!conflictingPolicies.isEmpty()) {
@@ -64,8 +65,7 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     @Override
-    public Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination,
-            Set<Action> action) {
+    public Policy createPolicy(Epg source, Epg destination, Set<Action> action) {
         return new PolicyImpl(source, destination, action);
     }
 

@@ -11,8 +11,13 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Set;
 
+import org.opendaylight.nic.compiler.Epg;
+
 public interface IntentCompiler {
-    Collection<Policy> compile(Collection<Policy> policies) throws IntentCompilerException;
+    Collection<Policy> compile(Collection<Policy> policies)
+            throws IntentCompilerException;
+
     Set<Endpoint> parseEndpointGroup(String csv) throws UnknownHostException;
-    Policy createPolicy(Set<Endpoint> source, Set<Endpoint> destination, Set<Action> action);
+
+    Policy createPolicy(Epg source, Epg destination, Set<Action> action);
 }
