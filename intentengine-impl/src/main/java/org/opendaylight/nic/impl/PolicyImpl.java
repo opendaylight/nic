@@ -1,35 +1,35 @@
 //------------------------------------------------------------------------------
 // Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
-//
+// 
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
 //------------------------------------------------------------------------------
-package org.opendaylight.nic.compiler;
+package org.opendaylight.nic.impl;
 
 import java.util.Set;
 
 import org.opendaylight.nic.compiler.api.Action;
-import org.opendaylight.nic.compiler.api.Policy;
+import org.opendaylight.nic.compiler.api.Endpoint;
 
 public class PolicyImpl implements Policy {
-    private final Epg src;
-    private final Epg dst;
+    private final Set<Endpoint> src;
+    private final Set<Endpoint> dst;
     private final Set<Action> action;
 
-    public PolicyImpl(Epg src, Epg dst, Set<Action> action) {
+    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action) {
         this.src = src;
         this.dst = dst;
         this.action = action;
     }
 
     @Override
-    public Epg src() {
+    public Set<Endpoint> src() {
         return src;
     }
 
     @Override
-    public Epg dst() {
+    public Set<Endpoint> dst() {
         return dst;
     }
 
@@ -39,35 +39,29 @@ public class PolicyImpl implements Policy {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) {
+    public boolean equals(Object o) {
+        if (this == o)
             return true;
-        }
-        if (object == null || getClass() != object.getClass()) {
+        if (o == null || getClass() != o.getClass())
             return false;
-        }
 
-        PolicyImpl policy = (PolicyImpl) object;
+        PolicyImpl policy = (PolicyImpl) o;
 
-        if (src != null ? !src.equals(policy.src) : policy.src != null) {
+        if (src != null ? !src.equals(policy.src) : policy.src != null)
             return false;
-        }
-        if (dst != null ? !dst.equals(policy.dst) : policy.dst != null) {
+        if (dst != null ? !dst.equals(policy.dst) : policy.dst != null)
             return false;
-        }
         if (action != null ? !action.equals(policy.action)
-                : policy.action != null) {
+                : policy.action != null)
             return false;
-        }
         return true;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = src != null ? src.hashCode() : 0;
-        result = prime * result + (dst != null ? dst.hashCode() : 0);
-        result = prime * result + (action != null ? action.hashCode() : 0);
+        result = 31 * result + (dst != null ? dst.hashCode() : 0);
+        result = 31 * result + (action != null ? action.hashCode() : 0);
         return result;
     }
 

@@ -17,14 +17,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import org.opendaylight.nic.api.NicConsoleProvider;
 
 /**
  * JUnit test for {@link IntentCompileShellCommand}
- *
- * IntentCompileShellCommand test class is to test
- * whether all intents compiled or not
+ * 
+ * IntentCompileShellCommand test class is to test whether all intents compiled
+ * or not
  */
 @RunWith(MockitoJUnitRunner.class)
 public class IntentCompileShellCommandTest {
@@ -32,7 +31,8 @@ public class IntentCompileShellCommandTest {
     /**
      * Create a mock object for NicConsoleProvider class
      */
-    @Mock private NicConsoleProvider nicConsole;
+    @Mock
+    private NicConsoleProvider nicConsole;
 
     /**
      * Create object for IntentCompileShellCommand class
@@ -42,11 +42,11 @@ public class IntentCompileShellCommandTest {
     /**
      * Declare an expected result.
      */
-    private StringBuilder expected = new StringBuilder();
+    private final StringBuilder expected = new StringBuilder();
 
     /**
      * Test method for {@link IntentCompileShellCommand#doExecute()}.
-     *
+     * 
      * Test whether all intents compiled or not.
      */
     @Test
@@ -63,7 +63,7 @@ public class IntentCompileShellCommandTest {
          */
         final String result = expected.toString();
 
-        when(nicConsole.compile()).thenReturn(result);
+        when(nicConsole.compile(false)).thenReturn(result);
 
         intentCompileShellCmd = new IntentCompileShellCommand(nicConsole);
         Object output = intentCompileShellCmd.doExecute();
