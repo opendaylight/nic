@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_b3c87223",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-07T14:23:11Z",
+      "side": 1,
+      "message": "This can be a mock object",
+      "revId": "4e17139f0136fcd510a8c4acfb46e6ad00b836b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b3ef1287",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-07T14:23:11Z",
+      "side": 1,
+      "message": "this looks like the init() method",
+      "revId": "4e17139f0136fcd510a8c4acfb46e6ad00b836b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_53d79ebf",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-07T14:23:11Z",
+      "side": 1,
+      "message": "why do you need to specify that?",
+      "revId": "4e17139f0136fcd510a8c4acfb46e6ad00b836b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_13e1269a",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-07T14:23:11Z",
+      "side": 1,
+      "message": "you could also verify that gbpRendererDataChangeListener.close() has been called.\n\n this looks like the close() method",
+      "revId": "4e17139f0136fcd510a8c4acfb46e6ad00b836b6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
