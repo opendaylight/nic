@@ -38,6 +38,43 @@
    <artifactId>junit</artifactId>
    <scope>test</scope>
   </dependency>
+      <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung2</artifactId>
+        <version>2.0.1</version>
+        <type>pom</type>
+    </dependency>
+    <dependency>
+        <groupId>net.sf.jung</groupId>
+        <artifactId>jung-graph-impl</artifactId>
+        <version>2.0.1</version>
+        <type>jar</type>
+        <scope>compile</scope>
+    </dependency>
+     <dependency>
+   <groupId>org.opendaylight.controller</groupId>
+   <artifactId>config-api</artifactId>
+   <version>${config.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>org.opendaylight.controller</groupId>
+   <artifactId>sal-binding-api</artifactId>
+   <version>${mdsal.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>org.opendaylight.controller</groupId>
+   <artifactId>sal-binding-config</artifactId>
+   <version>${mdsal.version}</version>
+  </dependency>
+      <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-config</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.controller.model</groupId>
+      <artifactId>model-inventory</artifactId>
+    </dependency>
  </dependencies>
 
  <build>
