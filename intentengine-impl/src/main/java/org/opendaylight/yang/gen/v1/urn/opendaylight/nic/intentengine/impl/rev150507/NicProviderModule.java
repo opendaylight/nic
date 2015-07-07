@@ -1,18 +1,28 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507;
 
+import org.opendaylight.nic.impl.EndpointChangeListener;
 import org.opendaylight.nic.impl.NicProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507.AbstractNicProviderModule {
+public class NicProviderModule
+        extends
+        org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507.AbstractNicProviderModule {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NicProviderModule.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(NicProviderModule.class);
 
-    public NicProviderModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
+    public NicProviderModule(
+            org.opendaylight.controller.config.api.ModuleIdentifier identifier,
+            org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
     }
 
-    public NicProviderModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver, org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507.NicProviderModule oldModule, java.lang.AutoCloseable oldInstance) {
+    public NicProviderModule(
+            org.opendaylight.controller.config.api.ModuleIdentifier identifier,
+            org.opendaylight.controller.config.api.DependencyResolver dependencyResolver,
+            org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intentengine.impl.rev150507.NicProviderModule oldModule,
+            java.lang.AutoCloseable oldInstance) {
         super(identifier, dependencyResolver, oldModule, oldInstance);
     }
 
@@ -25,7 +35,10 @@ public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendayl
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating a new NicProvider instance");
         final NicProvider provider = new NicProvider(getDataBrokerDependency());
+        final EndpointChangeListener endpointProvider = new EndpointChangeListener(
+                getDataBrokerDependency());
         provider.init();
+        endpointProvider.init();
         return provider;
     }
 

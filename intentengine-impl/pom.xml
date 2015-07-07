@@ -54,6 +54,22 @@
    <artifactId>sal-binding-config</artifactId>
    <version>${mdsal.version}</version>
   </dependency>
+      <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-config</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.controller.model</groupId>
+      <artifactId>model-inventory</artifactId>
+    </dependency>
+    
+      <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <scope>test</scope>
+  </dependency>
+  
 
   <!-- Testing Dependencies -->
   <dependency>
