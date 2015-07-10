@@ -43,7 +43,7 @@ public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
         InstanceIdentifier<Intents> path = InstanceIdentifier.builder(Intents.class).build();
         VTNRenderer renderer = new VTNRenderer();
         DataChangeScope scope = DataChangeScope.SUBTREE;
-        ListenerRegistration<DataChangeListener> reg = broker.registerDataChangeListener(store, path, renderer, scope);
+        broker.registerDataChangeListener(store, path, renderer, scope);
 
         return renderer;
     }

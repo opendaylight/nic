@@ -19,17 +19,17 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
 
 public interface NicConsoleProvider extends AutoCloseable {
 
-    public boolean addIntent(Intent intent);
+    boolean addIntent(Intent intent);
 
-    public boolean addIntents(Intents intents);
+    boolean addIntents(Intents intents);
 
-    public boolean removeIntent(Uuid id);
+    boolean removeIntent(Uuid id);
 
-    public boolean removeIntents(List<Uuid> intents);
+    boolean removeIntents(List<Uuid> intents);
 
-    public List<Intent> listIntents(boolean isConfigurationDatastore);
+    List<Intent> listIntents(boolean isConfigurationDatastore);
 
-    public Intent getIntent(Uuid id);
+    Intent getIntent(Uuid id);
 
-    public String compile();
+    String compile();
 }
