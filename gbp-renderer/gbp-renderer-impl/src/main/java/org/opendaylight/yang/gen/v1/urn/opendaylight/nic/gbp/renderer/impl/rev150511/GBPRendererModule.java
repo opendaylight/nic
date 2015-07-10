@@ -44,8 +44,6 @@ public class GBPRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
                 LOG.info("GBP Renderer (instance {}) torn down.", this);
             }
         }
-
-        AutoCloseable ret = new CloseResources();
-        return ret;
+        return new CloseResources();
     }
 }

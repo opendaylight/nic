@@ -24,7 +24,6 @@ public class IntentCompileShellCommand extends OsgiCommandSupport {
 
     @Override
     protected Object doExecute() throws Exception {
-        String result = provider.compile();
-        return result;
+        return provider.compile();
     }
 }

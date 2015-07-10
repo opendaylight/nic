@@ -41,6 +41,10 @@ import com.google.common.net.InetAddresses;
 
 public class GBPRendererHelper {
 
+    private GBPRendererHelper() {
+
+    }
+
     public static InstanceIdentifier<Intent> createIntentIid() {
         return InstanceIdentifier.builder(Intents.class)
                 .child(Intent.class)
