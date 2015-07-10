@@ -22,6 +22,9 @@
   <sonar.jacoco.Reportpath>target/jacoco.exec</sonar.jacoco.Reportpath>
   <!-- Sonar jacoco plugin to get integration test coverage info -->
   <sonar.jacoco.itReportPath>target/jacoco-it.exec</sonar.jacoco.itReportPath>
+  <powermock.version>1.5.5</powermock.version>
+  <mockito.version>1.9.5</mockito.version>
+  <junit.version>4.11</junit.version>
  </properties>
 
  <dependencies>
@@ -41,15 +44,32 @@
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
+   <version>${junit.version}</version>
    <scope>test</scope>
   </dependency>
 
   <dependency>
    <groupId>org.mockito</groupId>
    <artifactId>mockito-all</artifactId>
+   <version>${mockito.version}</version>
    <scope>test</scope>
   </dependency>
- </dependencies>
+
+  <!--   Configuration for PowerMock dependencies. -->
+  <dependency>
+   <groupId>org.powermock</groupId>
+   <artifactId>powermock-module-junit4</artifactId>
+   <version>${powermock.version}</version>
+   <scope>test</scope>
+  </dependency>
+
+  <dependency>
+   <groupId>org.powermock</groupId>
+   <artifactId>powermock-api-mockito</artifactId>
+   <version>${powermock.version}</version>
+   <scope>test</scope>
+  </dependency>
+</dependencies>
 
  <build>
   <plugins>
@@ -113,6 +133,6 @@
     </executions>
    </plugin>
   </plugins>
- </build>
+</build>
 
 </project>
