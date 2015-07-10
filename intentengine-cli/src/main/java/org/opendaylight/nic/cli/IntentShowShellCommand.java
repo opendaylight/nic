@@ -53,17 +53,19 @@ public class IntentShowShellCommand extends OsgiCommandSupport {
             for (Actions actions : intent.getActions()) {
                 Action action = actions.getAction();
                 sb.append(String.format("   Order: %d\n", actions.getOrder()));
-                if(action instanceof Allow)
+                if (action instanceof Allow) {
                     sb.append(String.format("   Value: %s\n", "ALLOW" ));
-                else if(action instanceof Block)
+                } else if (action instanceof Block) {
                     sb.append(String.format("   Value: %s\n", "BLOCK" ));
-                else
+                } else {
                     sb.append(String.format("   Value: %s\n", "UNKNOWN"));
+                }
             }
 
             return sb.toString();
 
-        } else
+        } else {
             return String.format("No intent found. Check the logs for more details.");
+        }
     }
 }
