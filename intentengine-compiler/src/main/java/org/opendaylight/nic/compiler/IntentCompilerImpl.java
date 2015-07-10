@@ -7,15 +7,21 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler;
 
-import com.google.common.collect.Sets;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.IntentCompiler;
 import org.opendaylight.nic.compiler.api.Policy;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.*;
+import com.google.common.collect.Sets;
 
 public class IntentCompilerImpl implements IntentCompiler {
     @Override
@@ -59,7 +65,8 @@ public class IntentCompilerImpl implements IntentCompiler {
 
     private Collection<Policy> transform(Policy p1, Policy p2) {
         Collection<Policy> policies = new LinkedList<>();
-        Sets.SetView<Endpoint> src, dst;
+        Sets.SetView<Endpoint> src;
+        Sets.SetView<Endpoint> dst;
 
         src = Sets.difference(p1.src(), p2.src());
         if (!src.isEmpty()) {
@@ -103,15 +110,17 @@ public class IntentCompilerImpl implements IntentCompiler {
     }
 
     private Action merge(Action a1, Action a2) {
-        if (Action.BLOCK.equals(a1) || Action.BLOCK.equals(a2))
+        if (Action.BLOCK.equals(a1) || Action.BLOCK.equals(a2)) {
             return Action.BLOCK;
+        }
         return Action.ALLOW;
     }
 
     private boolean conflicts(Policy p1, Policy p2) {
         if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
-                && !Sets.intersection(p1.dst(), p2.dst()).isEmpty())
+                && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()) {
             return true;
+        }
         return false;
     }
 }

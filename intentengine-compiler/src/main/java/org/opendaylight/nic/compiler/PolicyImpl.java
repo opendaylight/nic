@@ -25,7 +25,7 @@ public class PolicyImpl implements Policy {
     }
 
     @Override
-    public Set<Endpoint> src(){
+    public Set<Endpoint> src() {
         return src;
     }
 
@@ -40,14 +40,22 @@ public class PolicyImpl implements Policy {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
 
-        PolicyImpl policy = (PolicyImpl) o;
+        PolicyImpl policy = (PolicyImpl) object;
 
-        if (src != null ? !src.equals(policy.src) : policy.src != null) return false;
-        if (dst != null ? !dst.equals(policy.dst) : policy.dst != null) return false;
+        if (src != null ? !src.equals(policy.src) : policy.src != null) {
+            return false;
+        }
+        if (dst != null ? !dst.equals(policy.dst) : policy.dst != null) {
+            return false;
+        }
         return action == policy.action;
 
     }
