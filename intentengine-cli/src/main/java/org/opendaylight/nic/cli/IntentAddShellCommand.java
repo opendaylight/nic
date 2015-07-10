@@ -78,7 +78,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         if (provider.addIntent(intent)) {
             return String.format("Intent created (id: %s)", uuid.toString());
         } else {
-            return new String("Error creating new intent");
+            return "Error creating new intent";
         }
     }
 
@@ -98,8 +98,8 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
                 continue;
             }
 
-            Actions actions = new ActionsBuilder().setOrder(order).setAction(action).build();
-            actionsList.add(actions);
+            Actions intentActions = new ActionsBuilder().setOrder(order).setAction(action).build();
+            actionsList.add(intentActions);
             order++;
         }
 
@@ -110,16 +110,16 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         List<Subjects> subjectList = new ArrayList<Subjects>();
 
         EndPointGroup endpointGroupFrom = new EndPointGroupBuilder().setName(this.from).build();
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject
-            .EndPointGroup from = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects
-            .subject.EndPointGroupBuilder().setEndPointGroup(endpointGroupFrom).build();
-        Subjects subjects1 = new SubjectsBuilder().setOrder((short) FIRST_SUBJECT).setSubject(from).build();
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup fromEPG =
+                new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject
+                .EndPointGroupBuilder().setEndPointGroup(endpointGroupFrom).build();
+        Subjects subjects1 = new SubjectsBuilder().setOrder((short) FIRST_SUBJECT).setSubject(fromEPG).build();
 
         EndPointGroup endpointGroupTo = new EndPointGroupBuilder().setName(this.to).build();
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject
-            .EndPointGroup to = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects
-            .subject.EndPointGroupBuilder().setEndPointGroup(endpointGroupTo).build();
-        Subjects subjects2 = new SubjectsBuilder().setOrder((short) SECOND_SUBJECT).setSubject(to).build();
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup toEPG =
+                new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject
+                .EndPointGroupBuilder().setEndPointGroup(endpointGroupTo).build();
+        Subjects subjects2 = new SubjectsBuilder().setOrder((short) SECOND_SUBJECT).setSubject(toEPG).build();
 
         subjectList.add(subjects1);
         subjectList.add(subjects2);
