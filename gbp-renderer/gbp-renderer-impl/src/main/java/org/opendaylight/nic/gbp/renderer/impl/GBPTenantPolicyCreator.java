@@ -205,11 +205,10 @@ public class GBPTenantPolicyCreator {
 
         //Most endpoint definitions will present only one bridge domain
         for (L2BridgeDomainId bridgeDomainId : this.bridgeDomainIds) {
-            l2BridgeDomains.add(
-                    new L2BridgeDomainBuilder()
-                    .setId(bridgeDomainId)
-                    .setParent(l3ContextIds.get(0))
-                    .build());
+            l2BridgeDomains.add(new L2BridgeDomainBuilder()
+                .setId(bridgeDomainId)
+                .setParent(l3ContextIds.get(0))
+                .build());
 
             l2FloodDomains.add(new L2FloodDomainBuilder()
                 .setId(this.consumerFloodDomainId)
@@ -230,8 +229,7 @@ public class GBPTenantPolicyCreator {
             .setL2FloodDomain(ImmutableList.copyOf(l2FloodDomains))
             .setContract(ImmutableList.of(this.getDefaultContract()))
             .setSubjectFeatureInstances(new SubjectFeatureInstancesBuilder()
-                .setClassifierInstance(ImmutableList.of(
-                     new ClassifierInstanceBuilder()
+                .setClassifierInstance(ImmutableList.of(new ClassifierInstanceBuilder()
                      .setName(new ClassifierName(CLASSIFIER_NAME))
                      .setClassifierDefinitionId(Classifier.ETHER_TYPE_CL.getId())
                      .setParameterValue(ImmutableList.of(new ParameterValueBuilder()
@@ -353,13 +351,13 @@ public class GBPTenantPolicyCreator {
             }
 
             epgProvider = new EndpointGroupBuilder()
-            .setId(new EndpointGroupId(this.getEndpointIdentifier(subjects2)))
-            .setNetworkDomain(providerNetworkDomainId)
-            .setProviderNamedSelector(ImmutableList.of(new ProviderNamedSelectorBuilder()
-                .setName(new SelectorName(PROVIDER_NETWORK_NAME))
-                .setContract(ImmutableList.of(new ContractId(this.contractId)))
-                .build()))
-            .build();
+                .setId(new EndpointGroupId(this.getEndpointIdentifier(subjects2)))
+                .setNetworkDomain(providerNetworkDomainId)
+                .setProviderNamedSelector(ImmutableList.of(new ProviderNamedSelectorBuilder()
+                    .setName(new SelectorName(PROVIDER_NETWORK_NAME))
+                    .setContract(ImmutableList.of(new ContractId(this.contractId)))
+                    .build()))
+                .build();
 
             endpointGroups.add(epgConsumer);
             endpointGroups.add(epgProvider);
