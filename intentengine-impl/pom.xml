@@ -59,5 +59,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    
+     <build>
+         <plugins>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-checkstyle-plugin</artifactId>
+                 <configuration>
+                     <configLocation>${project.basedir}/../checkstyle.xml</configLocation>
+                     <failsOnError>true</failsOnError>
+                     <includes>**/*.java,**/*.xml,**/*.ini,**/*.sh,**/*.bat</includes>
+                     <excludes>**/yang/</excludes>
+                 </configuration>
+             </plugin>
+         </plugins>
+     </build>
 
 </project>
