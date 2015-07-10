@@ -13,6 +13,8 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.ServiceUnavailableException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.opendaylight.controller.sal.utils.ServiceHelper;
@@ -32,6 +34,7 @@ import org.opendaylight.vtn.manager.IVTNManager;
 import org.opendaylight.vtn.manager.VBridge;
 import org.opendaylight.vtn.manager.VBridgeConfig;
 import org.opendaylight.vtn.manager.VBridgePath;
+import org.opendaylight.vtn.manager.VTNException;
 import org.opendaylight.vtn.manager.VlanMapConfig;
 import org.opendaylight.vtn.manager.VTenantConfig;
 import org.opendaylight.vtn.manager.VTenantPath;
@@ -57,6 +60,8 @@ public class VTNIntentParser {
      * The default Container name used in VTN Manager.
      */
     private static final String CONTAINER_NAME = "default";
+
+    private static final String MATCH_ANY = "match_any";
 
     /**
      * Setting the lowest index value for match_any flow condition used by flow filter.
@@ -108,7 +113,7 @@ public class VTNIntentParser {
         /**
          * Creates a default flow condition
          */
-        status = createFlowCond("0.0", "0.0", "match_any");
+        status = createFlowCond("0.0", "0.0", MATCH_ANY);
         if (!status) {
             LOG.error("Flow condiiton creation failed");
             return false;
@@ -123,7 +128,7 @@ public class VTNIntentParser {
      */
     public boolean deleteDefault() {
         if (deleteTenant(TENANT_NAME)) {
-            return deleteFlowCond("match_any");
+            return deleteFlowCond(MATCH_ANY);
         }
         return false;
     }
@@ -165,7 +170,7 @@ public class VTNIntentParser {
                 createFlowCond(adressDst, adressSrc, condNameDstSrc);
 
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
-                    "match_any", false, intentList);
+                        MATCH_ANY, false, intentList);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
                         condNameSrcDst, true, intentList);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
@@ -321,14 +326,14 @@ public class VTNIntentParser {
      *
      * @param containerName
      * @return  VTN Manager Instance
-     * @throws Exception
+     * @throws ServiceUnavailableException
      */
-    protected IVTNManager getVTNManager(String containerName) throws Exception {
+    protected IVTNManager getVTNManager(String containerName) throws ServiceUnavailableException {
         IVTNManager mgr = (IVTNManager) ServiceHelper.getInstance(
                 IVTNManager.class, containerName, this);
 
         if (mgr == null) {
-            throw new Exception("VTN Manager Service unavailable");
+            throw new ServiceUnavailableException("VTN Manager Service unavailable");
         }
 
         return mgr;
@@ -528,15 +533,16 @@ public class VTNIntentParser {
      * @param condName
      * @param canAdd
      * @param intentList
-     * @throws Exception
+     * @throws VTNException
+     * @throws ServiceUnavailableException
      */
     public void createFlowFilter(String tenantName, String bridgeName,
             String type, String condName, boolean canAdd,
-            List<IntentWrapper> intentList) throws Exception {
+            List<IntentWrapper> intentList) throws ServiceUnavailableException, VTNException {
         boolean in = false;
         int index = 0;
 
-        if (condName.equalsIgnoreCase("match_any")) {
+        if (condName.equalsIgnoreCase(MATCH_ANY)) {
             index = LOW_PRIORITY;
         } else {
             index = flowFilterIndex++;
