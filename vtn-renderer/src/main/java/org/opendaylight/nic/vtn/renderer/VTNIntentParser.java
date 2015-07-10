@@ -13,12 +13,17 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.opendaylight.controller.sal.core.UpdateType;
 import org.opendaylight.controller.sal.utils.ServiceHelper;
 import org.opendaylight.controller.sal.utils.Status;
 import org.opendaylight.controller.sal.utils.StatusCode;
-import org.opendaylight.controller.sal.core.UpdateType;
+import org.opendaylight.vtn.manager.IVTNManager;
+import org.opendaylight.vtn.manager.VBridge;
+import org.opendaylight.vtn.manager.VBridgeConfig;
+import org.opendaylight.vtn.manager.VBridgePath;
+import org.opendaylight.vtn.manager.VTenantConfig;
+import org.opendaylight.vtn.manager.VTenantPath;
+import org.opendaylight.vtn.manager.VlanMapConfig;
 import org.opendaylight.vtn.manager.flow.cond.EthernetMatch;
 import org.opendaylight.vtn.manager.flow.cond.FlowCondition;
 import org.opendaylight.vtn.manager.flow.cond.FlowMatch;
@@ -28,15 +33,10 @@ import org.opendaylight.vtn.manager.flow.filter.DropFilter;
 import org.opendaylight.vtn.manager.flow.filter.FlowFilter;
 import org.opendaylight.vtn.manager.flow.filter.FlowFilterId;
 import org.opendaylight.vtn.manager.flow.filter.PassFilter;
-import org.opendaylight.vtn.manager.IVTNManager;
-import org.opendaylight.vtn.manager.VBridge;
-import org.opendaylight.vtn.manager.VBridgeConfig;
-import org.opendaylight.vtn.manager.VBridgePath;
-import org.opendaylight.vtn.manager.VlanMapConfig;
-import org.opendaylight.vtn.manager.VTenantConfig;
-import org.opendaylight.vtn.manager.VTenantPath;
 import org.opendaylight.vtn.manager.util.EtherAddress;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The VTNIntentParser class creates a VTN objects based on the Intents received.
@@ -57,6 +57,8 @@ public class VTNIntentParser {
      * The default Container name used in VTN Manager.
      */
     private static final String CONTAINER_NAME = "default";
+
+    private static final String MATCH_ANY = "match_any";
 
     /**
      * Setting the lowest index value for match_any flow condition used by flow filter.
@@ -108,7 +110,7 @@ public class VTNIntentParser {
         /**
          * Creates a default flow condition
          */
-        status = createFlowCond("0.0", "0.0", "match_any");
+        status = createFlowCond("0.0", "0.0", MATCH_ANY);
         if (!status) {
             LOG.error("Flow condiiton creation failed");
             return false;
@@ -123,7 +125,7 @@ public class VTNIntentParser {
      */
     public boolean deleteDefault() {
         if (deleteTenant(TENANT_NAME)) {
-            return deleteFlowCond("match_any");
+            return deleteFlowCond(MATCH_ANY);
         }
         return false;
     }
@@ -165,7 +167,7 @@ public class VTNIntentParser {
                 createFlowCond(adressDst, adressSrc, condNameDstSrc);
 
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
-                    "match_any", false, intentList);
+                        MATCH_ANY, false, intentList);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
                         condNameSrcDst, true, intentList);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
@@ -536,7 +538,7 @@ public class VTNIntentParser {
         boolean in = false;
         int index = 0;
 
-        if (condName.equalsIgnoreCase("match_any")) {
+        if (condName.equalsIgnoreCase(MATCH_ANY)) {
             index = LOW_PRIORITY;
         } else {
             index = flowFilterIndex++;
