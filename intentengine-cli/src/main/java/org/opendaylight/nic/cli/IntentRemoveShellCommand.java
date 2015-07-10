@@ -13,12 +13,18 @@ import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 
-@Command(name = "remove", scope = "intent", description = "Removes an intent from the controller.")
+@Command(name = "remove",
+    scope = "intent",
+    description = "Removes an intent from the controller.")
 public class IntentRemoveShellCommand extends OsgiCommandSupport {
 
     protected NicConsoleProvider provider;
 
-    @Argument(index = 0, name = "id", description = "Intent Id", required = true, multiValued = false)
+    @Argument(index = 0,
+            name = "id",
+            description = "Intent Id",
+            required = true,
+            multiValued = false)
     String id;
 
     public IntentRemoveShellCommand(NicConsoleProvider provider) {
@@ -29,9 +35,10 @@ public class IntentRemoveShellCommand extends OsgiCommandSupport {
     protected Object doExecute() throws Exception {
 
         Uuid uuid = Uuid.getDefaultInstance(id);
-        if (provider.removeIntent(uuid))
+        if (provider.removeIntent(uuid)) {
             return String.format("Intent successfully removed (id: %s)", uuid.toString());
-        else
+        } else {
             return String.format("Error removing intent (id: %s)", uuid.toString());
+        }
     }
 }
