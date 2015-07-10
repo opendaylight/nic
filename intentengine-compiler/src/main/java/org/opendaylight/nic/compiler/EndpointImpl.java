@@ -24,11 +24,15 @@ public class EndpointImpl implements Endpoint {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
 
-        EndpointImpl endpoint = (EndpointImpl) o;
+        EndpointImpl endpoint = (EndpointImpl) object;
 
         return !(ipAddress != null ? !ipAddress.equals(endpoint.ipAddress) : endpoint.ipAddress != null);
 
