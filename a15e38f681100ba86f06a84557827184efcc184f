@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_410d7636",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/api/NicConsoleProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-07-13T15:29:42Z",
+      "side": 1,
+      "message": "Well remembered that all interface methods are public by default",
+      "range": {
+        "startLine": 26,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "a15e38f681100ba86f06a84557827184efcc184f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
