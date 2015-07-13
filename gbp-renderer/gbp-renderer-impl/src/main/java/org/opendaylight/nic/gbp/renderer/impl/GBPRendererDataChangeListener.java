@@ -54,7 +54,7 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
 
                 Intent intent = (Intent) created.getValue();
 
-                LOG.info("New intent created with id {}.", intent);
+                LOG.info("Intent created with id {}.", intent);
 
                 //This may generate conflicts since actions tend to oppose each other
                 GBPTenantPolicyCreator createGBPolicy = new GBPTenantPolicyCreator(this.dataBroker, intent);
@@ -66,11 +66,20 @@ public class GBPRendererDataChangeListener implements DataChangeListener,
 
     private void update(Map<InstanceIdentifier<?>, DataObject> changes) {
         // TODO implement update
+        for (Entry<InstanceIdentifier<?>, DataObject> updated : changes.entrySet()) {
+            if (updated.getValue() != null && updated.getValue() instanceof Intent) {
+                Intent intent = (Intent) updated.getValue();
+                LOG.info("Intent updated with id {}.", intent);
+            }
+        }
     }
 
     private void delete(
             AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
         // TODO implement delete, verify old data versus new data
+        for (InstanceIdentifier<?> deleted : changes.getRemovedPaths()) {
+            LOG.info("Intent deleted with id {}.", deleted);
+        }
     }
 
     @Override
