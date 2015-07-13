@@ -48,7 +48,7 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 /**
  * Unit test class for {@link GBPRenderer}.
  */
-@PrepareForTest(FrameworkUtil.class)
+@PrepareForTest({GBPRendererHelper.class, FrameworkUtil.class})
 @RunWith(PowerMockRunner.class)
 public class GBPRendererTest {
     /**

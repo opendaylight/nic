@@ -12,13 +12,13 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 
 @Command(name = "show", scope = "intent", description = "Shows detailed information about an intent.")
 public class IntentShowShellCommand extends OsgiCommandSupport {
@@ -34,6 +34,7 @@ public class IntentShowShellCommand extends OsgiCommandSupport {
 
     @Override
     protected Object doExecute() throws Exception {
+        String value = "Value";
 
         StringBuilder sb = new StringBuilder();
         Uuid uuid = Uuid.getDefaultInstance(id);
@@ -45,7 +46,7 @@ public class IntentShowShellCommand extends OsgiCommandSupport {
             for (Subjects subjects : intent.getSubjects()) {
                 EndPointGroup endPointGroup = (EndPointGroup) subjects.getSubject();
                 sb.append(String.format("   Order: %d\n", subjects.getOrder()));
-                sb.append(String.format("   Value: %s\n", endPointGroup.getEndPointGroup().getName()));
+                sb.append(String.format("   " + value + ": %s\n", endPointGroup.getEndPointGroup().getName()));
                 sb.append("\n");
             }
 
@@ -54,11 +55,11 @@ public class IntentShowShellCommand extends OsgiCommandSupport {
                 Action action = actions.getAction();
                 sb.append(String.format("   Order: %d\n", actions.getOrder()));
                 if (action instanceof Allow) {
-                    sb.append(String.format("   Value: %s\n", "ALLOW" ));
+                    sb.append(String.format("   " + value + ": %s\n", NicProvider.ACTION_ALLOW));
                 } else if (action instanceof Block) {
-                    sb.append(String.format("   Value: %s\n", "BLOCK" ));
+                    sb.append(String.format("   " + value + ": %s\n", NicProvider.ACTION_BLOCK));
                 } else {
-                    sb.append(String.format("   Value: %s\n", "UNKNOWN"));
+                    sb.append(String.format("   " + value + ": %s\n", "UNKNOWN"));
                 }
             }
 
