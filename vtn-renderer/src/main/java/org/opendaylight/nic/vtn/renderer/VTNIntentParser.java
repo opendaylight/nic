@@ -13,8 +13,9 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.naming.ServiceUnavailableException;
+
+import org.opendaylight.controller.sal.core.UpdateType;
 import org.opendaylight.controller.sal.utils.ServiceHelper;
 import org.opendaylight.controller.sal.utils.Status;
 import org.opendaylight.controller.sal.utils.StatusCode;
@@ -154,10 +155,10 @@ public class VTNIntentParser {
                 String condNameSrcDst = constructCondName(adressSrc, adressDst);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc);
 
-                action = action.equalsIgnoreCase("allow") ? "PASS" : action
+                String whichAction = action.equalsIgnoreCase("allow") ? "PASS" : action
                         .equalsIgnoreCase("block") ? "DROP" : "NA";
-                if (action.equalsIgnoreCase("NA")) {
-                    LOG.error("Unsupported Action {}", action);
+                if (whichAction.equalsIgnoreCase("NA")) {
+                    LOG.error("Unsupported Action {}", whichAction);
                     return;
                 }
 
@@ -168,7 +169,7 @@ public class VTNIntentParser {
                     "match_any", false, intentList);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
                         condNameSrcDst, true, intentList);
-                createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
                         condNameDstSrc, true, intentList);
 
                 LOG.info("VTN configuration is successfully updated for user Intents.");
@@ -205,10 +206,10 @@ public class VTNIntentParser {
                 boolean isSrcDstCond = false;
                 boolean isDstSrcCond = false;
 
-                action = action.equalsIgnoreCase("allow") ? "PASS" : action
+                String whichAction = action.equalsIgnoreCase("allow") ? "PASS" : action
                         .equalsIgnoreCase("block") ? "DROP" : "NA";
-                if (action.equalsIgnoreCase("NA")) {
-                    LOG.error("Unsupported Action {}", action);
+                if (whichAction.equalsIgnoreCase("NA")) {
+                    LOG.error("Unsupported Action {}", whichAction);
                     return;
                 }
                 List<IntentWrapper> list = VTNRendererUtility.hashMapIntentUtil
@@ -224,24 +225,24 @@ public class VTNIntentParser {
                         deleteFlowFilter(intentWrapper.getEntityValue());
                         if (!(isSrcDstCondName) && !(isSrcDstCond)) {
                             createFlowCond(adressSrc, adressDst, condNameSrcDst);
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
                                     condNameSrcDst, true, intentList);
                             isSrcDstCond = true;
                         }
                         if (!(isDstSrcCondName) && !(isDstSrcCond)) {
                             createFlowCond(adressDst, adressSrc, condNameDstSrc);
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
                                     condNameDstSrc, true, intentList);
                             isDstSrcCond = true;
                         }
-                    } else if (!(intentWrapper.getAction().equals(action))) {
+                    } else if (!(intentWrapper.getAction().equals(whichAction))) {
                         deleteFlowFilter(intentWrapper.getEntityValue());
                         if (isSrcDstCondName) {
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
                                     condNameSrcDst, true, intentList);
                         }
                         if (isDstSrcCondName) {
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
                                     condNameDstSrc, true, intentList);
                         }
                     }
@@ -324,14 +325,14 @@ public class VTNIntentParser {
      * @throws Exception
      */
     protected IVTNManager getVTNManager(String containerName) throws Exception {
-        IVTNManager mgr = (IVTNManager) ServiceHelper.getInstance(
+        IVTNManager vtnmanager = (IVTNManager) ServiceHelper.getInstance(
                 IVTNManager.class, containerName, this);
 
-        if (mgr == null) {
-            throw new Exception("VTN Manager Service unavailable");
+        if (vtnmanager == null) {
+            throw new ServiceUnavailableException("VTN Manager Service unavailable");
         }
 
-        return mgr;
+        return vtnmanager;
     }
 
     /**

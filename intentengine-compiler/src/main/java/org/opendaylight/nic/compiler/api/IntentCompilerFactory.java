@@ -10,7 +10,11 @@ package org.opendaylight.nic.compiler.api;
 
 import org.opendaylight.nic.compiler.IntentCompilerImpl;
 
-public class IntentCompilerFactory {
+public final class IntentCompilerFactory {
+
+    private IntentCompilerFactory() {
+    }
+
     public static IntentCompiler createIntentCompiler() {
         return new IntentCompilerImpl();
     }
