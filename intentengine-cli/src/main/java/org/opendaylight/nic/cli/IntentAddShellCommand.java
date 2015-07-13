@@ -72,12 +72,12 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         UUID uuid = UUID.randomUUID();
 
         List<Subjects> subjects = createSubjects();
-        List<Actions> actions = createActions();
+        List<Actions> intentActions = createActions();
 
         Intent intent = new IntentBuilder().
                 setId(new Uuid(uuid.toString()))
                 .setSubjects(subjects)
-                .setActions(actions)
+                .setActions(intentActions)
                 .build();
         if (provider.addIntent(intent)) {
             return String.format("Intent created (id: %s)", uuid.toString());
