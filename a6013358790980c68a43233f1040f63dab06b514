@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_a6e580a9",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "I would have seen a test building a Subject similar as the one in the GBPTenantPolicyCreator#getAllowSubject method() and make an assertEquals with the built subject and the one retrieved by the GBPTenantPolicyCreator#getAllowSubject().\n\nThe subject can be build using mock.",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_86f2c46d",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "Same comment as above, I would have seem a test building a subject similar as the one in the GBPTenantPolicyCreator#getBlockSubject() method() and make an assertEquals with the built subject and the one retrieved by the GBPTenantPolicyCreator#getBlockSubject()/\n\nThe subject can be build using mock.",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_26e97080",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "Same comment as above for a Tenant.",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_e602983d",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "Same comment as above for a Contract",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_c6f75c58",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "You could mock the behaviour of subject.getSubject() and make 4 tests. One for each defined type, and one will an unknown type.",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_669688f2",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "Same comment as contract/tenant/subject",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_86996421",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "you could mock the behavior of the function and make an assertEquals with the returned List at the end",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_e68938cb",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "you could mock the behavior of the function and make some assertTrue or assertFalse depending on what is expected.",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_46a34c4f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-13T14:39:26Z",
+      "side": 1,
+      "message": "you could mock the behavior of the function and make some assertTrue or assertFalse depending on what is expected.",
+      "revId": "a6013358790980c68a43233f1040f63dab06b514",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
