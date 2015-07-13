@@ -39,7 +39,10 @@ import com.google.common.base.Strings;
 import com.google.common.net.InetAddresses;
 
 
-public class GBPRendererHelper {
+public final class GBPRendererHelper {
+
+    private GBPRendererHelper() {
+    }
 
     private GBPRendererHelper() {
 
