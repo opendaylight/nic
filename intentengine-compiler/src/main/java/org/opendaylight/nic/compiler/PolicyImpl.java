@@ -7,11 +7,11 @@
 //------------------------------------------------------------------------------
 package org.opendaylight.nic.compiler;
 
+import java.util.Set;
+
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.Policy;
-
-import java.util.Set;
 
 public class PolicyImpl implements Policy {
     private Set<Endpoint> src;
@@ -64,9 +64,10 @@ public class PolicyImpl implements Policy {
 
     @Override
     public int hashCode() {
+        final int prime = 31;
         int result = src != null ? src.hashCode() : 0;
-        result = 31 * result + (dst != null ? dst.hashCode() : 0);
-        result = 31 * result + (action != null ? action.hashCode() : 0);
+        result = prime * result + (dst != null ? dst.hashCode() : 0);
+        result = prime * result + (action != null ? action.hashCode() : 0);
         return result;
     }
 
