@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_780620d0",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-07-16T20:07:06Z",
+      "side": 1,
+      "message": "Remove this comment. It\u0027s not necessary anymore.",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b80358b7",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-07-16T20:07:06Z",
+      "side": 1,
+      "message": "Delete this comment.",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_d8fe54ae",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-07-16T20:07:06Z",
+      "side": 1,
+      "message": "Delete this comment.",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_782dc045",
+        "filename": "intentengine-cli/src/main/java/org/opendaylight/nic/cli/IntentShowShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-07-16T20:07:06Z",
+      "side": 1,
+      "message": "What\u0027s the idea with this change?\n\nIf you want to avoid duplication, I would prefer creating a constant attribute with the whole format string (\"   Value: %s\\n\"). What do you think?",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_9830dc9f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-07-16T20:07:06Z",
+      "side": 1,
+      "message": "What about using vtnManager (camel case) instead?",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
