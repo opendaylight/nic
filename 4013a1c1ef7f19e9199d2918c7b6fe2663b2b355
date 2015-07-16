@@ -43,6 +43,23 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_98a53cb7",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3706
+      },
+      "writtenOn": "2015-07-16T20:32:40Z",
+      "side": 1,
+      "message": "If the method is not fully implemented, I suggest moving the comment to here.",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_b80358b7",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
         "patchSetId": 2
