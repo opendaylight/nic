@@ -25,6 +25,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_78d4e01f",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-16T20:12:00Z",
+      "side": 1,
+      "message": "It stills need to be implemented, here I\u0027m just iterating through the changes, and logging the intent, but I\u0027m not doing anything with it..",
+      "parentUuid": "7a7fa997_780620d0",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_b80358b7",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
         "patchSetId": 2
@@ -48,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_98d77c23",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-16T20:12:00Z",
+      "side": 1,
+      "message": "same here",
+      "parentUuid": "7a7fa997_b80358b7",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_d8fe54ae",
         "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
         "patchSetId": 2
@@ -59,6 +95,24 @@
       "writtenOn": "2015-07-16T20:07:06Z",
       "side": 1,
       "message": "Delete this comment.",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_38de6840",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-16T20:12:00Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "7a7fa997_d8fe54ae",
       "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7a7fa997_18e36c06",
+        "filename": "intentengine-cli/src/main/java/org/opendaylight/nic/cli/IntentShowShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-16T20:12:00Z",
+      "side": 1,
+      "message": "Right, this is to avoid duplication. Will create a constant as you mentioned.",
+      "parentUuid": "7a7fa997_782dc045",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7fa997_9830dc9f",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 2
@@ -99,6 +171,24 @@
       "writtenOn": "2015-07-16T20:07:06Z",
       "side": 1,
       "message": "What about using vtnManager (camel case) instead?",
+      "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_b8f118cf",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-16T20:12:00Z",
+      "side": 1,
+      "message": "Right, kind of a typo, wanted to have vtnManager in a first place.",
+      "parentUuid": "7a7fa997_9830dc9f",
       "revId": "4013a1c1ef7f19e9199d2918c7b6fe2663b2b355",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
