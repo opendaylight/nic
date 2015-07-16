@@ -141,7 +141,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         List<String> endPointGroups = new ArrayList<String>();
         for (Subjects subjects: listSubjects) {
             Subject subject = subjects.getSubject();
-            if (subject == null || !(subject instanceof EndPointGroup)) {
+            if (!(subject instanceof EndPointGroup)) {
                 LOG.info("Subject is not specified: {}", intentID);
                 return;
             }
