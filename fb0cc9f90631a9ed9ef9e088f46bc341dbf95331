@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_4576d8a5",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-17T14:22:30Z",
+      "side": 1,
+      "message": "This is not a good way of defining variables. It should be all capital letters.",
+      "revId": "fb0cc9f90631a9ed9ef9e088f46bc341dbf95331",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_65799492",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-17T14:22:30Z",
+      "side": 1,
+      "message": "This is not a good way of defining variables. It should be all capital letters.",
+      "revId": "fb0cc9f90631a9ed9ef9e088f46bc341dbf95331",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_0570e0a3",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPTenantPolicyCreatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-17T14:22:30Z",
+      "side": 1,
+      "message": "This is not a good way of defining variables. It should be all capital letters.",
+      "revId": "fb0cc9f90631a9ed9ef9e088f46bc341dbf95331",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
