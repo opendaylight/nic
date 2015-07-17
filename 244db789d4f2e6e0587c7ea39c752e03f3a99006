@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7fa997_459d78bb",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-07-17T14:29:10Z",
+      "side": 1,
+      "message": "This is not a good way to declare variables in JAVA, it must not have a capital letter as first character.\n\nIt should look like gbpRendererObj",
+      "revId": "244db789d4f2e6e0587c7ea39c752e03f3a99006",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
