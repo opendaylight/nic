@@ -16,6 +16,24 @@
       "revId": "adf3614afd26886ebc07d4f066c4132ad8eadfd9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a7fa997_285db3e9",
+        "filename": "gbp-renderer/gbp-renderer-impl/src/test/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListenerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2015-07-20T08:43:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7fa997_25815c4a",
+      "revId": "adf3614afd26886ebc07d4f066c4132ad8eadfd9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
