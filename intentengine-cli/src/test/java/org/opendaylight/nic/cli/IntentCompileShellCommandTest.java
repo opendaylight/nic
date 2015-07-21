@@ -63,7 +63,7 @@ public class IntentCompileShellCommandTest {
          */
         final String result = expected.toString();
 
-        when(nicConsole.compile()).thenReturn(result);
+        when(nicConsole.compile(false)).thenReturn(result);
 
         intentCompileShellCmd = new IntentCompileShellCommand(nicConsole);
         Object output = intentCompileShellCmd.doExecute();

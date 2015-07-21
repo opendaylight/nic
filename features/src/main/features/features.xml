@@ -26,6 +26,8 @@
         <bundle>mvn:org.opendaylight.nic/intentengine-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-impl/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-compiler/${project.version}</bundle>
+        <bundle>wrap:mvn:net.sf.jung/jung-api/2.0.1</bundle>
+        <bundle>wrap:mvn:net.sf.jung/jung-visualization/2.0.1</bundle>
         <configfile finalname="etc/opendaylight/karaf/88-intentengine-impl.xml">mvn:org.opendaylight.nic/intentengine-impl/${project.version}/xml/config</configfile>
     </feature>
 
