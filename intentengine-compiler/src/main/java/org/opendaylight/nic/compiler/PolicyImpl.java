@@ -10,27 +10,26 @@ package org.opendaylight.nic.compiler;
 import java.util.Set;
 
 import org.opendaylight.nic.compiler.api.Action;
-import org.opendaylight.nic.compiler.api.Endpoint;
 import org.opendaylight.nic.compiler.api.Policy;
 
 public class PolicyImpl implements Policy {
-    private Set<Endpoint> src;
-    private Set<Endpoint> dst;
-    private Set<Action> action;
+    private final Epg src;
+    private final Epg dst;
+    private final Set<Action> action;
 
-    public PolicyImpl(Set<Endpoint> src, Set<Endpoint> dst, Set<Action> action) {
+    public PolicyImpl(Epg src, Epg dst, Set<Action> action) {
         this.src = src;
         this.dst = dst;
         this.action = action;
     }
 
     @Override
-    public Set<Endpoint> src() {
+    public Epg src() {
         return src;
     }
 
     @Override
-    public Set<Endpoint> dst() {
+    public Epg dst() {
         return dst;
     }
 
@@ -56,7 +55,8 @@ public class PolicyImpl implements Policy {
         if (dst != null ? !dst.equals(policy.dst) : policy.dst != null) {
             return false;
         }
-        if (action != null ? !action.equals(policy.action) : policy.action != null) {
+        if (action != null ? !action.equals(policy.action)
+                : policy.action != null) {
             return false;
         }
         return true;

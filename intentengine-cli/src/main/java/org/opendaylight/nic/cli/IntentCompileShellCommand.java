@@ -8,6 +8,7 @@
 package org.opendaylight.nic.cli;
 
 import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
 
@@ -18,12 +19,19 @@ public class IntentCompileShellCommand extends OsgiCommandSupport {
 
     protected NicConsoleProvider provider;
 
+    @Option(name = "-g",
+            aliases = { "--graph" },
+            description = "Show graph view (optional).\n-g / --graph <ENTER>",
+            required = false,
+            multiValued = false)
+    Boolean showGraph = false;
+
     public IntentCompileShellCommand(NicConsoleProvider provider) {
         this.provider = provider;
     }
 
     @Override
     protected Object doExecute() throws Exception {
-        return provider.compile();
+        return provider.compile(showGraph);
     }
 }
