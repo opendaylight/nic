@@ -5,16 +5,25 @@
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
 // and is available at http://www.eclipse.org/legal/epl-v10.html
 //------------------------------------------------------------------------------
-package org.opendaylight.nic.compiler.api;
+package org.opendaylight.nic.compiler;
 
 import java.util.Set;
 
-import org.opendaylight.nic.compiler.Epg;
+import org.opendaylight.nic.compiler.api.Action;
 
-public interface Policy {
-    Epg src();
+public class Edge {
+    private final Set<Action> action;
 
-    Epg dst();
+    public Edge(Set<Action> action) {
+        this.action = action;
+    }
 
-    Set<Action> action();
+    public Set<Action> getAction() {
+        return action;
+    }
+
+    @Override
+    public String toString() {
+        return action.toString();
+    }
 }
