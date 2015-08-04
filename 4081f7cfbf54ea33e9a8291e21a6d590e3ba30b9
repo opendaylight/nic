@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_3e41c80b",
+        "filename": "intentengine-compiler/src/test/java/org/opendaylight/nic/compiler/EndpointImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-04T13:45:58Z",
+      "side": 1,
+      "message": "Could you add a string to explain the reason of a potential test failure:\n\nfor instance:\nassertEquals(\"EndPointImpl instances should be equal, error in the #equals() function\", true, endPointImpl.equals(endPointImpl));",
+      "revId": "4081f7cfbf54ea33e9a8291e21a6d590e3ba30b9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
