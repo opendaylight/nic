@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_1e488c2c",
+        "filename": "intentengine-impl/src/test/java/org/opendaylight/nic/impl/NicProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-04T13:47:47Z",
+      "side": 1,
+      "message": "remove \\r",
+      "revId": "e872bbd9873992abc965ef6d3495db0e0b80f030",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a7ca5a3_be54f8ca",
+        "filename": "intentengine-impl/src/test/java/org/opendaylight/nic/impl/NicProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-04T13:47:47Z",
+      "side": 1,
+      "message": "remove \\r",
+      "revId": "e872bbd9873992abc965ef6d3495db0e0b80f030",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
