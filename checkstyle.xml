@@ -223,8 +223,8 @@
 
     </module>
 
-    <!--<module name="RegexpHeader">
-        <property name="headerFile" value="${checkstyle.header.file}"/>
-        <property name="multiLines" value="2"/>
-    </module>-->
+    <module name="RegexpHeader">
+        <property name="severity" value="error"/>
+        <property name="headerFile" value="checkstyle-license.txt"/>
+    </module>
 </module>
