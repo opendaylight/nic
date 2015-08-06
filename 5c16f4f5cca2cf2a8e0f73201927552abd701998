@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a7ca5a3_48f3a20a",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/api/NicConsoleProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2015-08-06T05:04:47Z",
+      "side": 0,
+      "message": "Not sure if this is right but as I understand it all contributions to OpenDaylight must be EPL license. This license appears to be proprietary and shouldn\u0027t be in an ODL project.",
+      "revId": "5c16f4f5cca2cf2a8e0f73201927552abd701998",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
