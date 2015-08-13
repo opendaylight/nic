@@ -169,7 +169,7 @@ public class VTNIntentParser {
 
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP",
                         MATCH_ANY, false, intentList);
-                createFlowFilter(TENANT_NAME, BRIDGE_NAME, action,
+                createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
                         condNameSrcDst, true, intentList);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
                         condNameDstSrc, true, intentList);
