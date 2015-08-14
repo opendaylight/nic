@@ -24,6 +24,7 @@ MANIFEST.MF
 .classpath
 target/
 *.class
+.checkstyle
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
