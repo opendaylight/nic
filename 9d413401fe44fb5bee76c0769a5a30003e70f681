@@ -1,0 +1,7 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+2: Alexis de Talhouët <adetalhouet@inocybe.com>
+Submitted-by: Alexis de Talhouët <adetalhouet@inocybe.com>
+Submitted-at: Fri, 14 Aug 2015 12:23:09 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/25284
+Project: nic
+Branch: refs/heads/stable/lithium
