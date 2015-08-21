@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_122dc046",
+        "filename": "samples/action/api/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "can we use version 1.1.0-SNAPSHOT to be consistent in all the version across the project",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_32323ca8",
+        "filename": "samples/action/artifacts/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "can we use version 1.1.0-SNAPSHOT to be consistent in all the version across the project",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d2266868",
+        "filename": "samples/action/features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "can we use version 1.1.0-SNAPSHOT to be consistent in all the version across the project",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_f22b642e",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "I would prefix with nic here: odl-nic-action",
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_9220f04a",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b21dec11",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_521a5818",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_721754ee",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-21T15:30:36Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "917967df0b574685e9f79846a7dac11b0f20be97",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
