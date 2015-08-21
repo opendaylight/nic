@@ -222,4 +222,12 @@
     -->
 
     </module>
+
+    <!-- ODL license header checker, should match with what's in odlparent
+         please do not override unless you have a good documented reason to
+         not be following odlparent settings. -->
+   <module name="RegexpHeader">
+        <property name="severity" value="error"/>
+        <property name="headerFile" value="${checkstyle.header.file}"/>
+    </module>
 </module>
