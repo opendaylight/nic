@@ -42,6 +42,7 @@
         <module>intentengine-compiler</module>
         <module>gbp-renderer</module>
         <module>vtn-renderer</module>
+        <module>of-renderer</module>
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>

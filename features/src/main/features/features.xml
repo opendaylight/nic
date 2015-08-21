@@ -17,26 +17,34 @@
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
 
     <!-- Repository for GBP -->
-    <repository>mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features</repository>
+    <repository>
+        mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features
+    </repository>
 
     <!-- Core feature -->
-    <feature name='odl-nic-core' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core'>
+    <feature name='odl-nic-core' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: Core'>
         <feature version="${mdsal.version}">odl-restconf</feature>
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
+        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-impl/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-compiler/${project.version}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/88-intentengine-impl.xml">mvn:org.opendaylight.nic/intentengine-impl/${project.version}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/karaf/88-intentengine-impl.xml">
+            mvn:org.opendaylight.nic/intentengine-impl/${project.version}/xml/config
+        </configfile>
     </feature>
 
     <!-- CLI feature -->
-    <feature name='odl-nic-console' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: CLI'>
+    <feature name='odl-nic-console' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: CLI'>
         <feature version="${project.version}">odl-nic-core</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-cli/${project.version}</bundle>
         <!-- <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile> -->
     </feature>
 
-    <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
+    <feature name='odl-nic-renderer-vtn' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <!-- TODO: Add the following dependents after the wiring issue around sun.reflect is fixed -->
         <!-- <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature> -->
@@ -45,11 +53,26 @@
     </feature>
 
     <!-- GBP Renderer -->
-    <feature name='odl-nic-renderer-gbp' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
+    <feature name='odl-nic-renderer-gbp' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-ofoverlay</feature>
         <bundle>mvn:org.opendaylight.nic/gbp-renderer-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">
+            mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config
+        </configfile>
+    </feature>
+    <!-- OF Renderer -->
+    <feature name='odl-nic-renderer-of' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
+        <feature version="${project.version}">odl-nic-core</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
+        <bundle>mvn:org.opendaylight.nic/of-renderer/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
+            mvn:org.opendaylight.nic/of-renderer/${project.version}/xml/config
+        </configfile>
+
     </feature>
 </features>
