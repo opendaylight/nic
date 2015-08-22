@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_623f8326",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-22T17:44:01Z",
+      "side": 1,
+      "message": "you are only pulling OFP features, you need to add your bundle here:\n\n\u003cbundle\u003emvn:org.opendaylight.nic/of-renderer/${project.version}\u003c/bundle\u003e\n\nAlso you need to add your config file:\n\n\u003cconfigfile finalname\u003d\"etc/opendaylight/karaf/91-of-renderer.xml\"\u003emvn:org.opendaylight.nic/of-renderer/${project.version}/xml/config\u003c/configfile\u003e",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "846bc0febe78bbd5cd5677a7d55607461ed11e66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c2b537ce",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-22T17:44:01Z",
+      "side": 1,
+      "message": "I\u0027m surprised this is not in odl-nic-core feature. could you please move it there?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 70
+      },
+      "revId": "846bc0febe78bbd5cd5677a7d55607461ed11e66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c23a1736",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-22T17:44:01Z",
+      "side": 1,
+      "message": "you should use config-parent as parent as it\u0027s an implementation bundle:\n \u003cparent\u003e\n  \u003cgroupId\u003eorg.opendaylight.controller\u003c/groupId\u003e\n  \u003cartifactId\u003econfig-parent\u003c/artifactId\u003e\n  \u003cversion\u003e0.4.0-SNAPSHOT\u003c/version\u003e\n  \u003crelativePath /\u003e\n \u003c/parent\u003e",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "846bc0febe78bbd5cd5677a7d55607461ed11e66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_42d8471d",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-22T17:44:01Z",
+      "side": 1,
+      "message": "could you define a property holding this version?",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "846bc0febe78bbd5cd5677a7d55607461ed11e66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_e204f37f",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-22T17:44:01Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 45
+      },
+      "revId": "846bc0febe78bbd5cd5677a7d55607461ed11e66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c203f771",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-22T17:44:01Z",
+      "side": 1,
+      "message": "likewise - could be something like mdsal.version",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "846bc0febe78bbd5cd5677a7d55607461ed11e66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_42efe7b0",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-08-22T17:44:01Z",
+      "side": 1,
+      "message": "remove commented code",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "846bc0febe78bbd5cd5677a7d55607461ed11e66",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
