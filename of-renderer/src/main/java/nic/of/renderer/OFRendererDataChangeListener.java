@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
 package nic.of.renderer;
 
 import com.google.common.collect.Lists;
@@ -92,13 +99,16 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
     }
 
     // TODO: Refactor this part
-    private void pushL2Flow(NodeId nodeId, String dstMac, NodeConnectorId ingressNodeConnectorId, NodeConnectorId egressNodeConnectorId, org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action) {
+    private void pushL2Flow(NodeId nodeId, String dstMac,
+                            NodeConnectorId ingressNodeConnectorId, NodeConnectorId egressNodeConnectorId,
+                            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.
+                                    intent.actions.Action action) {
 
-    	/* Programming a flow involves:
-    	 * 1. Creating a Flow object that has a match and a list of instructions,
-    	 * 2. Adding Flow object as an augmentation to the Node object in the inventory.
-    	 * 3. FlowProgrammer module of OpenFlowPlugin will pick up this data change and eventually program the switch.
-    	 */
+        /* Programming a flow involves:
+             * 1. Creating a Flow object that has a match and a list of instructions,
+             * 2. Adding Flow object as an augmentation to the Node object in the inventory.
+             * 3. FlowProgrammer module of OpenFlowPlugin picks up this data change and eventually program the switch.
+        */
 
         //Creating match object
         MatchBuilder matchBuilder = new MatchBuilder();
@@ -170,17 +180,18 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
                 .child(Table.class, new TableKey(flowBuilder.getTableId()))
                 .child(Flow.class, flowBuilder.getKey())
                 .build();
-        GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build(), true);
+        GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION,
+                flowIID, flowBuilder.build(), true);
     }
 
-//    private void update(Map<InstanceIdentifier<?>, DataObject> changes) {
+    //    private void update(Map<InstanceIdentifier<?>, DataObject> changes) {
 //
 //    }
 //
 //    private void delete(Map<InstanceIdentifier<?>, DataObject> changes) {
 //
 //    }
-        @Override
+    @Override
     public void close() throws Exception {
 
     }

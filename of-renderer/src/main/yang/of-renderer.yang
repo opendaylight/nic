@@ -1,16 +1,7 @@
-/*
- * Copyright (c) 2015 NEC Corporation
- * All rights reserved.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this
- * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
- */
-
 module of-renderer {
     main.yang-version 1;
     namespace "urn:opendaylight:nic:of:renderer";
-    prefix of-renderer;
+    prefix "of-renderer";
 
     import config { prefix config; revision-date 2013-04-05; }
     import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
@@ -18,10 +9,7 @@ module of-renderer {
 
     description
       "This module contains the base YANG definition for the OpenFlow Renderer
-       implementation";
-
-        description "Initial revision.";
-    }
+       implementation.";
 
     revision 2015-08-19 {
         description "Initial revision.";
@@ -32,7 +20,7 @@ module of-renderer {
                 base config:module-type;
 
                 // Specifies the prefix for generated java classes.
-                config:java-name-prefix OFRenderer;
+                config:java-name-prefix OFRendererProvider;
         }
 
         // Augments the 'configuration' choice node under modules/module.
@@ -44,29 +32,11 @@ module of-renderer {
                 container data-broker {
                     uses config:service-ref {
                         refine type {
-                            mandatory true;
+                            mandatory false;
                             config:required-identity mdsal:binding-async-data-broker;
                         }
                     }
                 }
-/*  Dont need this for now
-                container notification-service {
-                    uses config:service-ref {
-                      refine type {
-                        mandatory false;
-                        config:required-identity mdsal:binding-notification-service;
-                      }
-                   }
-                }
-                container rpc-registry {
-                    uses config:service-ref {
-                        refine type {
-                            mandatory true;
-                            config:required-identity mdsal:binding-rpc-registry;
-                        }
-                    }
-                }
-*/
             }
         }
 

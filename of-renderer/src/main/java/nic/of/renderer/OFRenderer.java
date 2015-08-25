@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
 package nic.of.renderer;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -10,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by saket on 8/19/15.
  */
-public class OFRenderer implements AutoCloseable{
+public class OFRenderer implements AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(OFRenderer.class);
 
     private DataBroker dataBroker;
