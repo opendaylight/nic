@@ -1,14 +1,26 @@
+/*
+ * Copyright (c) 2015 HP and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
 package nic.of.renderer;
 
-import com.google.common.collect.Lists;
+import java.util.List;
+import java.util.Map;
+
 import nic.of.renderer.utils.GenericTransactionUtils;
 import nic.of.renderer.utils.MatchUtils;
+
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.DropActionCase;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.DropActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.output.action._case.OutputActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
@@ -21,6 +33,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.ta
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.service.rev130819.AddFlowInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.InstructionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.instruction.ApplyActionsCaseBuilder;
@@ -43,8 +56,7 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Map;
+import com.google.common.collect.Lists;
 
 /**
  * Created by saket on 8/19/15.
@@ -90,7 +102,8 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
             }
         }
     }
-
+    
+   
     // TODO: Refactor this part
     private void pushL2Flow(NodeId nodeId, String dstMac, NodeConnectorId ingressNodeConnectorId, NodeConnectorId egressNodeConnectorId, org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action) {
 
@@ -131,6 +144,8 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
 //            ab.setAction(new OutputActionCaseBuilder().setOutputAction(output.build()).build());
             // TODO : Resume here
             // ab.setAction();
+        	DropActionCase dropAction = new DropActionCaseBuilder().build();
+        	ab.setAction(dropAction);
             ab.setOrder(0);
             ab.setKey(new ActionKey(0));
             actionList.add(ab.build());

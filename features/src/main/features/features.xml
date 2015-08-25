@@ -26,6 +26,7 @@
              description='OpenDaylight :: Network Intent Composition :: Core'>
         <feature version="${mdsal.version}">odl-restconf</feature>
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
+        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-impl/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-compiler/${project.version}</bundle>
@@ -63,11 +64,15 @@
         </configfile>
     </feature>
     <!-- OF Renderer -->
-    <feature name='odl-nic-renderer-of' version='${project.version}'
+    <feature name='odl-nic-of-renderer' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+        <bundle>mvn:org.opendaylight.nic/of-renderer/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
+            mvn:org.opendaylight.nic/of-renderer/${project.version}/xml/config
+        </configfile>
     </feature>
 </features>

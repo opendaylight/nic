@@ -56,6 +56,15 @@
    <scope>runtime</scope>
    <type>xml</type>
   </dependency>
+  
+  <!-- <dependency>
+   <groupId>org.opendaylight.of-renderer</groupId>
+   <artifactId>of-renderer</artifactId>
+   <version>1.1.0-SNAPSHOT</version>
+   <classifier>features</classifier>
+   <scope>runtime</scope>
+   <type>xml</type>
+  </dependency> --> 
 
   <dependency>
    <groupId>org.opendaylight.groupbasedpolicy</groupId>

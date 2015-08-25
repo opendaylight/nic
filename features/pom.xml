@@ -87,6 +87,13 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
+     <dependency>
+      <groupId>org.opendaylight.openflowplugin</groupId>
+      <artifactId>features-openflowplugin</artifactId>
+      <version>${openflowplugin.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -135,6 +142,18 @@
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>gbp-renderer-api</artifactId>
       <version>${project.version}</version>
+    </dependency>
+     <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>of-renderer</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+     <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>of-renderer</artifactId>
+      <version>${project.version}</version>
+       <classifier>config</classifier>
+      <type>xml</type>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
