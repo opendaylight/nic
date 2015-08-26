@@ -16,6 +16,8 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.DropActionCase;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.DropActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.output.action._case.OutputActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
@@ -36,9 +38,13 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instru
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.InstructionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.InstructionKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
@@ -50,6 +56,7 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +68,8 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
 
     private DataBroker dataBroker;
     private ListenerRegistration<DataChangeListener> ofRendererListener = null;
+    private static final int  NUM_OF_SUPPORTED_EPG = 2;
+    private static final int NUM_OF_SUPPORTED_ACTION = 1;
 
     public OFRendererDataChangeListener(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
@@ -68,12 +77,32 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
         ofRendererListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.CONFIGURATION,
                 InstanceIdentifier.builder(Intents.class)
-                        .child(Intent.class)
+                        .child(Intent.cla
                         .build(), this, AsyncDataBroker.DataChangeScope.SUBTREE);
+    }
+
+    // TODO: Move this to some common NIC utils
+    private boolean verifyIntent(Intent intent) {
+        if (intent.getId() == null) {
+            LOG.warn("Intent ID is not specified {}", intent);
+            return false;
+        }
+        if (intent.getActions() == null || intent.getActions().size() > NUM_OF_SUPPORTED_ACTION) {
+            LOG.warn("Intent's action is either null or there is more than {} action {}"
+                    , NUM_OF_SUPPORTED_ACTION, intent);
+            return false;
+        }
+        if (intent.getSubjects() == null || intent.getSubjects().size() > NUM_OF_SUPPORTED_EPG) {
+            LOG.warn("Intent's subjects is either null or there is more than {} subjects {}"
+                    , NUM_OF_SUPPORTED_EPG, intent);
+            return false;
+        }
+        return true;
     }
 
     @Override
     public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> asyncDataChangeEvent) {
+        LOG.info("Intent tree changed");
         create(asyncDataChangeEvent.getCreatedData());
 //        update(asyncDataChangeEvent.getUpdatedData());
 //        delete(asyncDataChangeEvent);
@@ -81,21 +110,52 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
 
     private void create(Map<InstanceIdentifier<?>, DataObject> changes) {
         for (Map.Entry<InstanceIdentifier<?>, DataObject> created : changes.entrySet()) {
-
             if (created.getValue() != null && created.getValue() instanceof Intent) {
-
                 Intent intent = (Intent) created.getValue();
-
-                LOG.info("Intent created with id {}.", intent);
-
-                // TODO: Use Mapping service to resolve the subjects
-                // TODO: Extend to support other actions
-                org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action actionContainer =
-                        (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action)
-                                intent.getActions().get(0).getAction();
-                // TODO: Push the flow
+                LOG.info("Creating intent with id {}.", intent);
+                if (!verifyIntent(intent)) {
+                    LOG.info("Intent verification failed");
+                    return;
+                }
+                parseIntent(intent);
             }
         }
+    }
+
+    // TODO: Move this to some common NIC utils
+    private void parseIntent(Intent intent) {
+        // Retrieve the ID
+        Uuid uuid = intent.getId();
+        String intentID = uuid.getValue();
+
+        // TODO: Use Mapping service to resolve the subjects
+        // Retrieve the end points
+        List<Subjects> listSubjects = intent.getSubjects();
+        List<String> endPointGroups = new ArrayList<String>();
+        for (Subjects subjects: listSubjects) {
+            Subject subject = subjects.getSubject();
+            if (!(subject instanceof EndPointGroup)) {
+                LOG.info("Subject is not specified: {}", intentID);
+                return;
+            }
+            EndPointGroup endPointGroup = (EndPointGroup) subject;
+
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
+                    .EndPointGroup epg = endPointGroup.getEndPointGroup();
+            if (epg == null) {
+                LOG.info("End Point Group is not specified: {}", intentID);
+                return;
+            }
+            endPointGroups.add(epg.getName());
+        }
+        String endPointSrc = endPointGroups.get(0);
+        String endPointDst = endPointGroups.get(1);
+
+        // TODO: Extend to support other actions
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action actionContainer =
+                (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action)
+                        intent.getActions().get(0).getAction();
+        // TODO: Push the flow
     }
 
     // TODO: Refactor this part
@@ -134,13 +194,13 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
             actionList.add(ab.build());
         } else if (action instanceof Block) {
             // Set block action
-//            DropActionBuilder block = new DropActionBuilder();
 //            OutputActionBuilder output = new OutputActionBuilder()
 //            output.setOutputNodeConnector(egressNodeConnectorId);
 //            output.setMaxLength(65535); //Send full packet and No buffer
 //            ab.setAction(new OutputActionCaseBuilder().setOutputAction(output.build()).build());
             // TODO : Resume here
-            // ab.setAction();
+            DropActionCase dropActionCase = new DropActionCaseBuilder().build();
+            ab.setAction(dropActionCase);
             ab.setOrder(0);
             ab.setKey(new ActionKey(0));
             actionList.add(ab.build());

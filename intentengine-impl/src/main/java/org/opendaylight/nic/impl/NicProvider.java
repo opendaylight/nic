@@ -147,7 +147,7 @@ public class NicProvider implements NicConsoleProvider {
             return false;
         }
 
-        LOG.info("initIntentsConfiguration: default config populated: {}", intents);
+        LOG.info("initIntentsConfiguration: config populated: {}", intents);
         return true;
     }
 
