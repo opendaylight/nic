@@ -10,8 +10,12 @@ package org.opendaylight.nic.compiler.api;
 
 import java.util.Set;
 
+import org.opendaylight.nic.compiler.Epg;
+
 public interface Policy {
-    Set<Endpoint> src();
-    Set<Endpoint> dst();
+    Epg src();
+
+    Epg dst();
+
     Set<Action> action();
 }
