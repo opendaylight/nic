@@ -28,5 +28,5 @@ public interface NicConsoleProvider extends AutoCloseable {
 
     Intent getIntent(Uuid id);
 
-    String compile();
+    public String compile(boolean showGraph);
 }
