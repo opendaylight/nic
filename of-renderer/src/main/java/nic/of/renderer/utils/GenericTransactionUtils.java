@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
 package nic.of.renderer.utils;
 
 import com.google.common.base.Optional;
@@ -18,8 +25,9 @@ import java.util.concurrent.ExecutionException;
 public final class GenericTransactionUtils {
     static final Logger logger = LoggerFactory.getLogger(GenericTransactionUtils.class);
 
-    public static <T extends DataObject> boolean writeData(DataBroker dataBroker, LogicalDatastoreType logicalDatastoreType,
-    		InstanceIdentifier<T> iid, T dataObject, boolean isAdd) {
+    public static <T extends DataObject> boolean writeData(
+              DataBroker dataBroker, LogicalDatastoreType logicalDatastoreType,
+              InstanceIdentifier<T> iid, T dataObject, boolean isAdd) {
         Preconditions.checkNotNull(dataBroker);
         WriteTransaction modification = dataBroker.newWriteOnlyTransaction();
         if (isAdd) {
@@ -28,8 +36,7 @@ public final class GenericTransactionUtils {
                 return false;
             }
             modification.merge(logicalDatastoreType, iid, dataObject, true /*createMissingParents*/);
-        }
-        else {
+        } else {
             modification.delete(LogicalDatastoreType.CONFIGURATION, iid);
         }
         CheckedFuture<Void, TransactionCommitFailedException> commitFuture = modification.submit();
@@ -38,13 +45,15 @@ public final class GenericTransactionUtils {
             logger.debug("Transaction success for {} of object {}", (isAdd) ? "add" : "delete", dataObject);
             return true;
         } catch (Exception e) {
-            logger.error("Transaction failed with error {} for {} of object {}", e.getMessage(), (isAdd) ? "add" : "delete", dataObject);
+            logger.error("Transaction failed with error {} for {} of object {}",
+                    e.getMessage(), (isAdd) ? "add" : "delete", dataObject);
             modification.cancel();
             return false;
         }
     }
 
-    public static <T extends DataObject> T readData(DataBroker dataBroker, LogicalDatastoreType dataStoreType, InstanceIdentifier<T> iid) {
+    public static <T extends DataObject> T readData(DataBroker dataBroker,
+                                                    LogicalDatastoreType dataStoreType, InstanceIdentifier<T> iid) {
         Preconditions.checkNotNull(dataBroker);
         ReadOnlyTransaction readTransaction = dataBroker.newReadOnlyTransaction();
         try {

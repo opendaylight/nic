@@ -1,12 +1,10 @@
 /*
- * Copyright (C) 2013 Red Hat, Inc.
+ * Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
- *
  */
-
 package nic.of.renderer.utils;
 
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Prefix;
@@ -19,7 +17,15 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.VlanId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetDestinationBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetSourceBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetTypeBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.*;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.VlanMatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFieldsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TunnelBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.IpMatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.MetadataBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TcpFlagMatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.Icmpv4MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.ArpMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv4MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._4.match.TcpMatchBuilder;
@@ -29,6 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
+
+//import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.*;
 
 public class MatchUtils {
     private static final Logger logger = LoggerFactory.getLogger(MatchUtils.class);
@@ -96,14 +104,14 @@ public class MatchUtils {
      * Create Ethernet Source Match
      *
      * @param matchBuilder MatchBuilder Object without a match yet
-     * @param sMacAddr     String representing a source MAC
+     * @param srcMac     String representing a source MAC
      * @return matchBuilder Map MatchBuilder Object with a match
      */
-    public static MatchBuilder createEthSrcMatch(MatchBuilder matchBuilder, MacAddress sMacAddr) {
+    public static MatchBuilder createEthSrcMatch(MatchBuilder matchBuilder, MacAddress srcMac) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetSourceBuilder ethSourceBuilder = new EthernetSourceBuilder();
-        ethSourceBuilder.setAddress(new MacAddress(sMacAddr));
+        ethSourceBuilder.setAddress(new MacAddress(srcMac));
         ethernetMatch.setEthernetSource(ethSourceBuilder.build());
         matchBuilder.setEthernetMatch(ethernetMatch.build());
 
@@ -151,7 +159,7 @@ public class MatchUtils {
 
         ProtocolMatchFieldsBuilder matchFieldsBuilder = new ProtocolMatchFieldsBuilder()
                     .setMplsLabel(label)
-                    .setMplsBos((short) (bos?1:0));
+                    .setMplsBos((short) (bos ? 1 : 0));
         matchBuilder.setProtocolMatchFields(matchFieldsBuilder.build());
         return matchBuilder;
     }
@@ -160,14 +168,14 @@ public class MatchUtils {
      * Create Ethernet Destination Match
      *
      * @param matchBuilder MatchBuilder Object without a match yet
-     * @param dMacAddr     String representing a destination MAC
+     * @param dstMac     String representing a destination MAC
      * @return matchBuilder Map MatchBuilder Object with a match
      */
-    public static MatchBuilder createEthDstMatch(MatchBuilder matchBuilder, MacAddress dMacAddr, MacAddress mask) {
+    public static MatchBuilder createEthDstMatch(MatchBuilder matchBuilder, MacAddress dstMac, MacAddress mask) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetDestinationBuilder ethDestinationBuilder = new EthernetDestinationBuilder();
-        ethDestinationBuilder.setAddress(new MacAddress(dMacAddr));
+        ethDestinationBuilder.setAddress(new MacAddress(dstMac));
         if (mask != null) {
             ethDestinationBuilder.setMask(mask);
         }
@@ -427,7 +435,8 @@ public class MatchUtils {
     /**
      * @return MatchBuilder containing the metadata match values
      */
-    public static MatchBuilder createMetadataMatch(MatchBuilder matchBuilder, BigInteger metaData,  BigInteger metaDataMask) {
+    public static MatchBuilder createMetadataMatch(MatchBuilder matchBuilder,
+                                                   BigInteger metaData,  BigInteger metaDataMask) {
 
         // metadata matchbuilder
         MetadataBuilder metadata = new MetadataBuilder();
@@ -459,11 +468,9 @@ public class MatchUtils {
         IpMatchBuilder ipMmatch = new IpMatchBuilder();
         if (ipProtocol == TCP_SHORT) {
             ipMmatch.setIpProtocol(TCP_SHORT);
-        }
-        else if (ipProtocol == UDP_SHORT) {
+        } else if (ipProtocol == UDP_SHORT) {
             ipMmatch.setIpProtocol(UDP_SHORT);
-        }
-        else if (ipProtocol == ICMP_SHORT) {
+        } else if (ipProtocol == ICMP_SHORT) {
             ipMmatch.setIpProtocol(ICMP_SHORT);
         }
         matchBuilder.setIpMatch(ipMmatch.build());
@@ -654,17 +661,17 @@ public class MatchUtils {
      * Create dmac ip tcp syn match.
      *
      * @param matchBuilder the match builder
-     * @param dMacAddr the d mac addr
+     * @param dstMac the d mac addr
      * @param mask the mask
      * @param ipPrefix the ip prefix
      * @return MatchBuilder containing the metadata match values
      */
     public static MatchBuilder createDmacIpTcpSynMatch(MatchBuilder matchBuilder,
-            MacAddress dMacAddr, MacAddress mask, Ipv4Prefix ipPrefix) {
+            MacAddress dstMac, MacAddress mask, Ipv4Prefix ipPrefix) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetDestinationBuilder ethDestBuilder = new EthernetDestinationBuilder();
-        ethDestBuilder.setAddress(new MacAddress(dMacAddr));
+        ethDestBuilder.setAddress(new MacAddress(dstMac));
         if (mask != null) {
             ethDestBuilder.setMask(mask);
         }
@@ -786,17 +793,17 @@ public class MatchUtils {
      * Create smac ip tcp syn match.
      *
      * @param matchBuilder the match builder
-     * @param dMacAddr the d mac addr
+     * @param dstMac the d mac addr
      * @param mask the mask
      * @param ipPrefix the ip prefix
      * @return MatchBuilder containing the metadata match values
      */
-    public static MatchBuilder createSmacIpTcpSynMatch(MatchBuilder matchBuilder, MacAddress dMacAddr,
+    public static MatchBuilder createSmacIpTcpSynMatch(MatchBuilder matchBuilder, MacAddress dstMac,
             MacAddress mask, Ipv4Prefix ipPrefix) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetSourceBuilder ethSrcBuilder = new EthernetSourceBuilder();
-        ethSrcBuilder.setAddress(new MacAddress(dMacAddr));
+        ethSrcBuilder.setAddress(new MacAddress(dstMac));
         if (mask != null) {
             ethSrcBuilder.setMask(mask);
         }
@@ -875,11 +882,11 @@ public class MatchUtils {
      * @return MatchBuilder containing the metadata match values
      */
     public static MatchBuilder createMacSrcIpTcpSynMatch(MatchBuilder matchBuilder,
-            MacAddress dMacAddr,  MacAddress mask, Ipv4Prefix ipPrefix) {
+            MacAddress dstMac,  MacAddress mask, Ipv4Prefix ipPrefix) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetDestinationBuilder ethDestinationBuilder = new EthernetDestinationBuilder();
-        ethDestinationBuilder.setAddress(new MacAddress(dMacAddr));
+        ethDestinationBuilder.setAddress(new MacAddress(dstMac));
         if (mask != null) {
             ethDestinationBuilder.setMask(mask);
         }
@@ -915,18 +922,21 @@ public class MatchUtils {
                                               MacAddress dstMac,
                                               Long etherType) {
         EthernetMatchBuilder emb = new  EthernetMatchBuilder();
-        if (srcMac != null)
+        if (srcMac != null) {
             emb.setEthernetSource(new EthernetSourceBuilder()
-                .setAddress(srcMac)
-                .build());
-        if (dstMac != null)
+                    .setAddress(srcMac)
+                    .build());
+        }
+        if (dstMac != null) {
             emb.setEthernetDestination(new EthernetDestinationBuilder()
-                .setAddress(dstMac)
-                .build());
-        if (etherType != null)
+                    .setAddress(dstMac)
+                    .build());
+        }
+        if (etherType != null) {
             emb.setEthernetType(new EthernetTypeBuilder()
-                .setType(new EtherType(etherType))
-                .build());
+                    .setType(new EtherType(etherType))
+                    .build());
+        }
         return emb.build();
     }
 }

@@ -9,29 +9,12 @@
                         nic:of-renderer
                     </type>
                     <name>of-renderer</name>
-
-                    <!--
-                    <notification-service>
-                        <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
-                            binding:binding-notification-service
-                        </type>
-                        <name>binding-notification-broker</name>
-                    </notification-service>
-                    -->
                     <data-broker>
                         <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
                             binding:binding-async-data-broker
                         </type>
                         <name>binding-data-broker</name>
                     </data-broker>
-                    <!--
-                    <rpc-registry>
-                        <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
-                            binding:binding-rpc-registry
-                        </type>
-                        <name>binding-rpc-broker</name>
-                    </rpc-registry>
-                    -->
                 </module>
             </modules>
         </data>
