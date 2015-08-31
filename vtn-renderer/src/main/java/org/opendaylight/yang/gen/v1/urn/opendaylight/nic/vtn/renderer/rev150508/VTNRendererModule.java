@@ -1,22 +1,21 @@
-/*
- * Copyright (c) 2015 NEC Corporation
- * All rights reserved.
+/**
+ * Copyright (c) 2015 NEC Corporation and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this
- * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.vtn.renderer.rev150508;
 
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.vtn.renderer.VTNRenderer;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.vtn.renderer.rev150508.AbstractVTNRendererModule {
+
+    private static final Logger LOG = LoggerFactory.getLogger(VTNRendererModule.class);
+
     public VTNRendererModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
     }
@@ -32,14 +31,8 @@ public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
 
     @Override
     public java.lang.AutoCloseable createInstance() {
-        DataBroker broker = getDataBrokerDependency();
-
-        LogicalDatastoreType store = LogicalDatastoreType.CONFIGURATION;
-        InstanceIdentifier<Intents> path = InstanceIdentifier.builder(Intents.class).build();
-        VTNRenderer renderer = new VTNRenderer();
-        DataChangeScope scope = DataChangeScope.SUBTREE;
-        broker.registerDataChangeListener(store, path, renderer, scope);
-
+        LOG.info("VTN Renderer createInstance()");
+        final VTNRenderer renderer = new VTNRenderer(getDataBrokerDependency());
         return renderer;
     }
 }
