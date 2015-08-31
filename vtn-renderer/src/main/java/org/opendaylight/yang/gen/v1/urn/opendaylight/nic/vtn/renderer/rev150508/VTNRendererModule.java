@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 NEC Corporation
- * All rights reserved.
+ * Copyright (c) 2015 NEC Corporation All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this
@@ -33,13 +32,12 @@ public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
     @Override
     public java.lang.AutoCloseable createInstance() {
         DataBroker broker = getDataBrokerDependency();
-
+        
         LogicalDatastoreType store = LogicalDatastoreType.CONFIGURATION;
         InstanceIdentifier<Intents> path = InstanceIdentifier.builder(Intents.class).build();
-        VTNRenderer renderer = new VTNRenderer();
+        VTNRenderer renderer = new VTNRenderer(broker);
         DataChangeScope scope = DataChangeScope.SUBTREE;
         broker.registerDataChangeListener(store, path, renderer, scope);
-
         return renderer;
     }
 }
