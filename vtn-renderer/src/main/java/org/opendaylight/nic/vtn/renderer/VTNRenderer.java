@@ -9,16 +9,18 @@
 package org.opendaylight.nic.vtn.renderer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
+import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
@@ -29,6 +31,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
@@ -40,7 +43,9 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
     private static final Logger LOG = LoggerFactory
             .getLogger(VTNRenderer.class);
 
-    VTNIntentParser renderer = new VTNIntentParser();
+    private VTNIntentParser vtnIntentParser;
+
+    private VTNRendererUtility vtnRendererUtility;
 
     /**
      * The number of supported actions by VTN Renderer.
@@ -62,62 +67,78 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      */
     private static final int  INDEX_OF_DST_END_POINT_GROUP = 1;
 
+    private DataBroker dataProvider;
+
+    private ListenerRegistration<DataChangeListener> vtnRendererListener = null;
+
+    public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
+
+    public VTNRenderer(DataBroker dataBroker) {
+        this.dataProvider = dataBroker;
+        this.vtnRendererUtility = new VTNRendererUtility(dataProvider);
+        this.vtnIntentParser = new VTNIntentParser(dataProvider);
+        vtnRendererListener = dataBroker.registerDataChangeListener(
+                LogicalDatastoreType.CONFIGURATION,
+                INTENTS_IID, this, DataChangeScope.SUBTREE);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void close() throws Exception {
+        LOG.info("VTNRendererListener closed.");
+        if (vtnRendererListener != null) {
+            vtnRendererListener.close();
+        }
     }
 
     /**
      * This method is called on intent data requests.
      */
+    @Override
     public void onDataChanged(
-            AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
+            final AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
         LOG.info("Intent configuration changed.");
 
         for (DataObject dao: ev.getCreatedData().values()) {
             LOG.trace("A new data object is created: {}", dao);
-
             if (dao instanceof Intent) {
                 Intent intent = (Intent) dao;
                 LOG.debug("A new intent is created: {}", intent.getId());
                 intentParser(intent);
             }
         }
-
         for (DataObject dao: ev.getUpdatedData().values()) {
             LOG.trace("A data object is updated: {}", dao);
-
             if (dao instanceof Intent) {
                 Intent intent = (Intent) dao;
                 LOG.debug("An intent is updated: {}", intent.getId());
                 intentParser(intent);
             }
         }
-
         Map<InstanceIdentifier<?>, DataObject> originalDataObject = ev.getOriginalData();
         Set<InstanceIdentifier<?>> iiD = ev.getRemovedPaths();
-        for (InstanceIdentifier instanceIdentifier : iiD) {
+        for (InstanceIdentifier<?> instanceIdentifier : iiD) {
             try {
                 if (originalDataObject.get(instanceIdentifier) instanceof Intent) {
                     Intent lclIntent = (Intent) originalDataObject.get(instanceIdentifier);
                     IntentKey lclIntentKey = (IntentKey) lclIntent.getKey();
                     Uuid uuid = (Uuid) lclIntentKey.getId();
                     LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
-                    renderer.delete(uuid.getValue());
+                    String encodeUUID = vtnRendererUtility.encodeUUID(uuid.getValue());
+                    vtnIntentParser.delete(encodeUUID);
                 }
             } catch (Exception e) {
                 LOG.error("Could not delete VTN Renderer :{} ", e);
             }
         }
-
     }
 
     /**
      * This method parse the intent and calls the VTN renderer
      *
-     * @param intent
+     * @param intent the intent instance.
      */
     private void intentParser(Intent intent) {
         // Retrieve the ID.
@@ -127,11 +148,10 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             return;
         }
         String intentID = uuid.getValue();
-
         // Retrieve the end points.
-        List<Subjects> listSubjects = intent.getSubjects();
+        final List<Subjects> listSubjects = intent.getSubjects();
         if (listSubjects == null) {
-            LOG.info("Subjects are not specified: {}", intentID);
+            LOG.warn("Subjects are not specified: {}", intentID);
             return;
         } else if (listSubjects.size() != NUM_OF_SUPPORTED_EPG) {
             LOG.warn("VTN Renderer supports only two end point groups per Intent: {}", intentID);
@@ -156,9 +176,8 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         }
         String endPointSrc = endPointGroups.get(INDEX_OF_SRC_END_POINT_GROUP);
         String endPointDst = endPointGroups.get(INDEX_OF_DST_END_POINT_GROUP);
-
         // Retrieve the action.
-        List<Actions> listActions = intent.getActions();
+        final List<Actions> listActions = intent.getActions();
         if (listActions == null) {
             LOG.info("Actions are not specified: {}", intentID);
             return;
@@ -167,7 +186,6 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             return;
         }
         Action action = listActions.get(0).getAction();
-
         // Get the type of the action.
         String actionType;
         if (action instanceof Allow) {
@@ -178,27 +196,22 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             LOG.warn("VTN Renderer supports only allow or block: {}", intentID);
             return;
         }
-
+        // get the encode UUID value
+        String encodeUUID = vtnRendererUtility.encodeUUID(intentID);
         // Convert the intent to VTN configuration.
-        List<IntentWrapper> intentList = new ArrayList<IntentWrapper>();
-        if (hasRendered(intentID)) {
-            renderer.updateRendering(endPointSrc, endPointDst, actionType, intentList, intentID);
+        if (hasRendered(encodeUUID)) {
+            vtnIntentParser.updateRendering(endPointSrc, endPointDst, actionType, intentID, encodeUUID, intent);
         } else {
-            renderer.rendering(endPointSrc, endPointDst, actionType, intentList);
+            vtnIntentParser.rendering(endPointSrc, endPointDst, actionType, encodeUUID, intent);
         }
-
-        // Store the VTN configuration for the intent.
-        Map intentMap = new HashMap<String, List<IntentWrapper>>();
-        intentMap.put(intentID, intentList);
-        VTNRendererUtility.storeIntentDetail(intentMap);
     }
 
     /**
      * Return {@code true} if it has already rendered the specified intent.
      *
-     * @param intentId  The ID of the intent
+     * @param intentId  the intent ID.
      */
     private boolean hasRendered(String intentId) {
-        return VTNRendererUtility.containsIntent(intentId);
+        return vtnIntentParser.containsIntentID(intentId);
     }
 }
