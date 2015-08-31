@@ -1,10 +1,9 @@
-/*
- * Copyright (c) 2015 NEC Corporation
- * All rights reserved.
+/**
+ * Copyright (c) 2015 NEC Corporation and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this
- * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
 package org.opendaylight.nic.vtn.renderer;
@@ -25,8 +24,15 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.junit.Test;
 
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
+
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
@@ -42,6 +48,8 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 /**
  * Unit test class for {@link VTNRenderer}.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(VTNRenderer.class)
 public class VTNRendererTest {
     /**
      * Valid Intent IDs used for testing different scenarios.
@@ -79,15 +87,26 @@ public class VTNRendererTest {
     private AsyncDataChangeEvent asyncDataChangeEvent;
 
     /**
+     * DataBroker object reference for unit testing.
+     */
+    private DataBroker dataBroker;
+
+    /**
+     * VTNIntentParser object reference for unit testing.
+     */
+    private VTNIntentParser mockVTNIntentParser;
+
+    /**
      * This method creates the required objects to perform unit testing.
      */
     @Before
     public void setUp() throws Exception {
-        vtnRendererObj = spy(new VTNRenderer());
-        vtnRendererObj.renderer = spy(vtnRendererObj.renderer);
+        dataBroker = mock(DataBroker.class);
+        vtnRendererObj = PowerMockito.spy(new VTNRenderer(dataBroker));
+        mockVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker));
+        Whitebox.setInternalState(vtnRendererObj, "intentParser", mockVTNIntentParser);
         asyncDataChangeEvent = mock(AsyncDataChangeEvent.class);
         dataMap = new HashMap<InstanceIdentifier, Intent>();
-
         when(asyncDataChangeEvent.getCreatedData()).thenReturn(dataMap);
         when(asyncDataChangeEvent.getUpdatedData()).thenReturn(dataMap);
         intentKey = mock(IntentKey.class);
@@ -136,7 +155,6 @@ public class VTNRendererTest {
         final Set<InstanceIdentifier> dataSet = new HashSet<InstanceIdentifier>();
         dataSet.add(instanceIdentifier);
         dataSet.add(null);
-
         when(asyncDataChangeEvent.getOriginalData()).thenReturn(dataMap);
         when(asyncDataChangeEvent.getRemovedPaths()).thenReturn(dataSet);
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
@@ -148,7 +166,7 @@ public class VTNRendererTest {
         verify(asyncDataChangeEvent).getUpdatedData();
         verify(asyncDataChangeEvent).getOriginalData();
         verify(asyncDataChangeEvent).getRemovedPaths();
-        verify(vtnRendererObj.renderer).delete(anyString());
+        verify(mockVTNIntentParser).delete(anyString(), isA(List.class), isA(Uuid.class));
     }
 
     /**
@@ -160,7 +178,6 @@ public class VTNRendererTest {
         final Uuid uuid = mock(Uuid.class);
         final Subjects subjects = mock(Subjects.class);
         final List<Subjects> subjectsList = new ArrayList<Subjects>();
-
         when(uuid.getValue()).thenReturn(UUID_VALUE);
         when(intent.getId()).thenReturn(uuid);
         subjectsList.add(subjects);
@@ -198,17 +215,14 @@ public class VTNRendererTest {
         final List<Subjects> subjectsList = new ArrayList<Subjects>();
         final Uuid  uuid  = mock(Uuid.class);
         final EndPointGroup endPointGroup = mock(EndPointGroup.class);
-
         when(uuid.getValue()).thenReturn(UUID_VALUE);
         when(intent.getId()).thenReturn(uuid);
         Subjects subjects = mock(Subjects.class);
         subjectsList.add(subjects);
         subjectsList.add(subjects);
-
         when(endPointGroup.getEndPointGroup()).thenReturn(null,
                 mock(org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.
                 intent.subjects.subject.end.point.group.EndPointGroup.class));
-
         when(subjects.getSubject()).thenReturn(null, mock(Subject.class), endPointGroup);
         when(intent.getSubjects()).thenReturn(subjectsList);
         /**
@@ -241,7 +255,6 @@ public class VTNRendererTest {
         final List<Actions> emptyList = new ArrayList<Actions>();
         final List<Actions> listActions = new ArrayList<Actions>();
         final Actions actions = mock(Actions.class);
-
         when(uuid.getValue()).thenReturn(UUID_VALUE);
         when(intent.getId()).thenReturn(uuid);
         subjectsList.add(subjects);
@@ -260,11 +273,12 @@ public class VTNRendererTest {
          */
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(vtnRendererObj.renderer).updateRendering(anyString(),
+        verify(mockVTNIntentParser).updateRendering(anyString(),
+                anyString(), anyString(), isA(List.class),
+                anyString(), isA(List.class));
+        verify(mockVTNIntentParser).rendering(anyString(),
                 anyString(), anyString(), isA(List.class),
                 anyString());
-        verify(vtnRendererObj.renderer).rendering(anyString(),
-                anyString(), anyString(), isA(List.class));
         /**
          * Verifying vtnRenderer object invoking rendering and updateRendering methods
          * when getAction() returns null, Allow and Block object.
@@ -272,11 +286,11 @@ public class VTNRendererTest {
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(vtnRendererObj.renderer).updateRendering(anyString(),
+        verify(mockVTNIntentParser).updateRendering(anyString(),
+                anyString(), anyString(), isA(List.class),
+                anyString(), isA(List.class));
+        verify(mockVTNIntentParser).rendering(anyString(),
                 anyString(), anyString(), isA(List.class),
                 anyString());
-        verify(vtnRendererObj.renderer).rendering(anyString(),
-                anyString(), anyString(), isA(List.class));
     }
-
 }
