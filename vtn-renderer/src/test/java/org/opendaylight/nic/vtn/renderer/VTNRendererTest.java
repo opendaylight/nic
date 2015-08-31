@@ -1,10 +1,9 @@
-/*
- * Copyright (c) 2015 NEC Corporation
- * All rights reserved.
+/**
+ * Copyright (c) 2015 NEC Corporation and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this
- * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
 package org.opendaylight.nic.vtn.renderer;
@@ -17,6 +16,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,6 +30,8 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.reflect.Whitebox;
 
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
@@ -42,6 +48,8 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 /**
  * Unit test class for {@link VTNRenderer}.
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(VTNRenderer.class)
 public class VTNRendererTest {
     /**
      * Valid Intent IDs used for testing different scenarios.
@@ -78,20 +86,25 @@ public class VTNRendererTest {
      */
     private AsyncDataChangeEvent asyncDataChangeEvent;
 
+    private VTNIntentParser mockVTNIntentParser;
+
     /**
      * This method creates the required objects to perform unit testing.
      */
     @Before
     public void setUp() throws Exception {
-        vtnRendererObj = spy(new VTNRenderer());
-        vtnRendererObj.renderer = spy(vtnRendererObj.renderer);
+        vtnRendererObj = PowerMockito.spy(new VTNRenderer());
+        mockVTNIntentParser = PowerMockito.spy(new VTNIntentParser());
+        Whitebox.setInternalState(vtnRendererObj, "vtnIntentParser", mockVTNIntentParser);
         asyncDataChangeEvent = mock(AsyncDataChangeEvent.class);
         dataMap = new HashMap<InstanceIdentifier, Intent>();
 
         when(asyncDataChangeEvent.getCreatedData()).thenReturn(dataMap);
         when(asyncDataChangeEvent.getUpdatedData()).thenReturn(dataMap);
         intentKey = mock(IntentKey.class);
-        when(intentKey.getId()).thenReturn(mock(Uuid.class));
+        Uuid mockuuid = mock(Uuid.class);
+        when(mockuuid.getValue()).thenReturn(UUID_VALUE);
+        when(intentKey.getId()).thenReturn(mockuuid);
         intent = mock(Intent.class);
         when(intent.getKey()).thenReturn(intentKey);
         instanceIdentifier = mock(InstanceIdentifier.class);
@@ -148,7 +161,7 @@ public class VTNRendererTest {
         verify(asyncDataChangeEvent).getUpdatedData();
         verify(asyncDataChangeEvent).getOriginalData();
         verify(asyncDataChangeEvent).getRemovedPaths();
-        verify(vtnRendererObj.renderer).delete(anyString());
+        verify(mockVTNIntentParser).delete(anyString());
     }
 
     /**
@@ -160,7 +173,7 @@ public class VTNRendererTest {
         final Uuid uuid = mock(Uuid.class);
         final Subjects subjects = mock(Subjects.class);
         final List<Subjects> subjectsList = new ArrayList<Subjects>();
-
+        PowerMockito.doReturn(true).when(vtnRendererObj, "hasRendered", anyString());
         when(uuid.getValue()).thenReturn(UUID_VALUE);
         when(intent.getId()).thenReturn(uuid);
         subjectsList.add(subjects);
@@ -198,7 +211,7 @@ public class VTNRendererTest {
         final List<Subjects> subjectsList = new ArrayList<Subjects>();
         final Uuid  uuid  = mock(Uuid.class);
         final EndPointGroup endPointGroup = mock(EndPointGroup.class);
-
+        PowerMockito.doReturn(true).when(vtnRendererObj, "hasRendered", anyString());
         when(uuid.getValue()).thenReturn(UUID_VALUE);
         when(intent.getId()).thenReturn(uuid);
         Subjects subjects = mock(Subjects.class);
@@ -241,7 +254,7 @@ public class VTNRendererTest {
         final List<Actions> emptyList = new ArrayList<Actions>();
         final List<Actions> listActions = new ArrayList<Actions>();
         final Actions actions = mock(Actions.class);
-
+        PowerMockito.doReturn(true).when(vtnRendererObj, "hasRendered", anyString());
         when(uuid.getValue()).thenReturn(UUID_VALUE);
         when(intent.getId()).thenReturn(uuid);
         subjectsList.add(subjects);
@@ -258,25 +271,22 @@ public class VTNRendererTest {
          * Verifying vtnRenderer object invoking rendering and updateRendering methods
          * when getActions() returns null, empty list and list contains actions object.
          */
+        PowerMockito.doReturn(true).when(vtnRendererObj, "hasRendered", anyString());
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
+        PowerMockito.doReturn(false).when(vtnRendererObj, "hasRendered", anyString());
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(vtnRendererObj.renderer).updateRendering(anyString(),
-                anyString(), anyString(), isA(List.class),
-                anyString());
-        verify(vtnRendererObj.renderer).rendering(anyString(),
-                anyString(), anyString(), isA(List.class));
+        verify(mockVTNIntentParser, times(2)).rendering(anyString(),
+                anyString(), anyString(), anyString());
         /**
          * Verifying vtnRenderer object invoking rendering and updateRendering methods
          * when getAction() returns null, Allow and Block object.
          */
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
+        PowerMockito.doReturn(true).when(vtnRendererObj, "hasRendered", anyString());
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
+        PowerMockito.doReturn(false).when(vtnRendererObj, "hasRendered", anyString());
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(vtnRendererObj.renderer).updateRendering(anyString(),
-                anyString(), anyString(), isA(List.class),
-                anyString());
-        verify(vtnRendererObj.renderer).rendering(anyString(),
-                anyString(), anyString(), isA(List.class));
+        verify(mockVTNIntentParser, times(2)).rendering(anyString(),
+                anyString(), anyString(), anyString());
     }
-
 }
