@@ -19,6 +19,9 @@
     <!-- Repository for GBP -->
     <repository>mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features</repository>
 
+    <!-- Repository for NEMO -->
+    <!-- <repository>mvn:org.opendaylight.nemo/nemo-api/${feature.nemo-api.version}/xml/features</repository> -->
+
     <!-- Core feature -->
     <feature name='odl-nic-core' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core'>
         <feature version="${mdsal.version}">odl-restconf</feature>
@@ -51,5 +54,39 @@
         <bundle>mvn:org.opendaylight.nic/gbp-renderer-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}</bundle>
         <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config</configfile>
+    </feature>
+
+    <feature name='odl-nic-renderer-nemo' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer using NEMO'>
+        <!-- <feature version="${project.version}">odl-nic-core</feature>
+        <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-ofoverlay</feature>
+        <bundle>mvn:org.opendaylight.nic/nemo-renderer-impl/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/90-nemo-renderer.xml">mvn:org.opendaylight.nic/nemo-renderer-impl/${project.version}/xml/config</configfile> -->
+    </feature>
+
+    <!-- NEMO API -->
+    <feature name='odl-nemo-api' version='${feature.nemo-api.version}' description='OpenDaylight :: NEMO :: API'>
+        <feature version='${yangtools.version}'>odl-yangtools-models</feature>
+            <bundle>mvn:org.opendaylight.nemo/nemo-api/${feature.nemo-api.version}</bundle>
+        </feature>
+        <feature name='odl-nemo-engine' version='${feature.nemo-api.version}' description='OpenDaylight :: NEMO :: Engine'>
+        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${feature.nemo-api.version}'>odl-nemo-api</feature>
+            <bundle>mvn:org.opendaylight.nemo/nemo-impl/${feature.nemo-api.version}</bundle>
+        </feature>
+        <feature name='odl-nemo-engine-rest' version='${feature.nemo-api.version}' description='OpenDaylight :: NEMO :: Engine :: REST'>
+        <feature version='${mdsal.version}'>odl-restconf</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-apidocs</feature>
+        <feature version='${mdsal.version}'>odl-mdsal-xsql</feature>
+        <feature version='${feature.nemo-api.version}'>odl-nemo-engine</feature>
+        </feature>
+        <feature name='odl-nemo-openflow-renderer' version='${feature.nemo-api.version}' description='OpenDaylight :: NEMO :: OpenFlow Renderer'>
+        <feature version='${feature.nemo-api.version}'>odl-nemo-engine</feature>
+            <bundle>mvn:org.opendaylight.nemo/openflow-renderer/${feature.nemo-api.version}</bundle>
+            <configfile finalname='etc/opendaylight/karaf/00-nemo-openflow-renderer.xml'>mvn:org.opendaylight.nemo/openflow-renderer/${feature.nemo-api.version}/xml/config</configfile>
+        </feature>
+        <feature name='odl-nemo-engine-ui' version='${feature.nemo-api.version}' description='OpenDaylight :: NEMO :: Engine :: UI'>
+        <feature version='${dlux.version}'>odl-dlux-core</feature>
+        <feature version='${feature.nemo-api.version}'>odl-nemo-engine-rest</feature>
+            <bundle>mvn:org.opendaylight.nemo/nemo-ui/${feature.nemo-api.version}</bundle>
     </feature>
 </features>

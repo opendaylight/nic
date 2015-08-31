@@ -33,6 +33,7 @@
     <feature.base.version>1.6.0-SNAPSHOT</feature.base.version>
     <feature.test.version>1.6.0-SNAPSHOT</feature.test.version>
     <feature.vtn-manager.version>0.4.0-SNAPSHOT</feature.vtn-manager.version>
+    <feature.nemo-api.version>1.0.0-SNAPSHOT</feature.nemo-api.version>
     <groupbasedpolicy.version>0.3.0-SNAPSHOT</groupbasedpolicy.version>
     <javax.transaction.version>1.0.1.Final</javax.transaction.version>
     <osgi.compendium.version>5.0.0</osgi.compendium.version>
@@ -148,6 +149,17 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nemo</groupId>
+      <artifactId>nemo-api</artifactId>
+      <version>${feature.nemo-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nemo</groupId>
+      <artifactId>nemo-impl</artifactId>
+      <version>${feature.nemo-api.version}</version>
+    </dependency>
+
   </dependencies>
 
 </project>

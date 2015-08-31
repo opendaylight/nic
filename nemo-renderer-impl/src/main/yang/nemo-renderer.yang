@@ -1,0 +1,38 @@
+module nemo-renderer-impl {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:nemo:renderer:impl";
+    prefix "nemo-renderer-impl";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+
+    description
+      "This module contains the base YANG definition for the NEMO Renderer
+       implementation.";
+
+    revision 2015-08-28 {
+        description "Initial revision.";
+    }
+
+    identity nemo-renderer-impl {
+        base config:module-type;
+
+        config:java-name-prefix NEMOenderer;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case gbp-renderer-impl {
+            when "/config:modules/config:module/config:type = 'nemo-renderer-impl'";
+
+            container data-broker {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity
+                          mdsal:binding-async-data-broker;
+                    }
+                }
+            }
+        }
+    }
+}
