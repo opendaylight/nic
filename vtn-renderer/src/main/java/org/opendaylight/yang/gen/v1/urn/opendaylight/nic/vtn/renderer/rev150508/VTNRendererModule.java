@@ -36,7 +36,7 @@ public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
 
         LogicalDatastoreType store = LogicalDatastoreType.CONFIGURATION;
         InstanceIdentifier<Intents> path = InstanceIdentifier.builder(Intents.class).build();
-        VTNRenderer renderer = new VTNRenderer();
+        VTNRenderer renderer = new VTNRenderer(broker);
         DataChangeScope scope = DataChangeScope.SUBTREE;
         broker.registerDataChangeListener(store, path, renderer, scope);
 
