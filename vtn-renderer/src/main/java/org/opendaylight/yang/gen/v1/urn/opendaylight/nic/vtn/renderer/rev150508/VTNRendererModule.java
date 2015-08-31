@@ -12,9 +12,12 @@ package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.vtn.renderer.rev150508
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+
 import org.opendaylight.nic.vtn.renderer.VTNRenderer;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
+
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 
 public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.vtn.renderer.rev150508.AbstractVTNRendererModule {
     public VTNRendererModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
@@ -36,7 +39,7 @@ public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
 
         LogicalDatastoreType store = LogicalDatastoreType.CONFIGURATION;
         InstanceIdentifier<Intents> path = InstanceIdentifier.builder(Intents.class).build();
-        VTNRenderer renderer = new VTNRenderer();
+        VTNRenderer renderer = new VTNRenderer(broker);
         DataChangeScope scope = DataChangeScope.SUBTREE;
         broker.registerDataChangeListener(store, path, renderer, scope);
 
