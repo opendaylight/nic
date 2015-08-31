@@ -185,7 +185,6 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
         }
     }
 
-    // TODO: Refactor this part
     private void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
                             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.
                                     intent.actions.Action action) {
