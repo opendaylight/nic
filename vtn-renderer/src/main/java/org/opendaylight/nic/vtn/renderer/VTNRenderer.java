@@ -9,14 +9,13 @@
 package org.opendaylight.nic.vtn.renderer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
@@ -29,6 +28,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.renderer.intent.rev150811.vtn.renderer.intent.IntentWrapper;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.renderer.intent.rev150811.vtnintents.VtnRendererIntent;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
@@ -39,8 +40,6 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
 
     private static final Logger LOG = LoggerFactory
             .getLogger(VTNRenderer.class);
-
-    VTNIntentParser renderer = new VTNIntentParser();
 
     /**
      * The number of supported actions by VTN Renderer.
@@ -62,6 +61,26 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      */
     private static final int  INDEX_OF_DST_END_POINT_GROUP = 1;
 
+    private DataBroker dataProvider;
+
+    private VTNRendererUtility vtnRendererUtility;
+
+    private VTNIntentParser intentParser;
+
+    private List<VtnRendererIntent> listOfIntents;
+
+    /**
+     * Class constructor setting the data broker.
+     *
+     * @param dataBroker the {@link org.opendaylight.controller.md.sal.binding.api.DataBroker}
+     */
+    public VTNRenderer(DataBroker dataBroker) {
+        this.dataProvider = dataBroker;
+        this.vtnRendererUtility = new VTNRendererUtility(dataProvider);
+        this.intentParser = new VTNIntentParser(dataProvider);
+        this.listOfIntents = new ArrayList<VtnRendererIntent>();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -72,8 +91,9 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
     /**
      * This method is called on intent data requests.
      */
+    @Override
     public void onDataChanged(
-            AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
+            final AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
         LOG.info("Intent configuration changed.");
 
         for (DataObject dao: ev.getCreatedData().values()) {
@@ -98,14 +118,15 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
 
         Map<InstanceIdentifier<?>, DataObject> originalDataObject = ev.getOriginalData();
         Set<InstanceIdentifier<?>> iiD = ev.getRemovedPaths();
-        for (InstanceIdentifier instanceIdentifier : iiD) {
+        for (InstanceIdentifier<?> instanceIdentifier : iiD) {
             try {
                 if (originalDataObject.get(instanceIdentifier) instanceof Intent) {
                     Intent lclIntent = (Intent) originalDataObject.get(instanceIdentifier);
                     IntentKey lclIntentKey = (IntentKey) lclIntent.getKey();
                     Uuid uuid = (Uuid) lclIntentKey.getId();
                     LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
-                    renderer.delete(uuid.getValue());
+                    listOfIntents = vtnRendererUtility.listOfIntents();
+                    intentParser.delete(uuid.getValue(), listOfIntents, uuid);
                 }
             } catch (Exception e) {
                 LOG.error("Could not delete VTN Renderer :{} ", e);
@@ -120,7 +141,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      * @param intent
      */
     private void intentParser(Intent intent) {
-        // Retrieve the ID.
+        // Retrieve the UID.
         Uuid uuid = intent.getId();
         if (uuid == null) {
             LOG.error("Intent ID is not specified: {}", intent);
@@ -129,7 +150,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         String intentID = uuid.getValue();
 
         // Retrieve the end points.
-        List<Subjects> listSubjects = intent.getSubjects();
+        final List<Subjects> listSubjects = intent.getSubjects();
         if (listSubjects == null) {
             LOG.info("Subjects are not specified: {}", intentID);
             return;
@@ -158,7 +179,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         String endPointDst = endPointGroups.get(INDEX_OF_DST_END_POINT_GROUP);
 
         // Retrieve the action.
-        List<Actions> listActions = intent.getActions();
+        final List<Actions> listActions = intent.getActions();
         if (listActions == null) {
             LOG.info("Actions are not specified: {}", intentID);
             return;
@@ -182,15 +203,13 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         // Convert the intent to VTN configuration.
         List<IntentWrapper> intentList = new ArrayList<IntentWrapper>();
         if (hasRendered(intentID)) {
-            renderer.updateRendering(endPointSrc, endPointDst, actionType, intentList, intentID);
+            listOfIntents = vtnRendererUtility.listOfIntents();
+            intentParser.updateRendering(endPointSrc, endPointDst, actionType, intentList, intentID, listOfIntents);
         } else {
-            renderer.rendering(endPointSrc, endPointDst, actionType, intentList);
+            intentParser.rendering(endPointSrc, endPointDst, actionType, intentList, intentID);
         }
-
         // Store the VTN configuration for the intent.
-        Map intentMap = new HashMap<String, List<IntentWrapper>>();
-        intentMap.put(intentID, intentList);
-        VTNRendererUtility.storeIntentDetail(intentMap);
+        vtnRendererUtility.addIntent(intent, intentList);
     }
 
     /**
@@ -199,6 +218,6 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
      * @param intentId  The ID of the intent
      */
     private boolean hasRendered(String intentId) {
-        return VTNRendererUtility.containsIntent(intentId);
+        return vtnRendererUtility.containsIntent(intentId);
     }
 }

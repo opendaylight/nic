@@ -1,0 +1,59 @@
+/*
+ * Copyright (c) 2015 NEC Corporation
+ * All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
+module vtn-renderer-intent {
+    namespace "urn:opendaylight:vtn:renderer:intent";
+    prefix "vtn-renderer-intent";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+
+    revision 2015-08-11 {
+        description "Initial revision";
+    }
+
+    grouping vtn-renderer-intent {
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifies the intent";
+        }
+
+        leaf flowCondName {
+            type string;
+            mandatory true;
+        }
+
+        list IntentWrapper {
+            key "id";
+            leaf id {
+            type types:uuid;
+            mandatory true;
+        }
+           leaf entityValue {
+              type int32;
+        }
+           leaf entityName {
+              type string;
+        }
+        leaf entityDescription {
+              type string;
+        }
+        leaf action {
+              type string;
+        }
+    }
+ }
+
+    container vtnintents {
+        list vtn-renderer-intent {
+            key "id";
+            uses vtn-renderer-intent;
+        }
+    }
+}
