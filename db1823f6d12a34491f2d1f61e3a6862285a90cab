@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_10d7dcee",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-01T01:10:56Z",
+      "side": 1,
+      "message": "I think that it should be handled, throw an exception or just a LOG.",
+      "range": {
+        "startLine": 144,
+        "startChar": 14,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
