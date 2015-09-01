@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_eb2035f9",
+        "filename": "of-renderer/src/test/java/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 4331
+      },
+      "writtenOn": "2015-09-01T18:04:10Z",
+      "side": 1,
+      "message": "Please use camelcase for consistency",
+      "range": {
+        "startLine": 155,
+        "startChar": 21,
+        "endLine": 155,
+        "endChar": 31
+      },
+      "revId": "91dbfb55dc258628f1e65d62b56fc891a330c5a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_0b1c91c0",
+        "filename": "of-renderer/src/test/java/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 4331
+      },
+      "writtenOn": "2015-09-01T18:04:10Z",
+      "side": 1,
+      "message": "camelcase",
+      "range": {
+        "startLine": 160,
+        "startChar": 21,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "91dbfb55dc258628f1e65d62b56fc891a330c5a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_ab7a3def",
+        "filename": "of-renderer/src/test/java/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 4331
+      },
+      "writtenOn": "2015-09-01T18:04:10Z",
+      "side": 1,
+      "message": "camelcase",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 34
+      },
+      "revId": "91dbfb55dc258628f1e65d62b56fc891a330c5a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_cb7d39e9",
+        "filename": "of-renderer/src/test/java/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 4331
+      },
+      "writtenOn": "2015-09-01T18:04:10Z",
+      "side": 1,
+      "message": "camelcase",
+      "range": {
+        "startLine": 170,
+        "startChar": 27,
+        "endLine": 170,
+        "endChar": 39
+      },
+      "revId": "91dbfb55dc258628f1e65d62b56fc891a330c5a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_6b8425d4",
+        "filename": "of-renderer/src/test/java/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 4331
+      },
+      "writtenOn": "2015-09-01T18:04:10Z",
+      "side": 1,
+      "message": "Add @Test annotation to include this method in the tests.",
+      "range": {
+        "startLine": 278,
+        "startChar": 4,
+        "endLine": 278,
+        "endChar": 30
+      },
+      "revId": "91dbfb55dc258628f1e65d62b56fc891a330c5a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_8b8741d7",
+        "filename": "of-renderer/src/test/java/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 4331
+      },
+      "writtenOn": "2015-09-01T18:04:10Z",
+      "side": 1,
+      "message": "Missing @Test annotation",
+      "range": {
+        "startLine": 290,
+        "startChar": 4,
+        "endLine": 290,
+        "endChar": 32
+      },
+      "revId": "91dbfb55dc258628f1e65d62b56fc891a330c5a4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
