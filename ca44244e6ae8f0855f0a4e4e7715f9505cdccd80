@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_5069d423",
+        "filename": "of-renderer/src/test/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-01T01:56:52Z",
+      "side": 1,
+      "message": "This is not the package of the OFRenderer, I think that you should create a new \u0027Source Folder\u0027 to that.",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "ca44244e6ae8f0855f0a4e4e7715f9505cdccd80",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d01644a7",
+        "filename": "of-renderer/src/test/nic.of.renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-01T01:56:52Z",
+      "side": 1,
+      "message": "I think that you should replace it to \u0027OFRendererDataChangeListenerTest\u0027",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "ca44244e6ae8f0855f0a4e4e7715f9505cdccd80",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
