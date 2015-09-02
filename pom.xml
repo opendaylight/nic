@@ -42,6 +42,8 @@
         <module>intentengine-compiler</module>
         <module>gbp-renderer</module>
         <module>vtn-renderer</module>
+        <module>nic-mapper-api</module>
+        <module>nic-mapper-impl</module>
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>

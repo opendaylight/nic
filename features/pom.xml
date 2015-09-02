@@ -109,6 +109,26 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+    
+ 
+       <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>nic-mapper-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>nic-mapper-impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>nic-mapper-impl</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>intentengine-cli</artifactId>

@@ -1,0 +1,26 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2015 Hewlett-Packard.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+
+module nic-mapper {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:mapper";
+    prefix "nic-mapper";
+
+    description
+        "This module contains the base YANG definition for the nic mapper.";
+
+    revision 2015-08-31 {
+        description "Initial revision";
+    }
+
+    typedef nic-mapper-key {
+        description "A reference to the mapper key.";
+        type string;
+    }
+
+}

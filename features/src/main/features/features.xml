@@ -52,4 +52,12 @@
         <bundle>mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}</bundle>
         <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config</configfile>
     </feature>
+    <!-- NIC Mapper -->
+      <feature name='odl-nic-mapper' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: NIC Mapping service'>
+        <feature version="${project.version}">odl-nic-core</feature>
+        <!-- <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-ofoverlay</feature> -->
+        <bundle>mvn:org.opendaylight.nic/nic-mapper-api/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/nic-mapper-impl/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-nic-mapper.xml">mvn:org.opendaylight.nic/nic-mapper-impl/${project.version}/xml/config</configfile>
+    </feature>
 </features>
