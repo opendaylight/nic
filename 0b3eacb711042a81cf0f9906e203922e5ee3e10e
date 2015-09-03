@@ -1,0 +1,498 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_17dcab11",
+        "filename": "features/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "please arrange the identention",
+      "range": {
+        "startLine": 151,
+        "startChar": 11,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_17f34b9f",
+        "filename": "intentengine-cli/src/test/java/org/opendaylight/nic/cli/IntentCompileShellCommandTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please add a copyright header",
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d705d37a",
+        "filename": "intentengine-compiler/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "please arrange identation",
+      "range": {
+        "startLine": 63,
+        "startChar": 1,
+        "endLine": 83,
+        "endChar": 17
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_77f4ff86",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Edge.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make to copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_37ee87b5",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Epg.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make to copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d72cf304",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Test.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please add copyright header to be compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_97367b51",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/api/EndpointGroup.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make the copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b7393743",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "remove trailing space",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 4
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_5740e3a4",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 4
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_773b9f38",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 2
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d71393b6",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/api/NicConsoleProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "doesn\u0027t need to public identifier as this is an interface",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_970d1b93",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/EndpointChangeListener.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make the copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b71057a9",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/EndpointManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make the copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_57278312",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "why not create to instance in the init function?",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 60
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_7722bf02",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "LOOL",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 257,
+        "endChar": 23
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_17210bfb",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/Policy.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make the copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_371c47c1",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/PolicyGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make the copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d77ab3f0",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/PolicyImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make the copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_f77d6fe8",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/ViewCompiledGraph.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "Please make the copyright compliant with ODL best practice:\nhttps://wiki.opendaylight.org/view/BestPractices/Coding_Guidelines#General_Code_headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b787f7d6",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intentengine/impl/rev150507/NicProviderModule.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "I think this can be in the NicPorvider constuctor",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 70
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_77695f24",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intentengine/impl/rev150507/NicProviderModule.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "so no need of that",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_576ea330",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intentengine/impl/rev150507/NicProviderModule.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}

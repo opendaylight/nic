@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_37d767ef",
+        "filename": "intentengine-cli/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 0,
+      "message": "Why did you remove the checkstyle plugin? please add it again and fix the checkstyle violations",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 12
+      },
+      "revId": "517df7c2ff9d1c40b67100d34e7fe69b8167c206",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b7d5b7ba",
+        "filename": "intentengine-compiler/src/test/java/org/opendaylight/nic/compiler/IntentCompilerImplTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 0,
+      "message": "Why removing this test class?",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "517df7c2ff9d1c40b67100d34e7fe69b8167c206",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_174a6bc5",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 0,
+      "message": "Please re-add the checkstyle verification",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 12
+      },
+      "revId": "517df7c2ff9d1c40b67100d34e7fe69b8167c206",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d7c87324",
+        "filename": "intentengine-impl/src/test/java/org/opendaylight/nic/impl/NicProviderTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:42:46Z",
+      "side": 0,
+      "message": "Why removing this nice test class?",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "517df7c2ff9d1c40b67100d34e7fe69b8167c206",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
