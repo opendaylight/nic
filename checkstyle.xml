@@ -228,6 +228,6 @@
          not be following odlparent settings. -->
     <module name="RegexpHeader">
         <property name="severity" value="error"/>
-        <property name="headerFile" value="checkstyle-license.txt"/>
+        <property name="headerFile" value="${checkstyle.header.file}"/>
     </module>
 </module>
