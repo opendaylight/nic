@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_17e6ebb4",
+        "filename": "features/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:49:48Z",
+      "side": 1,
+      "message": "You need  to add nemo-features as it\u0027s done for the other external component.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "c654a7ca114d70dc788ccf3f70f4f6bc0062a2fe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_37e1a79a",
+        "filename": "features/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:49:48Z",
+      "side": 1,
+      "message": "maybe this could just reflect feature.nemo as it is the same for API and IMPL bundles",
+      "range": {
+        "startLine": 161,
+        "startChar": 30,
+        "endLine": 161,
+        "endChar": 33
+      },
+      "revId": "c654a7ca114d70dc788ccf3f70f4f6bc0062a2fe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d7ef1386",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:49:48Z",
+      "side": 1,
+      "message": "that is correct, you need this. To make it work you need to associated dependency in the pom file. (cf the comment on nemo-features)",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 113
+      },
+      "revId": "c654a7ca114d70dc788ccf3f70f4f6bc0062a2fe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_57030342",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:49:48Z",
+      "side": 1,
+      "message": "you need to add the features from nemo that you need here.\nyou need to add the bundle you\u0027re creating here.\nyou need to add the config file.\n\nLook like a good part of it is already there",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "c654a7ca114d70dc788ccf3f70f4f6bc0062a2fe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_97e99b82",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:49:48Z",
+      "side": 1,
+      "message": "those features are pulled by the repository added at the top of the file",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 14
+      },
+      "revId": "c654a7ca114d70dc788ccf3f70f4f6bc0062a2fe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_77fe3f3a",
+        "filename": "nemo-renderer-impl/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:49:48Z",
+      "side": 1,
+      "message": "arrange the identation",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 17
+      },
+      "revId": "c654a7ca114d70dc788ccf3f70f4f6bc0062a2fe",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
