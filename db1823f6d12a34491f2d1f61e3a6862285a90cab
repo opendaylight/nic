@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a79b1b5_57730380",
+        "filename": "checkstyle.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "why did you remove a space here?",
+      "range": {
+        "startLine": 229,
+        "startChar": 3,
+        "endLine": 229,
+        "endChar": 4
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_97599b00",
+        "filename": "checkstyle.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "could use undo the changes you\u0027ve done here, this is not related to your patch, and this should not have been modified in a first place",
+      "range": {
+        "startLine": 229,
+        "startChar": 3,
+        "endLine": 232,
+        "endChar": 13
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_f709efdd",
+        "filename": "of-renderer/checkstyle-license.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "why would you had this?\nplease remove this file as it already exist at the root of the project:\nhttps://github.com/opendaylight/nic/blob/master/checkstyle-license.txt",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_77915f51",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "How about OFRendererProvider?",
+      "range": {
+        "startLine": 20,
+        "startChar": 23,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_5721c34b",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "Are you sure you want to iterate over all the nodes? this might not scale well..",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_10d7dcee",
         "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
         "patchSetId": 1
@@ -18,6 +133,191 @@
         "startChar": 14,
         "endLine": 144,
         "endChar": 29
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_171b4b1c",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "Agree, you should add an ERROR log here, or just a WARM could be fine",
+      "parentUuid": "3a79b1b5_10d7dcee",
+      "range": {
+        "startLine": 144,
+        "startChar": 14,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_97de7b3e",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "subject can be of 3 different types\nEndPointGroup\nEndPointSelector\nEndPointGroupSelector",
+      "range": {
+        "startLine": 166,
+        "startChar": 18,
+        "endLine": 166,
+        "endChar": 25
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b7e13700",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "Can this be set in a final variable?",
+      "range": {
+        "startLine": 244,
+        "startChar": 29,
+        "endLine": 244,
+        "endChar": 37
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_57e8e3e1",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 267,
+        "startChar": 28,
+        "endLine": 267,
+        "endChar": 37
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_f7becfd3",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/utils/GenericTransactionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "This class is fine, but I suggest you bring this one and this related test class:\nhttps://github.com/opendaylight/nic/blob/master/gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/MdsalUtils.java\nNote: that is just a suggestion",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_17c90b78",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/utils/MatchUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "could you add this one to the javadoc",
+      "range": {
+        "startLine": 174,
+        "startChar": 106,
+        "endLine": 174,
+        "endChar": 110
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_b7aff793",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/utils/MatchUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "could you write it completely",
+      "range": {
+        "startLine": 664,
+        "startChar": 22,
+        "endLine": 664,
+        "endChar": 35
+      },
+      "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_5796a34d",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/utils/MatchUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-03T13:03:01Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 796,
+        "startChar": 21,
+        "endLine": 796,
+        "endChar": 35
       },
       "revId": "db1823f6d12a34491f2d1f61e3a6862285a90cab",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
