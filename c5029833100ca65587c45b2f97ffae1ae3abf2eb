@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_1dde0540",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/flow/OFRendererFlowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-09-08T01:40:15Z",
+      "side": 1,
+      "message": "remove trailing spaces",
+      "revId": "c5029833100ca65587c45b2f97ffae1ae3abf2eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_3de181fe",
+        "filename": "of-renderer/src/test/java/nic/of/renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-09-08T01:40:15Z",
+      "side": 1,
+      "message": "remove trailing spaces",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 4
+      },
+      "revId": "c5029833100ca65587c45b2f97ffae1ae3abf2eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_dde72d11",
+        "filename": "of-renderer/src/test/java/nic/of/renderer/utils/IntentUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-09-08T01:40:15Z",
+      "side": 1,
+      "message": "remove trailing spaces",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 8
+      },
+      "revId": "c5029833100ca65587c45b2f97ffae1ae3abf2eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
