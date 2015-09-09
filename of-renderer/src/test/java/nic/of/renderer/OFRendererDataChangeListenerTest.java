@@ -9,10 +9,7 @@
 
 package nic.of.renderer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -21,12 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +38,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.AllowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
@@ -126,6 +117,15 @@ public class OFRendererDataChangeListenerTest {
 
     @Mock
     private Map.Entry<InstanceIdentifier<?>, DataObject> mockIntentSet;
+
+    @Mock
+    private CheckedFuture<Void, TransactionCommitFailedException> commitFuture;
+
+    @Mock
+    private Nodes nodeList;
+
+    @Mock
+    private Optional<Nodes> mockNodesOptional;
 
     /**
      * Collection of InstanceIdentifier and Intent.
@@ -277,94 +277,74 @@ public class OFRendererDataChangeListenerTest {
     }
 
     /**
-     * Positiver test method for
-     * {@link OFRendererDataChangeListener#verifyIntent(Intent)}
-     * <p/>
-     * verify if the intent has id as well as the number of subjects and actions.
-     */
-    @Test
-    public void testVerifyTrueIntent() {
-        try {
-            boolean actual = Whitebox.invokeMethod(ofRendererDataChangeListener, "verifyIntent", intent);
-            assertTrue(actual);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Negative test method for
-     * {@link OFRendererDataChangeListener#verifyIntent(Intent)}
-     * <p/>
-     * verify intent should fail with malformed Intent.
-     */
-    @Test
-    public void testVerifyFalseIntent() {
-        try {
-            boolean actual = Whitebox.invokeMethod(ofRendererDataChangeListener, "verifyIntent", falseIntent);
-            assertFalse(actual);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Test method for
      * {@link OFRendererDataChangeListener#getNodes()}
      * <p/>
      * Verify if openflow plugin returns the Node ID's
      */
     @Test
-    public void testGetNodes() {
-        try {
-            CheckedFuture<Optional<Nodes>, ReadFailedException> commitFuture = mock(CheckedFuture.class);
-            Optional<Nodes> mockNodesOptional= mock(Optional.class);
-            Nodes nodeList = mock(Nodes.class);
-            when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadTransaction);
-            when(mockReadTransaction.read(LogicalDatastoreType.OPERATIONAL,
-                    InstanceIdentifier.create(Nodes.class))).thenReturn(commitFuture);
-            when(commitFuture.checkedGet()).thenReturn(mockNodesOptional);
-            when(mockNodesOptional.get()).thenReturn(nodeList);
-            Whitebox.invokeMethod(ofRendererDataChangeListener, "getNodes");
-            //Verify that the MD-SAL is read for nodes
-            verify(mockDataBroker).newReadOnlyTransaction();
-            verify(mockReadTransaction).read(LogicalDatastoreType.OPERATIONAL,
-                    InstanceIdentifier.create(Nodes.class));
-            verify(commitFuture).checkedGet();
-            verify(mockNodesOptional).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void testGetNodes() throws Exception{
+        CheckedFuture<Optional<Nodes>, ReadFailedException> commitFuture = mock(CheckedFuture.class);
+        Optional<Nodes> mockNodesOptional= mock(Optional.class);
+        Nodes nodeList = mock(Nodes.class);
+        when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadTransaction);
+        when(mockReadTransaction.read(LogicalDatastoreType.OPERATIONAL,
+                InstanceIdentifier.create(Nodes.class))).thenReturn(commitFuture);
+        when(commitFuture.checkedGet()).thenReturn(mockNodesOptional);
+        when(mockNodesOptional.get()).thenReturn(nodeList);
+        Whitebox.invokeMethod(ofRendererDataChangeListener, "getNodes");
+        //Verify that the MD-SAL is read for nodes
+        verify(mockDataBroker).newReadOnlyTransaction();
+        verify(mockReadTransaction).read(LogicalDatastoreType.OPERATIONAL,
+                InstanceIdentifier.create(Nodes.class));
+        verify(commitFuture).checkedGet();
+        verify(mockNodesOptional).get();
+    }
+
+    private void prepareForPushFlowTest() throws ReadFailedException, TransactionCommitFailedException {
+        CheckedFuture<Optional<Nodes>, ReadFailedException> checkedFutureMock = Mockito.mock(CheckedFuture.class);
+        commitFuture = mock(CheckedFuture.class);
+
+        when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
+        when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadTransaction);
+
+        when(mockWriteTransaction.submit()).thenReturn(commitFuture);
+        when(mockReadTransaction.read(LogicalDatastoreType.OPERATIONAL,
+                InstanceIdentifier.create(Nodes.class))).thenReturn(checkedFutureMock);
+        when(commitFuture.checkedGet()).thenReturn(null);
+        when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadTransaction);
+        when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadTransaction);
+        when(mockNodesOptional.get()).thenReturn(nodeList);
+        when(checkedFutureMock.checkedGet()).thenReturn(mockNodesOptional);
+        when(mockNodesOptional.get()).thenReturn(nodeList);
     }
 
     /**
      * Test method for
-     * {@link OFRendererDataChangeListener#pushL2Flow(NodeId, List, Action)}}
+     * {@link OFRendererDataChangeListener#pushIntentFlow(Intent)}}
      * <p/>
      * Verify if openflow plugin pushes flows to MD-SAL
      */
     @Test
-    public void testPushFlow() {
-        try {
-            CheckedFuture<Void, TransactionCommitFailedException> commitFuture = mock(CheckedFuture.class);
-            when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
-            when(mockWriteTransaction.submit()).thenReturn(commitFuture);
-            when(commitFuture.checkedGet()).thenReturn(null);
-            doReturn(null).when(commitFuture).checkedGet();
-            List<String> list = new ArrayList<String>();
-            list.add(SRC_MAC);
-            list.add(DST_MAC);
-            NodeId id = mock(NodeId.class);
-            //Test for allow
-            Whitebox.invokeMethod(ofRendererDataChangeListener, "pushL2Flow", id, list, allow);
-            //Test for block
-            Whitebox.invokeMethod(ofRendererDataChangeListener, "pushL2Flow", id, list, block);
-            //Verify that flow is written to MD-SAL
-            verify(mockDataBroker, times(2)).newWriteOnlyTransaction();
-            verify(mockWriteTransaction, times(2)).submit();
-            verify(commitFuture, times(2)).checkedGet();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void testPushFlow() throws Exception {
+        prepareForPushFlowTest();
+
+        when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
+        when(mockWriteTransaction.submit()).thenReturn(commitFuture);
+        when(commitFuture.checkedGet()).thenReturn(null);
+
+        doReturn(null).when(commitFuture).checkedGet();
+        List<String> list = new ArrayList<String>();
+        list.add(SRC_MAC);
+        list.add(DST_MAC);
+        NodeId id = mock(NodeId.class);
+        //Test for allow
+        actionList.clear();
+        actionList.add(actionAllow);
+        Whitebox.invokeMethod(ofRendererDataChangeListener, "pushIntentFlow", intent);
+        //Test for block
+        actionList.clear();
+        actionList.add(actionBlock);
+        Whitebox.invokeMethod(ofRendererDataChangeListener, "pushIntentFlow", intent);
     }
 }

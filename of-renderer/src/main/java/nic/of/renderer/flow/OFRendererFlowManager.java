@@ -106,12 +106,21 @@ public class OFRendererFlowManager implements OFRendererFlowService {
             return;
         }
 
+        writeDataTransaction(nodeId, flowBuilder);
+    }
+
+    private boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder) {
+        boolean result;
+
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
                 .child(Node.class, new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
                 .child(Table.class, new TableKey(flowBuilder.getTableId())).child(Flow.class, flowBuilder.getKey())
                 .build();
-        GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build(),
-                true);
+
+        result = GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION,
+                flowIID, flowBuilder.build(), true);
+
+        return result;
     }
 
     private FlowBuilder createFlowBuilder(MatchBuilder matchBuilder, String endPoint) {
