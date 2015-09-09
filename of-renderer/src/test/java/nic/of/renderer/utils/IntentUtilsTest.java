@@ -10,12 +10,15 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
 public class IntentUtilsTest {
 
@@ -37,6 +40,15 @@ public class IntentUtilsTest {
     @Mock
     private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
     .EndPointGroup epgMock;
+
+    @Mock
+    private WriteTransaction modificationMock;
+
+    @Mock
+    private InstanceIdentifier<Flow> instanceIdentifierFlowMock;
+
+    @Mock
+    private Flow flowMock;
 
     private final String DEFAULT_STR_UUID = UUID.randomUUID().toString();
 
@@ -122,8 +134,6 @@ public class IntentUtilsTest {
         expected.add(EPG_NAME_ONE);
 
         Subjects subjectsMockOne = Mockito.mock(Subjects.class);
-        Subjects subjectsMockTwo = Mockito.mock(Subjects.class);
-        Subjects subjectsMockThree = Mockito.mock(Subjects.class);
 
         List<Subjects> subjectMockList = new ArrayList<Subjects>();
 

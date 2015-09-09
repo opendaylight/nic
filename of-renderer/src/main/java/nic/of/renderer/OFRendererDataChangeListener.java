@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
@@ -43,8 +45,6 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
 
     private DataBroker dataBroker;
     private ListenerRegistration<DataChangeListener> ofRendererListener = null;
-    private static final int  NUM_OF_SUPPORTED_EPG = 2;
-    private static final int NUM_OF_SUPPORTED_ACTION = 1;
 
     private OFRendererFlowService flowService;
 
@@ -63,8 +63,6 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
     public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> asyncDataChangeEvent) {
         LOG.info("Intent tree changed");
         create(asyncDataChangeEvent.getCreatedData());
-//        update(asyncDataChangeEvent.getUpdatedData());
-//        delete(asyncDataChangeEvent);
     }
 
     private void create(Map<InstanceIdentifier<?>, DataObject> changes) {
@@ -99,9 +97,10 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
         Nodes nodeList = new NodesBuilder().build();
         ReadTransaction tx = dataBroker.newReadOnlyTransaction();
         try {
-            nodeList = tx.read(LogicalDatastoreType.OPERATIONAL,
-                    InstanceIdentifier.create(Nodes.class))
-                    .checkedGet().get();
+            final InstanceIdentifier<Nodes> nodesIdentifier = InstanceIdentifier.create(Nodes.class);
+            final CheckedFuture<Optional<Nodes>, ReadFailedException> txCheckedFuture = tx.read(LogicalDatastoreType
+                            .OPERATIONAL, nodesIdentifier);
+            nodeList = txCheckedFuture.checkedGet().get();
 
             for (Node node : nodeList.getNode()) {
                 LOG.info("Node ID : {}", node.getId());
@@ -109,8 +108,8 @@ public class OFRendererDataChangeListener implements DataChangeListener,AutoClos
                 nodeMap.put(node, nodeConnector);
             }
         } catch (ReadFailedException e) {
+            //TODO: Perform fail over
             LOG.error("Error reading Nodes from MD-SAL");
-            e.printStackTrace();
         }
         return nodeMap;
     }
