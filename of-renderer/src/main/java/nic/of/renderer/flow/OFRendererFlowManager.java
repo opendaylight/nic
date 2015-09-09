@@ -42,6 +42,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier.InstanceIdentifierBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,12 +107,28 @@ public class OFRendererFlowManager implements OFRendererFlowService {
             return;
         }
 
-        InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
-                .child(Node.class, new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
-                .child(Table.class, new TableKey(flowBuilder.getTableId())).child(Flow.class, flowBuilder.getKey())
-                .build();
-        GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build(),
-                true);
+        writeData(nodeId, flowBuilder);
+    }
+
+    protected boolean writeData(NodeId nodeId, FlowBuilder flowBuilder) {
+        boolean result;
+        final short tableId = flowBuilder.getTableId();
+        final NodeKey NodeKey = new NodeKey(nodeId);
+        final TableKey tableKey = new TableKey(tableId);
+        final FlowKey flowKey = flowBuilder.getKey();
+
+        InstanceIdentifierBuilder<Nodes> nodes = InstanceIdentifier.builder(Nodes.class);
+        InstanceIdentifierBuilder<Node> node = nodes.child(Node.class, NodeKey);
+        InstanceIdentifierBuilder<FlowCapableNode>  flowCapableNode = node.augmentation(FlowCapableNode.class);
+        InstanceIdentifierBuilder<Table> table = flowCapableNode.child(Table.class, tableKey);
+        InstanceIdentifierBuilder<Flow> newFlowBuilder = table.child(Flow.class, flowKey);
+
+        InstanceIdentifier<Flow> flowII = newFlowBuilder.build();
+
+        result = GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION, 
+                flowII, flowBuilder.build(), true);
+
+        return result;
     }
 
     private FlowBuilder createFlowBuilder(MatchBuilder matchBuilder, String endPoint) {
@@ -171,7 +188,7 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         return instructionsBuilder.build();
     }
 
-    private void createBlockMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
+    protected void createBlockMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
         String endPointSrc = endPointGroups.get(SRC_END_POINT_GROUP_INDEX);
         LOG.info("Creating block intent for endpoint: {}", endPointSrc);
         try {
@@ -182,7 +199,7 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         }
     }
 
-    private void createAllowMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
+    protected void createAllowMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
         String endPointSrc = endPointGroups.get(SRC_END_POINT_GROUP_INDEX);
         String endPointDst = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
         LOG.info("Creating allow intent between endpoints: source {} destination {}", endPointSrc, endPointDst);
