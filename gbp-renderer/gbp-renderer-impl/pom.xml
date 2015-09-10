@@ -23,9 +23,6 @@
 
  <properties>
   <groupbasedpolicy.version>0.3.0-SNAPSHOT</groupbasedpolicy.version>
-  <sonar.jacoco.Reportpath>target/jacoco.exec</sonar.jacoco.Reportpath>
-  <!-- Sonar jacoco plugin to get integration test coverage info -->
-  <sonar.jacoco.itReportPath>target/jacoco-it.exec</sonar.jacoco.itReportPath>
   <powermock.version>1.5.5</powermock.version>
   <mockito.version>1.9.5</mockito.version>
   <junit.version>4.11</junit.version>
@@ -119,56 +116,6 @@
      <includes>**/*.java,**/*.xml,**/*.ini,**/*.sh,**/*.bat</includes>
      <excludes>**/yang/</excludes>
     </configuration>
-   </plugin>
-
-   <plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>${jacoco.version}</version>
-    <configuration>
-     <skip>${skip.coverage}</skip>
-    </configuration>
-    <executions>
-     <execution>
-      <id>pre-unit-test</id>
-      <goals>
-       <goal>prepare-agent</goal>
-      </goals>
-      <configuration>
-       <destFile>${sonar.jacoco.reportPath}</destFile>
-      </configuration>
-     </execution>
-     <execution>
-      <id>pre-integration-test</id>
-      <goals>
-       <goal>prepare-agent-integration</goal>
-      </goals>
-      <configuration>
-       <destFile>${sonar.jacoco.itReportPath}</destFile>
-       <append>true</append>
-       <skip>${skip.integrationtest}</skip>
-      </configuration>
-     </execution>
-     <execution>
-      <id>post-unit-test</id>
-      <goals>
-       <goal>report</goal>
-      </goals>
-      <configuration>
-       <dataFile>${sonar.jacoco.reportPath}</dataFile>
-      </configuration>
-     </execution>
-     <execution>
-      <id>post-integration-test</id>
-      <goals>
-       <goal>report-integration</goal>
-      </goals>
-      <configuration>
-       <dataFile>${sonar.jacoco.itReportPath}</dataFile>
-       <skip>${skip.integrationtest}</skip>
-      </configuration>
-     </execution>
-    </executions>
    </plugin>
   </plugins>
  </build>
