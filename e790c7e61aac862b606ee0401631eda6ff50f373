@@ -22,6 +22,30 @@
       "revId": "e790c7e61aac862b606ee0401631eda6ff50f373",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_8f308d02",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/flow/OFRendererFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-11T16:22:39Z",
+      "side": 1,
+      "message": "Just for legibility, but I understand that the last code is better for avoid unnecessary references. I\u0027ll apply the changes later and send a new patch.",
+      "parentUuid": "3a79b1b5_eff4a188",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "e790c7e61aac862b606ee0401631eda6ff50f373",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
