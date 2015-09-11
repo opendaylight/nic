@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_eff4a188",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/flow/OFRendererFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-11T14:55:55Z",
+      "side": 1,
+      "message": "What about something like that:\n\nInstanceIdentifier\u003cFlow\u003e flowII \u003d InstanceIdentifier.builder(Nodes.class).child(Node.class, NodeKey).augmentation(FlowCapableNode.class).child(Table.class, tableKey).child(Flow.class, flowKey).build()",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "e790c7e61aac862b606ee0401631eda6ff50f373",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
