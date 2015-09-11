@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a79b1b5_fafe9d37",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/OFRendererDataChangeListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-11T23:19:01Z",
+      "side": 1,
+      "message": "This class exists, and can be find on the path:\n\u003cyour_workspace\u003e/of-renderer/src/main/java/nic/of/renderer/utils/\n\nThis code was merged with master some days ago.",
+      "parentUuid": "3a79b1b5_fa921d9e",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 53
+      },
+      "revId": "e790c7e61aac862b606ee0401631eda6ff50f373",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_eff4a188",
         "filename": "of-renderer/src/main/java/nic/of/renderer/flow/OFRendererFlowManager.java",
         "patchSetId": 2
@@ -106,6 +130,30 @@
       "writtenOn": "2015-09-11T18:10:04Z",
       "side": 1,
       "message": "Is the code to verify that the flow is written to MD-SAL unnecessary?\nverify(mockDataBroker, times(2)).newWriteOnlyTransaction();\nverify(mockWriteTransaction, times(2)).submit();\nverify(commitFuture, times(2)).checkedGet();",
+      "range": {
+        "startLine": 340,
+        "startChar": 8,
+        "endLine": 344,
+        "endChar": 86
+      },
+      "revId": "e790c7e61aac862b606ee0401631eda6ff50f373",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_1ab83975",
+        "filename": "of-renderer/src/test/java/nic/of/renderer/OFRendererDataChangeListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-11T23:19:01Z",
+      "side": 1,
+      "message": "I think that it should be verified just when we write the tests for the class OFRendererFlowManager, it\u0027ll call the method  to write into the MD-SAL. On the next commit I\u0027ll submit this test. Thanks for your observation.",
+      "parentUuid": "3a79b1b5_fad9bd83",
       "range": {
         "startLine": 340,
         "startChar": 8,
