@@ -73,6 +73,23 @@
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
             mvn:org.opendaylight.nic/of-renderer/${project.version}/xml/config
         </configfile>
-
+    </feature>
+    
+    <feature name='odl-nic-mapper-api' version='${project.version}' description='OpenDaylight :: mapper :: api'>
+        <feature version='${yangtools.version}'>odl-yangtools-models</feature>
+        <bundle>mvn:org.opendaylight.nic/nic-mapper-api/${project.version}</bundle>
+    </feature>
+    
+    <feature name='odl-nic-mapper' version='${project.version}' description='OpenDaylight :: mapper'>
+        <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+        <feature version='${project.version}'>odl-nic-mapper-api</feature>
+        <bundle>mvn:org.opendaylight.nic/nic-mapper-impl/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-nic-mapper.xml">
+        	mvn:org.opendaylight.nic/nic-mapper-impl/${project.version}/xml/config
+        </configfile>
+    </feature>
+    <feature name='odl-nic-mapper-rest' version='${project.version}' description='OpenDaylight :: mapper :: REST'>
+        <feature version="${project.version}">odl-nic-mapper</feature>
+        <feature version="${mdsal.version}">odl-restconf</feature>
     </feature>
 </features>
