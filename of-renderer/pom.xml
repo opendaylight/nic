@@ -22,6 +22,7 @@
         <!-- Sonar jacoco plugin to get integration test coverage info -->
         <sonar.jacoco.itReportPath>target/jacoco-it.exec</sonar.jacoco.itReportPath>
         <powermock.version>1.5.5</powermock.version>
+        <pitest.version>1.1.4</pitest.version>
     </properties>
     <dependencies>
         <dependency>
@@ -136,6 +137,23 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest.version}</version>
+                <configuration>
+                    <targetClasses>
+                        <param>nic.of.renderer.flow*</param>
+                        <param>nic.of.renderer*</param>
+                        <param>nic.of.renderer.utils*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>nic.of.renderer.flow*</param>
+                        <param>nic.of.renderer*</param>
+                        <param>nic.of.renderer.utils*</param>
+                    </targetTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>
