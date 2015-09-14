@@ -177,6 +177,23 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>nic-mapper-impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>nic-mapper-impl</artifactId>
+      <version>${project.version}</version>
+      <type>xml</type>
+      <classifier>config</classifier>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>nic-mapper-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
