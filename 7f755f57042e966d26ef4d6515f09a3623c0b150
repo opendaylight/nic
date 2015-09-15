@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_cc08c82f",
+        "filename": "nic-mapper/nic-mapper-api/bin/src/main/yang/mapper.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-09-15T18:55:07Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_ac0d4c40",
+        "filename": "nic-mapper/nic-mapper-impl/bin/src/main/yang/mapper-impl.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-09-15T18:55:07Z",
+      "side": 1,
+      "message": "Isn\u0027t this already under nic-mapper-impl/bin/src/main/yang ?",
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_d20a9e20",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/mapper/impl/rev141210/MapperModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-09-15T18:55:07Z",
+      "side": 1,
+      "message": "getBindingAwareBrokerDepenedency instead?",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_32043214",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/yang/mapper-impl.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-09-15T18:55:07Z",
+      "side": 1,
+      "message": "Should this be a binding-aware-broker?",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
