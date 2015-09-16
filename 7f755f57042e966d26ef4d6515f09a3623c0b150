@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a79b1b5_617df6b0",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "remove tab",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 9
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_810db240",
+        "filename": "nic-mapper/nic-mapper-api/bin/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "to be removed",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_cc08c82f",
         "filename": "nic-mapper/nic-mapper-api/bin/src/main/yang/mapper.yang",
         "patchSetId": 1
@@ -25,6 +71,98 @@
     },
     {
       "key": {
+        "uuid": "3a79b1b5_e116e654",
+        "filename": "nic-mapper/nic-mapper-api/bin/src/main/yang/mapper.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "to be removed",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_014c429d",
+        "filename": "nic-mapper/nic-mapper-api/src/main/yang/mapper.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "remove whitespace",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c113aa64",
+        "filename": "nic-mapper/nic-mapper-impl/bin/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "to be removed",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_211dbe73",
+        "filename": "nic-mapper/nic-mapper-impl/bin/src/main/config/default-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "to be removed",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_ac0d4c40",
         "filename": "nic-mapper/nic-mapper-impl/bin/src/main/yang/mapper-impl.yang",
         "patchSetId": 1
@@ -36,6 +174,116 @@
       "writtenOn": "2015-09-15T18:55:07Z",
       "side": 1,
       "message": "Isn\u0027t this already under nic-mapper-impl/bin/src/main/yang ?",
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_011a027d",
+        "filename": "nic-mapper/nic-mapper-impl/bin/src/main/yang/mapper-impl.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "Right this file should be removed",
+      "parentUuid": "3a79b1b5_ac0d4c40",
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_214ffe93",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/java/org/opendaylight/nic/impl/GetValueImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "remove tab",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 1
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_c145ea70",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/java/org/opendaylight/nic/impl/GetValueImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "remove tab",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_e1482689",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/java/org/opendaylight/nic/impl/GetValueImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "remove tab",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_815ff240",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/java/org/opendaylight/nic/impl/MapperProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "remove tab",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 9
+      },
       "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -65,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "3a79b1b5_a15a2e4e",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/mapper/impl/rev141210/MapperModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "this is fine as it is",
+      "parentUuid": "3a79b1b5_d20a9e20",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_32043214",
         "filename": "nic-mapper/nic-mapper-impl/src/main/yang/mapper-impl.yang",
         "patchSetId": 1
@@ -81,6 +353,76 @@
         "startChar": 22,
         "endLine": 25,
         "endChar": 28
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_61541621",
+        "filename": "nic-mapper/nic-mapper-impl/src/main/yang/mapper-impl.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "this is fine as it is",
+      "parentUuid": "3a79b1b5_32043214",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_e13fc6d4",
+        "filename": "nic-mapper/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "I\u0027m perplex here.. do we need/want that? is there a mapper project - and/or at least a mapper:Main page in the wiki page..",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 8
+      },
+      "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_0133e214",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-16T20:10:14Z",
+      "side": 1,
+      "message": "remove tab",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 1
       },
       "revId": "7f755f57042e966d26ef4d6515f09a3623c0b150",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
