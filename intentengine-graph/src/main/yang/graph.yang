@@ -1,0 +1,65 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2015 Hewlett-Packard.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module graph {
+    namespace "urn:opendaylight:intent:graph";
+    prefix "graph";
+    
+    revision 2015-09-11 {
+        description "Initial revision";
+    }
+
+    typedef edge-types {
+	     type enumeration { 
+	        enum MustAllow {
+	            description "Strong Allow";
+	            value 1;
+	        }
+	        enum CanDeny {
+	            value 2;
+	            description "Can communicate";
+	        }
+	        enum MustDeny {
+	            value 4;
+	            description "Strong Block";
+	        }  
+	        enum Conditional {
+	            value 8;
+	            description "Good to have, but can be overrided by others";
+	        }    		
+	     }
+    }
+
+    container composed-graph {
+             
+       leaf-list nodes {
+       
+         leaf name {
+             type string;
+         }
+       }  
+       
+       leaf-list edges {
+       
+         leaf identifier {
+             type string;
+         }
+         
+         leaf node1 {
+             type string;
+         }
+         
+         leaf node2 {
+             type string;
+         }
+         
+         leaf edge-type {
+             type edge-types;
+         } 
+       }  
+    }
+}
