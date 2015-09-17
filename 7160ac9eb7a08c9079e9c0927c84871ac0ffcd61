@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_67198678",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/EventServiceRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-17T04:29:28Z",
+      "side": 1,
+      "message": "Good idea!",
+      "range": {
+        "startLine": 13,
+        "startChar": 80,
+        "endLine": 13,
+        "endChar": 93
+      },
+      "revId": "7160ac9eb7a08c9079e9c0927c84871ac0ffcd61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_471eca64",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/EventServiceRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-17T04:29:28Z",
+      "side": 1,
+      "message": "HINT: I think that this implementation should have a single instance, so, it\u0027s better to use a singleton and instantiate the eventListeners just when the method getInstance() was called?",
+      "range": {
+        "startLine": 15,
+        "startChar": 55,
+        "endLine": 15,
+        "endChar": 73
+      },
+      "revId": "7160ac9eb7a08c9079e9c0927c84871ac0ffcd61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a79b1b5_a70f9e2d",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/EventServiceRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-17T04:29:28Z",
+      "side": 1,
+      "message": "HINT: I usually use the Set\u003cIEventLisneter\u003e just to avoid duplicated values and to be oriented to interface.",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "7160ac9eb7a08c9079e9c0927c84871ac0ffcd61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
