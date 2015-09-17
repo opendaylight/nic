@@ -40,7 +40,7 @@
              description='OpenDaylight :: Network Intent Composition :: CLI'>
         <feature version="${project.version}">odl-nic-core</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-cli/${project.version}</bundle>
-        <!-- <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile> -->
+        <!-- <configfile finalname="${config.configfile.directory}/${nic.listeners.configfile}">mvn:org.opendaylight.nic/nic-listeners/${project.version}/xml/config</configfile> -->
     </feature>
 
     <feature name='odl-nic-renderer-vtn' version='${project.version}'
@@ -63,6 +63,7 @@
             mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config
         </configfile>
     </feature>
+
     <!-- OF Renderer -->
     <feature name='odl-nic-renderer-of' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
@@ -73,6 +74,15 @@
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
             mvn:org.opendaylight.nic/of-renderer/${project.version}/xml/config
         </configfile>
+    </feature>
 
+    <!-- Intent Listeners -->
+    <feature name='odl-nic-listeners' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: Listeners'>
+        <feature version="${project.version}">odl-nic-core</feature>
+        <bundle>mvn:org.opendaylight.nic/intentengine-listeners/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
+            mvn:org.opendaylight.nic/intentengine-listeners/${project.version}/xml/config
+        </configfile>
     </feature>
 </features>
