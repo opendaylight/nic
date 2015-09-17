@@ -5,22 +5,16 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.of.renderer.flow;
+package org.opendaylight.nic.listeners.api;
 
 /**
- * Created by yrineu on 22/09/15.
+ * Interface for receiving notification about various application events
  */
-public enum FlowAction {
-    ADD_FLOW(0),
-    REMOVE_FLOW(1);
-
-    private final int value;
-
-    private FlowAction(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
+public interface IEventListener<E extends NicNotification> {
+    /**
+     * Issues notification about an application event.
+     * @param event Application event notification
+     */
+    void handleEvent(E event);
 }
+

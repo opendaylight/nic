@@ -5,15 +5,14 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.of.renderer.flow;
+package org.opendaylight.nic.of.renderer.api;
 
-import java.util.List;
-
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 
 public interface OFRendererFlowService {
 
-    public void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action,
-            FlowAction flowAction);
+    void pushIntentFlow(Intent intent, FlowAction flowAction);
+
+    void pushARPFlow(NodeId nodeId, FlowAction flowAction);
 }
