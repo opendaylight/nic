@@ -1,6 +1,6 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819;
 
-import nic.of.renderer.OFRendererProvider;
+import nic.of.renderer.impl.OFRendererFlowManagerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ public class OFRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.o
     @Override
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating Open flow renderer");
-        final OFRendererProvider provider = new OFRendererProvider(getDataBrokerDependency());
+        final OFRendererFlowManagerProvider provider = new OFRendererFlowManagerProvider(getDataBrokerDependency());
         provider.init();
         return provider;
     }

@@ -10,7 +10,7 @@ package nic.of.renderer.utils;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.CheckedFuture;
-import nic.of.renderer.flow.FlowAction;
+import nic.of.renderer.api.FlowAction;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;

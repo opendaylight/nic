@@ -5,13 +5,20 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package nic.of.renderer.flow;
+package nic.of.renderer.impl;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.CheckedFuture;
+import nic.of.renderer.api.FlowAction;
+import nic.of.renderer.api.OFRendererFlowService;
 import nic.of.renderer.utils.GenericTransactionUtils;
+import nic.of.renderer.utils.IntentUtils;
 import nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
@@ -38,19 +45,31 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instru
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.InstructionKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodesBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class OFRendererFlowManager implements OFRendererFlowService {
+/**
+ * Created by saket on 8/19/15.
+ */
+public class OFRendererFlowManagerProvider implements OFRendererFlowService, AutoCloseable {
+    private static final Logger LOG = LoggerFactory.getLogger(OFRendererFlowManagerProvider.class);
 
-    private static Logger LOG = LoggerFactory.getLogger(OFRendererFlowManager.class);
+    protected ServiceRegistration<OFRendererFlowService> nicFlowServiceRegistration;
 
     private static final Integer PRIORITY = 32768;
     private static final short DEFAULT_TABLE_ID = 0;
@@ -62,12 +81,58 @@ public class OFRendererFlowManager implements OFRendererFlowService {
 
     private DataBroker dataBroker;
 
-    public OFRendererFlowManager(DataBroker dataBroker) {
+    public OFRendererFlowManagerProvider(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
     }
 
+    public void init() {
+        LOG.info("OF Renderer Provider Session Initiated");
+
+        // Register this service with karaf
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        nicFlowServiceRegistration = context.registerService(OFRendererFlowService.class, this, null);
+    }
+
     @Override
-    public void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
+    public void pushIntentFlow(Intent intent, FlowAction flowAction) {
+        // TODO: Extend to support other actions
+        LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action actionContainer =
+                (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action)
+                        intent.getActions().get(0).getAction();
+
+        List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
+        //Get all node Id's
+        Map<Node, List<NodeConnector>> nodeMap = getNodes();
+        for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
+            //Push flow to every node for now
+            pushL2Flow(entry.getKey().getId(), endPointGroups, actionContainer, flowAction);
+        }
+    }
+
+    private Map<Node, List<NodeConnector>> getNodes() {
+        Map<Node, List<NodeConnector>> nodeMap = new HashMap<Node, List<NodeConnector>>();
+        Nodes nodeList = new NodesBuilder().build();
+        ReadTransaction tx = dataBroker.newReadOnlyTransaction();
+        try {
+            final InstanceIdentifier<Nodes> nodesIdentifier = InstanceIdentifier.create(Nodes.class);
+            final CheckedFuture<Optional<Nodes>, ReadFailedException> txCheckedFuture = tx.read(LogicalDatastoreType
+                    .OPERATIONAL, nodesIdentifier);
+            nodeList = txCheckedFuture.checkedGet().get();
+
+            for (Node node : nodeList.getNode()) {
+                LOG.info("Node ID : {}", node.getId());
+                List<NodeConnector> nodeConnector = node.getNodeConnector();
+                nodeMap.put(node, nodeConnector);
+            }
+        } catch (ReadFailedException e) {
+            //TODO: Perform fail over
+            LOG.error("Error reading Nodes from MD-SAL");
+        }
+        return nodeMap;
+    }
+
+    private void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
                            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action,
                            FlowAction flowAction) {
 
@@ -200,5 +265,10 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         } catch (IllegalArgumentException e) {
             LOG.error("Can only accept valid MAC addresses as subjects");
         }
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }
