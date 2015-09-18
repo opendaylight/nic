@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a79b1b5_c8ce66b4",
+        "filename": "intentengine-graph/src/main/yang/graph.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-18T19:53:49Z",
+      "side": 1,
+      "message": "Just to be clear, a composed-graph will use only two edge types -- the conventional allow and deny -- which a underlying renderer can simply implement. The fine-grained intent edge types are needed only by input policy graphs from apps/users to declare their intents. \nIf a graph compiler can compose only two input graphs at a time, the compiler would generate intermediate graphs (e.g., a composed graph of the first two inputs) to eventually compose three or more input graphs. The intermediate graphs would also use the 4 types of intent edges.",
+      "range": {
+        "startLine": 61,
+        "startChar": 18,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "5b989616792a366c903123d1ab3c097a387b5ecf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
