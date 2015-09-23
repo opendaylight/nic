@@ -14,5 +14,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 public interface OFRendererFlowService {
 
     public void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action);
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action,
+            FlowAction flowAction);
 }
