@@ -10,6 +10,7 @@ package nic.of.renderer.utils;
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.CheckedFuture;
+import nic.of.renderer.flow.FlowAction;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
@@ -27,26 +28,28 @@ public final class GenericTransactionUtils {
 
     public static <T extends DataObject> boolean writeData(
               DataBroker dataBroker, LogicalDatastoreType logicalDatastoreType,
-              InstanceIdentifier<T> iid, T dataObject, boolean isAdd) {
+              InstanceIdentifier<T> iid, T dataObject, FlowAction isAdd) {
         Preconditions.checkNotNull(dataBroker);
         WriteTransaction modification = dataBroker.newWriteOnlyTransaction();
-        if (isAdd) {
+        boolean isFlowAdd = (FlowAction.ADD_FLOW.getValue() == isAdd.getValue());
+        if (isFlowAdd) {
             if (dataObject == null) {
                 logger.warn("Invalid attempt to add a non-existent object to path {}", iid);
                 return false;
             }
             modification.merge(logicalDatastoreType, iid, dataObject, true /*createMissingParents*/);
+            //TODO: Change to support more actions
         } else {
             modification.delete(LogicalDatastoreType.CONFIGURATION, iid);
         }
         CheckedFuture<Void, TransactionCommitFailedException> commitFuture = modification.submit();
         try {
             commitFuture.checkedGet();
-            logger.debug("Transaction success for {} of object {}", (isAdd) ? "add" : "delete", dataObject);
+            logger.debug("Transaction success for {} of object {}", (isFlowAdd) ? "add" : "delete", dataObject);
             return true;
         } catch (Exception e) {
             logger.error("Transaction failed with error {} for {} of object {}",
-                    e.getMessage(), (isAdd) ? "add" : "delete", dataObject);
+                    e.getMessage(), (isFlowAdd) ? "add" : "delete", dataObject);
             modification.cancel();
             return false;
         }
