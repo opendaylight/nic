@@ -7,13 +7,20 @@
  */
 package nic.of.renderer.flow;
 
-import java.util.List;
+/**
+ * Created by yrineu on 22/09/15.
+ */
+public enum FlowAction {
+    ADD_FLOW(0),
+    REMOVE_FLOW(1);
 
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+    private final int value;
 
-public interface OFRendererFlowService {
+    private FlowAction(int value) {
+        this.value = value;
+    }
 
-    public void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action,
-            FlowAction flowAction);
+    public int getValue() {
+        return value;
+    }
 }
