@@ -20,6 +20,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.*;
 
+import nic.of.renderer.flow.FlowAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -321,7 +322,7 @@ public class OFRendererDataChangeListenerTest {
 
     /**
      * Test method for
-     * {@link OFRendererDataChangeListener#pushIntentFlow(Intent)}}
+     * {@link OFRendererDataChangeListener#pushIntentFlow(Intent, nic.of.renderer.flow.FlowAction)}}
      * <p/>
      * Verify if openflow plugin pushes flows to MD-SAL
      */
@@ -341,10 +342,10 @@ public class OFRendererDataChangeListenerTest {
         //Test for allow
         actionList.clear();
         actionList.add(actionAllow);
-        Whitebox.invokeMethod(ofRendererDataChangeListener, "pushIntentFlow", intent);
+        Whitebox.invokeMethod(ofRendererDataChangeListener, "pushIntentFlow", intent, FlowAction.ADD_FLOW);
         //Test for block
         actionList.clear();
         actionList.add(actionBlock);
-        Whitebox.invokeMethod(ofRendererDataChangeListener, "pushIntentFlow", intent);
+        Whitebox.invokeMethod(ofRendererDataChangeListener, "pushIntentFlow", intent, FlowAction.ADD_FLOW);
     }
 }

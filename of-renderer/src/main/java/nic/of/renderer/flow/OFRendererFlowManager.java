@@ -7,8 +7,9 @@
  */
 package nic.of.renderer.flow;
 
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import nic.of.renderer.utils.GenericTransactionUtils;
+import nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
@@ -25,6 +26,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.ta
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.service.rev130819.RemoveFlowInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.OutputPortValues;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.InstructionsBuilder;
@@ -45,10 +47,7 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
-
-import nic.of.renderer.utils.GenericTransactionUtils;
-import nic.of.renderer.utils.MatchUtils;
+import java.util.List;
 
 public class OFRendererFlowManager implements OFRendererFlowService {
 
@@ -69,7 +68,8 @@ public class OFRendererFlowManager implements OFRendererFlowService {
 
     @Override
     public void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action) {
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action,
+            FlowAction flowAction) {
 
         /*
          * Programming a flow involves: 1. Creating a Flow object that has a
@@ -106,10 +106,10 @@ public class OFRendererFlowManager implements OFRendererFlowService {
             return;
         }
 
-        writeDataTransaction(nodeId, flowBuilder);
+        writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
-    private boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder) {
+    private boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder, FlowAction flowAction) {
         boolean result;
 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
@@ -118,7 +118,7 @@ public class OFRendererFlowManager implements OFRendererFlowService {
                 .build();
 
         result = GenericTransactionUtils.writeData(dataBroker, LogicalDatastoreType.CONFIGURATION,
-                flowIID, flowBuilder.build(), true);
+                flowIID, flowBuilder.build(), flowAction.getValue());
 
         return result;
     }
@@ -129,10 +129,27 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         final FlowId flowId = new FlowId(flowIdStr);
         final FlowKey key = new FlowKey(flowId);
         final FlowBuilder flowBuilder = new FlowBuilder();
+        RemoveFlowInputBuilder removeFlowInput = new RemoveFlowInputBuilder();
 
         flowBuilder.setMatch(match);
         flowBuilder.setId(flowId);
         flowBuilder.setKey(key);
+        flowBuilder.setBarrier(true);
+        flowBuilder.setTableId(DEFAULT_TABLE_ID);
+        flowBuilder.setPriority(PRIORITY);
+        flowBuilder.setFlowName(flowIdStr);
+        flowBuilder.setHardTimeout(DEFAULT_HARD_TIMEOUT);
+        flowBuilder.setIdleTimeout(DEFAULT_IDDLE_TIMEOUT);
+
+        return flowBuilder;
+    }
+
+    private RemoveFlowInputBuilder createRemoveFlowBuilder(MatchBuilder matchBuilder, String endPoint) {
+        final Match match = matchBuilder.build();
+        final String flowIdStr = "L2_Rule_" + endPoint;
+        RemoveFlowInputBuilder flowBuilder = new RemoveFlowInputBuilder();
+
+        flowBuilder.setMatch(match);
         flowBuilder.setBarrier(true);
         flowBuilder.setTableId(DEFAULT_TABLE_ID);
         flowBuilder.setPriority(PRIORITY);
