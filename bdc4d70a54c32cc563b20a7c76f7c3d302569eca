@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_a16375b0",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-24T15:05:53Z",
+      "side": 1,
+      "message": "this is useless",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 78
+      },
+      "revId": "bdc4d70a54c32cc563b20a7c76f7c3d302569eca",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
