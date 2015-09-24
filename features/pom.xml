@@ -179,19 +179,19 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>nic-mapper-impl</artifactId>
+      <artifactId>intentengine-mapping-impl</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>nic-mapper-impl</artifactId>
+      <artifactId>intentengine-mapping-impl</artifactId>
       <version>${project.version}</version>
       <type>xml</type>
       <classifier>config</classifier>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>nic-mapper-api</artifactId>
+      <artifactId>intentengine-mapping-api</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

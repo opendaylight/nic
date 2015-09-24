@@ -29,7 +29,7 @@ public class MapperProvider implements BindingAwareProvider, AutoCloseable {
     public void close() throws Exception {
         LOG.info("MapperProvider Closed");
         if(mapperService != null){
-        	mapperService.close();
+            mapperService.close();
         }
     }
 

@@ -11,11 +11,10 @@ import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 
 public class GetValueImpl implements MapperService{
 
-	@Override
-	public Future<RpcResult<GetValueOutput>> getValue(GetValueInput input) {
+    @Override
+    public Future<RpcResult<GetValueOutput>> getValue(GetValueInput input) {
         GetValueOutputBuilder builder = new GetValueOutputBuilder();
         builder.setResult("testValue");
         return RpcResultBuilder.success(builder.build()).buildFuture();
-	}
-
+    }
 }

@@ -6,7 +6,6 @@ module mapper {
     revision "2015-01-05" {
         description "Initial revision of mapper model";
     }
-    
     rpc get-value {
         input {
             leaf key {

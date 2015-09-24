@@ -14,17 +14,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   </parent>
 
   <groupId>org.opendaylight.nic</groupId>
-  <artifactId>mapper-aggregator</artifactId>
+  <artifactId>intentengine-mapping-aggregator</artifactId>
   <version>1.1.0-SNAPSHOT</version>
-  <name>mapper</name>
+  <name>intentengine-mapping</name>
   <packaging>pom</packaging>
   <modelVersion>4.0.0</modelVersion>
   <prerequisites>
     <maven>3.1.1</maven>
   </prerequisites>
   <modules>
-    <module>nic-mapper-api</module>
-    <module>nic-mapper-impl</module>
+    <module>intentengine-mapping-api</module>
+    <module>intentengine-mapping-impl</module>
     <module>artifacts</module>
   </modules>
   <!-- DO NOT install or deploy the repo root pom as it's only needed to initiate a build -->

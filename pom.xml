@@ -43,7 +43,7 @@
         <module>gbp-renderer</module>
         <module>vtn-renderer</module>
         <module>of-renderer</module>
-	<module>nic-mapper</module>
+        <module>intentengine-mapping</module>
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>
