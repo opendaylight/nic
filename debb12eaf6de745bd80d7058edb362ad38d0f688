@@ -22,6 +22,30 @@
       "revId": "debb12eaf6de745bd80d7058edb362ad38d0f688",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a504e07e",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/flow/OFRendererFlowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-24T21:28:14Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll remove this unused method and send a new patch",
+      "parentUuid": "1a76adc5_2513f05d",
+      "range": {
+        "startLine": 147,
+        "startChar": 35,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "debb12eaf6de745bd80d7058edb362ad38d0f688",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
