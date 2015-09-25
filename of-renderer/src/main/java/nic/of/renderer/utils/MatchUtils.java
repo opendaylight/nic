@@ -72,7 +72,6 @@ public class MatchUtils {
      * Create Ingress Port Match dpidLong, inPort
      *
      * @param matchBuilder Map matchBuilder MatchBuilder Object without a match
-     * @param nodeConnectorId  NodeConnectorId for the ingress port
      * @return matchBuilder Map MatchBuilder Object with a match
      */
     public static MatchBuilder createInPortMatch(MatchBuilder matchBuilder, NodeConnectorId ncId) {
@@ -289,7 +288,7 @@ public class MatchUtils {
     /**
      * Create Source TCP Port Match
      *
-     * @param matchBuilder @param matchbuilder MatchBuilder Object without a match yet
+     * @param matchBuilder matchbuilder MatchBuilder Object without a match yet
      * @param tcpport      Integer representing a source TCP port
      * @return matchBuilder Map MatchBuilder Object with a match
      */
@@ -346,7 +345,7 @@ public class MatchUtils {
      * @param tcpPort  PortNumber representing a destination TCP port
      * @param tcpFlag  int representing a tcp_flag
      * @return match containing TCP_Flag (), IP Protocol (TCP), TCP_Flag (SYN)
-     * <p/>
+     * 
      * Defined TCP Flag values in OVS v2.1+
      * TCP_FIN 0x001 / TCP_SYN 0x002 / TCP_RST 0x004
      * TCP_PSH 0x008 / TCP_ACK 0x010 / TCP_URG 0x020
@@ -381,7 +380,7 @@ public class MatchUtils {
     /**
      * Create Source UDP Port Match
      *
-     * @param matchBuilder @param matchbuilder MatchBuilder Object without a match yet
+     * @param matchBuilder matchbuilder MatchBuilder Object without a match yet
      * @param udpport      Integer representing a source UDP port
      * @return matchBuilder Map MatchBuilder Object with a match
      */
@@ -452,8 +451,7 @@ public class MatchUtils {
     /**
      * Create  TCP Port Match
      *
-     * @param matchBuilder @param matchbuilder MatchBuilder Object without a match yet
-     * @param tcpport      Integer representing a source TCP port
+     * @param matchBuilder MatchBuilder Object without a match yet
      * @return matchBuilder Map MatchBuilder Object with a match
      */
     public static MatchBuilder createIpProtocolMatch(MatchBuilder matchBuilder, short ipProtocol) {
