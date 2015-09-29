@@ -22,6 +22,30 @@
       "revId": "69fbebb786ab165d2eeda12d43107a843b4fdc0b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_64924159",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/flow/FlowAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-09-29T02:12:45Z",
+      "side": 1,
+      "message": "Great! I can change it and send a new path.\nThanks!",
+      "parentUuid": "1a76adc5_641d610f",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "69fbebb786ab165d2eeda12d43107a843b4fdc0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
