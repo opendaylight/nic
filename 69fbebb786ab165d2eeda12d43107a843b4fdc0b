@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_641d610f",
+        "filename": "of-renderer/src/main/java/nic/of/renderer/flow/FlowAction.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T01:55:54Z",
+      "side": 1,
+      "message": "Why not defining the enum like this:\n\nADD_FLOW(0),\nREMOVE_FLOW(1);\n\nprivate final int value;\n\nprivate FlowAction(int value) {\n    this.value \u003d value\n}\n\npublic int getValue() {\n    return value;\n}\n\nFor now we only have 2 actions so the way you\u0027ve done it is fine, but the getValue() method won\u0027t scale if we add another value, right?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 16
+      },
+      "revId": "69fbebb786ab165d2eeda12d43107a843b4fdc0b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
