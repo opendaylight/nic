@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_c4d31537",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:04:18Z",
+      "side": 1,
+      "message": "this doesn\u0027t make sense at all to me. Maybe we could define variables to hold this and the one bellow?",
+      "range": {
+        "startLine": 186,
+        "startChar": 69,
+        "endLine": 186,
+        "endChar": 72
+      },
+      "revId": "550f0b5cb7b291bb5e6222f10f710c1399d98bda",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_84dd1d45",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:04:18Z",
+      "side": 1,
+      "message": "This might be an uppercase?",
+      "range": {
+        "startLine": 720,
+        "startChar": 32,
+        "endLine": 720,
+        "endChar": 33
+      },
+      "revId": "550f0b5cb7b291bb5e6222f10f710c1399d98bda",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c4ba35e1",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/vtn/renderer/rev150508/VTNRendererModule.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:04:18Z",
+      "side": 1,
+      "message": "I think this should be done in the VTNRenderer class, as in the close() method you should call reg.close() to properly unregistered the DataChangeListener",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 119
+      },
+      "revId": "550f0b5cb7b291bb5e6222f10f710c1399d98bda",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
