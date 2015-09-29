@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_44ce2585",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "please remove whitespace",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 4
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a4b939eb",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "please remove tab",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_64cb2173",
+        "filename": "intentengine-mapping/intentengine-mapping-api/bin/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "please use master dependency. binding-parent has migrated to mdsal. Also the version is not correct.\n\n  \u003cparent\u003e\n    \u003cgroupId\u003eorg.opendaylight.mdsal\u003c/groupId\u003e\n    \u003cartifactId\u003ebinding-parent\u003c/artifactId\u003e\n    \u003cversion\u003e0.8.0-SNAPSHOT\u003c/version\u003e\n    \u003crelativePath/\u003e\n  \u003c/parent\u003e",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_24c5295b",
+        "filename": "intentengine-mapping/intentengine-mapping-api/bin/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "please remove this bin/ folder",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_c4a1d5aa",
+        "filename": "intentengine-mapping/intentengine-mapping-api/bin/src/main/yang/mapper.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "remove bin/ folder",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_04c82d73",
+        "filename": "intentengine-mapping/intentengine-mapping-api/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "Should be \n\n  \u003cparent\u003e\n    \u003cgroupId\u003eorg.opendaylight.mdsal\u003c/groupId\u003e\n    \u003cartifactId\u003ebinding-parent\u003c/artifactId\u003e\n    \u003cversion\u003e0.8.0-SNAPSHOT\u003c/version\u003e\n    \u003crelativePath/\u003e\n  \u003c/parent\u003e",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_e4a651c1",
+        "filename": "intentengine-mapping/intentengine-mapping-impl/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "the version is incorrect, it should be 0.4.0-SNAPSHOT to reflect master",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_84abdd88",
+        "filename": "intentengine-mapping/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "use 1.6.0-SNAPSHOT to reflect master",
+      "range": {
+        "startLine": 13,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_a4b059f5",
+        "filename": "intentengine-mapping/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T02:12:34Z",
+      "side": 1,
+      "message": "please remove this",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 8
+      },
+      "revId": "b907ad0effde8180343fa3181e81dfc42de4475a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
