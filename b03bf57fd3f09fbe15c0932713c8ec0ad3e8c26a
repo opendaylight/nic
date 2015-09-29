@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_629311a4",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/vtn/renderer/rev150508/VTNRendererModule.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T13:44:52Z",
+      "side": 1,
+      "message": "I think what you had in the previous patch was better.\nWhat I was suggesting is register the listener in VTNRenderer constructor and you keep the reference of the registration local to the class. So in VTNRenderer#close() method you could close the ListenerRegistration. \n\nHave a look at this for a concrete example:\n\n- registration: https://github.com/opendaylight/nic/blob/master/gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java#l36\n\n- close(): https://github.com/opendaylight/nic/blob/master/gbp-renderer/gbp-renderer-impl/src/main/java/org/opendaylight/nic/gbp/renderer/impl/GBPRendererDataChangeListener.java#l89",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 72
+      },
+      "revId": "b03bf57fd3f09fbe15c0932713c8ec0ad3e8c26a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_02b9fd2d",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/vtn/renderer/rev150508/VTNRendererModule.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-09-29T13:44:52Z",
+      "side": 1,
+      "message": "I think what you have in the previous patch was better.\nWhat I was suggesting is register the listener in VTNRenderer constructor and you keep the reference od",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 72
+      },
+      "revId": "b03bf57fd3f09fbe15c0932713c8ec0ad3e8c26a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
