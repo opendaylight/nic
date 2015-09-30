@@ -88,6 +88,29 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_fa182186",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Edge.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-30T23:42:21Z",
+      "side": 1,
+      "message": "Isn\u0027t there any execution order between actions? you know, Set Iterator doesn\u0027t maintain any order unless the Action class guarantees that.",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_37ee87b5",
         "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Epg.java",
         "patchSetId": 13
@@ -104,6 +127,52 @@
         "startChar": 0,
         "endLine": 7,
         "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_5dc10f2d",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/IntentCompilerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-30T23:42:21Z",
+      "side": 1,
+      "message": "As we discussed before, multiple different src-dst edges can have an identical policy, especially as a result of policy duplication/compilation. One way to handle this is to maintain a separate list of all policy objects of this graph and let each edge to point to the matching object. One policy object can be referenced by many edges. This technique is also useful to avoid duplicating the same resolve/merge operation over the same pair of policies during the composition process. It\u0027s a kind of dynamic programming approach.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 78
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_3dc4533f",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/IntentCompilerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-30T23:42:21Z",
+      "side": 1,
+      "message": "It seems the 4 action/edge types (MUST, CAN, BLOCK, CONDITIONAL) and the new merging mechanism haven\u0027t been integrated yet. Maybe the integration is the next step? I\u0027ll be happy to help. Let me know.",
+      "range": {
+        "startLine": 109,
+        "startChar": 24,
+        "endLine": 109,
+        "endChar": 29
       },
       "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
@@ -374,6 +443,75 @@
         "startChar": 0,
         "endLine": 7,
         "endChar": 80
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_fd2b3be9",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/PolicyGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-30T23:42:21Z",
+      "side": 1,
+      "message": "Needs to be careful in whitelisting model. The fact that P2 didn\u0027t have an edge from src to dst might have meant to \u0027deny\u0027 that traffic by default. Or do we assume \u0027don\u0027t care\u0027 as a default action in the absence of active allow or deny for that traffic?",
+      "range": {
+        "startLine": 95,
+        "startChar": 10,
+        "endLine": 97,
+        "endChar": 68
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_1d1877d2",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/PolicyGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-30T23:42:21Z",
+      "side": 1,
+      "message": "likewise.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 13
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_bd0ce395",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/PolicyGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-30T23:42:21Z",
+      "side": 1,
+      "message": "likewise.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 13
       },
       "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",

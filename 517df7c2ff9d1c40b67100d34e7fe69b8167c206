@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_ba3b89ea",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Epg.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4854
+      },
+      "writtenOn": "2015-09-30T23:42:21Z",
+      "side": 0,
+      "message": "Do we enforce a certain rule in calling A.and(B) vs. B.and(A) operations? \nSince \u0027group\u0027 is a concatenated string of \"A and B\", A.and(B) will yield a different string (thus hashcode) than B.and(A), although they\u0027re logically equal. To handle this correctly, you may need to maintain \u0027group\u0027 as an ordered set of labels (and negated labels), concatenate the ordered set into a string, and generate a hashcode from the string. \nI can share our python implementation of this logic.",
+      "revId": "517df7c2ff9d1c40b67100d34e7fe69b8167c206",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_b7d5b7ba",
         "filename": "intentengine-compiler/src/test/java/org/opendaylight/nic/compiler/IntentCompilerImplTest.java",
         "patchSetId": 13
