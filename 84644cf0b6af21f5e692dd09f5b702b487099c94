@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_71aaf471",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-01T18:08:30Z",
+      "side": 1,
+      "message": "Could you add more explanation about the change of the patch in the commit message?\nThe patch changes more than 3000 lines.\nIt is a big change.\nI think just one line explanation is not enough for this big change.\nTherefore, I think you need to describe more explanation about what the change is introduced in the commit message.\nWithout the explanation, it is hard to review the patch.\n\nIt seems to me that this patch does not only refactor the VTN Renderer, but it also change the behavior of the VTN Renderer.\nI mean that it seems to me that this change writes some data into the configuration datastore of the MD-SAL at the addIntent method of VTNRendererUtility.java. I think it is not happened without this patch.\nIf my understanding is correct, you should write about this change in the commit message.\n\nBy the way, the patch contains many type of changes.\nI think the patch should be spitted into several patches to make reviews easier.",
+      "revId": "84644cf0b6af21f5e692dd09f5b702b487099c94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_9120f04a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-01T18:08:30Z",
+      "side": 1,
+      "message": "There is an unnecessary space.",
+      "range": {
+        "startLine": 599,
+        "startChar": 24,
+        "endLine": 599,
+        "endChar": 25
+      },
+      "revId": "84644cf0b6af21f5e692dd09f5b702b487099c94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_b11dec11",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-01T18:08:30Z",
+      "side": 1,
+      "message": "\"FIlter\" should be \"Filter\" or \"filter\".",
+      "range": {
+        "startLine": 600,
+        "startChar": 67,
+        "endLine": 600,
+        "endChar": 73
+      },
+      "revId": "84644cf0b6af21f5e692dd09f5b702b487099c94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_d1dd0844",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-01T18:08:30Z",
+      "side": 1,
+      "message": "Unnecessary space at the end of the line.",
+      "range": {
+        "startLine": 81,
+        "startChar": 51,
+        "endLine": 81,
+        "endChar": 52
+      },
+      "revId": "84644cf0b6af21f5e692dd09f5b702b487099c94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_51f1f8cb",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-01T18:08:30Z",
+      "side": 1,
+      "message": "Unnecessary space at the end of the lines.",
+      "range": {
+        "startLine": 157,
+        "startChar": 40,
+        "endLine": 157,
+        "endChar": 41
+      },
+      "revId": "84644cf0b6af21f5e692dd09f5b702b487099c94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_719c346a",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNIntentParserTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-01T18:08:30Z",
+      "side": 1,
+      "message": "I think this import statement should be in the line 36.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "84644cf0b6af21f5e692dd09f5b702b487099c94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
