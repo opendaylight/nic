@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_abad7d33",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/vtn/renderer/rev150508/VTNRendererModule.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-01T13:00:34Z",
+      "side": 1,
+      "message": "I\u0027m sorry if I mislead you here, but you just need to create an instance of VTNRenderer and return it, because VTNRenderer implements AutoCloseable.\n\nso the createInstance could look like:\n\nDataBroker broker \u003d getDataBrokerDependency();\nVTNRenderer renderer \u003d new VTNRenderer();\nreturn renderer;",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "4732cf2ab407c67c7288bf308063f7d0a02805c8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
