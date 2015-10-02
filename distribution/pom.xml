@@ -48,24 +48,6 @@
    <version>${project.version}</version>
   </dependency>
 
-  <dependency>
-   <groupId>org.opendaylight.vtn</groupId>
-   <artifactId>features-vtn-manager</artifactId>
-   <version>0.4.0-SNAPSHOT</version>
-   <classifier>features</classifier>
-   <scope>runtime</scope>
-   <type>xml</type>
-  </dependency>
-
-  <dependency>
-   <groupId>org.opendaylight.groupbasedpolicy</groupId>
-   <artifactId>features-groupbasedpolicy</artifactId>
-   <version>0.3.0-SNAPSHOT</version>
-   <classifier>features</classifier>
-   <scope>runtime</scope>
-   <type>xml</type>
-  </dependency>
-
  </dependencies>
  <!-- DO NOT install or deploy the karaf artifact -->
  <build>
