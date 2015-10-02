@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a76adc5_f92b4680",
+        "filename": "intentengine-graph/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-02T17:36:59Z",
+      "side": 1,
+      "message": "It seems to me that the dependency is not needed now, since the yang file (intentengine-graph/src/main/yang/graph.yang) does not use the model defined in the ietf-yang-types-20130715.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "5b989616792a366c903123d1ab3c097a387b5ecf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a79b1b5_c8ce66b4",
         "filename": "intentengine-graph/src/main/yang/graph.yang",
         "patchSetId": 1
