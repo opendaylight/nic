@@ -1,5 +1,5 @@
 module of-renderer {
-    main.yang-version 1;
+    yang-version 1;
     namespace "urn:opendaylight:nic:of:renderer";
     prefix "of-renderer";
 
