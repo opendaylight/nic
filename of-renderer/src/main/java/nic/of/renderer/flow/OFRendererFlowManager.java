@@ -54,10 +54,11 @@ public class OFRendererFlowManager implements OFRendererFlowService {
 
     private static final Integer PRIORITY = 32768;
     private static final short DEFAULT_TABLE_ID = 0;
-    private static final Integer DEFAULT_IDDLE_TIMEOUT = 0;
+    private static final Integer DEFAULT_IDLE_TIMEOUT = 0;
     private static final Integer DEFAULT_HARD_TIMEOUT = 0;
-    private static final Integer SRC_END_POINT_GROUP_INDEX = 1;
-    private static final Integer DST_END_POINT_GROUP_INDEX = 0;
+    private static final Integer SRC_END_POINT_GROUP_INDEX = 0;
+    private static final Integer DST_END_POINT_GROUP_INDEX = 1;
+    private static final String ANY_MATCH = "any";
 
     private DataBroker dataBroker;
 
@@ -67,8 +68,8 @@ public class OFRendererFlowManager implements OFRendererFlowService {
 
     @Override
     public void pushL2Flow(NodeId nodeId, List<String> endPointGroups,
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action,
-            FlowAction flowAction) {
+                           org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action action,
+                           FlowAction flowAction) {
 
         /*
          * Programming a flow involves: 1. Creating a Flow object that has a
@@ -83,27 +84,26 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         // Creating Flow object
         FlowBuilder flowBuilder = new FlowBuilder();
 
+        // Create L2 match
+        // TODO: Extend for L3 matches
+        createEthMatch(endPointGroups, matchBuilder);
+        // Create Flow
+        flowBuilder = createFlowBuilder(matchBuilder, endPointGroups);
         // TODO: Extend for other actions
         if (action instanceof Allow) {
-            createAllowMatch(endPointGroups, matchBuilder);
             // Set allow action
             Instructions buildedInstructions = createInstructions(OutputPortValues.NORMAL);
-            String endPoint = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
-
-            flowBuilder = createFlowBuilder(matchBuilder, endPoint);
             flowBuilder.setInstructions(buildedInstructions);
 
         } else if (action instanceof Block) {
-            // Set block action
-            createBlockMatch(endPointGroups, matchBuilder);
-            // Create Flow
-            final String endPoint = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
-            flowBuilder = createFlowBuilder(matchBuilder, endPoint);
+            // For Block Action the Instructions are not set
+            // If block added for readability
         } else {
             String actionClass = action.getClass().getName();
             LOG.error("Invalid action: {}", actionClass);
             return;
         }
+
 
         writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
@@ -122,9 +122,12 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         return result;
     }
 
-    private FlowBuilder createFlowBuilder(MatchBuilder matchBuilder, String endPoint) {
+    private FlowBuilder createFlowBuilder(MatchBuilder matchBuilder, List<String> endPointGroups) {
         final Match match = matchBuilder.build();
-        final String flowIdStr = "L2_Rule_" + endPoint;
+        //Flow named for convenience and uniqueness
+        String flowIdStr = "L2_Rule_";
+        flowIdStr += endPointGroups.get(SRC_END_POINT_GROUP_INDEX);
+        flowIdStr += endPointGroups.get(DST_END_POINT_GROUP_INDEX);
         final FlowId flowId = new FlowId(flowIdStr);
         final FlowKey key = new FlowKey(flowId);
         final FlowBuilder flowBuilder = new FlowBuilder();
@@ -137,7 +140,7 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         flowBuilder.setPriority(PRIORITY);
         flowBuilder.setFlowName(flowIdStr);
         flowBuilder.setHardTimeout(DEFAULT_HARD_TIMEOUT);
-        flowBuilder.setIdleTimeout(DEFAULT_IDDLE_TIMEOUT);
+        flowBuilder.setIdleTimeout(DEFAULT_IDLE_TIMEOUT);
 
         return flowBuilder;
     }
@@ -179,27 +182,21 @@ public class OFRendererFlowManager implements OFRendererFlowService {
         return instructionsBuilder.build();
     }
 
-    private void createBlockMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
-        String endPointSrc = endPointGroups.get(SRC_END_POINT_GROUP_INDEX);
-        LOG.info("Creating block intent for endpoint: {}", endPointSrc);
-        try {
-            MacAddress srcMac = new MacAddress(endPointSrc);
-            MatchUtils.createEthSrcMatch(matchBuilder, srcMac);
-        } catch (IllegalArgumentException e) {
-            LOG.error("Can only accept valid MAC addresses as subjects");
-        }
-    }
-
-    private void createAllowMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
+    private void createEthMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
         String endPointSrc = endPointGroups.get(SRC_END_POINT_GROUP_INDEX);
         String endPointDst = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
-        LOG.info("Creating allow intent between endpoints: source {} destination {}", endPointSrc, endPointDst);
-        try {
-            MacAddress srcMac = new MacAddress(endPointSrc);
-            MacAddress dstMac = new MacAddress(endPointDst);
-            MatchUtils.createEthSrcMatch(matchBuilder, srcMac);
-            MatchUtils.createEthDstMatch(matchBuilder, dstMac, null);
+        MacAddress srcMac = null;
+        MacAddress dstMac = null;
 
+        LOG.info("Creating block intent for endpoints: source{} destination {}", endPointSrc, endPointDst);
+        try {
+            if (!endPointSrc.equalsIgnoreCase(ANY_MATCH)) {
+                srcMac = new MacAddress(endPointSrc);
+            }
+            if (!endPointDst.equalsIgnoreCase(ANY_MATCH)) {
+                dstMac = new MacAddress(endPointDst);
+            }
+            MatchUtils.createEthMatch(matchBuilder, srcMac, dstMac);
         } catch (IllegalArgumentException e) {
             LOG.error("Can only accept valid MAC addresses as subjects");
         }
