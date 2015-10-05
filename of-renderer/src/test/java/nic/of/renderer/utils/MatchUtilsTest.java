@@ -64,8 +64,8 @@ public class MatchUtilsTest {
     }
 
     @Test
-    public void testCreateEthSrcMatch() {
-        result = MatchUtils.createEthSrcMatch(matchBuilderMock, macAddressMock);
+    public void testCreateEthMatch() {
+        result = MatchUtils.createEthMatch(matchBuilderMock, macAddressMock, macAddressMock);
         Assert.assertNotNull(result);
     }
 
@@ -84,12 +84,6 @@ public class MatchUtilsTest {
         Assert.assertNotNull(result);
 
         result = MatchUtils.createMplsLabelBosMatch(matchBuilderMock, 2L, false);
-        Assert.assertNotNull(result);
-    }
-
-    @Test
-    public void testCreateEthDstMatch() {
-        result = MatchUtils.createEthDstMatch(matchBuilderMock, macAddressMock, macAddressMock);
         Assert.assertNotNull(result);
     }
 
@@ -136,13 +130,13 @@ public class MatchUtilsTest {
         MatchUtils.createVlanIdMatch(null, null, true);
         MatchUtils.createMplsLabelBosMatch(null, 2L, true);
         MatchUtils.createMplsLabelBosMatch(null, null, true);
-        MatchUtils.createEthDstMatch(null, macAddressMock, macAddressMock);
-        MatchUtils.createEthDstMatch(matchBuilderMock, null, macAddressMock);
-        MatchUtils.createEthDstMatch(matchBuilderMock, macAddressMock, null);
-        MatchUtils.createEthDstMatch(null, null, null);
+        MatchUtils.createEthMatch(null, macAddressMock, macAddressMock);
+        MatchUtils.createEthMatch(matchBuilderMock, null, macAddressMock);
+        MatchUtils.createEthMatch(matchBuilderMock, macAddressMock, null);
+        MatchUtils.createEthMatch(null, null, null);
         MatchUtils.createTunnelIDMatch(matchBuilderMock, null);
         MatchUtils.createTunnelIDMatch(null, TUNNEL_ID);
-        MatchUtils.createICMPv4Match(null, (short)1, (short)2);
+        MatchUtils.createICMPv4Match(null, (short)1, (short) 2);
         MatchUtils.createDstL3IPv4Match(matchBuilderMock, null);
         MatchUtils.createDstL3IPv4Match(null, ipv4PrefixMock);
     }
