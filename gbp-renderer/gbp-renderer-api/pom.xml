@@ -12,19 +12,19 @@
   <parent>
     <groupId>org.opendaylight.yangtools</groupId>
     <artifactId>binding-parent</artifactId>
-    <version>0.7.2-SNAPSHOT</version>
+    <version>0.7.2-Lithium-SR2</version>
     <relativePath/>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opendaylight.nic</groupId>
   <artifactId>gbp-renderer-api</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.2-Lithium-SR2</version>
   <packaging>bundle</packaging>
 
   <properties>
-    <gbp.version>0.2.2-SNAPSHOT</gbp.version>
-    <intent.version>1.0.2-SNAPSHOT</intent.version>
+    <gbp.version>0.2.2-Lithium-SR2</gbp.version>
+    <intent.version>1.0.2-Lithium-SR2</intent.version>
   </properties>
 
   <dependencies>

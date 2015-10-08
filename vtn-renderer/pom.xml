@@ -12,14 +12,14 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.3.2-SNAPSHOT</version>
+  <version>0.3.2-Lithium-SR2</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>vtn-renderer</artifactId>
- <version>1.0.2-SNAPSHOT</version>
+ <version>1.0.2-Lithium-SR2</version>
  <packaging>bundle</packaging>
 
  <properties>
@@ -51,7 +51,7 @@
   <dependency>
    <groupId>org.opendaylight.vtn</groupId>
    <artifactId>manager</artifactId>
-   <version>0.3.2-SNAPSHOT</version>
+   <version>0.3.2-Lithium-SR2</version>
   </dependency>
 
   <!-- OpenDaylight YANG Tools -->
