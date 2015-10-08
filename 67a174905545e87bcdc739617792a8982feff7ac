@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_41d91356",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-08T19:19:32Z",
+      "side": 1,
+      "message": "I think we should make the scope of try blocks small as much as possible to make easier to read the code.\nI think we can move the \"try\" from here to the line 492.",
+      "range": {
+        "startLine": 477,
+        "startChar": 0,
+        "endLine": 477,
+        "endChar": 13
+      },
+      "revId": "67a174905545e87bcdc739617792a8982feff7ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_81172bed",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-08T19:19:32Z",
+      "side": 1,
+      "message": "It seems to me that this method should return \"false\" here, since reaching here means that it fails to create flow condition.\n\nIs my understanding correct?",
+      "range": {
+        "startLine": 548,
+        "startChar": 0,
+        "endLine": 552,
+        "endChar": 20
+      },
+      "revId": "67a174905545e87bcdc739617792a8982feff7ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_21bbb7e6",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-08T19:19:32Z",
+      "side": 1,
+      "message": "It seems to me that this line is not needed.\n\nIn the next line, it calls the same method, and uses the return value of the method.\n\nIs this line really needed?",
+      "range": {
+        "startLine": 194,
+        "startChar": 16,
+        "endLine": 194,
+        "endChar": 36
+      },
+      "revId": "67a174905545e87bcdc739617792a8982feff7ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_41c03350",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-10-08T19:19:32Z",
+      "side": 1,
+      "message": "It seems to me that even if an exception occurs, this method always output the following loge message.\n\"List of Intents retrieved successfully\"\n\nIs this your expectation?\n\nI think you should insert return statement in catch blocks.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 29
+      },
+      "revId": "67a174905545e87bcdc739617792a8982feff7ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
