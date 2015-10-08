@@ -5,11 +5,12 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.listeners.api;
+package org.opendaylight.nic.listeners.api.network;
 
-/**
-* Interface for all NIC related events
-*/
-public interface NicNotification {
+import org.opendaylight.nic.listeners.api.NicNotification;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
 
+public interface NodeUp extends NicNotification {
+
+    IpAddress getIp();
 }

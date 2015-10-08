@@ -9,15 +9,19 @@ package org.opendaylight.nic.listeners.api;
 
 public enum EventType {
     /** Indicates a new link is discovered. */
-    LINKDISCOVERED,
+    LINK_DISCOVERED,
     /** Indicates an existing link is overutilized. */
-    LINKOVERUTILIZED,
+    LINK_OVERUTILIZED,
     /** Indicates an existing link is removed. */
-    LINKREMOVED,
+    LINK_REMOVED,
     /** Indicates normal link utilization. */
-    LINKUTILIZATIONNORMAL,
+    LINK_UTILIZATION_NORMAL,
     /** Indicates new node is up. */
-    NODEUPDATED,
+    NODE_UPDATED,
     /** Indicates existing node is removed. */
-    NODEREMOVED
+    NODE_REMOVED,
+    /** Indicates new intent is up */
+    INTENT_ADDED,
+    /** Indicates existing intent is removed */
+    INTENT_REMOVED
 }

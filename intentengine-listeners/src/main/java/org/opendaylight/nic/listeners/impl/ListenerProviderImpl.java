@@ -10,14 +10,18 @@ package org.opendaylight.nic.listeners.impl;
 
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.listeners.api.LinkUp;
-import org.opendaylight.nic.listeners.api.NodeDeleted;
-import org.opendaylight.nic.listeners.api.LinkDeleted;
-import org.opendaylight.nic.listeners.api.NodeUp;
+import org.opendaylight.nic.listeners.api.network.LinkUp;
+import org.opendaylight.nic.listeners.api.network.NodeDeleted;
+import org.opendaylight.nic.listeners.api.network.LinkDeleted;
+import org.opendaylight.nic.listeners.api.network.NodeUp;
 import org.opendaylight.nic.listeners.api.NotificationSupplierForItemRoot;
 import org.opendaylight.nic.listeners.api.NotificationSupplierDefinition;
+import org.opendaylight.nic.listeners.impl.intent.IntentNotificationSupplier;
+import org.opendaylight.nic.listeners.impl.network.NodeConnectorNotificationSupplierImpl;
+import org.opendaylight.nic.listeners.impl.network.NodeNotificationSupplierImpl;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +39,7 @@ public class ListenerProviderImpl {
     private NotificationSupplierForItemRoot<FlowCapableNode, NodeUp, NodeDeleted> nodeSupp;
     private NotificationSupplierForItemRoot<FlowCapableNodeConnector,
             LinkUp, LinkDeleted> connectorSupp;
+    private IntentNotificationSupplier intentListener;
 
     /**
      * Provider constructor set all needed final parameters
@@ -49,6 +54,7 @@ public class ListenerProviderImpl {
         nodeSupp = new NodeNotificationSupplierImpl(db);
         connectorSupp = new NodeConnectorNotificationSupplierImpl(db);
         supplierList = new ArrayList<NotificationSupplierDefinition<?>>(Arrays.asList(nodeSupp));
+        intentListener = new IntentNotificationSupplier(db, Intent.class);
     }
 
     public void close() throws Exception {

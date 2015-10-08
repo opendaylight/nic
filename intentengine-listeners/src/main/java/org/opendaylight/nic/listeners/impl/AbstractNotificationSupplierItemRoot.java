@@ -11,7 +11,7 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NotificationSupplierForItemRoot;
@@ -31,7 +31,7 @@ import java.util.Set;
  * @param <C> - Create notification
  * @param <D> - Delete notification
  */
-abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
+public abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
         C extends NicNotification,
         D extends NicNotification>
         extends AbstractNotificationSupplierBase<O>
@@ -46,8 +46,9 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
      * @param db - DataBroker for DataChangeEvent registration
      * @param clazz - Statistics NicNotification Class
      */
-    public AbstractNotificationSupplierItemRoot(final DataBroker db, final Class<O> clazz) {
-        super(db, clazz);
+    public AbstractNotificationSupplierItemRoot(final DataBroker db, final Class<O> clazz,
+                                                final LogicalDatastoreType datastoreType) {
+        super(db, clazz, datastoreType);
     }
 
     @Override
@@ -60,11 +61,13 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     final C notif = createNotification((O) createDataObj.getValue(), ii);
                     if (notif != null) {
                         LOG.info("NicNotification created");
-                        if (notif.getClass().isAssignableFrom(NodeUpImpl.class)) {
+                        if (notif.getClass().isAssignableFrom(getCreateImplClass())) {
                             Set<IEventListener> eventListeners =
-                                    serviceRegistry.getEventListeners(EventType.NODEUPDATED);
-                            for (IEventListener listener : eventListeners) {
-                                listener.handleEvent(notif);
+                                    serviceRegistry.getEventListeners(getCreateEventType());
+                            if (eventListeners != null) {
+                                for (IEventListener listener : eventListeners) {
+                                    listener.handleEvent(notif);
+                                }
                             }
                         }
                     }
@@ -78,11 +81,13 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     final D notif = deleteNotification(deleteDataPath.firstIdentifierOf(clazz));
                     if (notif != null) {
                         LOG.info("NicNotification deleted");
-                        if (notif.getClass().isAssignableFrom(NodeDeletedImpl.class)) {
+                        if (notif.getClass().isAssignableFrom(getDeleteImplClass())) {
                             Set<IEventListener> eventListeners =
-                                    serviceRegistry.getEventListeners(EventType.NODEREMOVED);
-                            for (IEventListener listener : eventListeners) {
-                                listener.handleEvent(notif);
+                                    serviceRegistry.getEventListeners(getDeleteEventType());
+                            if (eventListeners != null) {
+                                for (IEventListener listener : eventListeners) {
+                                    listener.handleEvent(notif);
+                                }
                             }
                         }
                     }

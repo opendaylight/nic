@@ -1,5 +1,5 @@
 module intentengine-listeners {
-    main.yang-version 1;
+    yang-version 1;
     namespace "urn:opendaylight:nic:listeners";
     prefix "intentengine-listeners";
 

@@ -5,8 +5,12 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.listeners.api;
+package org.opendaylight.nic.listeners.api.intent;
 
-//TODO: add relevant fields
-public class LinkUp implements NicNotification {
+import org.opendaylight.nic.listeners.api.NicNotification;
+
+/**
+ * Created by yrineu on 07/10/15.
+ */
+public interface IntentRemovedNotification extends NicNotification {
 }

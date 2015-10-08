@@ -6,15 +6,18 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.listeners.impl;
+package org.opendaylight.nic.listeners.impl.network;
 
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.listeners.api.NodeDeleted;
-import org.opendaylight.nic.listeners.api.NodeUp;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.listeners.api.network.NodeDeleted;
+import org.opendaylight.nic.listeners.api.network.NodeUp;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.listeners.impl.AbstractNotificationSupplierItemRoot;
+import org.opendaylight.nic.listeners.impl.EventServiceRegistry;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdatedBuilder;
@@ -42,8 +45,8 @@ public class NodeNotificationSupplierImpl extends
      * @param db                   - {@link DataBroker}
      */
     public NodeNotificationSupplierImpl(final DataBroker db) {
-        super(db, FlowCapableNode.class);
-        serviceRegistry.setEventTypeService(this, EventType.NODEUPDATED, EventType.NODEREMOVED);
+        super(db, FlowCapableNode.class, LogicalDatastoreType.OPERATIONAL);
+        serviceRegistry.setEventTypeService(this, EventType.NODE_UPDATED, EventType.NODE_REMOVED);
     }
 
     @Override
@@ -79,6 +82,26 @@ public class NodeNotificationSupplierImpl extends
         NodeDeleted nodeDeleted = new NodeDeletedImpl(delNodeNotifBuilder.getNodeRef());
         LOG.info("NicNotification created for Node deleted");
         return nodeDeleted;
+    }
+
+    @Override
+    public EventType getCreateEventType() {
+        return EventType.NODE_UPDATED;
+    }
+
+    @Override
+    public EventType getDeleteEventType() {
+        return EventType.NODE_REMOVED;
+    }
+
+    @Override
+    public Class getCreateImplClass() {
+        return NodeUpImpl.class;
+    }
+
+    @Override
+    public Class getDeleteImplClass() {
+        return NodeDeletedImpl.class;
     }
 
     @Override

@@ -43,9 +43,10 @@ public abstract class AbstractNotificationSupplierBase<O extends DataObject> imp
      * @param db    - {@link DataBroker}
      * @param clazz - API contract class extended {@link DataObject}
      */
-    public AbstractNotificationSupplierBase(final DataBroker db, final Class<O> clazz) {
+    public AbstractNotificationSupplierBase(final DataBroker db, final Class<O> clazz,
+                                            final LogicalDatastoreType datastoreType) {
         Preconditions.checkArgument(db != null, "DataBroker can not be null!");
-        listenerRegistration = db.registerDataChangeListener(LogicalDatastoreType.OPERATIONAL, getWildCardPath(), this,
+        listenerRegistration = db.registerDataChangeListener(datastoreType, getWildCardPath(), this,
                 DataChangeScope.BASE);
         this.clazz = clazz;
     }

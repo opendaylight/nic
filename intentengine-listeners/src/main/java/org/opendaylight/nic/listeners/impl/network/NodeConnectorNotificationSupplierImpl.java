@@ -6,12 +6,15 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.listeners.impl;
+package org.opendaylight.nic.listeners.impl.network;
 
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.listeners.api.LinkDeleted;
-import org.opendaylight.nic.listeners.api.LinkUp;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.listeners.api.network.LinkDeleted;
+import org.opendaylight.nic.listeners.api.network.LinkUp;
+import org.opendaylight.nic.listeners.impl.AbstractNotificationSupplierItemRoot;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -32,7 +35,7 @@ public class NodeConnectorNotificationSupplierImpl extends
      * @param db                   - {@link DataBroker}
      */
     public NodeConnectorNotificationSupplierImpl(final DataBroker db) {
-        super(db, FlowCapableNodeConnector.class);
+        super(db, FlowCapableNodeConnector.class, LogicalDatastoreType.OPERATIONAL);
     }
 
     @Override
@@ -64,6 +67,26 @@ public class NodeConnectorNotificationSupplierImpl extends
 //        return notifBuilder.build();
         //TODO: implement the builder for this notififcation
         return new LinkDeleted();
+    }
+
+    @Override
+    public EventType getCreateEventType() {
+        return EventType.NODE_UPDATED;
+    }
+
+    @Override
+    public EventType getDeleteEventType() {
+        return EventType.NODE_REMOVED;
+    }
+
+    @Override
+    public Class getCreateImplClass() {
+        return NodeUpImpl.class;
+    }
+
+    @Override
+    public Class getDeleteImplClass() {
+        return NodeDeletedImpl.class;
     }
 }
 

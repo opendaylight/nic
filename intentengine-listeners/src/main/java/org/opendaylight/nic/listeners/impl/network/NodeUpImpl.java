@@ -5,9 +5,9 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.listeners.impl;
+package org.opendaylight.nic.listeners.impl.network;
 
-import org.opendaylight.nic.listeners.api.NodeUp;
+import org.opendaylight.nic.listeners.api.network.NodeUp;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
 
 public class NodeUpImpl implements NodeUp {

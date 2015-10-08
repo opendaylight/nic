@@ -43,5 +43,13 @@ public interface NotificationSupplierForItemRoot<O extends DataObject,
      * @return {@link NicNotification} - relevant API contract NicNotification
      */
     D deleteNotification(InstanceIdentifier<O> path);
+
+    EventType getCreateEventType();
+
+    EventType getDeleteEventType();
+
+    Class getCreateImplClass();
+
+    Class getDeleteImplClass();
 }
 
