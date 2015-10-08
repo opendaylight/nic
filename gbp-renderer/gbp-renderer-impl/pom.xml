@@ -10,18 +10,18 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.3.2-Lithium-SR2</version>
+  <version>0.3.3-SNAPSHOT</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>gbp-renderer-impl</artifactId>
- <version>1.0.2-Lithium-SR2</version>
+ <version>1.0.3-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
  <properties>
-  <groupbasedpolicy.version>0.2.2-Lithium-SR2</groupbasedpolicy.version>
+  <groupbasedpolicy.version>0.2.3-SNAPSHOT</groupbasedpolicy.version>
   <sonar.jacoco.Reportpath>target/jacoco.exec</sonar.jacoco.Reportpath>
   <!-- Sonar jacoco plugin to get integration test coverage info -->
   <sonar.jacoco.itReportPath>target/jacoco-it.exec</sonar.jacoco.itReportPath>
