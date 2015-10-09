@@ -1,0 +1,36 @@
+module intentengine-mapping {
+
+    yang-version 1;
+    namespace "urn:opendaylight:nic:intentengine:mapping";
+    prefix "mapping-impl";
+
+    // Dependency on service definition for config-demo
+    /* Service definitions could be also located in this yang file or even
+     * in a separate maven project that is marked as maven dependency
+     */
+
+    // Dependencies on config subsystem definition
+    import config { prefix config; revision-date 2013-04-05; }
+
+    description
+        "Service implementation for config-mapping";
+
+    revision "2015-10-05" {
+        description
+            "Initial revision";
+    }
+
+    // Module implementing foo service
+    identity intentengine-mapping {                                                                             //
+        base config:module-type;                                                                                                                             //
+        config:java-name-prefix MappingImpl;
+    }                                                                                                                                                       //
+
+    // Runtime state definition for foo-impl module
+    augment "/config:modules/config:module/config:state" {
+        case intentengine-mapping {                                                                             //
+            when "/config:modules/config:module/config:type = 'intentengine-mapping'";                          //
+
+        }
+    }
+}
