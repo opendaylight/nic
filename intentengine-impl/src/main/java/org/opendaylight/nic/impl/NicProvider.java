@@ -47,6 +47,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
+
 public class NicProvider implements NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
@@ -75,7 +76,7 @@ public class NicProvider implements NicConsoleProvider {
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         nicConsoleRegistration = context.registerService(NicConsoleProvider.class, this, null);
 
-        initIntentsOperational();
+        //initIntentsOperational();
         initIntentsConfiguration();
         LOG.info("Initialization done");
     }
