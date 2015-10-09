@@ -142,7 +142,6 @@ public class NicProviderTest {
          */
         nicProvider.init();
         assertEquals(mockNicConsoleRegistration, nicProvider.nicConsoleRegistration);
-        verify(nicProvider, times(1)).initIntentsOperational();
         verify(nicProvider, times(1)).initIntentsConfiguration();
         verify(mockBundle, times(1)).getBundleContext();
         verify(mockBundleContext, times(1)).registerService(NicConsoleProvider.class, nicProvider, null);
