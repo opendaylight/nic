@@ -155,6 +155,18 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-mapping</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-mapping</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
       <artifactId>vtn-renderer</artifactId>
       <version>${project.version}</version>
       <classifier>config</classifier>
