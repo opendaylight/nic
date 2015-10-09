@@ -47,6 +47,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
+
 public class NicProvider implements NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);

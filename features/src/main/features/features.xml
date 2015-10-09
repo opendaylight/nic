@@ -15,18 +15,29 @@
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/${restconf.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
+    <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/${karaf.version}/xml/features</repository>
 
     <!-- Repository for GBP -->
     <repository>
         mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features
     </repository>
 
-    <!-- Core feature -->
-    <feature name='odl-nic-core' version='${project.version}'
-             description='OpenDaylight :: Network Intent Composition :: Core'>
+    <!-- Mapping Service feature -->
+    <feature name="odl-nic-core-service" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: Mapping service'>
         <feature version="${mdsal.version}">odl-restconf</feature>
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+        <feature version="${hazelcast.version}">hazelcast</feature>
+        <bundle>mvn:org.opendaylight.nic/intentengine-mapping/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/87-intentengine-mapping.xml">
+            mvn:org.opendaylight.nic/intentengine-mapping/${project.version}/xml/config
+        </configfile>
+    </feature>
+
+    <!-- Core feature -->
+    <feature name='odl-nic-core' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: Core'>
+        <feature version="${project.version}">odl-nic-core-service</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-api/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-impl/${project.version}</bundle>
         <bundle>mvn:org.opendaylight.nic/intentengine-compiler/${project.version}</bundle>

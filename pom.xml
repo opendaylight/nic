@@ -40,6 +40,7 @@
         <module>intentengine-impl</module>
         <module>intentengine-cli</module>
         <module>intentengine-compiler</module>
+        <module>intentengine-mapping</module>
         <module>gbp-renderer</module>
         <module>vtn-renderer</module>
         <module>of-renderer</module>

@@ -44,6 +44,7 @@
     <restconf.version>1.3.0-SNAPSHOT</restconf.version>
     <sal.version>0.10.0-SNAPSHOT</sal.version>
     <yangtools.version>0.8.0-SNAPSHOT</yangtools.version>
+    <hazelcast.version>3.4.2</hazelcast.version>
   </properties>
 
   <dependencies>
@@ -149,6 +150,18 @@
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>of-renderer</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-mapping</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intentengine-mapping</artifactId>
       <version>${project.version}</version>
       <classifier>config</classifier>
       <type>xml</type>
