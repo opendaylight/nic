@@ -1,7 +1,11 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
 
+    <reference id="intentMappingService" availability="mandatory"
+               activation="eager" interface="org.opendaylight.nic.mapping.api.IntentMappingService">
+    </reference>
+
     <reference id="nicConsoleProvider" availability="mandatory"
-        activation="eager" interface="org.opendaylight.nic.api.NicConsoleProvider">
+               activation="eager" interface="org.opendaylight.nic.api.NicConsoleProvider">
     </reference>
 
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.1.0">
@@ -34,9 +38,14 @@
                 <ref component-id="uuidCompleter" />
             </completers>
         </command>
-         <command>
+        <command>
             <action class="org.opendaylight.nic.cli.IntentCompileShellCommand" >
                 <argument ref="nicConsoleProvider" />
+            </action>
+        </command>
+        <command>
+            <action class="org.opendaylight.nic.cli.IntentAddMappingShellCommand" >
+                <argument ref="intentMappingService" />
             </action>
         </command>
     </command-bundle>
