@@ -15,11 +15,8 @@
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/${restconf.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
-
-    <!-- Repository for GBP -->
-    <repository>
-        mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features
-    </repository>
+    <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features</repository>
+    <repository> mvn:org.opendaylight.openflowplugin/features-openflowplugin/${openflowplugin.version}/xml/features</repository>
 
     <!-- Core feature -->
     <feature name='odl-nic-core' version='${project.version}'
@@ -40,7 +37,6 @@
              description='OpenDaylight :: Network Intent Composition :: CLI'>
         <feature version="${project.version}">odl-nic-core</feature>
         <bundle>mvn:org.opendaylight.nic/intentengine-cli/${project.version}</bundle>
-        <!-- <configfile finalname="${config.configfile.directory}/${nic.api.configfile}">mvn:org.opendaylight.nic/nic-api/${project.version}/xml/config</configfile> -->
     </feature>
 
     <feature name='odl-nic-renderer-vtn' version='${project.version}'
@@ -63,6 +59,7 @@
             mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config
         </configfile>
     </feature>
+
     <!-- OF Renderer -->
     <feature name='odl-nic-renderer-of' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
