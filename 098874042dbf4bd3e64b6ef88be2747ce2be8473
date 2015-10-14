@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_f2c0687e",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "I think it make sense to have those in the odl-nic-core feature instead of this one.\n\nSo in the odl-nic-mapping you could bring odl-nic-core and add the bundles related to mapping, as it\u0027s done in the renderers.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 70
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_72d55842",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "could this be define in a variable?",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_92bd5c05",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "Why are you commenting this?\nDon\u0027t we want to initiate operational DS also?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_322590ab",
+        "filename": "intentengine-mapping/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "remove whitespace",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_12208c9a",
+        "filename": "intentengine-mapping/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "could this be removed?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_12416c0b",
+        "filename": "intentengine-mapping/src/main/config/default-config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "don\u0027t you want to bring the broker here?",
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_d24a0427",
+        "filename": "intentengine-mapping/src/main/yang/intentengine-mapping.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 24,
+        "startChar": 112,
+        "endLine": 24,
+        "endChar": 114
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_f247081c",
+        "filename": "intentengine-mapping/src/main/yang/intentengine-mapping.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 31,
+        "startChar": 113,
+        "endLine": 31,
+        "endChar": 114
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_92547ccb",
+        "filename": "intentengine-mapping/src/main/yang/intentengine-mapping.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 32,
+        "startChar": 112,
+        "endLine": 32,
+        "endChar": 114
+      },
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_3246f024",
+        "filename": "intentengine-mapping/src/main/yang/intentengine-mapping.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T20:20:26Z",
+      "side": 1,
+      "message": "don\u0027t you want to add the broker here?",
+      "revId": "098874042dbf4bd3e64b6ef88be2747ce2be8473",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
