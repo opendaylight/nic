@@ -5,14 +5,11 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package nic.of.renderer;
+package org.opendaylight.nic.of.renderer;
 
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
-import nic.of.renderer.flow.FlowAction;
-import nic.of.renderer.flow.OFRendererFlowService;
-import nic.of.renderer.flow.OFRendererFlowServiceFactory;
-import nic.of.renderer.utils.IntentUtils;
+
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
@@ -20,6 +17,10 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.nic.of.renderer.flow.FlowAction;
+import org.opendaylight.nic.of.renderer.flow.OFRendererFlowService;
+import org.opendaylight.nic.of.renderer.flow.OFRendererFlowServiceFactory;
+import org.opendaylight.nic.of.renderer.utils.IntentUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
