@@ -7,9 +7,10 @@
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package nic.of.renderer;
+package org.opendaylight.nic.of.renderer;
 
 import com.google.common.util.concurrent.CheckedFuture;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,8 @@ import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.nic.of.renderer.OFRendererDataChangeListener;
+import org.opendaylight.nic.of.renderer.OFRendererProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;

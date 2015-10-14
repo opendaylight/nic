@@ -7,7 +7,7 @@
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package nic.of.renderer;
+package org.opendaylight.nic.of.renderer;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.doReturn;
@@ -20,7 +20,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.*;
 
-import nic.of.renderer.flow.FlowAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -34,6 +33,8 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.nic.of.renderer.OFRendererDataChangeListener;
+import org.opendaylight.nic.of.renderer.flow.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
@@ -61,7 +62,7 @@ import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 
 /**
- * Unit test class for {@link nic.of.renderer.OFRendererDataChangeListener}.
+ * Unit test class for {@link org.opendaylight.nic.of.renderer.OFRendererDataChangeListener}.
  */
 public class OFRendererDataChangeListenerTest {
 
@@ -322,7 +323,7 @@ public class OFRendererDataChangeListenerTest {
 
     /**
      * Test method for
-     * {@link OFRendererDataChangeListener#pushIntentFlow(Intent, nic.of.renderer.flow.FlowAction)}}
+     * {@link OFRendererDataChangeListener#pushIntentFlow(Intent, org.opendaylight.nic.of.renderer.flow.FlowAction)}}
      * <p/>
      * Verify if openflow plugin pushes flows to MD-SAL
      */

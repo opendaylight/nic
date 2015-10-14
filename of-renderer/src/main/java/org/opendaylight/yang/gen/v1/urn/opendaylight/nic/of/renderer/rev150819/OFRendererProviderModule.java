@@ -1,6 +1,6 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819;
 
-import nic.of.renderer.OFRendererProvider;
+import org.opendaylight.nic.of.renderer.OFRendererProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
