@@ -22,6 +22,207 @@
       "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_4ecb6e53",
+        "filename": "samples/action/features/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "you need to add this dependency:\n\n    \u003cdependency\u003e\n      \u003cgroupId\u003eorg.opendaylight.mdsal.model\u003c/groupId\u003e\n      \u003cartifactId\u003efeatures-mdsal-model\u003c/artifactId\u003e\n      \u003cversion\u003e${mdsal.model.version}\u003c/version\u003e\n      \u003cclassifier\u003efeatures\u003c/classifier\u003e\n      \u003ctype\u003exml\u003c/type\u003e\n      \u003cscope\u003eruntime\u003c/scope\u003e\n    \u003c/dependency\u003e",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_aeb482d1",
+        "filename": "samples/action/features/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "netconf",
+      "range": {
+        "startLine": 67,
+        "startChar": 32,
+        "endLine": 67,
+        "endChar": 42
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_0ec5763b",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "netconf",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 45
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_6ec66a4b",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "you need to add this repository:\n\n  \u003crepository\u003emvn:org.opendaylight.mdsal.model/features-mdsal-model/{{VERSION}}/xml/features\u003c/repository\u003e",
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_cede9e11",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "make sure to use mdsal.model.version",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_2ec07229",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "mdsal",
+      "range": {
+        "startLine": 18,
+        "startChar": 48,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_eee11ad1",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "use restconf.version",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_8ee8a6b5",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "restconf.version",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_4ed28e01",
+        "filename": "samples/action/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:55:42Z",
+      "side": 1,
+      "message": "this is useless",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 8
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
