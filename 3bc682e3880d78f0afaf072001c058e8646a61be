@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_0eaed685",
+        "filename": "samples/action/api/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-14T12:50:56Z",
+      "side": 1,
+      "message": "use mdsal project",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 39
+      },
+      "revId": "3bc682e3880d78f0afaf072001c058e8646a61be",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
