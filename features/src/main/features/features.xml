@@ -14,9 +14,9 @@
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/${restconf.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/${openflowplugin.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
     <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features</repository>
-    <repository> mvn:org.opendaylight.openflowplugin/features-openflowplugin/${openflowplugin.version}/xml/features</repository>
     <repository>mvn:org.opendaylight.nemo/nemo-features/${nemo.version}/xml/features</repository>
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/${karaf.version}/xml/features</repository>
 
@@ -59,7 +59,6 @@
         <!-- <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle> -->
         <!-- <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/${project.version}/xml/config</configfile> -->
     </feature>
-
     <!-- GBP Renderer -->
     <feature name='odl-nic-renderer-gbp' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
@@ -92,6 +91,16 @@
         <bundle>mvn:org.opendaylight.nic/nemo-renderer/${project.version}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">
             mvn:org.opendaylight.nic/nemo-renderer/${project.version}/xml/config
+        </configfile>
+    </feature>
+
+    <!-- Intent Listeners -->
+    <feature name='odl-nic-listeners' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: Listeners'>
+        <feature version="${project.version}">odl-nic-renderer-of</feature>
+        <bundle>mvn:org.opendaylight.nic/intentengine-listeners/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-intentengine-listeners.xml">
+            mvn:org.opendaylight.nic/intentengine-listeners/${project.version}/xml/config
         </configfile>
     </feature>
 

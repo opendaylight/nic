@@ -45,6 +45,7 @@
         <module>vtn-renderer</module>
         <module>nemo-renderer</module>
         <module>of-renderer</module>
+        <module>intentengine-listeners</module>
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>

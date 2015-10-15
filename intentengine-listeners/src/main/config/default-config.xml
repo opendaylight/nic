@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration for Event Listeners module. -->
+<snapshot>
+    <configuration>
+        <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+            <modules xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
+                <module>
+                    <type xmlns:nic="urn:opendaylight:nic:listeners">
+                        nic:intentengine-listeners
+                    </type>
+                    <name>intentengine-listeners</name>
+                    <data-broker>
+                        <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
+                            binding:binding-async-data-broker
+                        </type>
+                        <name>binding-data-broker</name>
+                    </data-broker>
+                    <rpc-registry>
+                        <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
+                            binding:binding-rpc-registry</type>
+                        <name>binding-rpc-broker</name>
+                    </rpc-registry>
+                    <notification-adapter>
+                        <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding:impl">
+                            binding:binding-new-notification-service</type>
+                        <name>binding-notification-adapter</name>
+                    </notification-adapter>
+                </module>
+            </modules>
+        </data>
+    </configuration>
+
+    <required-capabilities>
+        <capability>urn:opendaylight:nic:listeners?module=intentengine-listeners&amp;revision=2015-09-16</capability>
+        <capability>urn:opendaylight:nic:of:renderer?module=of-renderer&amp;revision=2015-08-19</capability>
+        <capability>urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?
+            module=opendaylight-md-sal-binding&amp;revision=2013-10-28</capability>
+    </required-capabilities>
+</snapshot>
+
