@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fad0f9df_78bbf9c4",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-10-15T15:23:07Z",
+      "side": 1,
+      "message": "yes, now we have something more core than core. Maybe core-dependencies would be better.",
+      "parentUuid": "fad0f9df_783c5994",
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad0f9df_18418d0b",
         "filename": "intentengine-impl/pom.xml",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2015-10-15T14:16:07Z",
       "side": 1,
       "message": "Could you define a property for this?",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_18b0addc",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-10-15T15:23:07Z",
+      "side": 1,
+      "message": "my bad. of course",
+      "parentUuid": "fad0f9df_18418d0b",
       "range": {
         "startLine": 92,
         "startChar": 12,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fad0f9df_38b571cd",
+        "filename": "intentengine-mapping/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-10-15T15:23:07Z",
+      "side": 1,
+      "message": "sure thing",
+      "parentUuid": "fad0f9df_d84a2527",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad0f9df_f847e91b",
         "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "fad0f9df_d8c9c55b",
+        "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-10-15T15:23:07Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "fad0f9df_f847e91b",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad0f9df_98549dcb",
         "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/impl/HazelcastMappingServiceImpl.java",
         "patchSetId": 5
@@ -99,6 +189,30 @@
       "writtenOn": "2015-10-15T14:16:07Z",
       "side": 1,
       "message": "I\u0027m a bit confused here, what is the purpose here?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_b8a9617d",
+        "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/impl/HazelcastMappingServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-10-15T15:23:07Z",
+      "side": 1,
+      "message": "garbage. let me remove it.\nLet me remove those comments above as well",
+      "parentUuid": "fad0f9df_98549dcb",
       "range": {
         "startLine": 66,
         "startChar": 0,
