@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_783c5994",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-15T14:16:07Z",
+      "side": 1,
+      "message": "So by doing this you make the -core dependent on -core-service meaning -core-service is a required feature.\n\nIs that correct?",
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_18418d0b",
+        "filename": "intentengine-impl/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-15T14:16:07Z",
+      "side": 1,
+      "message": "Could you define a property for this?",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_d84a2527",
+        "filename": "intentengine-mapping/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-15T14:16:07Z",
+      "side": 1,
+      "message": "Could you define a property for this?",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_f847e91b",
+        "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-15T14:16:07Z",
+      "side": 1,
+      "message": "Can this be define in a final variable?",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_98549dcb",
+        "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/impl/HazelcastMappingServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-15T14:16:07Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused here, what is the purpose here?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "3adc6993c6202bb66a2d81af344fed51a3988a88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
