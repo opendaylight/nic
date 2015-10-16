@@ -43,6 +43,7 @@
         <module>intentengine-mapping</module>
         <module>gbp-renderer</module>
         <module>vtn-renderer</module>
+        <module>nemo-renderer</module>
         <module>of-renderer</module>
         <module>features</module>
         <module>artifacts</module>

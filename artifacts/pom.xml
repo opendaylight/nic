@@ -45,6 +45,11 @@
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
+    <artifactId>nemo-renderer</artifactId>
+    <version>${project.version}</version>
+   </dependency>
+   <dependency>
+    <groupId>${project.groupId}</groupId>
     <artifactId>of-renderer</artifactId>
     <version>${project.version}</version>
    </dependency>
