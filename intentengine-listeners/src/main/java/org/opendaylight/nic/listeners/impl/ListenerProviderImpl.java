@@ -25,11 +25,13 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.Fl
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
+import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,8 +48,9 @@ public class ListenerProviderImpl implements AutoCloseable {
             LinkUp, LinkDeleted> connectorSupp;
     private NotificationSupplierForItemRoot<Intent, IntentAdded, IntentRemoved> intentSupp;
     private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
-    OFRendererFlowService flowService;
-    NotificationService notificationService;
+    private OFRendererFlowService flowService;
+    private NotificationService notificationService;
+    private ListenerRegistration<EndpointResolver> notificationListenerRegistration = null;
 
     /**
      * Provider constructor set all needed final parameters
@@ -76,8 +79,12 @@ public class ListenerProviderImpl implements AutoCloseable {
         // Event listeners
         IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
+        NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
+        serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
 
-        supplierList = new ArrayList<NotificationSupplierDefinition<?>>();
+        EndpointResolver endpointResolver = new EndpointResolver();
+        notificationListenerRegistration = notificationService.registerNotificationListener(endpointResolver);
+        supplierList = new ArrayList<NotificationSupplierDefinition<?>>(Arrays.asList(nodeSupp));
         supplierList.add(nodeSupp);
         supplierList.add(connectorSupp);
         supplierList.add(intentSupp);
@@ -85,10 +92,12 @@ public class ListenerProviderImpl implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
+        if (notificationListenerRegistration != null) {
+            notificationListenerRegistration.close();
+        }
         for (NotificationSupplierDefinition<?> supplier : supplierList) {
             if (supplier != null) {
                 supplier.close();
-                supplier = null;
             }
         }
     }
