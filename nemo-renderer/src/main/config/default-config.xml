@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2015 Huawei, Inc and others. All rights reserved.
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Public License v1.0 which accompanies this distribution,
+  and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<snapshot>
+  <configuration>
+    <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+      <modules xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
+        <module>
+          <type xmlns:nic="urn:opendaylight:nic:nemo:renderer">
+            nic:nemo-renderer
+          </type>
+          <name>nemo-renderer</name>
+          <data-broker>
+            <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
+              binding:binding-async-data-broker
+            </type>
+            <name>binding-data-broker</name>
+          </data-broker>
+        </module>
+      </modules>
+    </data>
+  </configuration>
+
+  <required-capabilities>
+    <capability>
+      urn:opendaylight:nic:nemo:renderer?module=nemo-renderer&amp;revision=2015-10-01
+    </capability>
+  </required-capabilities>
+</snapshot>
