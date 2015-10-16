@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_47872c10",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "this repository has already been imported ..",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 127
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_e77bc027",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "..here",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 128
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_0779242f",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "this is not needed, this is brought by the odl-nic-renderer-of feature",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 68
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_a775b833",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "same here: this is not needed, this is brought by the odl-nic-renderer-of feature",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 95
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_c7723c49",
+        "filename": "intentengine-listeners/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "please remove this, as we want to use the jacoco plugin defined in odlparent we don\u0027t need to redefine it here",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 84
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_678fd024",
+        "filename": "intentengine-listeners/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "please remove this, we want to use the checkstyle plugin defined in odlparent",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 21
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_87943438",
+        "filename": "intentengine-listeners/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "please remove this, we want to use the jacoco plugin defined in odlparent",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 21
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_07a0448f",
+        "filename": "intentengine-listeners/src/main/config/default-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "I think here the only 2 you needed are: \n\n\u003ccapability\u003eurn:opendaylight:nic:listeners?module\u003dintentengine-listeners\u0026amp;revision\u003d2015-09-16\u003c/capability\u003e\n\u003ccapability\u003eurn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?module\u003dopendaylight-md-sal-binding\u0026amp;revision\u003d2013-10-28\u003c/capability\u003e",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 115
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_a7acd88d",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/api/NotificationSupplierForItemRoot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "please remove whitespace",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 7
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_67b6f0de",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/api/NotificationSupplierForItemRoot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "please remove whitespace",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 7
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_87bbd4c3",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/AbstractNotificationSupplierBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "this is not needed",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 40
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_07c7e446",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/AbstractNotificationSupplierItemRoot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "don\u0027t forget to handle updated event also",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_c7c0fc2c",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/EventServiceRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "Right, you could just create an instance of this class in the provider, registers it as a service in OSGi, then retrieve it whenever it\u0027s needed\n\nIf you don\u0027t want to do that now, at least declare the private static variable as a volatile variable so it\u0027s a bit more thread safe",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_47ec0cc8",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/listeners/rev150916/ListenerProviderModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:34:07Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused here, you are not instantiating any provider here? How the bundle can be instantiated then?\n\nYou need to create the provider here, and to return its instance.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "1f2a004e2de65dc6a272917eee33a11548192c69",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
