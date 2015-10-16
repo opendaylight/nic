@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_672b50ec",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeNotificationSubscriberImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:39:58Z",
+      "side": 1,
+      "message": "visibility?",
+      "revId": "bb48b9677969c7158c0703f0b93db3ced821696b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_8730b457",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeNotificationSubscriberImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:39:58Z",
+      "side": 1,
+      "message": "visibility?",
+      "revId": "bb48b9677969c7158c0703f0b93db3ced821696b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
