@@ -81,6 +81,17 @@
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
             mvn:org.opendaylight.nic/of-renderer/${project.version}/xml/config
         </configfile>
-
     </feature>
+
+    <!-- NEMO Renderer -->
+    <feature name='odl-nic-renderer-nemo' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>
+        <feature version="${project.version}">odl-nic-core</feature>
+        <feature version="${nemo.version}">odl-nemo-engine</feature>
+        <bundle>mvn:org.opendaylight.nic/nemo-renderer/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">
+            mvn:org.opendaylight.nic/nemo-renderer/${project.version}/xml/config
+        </configfile>
+    </feature>
+
 </features>
