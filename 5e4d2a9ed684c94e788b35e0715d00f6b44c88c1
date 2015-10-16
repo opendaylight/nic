@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_c7d79cec",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/LinkUpImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:37:49Z",
+      "side": 1,
+      "message": "could you specify public constructor? or is this on purpose?",
+      "revId": "5e4d2a9ed684c94e788b35e0715d00f6b44c88c1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_6704b07e",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/ListenerProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:37:49Z",
+      "side": 1,
+      "message": "this is not needed",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 32
+      },
+      "revId": "5e4d2a9ed684c94e788b35e0715d00f6b44c88c1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_87099497",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/ListenerProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:37:49Z",
+      "side": 1,
+      "message": "could you define its visibility please? I believe it is public",
+      "revId": "5e4d2a9ed684c94e788b35e0715d00f6b44c88c1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_27fea86c",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeDeletedImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:37:49Z",
+      "side": 1,
+      "message": "public?",
+      "revId": "5e4d2a9ed684c94e788b35e0715d00f6b44c88c1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_4703ac73",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeDeletedImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-16T13:37:49Z",
+      "side": 1,
+      "message": "public?",
+      "revId": "5e4d2a9ed684c94e788b35e0715d00f6b44c88c1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
