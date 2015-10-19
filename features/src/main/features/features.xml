@@ -26,9 +26,9 @@
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <feature version="${hazelcast.version}">hazelcast</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-mapping/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intentengine-mapping/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/87-intentengine-mapping.xml">
-            mvn:org.opendaylight.nic/intentengine-mapping/${project.version}/xml/config
+            mvn:org.opendaylight.nic/intentengine-mapping/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
@@ -36,11 +36,11 @@
     <feature name='odl-nic-core' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Core'>
         <feature version="${project.version}">odl-nic-core-service</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-api/${project.version}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intentengine-impl/${project.version}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intentengine-compiler/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intentengine-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intentengine-impl/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intentengine-compiler/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/88-intentengine-impl.xml">
-            mvn:org.opendaylight.nic/intentengine-impl/${project.version}/xml/config
+            mvn:org.opendaylight.nic/intentengine-impl/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
@@ -48,7 +48,7 @@
     <feature name='odl-nic-console' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: CLI'>
         <feature version="${project.version}">odl-nic-core</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-cli/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intentengine-cli/{{VERSION}}</bundle>
     </feature>
 
     <feature name='odl-nic-renderer-vtn' version='${project.version}'
@@ -56,18 +56,18 @@
         <feature version="${project.version}">odl-nic-core</feature>
         <!-- TODO: Add the following dependents after the wiring issue around sun.reflect is fixed -->
         <!-- <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature> -->
-        <!-- <bundle>mvn:org.opendaylight.nic/vtn-renderer/${project.version}</bundle> -->
-        <!-- <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/${project.version}/xml/config</configfile> -->
+        <!-- <bundle>mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}</bundle> -->
+        <!-- <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}/xml/config</configfile> -->
     </feature>
     <!-- GBP Renderer -->
     <feature name='odl-nic-renderer-gbp' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-ofoverlay</feature>
-        <bundle>mvn:org.opendaylight.nic/gbp-renderer-api/${project.version}</bundle>
-        <bundle>mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/gbp-renderer-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/gbp-renderer-impl/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">
-            mvn:org.opendaylight.nic/gbp-renderer-impl/${project.version}/xml/config
+            mvn:org.opendaylight.nic/gbp-renderer-impl/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
@@ -77,9 +77,9 @@
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
-        <bundle>mvn:org.opendaylight.nic/of-renderer/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
-            mvn:org.opendaylight.nic/of-renderer/${project.version}/xml/config
+            mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
@@ -88,9 +88,9 @@
              description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${nemo.version}">odl-nemo-engine</feature>
-        <bundle>mvn:org.opendaylight.nic/nemo-renderer/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">
-            mvn:org.opendaylight.nic/nemo-renderer/${project.version}/xml/config
+            mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
@@ -98,9 +98,9 @@
     <feature name='odl-nic-listeners' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Listeners'>
         <feature version="${project.version}">odl-nic-renderer-of</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-listeners/${project.version}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intentengine-listeners/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-intentengine-listeners.xml">
-            mvn:org.opendaylight.nic/intentengine-listeners/${project.version}/xml/config
+            mvn:org.opendaylight.nic/intentengine-listeners/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
