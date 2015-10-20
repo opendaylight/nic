@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_8025f4ac",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-20T17:23:51Z",
+      "side": 1,
+      "message": "I missed those in the review, they can also be move to {{VERSION}}\n\nThis was done here: https://git.opendaylight.org/gerrit/#/c/28616/1",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 106
+      },
+      "revId": "6cd3456365bce28deb43adf97ee615f43b2f2a4b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
