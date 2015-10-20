@@ -33,8 +33,7 @@
     <required-capabilities>
         <capability>urn:opendaylight:nic:listeners?module=intentengine-listeners&amp;revision=2015-09-16</capability>
         <capability>urn:opendaylight:nic:of:renderer?module=of-renderer&amp;revision=2015-08-19</capability>
-        <capability>urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?
-            module=opendaylight-md-sal-binding&amp;revision=2013-10-28</capability>
+        <capability>urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?module=opendaylight-md-sal-binding&amp;revision=2013-10-28</capability>
     </required-capabilities>
 </snapshot>
 
