@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_689ebc58",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNotificationSubscriberImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-10-20T01:11:51Z",
+      "side": 1,
+      "message": "As mentioned by Alexis in earlier reviews, I think that this variable should be private",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "7f264d934e3732982b97c39199f64327554a4b73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_08a3709f",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNotificationSubscriberImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-10-20T01:11:51Z",
+      "side": 1,
+      "message": "I think that it should be tagged as public.",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "7f264d934e3732982b97c39199f64327554a4b73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
