@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_6349fd8a",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/ListenerProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-20T12:40:08Z",
+      "side": 1,
+      "message": "please specify the visibility",
+      "revId": "bfb48ca54f001c4ceae7f6295d02c288d92efeb7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_035ef145",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/ListenerProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-20T12:40:08Z",
+      "side": 1,
+      "message": "please specify the visibility",
+      "revId": "bfb48ca54f001c4ceae7f6295d02c288d92efeb7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_235bf555",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/ListenerProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-20T12:40:08Z",
+      "side": 1,
+      "message": "this is not needed",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "bfb48ca54f001c4ceae7f6295d02c288d92efeb7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
