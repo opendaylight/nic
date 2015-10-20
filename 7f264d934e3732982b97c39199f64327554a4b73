@@ -45,6 +45,23 @@
       "revId": "7f264d934e3732982b97c39199f64327554a4b73",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_63725de7",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeUpImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-20T12:34:14Z",
+      "side": 1,
+      "message": "public",
+      "revId": "7f264d934e3732982b97c39199f64327554a4b73",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
