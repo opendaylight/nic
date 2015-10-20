@@ -11,13 +11,13 @@
           xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
 
     <!-- https://wiki.opendaylight.org/view/Runtime:Karaf_Features_Guidelines#Feature_Best_Practices -->
-    <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.netconf/features-restconf/${restconf.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/${openflowplugin.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.vtn/features-vtn-manager/${feature.vtn-manager.version}/xml/features</repository>
-    <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/${groupbasedpolicy.version}/xml/features</repository>
-    <repository>mvn:org.opendaylight.nemo/nemo-features/${nemo.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
+    <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/${karaf.version}/xml/features</repository>
 
     <!-- Mapping Service feature -->
