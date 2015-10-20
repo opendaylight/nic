@@ -15,6 +15,12 @@
                         </type>
                         <name>binding-data-broker</name>
                     </data-broker>
+                    <pipeline-manager>
+                        <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:openflowplugin:app:pipeline-manager">
+                            prefix:pipeline-manager
+                        </type>
+                        <name>pipeline-manager</name>
+                    </pipeline-manager>
                 </module>
             </modules>
         </data>

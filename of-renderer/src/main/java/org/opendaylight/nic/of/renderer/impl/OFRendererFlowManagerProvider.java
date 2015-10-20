@@ -16,6 +16,7 @@ import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.nic.of.renderer.utils.IntentUtils;
+import org.opendaylight.openflowplugin.applications.pipeline_manager.PipelineManager;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
@@ -44,9 +45,11 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private IntentFlowManager intentFlowManager;
     private ArpFlowManager arpFlowManager;
     private DataBroker dataBroker;
+    private final PipelineManager pipelineManager;
 
-    public OFRendererFlowManagerProvider(DataBroker dataBroker) {
+    public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
+        this.pipelineManager = pipelineManager;
     }
 
     public void init() {
@@ -54,8 +57,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         // Register this service with karaf
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         nicFlowServiceRegistration = context.registerService(OFRendererFlowService.class, this, null);
-        intentFlowManager = new IntentFlowManager(dataBroker);
-        arpFlowManager = new ArpFlowManager(dataBroker);
+        intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
+        arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
     }
 
 

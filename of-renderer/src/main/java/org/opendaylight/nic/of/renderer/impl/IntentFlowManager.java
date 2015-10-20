@@ -10,6 +10,7 @@ package org.opendaylight.nic.of.renderer.impl;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.api.FlowAction;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
+import org.opendaylight.openflowplugin.applications.pipeline_manager.PipelineManager;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
@@ -47,8 +48,8 @@ public class IntentFlowManager extends AbstractFlowManager {
         this.action = action;
     }
 
-    IntentFlowManager(DataBroker dataBroker) {
-        super(dataBroker);
+    IntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
+        super(dataBroker, pipelineManager);
         this.dataBroker = dataBroker;
     }
 
@@ -101,7 +102,6 @@ public class IntentFlowManager extends AbstractFlowManager {
         flowBuilder.setId(flowId);
         flowBuilder.setKey(key);
         flowBuilder.setBarrier(true);
-        flowBuilder.setTableId(DEFAULT_TABLE_ID);
         flowBuilder.setPriority(DEFAULT_PRIORITY);
         flowBuilder.setFlowName(flowName);
         flowBuilder.setHardTimeout(DEFAULT_HARD_TIMEOUT);

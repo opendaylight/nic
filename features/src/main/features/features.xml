@@ -14,7 +14,7 @@
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
     <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
@@ -75,8 +75,7 @@
     <feature name='odl-nic-renderer-of' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
-        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
-        <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-app-pipeline-manager-li</feature>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
             mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config

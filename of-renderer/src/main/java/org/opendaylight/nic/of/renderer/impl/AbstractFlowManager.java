@@ -14,6 +14,7 @@ import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.utils.GenericTransactionUtils;
+import org.opendaylight.openflowplugin.applications.pipeline_manager.PipelineManager;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.Table;
@@ -39,13 +40,14 @@ import java.util.List;
 public abstract class AbstractFlowManager {
 
     private final DataBroker dataBroker;
-    protected static final short DEFAULT_TABLE_ID = 0;
     protected static final Integer DEFAULT_IDLE_TIMEOUT = 0;
     protected static final Integer DEFAULT_HARD_TIMEOUT = 0;
     protected static final Integer DEFAULT_PRIORITY = 9000;
+    private final PipelineManager pipelineManager;
 
-    AbstractFlowManager(DataBroker dataBroker) {
+    AbstractFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
+        this.pipelineManager = pipelineManager;
     }
 
     protected abstract String createFlowName();
@@ -83,6 +85,8 @@ public abstract class AbstractFlowManager {
 
     protected boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder, FlowAction flowAction) {
         boolean result;
+
+        pipelineManager.setTableId(nodeId, flowBuilder);
 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
                 .child(Node.class, new NodeKey(nodeId)).augmentation(FlowCapableNode.class)

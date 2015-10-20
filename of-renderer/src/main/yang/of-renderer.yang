@@ -5,6 +5,7 @@ module of-renderer {
 
     import config { prefix config; revision-date 2013-04-05; }
     import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+    import pipeline-manager { prefix pipeline-manager; revision-date 2015-09-25; }
 
 
     description
@@ -34,6 +35,15 @@ module of-renderer {
                         refine type {
                             mandatory false;
                             config:required-identity mdsal:binding-async-data-broker;
+                        }
+                    }
+                }
+
+                container pipeline-manager {
+                    uses config:service-ref {
+                        refine type {
+                            mandatory true;
+                            config:required-identity pipeline-manager:pipeline-manager;
                         }
                     }
                 }
