@@ -23,5 +23,7 @@ public enum EventType {
     /** Indicates a new intent is added */
     INTENT_ADDED,
     /** Indicates existing intent is removed */
-    INTENT_REMOVED
+    INTENT_REMOVED,
+    /** Indicates that a new endpoint is discovered but it doesn't mean that the just came up*/
+    ENDPOINT_DISCOVERED
 }

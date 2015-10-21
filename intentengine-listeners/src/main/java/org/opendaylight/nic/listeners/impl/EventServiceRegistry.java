@@ -18,10 +18,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
-  * Events Registry that stores mappings from the event providers
-  * to their supported types and Listeners
-  *
-*/
+ * Events Registry that stores mappings from the event providers
+ * to their supported types and Listeners
+ *
+ */
 public final class EventServiceRegistry {
 
     private static volatile EventServiceRegistry serviceRegistry = null;
@@ -50,6 +50,24 @@ public final class EventServiceRegistry {
             Set<IEventListener> eventListeners = eventRegistry.get(service);
             eventListeners.add(listener);
             eventRegistry.put(service, eventListeners);
+        }
+    }
+
+    public void registerEventListener(EventType eventType, IEventListener listener) {
+        IEventService service = getEventService(eventType);
+        if (service != null) {
+            if (!eventRegistry.containsKey(service)) {
+                HashSet<IEventListener> eventListeners = new HashSet<>();
+                eventListeners.add(listener);
+                eventRegistry.put(service, eventListeners);
+            } else {
+                Set<IEventListener> eventListeners = eventRegistry.get(service);
+                eventListeners.add(listener);
+                eventRegistry.put(service, eventListeners);
+            }
+        }
+        else {
+            LOG.error("No event supplier registered for Event type {}", eventType);
         }
     }
 

@@ -47,10 +47,10 @@ public class ListenerProviderImpl implements AutoCloseable {
     private NotificationSupplierForItemRoot<FlowCapableNodeConnector,
             LinkUp, LinkDeleted> connectorSupp;
     private NotificationSupplierForItemRoot<Intent, IntentAdded, IntentRemoved> intentSupp;
+    private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
     private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
     private OFRendererFlowService flowService;
     private NotificationService notificationService;
-    private ListenerRegistration<EndpointResolver> notificationListenerRegistration = null;
 
     /**
      * Provider constructor set all needed final parameters
@@ -75,15 +75,17 @@ public class ListenerProviderImpl implements AutoCloseable {
         nodeSupp = new NodeNotificationSupplierImpl(db);
         connectorSupp = new NodeConnectorNotificationSupplierImpl(db);
         intentSupp = new IntentNotificationSupplierImpl(db);
+        endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
         IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
         NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
+        EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =
+                new EndpointDiscoveryNotificationSubscriberImpl();
+        serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
 
-        EndpointResolver endpointResolver = new EndpointResolver();
-        notificationListenerRegistration = notificationService.registerNotificationListener(endpointResolver);
         supplierList = new ArrayList<NotificationSupplierDefinition<?>>(Arrays.asList(nodeSupp));
         supplierList.add(nodeSupp);
         supplierList.add(connectorSupp);
@@ -92,9 +94,7 @@ public class ListenerProviderImpl implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        if (notificationListenerRegistration != null) {
-            notificationListenerRegistration.close();
-        }
+        endpointResolver.close();
         for (NotificationSupplierDefinition<?> supplier : supplierList) {
             if (supplier != null) {
                 supplier.close();
