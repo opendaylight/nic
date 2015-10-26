@@ -28,6 +28,7 @@
     <mdsal.version>1.3.0-SNAPSHOT</mdsal.version>
     <restconf.version>1.3.0-SNAPSHOT</restconf.version>
     <yangtools.version>0.8.0-SNAPSHOT</yangtools.version>
+    <karaf.cellar.version>3.0.3</karaf.cellar.version>
     <hazelcast.version>3.4.2</hazelcast.version>
   </properties>
 
@@ -54,6 +55,7 @@
       <type>xml</type>
       <scope>runtime</scope>
     </dependency>
+    <!-- VTN is broken currently
     <dependency>
       <groupId>org.opendaylight.vtn</groupId>
       <artifactId>features-vtn-manager</artifactId>
@@ -61,6 +63,7 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
+    -->
     <dependency>
       <groupId>org.opendaylight.nemo</groupId>
       <artifactId>nemo-features</artifactId>
@@ -184,6 +187,13 @@
       <artifactId>intentengine-listeners</artifactId>
       <version>${project.version}</version>
       <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.karaf.cellar</groupId>
+      <artifactId>apache-karaf-cellar</artifactId>
+      <version>${karaf.cellar.version}</version>
+      <classifier>features</classifier>
       <type>xml</type>
     </dependency>
   </dependencies>
