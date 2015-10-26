@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_51a03590",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-26T14:29:21Z",
+      "side": 1,
+      "message": "why do we bring this repository?\n\nhttp://mvnrepository.com/artifact/org.apache.karaf.cellar/apache-karaf-cellar",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 101
+      },
+      "revId": "638b63789059a2f9ae3610ec11b69225108591f0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_317c9120",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-26T14:29:21Z",
+      "side": 1,
+      "message": "Does this feature comes from http://mvnrepository.com/artifact/com.hazelcast/hazelcast ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 67
+      },
+      "revId": "638b63789059a2f9ae3610ec11b69225108591f0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fad0f9df_11aaad70",
+        "filename": "intentengine-mapping/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-26T14:29:21Z",
+      "side": 1,
+      "message": "this one I understand, but we are not using the latest version here.\nIs this intentional? \n\nhttp://mvnrepository.com/artifact/org.apache.karaf.cellar/org.apache.karaf.cellar.hazelcast",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 15
+      },
+      "revId": "638b63789059a2f9ae3610ec11b69225108591f0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
