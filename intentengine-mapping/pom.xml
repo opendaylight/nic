@@ -24,6 +24,7 @@
 
  <properties>
   <powermock.version>1.5.5</powermock.version>
+  <karaf.cellar.version>3.0.3</karaf.cellar.version>
  </properties>
 
  <dependencies>
@@ -58,7 +59,7 @@
   <dependency>
    <groupId>org.apache.karaf.cellar</groupId>
    <artifactId>org.apache.karaf.cellar.hazelcast</artifactId>
-   <version>${karaf.version}</version>
+   <version>${karaf.cellar.version}</version>
   </dependency>
 
  </dependencies>
