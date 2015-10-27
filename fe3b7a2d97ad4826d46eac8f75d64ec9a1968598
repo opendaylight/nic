@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_345d7eea",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-10-27T14:46:47Z",
+      "side": 1,
+      "message": "So this feature was pulled from this repository \u003crepository\u003emvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features\u003c/repository\u003e although it doesn\u0027t make sense to me.\n\nMoreover, I don\u0027t even know if this feature \"hazelcast\" is needed as it\u0027s not the one used in intentengine-mapping..",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 67
+      },
+      "revId": "fe3b7a2d97ad4826d46eac8f75d64ec9a1968598",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
