@@ -40,6 +40,22 @@ module intent {
                         the system.";
         }
 
+        leaf state {
+                    type enumeration {
+                        enum "UNDEPLOYED";
+                        enum "UNDEPLOYING";
+                        enum "DEPLOYING";
+                        enum "DEPLOYED";
+                        enum "DEPLOY_FAILED";
+                        enum "UNDEPLOY_FAILED";
+                        enum "DISABLING";
+                        enum "DISABLED";
+                    }
+                    config false;
+                    mandatory true;
+                    description "Represents the state of the intent.";
+                }
+
         leaf detailed-status-message {
             type string;
             config false;
