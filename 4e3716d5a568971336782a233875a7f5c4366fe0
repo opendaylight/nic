@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_0bc7f146",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/api/StateMachineEngineService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-10-29T00:44:51Z",
+      "side": 1,
+      "message": "Rename to \u0027Hewlett-Packard Enteprise\u0027 \nremove this \u0027Development Company, L.P.\u0027\n\nall over the code",
+      "revId": "4e3716d5a568971336782a233875a7f5c4366fe0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
