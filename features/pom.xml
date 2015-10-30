@@ -55,13 +55,6 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.opendaylight.vtn</groupId>
-      <artifactId>features-vtn-manager</artifactId>
-      <version>${feature.vtn-manager.version}</version>
-      <classifier>features</classifier>
-      <type>xml</type>
-    </dependency>
-    <dependency>
       <groupId>org.opendaylight.nemo</groupId>
       <artifactId>nemo-features</artifactId>
       <version>${nemo.version}</version>
