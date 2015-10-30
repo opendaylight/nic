@@ -134,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_3fe8ea7b",
+        "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/Epg.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-10-30T23:49:43Z",
+      "side": 1,
+      "message": "What do you mean \u0027andNot\u0027?\nWe can consider some parts of boolean expressions such as AND, OR, and NOT.",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "0b3eacb711042a81cf0f9906e203922e5ee3e10e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_5dc10f2d",
         "filename": "intentengine-compiler/src/main/java/org/opendaylight/nic/compiler/IntentCompilerImpl.java",
         "patchSetId": 13
