@@ -57,5 +57,6 @@
         <module>artifacts</module>
         <module>distribution</module>
         <module>pipeline-manager</module>
+        <module>samples/action</module>
     </modules>
 </project>
