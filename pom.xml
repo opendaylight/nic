@@ -49,6 +49,7 @@
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>
+        <module>samples/action</module>
     </modules>
 
     <build>
