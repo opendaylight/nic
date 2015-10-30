@@ -1,0 +1,22 @@
+module action {
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:action";
+    prefix "action";
+
+    import intent { prefix "intent"; revision-date "2015-01-22"; }
+
+    revision "2015-01-22" {
+        description "Initial revision of action model";
+    }
+
+    augment "/intent:intents/intent:intent/intent:actions/intent:action" {
+        case Redirect  {
+            container Redirect  {
+                description "REDIRECT";
+                leaf priority {
+                    type uint8;
+                }
+            }
+        }
+    }
+}

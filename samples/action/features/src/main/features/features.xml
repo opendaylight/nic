@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vi: set et smarttab sw=4 tabstop=4: -->
+<!--
+Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others
+
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<features name="odl-action-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+  <repository>mvn:org.opendaylight.yangtools/features-yangtools/${yangtools.version}/xml/features</repository>
+  <repository>mvn:org.opendaylight.controller/features-mdsal/${mdsal.version}/xml/features</repository>
+  <repository>mvn:org.opendaylight.netconf/features-restconf/${mdsal.version}/xml/features</repository>
+  <repository>mvn:org.opendaylight.mdsal.model/features-mdsal-model/{{VERSION}}/xml/features</repository>
+  <repository>mvn:org.opendaylight.nic/features-nic/${nic.version}/xml/features</repository>
+  
+  <!-- Repos needed by ofoverlay for SFC -->
+  <!--   <repository>mvn:org.opendaylight.sfc/features-sfc/${sfc.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.sfc/features-sfc-sb-rest/${sfc.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.sfc/features-sfc-netconf/${sfc.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.sfc/features-sfc-ovs/${sfc.version}/xml/features</repository>
+    <repository>mvn:org.opendaylight.sfc/features-sfcofl2/${sfc.version}/xml/features</repository> -->
+
+  <feature name='odl-action-api' version='${project.version}' description='OpenDaylight :: action :: api'>
+    <feature version='${mdsal.model.version}'>odl-mdsal-models</feature>
+    <feature version='${nic.version}'>odl-nic-core</feature>
+    <bundle>mvn:org.opendaylight.nic.samples/action-api/${project.version}</bundle>
+  </feature>
+  <feature name='odl-action' version='${project.version}' description='OpenDaylight :: action'>
+    <feature version='${mdsal.version}'>odl-mdsal-broker</feature>
+    <feature version='${project.version}'>odl-action-api</feature>
+<!--     <feature version='${sfc.version}'>odl-sfc-core</feature>
+    <feature version='${sfc.version}'>odl-sfc-test-consumer</feature>
+    <feature version='${sfc.version}'>odl-sfc-sb-rest</feature>
+    <feature version='${sfc.version}'>odl-sfcofl2</feature>
+    <feature version='${sfc.version}'>odl-sfc-ovs</feature>
+    <feature version='${sfc.version}'>odl-sfc-netconf</feature> -->
+    <bundle>mvn:org.opendaylight.nic.samples/action-impl/${project.version}</bundle>
+    <configfile finalname="${configfile.directory}/action.xml">mvn:org.opendaylight.nic.samples/action-impl/${project.version}/xml/config</configfile>
+  </feature>
+  <feature name='odl-action-rest' version='${project.version}' description='OpenDaylight :: action :: REST'>
+    <feature version="${project.version}">odl-action</feature>
+    <feature version="${restconf.version}">odl-restconf</feature>
+  </feature>
+  <feature name='odl-action-ui' version='${project.version}' description='OpenDaylight :: action :: UI'>
+    <feature version="${project.version}">odl-action-rest</feature>
+    <feature version="${restconf.version}">odl-mdsal-apidocs</feature>
+    <feature version="${mdsal.version}">odl-mdsal-xsql</feature>
+  </feature>
+
+</features>
