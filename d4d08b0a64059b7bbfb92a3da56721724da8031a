@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_c468fe89",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/api/StateMachineEngineService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:23:38Z",
+      "side": 1,
+      "message": "redundant thus useless modifier",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "d4d08b0a64059b7bbfb92a3da56721724da8031a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_640592c1",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/api/StateMachineEngineService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:23:38Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "d4d08b0a64059b7bbfb92a3da56721724da8031a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_840af6d0",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/api/StateMachineEngineService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:23:38Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "d4d08b0a64059b7bbfb92a3da56721724da8031a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_240f8ae3",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/engine/service/DeployFailedService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:23:38Z",
+      "side": 1,
+      "message": "redundant thus useless modifier",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "d4d08b0a64059b7bbfb92a3da56721724da8031a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_44140ef5",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/engine/service/DeployService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:23:38Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "d4d08b0a64059b7bbfb92a3da56721724da8031a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_e4f8a2c6",
+        "filename": "intentengine-impl/src/main/java/org/opendaylight/nic/engine/service/EngineService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:23:38Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "d4d08b0a64059b7bbfb92a3da56721724da8031a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
