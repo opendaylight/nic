@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_642cb24b",
+        "filename": "of-renderer/src/main/config/default-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:30:09Z",
+      "side": 1,
+      "message": "wondering if you don\u0027t have to also add a capability in the required-capabilities for this?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "7c91f86d0920f35ed7acaf1a0a7601c3a4c00fcb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
