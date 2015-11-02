@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_046fe693",
+        "filename": "samples/action/impl/src/main/config/default-config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:19:46Z",
+      "side": 1,
+      "message": "You only need one here of them here",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "049006d333125b02d5941cb1863ecd4c33182952",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_445deee8",
+        "filename": "samples/action/impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/action/impl/rev141210/ActionModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:19:46Z",
+      "side": 1,
+      "message": "It\u0027s really confusing that you use both getDataBrokerDependency and getBrokerDependency(). You only need one",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 54
+      },
+      "revId": "049006d333125b02d5941cb1863ecd4c33182952",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_2458eaf9",
+        "filename": "samples/action/impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/action/impl/rev141210/ActionModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:19:46Z",
+      "side": 1,
+      "message": "could you save the registerListener returned so on #close() you can close it?",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 72
+      },
+      "revId": "049006d333125b02d5941cb1863ecd4c33182952",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_8463d6b0",
+        "filename": "samples/action/impl/src/main/yang/action-impl.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-02T20:19:46Z",
+      "side": 1,
+      "message": "why do you bring both, only one is needed",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 13
+      },
+      "revId": "049006d333125b02d5941cb1863ecd4c33182952",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
