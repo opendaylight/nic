@@ -92,6 +92,11 @@ module intent {
                         uses actions:block;
                     }
                 }
+                case redirect {
+                    container redirect {
+                        uses actions:redirect;
+                    }
+                }
             }
 
             description "List of action references to apply to the connections between

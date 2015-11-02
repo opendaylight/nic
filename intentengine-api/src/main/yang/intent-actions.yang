@@ -26,4 +26,9 @@ module intent-actions {
         uses action;
         description "Indicates traffic is not allowed";
     }
+
+    grouping redirect {
+        uses action;
+        description "Indicates traffic is to redirect";
+    }
 }
