@@ -39,4 +39,14 @@ module intent-constraints {
       description "Constraint that requires a specific node to be excluded
           from a path computation.";
     }
+    
+    grouping encapsulation-mpls {
+        uses constraint;
+        
+        leaf label {
+            type uint16;
+        }
+        
+        description "Encapsulation strategy to be applied.";
+    }
 }
