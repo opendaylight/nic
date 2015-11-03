@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "bada0100_97e223d4",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeNotificationSupplierImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-03T22:48:38Z",
+      "side": 1,
+      "message": "should not use a line break between those imports?",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_f7d04ff9",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeNotificationSupplierImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-03T22:48:38Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 6
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_17ce335b",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/utils/Arp.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-03T22:48:38Z",
+      "side": 1,
+      "message": "Use constant MAC_ADDR_LENGHT \u003d 6",
+      "range": {
+        "startLine": 66,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_b7dac715",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/utils/Arp.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-03T22:48:38Z",
+      "side": 1,
+      "message": "Use constant IPv4_ADDR_LENGHT \u003d 4",
+      "range": {
+        "startLine": 68,
+        "startChar": 34,
+        "endLine": 68,
+        "endChar": 35
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_77dd3f14",
         "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/utils/ArpUtils.java",
         "patchSetId": 1
