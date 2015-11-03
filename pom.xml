@@ -36,16 +36,16 @@
 
     <modules>
         <!-- Well-known -->
-        <module>intentengine-api</module>
-        <module>intentengine-impl</module>
-        <module>intentengine-cli</module>
-        <module>intentengine-compiler</module>
-        <module>intentengine-mapping</module>
+        <module>intent-api</module>
+        <module>intent-impl</module>
+        <module>intent-cli</module>
+        <module>intent-compiler</module>
+        <module>intent-mapping</module>
         <module>gbp-renderer</module>
         <module>vtn-renderer</module>
         <module>nemo-renderer</module>
         <module>of-renderer</module>
-        <module>intentengine-listeners</module>
+        <module>intent-listeners</module>
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>
