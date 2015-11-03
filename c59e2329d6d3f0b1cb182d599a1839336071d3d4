@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_ea24ebc7",
+        "filename": "intentengine-api/src/main/yang/intent-constraints.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-03T15:39:47Z",
+      "side": 1,
+      "message": "This might not be the right place to model the MPLS stuff since it\u0027s protocol specific. There might be a good spot in ofrenderer for that protocol.\n\nAlso, it might be a good idea to reuse the mpls model in vpnservice",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 4
+      },
+      "revId": "c59e2329d6d3f0b1cb182d599a1839336071d3d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_8a1d1f76",
+        "filename": "intentengine-api/src/main/yang/intent.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-03T15:39:47Z",
+      "side": 1,
+      "message": "This might not be the right place to model the MPLS stuff since it\u0027s protocol specific. There might be a good spot in ofrenderer for that protocol.\n\nAlso, it might be a good idea to reuse the mpls model in vpnservice",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 20
+      },
+      "revId": "c59e2329d6d3f0b1cb182d599a1839336071d3d4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
