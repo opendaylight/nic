@@ -20,17 +20,17 @@
   <dependencies>
    <dependency>
     <groupId>${project.groupId}</groupId>
-    <artifactId>intentengine-api</artifactId>
+    <artifactId>intent-api</artifactId>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
-    <artifactId>intentengine-impl</artifactId>
+    <artifactId>intent-impl</artifactId>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
-    <artifactId>intentengine-cli</artifactId>
+    <artifactId>intent-cli</artifactId>
     <version>${project.version}</version>
    </dependency>
    <dependency>
@@ -55,12 +55,12 @@
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
-    <artifactId>intentengine-listeners</artifactId>
+    <artifactId>intent-listeners</artifactId>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
-    <artifactId>intentengine-mapping</artifactId>
+    <artifactId>intent-mapping</artifactId>
     <version>${project.version}</version>
    </dependency>
    <dependency>

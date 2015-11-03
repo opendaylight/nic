@@ -18,16 +18,36 @@
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
- <artifactId>intentengine-mapping</artifactId>
+ <artifactId>intent-impl</artifactId>
  <version>1.1.0-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
  <properties>
   <powermock.version>1.5.5</powermock.version>
-  <karaf.cellar.version>3.0.3</karaf.cellar.version>
+  <lombok.version>1.16.4</lombok.version>
  </properties>
 
  <dependencies>
+  <dependency>
+   <groupId>${project.groupId}</groupId>
+   <artifactId>intent-api</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>${project.groupId}</groupId>
+   <artifactId>intent-compiler</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>${project.groupId}</groupId>
+   <artifactId>intent-mapping</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>org.projectlombok</groupId>
+   <artifactId>lombok</artifactId>
+   <version>${lombok.version}</version>
+  </dependency>
   <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
@@ -50,12 +70,6 @@
    <artifactId>powermock-api-mockito</artifactId>
    <version>${powermock.version}</version>
    <scope>test</scope>
-  </dependency>
-<!-- apache cellar dependency -->
-  <dependency>
-   <groupId>org.apache.karaf.cellar</groupId>
-   <artifactId>org.apache.karaf.cellar.hazelcast</artifactId>
-   <version>${karaf.cellar.version}</version>
   </dependency>
  </dependencies>
 </project>
