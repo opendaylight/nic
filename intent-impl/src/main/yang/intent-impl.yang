@@ -1,0 +1,45 @@
+module intent-impl {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:intent:impl";
+    prefix intent-impl;
+
+    import config {
+        prefix config;
+        revision-date 2013-04-05;
+    }
+    import opendaylight-md-sal-binding {
+        prefix mdsal;
+        revision-date 2013-10-28;
+    }
+
+    description
+      "Service definition for the EntityEngine API project.";
+
+    revision "2015-05-07" {
+        description "Initial revision.";
+    }
+
+    identity intent-impl {
+        base config:module-type;
+
+        // Specifies the prefix for generated Java classes.
+        config:java-name-prefix NicProvider;
+    }
+
+    // Augments the 'configuration' choice node under modules/module.
+    augment "/config:modules/config:module/config:configuration" {
+        case intent-impl {
+            when "/config:modules/config:module/config:type = 'intent-impl'";
+
+            container data-broker {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity
+                          mdsal:binding-async-data-broker;
+                    }
+                }
+            }
+        }
+    }
+}
