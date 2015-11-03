@@ -64,10 +64,9 @@
              description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-ofoverlay</feature>
-        <bundle>mvn:org.opendaylight.nic/gbp-renderer-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/gbp-renderer-impl/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">
-            mvn:org.opendaylight.nic/gbp-renderer-impl/{{VERSION}}/xml/config
+            mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
