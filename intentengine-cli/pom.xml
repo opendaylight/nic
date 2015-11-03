@@ -24,8 +24,6 @@
 
  <properties>
   <powermock.version>1.5.5</powermock.version>
-  <mockito.version>1.9.5</mockito.version>
-  <junit.version>4.11</junit.version>
  </properties>
 
  <dependencies>
@@ -34,42 +32,34 @@
    <artifactId>intentengine-impl</artifactId>
    <version>${project.version}</version>
   </dependency>
-
   <dependency>
    <groupId>${project.groupId}</groupId>
    <artifactId>intentengine-mapping</artifactId>
    <version>${project.version}</version>
   </dependency>
-
+<!-- apache console dependency -->
   <dependency>
    <groupId>org.apache.karaf.shell</groupId>
    <artifactId>org.apache.karaf.shell.console</artifactId>
    <version>${karaf.version}</version>
   </dependency>
-
   <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
-   <version>${junit.version}</version>
    <scope>test</scope>
   </dependency>
-
   <dependency>
    <groupId>org.mockito</groupId>
    <artifactId>mockito-all</artifactId>
-   <version>${mockito.version}</version>
    <scope>test</scope>
   </dependency>
-
-  <!--   Configuration for PowerMock dependencies. -->
   <dependency>
    <groupId>org.powermock</groupId>
    <artifactId>powermock-module-junit4</artifactId>
    <version>${powermock.version}</version>
    <scope>test</scope>
   </dependency>
-
   <dependency>
    <groupId>org.powermock</groupId>
    <artifactId>powermock-api-mockito</artifactId>
@@ -77,5 +67,4 @@
    <scope>test</scope>
   </dependency>
 </dependencies>
-
 </project>

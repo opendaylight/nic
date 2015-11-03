@@ -24,8 +24,6 @@
  <properties>
   <groupbasedpolicy.version>0.3.0-SNAPSHOT</groupbasedpolicy.version>
   <powermock.version>1.5.5</powermock.version>
-  <mockito.version>1.9.5</mockito.version>
-  <junit.version>4.11</junit.version>
  </properties>
 
  <dependencies>
@@ -34,31 +32,6 @@
    <artifactId>intentengine-api</artifactId>
    <version>${project.version}</version>
   </dependency>
-
-  <dependency>
-    <groupId>org.opendaylight.mdsal.model</groupId>
-    <artifactId>yang-ext</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.opendaylight.groupbasedpolicy</groupId>
-    <artifactId>groupbasedpolicy</artifactId>
-    <version>${gbp.version}</version>
-  </dependency>
-
-  <!-- OpenDaylight Controller -->
-  <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>config-api</artifactId>
-  </dependency>
-  <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>sal-binding-api</artifactId>
-  </dependency>
-  <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>sal-binding-config</artifactId>
-  </dependency>
-
   <!-- OpenDaylight GBP Manager -->
   <dependency>
    <groupId>org.opendaylight.groupbasedpolicy</groupId>
@@ -70,35 +43,22 @@
    <artifactId>ofoverlay-renderer</artifactId>
    <version>${groupbasedpolicy.version}</version>
   </dependency>
-
-  <!-- OpenDaylight YANG Tools -->
-  <dependency>
-   <groupId>org.opendaylight.yangtools</groupId>
-   <artifactId>yang-common</artifactId>
-  </dependency>
-
-  <!-- Junit Dependency -->
+  <!-- testing Dependency -->
   <dependency>
    <groupId>org.mockito</groupId>
    <artifactId>mockito-all</artifactId>
-   <version>${mockito.version}</version>
   </dependency>
-
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
-   <version>${junit.version}</version>
    <scope>test</scope>
   </dependency>
-
-<!--   Configuration for PowerMock dependencies. -->
   <dependency>
    <groupId>org.powermock</groupId>
    <artifactId>powermock-module-junit4</artifactId>
    <version>${powermock.version}</version>
    <scope>test</scope>
   </dependency>
-
   <dependency>
    <groupId>org.powermock</groupId>
    <artifactId>powermock-api-mockito</artifactId>
@@ -106,5 +66,4 @@
    <scope>test</scope>
   </dependency>
  </dependencies>
-
 </project>

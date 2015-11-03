@@ -33,6 +33,7 @@
   </properties>
 
   <dependencies>
+<!-- external projects feature repository -->
     <dependency>
       <groupId>org.opendaylight.yangtools</groupId>
       <artifactId>features-yangtools</artifactId>
@@ -85,6 +86,7 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
+<!-- project specific dependencies -->
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>intentengine-api</artifactId>
@@ -184,6 +186,7 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+<!-- external dependencies -->
     <dependency>
       <groupId>org.apache.karaf.cellar</groupId>
       <artifactId>apache-karaf-cellar</artifactId>
