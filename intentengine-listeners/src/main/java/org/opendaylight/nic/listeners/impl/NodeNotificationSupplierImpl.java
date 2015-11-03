@@ -8,14 +8,13 @@
 
 package org.opendaylight.nic.listeners.impl;
 
-import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
-import org.opendaylight.nic.listeners.api.NodeUp;
 import org.opendaylight.nic.listeners.api.NodeDeleted;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.listeners.api.NodeUp;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdatedBuilder;
@@ -25,6 +24,8 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Preconditions;
+
 /**
  * Implementation define a contract between {@link FlowCapableNode} data object
  * and {@link NodeUp} and {@link NodeDeleted} notifications.
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class NodeNotificationSupplierImpl extends
         AbstractNotificationSupplierItemRoot<FlowCapableNode, NodeUp, NodeDeleted> implements IEventService {
 
-    private static final InstanceIdentifier<FlowCapableNode> wildCardedInstanceIdent =
+    private static final InstanceIdentifier<FlowCapableNode> FLOW_CAPABLE_NODE_IID =
             getNodeWildII().augmentation(FlowCapableNode.class);
 
     private static final Logger LOG = LoggerFactory.getLogger(NodeNotificationSupplierImpl.class);
@@ -49,7 +50,7 @@ public class NodeNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<FlowCapableNode> getWildCardPath() {
-        return wildCardedInstanceIdent;
+        return FLOW_CAPABLE_NODE_IID;
     }
 
     @Override

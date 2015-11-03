@@ -7,19 +7,18 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
-import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.opendaylight.nic.listeners.api.IntentAdded;
 import org.opendaylight.nic.listeners.api.IntentRemoved;
-import org.opendaylight.nic.listeners.api.EventType;
-import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Preconditions;
 
 /**
  * Implementation define a contract between {@link Intent} data object
@@ -28,12 +27,11 @@ import org.slf4j.LoggerFactory;
 public class IntentNotificationSupplierImpl  extends
         AbstractNotificationSupplierItemRoot<Intent, IntentAdded, IntentRemoved> implements IEventService {
 
-    private static final InstanceIdentifier<Intent> wildCardedInstanceIdent =
+    private static final InstanceIdentifier<Intent> INTENT_IID =
             InstanceIdentifier.builder(Intents.class)
                     .child(Intent.class)
                     .build();
 
-    private static final Logger LOG = LoggerFactory.getLogger(NodeNotificationSupplierImpl.class);
     private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
     /**
      * Constructor register supplier as DataChangeLister and create wildCarded InstanceIdentifier.
@@ -47,7 +45,7 @@ public class IntentNotificationSupplierImpl  extends
 
     @Override
     public InstanceIdentifier<Intent> getWildCardPath() {
-        return wildCardedInstanceIdent;
+        return INTENT_IID;
     }
 
     @Override

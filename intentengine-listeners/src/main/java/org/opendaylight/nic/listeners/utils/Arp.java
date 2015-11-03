@@ -8,19 +8,18 @@
 
 package org.opendaylight.nic.listeners.utils;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import io.netty.buffer.Unpooled;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.opendaylight.controller.liblldp.EtherTypes;
-import org.opendaylight.controller.liblldp.NetUtils;
-import org.opendaylight.controller.liblldp.Packet;
-import org.opendaylight.controller.liblldp.PacketException;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.opendaylight.controller.liblldp.EtherTypes;
+import org.opendaylight.controller.liblldp.NetUtils;
+import org.opendaylight.controller.liblldp.Packet;
 
 /**
  * Represents ARP packet. Contains methods ({@link #setSHAFieldCoordinate(Pair)}
@@ -40,9 +39,11 @@ public class Arp extends Packet {
     private static final String THA = "tha";
     private static final String TPA = "tpa";
 
+    private static final short MAC_ADDR_LENGHT = 6;
+    private static final short IPv4_ADDR_LENGHT = 4;
     private static final int ARP_FIELDS_COUNT = 9;
     private static final int ETHERNET_HW_TYPE = 1;
-    private final Map<String, Pair<Integer, Integer>> arpFieldCoordiantes =
+    private final Map<String, Pair<Integer, Integer>> arpFieldCoordinates =
             new LinkedHashMap<String, Pair<Integer, Integer>>() {
 
         private static final long serialVersionUID = 1L;
@@ -63,47 +64,39 @@ public class Arp extends Packet {
     public Arp() {
         payload = null;
         hdrFieldsMap = new HashMap<String, byte[]>(ARP_FIELDS_COUNT);
-        setHardwareLength((short) 6); // MAC address length
-        setProtocolLength((short) 4); // IPv4 address length
+        // MAC address length
+        setHardwareLength(MAC_ADDR_LENGHT);
+        // IPv4 address length
+        setProtocolLength(IPv4_ADDR_LENGHT);
         setHardwareType(ETHERNET_HW_TYPE);
         setProtocolType(EtherTypes.IPv4.intValue());
-        hdrFieldCoordMap = arpFieldCoordiantes;
+        hdrFieldCoordMap = arpFieldCoordinates;
     }
 
     public Pair<Integer, Integer> setSHAFieldCoordinate(Pair<Integer, Integer> bitOffsetAndBitLength) {
         checkNotNullPair(bitOffsetAndBitLength);
-        return arpFieldCoordiantes.put(SHA, bitOffsetAndBitLength);
+        return arpFieldCoordinates.put(SHA, bitOffsetAndBitLength);
     }
 
     public Pair<Integer, Integer> setSPAFieldCoordinate(Pair<Integer, Integer> bitOffsetAndBitLength) {
         checkNotNullPair(bitOffsetAndBitLength);
-        return arpFieldCoordiantes.put(SPA, bitOffsetAndBitLength);
+        return arpFieldCoordinates.put(SPA, bitOffsetAndBitLength);
     }
 
     public Pair<Integer, Integer> setTHAFieldCoordinate(Pair<Integer, Integer> bitOffsetAndBitLength) {
         checkNotNullPair(bitOffsetAndBitLength);
-        return arpFieldCoordiantes.put(THA, bitOffsetAndBitLength);
+        return arpFieldCoordinates.put(THA, bitOffsetAndBitLength);
     }
 
     public Pair<Integer, Integer> setTPAFieldCoordinate(Pair<Integer, Integer> bitOffsetAndBitLength) {
         checkNotNullPair(bitOffsetAndBitLength);
-        return arpFieldCoordiantes.put(TPA, bitOffsetAndBitLength);
+        return arpFieldCoordinates.put(TPA, bitOffsetAndBitLength);
     }
 
     private void checkNotNullPair(Pair<Integer, Integer> pair) {
         checkNotNull(pair);
         checkNotNull(pair.getLeft());
         checkNotNull(pair.getRight());
-    }
-
-    @Override
-    public Packet deserialize(byte[] data, int bitOffset, int size) throws PacketException {
-        return super.deserialize(data, bitOffset, size);
-    }
-
-    @Override
-    public byte[] serialize() throws PacketException {
-        return super.serialize();
     }
 
     @Override

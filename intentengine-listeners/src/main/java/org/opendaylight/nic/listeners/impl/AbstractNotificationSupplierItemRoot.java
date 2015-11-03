@@ -8,7 +8,10 @@
 
 package org.opendaylight.nic.listeners.impl;
 
-import com.google.common.base.Preconditions;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -20,9 +23,7 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import com.google.common.base.Preconditions;
 
 /**
  * Class is package protected abstract implementation for all Root Items
@@ -56,8 +57,14 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
     @Override
     public void onDataChanged(final AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
         Preconditions.checkArgument(change != null, "ChangeEvent can not be null!");
-        if (change.getCreatedData() != null && ! (change.getCreatedData().isEmpty())) {
-            for (final Entry<InstanceIdentifier<?>, DataObject> createDataObj : change.getCreatedData().entrySet()) {
+
+        created(change.getCreatedData());
+        deleted(change);
+    }
+
+    private void created(Map<InstanceIdentifier<?>, DataObject> change) {
+        if (change != null && ! (change.isEmpty())) {
+            for (final Entry<InstanceIdentifier<?>, DataObject> createDataObj : change.entrySet()) {
                 if (clazz.isAssignableFrom(createDataObj.getKey().getTargetType())) {
                     final InstanceIdentifier<O> ii = createDataObj.getKey().firstIdentifierOf(clazz);
                     final C notif = createNotification((O) createDataObj.getValue(), ii);
@@ -76,7 +83,9 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                 }
             }
         }
+    }
 
+    private void deleted(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
         if (change.getRemovedPaths() != null && !(change.getRemovedPaths().isEmpty())) {
             for (final InstanceIdentifier<?> deleteDataPath : change.getRemovedPaths()) {
                 if (clazz.isAssignableFrom(deleteDataPath.getTargetType())) {

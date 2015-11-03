@@ -80,13 +80,15 @@ public class IntentAddMappingShellCommand extends OsgiCommandSupport {
         if (builder.toString().isEmpty()) {
             builder.append(key);
         } else {
-            builder.append(", " + key);
+            builder.append(", ")
+                   .append(key);
         }
     }
 
     private void printContents(StringBuilder builder, String key) {
-        builder.append(key + " = {\n");
-        builder.append(service.stringRepresentation(key));
-        builder.append("}\n");
+        builder.append(key)
+               .append(" = {\n")
+               .append(service.stringRepresentation(key))
+               .append("}\n");
     }
 }

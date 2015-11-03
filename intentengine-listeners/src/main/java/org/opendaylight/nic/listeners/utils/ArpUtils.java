@@ -8,18 +8,23 @@
 
 package org.opendaylight.nic.listeners.utils;
 
-import com.google.common.net.InetAddresses;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.opendaylight.controller.liblldp.EtherTypes;
 import org.opendaylight.controller.liblldp.Ethernet;
 import org.opendaylight.controller.liblldp.HexEncode;
 import org.opendaylight.controller.liblldp.Packet;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import com.google.common.net.InetAddresses;
 
-public class ArpUtils {
+public final class ArpUtils {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ArpUtils.class);
 
     private ArpUtils() {
         throw new UnsupportedOperationException("Cannot create an instance.");
@@ -61,7 +66,8 @@ public class ArpUtils {
                     + ", getTargetProtocolAddress()="
                     + InetAddress.getByAddress(arp.getTargetProtocolAddress()).getHostAddress() + "]\n";
         } catch (UnknownHostException e1) {
-            return "Error during parsing Arp " + arp;
+            LOG.error("Error during parsing Arp {}", arp, e1);
+            return null;
         }
     }
 
@@ -85,6 +91,7 @@ public class ArpUtils {
         try {
             return new Ipv4Address(InetAddress.getByAddress(ipv4AsBytes).getHostAddress());
         } catch (UnknownHostException e) {
+            LOG.error("Failed to convert bytes to IP", e);
             return null;
         }
     }

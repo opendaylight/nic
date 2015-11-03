@@ -28,6 +28,9 @@ public class IntentUtils {
     private static final int NUM_OF_SUPPORTED_ACTION = 1;
     private static final int  NUM_OF_SUPPORTED_EPG = 2;
 
+    private IntentUtils() {
+    }
+
     public static boolean verifyIntent(Intent intent) {
         boolean result = false;
         if (intent != null && intent.getId() != null) {

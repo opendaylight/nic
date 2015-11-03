@@ -98,7 +98,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
             }
         } catch (ReadFailedException e) {
             //TODO: Perform fail over
-            LOG.error("Error reading Nodes from MD-SAL");
+            LOG.error("Error reading Nodes from MD-SAL", e);
         }
         return nodeMap;
     }

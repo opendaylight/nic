@@ -20,6 +20,9 @@ public class ArpResolverUtils {
         Ethernet.etherTypeClassMap.put(EtherTypes.ARP.shortValue(), Arp.class);
     }
 
+    private ArpResolverUtils() {
+    }
+
     /**
      * Tries to deserialize received packet as ARP packet with IPv4 protocol address and MAC
      * hardware address.
