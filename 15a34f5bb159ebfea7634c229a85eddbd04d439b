@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bada0100_8af3df72",
+        "filename": "intentengine-graph/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-03T15:17:18Z",
+      "side": 1,
+      "message": "this is not needed",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "15a34f5bb159ebfea7634c229a85eddbd04d439b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_e453c26a",
         "filename": "intentengine-graph/src/main/yang/graph.yang",
         "patchSetId": 2
@@ -18,6 +41,29 @@
         "startChar": 0,
         "endLine": 11,
         "endChar": 4
+      },
+      "revId": "15a34f5bb159ebfea7634c229a85eddbd04d439b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_6a955be3",
+        "filename": "intentengine-graph/src/main/yang/graph.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-03T15:17:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is a good practice using camel case for first letter",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 7
       },
       "revId": "15a34f5bb159ebfea7634c229a85eddbd04d439b",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
