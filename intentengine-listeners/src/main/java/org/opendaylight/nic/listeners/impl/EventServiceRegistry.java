@@ -7,15 +7,16 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Events Registry that stores mappings from the event providers
@@ -25,8 +26,8 @@ import java.util.Set;
 public final class EventServiceRegistry {
 
     private static volatile EventServiceRegistry serviceRegistry = null;
-    private HashMap<IEventService, Set<IEventListener>> eventRegistry = new HashMap<>();
-    private HashMap<EventType, IEventService> typeRegistry = new HashMap<>();
+    private Map<IEventService, Set<IEventListener>> eventRegistry = new HashMap<>();
+    private Map<EventType, IEventService> typeRegistry = new HashMap<>();
     private static final Logger LOG = LoggerFactory.getLogger(EventServiceRegistry.class);
 
     private EventServiceRegistry() {
@@ -43,7 +44,7 @@ public final class EventServiceRegistry {
 
     public void registerEventListener(IEventService service, IEventListener listener) {
         if (!eventRegistry.containsKey(service)) {
-            HashSet<IEventListener> eventListeners = new HashSet<>();
+            Set<IEventListener> eventListeners = new HashSet<>();
             eventListeners.add(listener);
             eventRegistry.put(service, eventListeners);
         } else {
@@ -57,7 +58,7 @@ public final class EventServiceRegistry {
         IEventService service = getEventService(eventType);
         if (service != null) {
             if (!eventRegistry.containsKey(service)) {
-                HashSet<IEventListener> eventListeners = new HashSet<>();
+                Set<IEventListener> eventListeners = new HashSet<>();
                 eventListeners.add(listener);
                 eventRegistry.put(service, eventListeners);
             } else {

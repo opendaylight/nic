@@ -31,13 +31,11 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(NEMORenderer.class);
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
-    private DataBroker dataBroker;
     private NEMOIntentParser nemoIntentParser;
     private NEMOIntentMapper nemoIntentMapper;
     private ListenerRegistration<DataChangeListener> listenerRegistration = null;
 
     public NEMORenderer(DataBroker dataBroker) {
-        this.dataBroker = dataBroker;
         this.nemoIntentParser = new NEMOIntentParser();
         this.nemoIntentMapper = new NEMOIntentMapper();
         listenerRegistration = dataBroker.registerDataChangeListener(

@@ -7,13 +7,15 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import java.util.Set;
+
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.EndpointDiscovered;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
-import org.opendaylight.nic.listeners.utils.ArpOperation;
 import org.opendaylight.nic.listeners.utils.Arp;
+import org.opendaylight.nic.listeners.utils.ArpOperation;
 import org.opendaylight.nic.listeners.utils.ArpResolverUtils;
 import org.opendaylight.nic.listeners.utils.ArpUtils;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Address;
@@ -23,8 +25,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.Pa
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Set;
 
 public class EndpointDiscoveredNotificationSupplierImpl implements PacketProcessingListener, IEventService {
 

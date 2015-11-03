@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 
 public class MatchUtils {
-    private static final Logger logger = LoggerFactory.getLogger(MatchUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MatchUtils.class);
     public static final short ICMP_SHORT = 1;
     public static final short TCP_SHORT = 6;
     public static final short UDP_SHORT = 17;
@@ -49,6 +49,9 @@ public class MatchUtils {
     public static final long LLDP_LONG = (long) 0x88CC;
     public static final long VLANTAGGED_LONG = (long) 0x8100;
     public static final long MPLSUCAST_LONG = (long) 0x8847;
+
+    private MatchUtils() {
+    }
 
     /**
      * Create Ingress Port Match dpidLong, inPort
@@ -61,7 +64,7 @@ public class MatchUtils {
     public static MatchBuilder createInPortMatch(MatchBuilder matchBuilder, Long dpidLong, Long inPort) {
 
         NodeConnectorId ncid = new NodeConnectorId("openflow:" + dpidLong + ":" + inPort);
-        logger.debug("createInPortMatch() Node Connector ID is - Type=openflow: DPID={} inPort={} ", dpidLong, inPort);
+        LOG.debug("createInPortMatch() Node Connector ID is - Type=openflow: DPID={} inPort={} ", dpidLong, inPort);
         matchBuilder.setInPort(ncid);
 
         return matchBuilder;
@@ -74,7 +77,7 @@ public class MatchUtils {
      * @return matchBuilder Map MatchBuilder Object with a match
      */
     public static MatchBuilder createInPortMatch(MatchBuilder matchBuilder, NodeConnectorId ncId) {
-        logger.debug("createInPortMatch() Node Connector ID is {} ", ncId);
+        LOG.debug("createInPortMatch() Node Connector ID is {} ", ncId);
         matchBuilder.setInPort(ncId);
 
         return matchBuilder;
@@ -126,8 +129,8 @@ public class MatchUtils {
     /**
      * Create MPLS label Match
      *
-     * @param matchBuilder MatchBuilder Object 
-     * @param label  Long representing a Label value 
+     * @param matchBuilder MatchBuilder Object
+     * @param label  Long representing a Label value
      * @param bos Boolean indicating bottom of stack for this label
      * @return matchBuilder Map MatchBuilder Object with a match
      */
@@ -348,7 +351,8 @@ public class MatchUtils {
         matchBuilder.setEthernetMatch(ethernetType.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol((short) 6);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -477,7 +481,8 @@ public class MatchUtils {
         matchBuilder.setEthernetMatch(ethernetType.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol((short) 6);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -496,7 +501,8 @@ public class MatchUtils {
     public static MatchBuilder createTcpProtoSynMatch(MatchBuilder matchBuilder) {
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol((short) 6);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -529,7 +535,8 @@ public class MatchUtils {
         matchBuilder.setEthernetMatch(ethernetMatch.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -569,7 +576,8 @@ public class MatchUtils {
         matchBuilder.setEthernetMatch(ethernetMatch.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol((short) 6);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -622,7 +630,8 @@ public class MatchUtils {
         matchBuilder.setLayer3Match(ipv4match.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -675,7 +684,8 @@ public class MatchUtils {
             matchBuilder.setLayer3Match(ipv4match.build());
         }
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
         // TCP Flag Match
@@ -717,7 +727,8 @@ public class MatchUtils {
         matchBuilder.setLayer3Match(ipv4match.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -761,7 +772,8 @@ public class MatchUtils {
         matchBuilder.setEthernetMatch(ethernetMatch.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -808,7 +820,8 @@ public class MatchUtils {
             matchBuilder.setLayer3Match(ipv4match.build());
         }
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
         // TCP Flag Match
@@ -844,7 +857,8 @@ public class MatchUtils {
         matchBuilder.setEthernetMatch(ethernetMatch.build());
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol((short) 6);
         matchBuilder.setIpMatch(ipMatch.build());
 
@@ -894,7 +908,8 @@ public class MatchUtils {
         }
 
         // TCP Protocol Match
-        IpMatchBuilder ipMatch = new IpMatchBuilder(); // ipv4 version
+        // ipv4 version
+        IpMatchBuilder ipMatch = new IpMatchBuilder();
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 

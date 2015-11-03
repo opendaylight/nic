@@ -8,21 +8,17 @@
 
 package org.opendaylight.nic.mapping.impl;
 
-import org.opendaylight.nic.mapping.api.MappedObject;
-import org.opendaylight.nic.mapping.api.IntentMappingService;
-
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
 
-import org.opendaylight.nic.mapping.api.TypeHostname;
+import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.mapping.api.MappedObject;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
-import com.hazelcast.core.Hazelcast;
 import com.hazelcast.config.Config;
-import com.hazelcast.config.SerializationConfig;
-import com.hazelcast.config.SerializerConfig;
+import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.MultiMap;
 
@@ -91,7 +87,8 @@ public class HazelcastMappingServiceImpl implements IntentMappingService {
         }
 
         for (MappedObject obj : list) {
-            builder.append("    " + obj.toString());
+            builder.append("    ");
+            builder.append(obj.toString());
             builder.append("\n");
         }
 

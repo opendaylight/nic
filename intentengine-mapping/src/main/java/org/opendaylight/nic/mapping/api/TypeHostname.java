@@ -19,8 +19,6 @@ public class TypeHostname extends MappedObject {
     private String hostname;
 
     public TypeHostname() {
-
-        hostname = new String();
     }
 
     @Override
@@ -29,7 +27,7 @@ public class TypeHostname extends MappedObject {
     }
 
     public String getHostname() {
-        return hostname;
+        return hostname == null ? "" : hostname;
     }
 
     public void setHostname(String hostname) {

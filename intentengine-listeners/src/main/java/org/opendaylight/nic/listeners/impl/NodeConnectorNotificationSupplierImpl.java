@@ -8,7 +8,6 @@
 
 package org.opendaylight.nic.listeners.impl;
 
-import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.EventType;
@@ -16,9 +15,10 @@ import org.opendaylight.nic.listeners.api.LinkDeleted;
 import org.opendaylight.nic.listeners.api.LinkUp;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorUpdatedBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+
+import com.google.common.base.Preconditions;
 
 /**
  * Implementation define a contract between {@link FlowCapableNodeConnector} data object
@@ -27,7 +27,7 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 public class NodeConnectorNotificationSupplierImpl extends
         AbstractNotificationSupplierItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted> {
 
-    private static final InstanceIdentifier<FlowCapableNodeConnector> wildCardedInstanceIdent =
+    private static final InstanceIdentifier<FlowCapableNodeConnector> FLOW_CAPABLE_NODE_CONNECTOR_IID =
             getNodeWildII().child(NodeConnector.class).augmentation(FlowCapableNodeConnector.class);
 
     /**
@@ -41,7 +41,7 @@ public class NodeConnectorNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<FlowCapableNodeConnector> getWildCardPath() {
-        return wildCardedInstanceIdent;
+        return FLOW_CAPABLE_NODE_CONNECTOR_IID;
     }
 
     @Override
@@ -49,11 +49,10 @@ public class NodeConnectorNotificationSupplierImpl extends
                                                    final InstanceIdentifier<FlowCapableNodeConnector> path) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(path != null);
-        final NodeConnectorUpdatedBuilder notifBuilder = new NodeConnectorUpdatedBuilder();
         //TODO: implement the builder for this notififcation
+        //final NodeConnectorUpdatedBuilder notifBuilder = new NodeConnectorUpdatedBuilder();
         NodeConnectorId connectorId = path.firstKeyOf(NodeConnector.class).getId();
-        final LinkUp notifLinkUp = new LinkUpImpl(object.getHardwareAddress(), object.getName(), connectorId);
-        return notifLinkUp;
+        return new LinkUpImpl(object.getHardwareAddress(), object.getName(), connectorId);
     }
 
     @Override
