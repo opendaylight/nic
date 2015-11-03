@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_e453c26a",
+        "filename": "intentengine-graph/src/main/yang/graph.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-11-03T00:24:23Z",
+      "side": 1,
+      "message": "Please, remove these blank spaces.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "15a34f5bb159ebfea7634c229a85eddbd04d439b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
