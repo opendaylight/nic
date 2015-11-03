@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_f76ccf38",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/utils/ArpUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-11-03T23:00:51Z",
+      "side": 1,
+      "message": "Yes, I understand, I just guess about the duplicated error that it will display. This error message is used by org.opendaylight.nic.listeners.impl.EndpointResolver, just for LOG, if the same error appear twice, I think that can confuse the LOG.",
+      "parentUuid": "bada0100_d7ee6bb4",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_9709c397",
         "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
         "patchSetId": 1
@@ -176,6 +200,30 @@
       "side": 1,
       "message": "Ok, I\u0027m fine with initializing the hostname, I just think it\u0027s weird to initialize a string.\n\nOr maybe we could return something like:\nhostname \u003d\u003d null ? \"\" : hostname\n\nAs you like :)",
       "parentUuid": "bada0100_9709c397",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_17239306",
+        "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-11-03T23:00:51Z",
+      "side": 1,
+      "message": "Great! \u003d)",
+      "parentUuid": "bada0100_772bffeb",
       "range": {
         "startLine": 29,
         "startChar": 4,
