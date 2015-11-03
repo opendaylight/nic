@@ -113,6 +113,11 @@ module intent {
                         uses constraints:exclude-node;
                     }
                 }
+                case encapsulation-type {
+                    container mpls {
+                        uses constraints:encapsulation-mpls;
+                    }
+                }
             }
             description "List of additional constraints to apply to the when implementing
                         the intent.";
