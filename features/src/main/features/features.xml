@@ -26,9 +26,9 @@
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <feature version="${hazelcast.version}">hazelcast</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-mapping/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/87-intentengine-mapping.xml">
-            mvn:org.opendaylight.nic/intentengine-mapping/{{VERSION}}/xml/config
+        <bundle>mvn:org.opendaylight.nic/intent-mapping/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping.xml">
+            mvn:org.opendaylight.nic/intent-mapping/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
@@ -36,11 +36,11 @@
     <feature name='odl-nic-core' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Core'>
         <feature version="${project.version}">odl-nic-core-service</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intentengine-impl/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intentengine-compiler/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/88-intentengine-impl.xml">
-            mvn:org.opendaylight.nic/intentengine-impl/{{VERSION}}/xml/config
+        <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">
+            mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
@@ -48,7 +48,7 @@
     <feature name='odl-nic-console' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: CLI'>
         <feature version="${project.version}">odl-nic-core</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-cli/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-cli/{{VERSION}}</bundle>
     </feature>
 
     <feature name='odl-nic-renderer-vtn' version='${project.version}'
@@ -97,9 +97,9 @@
     <feature name='odl-nic-listeners' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Listeners'>
         <feature version="${project.version}">odl-nic-renderer-of</feature>
-        <bundle>mvn:org.opendaylight.nic/intentengine-listeners/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/92-intentengine-listeners.xml">
-            mvn:org.opendaylight.nic/intentengine-listeners/{{VERSION}}/xml/config
+        <bundle>mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-intent-listeners.xml">
+            mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
