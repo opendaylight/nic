@@ -24,7 +24,10 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutionException;
 
 public final class GenericTransactionUtils {
-    static final Logger logger = LoggerFactory.getLogger(GenericTransactionUtils.class);
+    static final Logger LOG = LoggerFactory.getLogger(GenericTransactionUtils.class);
+
+    private GenericTransactionUtils() {
+    }
 
     public static <T extends DataObject> boolean writeData(
               DataBroker dataBroker, LogicalDatastoreType logicalDatastoreType,
@@ -34,7 +37,7 @@ public final class GenericTransactionUtils {
         boolean isFlowAdd = (FlowAction.ADD_FLOW.getValue() == isAdd.getValue());
         if (isFlowAdd) {
             if (dataObject == null) {
-                logger.warn("Invalid attempt to add a non-existent object to path {}", iid);
+                LOG.warn("Invalid attempt to add a non-existent object to path {}", iid);
                 return false;
             }
             modification.merge(logicalDatastoreType, iid, dataObject, true /*createMissingParents*/);
@@ -45,11 +48,11 @@ public final class GenericTransactionUtils {
         CheckedFuture<Void, TransactionCommitFailedException> commitFuture = modification.submit();
         try {
             commitFuture.checkedGet();
-            logger.debug("Transaction success for {} of object {}", (isFlowAdd) ? "add" : "delete", dataObject);
+            LOG.debug("Transaction success for {} of object {}", (isFlowAdd) ? "add" : "delete", dataObject);
             return true;
         } catch (Exception e) {
-            logger.error("Transaction failed with error {} for {} of object {}",
-                    e.getMessage(), (isFlowAdd) ? "add" : "delete", dataObject);
+            LOG.error("Transaction failed with error {} for {} of object {}",
+                    e.getMessage(), (isFlowAdd) ? "add" : "delete", dataObject, e);
             modification.cancel();
             return false;
         }
@@ -65,7 +68,7 @@ public final class GenericTransactionUtils {
                 return (T)optionalData.get();
             }
         } catch (ExecutionException | InterruptedException e) {
-            logger.error("Read transaction for identifier {} failed with error {}", iid, e.getMessage());
+            LOG.error("Read transaction for identifier {} failed with error", iid, e);
             readTransaction.close();
         }
         return null;

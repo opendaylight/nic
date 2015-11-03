@@ -26,8 +26,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026
  */
 public class FlowUtils {
 
-    private static final String HOST_MASK = "/32";
-
+    private FlowUtils() {
+    }
     /**
      * Creates {@link EthernetMatch} containing ARP ether-type and the given destination MAC address
      */
@@ -38,10 +38,10 @@ public class FlowUtils {
     }
 
 
-//    /**
-//     * Creates {@link ArpMatch} containing Reply ARP operation, THA and TPA for the given target
-//     * address and SPA for the given sender protocol address
-//     */
+    /**
+     * Creates {@link ArpMatch} containing Reply ARP operation, THA and TPA for the given target
+     * address and SPA for the given sender protocol address
+     */
 //    public static ArpMatch createArpMatch() {
 //        return new ArpMatchBuilder().setArpOp(ArpOperation.REPLY.intValue()).build();
 //    }

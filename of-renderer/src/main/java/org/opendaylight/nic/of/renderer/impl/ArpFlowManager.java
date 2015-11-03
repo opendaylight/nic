@@ -7,9 +7,12 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.math.BigInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.api.FlowAction;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowKey;
@@ -21,23 +24,15 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.M
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.math.BigInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class ArpFlowManager extends AbstractFlowManager {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ArpFlowManager.class);
     private static final String ARP_REPLY_TO_CONTROLLER_FLOW_NAME = "arpReplyToController";
     private static final int ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY = 10000;
     private final AtomicLong flowCookie = new AtomicLong();
-    private final DataBroker dataBroker;
 
     public ArpFlowManager(DataBroker dataBroker) {
         super(dataBroker);
-        this.dataBroker = dataBroker;
     }
 
     @Override
@@ -62,7 +57,6 @@ public class ArpFlowManager extends AbstractFlowManager {
          * Use following code for specific ARP REQUEST or REPLY packet capture
          * ArpMatch arpMatch = FlowUtils.createArpMatch();
          */
-//        ArpMatch arpMatch = FlowUtils.createArpMatch();
         Match match = new MatchBuilder().setEthernetMatch(ethernetMatch).build();//.setLayer3Match(arpMatch).build();
         arpFlow.setMatch(match);
         Instructions instructions = createOutputInstructions(OutputPortValues.CONTROLLER, OutputPortValues.NORMAL);

@@ -29,7 +29,6 @@ import java.util.List;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
-    private DataBroker dataBroker;
     private List<String> endPointGroups = null;
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(IntentFlowManager.class);
@@ -49,7 +48,6 @@ public class IntentFlowManager extends AbstractFlowManager {
 
     IntentFlowManager(DataBroker dataBroker) {
         super(dataBroker);
-        this.dataBroker = dataBroker;
     }
 
     @Override
@@ -127,7 +125,7 @@ public class IntentFlowManager extends AbstractFlowManager {
             }
             MatchUtils.createEthMatch(matchBuilder, srcMac, dstMac);
         } catch (IllegalArgumentException e) {
-            LOG.error("Can only accept valid MAC addresses as subjects");
+            LOG.error("Can only accept valid MAC addresses as subjects", e);
         }
     }
 

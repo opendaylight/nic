@@ -19,8 +19,6 @@ public class TypeHostname extends MappedObject {
     private String hostname;
 
     public TypeHostname() {
-
-        hostname = new String();
     }
 
     @Override
