@@ -162,17 +162,12 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
-      <artifactId>gbp-renderer-api</artifactId>
+      <artifactId>gbp-renderer</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
-      <artifactId>gbp-renderer-impl</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.nic</groupId>
-      <artifactId>gbp-renderer-impl</artifactId>
+      <artifactId>gbp-renderer</artifactId>
       <version>${project.version}</version>
       <classifier>config</classifier>
       <type>xml</type>
