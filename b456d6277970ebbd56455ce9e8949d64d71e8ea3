@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_77dd3f14",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/utils/ArpUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-11-03T22:35:59Z",
+      "side": 1,
+      "message": "This method is used just for LOG, this line will generate a duplicate LOG.",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_9709c397",
+        "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2015-11-03T22:35:59Z",
+      "side": 1,
+      "message": "If the hostname wasn\u0027t initialized, it should return a null value. I think that the \u0027hostname\u0027 should be initialized with an empty value in this case.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
