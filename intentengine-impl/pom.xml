@@ -44,47 +44,27 @@
    <version>${project.version}</version>
   </dependency>
   <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>config-api</artifactId>
-   <version>${config.version}</version>
-  </dependency>
-  <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>sal-binding-api</artifactId>
-   <version>${mdsal.version}</version>
-  </dependency>
-  <dependency>
-   <groupId>org.opendaylight.controller</groupId>
-   <artifactId>sal-binding-config</artifactId>
-   <version>${mdsal.version}</version>
-  </dependency>
-  <dependency>
    <groupId>org.projectlombok</groupId>
    <artifactId>lombok</artifactId>
    <version>${lombok.version}</version>
   </dependency>
-
   <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
    <scope>test</scope>
   </dependency>
-
   <dependency>
    <groupId>org.mockito</groupId>
    <artifactId>mockito-all</artifactId>
    <scope>test</scope>
   </dependency>
-
-  <!--   Configuration for PowerMock dependencies. -->
   <dependency>
    <groupId>org.powermock</groupId>
    <artifactId>powermock-module-junit4</artifactId>
    <version>${powermock.version}</version>
    <scope>test</scope>
   </dependency>
-
   <dependency>
    <groupId>org.powermock</groupId>
    <artifactId>powermock-api-mockito</artifactId>
