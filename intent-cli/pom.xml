@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Copyright (c) 2015 NEC Corporation. All rights reserved.
+ <!--
+  Copyright (c) 2015 Ciena and others.  All rights reserved.
 
   This program and the accompanying materials are made available under the
   terms of the Eclipse Public License v1.0 which accompanies this distribution,
   and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
@@ -18,37 +18,40 @@
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
- <artifactId>vtn-renderer</artifactId>
+ <artifactId>intent-cli</artifactId>
  <version>1.1.0-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
  <properties>
   <powermock.version>1.5.5</powermock.version>
-   <vtn.version>0.4.0-SNAPSHOT</vtn.version>
  </properties>
 
  <dependencies>
   <dependency>
    <groupId>${project.groupId}</groupId>
-   <artifactId>intent-api</artifactId>
+   <artifactId>intent-impl</artifactId>
    <version>${project.version}</version>
   </dependency>
-
-  <!-- OpenDaylight VTN Manager -->
   <dependency>
-   <groupId>org.opendaylight.vtn</groupId>
-   <artifactId>manager</artifactId>
-   <version>${vtn.version}</version>
+   <groupId>${project.groupId}</groupId>
+   <artifactId>intent-mapping</artifactId>
+   <version>${project.version}</version>
   </dependency>
-
-  <!-- Junit Dependency -->
+<!-- apache console dependency -->
   <dependency>
-   <groupId>org.mockito</groupId>
-   <artifactId>mockito-all</artifactId>
+   <groupId>org.apache.karaf.shell</groupId>
+   <artifactId>org.apache.karaf.shell.console</artifactId>
+   <version>${karaf.version}</version>
   </dependency>
+  <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
+   <scope>test</scope>
+  </dependency>
+  <dependency>
+   <groupId>org.mockito</groupId>
+   <artifactId>mockito-all</artifactId>
    <scope>test</scope>
   </dependency>
   <dependency>
@@ -63,5 +66,5 @@
    <version>${powermock.version}</version>
    <scope>test</scope>
   </dependency>
- </dependencies>
+</dependencies>
 </project>
