@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_d7ee6bb4",
+        "filename": "intentengine-listeners/src/main/java/org/opendaylight/nic/listeners/utils/ArpUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-03T22:42:13Z",
+      "side": 1,
+      "message": "Do you mean the method calling this one will log the result?\n\nI did that so the catch error is logged (e1). Else this is causing a sonar issue",
+      "parentUuid": "bada0100_77dd3f14",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_9709c397",
         "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2015-11-03T22:35:59Z",
       "side": 1,
       "message": "If the hostname wasn\u0027t initialized, it should return a null value. I think that the \u0027hostname\u0027 should be initialized with an empty value in this case.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "b456d6277970ebbd56455ce9e8949d64d71e8ea3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_772bffeb",
+        "filename": "intentengine-mapping/src/main/java/org/opendaylight/nic/mapping/api/TypeHostname.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-03T22:42:13Z",
+      "side": 1,
+      "message": "Ok, I\u0027m fine with initializing the hostname, I just think it\u0027s weird to initialize a string.\n\nOr maybe we could return something like:\nhostname \u003d\u003d null ? \"\" : hostname\n\nAs you like :)",
+      "parentUuid": "bada0100_9709c397",
       "range": {
         "startLine": 29,
         "startChar": 4,
