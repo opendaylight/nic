@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_8df3f672",
+        "filename": "samples/action/api/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use proper version: X.Y.Z-SNAPSHOT",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_0d514662",
+        "filename": "samples/action/api/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use ${project.version} here",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_6deed28d",
+        "filename": "samples/action/artifacts/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use proper version: X.Y.Z-SNAPSHOT",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_cde1fe9b",
+        "filename": "samples/action/features/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use proper version: X.Y.Z-SNAPSHOT",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_cd4a5eac",
+        "filename": "samples/action/features/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_6dc7b213",
+        "filename": "samples/action/features/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "whitespaces",
+      "range": {
+        "startLine": 101,
+        "startChar": 17,
+        "endLine": 101,
+        "endChar": 21
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_8dcc5637",
+        "filename": "samples/action/features/src/main/features/features.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use ${project.version}",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_ade4baac",
+        "filename": "samples/action/impl/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use proper version: X.Y.Z-SNAPSHOT",
+      "range": {
+        "startLine": 23,
+        "startChar": 33,
+        "endLine": 24,
+        "endChar": 2
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_2dd1aacd",
+        "filename": "samples/action/impl/src/main/java/org/opendaylight/nic/action/impl/ActionProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "specify modifier",
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_4dd66ec7",
+        "filename": "samples/action/impl/src/main/java/org/opendaylight/nic/action/impl/ActionProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_0dd866ee",
+        "filename": "samples/action/karaf/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use proper version: X.Y.Z-SNAPSHOT",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_eddac2e8",
+        "filename": "samples/action/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-04T15:12:11Z",
+      "side": 1,
+      "message": "please use proper version: X.Y.Z-SNAPSHOT",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "e92fc05241cf81184f4f9681c41615cba75dbdb1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
