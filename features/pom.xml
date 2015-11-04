@@ -54,7 +54,6 @@
       <type>xml</type>
       <scope>runtime</scope>
     </dependency>
-    <!-- VTN is broken currently
     <dependency>
       <groupId>org.opendaylight.vtn</groupId>
       <artifactId>features-vtn-manager</artifactId>
@@ -62,7 +61,6 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
-    -->
     <dependency>
       <groupId>org.opendaylight.nemo</groupId>
       <artifactId>nemo-features</artifactId>
