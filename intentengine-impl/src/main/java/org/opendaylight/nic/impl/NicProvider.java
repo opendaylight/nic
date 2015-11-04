@@ -32,6 +32,7 @@ import org.opendaylight.nic.compiler.api.Policy;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -47,12 +48,12 @@ import org.slf4j.LoggerFactory;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-
 public class NicProvider implements NicConsoleProvider {
 
     private static final Logger LOG = LoggerFactory.getLogger(NicProvider.class);
     public static final String ACTION_ALLOW = "ALLOW";
     public static final String ACTION_BLOCK = "BLOCK";
+    public static final String ACTION_REDIRECT = "REDIRECT";
 
     protected DataBroker dataBroker;
 
@@ -230,6 +231,7 @@ public class NicProvider implements NicConsoleProvider {
         IntentCompiler compiler = IntentCompilerFactory.createIntentCompiler();
         BasicAction allow = new BasicAction(ACTION_ALLOW, ActionConflictType.COMPOSABLE);
         BasicAction block = new BasicAction(ACTION_BLOCK, ActionConflictType.EXCLUSIVE);
+        BasicAction redirect = new BasicAction(ACTION_REDIRECT, ActionConflictType.COMPOSABLE);
 
         Collection<Policy> policies = new LinkedList<>();
 
@@ -260,7 +262,9 @@ public class NicProvider implements NicConsoleProvider {
                 action = allow;
             } else if (actionContainer instanceof Block) {
                 action = block;
-            } else {
+            } else if (actionContainer instanceof Redirect) {
+                action = redirect;
+            }else {
                 String actionClass = actionContainer.getClass().getName();
                 LOG.error("Invalid action: {}", actionClass);
                 return "[ERROR] Invalid action: " + actionClass;
