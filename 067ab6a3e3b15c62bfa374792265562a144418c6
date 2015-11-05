@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_01ca6d4f",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/EgressPoint.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-05T16:57:56Z",
+      "side": 1,
+      "message": "this could be static final also",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 49
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_21c77147",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/EgressPoint.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-05T16:57:56Z",
+      "side": 1,
+      "message": "use to var defined above",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
