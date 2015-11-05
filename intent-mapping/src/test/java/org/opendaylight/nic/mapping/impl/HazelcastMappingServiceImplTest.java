@@ -33,7 +33,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HazelcastMappingServiceTest {
+public class HazelcastMappingServiceImplTest {
 
     private HazelcastMappingServiceImpl service = new HazelcastMappingServiceImpl();
     private static String BOB = "bob";
