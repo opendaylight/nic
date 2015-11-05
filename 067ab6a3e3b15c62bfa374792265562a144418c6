@@ -45,6 +45,121 @@
       "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_a1e281d3",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/EgressPoint.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-05T17:02:52Z",
+      "side": 1,
+      "message": "possible concatenation with null value here",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 59
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_41e715e5",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/IngressPoint.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-05T17:02:52Z",
+      "side": 1,
+      "message": "Possible concatenation with null value here",
+      "range": {
+        "startLine": 22,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_61ec99c8",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/MplsEgressLabel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-05T17:02:52Z",
+      "side": 1,
+      "message": "Possible concatenation with null value here",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_21ce915b",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/MplsIngressLabel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-05T17:02:52Z",
+      "side": 1,
+      "message": "Possible concatenation with null value here",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 59
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_c1da2517",
+        "filename": "intent-mapping/src/test/java/org/opendaylight/nic/mapping/impl/HazelcastMappingServiceImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-05T17:02:52Z",
+      "side": 1,
+      "message": "create a test case to execute toString() just after creating a mappedobject",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 44
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
