@@ -49,5 +49,6 @@
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>
+        <module>pipeline-manager</module>
     </modules>
 </project>

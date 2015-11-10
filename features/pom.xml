@@ -79,7 +79,7 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.openflowplugin</groupId>
-      <artifactId>features-openflowplugin</artifactId>
+      <artifactId>features-openflowplugin-li</artifactId>
       <version>${openflowplugin.version}</version>
       <classifier>features</classifier>
       <type>xml</type>
@@ -129,6 +129,18 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+      <dependency>
+          <groupId>org.opendaylight.nic</groupId>
+          <artifactId>pipeline-manager</artifactId>
+          <version>${project.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.opendaylight.nic</groupId>
+          <artifactId>pipeline-manager</artifactId>
+          <version>${project.version}</version>
+          <classifier>config</classifier>
+          <type>xml</type>
+      </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>intent-mapping</artifactId>

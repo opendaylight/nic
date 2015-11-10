@@ -15,6 +15,12 @@
                         </type>
                         <name>binding-data-broker</name>
                     </data-broker>
+                    <pipeline-manager>
+                        <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:nic:pipeline-manager">
+                            prefix:pipeline-manager
+                        </type>
+                        <name>pipeline-manager</name>
+                    </pipeline-manager>
                 </module>
             </modules>
         </data>
@@ -22,7 +28,7 @@
 
     <required-capabilities>
         <capability>urn:opendaylight:nic:of:renderer?module=of-renderer&amp;revision=2015-08-19</capability>
-        <capability>urn:opendaylight:params:xml:ns:yang:openflow:common:config:impl?module=openflow-provider-impl&amp;revision=2014-03-26</capability>
+        <capability>urn:opendaylight:params:xml:ns:yang:nic:pipeline-manager?module=pipeline-manager&amp;revision=2015-09-25</capability>
     </required-capabilities>
 </snapshot>
 
