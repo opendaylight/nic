@@ -12,6 +12,7 @@
 
     <!-- https://wiki.opendaylight.org/view/Runtime:Karaf_Features_Guidelines#Feature_Best_Practices -->
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.mdsal/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
@@ -29,6 +30,18 @@
         <bundle>mvn:org.opendaylight.nic/intent-mapping/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/87-intent-mapping.xml">
             mvn:org.opendaylight.nic/intent-mapping/{{VERSION}}/xml/config
+        </configfile>
+    </feature>
+
+    <!-- Mapping Service feature for MDSAL -->
+    <feature name="odl-nic-core-service-mdsal" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: MDSAL based mapping service'>
+        <feature version="${mdsal.version}">odl-restconf</feature>
+        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
+        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+        <feature version='${latest.mdsal.version}'>odl-mdsal-binding-base</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-mdsal.xml">
+            mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}/xml/config
         </configfile>
     </feature>
 
