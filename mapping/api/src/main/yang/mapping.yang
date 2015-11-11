@@ -1,0 +1,34 @@
+module mapping {
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:mapping";
+    prefix "mapping";
+
+//  Dependency on service definition for config-demo
+    /* Service definitions could be also located in this yang file or even
+     * in a separate maven project that is marked as maven dependency
+     */
+    
+    revision "2015-11-11" {
+        description "Initial revision of mapping model";
+    }
+
+    grouping map {
+        list outer-map {
+            key "id";
+            leaf id {
+              type string;
+            }
+            list inner-map {
+                leaf inner-key {
+                    type string;
+                }
+                leaf value {
+                     type string;
+                }
+            }
+        }
+    }
+    container mappings {
+         uses map;
+     }
+}
