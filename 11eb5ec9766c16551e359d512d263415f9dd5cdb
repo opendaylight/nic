@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_5b31430a",
+        "filename": "mapping/api/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "1.0.0-SNAPSHOT",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7b368705",
+        "filename": "mapping/api/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/mapping/rev150105/MappingImplModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "Are you going to create a provider here ?",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_db2453c8",
+        "filename": "mapping/api/src/main/yang/mapping.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "Whitespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_fb2117b5",
+        "filename": "mapping/api/src/main/yang/mapping.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "Whitespace",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_1b12eb62",
+        "filename": "mapping/api/src/main/yang/mapping.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "I think this translate to MappingImplProvider but should be MappingProvider",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_1609622c",
+        "filename": "mapping/api/src/main/yang/mapping.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "You define this Yang file but you also have a mapping-impl file. This yang file should not contain this augmentation as it goes in the impl yang file.",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_9b2edba4",
+        "filename": "mapping/features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "2.0.0-SNAPSHOT",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_5b186384",
+        "filename": "mapping/impl/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "Please use the main .gitignore in the parent directory of nic",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_7b1d2773",
+        "filename": "mapping/impl/src/main/config/default-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "revision does not fit the one in the yang impl file.",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_f60fee2c",
+        "filename": "mapping/impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/mapping/rev150105/MappingImplModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "This module or the other one should not exist. please review the yang files",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_9b057b16",
+        "filename": "mapping/it/.gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "Please use the main gitignore file in nic parent folder",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_db0bf329",
+        "filename": "mapping/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "Does that page exist ?",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_3b17af53",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-11T16:38:25Z",
+      "side": 1,
+      "message": "identation: align correctly",
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
