@@ -6,9 +6,10 @@
      Eclipse Public License v1.0 which accompanies this distribution,
      and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
@@ -41,6 +42,7 @@
         <module>intent-cli</module>
         <module>intent-compiler</module>
         <module>intent-mapping</module>
+        <module>intent-mapping-mdsal</module>
         <module>gbp-renderer</module>
         <module>vtn-renderer</module>
         <module>nemo-renderer</module>
