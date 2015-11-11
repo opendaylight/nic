@@ -32,6 +32,17 @@
         </configfile>
     </feature>
 
+    <!-- Mapping Service feature for MDSAL -->
+    <feature name="odl-nic-core-service-mdsal" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: MDSAL based mapping service'>
+        <feature version="${mdsal.version}">odl-restconf</feature>
+        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
+        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-mdsal.xml">
+            mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}/xml/config
+        </configfile>
+    </feature>
+
     <!-- Core feature -->
     <feature name='odl-nic-core' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Core'>

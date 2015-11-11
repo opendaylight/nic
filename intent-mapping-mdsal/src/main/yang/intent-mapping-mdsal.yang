@@ -1,0 +1,41 @@
+/*
+* Copyright (c) 2015 Inocybe Technologies
+* All rights reserved.
+*
+* This program and the accompanying materials are made available under then
+* terms of the Eclipse Public License v1.0 which accompanies this distribution,
+* and is available at http://www.eclipse.org/legal/epl-v10.html
+*/
+
+module intent-mapping-mdsal {
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal";
+    prefix "intent-mapping-mdsal";
+
+    description
+        "Service definition for intent-mapping-mdsal module";
+
+    revision "2015-11-11" {
+        description "Initial revision of intent-mapping-mdsal model";
+    }
+
+    grouping map {
+        list outer-map {
+            key "id";
+            leaf id {
+              type string;
+            }
+            list inner-map {
+                leaf inner-key {
+                    type string;
+                }
+                leaf value {
+                     type string;
+                }
+            }
+        }
+    }
+    container mappings {
+         uses map;
+     }
+}
