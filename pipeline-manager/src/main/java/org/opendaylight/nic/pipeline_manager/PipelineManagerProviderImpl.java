@@ -24,6 +24,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.ta
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.InstructionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
@@ -191,9 +192,13 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
     }
 
     private boolean isFlowSupported(List<TableFeatureProperties> tableFeaturePropertiesList, FlowBuilder flowBuilder) {
+        Instructions flowBuilderInstructions = flowBuilder.getInstructions();
+        if (flowBuilderInstructions == null) {
+            return false;
+        }
         List<SetFieldMatch> matchList = getMatchList(tableFeaturePropertiesList);
         return isMatchSupported(matchList, flowBuilder.getMatch())
-                && isInstructionsSupported(tableFeaturePropertiesList, flowBuilder.getInstructions().getInstruction());
+                && isInstructionsSupported(tableFeaturePropertiesList, flowBuilderInstructions.getInstruction());
     }
 
     private boolean isInstructionsSupported(List<TableFeatureProperties> tableFeaturePropertiesList, List<Instruction> instructions) {
