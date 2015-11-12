@@ -129,7 +129,7 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
     }
 
     private List<TableFeatureProperties> getTableFeatureProperties(Table table) {
-        if (table.getTableFeatures().isEmpty())
+        if (table.getTableFeatures() == null || table.getTableFeatures().isEmpty())
             return Collections.emptyList();
         TableFeatures tableFeatures = table.getTableFeatures().get(0);
         return tableFeatures.getTableProperties().getTableFeatureProperties();
