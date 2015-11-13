@@ -53,6 +53,11 @@
   </dependency>
 <!-- apache cellar dependency -->
   <dependency>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>intent-mapping-interface</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
    <groupId>org.apache.karaf.cellar</groupId>
    <artifactId>org.apache.karaf.cellar.hazelcast</artifactId>
    <version>${karaf.cellar.version}</version>

@@ -1,36 +1,25 @@
 package org.opendaylight.nic.mapping.impl;
 
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.opendaylight.nic.mapping.api.IntentMappingService;
-import org.opendaylight.nic.mapping.api.MappedObject;
-import org.opendaylight.nic.mapping.api.TypeHostname;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
-import org.powermock.api.mockito.PowerMockito;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.opendaylight.nic.api.IntentMappingService;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+import org.powermock.api.mockito.PowerMockito;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HazelcastMappingServiceImplTest {
@@ -55,27 +44,23 @@ public class HazelcastMappingServiceImplTest {
         ServiceRegistration<IntentMappingService> intentServiceMock = mock(ServiceRegistration.class);
 
         doReturn(mockBundleContext).when(service).getBundleCtx();
-        when(mockBundleContext.registerService(IntentMappingService.class,
-                service, null)).thenReturn(intentServiceMock);
+        when(mockBundleContext.registerService(IntentMappingService.class, service, null))
+                .thenReturn(intentServiceMock);
 
-        TypeHostname hostname = new TypeHostname();
-        hostname.setHostname("bob-server");
+        String hostname = "bob-server";
 
         service.add(BOB, hostname);
-        Collection<MappedObject> objects = service.retrieve(BOB);
+        Collection<String> objects = service.retrieve(BOB);
         assertNotNull(objects);
         assertTrue(objects.size() == 1);
 
-        List<MappedObject> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
 
-        TypeHostname hostname1 = new TypeHostname();
-        hostname1.setHostname("alice-server1");
+        String hostname1 = "alice-server1";
 
-        TypeHostname hostname2 = new TypeHostname();
-        hostname2.setHostname("alice-server2");
+        String hostname2 = "alice-server2";
 
-        TypeHostname hostname3 = new TypeHostname();
-        hostname3.setHostname("alice-server3");
+        String hostname3 = "alice-server3";
 
         list.add(hostname1);
         list.add(hostname2);
@@ -89,8 +74,8 @@ public class HazelcastMappingServiceImplTest {
 
         assertNotNull(service.stringRepresentation(ALICE));
 
-        for (MappedObject o : objects) {
-            assertTrue(o.getType().equals("hostname"));
+        for (String o : objects) {
+            assertTrue(o.getClass() == String.class);
         }
     }
 }

@@ -8,6 +8,9 @@
 
 package org.opendaylight.nic.mapping.mdsal.impl;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
@@ -15,6 +18,7 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
+import org.opendaylight.nic.api.IntentMappingService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.Mappings;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.MappingsBuilder;
 import org.opendaylight.yangtools.yang.binding.DataObject;
@@ -25,7 +29,8 @@ import org.slf4j.LoggerFactory;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
-public class MappingMdsalProvider implements BindingAwareProvider, DataChangeListener, AutoCloseable {
+public class MappingMdsalProvider
+        implements IntentMappingService, BindingAwareProvider, DataChangeListener, AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
     private DataBroker dataBroker;
@@ -73,5 +78,35 @@ public class MappingMdsalProvider implements BindingAwareProvider, DataChangeLis
             }
         });
         LOG.info("initDatastore: mappings data populated: {}", store, iid, mappings);
+    }
+
+    @Override
+    public void add(String key, String obj) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void addList(String key, List<String> objs) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public Collection<String> retrieve(String key) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Collection<String> keys() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String stringRepresentation(String key) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
