@@ -129,23 +129,17 @@ public class NicProviderTest {
         PowerMockito.mockStatic(FrameworkUtil.class);
         Bundle mockBundle = mock(Bundle.class);
         BundleContext mockBundleContext = mock(BundleContext.class);
-        ServiceRegistration<NicConsoleProvider> mockNicConsoleRegistration = mock(ServiceRegistration.class);
         doNothing().when(nicProvider).initIntentsOperational();
         doNothing().when(nicProvider).initIntentsConfiguration();
         when(FrameworkUtil.getBundle(nicProvider.getClass())).thenReturn(mockBundle);
         when(mockBundle.getBundleContext()).thenReturn(mockBundleContext);
-        when(mockBundleContext.registerService(NicConsoleProvider.class,
-                nicProvider, null)).thenReturn(mockNicConsoleRegistration);
         /**
          * Here verifying init() should initialize operational and default
          * config data in MD-SAL data store.
          */
         nicProvider.init();
-        assertEquals(mockNicConsoleRegistration, nicProvider.nicConsoleRegistration);
         verify(nicProvider, times(1)).initIntentsOperational();
         verify(nicProvider, times(1)).initIntentsConfiguration();
-        verify(mockBundle, times(1)).getBundleContext();
-        verify(mockBundleContext, times(1)).registerService(NicConsoleProvider.class, nicProvider, null);
     }
 
     /**
@@ -154,13 +148,10 @@ public class NicProviderTest {
     @Test
     public void testClose() throws Exception {
         nicProvider = spy(nicProvider);
-        ServiceRegistration mockServiceRegistration = mock(ServiceRegistration.class);
-        nicProvider.nicConsoleRegistration = mockServiceRegistration;
         /**
          * Here verifying close() should close active registrations.
          */
         nicProvider.close();
-        verify(mockServiceRegistration, times(1)).unregister();
     }
 
     /**
