@@ -40,7 +40,7 @@ public final class GenericTransactionUtils {
                 LOG.warn("Invalid attempt to add a non-existent object to path {}", iid);
                 return false;
             }
-            modification.merge(logicalDatastoreType, iid, dataObject, true /*createMissingParents*/);
+            modification.put(logicalDatastoreType, iid, dataObject, true /*createMissingParents*/);
             //TODO: Change to support more actions
         } else {
             modification.delete(LogicalDatastoreType.CONFIGURATION, iid);
