@@ -8,13 +8,17 @@
 
 package org.opendaylight.nic.mapping.api;
 
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
 
 public interface IntentMappingService extends AutoCloseable {
-    void add(String key, MappedObject obj);
-    void addList(String key, List<MappedObject> objs);
-    Collection<MappedObject> retrieve(String key);
+    void add(String key, String obj);
+
+    void addList(String key, List<String> objs);
+
+    Collection<String> retrieve(String key);
+
     Collection<String> keys();
+
     String stringRepresentation(String key);
 }
