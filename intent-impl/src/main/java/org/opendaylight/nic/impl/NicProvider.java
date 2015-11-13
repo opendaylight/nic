@@ -57,8 +57,6 @@ public class NicProvider implements NicConsoleProvider {
 
     protected DataBroker dataBroker;
 
-    protected ServiceRegistration<NicConsoleProvider> nicConsoleRegistration;
-
     public NicProvider(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
     }
@@ -68,15 +66,10 @@ public class NicProvider implements NicConsoleProvider {
     @Override
     public void close() throws Exception {
         // Close active registrations
-        nicConsoleRegistration.unregister();
         LOG.info("IntentengineImpl: registrations closed");
     }
 
     public void init() {
-        // Initialize operational and default config data in MD-SAL data store
-        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        nicConsoleRegistration = context.registerService(NicConsoleProvider.class, this, null);
-
         initIntentsOperational();
         initIntentsConfiguration();
         LOG.info("Initialization done");

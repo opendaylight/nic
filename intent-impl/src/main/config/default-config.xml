@@ -25,6 +25,15 @@
 
         </module>
       </modules>
+        <services xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
+            <service>
+                <type xmlns:prefix="urn:opendaylight:nic:intent:impl">prefix:nic-console-provider</type>
+                <instance>
+                    <name>nic-console-provider</name>
+                    <provider>/modules/module[type='intent-impl'][name='intent-impl']</provider>
+                </instance>
+            </service>
+        </services>
     </data>
   </configuration>
 
