@@ -33,10 +33,11 @@
    <version>${project.version}</version>
   </dependency>
   <dependency>
-   <groupId>${project.groupId}</groupId>
-   <artifactId>intent-mapping</artifactId>
+   <groupId>org.opendaylight.nic</groupId>
+   <artifactId>intent-mapping-interface</artifactId>
    <version>${project.version}</version>
   </dependency>
+
 <!-- apache console dependency -->
   <dependency>
    <groupId>org.apache.karaf.shell</groupId>
