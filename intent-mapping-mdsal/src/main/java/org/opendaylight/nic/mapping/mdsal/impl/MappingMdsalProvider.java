@@ -38,8 +38,7 @@ public class MappingMdsalProvider implements BindingAwareProvider, DataChangeLis
     }
 
     @Override
-    public void onDataChanged(
-            AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
+    public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
         // TODO Auto-generated method stub
 
     }
@@ -47,7 +46,7 @@ public class MappingMdsalProvider implements BindingAwareProvider, DataChangeLis
     @Override
     public void onSessionInitiated(ProviderContext session) {
         // Retrieve the data broker to create transactions
-        dataBroker =  session.getSALService(DataBroker.class);
+        dataBroker = session.getSALService(DataBroker.class);
         iid = InstanceIdentifier.builder(Mappings.class).build();
 
         Mappings mappings = new MappingsBuilder().build();
@@ -67,6 +66,7 @@ public class MappingMdsalProvider implements BindingAwareProvider, DataChangeLis
             public void onSuccess(final Void result) {
                 LOG.info("initDatastore for mappings: transaction succeeded");
             }
+
             @Override
             public void onFailure(final Throwable throwable) {
                 LOG.error("initDatastore for mappings: transaction failed");

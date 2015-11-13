@@ -21,13 +21,6 @@ public class MappingMdsalImplModule extends org.opendaylight.yang.gen.v1.urn.ope
         final MappingMdsalProvider provider = new MappingMdsalProvider();
         getBrokerDependency().registerProvider(provider);
 
-        final class AutoCloseableMapping implements AutoCloseable {
-
-            @Override
-            public void close() throws Exception {
-                provider.close();
-            }
-        }
-        return new AutoCloseableMapping();
+        return provider;
     }
 }
