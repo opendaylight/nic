@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.opendaylight.nic.mapping.api.IntentMappingService;
-import org.opendaylight.nic.mapping.api.MappedObject;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -24,7 +23,7 @@ import com.hazelcast.core.MultiMap;
 
 public class HazelcastMappingServiceImpl implements IntentMappingService {
 
-    private MultiMap<String, MappedObject> multiMap;
+    private MultiMap<String, String> multiMap;
 
     protected ServiceRegistration<IntentMappingService> nicConsoleRegistration;
 
@@ -48,7 +47,7 @@ public class HazelcastMappingServiceImpl implements IntentMappingService {
         nicConsoleRegistration = context.registerService(IntentMappingService.class, this, null);
     }
 
-    private MultiMap<String, MappedObject> getMultiMap() {
+    private MultiMap<String, String> getMultiMap() {
         if (multiMap == null) {
             init();
         }
@@ -56,19 +55,19 @@ public class HazelcastMappingServiceImpl implements IntentMappingService {
     }
 
     @Override
-    public void add(String key, MappedObject obj) {
+    public void add(String key, String obj) {
         getMultiMap().put(key, obj);
     }
 
     @Override
-    public void addList(String key, List<MappedObject> objs) {
-        for (MappedObject obj : objs) {
+    public void addList(String key, List<String> objs) {
+        for (String obj : objs) {
             getMultiMap().put(key, obj);
         }
     }
 
     @Override
-    public Collection<MappedObject> retrieve(String key) {
+    public Collection<String> retrieve(String key) {
         return getMultiMap().get(key);
     }
 
@@ -80,13 +79,13 @@ public class HazelcastMappingServiceImpl implements IntentMappingService {
     @Override
     public String stringRepresentation(String key) {
         StringBuilder builder = new StringBuilder();
-        Collection<MappedObject> list = getMultiMap().get(key);
+        Collection<String> list = getMultiMap().get(key);
 
         if (list == null) {
             return "";
         }
 
-        for (MappedObject obj : list) {
+        for (String obj : list) {
             builder.append("    ");
             builder.append(obj.toString());
             builder.append("\n");
