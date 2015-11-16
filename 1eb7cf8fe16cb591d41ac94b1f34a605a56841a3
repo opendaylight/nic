@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_f2e60d16",
+        "filename": "intent-mapping-interface/src/main/java/IntentMappingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-16T17:27:13Z",
+      "side": 1,
+      "message": "Hewlett Packard Enterprise, Inocybe Technologies and others ?\nSince the interface was already there.",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 29
+      },
+      "revId": "1eb7cf8fe16cb591d41ac94b1f34a605a56841a3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
