@@ -29,7 +29,7 @@
  <dependencies>
   <dependency>
    <groupId>${project.groupId}</groupId>
-   <artifactId>intentengine-api</artifactId>
+   <artifactId>intent-api</artifactId>
    <version>${project.version}</version>
   </dependency>
   <!-- OpenDaylight GBP Manager -->
