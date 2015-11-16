@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+ <parent>
+  <groupId>org.opendaylight.controller</groupId>
+  <artifactId>config-parent</artifactId>
+  <version>0.4.0-SNAPSHOT</version>
+  <relativePath />
+ </parent>
+
+ <modelVersion>4.0.0</modelVersion>
+ <groupId>org.opendaylight.nic</groupId>
+ <artifactId>intent-graph</artifactId>
+ <version>1.1.0-SNAPSHOT</version>
+ <packaging>bundle</packaging>
+
+ <dependencies>
+  <!-- project specific dependency -->
+  <dependency>
+   <groupId>org.opendaylight.nic</groupId>
+   <artifactId>intent-api</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+  <!-- graph dependency -->
+  <!--<dependency>
+   <groupId>org.jgrapht</groupId>
+   <artifactId>jgraph-core</artifactId>
+   <version>0.9.1</version>
+  </dependency>-->
+  <dependency>
+   <groupId>org.opendaylight.nic</groupId>
+   <artifactId>intent-impl</artifactId>
+   <version>1.1.0-SNAPSHOT</version>
+  </dependency>
+ </dependencies>
+
+</project>
