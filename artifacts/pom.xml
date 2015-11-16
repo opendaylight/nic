@@ -81,6 +81,11 @@
     <artifactId>intent-mapping</artifactId>
     <version>${project.version}</version>
    </dependency>
+<!--   <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>intent-graph</artifactId>
+    <version>${project.version}</version>
+   </dependency> -->
    <dependency>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>features-nic</artifactId>
