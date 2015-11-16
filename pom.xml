@@ -37,6 +37,7 @@
     <modules>
         <!-- Well-known -->
         <module>intent-api</module>
+        <module>intent-graph</module> 
         <module>intent-impl</module>
         <module>intent-cli</module>
         <module>intent-compiler</module>
