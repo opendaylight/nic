@@ -1,0 +1,89 @@
+//----------------------------------------------------------------------------------
+// Copyright (c) 2015 Hewlett Packard Enterprise Development LP.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//----------------------------------------------------------------------------------
+module intent-graph {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:intent:graph";
+    prefix "intent-graph";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+
+    description
+      "This module is yang structure definition for PGA graph";
+
+    revision 2015-09-11 {
+        description "Initial revision";
+    }
+
+    // This is the definition of the service implementation as a module identity
+    identity intent-graph {
+            base config:module-type;
+
+            // Specifies the prefix for generated java classes.
+            config:java-name-prefix GraphProvider;
+    }
+
+    // Augments the 'configuration' choice node under modules/module.
+    augment "/config:modules/config:module/config:configuration" {
+        case intent-graph {
+            when "/config:modules/config:module/config:type = 'intent-graph'";
+        }
+    }
+
+    typedef edge-types {
+         type enumeration {
+            enum mustAllow {
+                value 1;
+                description "Strong Allow";
+            }
+            enum canAllow {
+                value 2;
+                description "Can Communicate provided there is no condition";
+            }
+            enum mustDeny {
+                value 4;
+                description "Strong Block";
+            }
+            enum conditional {
+                value 8;
+                description "Good to have, but can be overrided by others";
+            }
+         }
+         description "Graph edge for specifying intent in PGA";
+    }
+
+    container graph {
+       key "identifier";
+       leaf identifier {
+         type string;
+       }
+       list nodes {
+         key "name";
+         leaf name {
+             type string;
+             description "nodes are vertices which are based on label tree";
+         }
+       }
+       list edges {
+         key "identifier";
+         leaf identifier {
+             type string;
+         }
+         leaf node1 {
+             type string;
+         }
+         leaf node2 {
+             type string;
+         }
+         leaf type {
+             type edge-types;
+         }
+       }
+       description "The common graph structure for input and composed graph";
+    }
+}
