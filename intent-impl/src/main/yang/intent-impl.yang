@@ -24,23 +24,19 @@ module intent-impl {
 
         // Specifies the prefix for generated Java classes.
         config:java-name-prefix NicProvider;
-        config:provided-service nic-console-provider;
     }
-
-    identity nic-console-provider {
-        base config:service-type;
-        config:java-class "org.opendaylight.nic.api.NicConsoleProvider";
-    } 
 
     // Augments the 'configuration' choice node under modules/module.
     augment "/config:modules/config:module/config:configuration" {
         case intent-impl {
             when "/config:modules/config:module/config:type = 'intent-impl'";
+
             container data-broker {
                 uses config:service-ref {
                     refine type {
                         mandatory true;
-                        config:required-identity mdsal:binding-async-data-broker;
+                        config:required-identity
+                          mdsal:binding-async-data-broker;
                     }
                 }
             }
