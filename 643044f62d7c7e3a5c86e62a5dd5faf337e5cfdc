@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_7acf53b1",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "remove those and add them in odl-nic-core",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 70
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_1ac41f91",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "remove those and add then in odl-nic-core",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 86
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_5aca97a2",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "remove those and add them in the odl-nic-core",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 86
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_fae34331",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "please add the feature not only the bundle\n\n\u003cfeature version\u003d\"${project.version}\"\u003eodl-nic-core-service-mdsal\u003c/feature\u003e\n\nas it is done for the odl-nic-core-service\n\nAlso I think you should add those features in odl-nic-core\n\n        \u003cfeature version\u003d\"${mdsal.version}\"\u003eodl-restconf\u003c/feature\u003e\n        \u003cfeature version\u003d\"${mdsal.version}\"\u003eodl-mdsal-apidocs\u003c/feature\u003e\n        \u003cfeature version\u003d\"${mdsal.version}\"\u003eodl-mdsal-broker\u003c/feature\u003e\n        \u003cbundle\u003emvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}\u003c/bundle\u003e",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 82
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_3ac1db80",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "remove this as the odl-nic-core will provide it",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 86
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_dabd2704",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddMappingShellCommand.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "please restore previous format to avoid checkstyle violation",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 125
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_faba6309",
+        "filename": "intent-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/mapping/rev151005/MappingImplModule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "add copyright",
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_9a37afb0",
+        "filename": "intent-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/mapping/rev151005/MappingImplModule.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "init provider",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_7a467325",
+        "filename": "intent-mapping-interface/src/main/java/org/opendaylight/nic/api/IntentMappingService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "remove Inocybe, this was contributed by HP, you just moved the class somewhere else",
+      "range": {
+        "startLine": 2,
+        "startChar": 48,
+        "endLine": 2,
+        "endChar": 70
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_ba3ceb94",
+        "filename": "intent-mapping-interface/src/main/java/org/opendaylight/nic/api/IntentMappingService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "import the package",
+      "range": {
+        "startLine": 13,
+        "startChar": 46,
+        "endLine": 13,
+        "endChar": 56
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_5a41370a",
+        "filename": "intent-mapping-mdsal/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "please indent correctly",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_1a4bbf2c",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/impl/HazelcastMappingServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-17T14:13:17Z",
+      "side": 1,
+      "message": "Why would you change MappedObject to String. Is that something we want?",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
