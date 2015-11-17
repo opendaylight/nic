@@ -1,0 +1,30 @@
+module state-transition-queue {
+    yang-version 1;
+    namespace "urn:opendaylight:intent:state:transition:queue";
+    prefix "state-queue";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+
+    description
+      "Thread-safe ready queue for state machine transitions";
+
+    revision "2015-11-17" {
+        description "Initial revision.";
+    }
+
+    container ready-queue {
+        list queue {
+            key "intent-id";
+            leaf intent-id {
+             type types:uuid;
+             mandatory true;
+             description "The ID of intent undergoing a transition";
+            }
+            leaf event {
+                type string;
+                description "The event that triggered a state change";
+            }
+        }
+    }
+
+}
