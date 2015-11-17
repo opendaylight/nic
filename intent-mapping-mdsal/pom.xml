@@ -26,7 +26,12 @@
   <powermock.version>1.5.5</powermock.version>
  </properties>
 
- <dependencies>
+  <dependencies>
+   <dependency>
+   <groupId>org.opendaylight.nic</groupId>
+   <artifactId>intent-mapping-interface</artifactId>
+   <version>${project.version}</version>
+  </dependency>
   <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
