@@ -203,6 +203,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_fa5103d9",
+        "filename": "intent-mapping-interface/src/main/java/org/opendaylight/nic/api/IntentMappingService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-17T14:47:01Z",
+      "side": 1,
+      "message": "I\u0027ve done changes on contracts.",
+      "parentUuid": "7aade967_7a467325",
+      "range": {
+        "startLine": 2,
+        "startChar": 48,
+        "endLine": 2,
+        "endChar": 70
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_ba3ceb94",
         "filename": "intent-mapping-interface/src/main/java/org/opendaylight/nic/api/IntentMappingService.java",
         "patchSetId": 7
@@ -260,6 +284,30 @@
       "writtenOn": "2015-11-17T14:13:17Z",
       "side": 1,
       "message": "Why would you change MappedObject to String. Is that something we want?",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_9a5ecfe8",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/impl/HazelcastMappingServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-17T14:47:01Z",
+      "side": 1,
+      "message": "This change was discussed with Raphael, in order to have a generic interface that can handle no matter implementation. MappedObject had Hazelcast dependencies.",
+      "parentUuid": "7aade967_1a4bbf2c",
       "range": {
         "startLine": 26,
         "startChar": 29,
