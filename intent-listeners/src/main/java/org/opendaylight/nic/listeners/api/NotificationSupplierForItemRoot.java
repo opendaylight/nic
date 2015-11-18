@@ -19,10 +19,12 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
  * @param <O> - data tree item Object
  * @param <C> - Create notification
  * @param <D> - Delete notification
+ * @param <U> - Update notification
  */
 public interface NotificationSupplierForItemRoot<O extends DataObject,
                                              C extends NicNotification,
-                                             D extends NicNotification>
+                                             D extends NicNotification,
+                                             U extends NicNotification>
                 extends NotificationSupplierDefinition<O> {
 
     /**
@@ -44,12 +46,25 @@ public interface NotificationSupplierForItemRoot<O extends DataObject,
      */
     D deleteNotification(O object, InstanceIdentifier<O> path);
 
+    /**
+     * Method produces relevant updateItem kind of {@link NicNotification} from
+     * path {@link InstanceIdentifier} to deleted item.
+     *
+     * @param path - Identifier of Data Tree Item
+     * @return {@link NicNotification} - relevant API contract NicNotification
+     */
+    U updateNotification(O object, InstanceIdentifier<O> path);
+
     EventType getCreateEventType();
 
     EventType getDeleteEventType();
 
+    EventType getUpdateEventType();
+
     Class getCreateImplClass();
 
     Class getDeleteImplClass();
+
+    Class getUpdateImplClass();
 }
 
