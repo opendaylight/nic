@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "7aade967_91f8ede6",
+        "filename": "utils/src/main/java/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-18T22:46:19Z",
+      "side": 1,
+      "message": "Maybe we need to move this code here as well:\n\nhttps://git.opendaylight.org/gerrit/gitweb?p\u003dnic.git;a\u003dtree;f\u003dof-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils",
+      "revId": "58e5529e4ef045243da20337c270ea5e5219b383",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_118ddd7b",
         "filename": "utils/src/test/java/opendaylight/nic/utils/MdsalUtilsTest.java",
         "patchSetId": 2
