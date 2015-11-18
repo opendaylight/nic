@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_d1ee6522",
+        "filename": "utils/src/main/java/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-18T22:48:14Z",
+      "side": 1,
+      "message": "It\u0027s a typo. I should be: \"org.opendaylight\".",
+      "parentUuid": "7aade967_f18fe173",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "58e5529e4ef045243da20337c270ea5e5219b383",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_91f8ede6",
         "filename": "utils/src/main/java/opendaylight/nic/utils/MdsalUtils.java",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7aade967_f1e60144",
+        "filename": "utils/src/main/java/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-18T22:48:14Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "7aade967_91f8ede6",
+      "revId": "58e5529e4ef045243da20337c270ea5e5219b383",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_118ddd7b",
         "filename": "utils/src/test/java/opendaylight/nic/utils/MdsalUtilsTest.java",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2015-11-18T22:39:42Z",
       "side": 1,
       "message": "\"org.opendaylight.nic.utils\"?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "58e5529e4ef045243da20337c270ea5e5219b383",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_71f3f10a",
+        "filename": "utils/src/test/java/opendaylight/nic/utils/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-18T22:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_118ddd7b",
       "range": {
         "startLine": 9,
         "startChar": 0,
