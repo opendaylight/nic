@@ -27,10 +27,12 @@ import org.slf4j.LoggerFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 
 import java.util.List;
+import java.util.Map;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
     private List<String> endPointGroups = null;
+    private Map<String, Map<String, String>> subjectsMapping = null;
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(IntentFlowManager.class);
 
@@ -38,6 +40,7 @@ public class IntentFlowManager extends AbstractFlowManager {
     private static final Integer DST_END_POINT_GROUP_INDEX = 1;
     private static final String ANY_MATCH = "any";
     private static final String INTENT_L2_FLOW_NAME = "L2_Rule_";
+    private static final String MPLS_LABEL_KEY = "MPLS-label";
 
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
@@ -45,6 +48,11 @@ public class IntentFlowManager extends AbstractFlowManager {
 
     public void setAction(Action action) {
         this.action = action;
+    }
+
+    public void setSubjectsMapping(
+            Map<String, Map<String, String>> subjectsMapping) {
+        this.subjectsMapping = subjectsMapping;
     }
 
     IntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
@@ -66,6 +74,8 @@ public class IntentFlowManager extends AbstractFlowManager {
         // TODO: Extend for L3 matches
 
         createEthMatch(endPointGroups, matchBuilder);
+        createMplsMatch(endPointGroups, subjectsMapping, matchBuilder);
+
         // Create Flow
         flowBuilder = createFlowBuilder(matchBuilder);
         // TODO: Extend for other actions
@@ -126,6 +136,24 @@ public class IntentFlowManager extends AbstractFlowManager {
             MatchUtils.createEthMatch(matchBuilder, srcMac, dstMac);
         } catch (IllegalArgumentException e) {
             LOG.error("Can only accept valid MAC addresses as subjects", e);
+        }
+    }
+
+    // endPointGroups list received from Intent operation is a list of mac addresses
+    // For each mac address as key access the mapping information from mapping-service
+    // Get mpls label value from mapping information using MPLS-label as key
+    // Finally add the label to the ProtocolMatchField of OF flow-rule
+    private void createMplsMatch(
+            List<String> endPointGroups, Map<String, Map<String, String>> subjectsMapping,
+            MatchBuilder matchBuilder) {
+
+        for (String macAddress : endPointGroups) {
+            if (subjectsMapping.containsKey(macAddress)) {
+                Long mplsLabel = new Long(subjectsMapping.get(macAddress).get(MPLS_LABEL_KEY));
+                // since we add only one MPLS label for now bos field is 1 or true
+                boolean bos = true;
+                MatchUtils.createMplsLabelBosMatch(matchBuilder, mplsLabel, bos);
+            }
         }
     }
 

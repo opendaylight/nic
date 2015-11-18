@@ -11,7 +11,11 @@ package org.opendaylight.nic.of.renderer.utils;
 import org.opendaylight.controller.liblldp.EtherTypes;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PopMplsActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PushMplsActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.output.action._case.OutputActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.pop.mpls.action._case.PopMplsActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.push.mpls.action._case.PushMplsActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionKey;
@@ -28,48 +32,68 @@ public class FlowUtils {
 
     private FlowUtils() {
     }
+
     /**
-     * Creates {@link EthernetMatch} containing ARP ether-type and the given destination MAC address
+     * Creates {@link EthernetMatch} containing ARP ether-type and the given
+     * destination MAC address
      */
     public static EthernetMatch createEthernetMatch() {
         return new EthernetMatchBuilder().setEthernetType(
                 new EthernetTypeBuilder().setType(new EtherType(Long.valueOf(EtherTypes.ARP.intValue()))).build())
-            .build();
+                .build();
     }
 
-
     /**
-     * Creates {@link ArpMatch} containing Reply ARP operation, THA and TPA for the given target
-     * address and SPA for the given sender protocol address
+     * Creates {@link ArpMatch} containing Reply ARP operation, THA and TPA for
+     * the given target address and SPA for the given sender protocol address
      */
-//    public static ArpMatch createArpMatch() {
-//        return new ArpMatchBuilder().setArpOp(ArpOperation.REPLY.intValue()).build();
-//    }
+    // public static ArpMatch createArpMatch() {
+    // return new
+    // ArpMatchBuilder().setArpOp(ArpOperation.REPLY.intValue()).build();
+    // }
     /**
      * Creates {@link Action} representing output to the controller
      *
-     * @param order the order for the action
+     * @param order
+     *            the order for the action
      */
     public static Action createSendToControllerAction(int order) {
-        return new ActionBuilder().setOrder(order)
-            .setKey(new ActionKey(order))
-            .setAction(
-                    new OutputActionCaseBuilder().setOutputAction(
-                            new OutputActionBuilder().setMaxLength(0xffff)
-                                .setOutputNodeConnector(new Uri(OutputPortValues.CONTROLLER.toString()))
-                                .build()).build())
-            .build();
+        return new ActionBuilder().setOrder(order).setKey(new ActionKey(order))
+                .setAction(new OutputActionCaseBuilder()
+                        .setOutputAction(new OutputActionBuilder().setMaxLength(0xffff)
+                                .setOutputNodeConnector(new Uri(OutputPortValues.CONTROLLER.toString())).build())
+                .build()).build();
     }
 
     public static Action createOutputNormal(int order) {
         return new ActionBuilder().setOrder(order)
-                .setKey(new ActionKey(order))
+                .setKey(new ActionKey(
+                        order))
                 .setAction(
-                        new OutputActionCaseBuilder().setOutputAction(
-                                new OutputActionBuilder().setMaxLength(0xffff)
-                                        .setOutputNodeConnector(new Uri(OutputPortValues.NORMAL.toString()))
-                                        .build()).build())
+                        new OutputActionCaseBuilder()
+                                .setOutputAction(new OutputActionBuilder().setMaxLength(0xffff)
+                                        .setOutputNodeConnector(new Uri(OutputPortValues.NORMAL.toString())).build())
+                        .build())
                 .build();
+    }
+
+    public static Action createMPLSAction(int order, int label, boolean popLabel) {
+        Action action = null;
+        ActionBuilder ab = new ActionBuilder();
+
+        if (popLabel) {
+            PopMplsActionBuilder popMplsActionBuilder = new PopMplsActionBuilder();
+            popMplsActionBuilder.setEthernetType(label);
+            ab.setAction(new PopMplsActionCaseBuilder().setPopMplsAction(popMplsActionBuilder.build()).build());
+            action = ab.build();
+        } else {
+
+            PushMplsActionBuilder push = new PushMplsActionBuilder();
+            push.setEthernetType(new Integer(label));
+            ab.setAction(new PushMplsActionCaseBuilder().setPushMplsAction(push.build()).build());
+            action = ab.build();
+        }
+        return action;
     }
 
 }

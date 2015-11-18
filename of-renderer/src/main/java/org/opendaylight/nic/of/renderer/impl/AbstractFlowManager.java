@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -81,6 +82,19 @@ public abstract class AbstractFlowManager {
                 .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyOutputActions).build()).build();
         Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(outputInstruction))
                 .build();
+        return instructions;
+    }
+
+    protected Instructions createMPLSInstructions(List<Integer> labels, boolean popLabel) {
+        int order = 0;
+        List<Action> actionList = new ArrayList<>();
+        for (Integer labelValue : labels) {
+            actionList.add(FlowUtils.createMPLSAction(order++, labelValue, popLabel));
+        }
+        ApplyActions applyMplsActions = new ApplyActionsBuilder().setAction(actionList).build();
+        Instruction mplsInstruction = new InstructionBuilder().setOrder(0)
+                .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyMplsActions).build()).build();
+        Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(mplsInstruction)).build();
         return instructions;
     }
 

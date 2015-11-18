@@ -7,17 +7,22 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import com.google.common.base.Optional;
-import com.google.common.util.concurrent.CheckedFuture;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.nic.api.IntentMappingService;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
@@ -27,14 +32,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.common.base.Optional;
+import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 
 /**
  * Created by saket on 8/19/15.
@@ -47,6 +52,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private ArpFlowManager arpFlowManager;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
+    private IntentMappingService intentMappingService;
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
@@ -57,25 +63,28 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         LOG.info("OF Renderer Provider Session Initiated");
         // Register this service with karaf
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        ServiceReference<?> serviceReference = context.getServiceReference(IntentMappingService.class);
+        intentMappingService = (IntentMappingService) context.getService(serviceReference);
         nicFlowServiceRegistration = context.registerService(OFRendererFlowService.class, this, null);
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
     }
 
-
-
     @Override
     public void pushIntentFlow(Intent intent, FlowAction flowAction) {
         // TODO: Extend to support other actions
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
-        Action actionContainer = (Action) intent.getActions().get(0).getAction();
+        Action actionContainer = intent.getActions().get(0).getAction();
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
+        Map<String, Map<String, String>> subjectsMapping = IntentUtils.extractSubjectDetails(endPointGroups);// ,intentMappingService);
+
+        intentFlowManager.setSubjectsMapping(subjectsMapping);
         intentFlowManager.setEndPointGroups(endPointGroups);
         intentFlowManager.setAction(actionContainer);
-        //Get all node Id's
+        // Get all node Id's
         Map<Node, List<NodeConnector>> nodeMap = getNodes();
         for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
-            //Push flow to every node for now
+            // Push flow to every node for now
             intentFlowManager.pushFlow(entry.getKey().getId(), flowAction);
         }
     }
@@ -91,8 +100,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         ReadTransaction tx = dataBroker.newReadOnlyTransaction();
         try {
             final InstanceIdentifier<Nodes> nodesIdentifier = InstanceIdentifier.create(Nodes.class);
-            final CheckedFuture<Optional<Nodes>, ReadFailedException> txCheckedFuture = tx.read(LogicalDatastoreType
-                    .OPERATIONAL, nodesIdentifier);
+            final CheckedFuture<Optional<Nodes>, ReadFailedException> txCheckedFuture = tx
+                    .read(LogicalDatastoreType.OPERATIONAL, nodesIdentifier);
             nodeList = txCheckedFuture.checkedGet().get();
 
             for (Node node : nodeList.getNode()) {
@@ -101,7 +110,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
                 nodeMap.put(node, nodeConnector);
             }
         } catch (ReadFailedException e) {
-            //TODO: Perform fail over
+            // TODO: Perform fail over
             LOG.error("Error reading Nodes from MD-SAL", e);
         }
         return nodeMap;
@@ -109,8 +118,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
 
     @Override
     public void close() throws Exception {
-      if (nicFlowServiceRegistration != null) {
-          nicFlowServiceRegistration.unregister();
-      }
+        if (nicFlowServiceRegistration != null) {
+            nicFlowServiceRegistration.unregister();
+        }
     }
 }
