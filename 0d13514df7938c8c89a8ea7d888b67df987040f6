@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_c9f1df96",
+        "filename": "intent-mapping-interface/src/main/java/org/opendaylight/nic/api/IntentMappingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-18T16:38:48Z",
+      "side": 1,
+      "message": "no capital letter here",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 15
+      },
+      "revId": "0d13514df7938c8c89a8ea7d888b67df987040f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
