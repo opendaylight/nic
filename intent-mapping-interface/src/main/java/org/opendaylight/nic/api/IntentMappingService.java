@@ -9,13 +9,18 @@ package org.opendaylight.nic.api;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface IntentMappingService extends AutoCloseable {
     void add(String key, String obj);
 
+    void add(String key, Map<String, String> objs);
+
     void addList(String key, List<String> objs);
 
     Collection<String> retrieve(String key);
+
+    Map<String, String> get(String outerKey);
 
     Collection<String> keys();
 

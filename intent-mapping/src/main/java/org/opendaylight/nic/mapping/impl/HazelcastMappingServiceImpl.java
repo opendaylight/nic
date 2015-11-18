@@ -10,6 +10,7 @@ package org.opendaylight.nic.mapping.impl;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.opendaylight.nic.api.IntentMappingService;
 import org.osgi.framework.BundleContext;
@@ -92,5 +93,15 @@ public class HazelcastMappingServiceImpl implements IntentMappingService {
         }
 
         return builder.toString();
+    }
+
+    @Override
+    public void add(String key, Map<String, String> objs) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, String> get(String outerKey) {
+        throw new UnsupportedOperationException();
     }
 }

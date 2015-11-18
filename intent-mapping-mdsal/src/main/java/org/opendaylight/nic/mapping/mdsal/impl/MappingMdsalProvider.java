@@ -8,11 +8,15 @@
 
 package org.opendaylight.nic.mapping.mdsal.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -21,6 +25,11 @@ import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.nic.api.IntentMappingService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.Mappings;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.MappingsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.OuterMap;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.OuterMapBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.OuterMapKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.outer.map.InnerMap;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.outer.map.InnerMapBuilder;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -34,7 +43,7 @@ public class MappingMdsalProvider
 
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
     private DataBroker dataBroker;
-    private InstanceIdentifier<Mappings> iid;
+    public static final InstanceIdentifier<Mappings> MAPPINGS_IID = InstanceIdentifier.builder(Mappings.class).build();
 
     @Override
     public void close() throws Exception {
@@ -52,12 +61,11 @@ public class MappingMdsalProvider
     public void onSessionInitiated(ProviderContext session) {
         // Retrieve the data broker to create transactions
         dataBroker = session.getSALService(DataBroker.class);
-        iid = InstanceIdentifier.builder(Mappings.class).build();
 
         Mappings mappings = new MappingsBuilder().build();
 
         // Initialize default config data in MD-SAL data store
-        initDatastore(LogicalDatastoreType.CONFIGURATION, iid, mappings);
+        initDatastore(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID, mappings);
     }
 
     private void initDatastore(LogicalDatastoreType store, InstanceIdentifier<Mappings> iid, Mappings mappings) {
@@ -82,14 +90,12 @@ public class MappingMdsalProvider
 
     @Override
     public void add(String key, String obj) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void addList(String key, List<String> objs) {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -100,13 +106,53 @@ public class MappingMdsalProvider
 
     @Override
     public Collection<String> keys() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public String stringRepresentation(String key) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void add(String key, Map<String, String> objs) {
+        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier.builder(Mappings.class)
+                .child(OuterMap.class, new OuterMapKey(key)).build();
+        try {
+            List<InnerMap> innerMap = new ArrayList<>();
+            for (String keyy : objs.keySet()) {
+                String valuee = objs.get(keyy);
+                InnerMap innerElement = new InnerMapBuilder().setInnerKey(keyy).setValue(valuee).build();
+                innerMap.add(innerElement);
+            }
+            OuterMapKey mapKey = new OuterMapKey(key);
+            OuterMap outerMap = new OuterMapBuilder().setId(key).setKey(mapKey).setInnerMap(innerMap).build();
+
+            WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
+            tx.put(LogicalDatastoreType.CONFIGURATION, outerMapIid, outerMap);
+            // Perform the tx.submit synchronously
+            tx.submit();
+        } catch (Exception e) {
+            LOG.error("add: failed: {}", e);
+        }
+    }
+
+    @Override
+    public Map<String, String> get(String key) {
+        Map<String, String> subjectMappings = new HashMap<>();
+        List<InnerMap> listInnerMap = null;
+        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier.builder(Mappings.class)
+                .child(OuterMap.class, new OuterMapKey(key)).build();
+        try {
+            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
+            listInnerMap = tx.read(LogicalDatastoreType.CONFIGURATION, outerMapIid).checkedGet().get().getInnerMap();
+        } catch (Exception e) {
+            LOG.error("getSubjectMappings() failed for key:", key);
+        }
+
+        for (InnerMap innerMap : listInnerMap) {
+            subjectMappings.put(innerMap.getInnerKey(), innerMap.getValue());
+        }
+        return subjectMappings;
     }
 }
