@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "7aade967_3172597d",
+        "filename": "utils/src/main/java/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-18T23:05:26Z",
+      "side": 1,
+      "message": "I took a look at these classes and they\u0027re very specific to Openflow, except by IntentUtils. I will leave them in OF-Renderer project and move only IntentUtils.",
+      "parentUuid": "7aade967_f1e60144",
+      "revId": "58e5529e4ef045243da20337c270ea5e5219b383",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_118ddd7b",
         "filename": "utils/src/test/java/opendaylight/nic/utils/MdsalUtilsTest.java",
         "patchSetId": 2
