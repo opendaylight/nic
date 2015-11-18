@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_f18fe173",
+        "filename": "utils/src/main/java/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-11-18T22:39:42Z",
+      "side": 1,
+      "message": "Is this a kind of typo?\n\nI think suggested convention for Java package name is to start with Internet domain name.\nIn OpenDaylight, package names typically start with \"org.opendaylight\".\nTherefore, I think here also it should start with \"org.opendaylight\" instead of \"opendaylight\".\n\nIs there any reason to start with \"opendaylight\" here?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "58e5529e4ef045243da20337c270ea5e5219b383",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_118ddd7b",
+        "filename": "utils/src/test/java/opendaylight/nic/utils/MdsalUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2015-11-18T22:39:42Z",
+      "side": 1,
+      "message": "\"org.opendaylight.nic.utils\"?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "58e5529e4ef045243da20337c270ea5e5219b383",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
