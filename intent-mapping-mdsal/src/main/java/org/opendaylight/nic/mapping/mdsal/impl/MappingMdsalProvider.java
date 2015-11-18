@@ -44,10 +44,10 @@ import com.google.common.util.concurrent.Futures;
 public class MappingMdsalProvider
         implements IntentMappingService, BindingAwareProvider, DataChangeListener, AutoCloseable {
 
-    protected ServiceRegistration<IntentMappingService> intentMappingServiceRegistration;
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
     private DataBroker dataBroker;
     public static final InstanceIdentifier<Mappings> MAPPINGS_IID = InstanceIdentifier.builder(Mappings.class).build();
+    protected ServiceRegistration<IntentMappingService> intentMappingServiceRegistration;
 
     @Override
     public void close() throws Exception {
@@ -63,6 +63,8 @@ public class MappingMdsalProvider
 
     @Override
     public void onSessionInitiated(ProviderContext session) {
+        LOG.info("MappingMdsal Provider Session Initiated");
+
         // Retrieve the data broker to create transactions
         dataBroker = session.getSALService(DataBroker.class);
 
