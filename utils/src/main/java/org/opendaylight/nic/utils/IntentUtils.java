@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
@@ -20,13 +18,17 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IntentUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(IntentUtils.class);
 
     private static final int NUM_OF_SUPPORTED_ACTION = 1;
-    private static final int  NUM_OF_SUPPORTED_EPG = 2;
+    private static final int NUM_OF_SUPPORTED_EPG = 2;
+
+    private static final String MPLS_LABEL_KEY = "MPLS-label";
 
     private IntentUtils() {
     }
@@ -78,8 +80,8 @@ public class IntentUtils {
             verifySubjectInstance(subject, uuid);
             EndPointGroup endPointGroup = (EndPointGroup) subject;
 
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
-                .EndPointGroup epg = endPointGroup.getEndPointGroup();
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup epg = endPointGroup
+                    .getEndPointGroup();
 
             if (epg != null) {
                 endPointGroups.add(epg.getName());
@@ -89,8 +91,7 @@ public class IntentUtils {
     }
 
     public static void verifySubjectInstance(Subject subject, Uuid intentId) {
-        if (!(subject instanceof EndPointGroup)
-                && !(subject instanceof EndPointSelector)
+        if (!(subject instanceof EndPointGroup) && !(subject instanceof EndPointSelector)
                 && !(subject instanceof EndPointGroupSelector)) {
             LOG.info("Subject is not specified: {}", intentId);
         }

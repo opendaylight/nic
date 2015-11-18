@@ -35,6 +35,11 @@
     <artifactId>intent-api</artifactId>
     <version>${project.version}</version>
    </dependency>
+   <dependency>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>intent-mapping-interface</artifactId>
+    <version>${project.version}</version>
+   </dependency>
  <!-- controller dependency -->
    <dependency>
     <groupId>org.opendaylight.controller</groupId>
