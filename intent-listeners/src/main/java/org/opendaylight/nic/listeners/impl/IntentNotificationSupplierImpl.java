@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.EventType;
@@ -14,18 +15,18 @@ import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.opendaylight.nic.listeners.api.IntentAdded;
 import org.opendaylight.nic.listeners.api.IntentRemoved;
+import org.opendaylight.nic.listeners.api.IntentUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Implementation define a contract between {@link Intent} data object
  * and {@link IntentAdded} and {@link IntentRemoved} notifications.
  */
 public class IntentNotificationSupplierImpl  extends
-        AbstractNotificationSupplierItemRoot<Intent, IntentAdded, IntentRemoved> implements IEventService {
+        AbstractNotificationSupplierItemRoot<Intent, IntentAdded, IntentRemoved, IntentUpdated>
+        implements IEventService {
 
     private static final InstanceIdentifier<Intent> INTENT_IID =
             InstanceIdentifier.builder(Intents.class)
@@ -64,6 +65,13 @@ public class IntentNotificationSupplierImpl  extends
     }
 
     @Override
+    public IntentUpdated updateNotification(Intent object, InstanceIdentifier<Intent> path) {
+        Preconditions.checkArgument(object != null);
+        Preconditions.checkArgument(path != null);
+        return new IntentUpdateImpl(object);
+    }
+
+    @Override
     public void addEventListener(IEventListener listener) {
         serviceRegistry.registerEventListener(this, listener);
     }
@@ -84,13 +92,23 @@ public class IntentNotificationSupplierImpl  extends
     }
 
     @Override
+    public EventType getUpdateEventType() {
+        return EventType.INTENT_UPDATE;
+    }
+
+    @Override
     public Class getCreateImplClass() {
-        return IntentAdded.class;
+        return IntentAddedImpl.class;
     }
 
     @Override
     public Class getDeleteImplClass() {
-        return IntentRemoved.class;
+        return IntentRemovedImpl.class;
+    }
+
+    @Override
+    public Class getUpdateImplClass() {
+        return IntentUpdateImpl.class;
     }
 }
 
