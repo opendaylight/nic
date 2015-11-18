@@ -8,24 +8,24 @@
 
 package org.opendaylight.nic.listeners.impl;
 
+import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.LinkDeleted;
 import org.opendaylight.nic.listeners.api.LinkUp;
+import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Implementation define a contract between {@link FlowCapableNodeConnector} data object
  * and {@link LinkUp} and {@link LinkDeleted} notifications.
  */
 public class NodeConnectorNotificationSupplierImpl extends
-        AbstractNotificationSupplierItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted> {
+        AbstractNotificationSupplierItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted, NicNotification> {
 
     private static final InstanceIdentifier<FlowCapableNodeConnector> FLOW_CAPABLE_NODE_CONNECTOR_IID =
             getNodeWildII().child(NodeConnector.class).augmentation(FlowCapableNodeConnector.class);
@@ -64,6 +64,12 @@ public class NodeConnectorNotificationSupplierImpl extends
     }
 
     @Override
+    public NicNotification updateNotification(FlowCapableNodeConnector object, InstanceIdentifier<FlowCapableNodeConnector> path) {
+        //Do nothing
+        return null;
+    }
+
+    @Override
     public EventType getCreateEventType() {
         return EventType.NODE_UPDATED;
     }
@@ -74,6 +80,12 @@ public class NodeConnectorNotificationSupplierImpl extends
     }
 
     @Override
+    public EventType getUpdateEventType() {
+        //Do nothing
+        return null;
+    }
+
+    @Override
     public Class getCreateImplClass() {
         return NodeUpImpl.class;
     }
@@ -81,6 +93,12 @@ public class NodeConnectorNotificationSupplierImpl extends
     @Override
     public Class getDeleteImplClass() {
         return NodeDeletedImpl.class;
+    }
+
+    @Override
+    public Class getUpdateImplClass() {
+        //Do nothing
+        return null;
     }
 }
 

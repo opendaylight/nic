@@ -8,10 +8,7 @@
 
 package org.opendaylight.nic.listeners.impl;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
+import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -23,7 +20,9 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Preconditions;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Class is package protected abstract implementation for all Root Items
@@ -32,13 +31,15 @@ import com.google.common.base.Preconditions;
  * @param <O> - data tree item Object
  * @param <C> - Create notification
  * @param <D> - Delete notification
+ * @param <U> - Update notification
  */
 //TODO: Extend to support update notif
 abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
         C extends NicNotification,
-        D extends NicNotification>
+        D extends NicNotification,
+        U extends NicNotification>
         extends AbstractNotificationSupplierBase<O>
-        implements NotificationSupplierForItemRoot<O, C, D> {
+        implements NotificationSupplierForItemRoot<O, C, D, U> {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractNotificationSupplierItemRoot.class);
     private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
@@ -59,9 +60,11 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
         Preconditions.checkArgument(change != null, "ChangeEvent can not be null!");
 
         created(change.getCreatedData());
+        update(change.getUpdatedData());
         deleted(change);
     }
 
+    //TODO: Refactor to avoid duplicated code
     private void created(Map<InstanceIdentifier<?>, DataObject> change) {
         if (change != null && ! (change.isEmpty())) {
             for (final Entry<InstanceIdentifier<?>, DataObject> createDataObj : change.entrySet()) {
@@ -73,6 +76,29 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                         if (getCreateImplClass().isInstance(notif)) {
                             Set<IEventListener> eventListeners =
                                     serviceRegistry.getEventListeners(getCreateEventType());
+                            if (eventListeners != null) {
+                                for (IEventListener listener : eventListeners) {
+                                    listener.handleEvent(notif);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void update(Map<InstanceIdentifier<?>, DataObject> updatedData) {
+        if (updatedData != null && ! (updatedData.isEmpty())) {
+            for (final Entry<InstanceIdentifier<?>, DataObject> updatedObject : updatedData.entrySet()) {
+                if (clazz.isAssignableFrom(updatedObject.getKey().getTargetType())) {
+                    final InstanceIdentifier<O> ii = updatedObject.getKey().firstIdentifierOf(clazz);
+                    final U notif = updateNotification((O) updatedObject.getValue(), ii);
+                    if (notif != null) {
+                        LOG.info("NicNotification update");
+                        if (getUpdateImplClass().isInstance(notif)) {
+                            Set<IEventListener> eventListeners =
+                                    serviceRegistry.getEventListeners(getUpdateEventType());
                             if (eventListeners != null) {
                                 for (IEventListener listener : eventListeners) {
                                     listener.handleEvent(notif);

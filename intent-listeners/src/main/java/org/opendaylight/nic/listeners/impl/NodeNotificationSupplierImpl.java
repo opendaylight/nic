@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.listeners.impl;
 
+import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.EventType;
@@ -15,23 +16,23 @@ import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.opendaylight.nic.listeners.api.NodeDeleted;
 import org.opendaylight.nic.listeners.api.NodeUp;
+import org.opendaylight.nic.listeners.api.NodeUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdatedBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeRef;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeRemovedBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeUpdatedBuilder;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Implementation define a contract between {@link FlowCapableNode} data object
  * and {@link NodeUp} and {@link NodeDeleted} notifications.
  */
 public class NodeNotificationSupplierImpl extends
-        AbstractNotificationSupplierItemRoot<FlowCapableNode, NodeUp, NodeDeleted> implements IEventService {
+        AbstractNotificationSupplierItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> implements IEventService {
 
     private static final InstanceIdentifier<FlowCapableNode> FLOW_CAPABLE_NODE_IID =
             getNodeWildII().augmentation(FlowCapableNode.class);
@@ -69,13 +70,22 @@ public class NodeNotificationSupplierImpl extends
     @Override
     public NodeDeleted deleteNotification(final FlowCapableNode flowCapableNode,
                                           final InstanceIdentifier<FlowCapableNode> path) {
-        Preconditions.checkArgument(flowCapableNode != null);
         Preconditions.checkArgument(path != null);
         final NodeRemovedBuilder delNodeNotifBuilder = new NodeRemovedBuilder();
         delNodeNotifBuilder.setNodeRef(new NodeRef(path));
         NodeDeleted nodeDeleted = new NodeDeletedImpl(delNodeNotifBuilder.getNodeRef());
         LOG.info("NicNotification created for Node deleted");
         return nodeDeleted;
+    }
+
+    @Override
+    public NodeUpdated updateNotification(final FlowCapableNode flowCapableNode,
+                                          InstanceIdentifier<FlowCapableNode> path) {
+        Preconditions.checkArgument(flowCapableNode != null);
+        Preconditions.checkArgument(path != null);
+        final NodeUpdatedBuilder nodeUpdatedBuilder = new NodeUpdatedBuilder();
+        nodeUpdatedBuilder.setNodeRef(new NodeRef(path));
+        return new NodeUpdatedImpl(nodeUpdatedBuilder.getNodeRef());
     }
 
     @Override
@@ -99,6 +109,11 @@ public class NodeNotificationSupplierImpl extends
     }
 
     @Override
+    public EventType getUpdateEventType() {
+        return EventType.NODE_UPDATED;
+    }
+
+    @Override
     public Class getCreateImplClass() {
         return NodeUpImpl.class;
     }
@@ -106,6 +121,11 @@ public class NodeNotificationSupplierImpl extends
     @Override
     public Class getDeleteImplClass() {
         return NodeDeletedImpl.class;
+    }
+
+    @Override
+    public Class getUpdateImplClass() {
+        return NodeUpdatedImpl.class;
     }
 }
 

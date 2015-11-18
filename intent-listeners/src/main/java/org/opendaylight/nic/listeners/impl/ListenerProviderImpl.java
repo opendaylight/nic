@@ -8,19 +8,19 @@
 
 package org.opendaylight.nic.listeners.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.opendaylight.nic.listeners.api.IntentAdded;
 import org.opendaylight.nic.listeners.api.IntentRemoved;
+import org.opendaylight.nic.listeners.api.IntentUpdated;
 import org.opendaylight.nic.listeners.api.LinkDeleted;
 import org.opendaylight.nic.listeners.api.LinkUp;
+import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NodeDeleted;
 import org.opendaylight.nic.listeners.api.NodeUp;
+import org.opendaylight.nic.listeners.api.NodeUpdated;
 import org.opendaylight.nic.listeners.api.NotificationSupplierDefinition;
 import org.opendaylight.nic.listeners.api.NotificationSupplierForItemRoot;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
@@ -31,7 +31,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-import com.google.common.base.Preconditions;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Provider Implementation for NIC events
@@ -67,9 +69,9 @@ public class ListenerProviderImpl implements AutoCloseable {
                 getService(serviceReference);
 
         // Event providers
-        NotificationSupplierForItemRoot<FlowCapableNode, NodeUp, NodeDeleted> nodeSupp = new NodeNotificationSupplierImpl(db);
-        NotificationSupplierForItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted> connectorSupp = new NodeConnectorNotificationSupplierImpl(db);
-        NotificationSupplierForItemRoot<Intent, IntentAdded, IntentRemoved> intentSupp = new IntentNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> nodeSupp = new NodeNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted, NicNotification> connectorSupp = new NodeConnectorNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<Intent, IntentAdded, IntentRemoved, IntentUpdated> intentSupp = new IntentNotificationSupplierImpl(db);
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
