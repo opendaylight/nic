@@ -8,8 +8,11 @@
 package org.opendaylight.nic.of.renderer.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.opendaylight.nic.api.IntentMappingService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +30,8 @@ public class IntentUtils {
 
     private static final int NUM_OF_SUPPORTED_ACTION = 1;
     private static final int  NUM_OF_SUPPORTED_EPG = 2;
+
+    private static final String MPLS_LABEL_KEY = "MPLS-label";
 
     private IntentUtils() {
     }
@@ -94,5 +99,18 @@ public class IntentUtils {
                 && !(subject instanceof EndPointGroupSelector)) {
             LOG.info("Subject is not specified: {}", intentId);
         }
+    }
+
+    // Creates a hashmap of the mapping information map for every subject (mac address) in the Intent operation
+    public static Map<String, Map<String, String>> extractSubjectDetails(
+            List<String> endPointGroups,
+            IntentMappingService intentMappingService) {
+        Map<String, Map<String, String>> subjectsMapping = new HashMap<String, Map<String, String>>();
+        for (String macAddress : endPointGroups) {
+            if (intentMappingService.get(MPLS_LABEL_KEY) != null) {
+                subjectsMapping.put(macAddress, intentMappingService.get(MPLS_LABEL_KEY));
+            }
+        }
+        return subjectsMapping;
     }
 }
