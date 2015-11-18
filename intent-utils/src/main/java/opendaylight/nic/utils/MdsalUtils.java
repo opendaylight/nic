@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2015 Inocybe Technologies, Inc. and others.  All rights reserved.
+ * Copyright (c) 2015 Inocybe Technologies and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.gbp.renderer.impl;
+package opendaylight.nic.utils;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
@@ -28,7 +28,9 @@ public class MdsalUtils {
     /**
      * Class constructor setting the data broker.
      *
-     * @param dataBroker the {@link org.opendaylight.controller.md.sal.binding.api.DataBroker}
+     * @param dataBroker
+     *            the
+     *            {@link org.opendaylight.controller.md.sal.binding.api.DataBroker}
      */
     public MdsalUtils(DataBroker dataBroker) {
         this.databroker = dataBroker;
@@ -37,13 +39,16 @@ public class MdsalUtils {
     /**
      * Executes delete as a blocking transaction.
      *
-     * @param store {@link LogicalDatastoreType} which should be modified
-     * @param path {@link InstanceIdentifier} to read from
-     * @param <D> the data object type
+     * @param store
+     *            {@link LogicalDatastoreType} which should be modified
+     * @param path
+     *            {@link InstanceIdentifier} to read from
+     * @param <D>
+     *            the data object type
      * @return the result of the request
      */
     public <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean delete(
-            final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
+            final LogicalDatastoreType store, final InstanceIdentifier<D> path) {
         boolean result = false;
         final WriteTransaction transaction = databroker.newWriteOnlyTransaction();
         transaction.delete(store, path);
@@ -60,13 +65,16 @@ public class MdsalUtils {
     /**
      * Executes merge as a blocking transaction.
      *
-     * @param logicalDatastoreType {@link LogicalDatastoreType} which should be modified
-     * @param path {@link InstanceIdentifier} for path to read
-     * @param <D> the data object type
+     * @param logicalDatastoreType
+     *            {@link LogicalDatastoreType} which should be modified
+     * @param path
+     *            {@link InstanceIdentifier} for path to read
+     * @param <D>
+     *            the data object type
      * @return the result of the request
      */
     public <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean merge(
-            final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, D data)  {
+            final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, D data) {
         boolean result = false;
         final WriteTransaction transaction = databroker.newWriteOnlyTransaction();
         transaction.merge(logicalDatastoreType, path, data, true);
@@ -83,13 +91,16 @@ public class MdsalUtils {
     /**
      * Executes put as a blocking transaction.
      *
-     * @param logicalDatastoreType {@link LogicalDatastoreType} which should be modified
-     * @param path {@link InstanceIdentifier} for path to read
-     * @param <D> the data object type
+     * @param logicalDatastoreType
+     *            {@link LogicalDatastoreType} which should be modified
+     * @param path
+     *            {@link InstanceIdentifier} for path to read
+     * @param <D>
+     *            the data object type
      * @return the result of the request
      */
     public <D extends org.opendaylight.yangtools.yang.binding.DataObject> boolean put(
-            final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, D data)  {
+            final LogicalDatastoreType logicalDatastoreType, final InstanceIdentifier<D> path, D data) {
         boolean result = false;
         final WriteTransaction transaction = databroker.newWriteOnlyTransaction();
         transaction.put(logicalDatastoreType, path, data, true);
@@ -106,13 +117,16 @@ public class MdsalUtils {
     /**
      * Executes read as a blocking transaction.
      *
-     * @param store {@link LogicalDatastoreType} to read
-     * @param path {@link InstanceIdentifier} for path to read
-     * @param <D> the data object type
+     * @param store
+     *            {@link LogicalDatastoreType} to read
+     * @param path
+     *            {@link InstanceIdentifier} for path to read
+     * @param <D>
+     *            the data object type
      * @return the result as the data object requested
      */
-    public <D extends org.opendaylight.yangtools.yang.binding.DataObject> D read(
-            final LogicalDatastoreType store, final InstanceIdentifier<D> path)  {
+    public <D extends org.opendaylight.yangtools.yang.binding.DataObject> D read(final LogicalDatastoreType store,
+            final InstanceIdentifier<D> path) {
         D result = null;
         final ReadOnlyTransaction transaction = databroker.newReadOnlyTransaction();
         Optional<D> optionalDataObject;
@@ -122,8 +136,7 @@ public class MdsalUtils {
             if (optionalDataObject.isPresent()) {
                 result = optionalDataObject.get();
             } else {
-                LOG.debug("{}: Failed to read {}",
-                        Thread.currentThread().getStackTrace()[1], path);
+                LOG.debug("{}: Failed to read {}", Thread.currentThread().getStackTrace()[1], path);
             }
         } catch (ReadFailedException e) {
             LOG.warn("Failed to read {} ", path, e);
@@ -131,4 +144,5 @@ public class MdsalUtils {
         transaction.close();
         return result;
     }
+
 }

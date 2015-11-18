@@ -53,6 +53,7 @@
         <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-utils/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">
             mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config
         </configfile>
