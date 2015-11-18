@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_29c19380",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNotificationSupplierImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-18T15:48:22Z",
+      "side": 1,
+      "message": "do we care of the path here?",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 50
+      },
+      "revId": "bc7df19da3ca32c234e0e44c415bee8b190102ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_49416f0a",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentUpdateImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-18T15:48:22Z",
+      "side": 1,
+      "message": "add a space here please",
+      "revId": "bc7df19da3ca32c234e0e44c415bee8b190102ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_a93ca394",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeNotificationSupplierImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-18T15:48:22Z",
+      "side": 1,
+      "message": "do we care about the flowCapableNode?",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 61
+      },
+      "revId": "bc7df19da3ca32c234e0e44c415bee8b190102ac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
