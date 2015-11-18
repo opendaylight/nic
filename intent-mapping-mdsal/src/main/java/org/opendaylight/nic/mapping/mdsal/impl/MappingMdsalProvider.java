@@ -45,6 +45,12 @@ public class MappingMdsalProvider
     private DataBroker dataBroker;
     public static final InstanceIdentifier<Mappings> MAPPINGS_IID = InstanceIdentifier.builder(Mappings.class).build();
 
+    public MappingMdsalProvider(DataBroker dataBroker) {
+        this.dataBroker = dataBroker;
+    }
+
+    public MappingMdsalProvider() { }
+
     @Override
     public void close() throws Exception {
         // TODO Auto-generated method stub
