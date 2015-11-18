@@ -11,8 +11,8 @@ import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NodeDeleted;
 import org.opendaylight.nic.listeners.api.NodeUp;
-import org.opendaylight.nic.of.renderer.api.FlowAction;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.nic.utils.FlowAction;
 
 class NodeNotificationSubscriberImpl implements IEventListener<NicNotification> {
 

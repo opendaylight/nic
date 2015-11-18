@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2015 Inocybe Technologies Inc. and others.  All rights reserved.
+  Copyright (c) 2015 Inocybe Technologies and others.  All rights reserved.
 
   This program and the accompanying materials are made available under the
   terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,6 +8,7 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
@@ -17,46 +18,44 @@
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
- <artifactId>gbp-renderer</artifactId>
+ <artifactId>utils</artifactId>
  <version>1.1.0-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
  <properties>
-  <groupbasedpolicy.version>0.3.0-SNAPSHOT</groupbasedpolicy.version>
   <powermock.version>1.5.5</powermock.version>
+  <liblldp.version>0.10.0-SNAPSHOT</liblldp.version>
+  <openflowplugin.version>0.2.0-SNAPSHOT</openflowplugin.version>
  </properties>
 
  <dependencies>
-  <dependency>
-   <groupId>${project.groupId}</groupId>
-   <artifactId>intent-api</artifactId>
-   <version>${project.version}</version>
+ <!-- project specific dependency -->
+   <dependency>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>intent-api</artifactId>
+    <version>${project.version}</version>
+   </dependency>
+ <!-- controller dependency -->
+   <dependency>
+    <groupId>org.opendaylight.controller</groupId>
+    <artifactId>liblldp</artifactId>
+    <version>${liblldp.version}</version>
   </dependency>
-  <!-- OpenDaylight GBP Manager -->
+  <!-- openflowplugin dependency -->
   <dependency>
-   <groupId>org.opendaylight.groupbasedpolicy</groupId>
-   <artifactId>groupbasedpolicy</artifactId>
-   <version>${groupbasedpolicy.version}</version>
+    <groupId>org.opendaylight.openflowplugin.model</groupId>
+    <artifactId>model-flow-service</artifactId>
+    <version>${openflowplugin.version}</version>
   </dependency>
-  <dependency>
-   <groupId>org.opendaylight.groupbasedpolicy</groupId>
-   <artifactId>ofoverlay-renderer</artifactId>
-   <version>${groupbasedpolicy.version}</version>
-  </dependency>
-  <!-- NIC Dependency -->
-  <dependency>
-   <groupId>org.opendaylight.nic</groupId>
-   <artifactId>utils</artifactId>
-   <version>${project.version}</version>
-  </dependency>
-  <!-- testing Dependency -->
-  <dependency>
-   <groupId>org.mockito</groupId>
-   <artifactId>mockito-all</artifactId>
-  </dependency>
+  <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
+   <scope>test</scope>
+  </dependency>
+  <dependency>
+   <groupId>org.mockito</groupId>
+   <artifactId>mockito-all</artifactId>
    <scope>test</scope>
   </dependency>
   <dependency>
@@ -73,3 +72,4 @@
   </dependency>
  </dependencies>
 </project>
+
