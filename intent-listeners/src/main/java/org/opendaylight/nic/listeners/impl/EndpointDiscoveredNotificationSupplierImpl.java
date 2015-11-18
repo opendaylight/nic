@@ -7,8 +7,6 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
-import java.util.Set;
-
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.EndpointDiscovered;
 import org.opendaylight.nic.listeners.api.EventType;
@@ -25,6 +23,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.Pa
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Set;
 
 public class EndpointDiscoveredNotificationSupplierImpl implements PacketProcessingListener, IEventService {
 

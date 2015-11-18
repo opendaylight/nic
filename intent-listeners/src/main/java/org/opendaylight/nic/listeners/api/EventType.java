@@ -17,11 +17,15 @@ public enum EventType {
     /** Indicates normal link utilization. */
     LINK_UTILIZATION_NORMAL,
     /** Indicates new node is up. */
+    NODE_ADDED,
+    /** Indicates new node is updated. */
     NODE_UPDATED,
     /** Indicates existing node is removed. */
     NODE_REMOVED,
     /** Indicates a new intent is added */
     INTENT_ADDED,
+    /** Indicates a intent is update */
+    INTENT_UPDATE,
     /** Indicates existing intent is removed */
     INTENT_REMOVED,
     /** Indicates that a new endpoint is discovered but it doesn't mean that the just came up*/
