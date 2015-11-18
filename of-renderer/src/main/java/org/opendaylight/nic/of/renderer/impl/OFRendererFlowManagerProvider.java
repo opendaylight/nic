@@ -9,14 +9,15 @@ package org.opendaylight.nic.of.renderer.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
-import org.opendaylight.nic.of.renderer.api.FlowAction;
+
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
-import org.opendaylight.nic.of.renderer.utils.IntentUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
+import org.opendaylight.nic.utils.FlowAction;
+import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;

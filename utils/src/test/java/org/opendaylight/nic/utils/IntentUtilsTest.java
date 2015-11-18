@@ -1,4 +1,4 @@
-package org.opendaylight.nic.of.renderer.utils;
+package org.opendaylight.nic.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
-import org.opendaylight.nic.of.renderer.utils.IntentUtils;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
@@ -39,8 +38,7 @@ public class IntentUtilsTest {
     private Uuid uuidMock;
 
     @Mock
-    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
-    .EndPointGroup epgMock;
+    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup epgMock;
 
     @Mock
     private WriteTransaction modificationMock;
@@ -146,7 +144,7 @@ public class IntentUtilsTest {
         Mockito.when(subjectMockOne.getEndPointGroup()).thenReturn(epgMock);
         Mockito.when(epgMock.getName()).thenReturn(EPG_NAME_ONE);
 
-        List<String> result  = IntentUtils.extractEndPointGroup(intentMock);
+        List<String> result = IntentUtils.extractEndPointGroup(intentMock);
 
         Assert.assertEquals(expected, result);
     }

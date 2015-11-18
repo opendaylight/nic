@@ -9,12 +9,13 @@ package org.opendaylight.nic.of.renderer.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import org.opendaylight.nic.of.renderer.api.FlowAction;
+
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.of.renderer.utils.GenericTransactionUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
+import org.opendaylight.nic.utils.FlowAction;
+import org.opendaylight.nic.utils.GenericTransactionUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.Table;
