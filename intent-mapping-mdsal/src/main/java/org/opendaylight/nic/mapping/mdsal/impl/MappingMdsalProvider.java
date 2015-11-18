@@ -32,6 +32,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.m
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.outer.map.InnerMapBuilder;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,11 +47,19 @@ public class MappingMdsalProvider
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
     private DataBroker dataBroker;
     public static final InstanceIdentifier<Mappings> MAPPINGS_IID = InstanceIdentifier.builder(Mappings.class).build();
+    protected ServiceRegistration<IntentMappingService> intentMappingServiceRegistration;
+
+    public MappingMdsalProvider(DataBroker dataBroker) {
+        this.dataBroker = dataBroker;
+    }
+
+    public MappingMdsalProvider() {
+    }
 
     @Override
     public void close() throws Exception {
-        // TODO Auto-generated method stub
-
+        if (intentMappingServiceRegistration != null)
+            intentMappingServiceRegistration.unregister();
     }
 
     @Override
@@ -59,6 +70,11 @@ public class MappingMdsalProvider
 
     @Override
     public void onSessionInitiated(ProviderContext session) {
+        LOG.info("OF Renderer Provider Session Initiated");
+        // Register this service with karaf
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        intentMappingServiceRegistration = context.registerService(IntentMappingService.class, this, null);
+
         // Retrieve the data broker to create transactions
         dataBroker = session.getSALService(DataBroker.class);
 
