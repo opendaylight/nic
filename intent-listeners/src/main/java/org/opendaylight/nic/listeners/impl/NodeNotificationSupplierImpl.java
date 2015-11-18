@@ -10,16 +10,13 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.listeners.api.EventType;
-import org.opendaylight.nic.listeners.api.IEventListener;
-import org.opendaylight.nic.listeners.api.IEventService;
-import org.opendaylight.nic.listeners.api.NodeDeleted;
-import org.opendaylight.nic.listeners.api.NodeUp;
+import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdatedBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeRef;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeRemovedBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeUpdatedBuilder;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +28,7 @@ import com.google.common.base.Preconditions;
  * and {@link NodeUp} and {@link NodeDeleted} notifications.
  */
 public class NodeNotificationSupplierImpl extends
-        AbstractNotificationSupplierItemRoot<FlowCapableNode, NodeUp, NodeDeleted> implements IEventService {
+        AbstractNotificationSupplierItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> implements IEventService {
 
     private static final InstanceIdentifier<FlowCapableNode> FLOW_CAPABLE_NODE_IID =
             getNodeWildII().augmentation(FlowCapableNode.class);
@@ -79,6 +76,16 @@ public class NodeNotificationSupplierImpl extends
     }
 
     @Override
+    public NodeUpdated updateNotification(final FlowCapableNode flowCapableNode,
+                                          InstanceIdentifier<FlowCapableNode> path) {
+        Preconditions.checkArgument(flowCapableNode != null);
+        Preconditions.checkArgument(path != null);
+        final NodeUpdatedBuilder nodeUpdatedBuilder = new NodeUpdatedBuilder();
+        nodeUpdatedBuilder.setNodeRef(new NodeRef(path));
+        return new NodeUpdatedImpl(nodeUpdatedBuilder.getNodeRef());
+    }
+
+    @Override
     public void addEventListener(IEventListener listener) {
         serviceRegistry.registerEventListener(this, listener);
     }
@@ -99,6 +106,11 @@ public class NodeNotificationSupplierImpl extends
     }
 
     @Override
+    public EventType getUpdateEventType() {
+        return EventType.NODE_UPDATED;
+    }
+
+    @Override
     public Class getCreateImplClass() {
         return NodeUpImpl.class;
     }
@@ -106,6 +118,11 @@ public class NodeNotificationSupplierImpl extends
     @Override
     public Class getDeleteImplClass() {
         return NodeDeletedImpl.class;
+    }
+
+    @Override
+    public Class getUpdateImplClass() {
+        return NodeUpdatedImpl.class;
     }
 }
 
