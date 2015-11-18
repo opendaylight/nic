@@ -1,16 +1,20 @@
 package org.opendaylight.nic.of.renderer.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
+import org.opendaylight.nic.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.utils.IntentUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
@@ -149,5 +153,22 @@ public class IntentUtilsTest {
         List<String> result  = IntentUtils.extractEndPointGroup(intentMock);
 
         Assert.assertEquals(expected, result);
+    }
+
+    @Test
+    public void testExtractSubjectDetails() {
+        Map<String, Map<String, String>> expectedSubjectsMapping = new HashMap<String, Map<String, String>>();
+
+        List<String> endPointGroups = new ArrayList<String>();
+        endPointGroups.add("mac1");
+
+        IntentMappingService intentMappingService = Mockito.mock(IntentMappingService.class);
+
+        Map<String, String> subject1Mapping = new HashMap<String, String>();
+        subject1Mapping.put("MPLS-label", "55555");
+        expectedSubjectsMapping.put("mac1", subject1Mapping);
+        Mockito.when(intentMappingService.get("MPLS-label")).thenReturn(subject1Mapping);
+
+        Assert.assertEquals(expectedSubjectsMapping, IntentUtils.extractSubjectDetails(endPointGroups, intentMappingService));
     }
 }
