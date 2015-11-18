@@ -30,6 +30,8 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
+import org.opendaylight.nic.api.IntentMappingService;
+import org.opendaylight.nic.mapping.mdsal.impl.MappingMdsalProvider;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +48,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private ArpFlowManager arpFlowManager;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
+    private IntentMappingService intentMappingService;
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
@@ -59,6 +62,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         nicFlowServiceRegistration = context.registerService(OFRendererFlowService.class, this, null);
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
+        intentMappingService = new MappingMdsalProvider(dataBroker);
     }
 
 
@@ -69,6 +73,9 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
         Action actionContainer = (Action) intent.getActions().get(0).getAction();
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
+        Map<String, Map<String, String>> subjectsMapping = IntentUtils.extractSubjectDetails(endPointGroups, intentMappingService);
+
+        intentFlowManager.setSubjectsMapping(subjectsMapping);
         intentFlowManager.setEndPointGroups(endPointGroups);
         intentFlowManager.setAction(actionContainer);
         //Get all node Id's
