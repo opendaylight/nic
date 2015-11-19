@@ -7,13 +7,18 @@
  */
 package org.opendaylight.nic.engine;
 
+import org.opendaylight.nic.impl.EventType;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+
+import java.util.List;
 
 public interface IntentStateMachineExecutorService {
 
-    void execute(Intent intent);
+    void createTransaction(Intent intent, EventType eventType);
 
-    void stopService(Intent intent);
+    void removeTransactions(Uuid intentId, EventType eventType);
 
-    void stopAllServices();
+    List<Intent> getUndeployedIntents(IpAddress ipAddress);
 }

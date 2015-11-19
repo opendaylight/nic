@@ -41,7 +41,7 @@ public class IntentNotificationSupplierImpl  extends
      */
     public IntentNotificationSupplierImpl(final DataBroker db) {
         super(db, Intent.class, LogicalDatastoreType.CONFIGURATION);
-        serviceRegistry.setEventTypeService(this, EventType.INTENT_ADDED, EventType.INTENT_REMOVED);
+        serviceRegistry.setEventTypeService(this, EventType.INTENT_ADDED, EventType.INTENT_REMOVED, EventType.INTENT_UPDATE);
     }
 
     @Override
