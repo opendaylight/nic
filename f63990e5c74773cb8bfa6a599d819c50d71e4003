@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7aade967_51235505",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/GenericTransactionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-19T02:09:41Z",
+      "side": 1,
+      "message": "this class seems to do pretty much the same thing as MdsalUtils. But MdsalUtils seems to covered all type of transactions, so I\u0027ll rather like see this one deleted in favor of the other one, what do you guys think?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_f1c36136",
         "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
         "patchSetId": 3
@@ -30,6 +53,24 @@
       "writtenOn": "2015-11-19T01:17:04Z",
       "side": 1,
       "message": "We can have it, but it\u0027s beyond the goal of this patch, that\u0027s only separate things in a common place.",
+      "parentUuid": "7aade967_f1c36136",
+      "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_f11fe1b5",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-19T02:09:41Z",
+      "side": 1,
+      "message": "yes you can have async transactions, checkout this wiki page: https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:Migration:Data_Broker#Non-blocking_read",
       "parentUuid": "7aade967_f1c36136",
       "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
