@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7aade967_f1da8116",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-19T01:17:04Z",
+      "side": 1,
+      "message": "We can have it, but it\u0027s beyond the goal of this patch, that\u0027s only separate things in a common place.",
+      "parentUuid": "7aade967_f1c36136",
+      "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_11c15d2e",
         "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
         "patchSetId": 3
