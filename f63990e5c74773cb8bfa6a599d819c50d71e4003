@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_f1c36136",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-19T01:01:44Z",
+      "side": 1,
+      "message": "Can we have async write operations on MDSAL as well? So you\u0027ll have a deleteAsync api that returns CheckedFuture instead of checking inside the method.\nthen deleteSync method would just call the async version and do a checkedGet().",
+      "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_11c15d2e",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-19T01:01:44Z",
+      "side": 1,
+      "message": "same thing",
+      "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_b1dde916",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-19T01:01:44Z",
+      "side": 1,
+      "message": "same thing",
+      "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
