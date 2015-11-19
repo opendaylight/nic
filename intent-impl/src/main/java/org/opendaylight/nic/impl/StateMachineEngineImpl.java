@@ -38,12 +38,16 @@ public class StateMachineEngineImpl implements StateMachineEngineService {
         engineServiceMap.put(Intent.State.DISABLING, DisableServiceImpl.getInstance(this));
     }
 
-    @Override
     public void changeState(final Intent.State currentState) {
         //TODO: Change intent state on MD-SAL
         final EngineService currentService = engineServiceMap.get(currentState);
         if(currentService != null) {
             currentService.execute();
         }
+    }
+
+    @Override
+    public void execute() {
+        changeState(intent.getState());
     }
 }
