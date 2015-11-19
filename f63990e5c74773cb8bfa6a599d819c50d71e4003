@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_91a46d58",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/GenericTransactionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-19T03:11:04Z",
+      "side": 1,
+      "message": "I deleted that class and created an overload to \"put\" method into MdSalUtils, since it takes a new FlowAction as parameter.",
+      "parentUuid": "7aade967_f1760106",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "f63990e5c74773cb8bfa6a599d819c50d71e4003",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_f1c36136",
         "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
         "patchSetId": 3
