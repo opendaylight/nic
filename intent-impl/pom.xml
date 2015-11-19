@@ -35,6 +35,11 @@
   </dependency>
   <dependency>
    <groupId>${project.groupId}</groupId>
+   <artifactId>intent-listeners</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>${project.groupId}</groupId>
    <artifactId>intent-compiler</artifactId>
    <version>${project.version}</version>
   </dependency>
