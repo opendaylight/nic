@@ -56,6 +56,7 @@
       <type>xml</type>
       <scope>runtime</scope>
     </dependency>
+    <!-- TODO: Add the following dependency after the Bug 4426 is fixed.
     <dependency>
       <groupId>org.opendaylight.vtn</groupId>
       <artifactId>features-vtn-manager</artifactId>
@@ -63,6 +64,7 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
+    -->
     <dependency>
       <groupId>org.opendaylight.nemo</groupId>
       <artifactId>nemo-features</artifactId>
@@ -117,11 +119,13 @@
       <artifactId>intent-compiler</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- TODO: Add the following dependency after the Bug 4426 is fixed.
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>vtn-renderer</artifactId>
       <version>${project.version}</version>
     </dependency>
+    -->
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>of-renderer</artifactId>
@@ -170,6 +174,7 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+    <!-- TODO: Add the following dependency after the Bug 4426 is fixed.
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>vtn-renderer</artifactId>
@@ -177,6 +182,7 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+    -->
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>nemo-renderer</artifactId>

@@ -15,7 +15,10 @@
     <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
+    <!--
+         TODO: Add the following repository after the Bug 4426 is fixed.
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
+    -->
     <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
