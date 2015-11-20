@@ -39,6 +39,24 @@
       "revId": "0d02e0e9f75e2c011cbdc776eb31b187eba1700a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_6ddd4d70",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-20T22:27:00Z",
+      "side": 1,
+      "message": "I think he wants to retrieve the IntentMappingService to be able to access the mappings.",
+      "parentUuid": "7aade967_0deff91f",
+      "revId": "0d02e0e9f75e2c011cbdc776eb31b187eba1700a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
