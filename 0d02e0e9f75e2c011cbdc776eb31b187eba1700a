@@ -111,6 +111,24 @@
       "revId": "0d02e0e9f75e2c011cbdc776eb31b187eba1700a",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_0d3db98f",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-11-20T22:34:00Z",
+      "side": 1,
+      "message": "I did it before, but somehow it failed when I installed nic-console. I got this message: \n2015-11-20 12:52:06,702 | INFO  | l for user karaf | BlueprintContainerImpl           | 15 - org.apache.aries.blueprint.core - 1.4.2 | Bundle org.opendaylight.nic.intent-cli is waiting for dependencies [(objectClass\u003dorg.opendaylight.nic.api.IntentMappingService)]",
+      "parentUuid": "7aade967_adca659f",
+      "revId": "0d02e0e9f75e2c011cbdc776eb31b187eba1700a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
