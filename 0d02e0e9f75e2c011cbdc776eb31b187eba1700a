@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_adf34509",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-20T22:20:56Z",
+      "side": 1,
+      "message": "if you use yang you don\u0027t need this",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "0d02e0e9f75e2c011cbdc776eb31b187eba1700a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_0deff91f",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-20T22:20:56Z",
+      "side": 1,
+      "message": "why not using yang to register the service?",
+      "revId": "0d02e0e9f75e2c011cbdc776eb31b187eba1700a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
