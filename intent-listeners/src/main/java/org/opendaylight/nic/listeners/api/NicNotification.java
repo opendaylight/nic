@@ -6,9 +6,11 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 package org.opendaylight.nic.listeners.api;
+import java.sql.Timestamp;
 
 /**
 * Interface for all NIC related events
 */
 public interface NicNotification {
+    Timestamp getTimeStamp();
 }

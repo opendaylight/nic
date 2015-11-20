@@ -10,7 +10,6 @@ package org.opendaylight.nic.listeners.api;
 
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
-
 public interface IntentAdded extends NicNotification {
     Intent getIntent();
 }
