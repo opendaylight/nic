@@ -11,14 +11,20 @@ import org.opendaylight.nic.listeners.api.NodeUp;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class NodeUpImpl implements NodeUp {
 
     private IpAddress ipAddress;
     private NodeId nodeId;
+    private final Timestamp timeStamp;
 
     public NodeUpImpl(IpAddress ipAddress, NodeId nodeId) {
         this.ipAddress = ipAddress;
         this.nodeId = nodeId;
+        Date date= new java.util.Date();
+        timeStamp = new Timestamp(date.getTime());
     }
 
     @Override
@@ -37,5 +43,10 @@ public class NodeUpImpl implements NodeUp {
 
     public void setNodeId(NodeId nodeId) {
         this.nodeId = nodeId;
+    }
+
+    @Override
+    public Timestamp getTimeStamp() {
+        return timeStamp;
     }
 }

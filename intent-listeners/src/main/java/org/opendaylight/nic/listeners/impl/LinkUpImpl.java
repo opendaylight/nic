@@ -11,16 +11,22 @@ import org.opendaylight.nic.listeners.api.LinkUp;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class LinkUpImpl implements LinkUp {
     private MacAddress mac = null;
     private String portName = null;
     private NodeConnectorId nodeConnectorId = null;
+    private final Timestamp timeStamp;
 
     public LinkUpImpl(MacAddress mac, String portName,
                NodeConnectorId nodeConnectorId) {
         this.mac = mac;
         this.portName = portName;
         this.nodeConnectorId = nodeConnectorId;
+        Date date= new java.util.Date();
+        timeStamp = new Timestamp(date.getTime());
     }
     @Override
     public void setMac(MacAddress mac) {
@@ -50,5 +56,10 @@ public class LinkUpImpl implements LinkUp {
     @Override
     public NodeConnectorId getNodeConnectorId() {
         return this.nodeConnectorId;
+    }
+
+    @Override
+    public Timestamp getTimeStamp() {
+        return timeStamp;
     }
 }

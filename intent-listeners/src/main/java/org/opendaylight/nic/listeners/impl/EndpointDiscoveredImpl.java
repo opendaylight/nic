@@ -11,13 +11,19 @@ import org.opendaylight.nic.listeners.api.EndpointDiscovered;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class EndpointDiscoveredImpl implements EndpointDiscovered {
     private Ipv4Address ipv4Address;
     private MacAddress macAddress;
+    private final Timestamp timeStamp;
 
     public EndpointDiscoveredImpl(Ipv4Address ipv4Address, MacAddress macAddress) {
         this.ipv4Address = ipv4Address;
         this.macAddress = macAddress;
+        Date date= new java.util.Date();
+        timeStamp = new Timestamp(date.getTime());
     }
 
     @Override
@@ -38,5 +44,10 @@ public class EndpointDiscoveredImpl implements EndpointDiscovered {
     @Override
     public void setMac(MacAddress macAddress) {
         this.macAddress = macAddress;
+    }
+
+    @Override
+    public Timestamp getTimeStamp() {
+        return timeStamp;
     }
 }
