@@ -48,10 +48,12 @@
     <!-- Core feature -->
     <feature name='odl-nic-core' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Core'>
-        <feature version="${project.version}">odl-nic-core-service</feature>
-        <feature version="${project.version}">odl-nic-core-service-mdsal</feature>
+        <feature version="${mdsal.version}">odl-restconf</feature>
+        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
+        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">
