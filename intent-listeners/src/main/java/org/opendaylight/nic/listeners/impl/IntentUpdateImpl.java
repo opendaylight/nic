@@ -10,15 +10,27 @@ package org.opendaylight.nic.listeners.impl;
 import org.opendaylight.nic.listeners.api.IntentUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class IntentUpdateImpl implements IntentUpdated {
 
     private Intent intent;
+    private final Timestamp timeStamp;
 
     public IntentUpdateImpl(Intent intent) {
         this.intent = intent;
+        Date date= new Date();
+        timeStamp = new Timestamp(date.getTime());
     }
+
     @Override
     public Intent getIntent() {
         return intent;
+    }
+
+    @Override
+    public Timestamp getTimeStamp() {
+        return timeStamp;
     }
 }

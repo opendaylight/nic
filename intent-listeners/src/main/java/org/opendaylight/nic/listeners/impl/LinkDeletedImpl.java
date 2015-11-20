@@ -9,5 +9,19 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.nic.listeners.api.LinkDeleted;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class LinkDeletedImpl implements LinkDeleted {
+    private final Timestamp timeStamp;
+
+    public LinkDeletedImpl() {
+        Date date= new Date();
+        timeStamp = new Timestamp(date.getTime());
+    }
+
+    @Override
+    public Timestamp getTimeStamp() {
+        return timeStamp;
+    }
 }
