@@ -14,7 +14,7 @@ module intent-constraints {
     }
 
     grouping constraint {
-        description "The contraints (how) provide more guidelines on how the intent
+        description "The constraints (how) provide more guidelines on how the intent
                 will have to be realized.";
     }
 

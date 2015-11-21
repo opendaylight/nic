@@ -28,7 +28,7 @@ module intent-subjects {
 
       description "Selects a list of end points to be included in the
           subject based on a (yet to be defined) selection syntax
-          (think jquery-like).";
+          (think jQuery-like).";
     }
 
     grouping end-point-group-selector {
@@ -49,7 +49,7 @@ module intent-subjects {
         type string;
       }
 
-      description "Select a specificly defined end point group.";
+      description "Select a specifically defined end point group.";
     }
 
     container end-point-groups {

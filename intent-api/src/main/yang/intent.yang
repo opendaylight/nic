@@ -89,7 +89,7 @@ module intent {
             }
             min-elements 2;
             max-elements 2;
-            description "List of subjectss that are part of the intent request. There
+            description "List of subjects that are part of the intent request. There
                         is an implicit many to many connection between all subjects selected.";
         }
         list actions {
