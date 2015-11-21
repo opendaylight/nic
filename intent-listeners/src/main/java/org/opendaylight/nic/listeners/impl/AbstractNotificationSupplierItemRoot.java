@@ -74,7 +74,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     if (notif != null) {
                         LOG.info("NicNotification created");
                         if (getCreateImplClass().isInstance(notif)) {
-                            Set<IEventListener> eventListeners =
+                            Set<IEventListener<?>> eventListeners =
                                     serviceRegistry.getEventListeners(getCreateEventType());
                             if (eventListeners != null) {
                                 for (IEventListener listener : eventListeners) {
@@ -97,7 +97,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     if (notif != null) {
                         LOG.info("NicNotification update");
                         if (getUpdateImplClass().isInstance(notif)) {
-                            Set<IEventListener> eventListeners =
+                            Set<IEventListener<?>> eventListeners =
                                     serviceRegistry.getEventListeners(getUpdateEventType());
                             if (eventListeners != null) {
                                 for (IEventListener listener : eventListeners) {
@@ -121,7 +121,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     if (notif != null) {
                         LOG.info("NicNotification deleted");
                         if (getDeleteImplClass().isInstance(notif)) {
-                            Set<IEventListener> eventListeners =
+                            Set<IEventListener<?>> eventListeners =
                                     serviceRegistry.getEventListeners(getDeleteEventType());
                             if (eventListeners != null) {
                                 for (IEventListener listener : eventListeners) {

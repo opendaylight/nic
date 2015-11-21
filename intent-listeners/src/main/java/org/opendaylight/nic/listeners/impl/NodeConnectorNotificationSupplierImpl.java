@@ -86,17 +86,17 @@ public class NodeConnectorNotificationSupplierImpl extends
     }
 
     @Override
-    public Class getCreateImplClass() {
+    public Class<?> getCreateImplClass() {
         return NodeUpImpl.class;
     }
 
     @Override
-    public Class getDeleteImplClass() {
+    public Class<?> getDeleteImplClass() {
         return NodeDeletedImpl.class;
     }
 
     @Override
-    public Class getUpdateImplClass() {
+    public Class<?> getUpdateImplClass() {
         //Do nothing
         return null;
     }

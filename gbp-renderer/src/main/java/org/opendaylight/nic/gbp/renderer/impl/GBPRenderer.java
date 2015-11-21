@@ -27,7 +27,7 @@ public class GBPRenderer implements AutoCloseable {
 
     private DataBroker dataBroker;
 
-    protected ServiceRegistration nicConsoleRegistration;
+    protected ServiceRegistration<?> nicConsoleRegistration;
 
     private GBPRendererDataChangeListener gbpRendererDataChangeListener;
 

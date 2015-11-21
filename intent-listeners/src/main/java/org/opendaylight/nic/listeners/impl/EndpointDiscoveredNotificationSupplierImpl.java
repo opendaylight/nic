@@ -65,7 +65,7 @@ public class EndpointDiscoveredNotificationSupplierImpl implements PacketProcess
             sourceEndpointDiscovered = new EndpointDiscoveredImpl(sourceIp, sourceMac);
             destEndpointDiscovered = new EndpointDiscoveredImpl(destIp, destMac);
         }
-        Set<IEventListener> eventListeners =
+        Set<IEventListener<?>> eventListeners =
                 serviceRegistry.getEventListeners(EventType.ENDPOINT_DISCOVERED);
         if (eventListeners != null) {
             for (IEventListener listener : eventListeners) {
@@ -80,12 +80,12 @@ public class EndpointDiscoveredNotificationSupplierImpl implements PacketProcess
     }
 
     @Override
-    public void addEventListener(IEventListener listener) {
+    public void addEventListener(IEventListener<?> listener) {
         serviceRegistry.registerEventListener(this, listener);
     }
 
     @Override
-    public void removeEventListener(IEventListener listener) {
+    public void removeEventListener(IEventListener<?> listener) {
         serviceRegistry.unregisterEventListener(this, listener);
     }
 
