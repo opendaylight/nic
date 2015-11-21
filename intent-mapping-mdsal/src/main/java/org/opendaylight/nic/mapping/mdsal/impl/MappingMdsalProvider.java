@@ -32,6 +32,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.m
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.outer.map.InnerMapBuilder;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,14 +44,15 @@ import com.google.common.util.concurrent.Futures;
 public class MappingMdsalProvider
         implements IntentMappingService, BindingAwareProvider, DataChangeListener, AutoCloseable {
 
+    protected ServiceRegistration<IntentMappingService> intentMappingServiceRegistration;
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
     private DataBroker dataBroker;
     public static final InstanceIdentifier<Mappings> MAPPINGS_IID = InstanceIdentifier.builder(Mappings.class).build();
 
     @Override
     public void close() throws Exception {
-        // TODO Auto-generated method stub
-
+        if (intentMappingServiceRegistration != null)
+            intentMappingServiceRegistration.unregister();
     }
 
     @Override
@@ -66,6 +70,10 @@ public class MappingMdsalProvider
 
         // Initialize default config data in MD-SAL data store
         initDatastore(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID, mappings);
+
+        // Register this service with karaf
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        intentMappingServiceRegistration = context.registerService(IntentMappingService.class, this, null);
     }
 
     private void initDatastore(LogicalDatastoreType store, InstanceIdentifier<Mappings> iid, Mappings mappings) {
