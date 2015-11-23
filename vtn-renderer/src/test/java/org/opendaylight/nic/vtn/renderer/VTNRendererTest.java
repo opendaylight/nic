@@ -171,7 +171,7 @@ public class VTNRendererTest {
      */
     @Test
     public void testOnDataChangedForDeleted() throws Exception {
-        final Set<InstanceIdentifier> dataSet = new HashSet<InstanceIdentifier>();
+        final Set<InstanceIdentifier<?>> dataSet = new HashSet<>();
         dataSet.add(instanceIdentifier);
         dataSet.add(null);
         when(asyncDataChangeEvent.getOriginalData()).thenReturn(dataMap);

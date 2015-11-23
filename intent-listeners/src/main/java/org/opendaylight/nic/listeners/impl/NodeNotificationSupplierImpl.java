@@ -89,12 +89,12 @@ public class NodeNotificationSupplierImpl extends
     }
 
     @Override
-    public void addEventListener(IEventListener listener) {
+    public void addEventListener(IEventListener<?> listener) {
         serviceRegistry.registerEventListener(this, listener);
     }
 
     @Override
-    public void removeEventListener(IEventListener listener) {
+    public void removeEventListener(IEventListener<?> listener) {
         serviceRegistry.unregisterEventListener(this, listener);
     }
 
@@ -114,17 +114,17 @@ public class NodeNotificationSupplierImpl extends
     }
 
     @Override
-    public Class getCreateImplClass() {
+    public Class<?> getCreateImplClass() {
         return NodeUpImpl.class;
     }
 
     @Override
-    public Class getDeleteImplClass() {
+    public Class<?> getDeleteImplClass() {
         return NodeDeletedImpl.class;
     }
 
     @Override
-    public Class getUpdateImplClass() {
+    public Class<?> getUpdateImplClass() {
         return NodeUpdatedImpl.class;
     }
 }

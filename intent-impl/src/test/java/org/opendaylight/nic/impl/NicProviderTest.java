@@ -11,7 +11,6 @@ package org.opendaylight.nic.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -34,7 +33,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.Test;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -324,7 +322,7 @@ public class NicProviderTest {
         doThrow(new RuntimeException()).when(mockReadOnlyTransaction).read(
                 LogicalDatastoreType.CONFIGURATION, NicProvider.INTENTS_IID);
         actualListOfIntents = nicProvider.listIntents(true);
-        assertEquals(new ArrayList(), actualListOfIntents);
+        assertEquals(new ArrayList<>(), actualListOfIntents);
         assertTrue(actualListOfIntents.isEmpty());
     }
 
@@ -396,8 +394,8 @@ public class NicProviderTest {
     @Test
     public void testCompile() throws Exception {
         String expectedResult, actualResult;
-        List listOfIntent = new ArrayList();
-        List listOfSubjects = new ArrayList();
+        List<Intent> listOfIntent = new ArrayList<Intent>();
+        List<Subjects> listOfSubjects = new ArrayList<Subjects>();
         /**
          * Here creates required mock objects and defines mocking functionality
          * for mock objects.
@@ -429,7 +427,7 @@ public class NicProviderTest {
         when(mockSubjects.getSubject()).thenReturn(mockEndPointGroupForSource, mockEndPointGroupForDestination);
         when(mockIntent.getSubjects()).thenReturn(listOfSubjects);
         when(mockActions.getAction()).thenReturn(mockAllow, mockBlock, mockAction, mockBlock);
-        List listOfActions = new ArrayList();
+        List<Actions> listOfActions = new ArrayList<Actions>();
         listOfActions.add(mockActions);
         when(mockIntent.getActions()).thenReturn(listOfActions);
         when(mockEndPointGroup.getName()).thenReturn("Mock EndPointGroupOne");
@@ -462,7 +460,7 @@ public class NicProviderTest {
          * Here verifying compile() should return specific pattern string if any
          * exception raised during the compiling the given policies.
          */
-        List<Policy> listOfPolicy = new ArrayList();
+        List<Policy> listOfPolicy = new ArrayList<Policy>();
         listOfPolicy.add(mockPolicy);
         when(mockIntentCompilerException.getMessage()).thenReturn("mockito msg..");
         when(mockIntentCompilerException.getRelatedPolicies()).thenReturn(listOfPolicy);

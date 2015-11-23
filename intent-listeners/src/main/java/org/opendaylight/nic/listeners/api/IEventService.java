@@ -16,13 +16,13 @@ public interface IEventService {
      *
      * @param listener listener to be added.
      */
-    void addEventListener(IEventListener listener);
+    void addEventListener(IEventListener<?> listener);
 
     /**
      * Removes a listener for application events.
      *
      * @param listener listener to be removed
      */
-    void removeEventListener(IEventListener listener);
+    void removeEventListener(IEventListener<?> listener);
 
 }

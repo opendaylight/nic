@@ -71,12 +71,12 @@ public class IntentNotificationSupplierImpl  extends
     }
 
     @Override
-    public void addEventListener(IEventListener listener) {
+    public void addEventListener(IEventListener<?> listener) {
         serviceRegistry.registerEventListener(this, listener);
     }
 
     @Override
-    public void removeEventListener(IEventListener listener) {
+    public void removeEventListener(IEventListener<?> listener) {
         serviceRegistry.unregisterEventListener(this, listener);
     }
 
@@ -96,17 +96,17 @@ public class IntentNotificationSupplierImpl  extends
     }
 
     @Override
-    public Class getCreateImplClass() {
+    public Class<?> getCreateImplClass() {
         return IntentAddedImpl.class;
     }
 
     @Override
-    public Class getDeleteImplClass() {
+    public Class<?> getDeleteImplClass() {
         return IntentRemovedImpl.class;
     }
 
     @Override
-    public Class getUpdateImplClass() {
+    public Class<?> getUpdateImplClass() {
         return IntentUpdateImpl.class;
     }
 }

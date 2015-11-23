@@ -26,7 +26,7 @@ import java.util.Set;
 public final class EventServiceRegistry {
 
     private static volatile EventServiceRegistry serviceRegistry = null;
-    private Map<IEventService, Set<IEventListener>> eventRegistry = new HashMap<>();
+    private Map<IEventService, Set<IEventListener<?>>> eventRegistry = new HashMap<>();
     private Map<EventType, IEventService> typeRegistry = new HashMap<>();
     private static final Logger LOG = LoggerFactory.getLogger(EventServiceRegistry.class);
 
@@ -42,27 +42,27 @@ public final class EventServiceRegistry {
         return serviceRegistry;
     }
 
-    public void registerEventListener(IEventService service, IEventListener listener) {
+    public void registerEventListener(IEventService service, IEventListener<?> listener) {
         if (!eventRegistry.containsKey(service)) {
-            Set<IEventListener> eventListeners = new HashSet<>();
+            Set<IEventListener<?>> eventListeners = new HashSet<>();
             eventListeners.add(listener);
             eventRegistry.put(service, eventListeners);
         } else {
-            Set<IEventListener> eventListeners = eventRegistry.get(service);
+            Set<IEventListener<?>> eventListeners = eventRegistry.get(service);
             eventListeners.add(listener);
             eventRegistry.put(service, eventListeners);
         }
     }
 
-    public void registerEventListener(EventType eventType, IEventListener listener) {
+    public void registerEventListener(EventType eventType, IEventListener<?> listener) {
         IEventService service = getEventService(eventType);
         if (service != null) {
             if (!eventRegistry.containsKey(service)) {
-                Set<IEventListener> eventListeners = new HashSet<>();
+                Set<IEventListener<?>> eventListeners = new HashSet<>();
                 eventListeners.add(listener);
                 eventRegistry.put(service, eventListeners);
             } else {
-                Set<IEventListener> eventListeners = eventRegistry.get(service);
+                Set<IEventListener<?>> eventListeners = eventRegistry.get(service);
                 eventListeners.add(listener);
                 eventRegistry.put(service, eventListeners);
             }
@@ -72,9 +72,9 @@ public final class EventServiceRegistry {
         }
     }
 
-    public void unregisterEventListener(IEventService service, IEventListener listener) {
+    public void unregisterEventListener(IEventService service, IEventListener<?> listener) {
         if (eventRegistry.containsKey(service)) {
-            Set<IEventListener> eventListeners = eventRegistry.get(service);
+            Set<IEventListener<?>> eventListeners = eventRegistry.get(service);
             eventListeners.remove(listener);
             if (eventListeners.isEmpty()) {
                 eventRegistry.remove(service);
@@ -94,7 +94,7 @@ public final class EventServiceRegistry {
         return typeRegistry.get(eventType);
     }
 
-    public Set<IEventListener> getEventListeners(EventType eventType) {
+    public Set<IEventListener<?>> getEventListeners(EventType eventType) {
         IEventService eventService = getEventService(eventType);
         return eventRegistry.get(eventService);
     }

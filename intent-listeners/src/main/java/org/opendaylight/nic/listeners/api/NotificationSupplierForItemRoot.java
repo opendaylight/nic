@@ -61,10 +61,10 @@ public interface NotificationSupplierForItemRoot<O extends DataObject,
 
     EventType getUpdateEventType();
 
-    Class getCreateImplClass();
+    Class<?> getCreateImplClass();
 
-    Class getDeleteImplClass();
+    Class<?> getDeleteImplClass();
 
-    Class getUpdateImplClass();
+    Class<?> getUpdateImplClass();
 }
 
