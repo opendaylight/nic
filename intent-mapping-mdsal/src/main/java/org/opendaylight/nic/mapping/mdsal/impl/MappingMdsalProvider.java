@@ -70,10 +70,6 @@ public class MappingMdsalProvider
 
         // Initialize default config data in MD-SAL data store
         initDatastore(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID, mappings);
-
-        // Register this service with karaf
-        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        intentMappingServiceRegistration = context.registerService(IntentMappingService.class, this, null);
     }
 
     private void initDatastore(LogicalDatastoreType store, InstanceIdentifier<Mappings> iid, Mappings mappings) {

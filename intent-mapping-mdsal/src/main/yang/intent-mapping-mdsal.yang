@@ -12,11 +12,18 @@ module intent-mapping-mdsal {
     namespace "urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal";
     prefix "intent-mapping-mdsal";
 
+    import config { prefix config; revision-date 2013-04-05; }
+
     description
         "Service definition for intent-mapping-mdsal module";
 
     revision "2015-11-11" {
         description "Initial revision of intent-mapping-mdsal model";
+    }
+
+    identity intent-mapping-service {
+        base config:service-type;
+        config:java-class "org.opendaylight.nic.api.IntentMappingService";
     }
 
     grouping map {
