@@ -11,12 +11,7 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.listeners.api.EventType;
-import org.opendaylight.nic.listeners.api.IEventListener;
-import org.opendaylight.nic.listeners.api.IEventService;
-import org.opendaylight.nic.listeners.api.NodeDeleted;
-import org.opendaylight.nic.listeners.api.NodeUp;
-import org.opendaylight.nic.listeners.api.NodeUpdated;
+import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdatedBuilder;
@@ -38,7 +33,6 @@ public class NodeNotificationSupplierImpl extends
             getNodeWildII().augmentation(FlowCapableNode.class);
 
     private static final Logger LOG = LoggerFactory.getLogger(NodeNotificationSupplierImpl.class);
-    private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
     /**
      * Constructor register supplier as DataChangeLister and create wildCarded InstanceIdentifier.
      *
@@ -128,4 +122,3 @@ public class NodeNotificationSupplierImpl extends
         return NodeUpdatedImpl.class;
     }
 }
-

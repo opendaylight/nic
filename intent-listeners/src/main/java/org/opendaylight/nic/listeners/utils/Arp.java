@@ -120,7 +120,8 @@ public class Arp extends Packet {
     }
 
     /**
-     * @param value hardware length in Bytes
+     * @param value - hardware length in Bytes
+     * @return {@link Arp} - Return the Arp object
      */
     public Arp setHardwareLength(short value) {
         hdrFieldsMap.put(HLEN, Unpooled.buffer(1).writeByte(value).array());
@@ -128,7 +129,8 @@ public class Arp extends Packet {
     }
 
     /**
-     * @param value protocol length in Bytes
+     * @param value - protocol length in Bytes
+     * @return {@link Arp} - Return the Arp object
      */
     public Arp setProtocolLength(short value) {
         hdrFieldsMap.put(PLEN, Unpooled.buffer(1).writeByte(value).array());

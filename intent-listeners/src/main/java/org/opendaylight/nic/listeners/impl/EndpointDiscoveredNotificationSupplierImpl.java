@@ -8,10 +8,7 @@
 package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
-import org.opendaylight.nic.listeners.api.EndpointDiscovered;
-import org.opendaylight.nic.listeners.api.EventType;
-import org.opendaylight.nic.listeners.api.IEventListener;
-import org.opendaylight.nic.listeners.api.IEventService;
+import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.listeners.utils.Arp;
 import org.opendaylight.nic.listeners.utils.ArpOperation;
 import org.opendaylight.nic.listeners.utils.ArpResolverUtils;
@@ -21,6 +18,9 @@ import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.PacketProcessingListener;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.PacketReceived;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,10 +29,16 @@ import java.util.Set;
 public class EndpointDiscoveredNotificationSupplierImpl implements PacketProcessingListener, IEventService {
 
     private static final Logger LOG = LoggerFactory.getLogger(EndpointDiscoveredNotificationSupplierImpl.class);
-    private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
+    private EventRegistryService serviceRegistry = null;
     private ListenerRegistration<EndpointDiscoveredNotificationSupplierImpl> notificationListenerRegistration = null;
 
     public EndpointDiscoveredNotificationSupplierImpl(NotificationService notificationService) {
+        // Retrieve reference for Event Registry service
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        ServiceReference<?> serviceReference = context.
+                getServiceReference(EventRegistryService.class);
+        serviceRegistry = (EventRegistryService) context.
+                getService(serviceReference);
         serviceRegistry.setEventTypeService(this, EventType.ENDPOINT_DISCOVERED);
         notificationListenerRegistration = notificationService.registerNotificationListener(this);
     }
