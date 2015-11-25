@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_eabb58c2",
+        "filename": "intent-impl/src/main/java/org/opendaylight/nic/impl/StateMachineEventsHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-11-25T02:03:08Z",
+      "side": 1,
+      "message": "These suppliers have already been implemented. You\u0027ll only need to create new listeners and register them with the existing Service Registry",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 79
+      },
+      "revId": "1d24b899ee36653824dc9b8f3bd36bc31c74579b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
