@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_db88b024",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/AbstractNotificationSupplierItemRoot.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-11-25T22:15:23Z",
+      "side": 1,
+      "message": "You\u0027re right. Good catch :)",
+      "parentUuid": "7aade967_8010834f",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "ce55c487108ce7de71c852812a57f79071ce2aa6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_401a8b6f",
         "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNotificationSupplierImpl.java",
         "patchSetId": 2
