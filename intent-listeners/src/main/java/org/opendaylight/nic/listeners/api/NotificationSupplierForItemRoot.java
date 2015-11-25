@@ -41,6 +41,7 @@ public interface NotificationSupplierForItemRoot<O extends DataObject,
      * Method produces relevant deleteItem kind of {@link NicNotification} from
      * path {@link InstanceIdentifier} to deleted item.
      *
+     * @param  object - Data Tree Item object
      * @param path - Identifier of Data Tree Item
      * @return {@link NicNotification} - relevant API contract NicNotification
      */
@@ -50,6 +51,7 @@ public interface NotificationSupplierForItemRoot<O extends DataObject,
      * Method produces relevant updateItem kind of {@link NicNotification} from
      * path {@link InstanceIdentifier} to deleted item.
      *
+     * @param object - Data Tree Item object
      * @param path - Identifier of Data Tree Item
      * @return {@link NicNotification} - relevant API contract NicNotification
      */

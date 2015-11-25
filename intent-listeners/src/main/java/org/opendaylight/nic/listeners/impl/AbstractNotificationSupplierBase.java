@@ -41,6 +41,7 @@ public abstract class AbstractNotificationSupplierBase<O extends DataObject> imp
      *
      * @param db    - {@link DataBroker}
      * @param clazz - API contract class extended {@link DataObject}
+     * @param datastoreType - Either Operational or Configuration data store
      */
     public AbstractNotificationSupplierBase(final DataBroker db, final Class<O> clazz,
                                             LogicalDatastoreType datastoreType) {

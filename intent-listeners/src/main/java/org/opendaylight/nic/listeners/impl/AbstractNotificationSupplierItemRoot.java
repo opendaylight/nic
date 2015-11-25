@@ -12,11 +12,15 @@ import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NotificationSupplierForItemRoot;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +46,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
         implements NotificationSupplierForItemRoot<O, C, D, U> {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractNotificationSupplierItemRoot.class);
-    private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
+    private EventRegistryService serviceRegistry = null;
 
     /**
      * Default constructor for all Root Item NicNotification Supplier implementation
@@ -53,6 +57,12 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
     public AbstractNotificationSupplierItemRoot(final DataBroker db, final Class<O> clazz,
                                                 LogicalDatastoreType datastoreType) {
         super(db, clazz, datastoreType);
+        // Retrieve reference for Event Registry service
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        ServiceReference<?> serviceReference = context.
+                getServiceReference(EventRegistryService.class);
+        serviceRegistry = (EventRegistryService) context.
+                getService(serviceReference);
     }
 
     @Override

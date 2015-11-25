@@ -7,9 +7,13 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,25 +27,20 @@ import java.util.Set;
  * to their supported types and Listeners
  *
  */
-public final class EventServiceRegistry {
+public final class EventRegistryServiceImpl implements EventRegistryService{
 
-    private static volatile EventServiceRegistry serviceRegistry = null;
     private Map<IEventService, Set<IEventListener<?>>> eventRegistry = new HashMap<>();
     private Map<EventType, IEventService> typeRegistry = new HashMap<>();
-    private static final Logger LOG = LoggerFactory.getLogger(EventServiceRegistry.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EventRegistryServiceImpl.class);
+    protected ServiceRegistration<EventRegistryService> nicEventServiceRegistration;
 
-    private EventServiceRegistry() {
+    public EventRegistryServiceImpl() {
+        // Register this service with karaf
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        nicEventServiceRegistration = context.registerService(EventRegistryService.class, this, null);
     }
 
-    //Registry is a Singleton
-    //TODO: Not thread safe for now
-    public static EventServiceRegistry getInstance() {
-        if (serviceRegistry == null) {
-            serviceRegistry = new EventServiceRegistry();
-        }
-        return serviceRegistry;
-    }
-
+    @Override
     public void registerEventListener(IEventService service, IEventListener<?> listener) {
         if (!eventRegistry.containsKey(service)) {
             Set<IEventListener<?>> eventListeners = new HashSet<>();
@@ -54,6 +53,7 @@ public final class EventServiceRegistry {
         }
     }
 
+    @Override
     public void registerEventListener(EventType eventType, IEventListener<?> listener) {
         IEventService service = getEventService(eventType);
         if (service != null) {
@@ -72,6 +72,7 @@ public final class EventServiceRegistry {
         }
     }
 
+    @Override
     public void unregisterEventListener(IEventService service, IEventListener<?> listener) {
         if (eventRegistry.containsKey(service)) {
             Set<IEventListener<?>> eventListeners = eventRegistry.get(service);
@@ -84,16 +85,19 @@ public final class EventServiceRegistry {
         }
     }
 
+    @Override
     public void setEventTypeService(IEventService service, EventType ... supportedTypes) {
         for (int index = 0; index < supportedTypes.length; index++) {
             typeRegistry.put(supportedTypes[index], service);
         }
     }
 
+    @Override
     public IEventService getEventService(EventType eventType) {
         return typeRegistry.get(eventType);
     }
 
+    @Override
     public Set<IEventListener<?>> getEventListeners(EventType eventType) {
         IEventService eventService = getEventService(eventType);
         return eventRegistry.get(eventService);

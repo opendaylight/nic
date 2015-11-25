@@ -11,18 +11,7 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
-import org.opendaylight.nic.listeners.api.IEventService;
-import org.opendaylight.nic.listeners.api.IntentAdded;
-import org.opendaylight.nic.listeners.api.IntentRemoved;
-import org.opendaylight.nic.listeners.api.IntentUpdated;
-import org.opendaylight.nic.listeners.api.LinkDeleted;
-import org.opendaylight.nic.listeners.api.LinkUp;
-import org.opendaylight.nic.listeners.api.NicNotification;
-import org.opendaylight.nic.listeners.api.NodeDeleted;
-import org.opendaylight.nic.listeners.api.NodeUp;
-import org.opendaylight.nic.listeners.api.NodeUpdated;
-import org.opendaylight.nic.listeners.api.NotificationSupplierDefinition;
-import org.opendaylight.nic.listeners.api.NotificationSupplierForItemRoot;
+import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
@@ -44,7 +33,7 @@ public class ListenerProviderImpl implements AutoCloseable {
 
     /* Supplier List property help for easy close method implementation and testing */
     private List<NotificationSupplierDefinition<?>> supplierList;
-    private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
+    private  EventRegistryServiceImpl serviceRegistry = null;
     private NotificationService notificationService;
 
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
@@ -62,11 +51,14 @@ public class ListenerProviderImpl implements AutoCloseable {
     }
 
     public void start() {
+        // Retrieve reference for OFRenderer service
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         ServiceReference<?> serviceReference = context.
                 getServiceReference(OFRendererFlowService.class);
         OFRendererFlowService flowService = (OFRendererFlowService) context.
                 getService(serviceReference);
+
+        serviceRegistry = new EventRegistryServiceImpl();
 
         // Event providers
         NotificationSupplierForItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> nodeSupp = new NodeNotificationSupplierImpl(db);
