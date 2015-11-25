@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_8010834f",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/AbstractNotificationSupplierItemRoot.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-25T13:47:21Z",
+      "side": 1,
+      "message": "maybe this could be protected so class extending this one can use this instance",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "ce55c487108ce7de71c852812a57f79071ce2aa6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_401a8b6f",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNotificationSupplierImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-25T13:47:21Z",
+      "side": 1,
+      "message": "maybe this can be removed to use the instance provided by the AbstractNotificationSupplierItemRoot, if it is declared as protected in AbstractNotificationSupplierItemRoot.",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "ce55c487108ce7de71c852812a57f79071ce2aa6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_6013075d",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNotificationSupplierImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-25T13:47:21Z",
+      "side": 1,
+      "message": "I believe this is already done in the AbstractNotificationSupplierItemRoot constructor. so calling super() does this operation.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "ce55c487108ce7de71c852812a57f79071ce2aa6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_a0201f9c",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/NodeNotificationSupplierImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-25T13:47:21Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 45
+      },
+      "revId": "ce55c487108ce7de71c852812a57f79071ce2aa6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
