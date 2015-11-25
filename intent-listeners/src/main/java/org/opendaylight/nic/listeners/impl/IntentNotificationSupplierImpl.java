@@ -10,15 +10,13 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.listeners.api.EventType;
-import org.opendaylight.nic.listeners.api.IEventListener;
-import org.opendaylight.nic.listeners.api.IEventService;
-import org.opendaylight.nic.listeners.api.IntentAdded;
-import org.opendaylight.nic.listeners.api.IntentRemoved;
-import org.opendaylight.nic.listeners.api.IntentUpdated;
+import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Implementation define a contract between {@link Intent} data object
@@ -33,7 +31,7 @@ public class IntentNotificationSupplierImpl  extends
                     .child(Intent.class)
                     .build();
 
-    private static EventServiceRegistry serviceRegistry = EventServiceRegistry.getInstance();
+    private static EventRegistryService serviceRegistry = null;
     /**
      * Constructor register supplier as DataChangeLister and create wildCarded InstanceIdentifier.
      *
@@ -41,6 +39,12 @@ public class IntentNotificationSupplierImpl  extends
      */
     public IntentNotificationSupplierImpl(final DataBroker db) {
         super(db, Intent.class, LogicalDatastoreType.CONFIGURATION);
+        // Retrieve reference for Event Registry service
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        ServiceReference<?> serviceReference = context.
+                getServiceReference(EventRegistryService.class);
+        serviceRegistry = (EventRegistryService) context.
+                getService(serviceReference);
         serviceRegistry.setEventTypeService(this, EventType.INTENT_ADDED, EventType.INTENT_REMOVED);
     }
 
@@ -110,4 +114,3 @@ public class IntentNotificationSupplierImpl  extends
         return IntentUpdateImpl.class;
     }
 }
-
