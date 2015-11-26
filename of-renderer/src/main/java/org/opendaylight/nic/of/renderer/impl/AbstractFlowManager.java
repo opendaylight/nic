@@ -7,10 +7,12 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.of.renderer.impl.IntentFlowManager.MplsInfo;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -81,6 +83,41 @@ public abstract class AbstractFlowManager {
                 .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyOutputActions).build()).build();
         Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(outputInstruction))
                 .build();
+        return instructions;
+    }
+
+    protected Instructions createMPLSIntentInstructions(List<Long> labels, boolean popLabel, Short bos,
+            String outputPort) {
+        int order = 0;
+        List<Action> actionList = new ArrayList<>();
+        for (Long labelValue : labels) {
+            actionList.add(FlowUtils.createMPLSAction(order++, labelValue / 15 == 1 ? false : true));
+            actionList.add(FlowUtils.createSetFieldMPLSLabelAction(order++, labelValue, bos));
+        }
+        actionList.add(FlowUtils.createOutputToPort(order++, outputPort));
+        ApplyActions applyMplsActions = new ApplyActionsBuilder().setAction(actionList).build();
+        Instruction mplsInstruction = new InstructionBuilder().setOrder(0)
+                .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyMplsActions).build()).build();
+        Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(mplsInstruction)).build();
+        return instructions;
+    }
+
+    // To create MPLS VPN intents three actions are pushed for a match made
+    // 1. push_mpls or pop_mpls action
+    // 2. set_field to mpls label
+    // 3. output to a switch port
+    protected Instructions createMPLSIntentInstructions(List<MplsInfo> mplsInfos) {
+        int order = 0;
+        List<Action> actionList = new ArrayList<>();
+        for (MplsInfo labelValue : mplsInfos) {
+            actionList.add(FlowUtils.createMPLSAction(order++, labelValue.isIngressLabel()));
+            actionList.add(FlowUtils.createSetFieldMPLSLabelAction(order++, labelValue.getLabel(), labelValue.isBos()));
+        }
+        actionList.add(FlowUtils.createOutputToPort(order++, String.valueOf(2)));
+        ApplyActions applyMplsActions = new ApplyActionsBuilder().setAction(actionList).build();
+        Instruction mplsInstruction = new InstructionBuilder().setOrder(0)
+                .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyMplsActions).build()).build();
+        Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(mplsInstruction)).build();
         return instructions;
     }
 
