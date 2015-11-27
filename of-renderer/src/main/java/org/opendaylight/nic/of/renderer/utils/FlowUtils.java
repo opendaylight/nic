@@ -11,7 +11,13 @@ package org.opendaylight.nic.of.renderer.utils;
 import org.opendaylight.controller.liblldp.EtherTypes;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PopMplsActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PushMplsActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.SetFieldCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.output.action._case.OutputActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.pop.mpls.action._case.PopMplsActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.push.mpls.action._case.PushMplsActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetFieldBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionKey;
@@ -20,6 +26,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherTyp
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetTypeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFieldsBuilder;
 
 /**
  * Contains methods creating flow part for ARP flow.
@@ -72,4 +79,62 @@ public class FlowUtils {
                 .build();
     }
 
+    /**
+     * Create OF action to perform MPLS push or pop label
+     * @param order
+     * @param popLabel true for MPLS pop action
+     */
+    public static Action createMPLSAction(int order, boolean popLabel) {
+        Action action = null;
+        ActionBuilder ab = new ActionBuilder();
+
+        if (popLabel) {
+            PopMplsActionBuilder popMplsActionBuilder = new PopMplsActionBuilder();
+            // EthernetType will change based on the packet resulting after the topmost MPLS header has been removed
+            popMplsActionBuilder.setEthernetType(EtherTypes.MPLSUCAST.intValue());
+            ab.setOrder(order).setKey(new ActionKey(order)).setAction(new PopMplsActionCaseBuilder().setPopMplsAction(popMplsActionBuilder.build()).build());
+            action = ab.build();
+        } else {
+
+            PushMplsActionBuilder pushMplsActionBuilder = new PushMplsActionBuilder();
+            // EthernetType of MPLS tag
+            pushMplsActionBuilder.setEthernetType(EtherTypes.MPLSUCAST.intValue());
+            ab.setOrder(order).setKey(new ActionKey(order)).setAction(new PushMplsActionCaseBuilder().setPushMplsAction(pushMplsActionBuilder.build()).build());
+            action = ab.build();
+        }
+        return action;
+    }
+
+    /**
+     * Create OF action to set the set_field with mpls label
+     * @param order
+     * @param label MPLS label value
+     * @param bos Bottom of Stack value
+     */
+    public static Action createSetFieldMPLSLabelAction(int order, Long label, Short bos) {
+        Action action = null;
+        ActionBuilder ab = new ActionBuilder();
+
+        ProtocolMatchFieldsBuilder matchFieldsBuilder = new ProtocolMatchFieldsBuilder().setMplsLabel(label).setMplsBos(bos);
+        ab.setOrder(order).setKey(new ActionKey(order)).setAction(new SetFieldCaseBuilder().
+                setSetField(new SetFieldBuilder().setProtocolMatchFields(matchFieldsBuilder.build()).build()).build());
+        action = ab.build();
+        return action;
+    }
+
+    /**
+     * Create OF action to output to a specific port
+     * @param order
+     * @param outputPort OVS port to output the packet to
+     */
+    public static Action createOutputToPort(int order, String outputPort) {
+        return new ActionBuilder().setOrder(order)
+                .setKey(new ActionKey(order))
+                .setAction(
+                        new OutputActionCaseBuilder()
+                        .setOutputAction(new OutputActionBuilder().setMaxLength(0xffff)
+                                .setOutputNodeConnector(new Uri(outputPort)).build())
+                                .build())
+                                .build();
+    }
 }

@@ -1,0 +1,141 @@
+/*
+ * Copyright (c) 2015 Inocybe Technologies and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
+
+package org.opendaylight.nic.of.renderer.utils;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCase;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PopMplsActionCase;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PopMplsActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PushMplsActionCase;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PushMplsActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.SetFieldCase;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.SetFieldCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.output.action._case.OutputAction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.output.action._case.OutputActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.pop.mpls.action._case.PopMplsAction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.pop.mpls.action._case.PopMplsActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.push.mpls.action._case.PushMplsAction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.push.mpls.action._case.PushMplsActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetField;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetFieldBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFields;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFieldsBuilder;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+@PrepareForTest({FlowUtils.class})
+@RunWith(PowerMockRunner.class)
+public class FlowUtilsTest {
+
+    @Before
+    public void setUp() {
+        PowerMockito.mockStatic(FlowUtils.class, Mockito.CALLS_REAL_METHODS);
+    }
+
+    @Test
+    public void testCreateMPLSAction() throws Exception {
+        ActionBuilder ab = mock(ActionBuilder.class);
+        PowerMockito.whenNew(ActionBuilder.class).withNoArguments().thenReturn(ab);
+        Action action = mock(Action.class);
+        when(ab.build()).thenReturn(action);
+        when(ab.setOrder(any(Integer.class))).thenReturn(ab);
+        PowerMockito.whenNew(ActionKey.class).withAnyArguments().thenReturn(mock(ActionKey.class));
+        when(ab.setKey(any(ActionKey.class))).thenReturn(ab);
+
+        //popLabel true case
+        PopMplsActionBuilder popMplsActionBuilder = mock(PopMplsActionBuilder.class);
+        when(popMplsActionBuilder.setEthernetType(any(Integer.class))).thenReturn(popMplsActionBuilder);
+        PopMplsActionCaseBuilder popMplsActionCaseBuilder = mock(PopMplsActionCaseBuilder.class);
+        PowerMockito.whenNew(PopMplsActionCaseBuilder.class).withNoArguments().thenReturn(popMplsActionCaseBuilder);
+        when(popMplsActionCaseBuilder.setPopMplsAction(any(PopMplsAction.class))).thenReturn(popMplsActionCaseBuilder);
+        when(popMplsActionBuilder.build()).thenReturn(mock(PopMplsAction.class));
+        when(popMplsActionCaseBuilder.build()).thenReturn(mock(PopMplsActionCase.class));
+        when(ab.setAction(any(PopMplsActionCase.class))).thenReturn(ab);
+        assertEquals("Failed to return correct Action object", action, FlowUtils.createMPLSAction(0, true));
+
+        // popLabel false case
+        PushMplsActionBuilder pushMplsActionBuilder = mock(PushMplsActionBuilder.class);
+        when(pushMplsActionBuilder.setEthernetType(any(Integer.class))).thenReturn(pushMplsActionBuilder);
+        PushMplsActionCaseBuilder pushMplsActionCaseBuilder = mock(PushMplsActionCaseBuilder.class);
+        PowerMockito.whenNew(PushMplsActionCaseBuilder.class).withNoArguments().thenReturn(pushMplsActionCaseBuilder);
+        when(pushMplsActionCaseBuilder.setPushMplsAction(any(PushMplsAction.class))).thenReturn(pushMplsActionCaseBuilder);
+        when(pushMplsActionBuilder.build()).thenReturn(mock(PushMplsAction.class));
+        when(pushMplsActionCaseBuilder.build()).thenReturn(mock(PushMplsActionCase.class));
+        when(ab.setAction(any(PushMplsActionCase.class))).thenReturn(ab);
+        assertEquals("Failed to return correct Action object", action, FlowUtils.createMPLSAction(0, false));
+    }
+
+    @Test
+    public void testCreateSetFieldMPLSLabelAction() throws Exception {
+        ActionBuilder ab = mock(ActionBuilder.class);
+        PowerMockito.whenNew(ActionBuilder.class).withNoArguments().thenReturn(ab);
+
+        ProtocolMatchFieldsBuilder matchFieldsBuilder = mock(ProtocolMatchFieldsBuilder.class);
+        PowerMockito.whenNew(ProtocolMatchFieldsBuilder.class).withNoArguments().thenReturn(matchFieldsBuilder);
+
+        when(matchFieldsBuilder.setMplsLabel(any(Long.class))).thenReturn(matchFieldsBuilder);
+        when(matchFieldsBuilder.setMplsBos(any(Short.class))).thenReturn(matchFieldsBuilder);
+
+        when(ab.setOrder(any(Integer.class))).thenReturn(ab);
+        PowerMockito.whenNew(ActionKey.class).withAnyArguments().thenReturn(mock(ActionKey.class));
+        when(ab.setKey(any(ActionKey.class))).thenReturn(ab);
+
+        SetFieldCaseBuilder setFieldCaseBuilder = mock(SetFieldCaseBuilder.class);
+        PowerMockito.whenNew(SetFieldCaseBuilder.class).withNoArguments().thenReturn(setFieldCaseBuilder);
+        when(setFieldCaseBuilder.setSetField(any(SetField.class))).thenReturn(setFieldCaseBuilder);
+        when(ab.setAction(any(SetFieldCase.class))).thenReturn(ab);
+        SetFieldBuilder setFieldBuilder = mock(SetFieldBuilder.class);
+        PowerMockito.whenNew(SetFieldBuilder.class).withNoArguments().thenReturn(setFieldBuilder);
+        when(setFieldBuilder.setProtocolMatchFields(any(ProtocolMatchFields.class))).thenReturn(setFieldBuilder);
+        when(matchFieldsBuilder.build()).thenReturn(mock(ProtocolMatchFields.class));
+        when(setFieldBuilder.build()).thenReturn(mock(SetField.class));
+        when(setFieldCaseBuilder.build()).thenReturn(mock(SetFieldCase.class));
+
+        Action action = mock(Action.class);
+        when(ab.build()).thenReturn(action);
+        assertEquals("Failed to return correct Action object", action, FlowUtils.createSetFieldMPLSLabelAction(0, new Long(28999), new Short((short) 1)));
+    }
+
+    @Test
+    public void testCreateOutputToPort() throws Exception {
+        ActionBuilder ab = mock(ActionBuilder.class);
+        PowerMockito.whenNew(ActionBuilder.class).withNoArguments().thenReturn(ab);
+        when(ab.setOrder(any(Integer.class))).thenReturn(ab);
+        PowerMockito.whenNew(ActionKey.class).withAnyArguments().thenReturn(mock(ActionKey.class));
+        when(ab.setKey(any(ActionKey.class))).thenReturn(ab);
+
+        OutputActionCaseBuilder outputActionCaseBuilder = mock(OutputActionCaseBuilder.class);
+        when(outputActionCaseBuilder.setOutputAction(any(OutputAction.class))).thenReturn(outputActionCaseBuilder);
+        when(ab.setAction(any(OutputActionCase.class))).thenReturn(ab);
+        OutputActionBuilder outputActionBuilder = mock(OutputActionBuilder.class);
+        when(outputActionBuilder.setMaxLength(any(Integer.class))).thenReturn(outputActionBuilder);
+        when(outputActionBuilder.setOutputNodeConnector(any(Uri.class))).thenReturn(outputActionBuilder);
+        PowerMockito.whenNew(Uri.class).withArguments(anyString()).thenReturn(mock(Uri.class));
+        when(outputActionBuilder.build()).thenReturn(mock(OutputAction.class));
+        when(outputActionCaseBuilder.build()).thenReturn(mock(OutputActionCase.class));
+        Action action = mock(Action.class);
+        when(ab.build()).thenReturn(action);
+        assertEquals("Failed to return correct Action object", action, FlowUtils.createOutputToPort(0, "2"));
+    }
+}
