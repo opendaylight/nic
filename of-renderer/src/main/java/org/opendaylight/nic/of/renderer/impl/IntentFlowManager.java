@@ -7,6 +7,8 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.List;
+
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
@@ -19,14 +21,12 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.Output
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
-
-import java.util.List;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
@@ -83,14 +83,12 @@ public class IntentFlowManager extends AbstractFlowManager {
             return;
         }
 
-
         writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
-
     private FlowBuilder createFlowBuilder(MatchBuilder matchBuilder) {
         final Match match = matchBuilder.build();
-        //Flow named for convenience and uniqueness
+        // Flow named for convenience and uniqueness
         String flowName = createFlowName();
         final FlowId flowId = new FlowId(flowName);
         final FlowKey key = new FlowKey(flowId);
@@ -107,7 +105,6 @@ public class IntentFlowManager extends AbstractFlowManager {
 
         return flowBuilder;
     }
-
 
     private void createEthMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
         String endPointSrc = endPointGroups.get(SRC_END_POINT_GROUP_INDEX);

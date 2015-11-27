@@ -7,8 +7,10 @@
  */
 package org.opendaylight.nic.of.renderer.utils;
 
-import com.google.common.base.Preconditions;
+import java.math.BigInteger;
+
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Prefix;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv6Prefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.PortNumber;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
@@ -20,22 +22,23 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetTypeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatchBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.VlanMatchBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFieldsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TunnelBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.Icmpv4MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.IpMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.MetadataBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFieldsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TcpFlagMatchBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.Icmpv4MatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TunnelBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.VlanMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.ArpMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv4MatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv6MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._4.match.TcpMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._4.match.UdpMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.vlan.match.fields.VlanIdBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigInteger;
+import com.google.common.base.Preconditions;
 
 public class MatchUtils {
     private static final Logger LOG = LoggerFactory.getLogger(MatchUtils.class);
@@ -45,10 +48,10 @@ public class MatchUtils {
     public static final String TCP = "tcp";
     public static final String UDP = "udp";
     public static final int TCP_SYN = 0x0002;
-    public static final long IPV4_LONG = (long) 0x800;
-    public static final long LLDP_LONG = (long) 0x88CC;
-    public static final long VLANTAGGED_LONG = (long) 0x8100;
-    public static final long MPLSUCAST_LONG = (long) 0x8847;
+    public static final long IPV4_LONG = 0x800;
+    public static final long LLDP_LONG = 0x88CC;
+    public static final long VLANTAGGED_LONG = 0x8100;
+    public static final long MPLSUCAST_LONG = 0x8847;
 
     private MatchUtils() {
     }
@@ -941,5 +944,53 @@ public class MatchUtils {
                     .build());
         }
         return emb.build();
+    }
+
+    /**
+     * @param srcPrefix IPv4 source prefix
+     * @param dstPrefix IPv4 destination prefix
+     * @param matchBuilder will contain the metadata match values
+     */
+    public static void createIPv4PrefixMatch(Ipv4Prefix srcPrefix, Ipv4Prefix dstPrefix, MatchBuilder matchBuilder) {
+        if (srcPrefix != null || dstPrefix != null) {
+            long IPV4_LONG = 0x800;
+            EthernetMatchBuilder eth = new EthernetMatchBuilder();
+            EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
+            ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+            eth.setEthernetType(ethTypeBuilder.build());
+            matchBuilder.setEthernetMatch(eth.build());
+
+            Ipv4MatchBuilder ipv4match = new Ipv4MatchBuilder();
+            if (srcPrefix != null)
+                ipv4match.setIpv4Source(srcPrefix);
+            if (dstPrefix != null)
+                ipv4match.setIpv4Destination(dstPrefix);
+
+            matchBuilder.setLayer3Match(ipv4match.build());
+        }
+    }
+
+    /**
+     * @param srcPrefix IPv6 source prefix
+     * @param dstPrefix IPv6 destination prefix
+     * @param matchBuilder will contain the metadata match values
+     */
+    public static void createIPv6PrefixMatch(Ipv6Prefix srcPrefix, Ipv6Prefix dstPrefix, MatchBuilder matchBuilder) {
+        if (srcPrefix != null || dstPrefix != null) {
+            long IPV6_LONG = 0x86DD;
+            EthernetMatchBuilder eth = new EthernetMatchBuilder();
+            EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
+            ethTypeBuilder.setType(new EtherType(IPV6_LONG));
+            eth.setEthernetType(ethTypeBuilder.build());
+            matchBuilder.setEthernetMatch(eth.build());
+
+            Ipv6MatchBuilder ipv4match = new Ipv6MatchBuilder();
+            if (srcPrefix != null)
+                ipv4match.setIpv6Source(srcPrefix);
+            if (dstPrefix != null)
+                ipv4match.setIpv6Destination(dstPrefix);
+
+            matchBuilder.setLayer3Match(ipv4match.build());
+        }
     }
 }

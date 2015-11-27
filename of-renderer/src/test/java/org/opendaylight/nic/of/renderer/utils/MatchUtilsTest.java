@@ -7,11 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Prefix;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv6Prefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv4Match;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv6Match;
 
 public class MatchUtilsTest {
 
@@ -140,5 +143,117 @@ public class MatchUtilsTest {
         MatchUtils.createICMPv4Match(null, (short)1, (short) 2);
         MatchUtils.createDstL3IPv4Match(matchBuilderMock, null);
         MatchUtils.createDstL3IPv4Match(null, ipv4PrefixMock);
+    }
+
+    @Test
+    public void testNullCreateIPv4Match() {
+        MatchBuilder matchBuilder = null;
+        Ipv4Prefix src = null;
+        Ipv4Prefix dst = null;
+
+        MatchUtils.createIPv4PrefixMatch(src, dst, matchBuilder);
+
+        Assert.assertNull(src);
+        Assert.assertNull(dst);
+        Assert.assertNull(matchBuilder);
+    }
+
+    @Test
+    public void testCreateIPv4Match() {
+        long IPV4_LONG = 0x800;
+        EtherType ethType = new EtherType(IPV4_LONG);
+
+        MatchBuilder matchBuilder = new MatchBuilder();
+        Ipv4Prefix src = new Ipv4Prefix("10.0.0.1/8");
+        Ipv4Prefix dst = new Ipv4Prefix("10.0.0.2/8");
+
+        MatchUtils.createIPv4PrefixMatch(src, dst, matchBuilder);
+        Ipv4Match ipv4Match = (Ipv4Match) matchBuilder.getLayer3Match();
+
+        Assert.assertEquals(ethType.getValue(), matchBuilder.getEthernetMatch().getEthernetType().getType().getValue());
+        Assert.assertNotNull(ipv4Match.getIpv4Source());
+        Assert.assertNotNull(ipv4Match.getIpv4Destination());
+    }
+
+    @Test
+    public void testCreateIPv4MatchSource() {
+        MatchBuilder matchBuilder = new MatchBuilder();
+        Ipv4Prefix src = new Ipv4Prefix("10.0.0.1/8");
+        Ipv4Prefix dst = null;
+
+        MatchUtils.createIPv4PrefixMatch(src, dst, matchBuilder);
+        Ipv4Match ipv4Match = (Ipv4Match) matchBuilder.getLayer3Match();
+
+        Assert.assertNotNull(ipv4Match.getIpv4Source());
+        Assert.assertNull(ipv4Match.getIpv4Destination());
+    }
+
+    @Test
+    public void testCreateIPv4MatchDestination() {
+        MatchBuilder matchBuilder = new MatchBuilder();
+        Ipv4Prefix src = null;
+        Ipv4Prefix dst = new Ipv4Prefix("10.0.0.1/8");
+
+        MatchUtils.createIPv4PrefixMatch(src, dst, matchBuilder);
+        Ipv4Match ipv4Match = (Ipv4Match) matchBuilder.getLayer3Match();
+
+        Assert.assertNull(ipv4Match.getIpv4Source());
+        Assert.assertNotNull(ipv4Match.getIpv4Destination());
+    }
+
+    @Test
+    public void testNullCreateIPv6Match() {
+        MatchBuilder matchBuilder = null;
+        Ipv4Prefix src = null;
+        Ipv4Prefix dst = null;
+
+        MatchUtils.createIPv4PrefixMatch(src, dst, matchBuilder);
+
+        Assert.assertNull(src);
+        Assert.assertNull(dst);
+        Assert.assertNull(matchBuilder);
+    }
+
+    @Test
+    public void testCreateIPv6Match() {
+        long IPV6_LONG = 0x86DD;
+        EtherType ethType = new EtherType(IPV6_LONG);
+
+        MatchBuilder matchBuilder = new MatchBuilder();
+        Ipv6Prefix src = new Ipv6Prefix("2001:db8:a0b:12f0::1/24");
+        Ipv6Prefix dst = new Ipv6Prefix("2001:db8:a0b:12f0::1/8");
+
+        MatchUtils.createIPv6PrefixMatch(src, dst, matchBuilder);
+        Ipv6Match ipv6Match = (Ipv6Match) matchBuilder.getLayer3Match();
+
+        Assert.assertEquals(ethType.getValue(), matchBuilder.getEthernetMatch().getEthernetType().getType().getValue());
+        Assert.assertNotNull(ipv6Match.getIpv6Source());
+        Assert.assertNotNull(ipv6Match.getIpv6Destination());
+    }
+
+    @Test
+    public void testCreateIPv6MatchSource() {
+        MatchBuilder matchBuilder = new MatchBuilder();
+        Ipv6Prefix src = new Ipv6Prefix("2001:db8:a0b:12f0::1/24");
+        Ipv6Prefix dst = null;
+
+        MatchUtils.createIPv6PrefixMatch(src, dst, matchBuilder);
+        Ipv6Match ipv6Match = (Ipv6Match) matchBuilder.getLayer3Match();
+
+        Assert.assertNotNull(ipv6Match.getIpv6Source());
+        Assert.assertNull(ipv6Match.getIpv6Destination());
+    }
+
+    @Test
+    public void testCreateIPv6MatchDestination() {
+        MatchBuilder matchBuilder = new MatchBuilder();
+        Ipv6Prefix src = null;
+        Ipv6Prefix dst = new Ipv6Prefix("2001:db8:a0b:12f0::1/24");
+
+        MatchUtils.createIPv6PrefixMatch(src, dst, matchBuilder);
+        Ipv6Match ipv6Match = (Ipv6Match) matchBuilder.getLayer3Match();
+
+        Assert.assertNull(ipv6Match.getIpv6Source());
+        Assert.assertNotNull(ipv6Match.getIpv6Destination());
     }
 }
