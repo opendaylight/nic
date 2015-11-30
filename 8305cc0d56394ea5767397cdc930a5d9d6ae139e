@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_22ce975b",
+        "filename": "intent-graph/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/graph/rev150911/GraphProviderModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2015-11-30T22:04:55Z",
+      "side": 1,
+      "message": "Hi Joon, Yes it is automatically generated based on the yang model. This can be extended to include new dependencies.",
+      "parentUuid": "5aaae553_8288ab23",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_a28da733",
         "filename": "intent-graph/src/main/yang/graph.yang",
         "patchSetId": 5
@@ -155,6 +173,24 @@
       "writtenOn": "2015-11-30T21:43:00Z",
       "side": 1,
       "message": "In terms of composition, PGA takes multiple input graphs and makes one composed graph by composing them. Actually, we have two types of graphs: input and composed. they have a different edge types. The input graph can have four types but the composed graph can have a single type.",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c2da2317",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2015-11-30T22:04:55Z",
+      "side": 1,
+      "message": "Thanks for the clarification Joon, we will include a new container input-graph, to have four types and another container composed-graph, to have just a single type.",
+      "parentUuid": "5aaae553_e2a95f7c",
       "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
