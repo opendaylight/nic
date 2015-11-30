@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_c29ea363",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/GraphProviderService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "Hewlett Packard Enterprise Development Company, L.P.",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_22cbf773",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/GraphProviderService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "Please use spaces instead of tab",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e2c4ff60",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/GraphProviderService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e29b9f70",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/GraphManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "No intent found.\nNo use of the variable \"result\"",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8288ab23",
+        "filename": "intent-graph/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/graph/rev150911/GraphProviderModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "Is this automatically generated file from the Yang model?",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a28da733",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "Please remove extra spaces",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6287af10",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "use spaces instead of tab",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_828f4b23",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "Why is this \"canDeny\"?\nThis edge type may allow the communication.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e2a95f7c",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "In terms of composition, PGA takes multiple input graphs and makes one composed graph by composing them. Actually, we have two types of graphs: input and composed. they have a different edge types. The input graph can have four types but the composed graph can have a single type.",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a2bb67c3",
+        "filename": "pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-11-30T21:43:00Z",
+      "side": 1,
+      "message": "remove the extra space",
+      "revId": "8305cc0d56394ea5767397cdc930a5d9d6ae139e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
