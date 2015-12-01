@@ -30,6 +30,7 @@
     <yangtools.version>0.8.0-SNAPSHOT</yangtools.version>
     <karaf.cellar.version>3.0.3</karaf.cellar.version>
     <hazelcast.version>3.4.2</hazelcast.version>
+    <neutron.version>0.6.0-SNAPSHOT</neutron.version>
   </properties>
 
   <dependencies>
@@ -56,6 +57,7 @@
       <type>xml</type>
       <scope>runtime</scope>
     </dependency>
+
     <!-- TODO: Add the following dependency after the Bug 4426 is fixed.
     <dependency>
       <groupId>org.opendaylight.vtn</groupId>
@@ -219,6 +221,31 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>neutron-integration</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>neutron-integration</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.neutron</groupId>
+      <artifactId>features-neutron</artifactId>
+      <version>${neutron.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.neutron</groupId>
+      <artifactId>dummyprovider</artifactId>
+      <version>${neutron.version}</version>
+    </dependency>
+
 <!-- external dependencies -->
     <dependency>
       <groupId>org.apache.karaf.cellar</groupId>

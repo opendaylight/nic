@@ -29,5 +29,17 @@ public enum EventType {
     /** Indicates existing intent is removed */
     INTENT_REMOVED,
     /** Indicates that a new endpoint is discovered but it doesn't mean that the just came up*/
-    ENDPOINT_DISCOVERED
+    ENDPOINT_DISCOVERED,
+    /** Indicates that a new security group is added by neutron*/
+    SECURITY_GROUP_ADDED,
+    /** Indicates that an existing security group is deleted by neutron*/
+    SECURITY_GROUP_DELETED,
+    /** Indicates that an existing security group is modified by neutron*/
+    SECURITY_GROUP_UPDATED,
+    /** Indicates that a new security rule is added by neutron*/
+    SECURITY_RULE_ADDED,
+    /** Indicates that an existing security rule is deleted by neutron*/
+    SECURITY_RULE_DELETED,
+    /** Indicates that an existing security rule is modified by neutron*/
+    SECURITY_RULE_UPDATED
 }
