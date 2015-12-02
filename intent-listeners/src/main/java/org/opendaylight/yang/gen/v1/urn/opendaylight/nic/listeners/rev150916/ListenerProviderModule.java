@@ -27,17 +27,6 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
         provider.start();
         LOG.info("NIC Listeners started successfully.");
 
-        return new AutoCloseable() {
-
-            @Override
-            public void close() throws Exception {
-                try {
-                    provider.close();
-                } catch (final Exception e) {
-                    LOG.error("Unexpected error while stopping ListenerProviderModule", e);
-                }
-                LOG.info("ListenerProviderModule stopped.");
-            }
-        };
+        return provider;
     }
 }
