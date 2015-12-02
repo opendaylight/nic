@@ -13,4 +13,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 public interface StateMachineEngineService {
 
     void changeState(Intent.State currentState);
+
+    void execute();
 }
