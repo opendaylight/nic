@@ -7,7 +7,8 @@
  */
 package org.opendaylight.nic.engine.service;
 
-public interface DeployFailedService extends EngineService {
-
-    void cancelRetry();
+/**
+ * Service to handle disable Intent
+ */
+public interface DisableService extends EngineService {
 }

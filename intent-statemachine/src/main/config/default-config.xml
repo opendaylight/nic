@@ -1,0 +1,34 @@
+<!--
+  ~ Copyright (c) 2015 Hewlett Packard Enterprise Development LP.  All rights reserved.
+  ~
+  ~ This program and the accompanying materials are made available under the
+  ~ terms of the Eclipse Public License v1.0 which accompanies this distribution,
+  ~ and is available at http://www.eclipse.org/legal/epl-v10.html
+  -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuration for Intent State Machine module. -->
+<snapshot>
+    <configuration>
+        <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+            <modules xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
+                <module>
+                    <type xmlns:prefix="urn:opendaylight:nic:intent:statemachine">
+                        prefix:intent-statemachine
+                    </type>
+                    <name>intent-statemachine</name>
+                    <data-broker>
+                        <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
+                            binding:binding-async-data-broker
+                        </type>
+                        <name>binding-data-broker</name>
+                    </data-broker>
+                </module>
+            </modules>
+        </data>
+    </configuration>
+
+    <required-capabilities>
+           <capability>urn:opendaylight:nic:listeners?module=intent-listeners&amp;revision=2015-09-16</capability>
+    </required-capabilities>
+</snapshot>
