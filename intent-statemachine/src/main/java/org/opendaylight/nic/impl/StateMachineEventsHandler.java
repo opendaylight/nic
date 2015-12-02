@@ -8,20 +8,21 @@
 
 package org.opendaylight.nic.impl;
 
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.listeners.api.EventRegistryService;
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
-import org.opendaylight.nic.listeners.api.IEventService;
 import org.opendaylight.nic.listeners.api.IntentAdded;
 import org.opendaylight.nic.listeners.api.IntentUpdated;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NodeDeleted;
 import org.opendaylight.nic.listeners.api.NodeUp;
 import org.opendaylight.nic.listeners.api.NodeUpdated;
-import org.opendaylight.nic.listeners.impl.IntentNotificationSupplierImpl;
-import org.opendaylight.nic.listeners.impl.NodeNotificationSupplierImpl;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +30,7 @@ import java.util.Map;
 
 public class StateMachineEventsHandler implements IEventListener{
 
-    private IEventService intentNotificationService;
-    private IEventService nodeNotificationService;
+    private EventRegistryService eventRegistryService;
     private Map<Class, EventExecutor> eventExecutorMap;
     private IntentStateMachineExecutorService stateMachineExecutorService;
 
@@ -38,14 +38,18 @@ public class StateMachineEventsHandler implements IEventListener{
         void execute(T event);
     }
 
-    public StateMachineEventsHandler(DataBroker dataBroker) {
+    public StateMachineEventsHandler() {
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        ServiceReference<?> serviceReference = bundleContext.getServiceReference(EventRegistryService.class);
+        eventRegistryService = (EventRegistryService) bundleContext.getService(serviceReference);
         eventExecutorMap = new HashMap<>();
-        intentNotificationService = new IntentNotificationSupplierImpl(dataBroker);
-        nodeNotificationService = new NodeNotificationSupplierImpl(dataBroker);
         stateMachineExecutorService = new IntentStateMachineExecutor();
-        intentNotificationService.addEventListener(this);
-        nodeNotificationService.addEventListener(this);
-
+        populateEventListener(EventType.INTENT_ADDED,
+                EventType.INTENT_REMOVED,
+                EventType.INTENT_UPDATE,
+                EventType.NODE_ADDED,
+                EventType.NODE_REMOVED,
+                EventType.NODE_UPDATED);
         createEventExecutors();
     }
 
@@ -54,6 +58,12 @@ public class StateMachineEventsHandler implements IEventListener{
         EventExecutor eventExecutor = eventExecutorMap.get(event);
         if (eventExecutor != null) {
             eventExecutorMap.get(event).execute(event);
+        }
+    }
+
+    private void populateEventListener(EventType ... eventTypes) {
+        for(EventType eventType : eventTypes) {
+            eventRegistryService.registerEventListener(eventType, this);
         }
     }
 
@@ -69,7 +79,7 @@ public class StateMachineEventsHandler implements IEventListener{
         return new EventExecutor<IntentAdded>() {
             @Override
             public void execute(IntentAdded event) {
-                stateMachineExecutorService.createTransaction(event.getIntent(),EventType.INTENT_CREATED);
+                stateMachineExecutorService.createTransaction(event.getIntent(), ReceivedEvent.INTENT_UPDATED);
             }
         };
     }
@@ -79,8 +89,8 @@ public class StateMachineEventsHandler implements IEventListener{
             @Override
             public void execute(IntentUpdated event) {
                 final Intent intent = event.getIntent();
-                stateMachineExecutorService.removeTransactions(intent.getId(), EventType.INTENT_UPDATED);
-                stateMachineExecutorService.createTransaction(intent, EventType.INTENT_UPDATED);
+                stateMachineExecutorService.removeTransactions(intent.getId(), ReceivedEvent.INTENT_UPDATED);
+                stateMachineExecutorService.createTransaction(intent, ReceivedEvent.INTENT_UPDATED);
             }
         };
     }
@@ -89,7 +99,7 @@ public class StateMachineEventsHandler implements IEventListener{
         return new EventExecutor<NodeUp>() {
             @Override
             public void execute(NodeUp event) {
-                executeNodeEvent(event.getIp(), EventType.NODE_UP);
+                executeNodeEvent(event.getIp(), ReceivedEvent.NODE_UP);
             }
         };
     }
@@ -112,7 +122,7 @@ public class StateMachineEventsHandler implements IEventListener{
         };
     }
 
-    private void executeNodeEvent(IpAddress ipAddress, EventType eventType) {
+    private void executeNodeEvent(IpAddress ipAddress, ReceivedEvent eventType) {
         List<Intent> intents = stateMachineExecutorService.getUndeployedIntents(ipAddress);
         for(Intent intent : intents) {
             stateMachineExecutorService.createTransaction(intent, eventType);

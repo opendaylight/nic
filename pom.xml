@@ -53,6 +53,7 @@
         <module>nemo-renderer</module>
         <module>of-renderer</module>
         <module>intent-listeners</module>
+        <module>intent-statemachine</module>
         <module>features</module>
         <module>artifacts</module>
         <module>distribution</module>

@@ -18,12 +18,12 @@ import java.util.List;
 public class IntentStateMachineExecutor implements IntentStateMachineExecutorService{
 
     @Override
-    public void createTransaction(Intent intent, EventType eventType) {
+    public void createTransaction(Intent intent, ReceivedEvent receivedEvent) {
 
     }
 
     @Override
-    public void removeTransactions(Uuid intentId, EventType eventType) {
+    public void removeTransactions(Uuid intentId, ReceivedEvent receivedEvent) {
         //TODO: Use the queue on MD-SAL to remove ready transactions
         //tagged with this intentId
     }

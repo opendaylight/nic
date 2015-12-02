@@ -8,7 +8,7 @@
 
 package org.opendaylight.nic.impl;
 
-public enum EventType {
+public enum ReceivedEvent {
 
     NODE_UP(1),
     NODE_UPDATED(2),
@@ -20,7 +20,7 @@ public enum EventType {
     INTENT_REMOVED(3);
 
     private int priority;
-    private EventType(int priority) {
+    private ReceivedEvent(int priority) {
         this.priority = priority;
     }
 

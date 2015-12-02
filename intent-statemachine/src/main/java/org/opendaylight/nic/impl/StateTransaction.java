@@ -22,11 +22,11 @@ public class StateTransaction {
     private boolean executing;
     private Date startTime;
     private StateMachineEngineService machineEngineService;
-    private EventType eventType;
+    private ReceivedEvent RECEIVEDEVENT;
 
-    public StateTransaction(Intent intent, EventType eventType) {
+    public StateTransaction(Intent intent, ReceivedEvent RECEIVEDEVENT) {
         this.intent = intent;
-        this.eventType = eventType;
+        this.RECEIVEDEVENT = RECEIVEDEVENT;
         startTime = Calendar.getInstance().getTime();
         machineEngineService = new StateMachineEngineImpl(intent);
     }
@@ -39,8 +39,8 @@ public class StateTransaction {
         return executing;
     }
 
-    public EventType getEventType() {
-        return eventType;
+    public ReceivedEvent getRECEIVEDEVENT() {
+        return RECEIVEDEVENT;
     }
 
     public void execute() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Hewlett-Packard Enterprise.  All rights reserved.
+ * Copyright (c) 2015 Hewlett Packard Enterprise Development LP.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -10,9 +10,9 @@ package org.opendaylight.nic.impl;
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.impl.DeployFailedServiceImpl;
 import org.opendaylight.nic.engine.impl.DeployServiceImpl;
+import org.opendaylight.nic.engine.impl.DisableServiceImpl;
 import org.opendaylight.nic.engine.impl.UndeployFailedServiceImpl;
 import org.opendaylight.nic.engine.impl.UndeployServiceImpl;
-import org.opendaylight.nic.engine.impl.DisableServiceImpl;
 import org.opendaylight.nic.engine.service.EngineService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
