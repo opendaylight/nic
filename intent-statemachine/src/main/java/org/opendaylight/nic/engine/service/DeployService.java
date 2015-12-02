@@ -7,7 +7,13 @@
  */
 package org.opendaylight.nic.engine.service;
 
-public interface DeployService extends EngineService{
+/**
+ * Service to deploy a Intent
+ */
+public interface DeployService extends EngineService {
 
+    /**
+     * Cancel Deploy to the current intent
+     */
     void cancel();
 }

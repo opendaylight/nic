@@ -145,4 +145,14 @@
         </configfile>
     </feature>
 
+    <!-- Intent State Machine -->
+    <feature name='odl-nic-intent-statemachine' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: Intent State Machine'>
+        <feature version="${project.version}">odl-nic-listeners</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-intent-statemachine.xml">
+            mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config
+        </configfile>
+    </feature>
+
 </features>

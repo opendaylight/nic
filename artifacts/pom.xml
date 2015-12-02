@@ -71,6 +71,11 @@
     <artifactId>intent-listeners</artifactId>
     <version>${project.version}</version>
    </dependency>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>intent-statemachine</artifactId>
+    <version>${project.version}</version>
+  </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>neutron-integration</artifactId>
