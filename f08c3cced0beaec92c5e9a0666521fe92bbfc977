@@ -1,0 +1,360 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_47f39c0a",
+        "filename": "features/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "could you add this under \u003c!-- external projects feature repository --\u003e instead of \u003c!-- project specific dependencies --\u003e",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 17
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_27da2079",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "could you add this to the odl-nic-neutron-integration feature? it make more sense to make it live there since this is used only for this feature. Or maybe I\u0027m missing something?",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 75
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_87d0b454",
+        "filename": "intent-listeners/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "I think neutron.version is enough since the version in neutron project is consistent for every bundles",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_27c1c080",
+        "filename": "intent-listeners/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add a comment saying this is neutron dependencies",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c7bd4c04",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/SecurityGroupAdded.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e7bac809",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/SecurityGroupDeleted.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_873754b0",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/SecurityGroupUpdated.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a73cd094",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/SecurityRuleAdded.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_47415c0a",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/SecurityRuleDeleted.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6746d825",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/SecurityRuleUpdated.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e75168d9",
+        "filename": "neutron-integration/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "neutron.version",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_675d78e9",
+        "filename": "neutron-integration/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "add a comment for this: neutron dependency",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0772847c",
+        "filename": "neutron-integration/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e7688889",
+        "filename": "neutron-integration/src/main/java/org/opendaylight/nic/neutron.integration/impl/SecGroupNotificationSubscriberImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add modifier to this class.",
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_870514c4",
+        "filename": "neutron-integration/src/main/java/org/opendaylight/nic/neutron.integration/impl/SecRuleNotificationSubscriberImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "please add modifier to this class",
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_671498f5",
+        "filename": "neutron-integration/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/neutron/integration/rev151125/NeutronIntegrationProviderModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:42:08Z",
+      "side": 1,
+      "message": "it\u0027s useless to create an Autocloseble instance here as NeutronIntegrationProviderImpl implements Autocloseable.\n\nSo returning provider should be enough",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
