@@ -7,11 +7,23 @@
  */
 package org.opendaylight.nic.engine.service;
 
+/**
+ * Service to handle State Machine behaviors and events
+ */
 public interface EngineService {
 
+    /**
+     * Starts State Machine execution
+     */
     void execute();
 
+    /**
+     * Handle State Machine execution success
+     */
     void onSuccess();
 
+    /**
+     * Handle State Machine in case of errors when engine execution
+     */
     void onError();
 }

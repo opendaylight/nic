@@ -240,7 +240,18 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
-
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>neutron-integration</artifactId>
+      <version>${project.version}</version>
+     </dependency>
+     <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>neutron-integration</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+     </dependency>
 <!-- external dependencies -->
     <dependency>
       <groupId>org.apache.karaf.cellar</groupId>

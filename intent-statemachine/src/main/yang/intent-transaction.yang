@@ -1,0 +1,41 @@
+module intent-transaction {
+    namespace "urn:opendaylight:nic:intent:state:machine";
+    prefix "intent-transaction";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import received-event { prefix event; revision-date 2015-12-02; }
+
+    description
+        "This module represents a transaction to represent Intent sate change based on events.";
+
+    revision 2015-12-03 {
+        description "Initial revision.";
+    }
+
+    grouping intent-transaction {
+
+        leaf intent-id {
+            type types:uuid;
+            mandatory true;
+            description "Intent identifier.";
+        }
+
+        leaf received-event {
+            type event:received-event;
+            mandatory true;
+            description "Wrapper for received Intent or Network event.";
+        }
+
+        leaf executing {
+            type boolean;
+            mandatory true;
+            description "Defines if this transaction is executing.";
+        }
+
+        leaf event-timestamp {
+            type uint32;
+            mandatory true;
+            description "Defines the timestamp of the received event.";
+        }
+    }
+}
