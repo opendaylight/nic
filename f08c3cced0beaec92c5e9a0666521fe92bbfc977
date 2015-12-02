@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_e2687689",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-12-02T19:28:29Z",
+      "side": 1,
+      "message": "The Event Publishers for the Security Groups reside inside the listeners bundle. Hence the neutron feature dependency.",
+      "parentUuid": "5aaae553_27da2079",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 75
+      },
+      "revId": "f08c3cced0beaec92c5e9a0666521fe92bbfc977",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_87d0b454",
         "filename": "intent-listeners/pom.xml",
         "patchSetId": 2
