@@ -1,0 +1,27 @@
+module received-event {
+    namespace "urn:opendaylight:nic:intent:state:machine";
+    prefix "received-event";
+
+    description
+        "This module represents a wrapper for Intent and Network events.";
+
+    revision 2015-12-02 {
+        description "Initial revision.";
+    }
+
+    typedef received-event {
+        type enumeration {
+            enum NODEUP;
+            enum NODEUPDATED;
+            enum NODEDOWN;
+            enum SWITCHUP;
+            enum SWITCHDOWN;
+            enum INTENTCREATED;
+            enum INTENTUPDATED;
+            enum INTENTREMOVED;
+        }
+        config false;
+        mandatory true;
+        description "Wrapper for Intent and Network events.";
+    }
+}
