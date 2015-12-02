@@ -1,0 +1,348 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_675c9826",
+        "filename": "intent-statemachine/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "is this needed?",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_273ea0b9",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/IntentStateMachineExecutorService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class and the functions",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c74a2c55",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/StateMachineEngineService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class and the functions",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8774349d",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/DeployFailedService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class and the functions",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_47a5dc02",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/DeployService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "add a space before the curly braket",
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_a7793095",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/DeployService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class and the functions",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_476e3ccb",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/DisableService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_076844b9",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/EnableService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_276540e1",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/EngineService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class and the functions",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_67aa58d6",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/UndeployFailedService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "add space before the curly braket",
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c761ccd4",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/UndeployFailedService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class and the functions",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e75e4812",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/UndeployService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please add javadoc for the class and the functions",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_07afe4e4",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/impl/IntentStateMachineExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "add space before the curly braket",
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_27ac60ed",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/impl/StateMachineEventsHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "add space before curly braket",
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6781f849",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/impl/StateTransaction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "please conform to java naming convention - this is not a final static variable, it shouldn\u0027t be all capital letter",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c78f8c74",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/impl/StateTransaction.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-02T14:26:15Z",
+      "side": 1,
+      "message": "does this ever turn to be false?",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "85b82997ef56e3f5e6dc0f8586e2765b5dc73298",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
