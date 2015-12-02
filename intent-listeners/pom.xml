@@ -18,6 +18,7 @@
     <properties>
         <openflowplugin.version>0.2.0-SNAPSHOT</openflowplugin.version>
         <powermock.version>1.5.5</powermock.version>
+        <neutron.version>0.6.0-SNAPSHOT</neutron.version>
     </properties>
     <dependencies>
         <dependency>
@@ -34,6 +35,12 @@
             <groupId>org.opendaylight.nic</groupId>
             <artifactId>of-renderer</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <!-- Neutron Dependencies -->
+        <dependency>
+            <groupId>org.opendaylight.neutron</groupId>
+            <artifactId>model</artifactId>
+            <version>${neutron.version}</version>
         </dependency>
         <!-- openflowplugin Dependencies -->
         <dependency>
