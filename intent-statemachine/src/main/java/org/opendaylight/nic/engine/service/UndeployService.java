@@ -5,15 +5,15 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.engine;
+package org.opendaylight.nic.engine.service;
 
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+/**
+ * Service to handle Undeploy for a Intent
+ */
+public interface UndeployService extends EngineService {
 
-public interface IntentStateMachineExecutorService {
-
-    void execute(Intent intent);
-
-    void stopService(Intent intent);
-
-    void stopAllServices();
+    /**
+     * Cancel Undeploy execution
+     */
+    void cancel();
 }

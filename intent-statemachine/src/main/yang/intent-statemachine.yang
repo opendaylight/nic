@@ -1,0 +1,42 @@
+module intent-statemachine {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:intent:state:machine";
+    prefix "intent-statemachine";
+
+    import config {
+        prefix config;
+        revision-date 2013-04-05;
+    }
+    import opendaylight-md-sal-binding {
+        prefix mdsal;
+        revision-date 2013-10-28;
+    }
+
+    description
+        "This module contains the base YANG definition for the Intent State Machine.";
+
+    revision 2015-12-01 {
+        description "Initial revision.";
+    }
+
+    identity intent-statemachine {
+        base config:module-type;
+
+        config:java-name-prefix IntentStateMachineProvider;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+        case intent-statemachine {
+            when "config:modules/config:module/config:type = 'intent-statemachine'";
+
+            container data-broker {
+                uses config:service-ref {
+                    refine type {
+                        mandatory false;
+                        config:required-identity mdsal:binding-async-data-broker;
+                    }
+                }
+            }
+        }
+    }
+}
