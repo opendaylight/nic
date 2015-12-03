@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_bc05c2c3",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-03T14:01:45Z",
+      "side": 1,
+      "message": "move that right above the comment  \u003c!-- external dependencies --\u003e",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 17
+      },
+      "revId": "bca39aa30a285662d153b11639eefca199e9a1fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_1c69768b",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-03T14:01:45Z",
+      "side": 1,
+      "message": "could you add that under \u003c!-- external projects feature repository --\u003e",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 17
+      },
+      "revId": "bca39aa30a285662d153b11639eefca199e9a1fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
