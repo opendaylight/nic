@@ -5,14 +5,14 @@
  <parent>
   <groupId>org.opendaylight.yangtools</groupId>
   <artifactId>binding-parent</artifactId>
-  <version>0.7.3-SNAPSHOT</version>
+  <version>0.7.3-Lithium-SR3</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>intentengine-api</artifactId>
- <version>1.0.3-SNAPSHOT</version>
+ <version>1.0.3-Lithium-SR3</version>
  <packaging>bundle</packaging>
 
  <dependencies>
