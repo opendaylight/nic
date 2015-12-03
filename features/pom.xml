@@ -88,6 +88,13 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.neutron</groupId>
+      <artifactId>features-neutron</artifactId>
+      <version>${neutron.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
 <!-- project specific dependencies -->
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
@@ -221,15 +228,20 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
-
-<!-- external dependencies -->
     <dependency>
-      <groupId>org.opendaylight.neutron</groupId>
-      <artifactId>features-neutron</artifactId>
-      <version>${neutron.version}</version>
-      <classifier>features</classifier>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>neutron-integration</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>neutron-integration</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+
+<!-- external dependencies -->
     <dependency>
       <groupId>org.apache.karaf.cellar</groupId>
       <artifactId>apache-karaf-cellar</artifactId>

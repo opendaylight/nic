@@ -135,4 +135,14 @@
         </configfile>
     </feature>
 
+    <!-- Neutron Integration -->
+    <feature name='odl-nic-neutron-integration' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: Neutron :: Integration'>
+        <feature version="${project.version}">odl-nic-listeners</feature>
+        <bundle>mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-neutron-integration.xml">
+            mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config
+        </configfile>
+    </feature>
+
 </features>
