@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_bc5e22e8",
+        "filename": "intent-statemachine/src/main/yang/received-events.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-03T13:49:36Z",
+      "side": 1,
+      "message": "I think convention imply to have the file name the same as the module name, thus I would just rename received-events.yang to received-event.yang",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "69febd62a987bd0caaa2e3b61d6285462d0a3768",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_fc549acb",
+        "filename": "intent-statemachine/src/main/yang/transaction.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-03T13:49:36Z",
+      "side": 1,
+      "message": "I think convention imply to have the file name the same as the module name, thus I would just rename transaction.yang to intent-transaction.yang",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "69febd62a987bd0caaa2e3b61d6285462d0a3768",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_1c52d6dd",
+        "filename": "intent-statemachine/src/main/yang/transaction.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-03T13:49:36Z",
+      "side": 1,
+      "message": "transaction",
+      "range": {
+        "startLine": 20,
+        "startChar": 31,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "69febd62a987bd0caaa2e3b61d6285462d0a3768",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
