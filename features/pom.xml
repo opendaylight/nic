@@ -36,6 +36,13 @@
   <dependencies>
 <!-- external projects feature repository -->
     <dependency>
+      <groupId>org.opendaylight.neutron</groupId>
+      <artifactId>features-neutron</artifactId>
+      <version>${neutron.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
       <groupId>org.opendaylight.yangtools</groupId>
       <artifactId>features-yangtools</artifactId>
       <version>${yangtools.version}</version>
@@ -223,13 +230,6 @@
     </dependency>
 
 <!-- external dependencies -->
-    <dependency>
-      <groupId>org.opendaylight.neutron</groupId>
-      <artifactId>features-neutron</artifactId>
-      <version>${neutron.version}</version>
-      <classifier>features</classifier>
-      <type>xml</type>
-    </dependency>
     <dependency>
       <groupId>org.apache.karaf.cellar</groupId>
       <artifactId>apache-karaf-cellar</artifactId>
