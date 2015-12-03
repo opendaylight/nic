@@ -226,8 +226,6 @@
       <artifactId>neutron-integration</artifactId>
       <version>${project.version}</version>
     </dependency>
-
-<!-- external dependencies -->
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>neutron-integration</artifactId>
@@ -235,6 +233,8 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+
+<!-- external dependencies -->
     <dependency>
       <groupId>org.opendaylight.neutron</groupId>
       <artifactId>features-neutron</artifactId>

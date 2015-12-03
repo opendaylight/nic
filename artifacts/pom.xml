@@ -73,6 +73,11 @@
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
+    <artifactId>neutron-integration</artifactId>
+    <version>${project.version}</version>
+   </dependency>
+   <dependency>
+    <groupId>${project.groupId}</groupId>
     <artifactId>intent-mapping</artifactId>
     <version>${project.version}</version>
    </dependency>
