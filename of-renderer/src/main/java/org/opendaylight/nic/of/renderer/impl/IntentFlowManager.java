@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.l2switch.loopremover.topology.NetworkGraphService;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -41,6 +42,7 @@ public class IntentFlowManager extends AbstractFlowManager {
     private static final String ANY_MATCH = "any";
     private static final String INTENT_L2_FLOW_NAME = "L2_Rule_";
     private static final String MPLS_LABEL_KEY = null;
+    private NetworkGraphService networkGraphService;
 
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
@@ -155,5 +157,13 @@ public class IntentFlowManager extends AbstractFlowManager {
         sb.append(endPointGroups.get(SRC_END_POINT_GROUP_INDEX));
         sb.append(endPointGroups.get(DST_END_POINT_GROUP_INDEX));
         return sb.toString();
+    }
+
+    public NetworkGraphService getNetworkGraphService() {
+        return networkGraphService;
+    }
+
+    public void setNetworkGraphService(NetworkGraphService networkGraphService) {
+        this.networkGraphService = networkGraphService;
     }
 }

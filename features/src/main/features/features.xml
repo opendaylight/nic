@@ -15,6 +15,7 @@
     <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.l2switch/features-l2switch/{{VERSION}}/xml/features</repository>
     <!--
          TODO: Add the following repository after the Bug 4426 is fixed.
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
@@ -106,6 +107,7 @@
     <feature name='odl-nic-renderer-of' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
+        <feature version="${loopremover.version}">odl-l2switch-loopremover</feature>
         <feature version="${project.version}">odl-nic-pipeline-manager</feature>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
@@ -144,5 +146,4 @@
             mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config
         </configfile>
     </feature>
-
 </features>

@@ -21,9 +21,15 @@
         <powermock.version>1.5.5</powermock.version>
         <pitest.version>1.1.4</pitest.version>
         <liblldp.version>0.10.0-SNAPSHOT</liblldp.version>
+        <loopremover.version>0.3.0-SNAPSHOT</loopremover.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->
+        <dependency>
+           <groupId>org.opendaylight.l2switch.loopremover</groupId>
+           <artifactId>loopremover-impl</artifactId>
+           <version>${loopremover.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
             <artifactId>intent-api</artifactId>
@@ -95,6 +101,16 @@
                         <param>nic.of.renderer*</param>
                         <param>nic.of.renderer.utils*</param>
                     </targetTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Import-Package>org.opendaylight.l2switch.loopremover.topology</Import-Package>
+                    </instructions>
                 </configuration>
             </plugin>
         </plugins>

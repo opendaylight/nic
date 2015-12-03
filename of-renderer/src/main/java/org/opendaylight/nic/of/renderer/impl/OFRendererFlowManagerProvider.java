@@ -7,17 +7,20 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import com.google.common.base.Optional;
-import com.google.common.util.concurrent.CheckedFuture;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.l2switch.loopremover.topology.NetworkGraphService;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
@@ -27,14 +30,13 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 
 /**
  * Created by saket on 8/19/15.
@@ -47,6 +49,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private ArpFlowManager arpFlowManager;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
+    protected ServiceReference<NetworkGraphService> networkGraphServiceReference;
+    private NetworkGraphService networkGraphService;
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
@@ -60,6 +64,12 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         nicFlowServiceRegistration = context.registerService(OFRendererFlowService.class, this, null);
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
+        networkGraphServiceReference = context.getServiceReference(NetworkGraphService.class);
+        if (networkGraphServiceReference != null) {
+            networkGraphService = context.getService(networkGraphServiceReference);
+            if (networkGraphService != null)
+                intentFlowManager.setNetworkGraphService(networkGraphService);
+        }
     }
 
 
@@ -68,7 +78,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     public void pushIntentFlow(Intent intent, FlowAction flowAction) {
         // TODO: Extend to support other actions
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
-        Action actionContainer = (Action) intent.getActions().get(0).getAction();
+        Action actionContainer = intent.getActions().get(0).getAction();
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         intentFlowManager.setEndPointGroups(endPointGroups);
         intentFlowManager.setAction(actionContainer);
