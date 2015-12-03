@@ -13,12 +13,12 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>1.5.3-Lithium-SR3</version>
+    <version>1.5.4-SNAPSHOT</version>
     <relativePath/>
   </parent>
 
     <groupId>org.opendaylight.nic</groupId>
-    <version>1.0.3-Lithium-SR3</version>
+    <version>1.0.4-SNAPSHOT</version>
     <artifactId>nic-aggregator</artifactId>
     <name>nic</name>
     <packaging>pom</packaging>
