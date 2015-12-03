@@ -71,4 +71,17 @@ module intent-conditions {
 
       description "Represents a weekly recurring condition.";
     }
+
+    grouping daily {
+      uses condition;
+
+      leaf start-time {
+        type time-of-day;
+      }
+      leaf duration {
+        type duration;
+      }
+
+      description "Represents a daily recurring condition.";
+    }
 }

@@ -134,6 +134,11 @@ module intent {
                         uses constraints:exclude-node;
                     }
                 }
+                case bandwidth-constraint {
+                    container bandwidth-constraint {
+                        uses constraints:bandwidth-constraint;
+                    }
+                }
             }
             description "List of additional constraints to apply to the when implementing
                         the intent.";
@@ -153,6 +158,11 @@ module intent {
                 case weekly {
                     container weekly {
                         uses conditions:weekly;
+                    }
+                }
+                case daily {
+                    container daily {
+                        uses conditions:daily;
                     }
                 }
             }

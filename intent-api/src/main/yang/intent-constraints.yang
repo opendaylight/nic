@@ -39,4 +39,14 @@ module intent-constraints {
       description "Constraint that requires a specific node to be excluded
           from a path computation.";
     }
+
+    grouping bandwidth-constraint {
+      uses constraint;
+
+      leaf bandwidth {
+        type string;
+      }
+
+      description "Constraint that requires the specified bandwidth.";
+    }
 }
