@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_5c6fee92",
+        "filename": "features/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-03T13:55:55Z",
+      "side": 1,
+      "message": "could you add this under \u003c!-- external projects feature repository --\u003e so we keep the pom file clean and consistent",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 17
+      },
+      "revId": "156f4e9c86a24f02eee3c4af1fe88610e96cd533",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
