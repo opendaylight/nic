@@ -161,18 +161,6 @@
       </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
-      <artifactId>intent-mapping</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.nic</groupId>
-      <artifactId>intent-mapping</artifactId>
-      <version>${project.version}</version>
-      <classifier>config</classifier>
-      <type>xml</type>
-    </dependency>
-    <dependency>
-      <groupId>org.opendaylight.nic</groupId>
       <artifactId>intent-mapping-mdsal</artifactId>
       <version>${project.version}</version>
     </dependency>
