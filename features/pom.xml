@@ -31,10 +31,18 @@
     <karaf.cellar.version>3.0.3</karaf.cellar.version>
     <hazelcast.version>3.4.2</hazelcast.version>
     <neutron.version>0.6.0-SNAPSHOT</neutron.version>
+    <loopremover.version>0.3.0-SNAPSHOT</loopremover.version>
   </properties>
 
   <dependencies>
 <!-- external projects feature repository -->
+    <dependency>
+      <groupId>org.opendaylight.l2switch</groupId>
+      <artifactId>features-l2switch</artifactId>
+      <version>${loopremover.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
     <dependency>
       <groupId>org.opendaylight.yangtools</groupId>
       <artifactId>features-yangtools</artifactId>
