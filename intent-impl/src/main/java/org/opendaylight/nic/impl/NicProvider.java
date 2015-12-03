@@ -20,6 +20,7 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.ActionConflictType;
@@ -56,9 +57,11 @@ public class NicProvider implements NicConsoleProvider {
     public static final String ACTION_REDIRECT = "REDIRECT";
 
     protected DataBroker dataBroker;
+    protected IntentMappingService mappingSvc;
 
-    public NicProvider(DataBroker dataBroker) {
+    public NicProvider(DataBroker dataBroker, IntentMappingService mappingSvc) {
         this.dataBroker = dataBroker;
+        this.mappingSvc = mappingSvc;
     }
 
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();

@@ -7,26 +7,26 @@
 * and is available at http://www.eclipse.org/legal/epl-v10.html
 */
 
-module intent-mapping-mdsal {
+module intent-mapping-interface{
     yang-version 1;
-    namespace "urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal";
-    prefix "intent-mapping-mdsal";
+    namespace "urn:opendaylight:params:xml:ns:yang:nic:mapping";
+    prefix "intent-mapping-interface";
 
     import config { prefix config; revision-date 2013-04-05; }
 
     description
-        "Service definition for intent-mapping-mdsal module";
+        "Service definition for intent-mapping-interface module";
 
     revision "2015-11-11" {
         description "Initial revision of intent-mapping-mdsal model";
     }
 
-    identity intent-mapping-service {
-        base config:service-type;
-        config:java-class "org.opendaylight.nic.api.IntentMappingService";
+    identity intent-mapping-interface {
+            base config:service-type;
+            config:java-class "org.opendaylight.nic.mapping.api.IntentMappingService";
     }
 
-    grouping map {
+    grouping multimap {
         list outer-map {
             key "id";
             leaf id {
@@ -43,6 +43,6 @@ module intent-mapping-mdsal {
         }
     }
     container mappings {
-         uses map;
+         uses multimap;
      }
 }
