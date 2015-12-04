@@ -145,4 +145,13 @@
         </configfile>
     </feature>
 
+    <!-- MD-SAL based mapping service bundle aggregation -->
+    <feature name='odl-nic-mdsal-mapper-all' version='${project.version}'
+             description='OpenDaylight :: Network Intent Composition :: MDSAL :: All'>
+        <feature version="${project.version}">odl-nic-core</feature>
+        <feature version="${project.version}">odl-nic-core-service-mdsal</feature>
+        <feature version="${project.version}">odl-nic-console</feature>
+        <feature version="${project.version}">odl-nic-renderer-of</feature>
+        <feature version="${project.version}">odl-nic-listeners</feature>
+    </feature>
 </features>
