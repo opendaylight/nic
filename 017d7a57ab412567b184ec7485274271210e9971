@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_a6636919",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/nemo/renderer/rev151001/NEMORendererModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T13:49:24Z",
+      "side": 1,
+      "message": "any reason why registering the NEMORenderer as a service?\n\nIf necessary, this could be done in the NEMORenderer constructor...",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "017d7a57ab412567b184ec7485274271210e9971",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c668e5f7",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/nemo/renderer/rev151001/NEMORendererModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T13:49:24Z",
+      "side": 1,
+      "message": "...allowing here to return the renderer (as it implements Autocloseable)",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "017d7a57ab412567b184ec7485274271210e9971",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
