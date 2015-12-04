@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_41093f30",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/nemo/renderer/rev151001/NEMORendererModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3172
+      },
+      "writtenOn": "2015-12-04T16:10:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the registration is necessary; I saw that this was done by the GBP renderer, and thought that maybe this was required by NIC.\n\nRegarding the location of the registration, if it is done in the NEMORender constructor, this would cause an improper leak of the \"this\" reference from the constructor.  So this AutoCloseable seems to be the best place.",
+      "parentUuid": "5aaae553_a6636919",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "017d7a57ab412567b184ec7485274271210e9971",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_c668e5f7",
         "filename": "nemo-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/nemo/renderer/rev151001/NEMORendererModule.java",
         "patchSetId": 1
