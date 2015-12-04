@@ -16,8 +16,13 @@ import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.NemoIntentService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.user.rev151010.UserInstance;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -36,11 +41,16 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
     public static final InstanceIdentifier<Intent> INTENT_IID = InstanceIdentifier.builder(Intents.class)
             .child(Intent.class).build();
 
+    // TODO: set actual user credentials
+    private UserInstance userInstance = new UserInstanceImpl("", "", "", "");
+
     private final DataBroker dataBroker;
+    private final RpcProviderRegistry rpcProviderRegistry;
     private ListenerRegistration<DataChangeListener> listenerRegistration;
 
-    public NEMORenderer(DataBroker dataBroker0) {
+    public NEMORenderer(DataBroker dataBroker0, RpcProviderRegistry rpcProviderRegistry0) {
         this.dataBroker = dataBroker0;
+        this.rpcProviderRegistry = rpcProviderRegistry0;
     }
 
     public void init() {
@@ -70,13 +80,22 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
     private void createIntent(Intent intent) {
         NEMOData data = NEMOIntentParser.parseForBandwidthOnDemand(intent);
 
-        // TODO: make call to NEMO
+        // make call to NEMO via MD-SAL RPC
+        NemoIntentService nemoEngine = rpcProviderRegistry.getRpcService(NemoIntentService.class);
+
+        nemoEngine.beginTransaction(new BeginTransactionInputBuilder().setUserId(userInstance.getUserId()).build());
+
+        nemoEngine.structureStyleNemoUpdate(data.asStructureStyleNemoUpdateInput(userInstance));
+
+        nemoEngine.endTransaction(new EndTransactionInputBuilder().setUserId(userInstance.getUserId()).build());
     }
 
     private void update(Map<InstanceIdentifier<?>, DataObject> changes) {
         for (Entry<InstanceIdentifier<?>, DataObject> updated : changes.entrySet()) {
             if (updated.getValue() instanceof Intent) {
                 LOG.info("Updated Intent {}.", updated);
+
+                createIntent((Intent) updated.getValue());
             }
         }
     }
@@ -84,6 +103,8 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
     private void delete(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
         for (InstanceIdentifier<?> deleted : changes.getRemovedPaths()) {
             LOG.info("Deleted Intent {}.", deleted);
+
+            // TODO: handle delete
         }
     }
 
