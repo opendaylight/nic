@@ -16,13 +16,21 @@ import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.NemoIntentService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInputBuilder;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.annotations.VisibleForTesting;
 
 /**
  *
@@ -37,10 +45,12 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
             .child(Intent.class).build();
 
     private final DataBroker dataBroker;
+    private final RpcProviderRegistry rpcProviderRegistry;
     private ListenerRegistration<DataChangeListener> listenerRegistration;
 
-    public NEMORenderer(DataBroker dataBroker0) {
+    public NEMORenderer(DataBroker dataBroker0, RpcProviderRegistry rpcProviderRegistry0) {
         this.dataBroker = dataBroker0;
+        this.rpcProviderRegistry = rpcProviderRegistry0;
     }
 
     public void init() {
@@ -62,21 +72,17 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
             if (created.getValue() instanceof Intent) {
                 LOG.info("Created Intent {}.", created);
 
-                createIntent((Intent) created.getValue());
+                createOrUpdateIntent((Intent) created.getValue());
             }
         }
-    }
-
-    private void createIntent(Intent intent) {
-        NEMOData data = NEMOIntentParser.parseForBandwidthOnDemand(intent);
-
-        // TODO: make call to NEMO
     }
 
     private void update(Map<InstanceIdentifier<?>, DataObject> changes) {
         for (Entry<InstanceIdentifier<?>, DataObject> updated : changes.entrySet()) {
             if (updated.getValue() instanceof Intent) {
                 LOG.info("Updated Intent {}.", updated);
+
+                createOrUpdateIntent((Intent) updated.getValue());
             }
         }
     }
@@ -84,6 +90,37 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
     private void delete(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
         for (InstanceIdentifier<?> deleted : changes.getRemovedPaths()) {
             LOG.info("Deleted Intent {}.", deleted);
+
+            // TODO: handle delete
+        }
+    }
+
+    public static UserId USER_ID = new UserId("f81d4fae-7dec-11d0-a765-00a0c91e6bf6");
+
+    @VisibleForTesting
+    boolean createOrUpdateIntent(Intent intent) {
+
+        StructureStyleNemoUpdateInputBuilder builder;
+        try {
+            builder = NEMOIntentParser.parseBandwidthOnDemand(intent);
+        } catch (Exception e) {
+            builder = null;
+        }
+
+        if (builder != null) {
+            // make call to NEMO via MD-SAL RPC
+            NemoIntentService nemoEngine = rpcProviderRegistry.getRpcService(NemoIntentService.class);
+
+            nemoEngine.beginTransaction(new BeginTransactionInputBuilder().setUserId(USER_ID).build());
+
+            nemoEngine.structureStyleNemoUpdate(builder.setUserId(USER_ID).build());
+
+            nemoEngine.endTransaction(new EndTransactionInputBuilder().setUserId(USER_ID).build());
+
+            return true;
+        } else {
+            LOG.info("Not a valid BoD intent");
+            return false;
         }
     }
 
