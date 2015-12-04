@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_c64f8591",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T14:07:20Z",
+      "side": 1,
+      "message": "please remove",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "cf9ea4c7a75ecbac2552e280f477031ba136fde8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_265e9946",
+        "filename": "intent-mapping-interface/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T14:07:20Z",
+      "side": 1,
+      "message": "please remove this",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "cf9ea4c7a75ecbac2552e280f477031ba136fde8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c636a503",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T14:07:20Z",
+      "side": 1,
+      "message": "please remove tabs",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 1
+      },
+      "revId": "cf9ea4c7a75ecbac2552e280f477031ba136fde8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_663b31ec",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-04T14:07:20Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "cf9ea4c7a75ecbac2552e280f477031ba136fde8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
