@@ -25,51 +25,63 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The VTNRenderer class parse the intents received.
+ *
+ * @author gwu
+ *
  */
 public class NEMORenderer implements AutoCloseable, DataChangeListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(NEMORenderer.class);
-    public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
-    private NEMOIntentParser nemoIntentParser;
-    private NEMOIntentMapper nemoIntentMapper;
-    private ListenerRegistration<DataChangeListener> listenerRegistration = null;
 
-    public NEMORenderer(DataBroker dataBroker) {
-        this.nemoIntentParser = new NEMOIntentParser();
-        this.nemoIntentMapper = new NEMOIntentMapper();
-        listenerRegistration = dataBroker.registerDataChangeListener(
-                LogicalDatastoreType.CONFIGURATION, INTENTS_IID,
+    public static final InstanceIdentifier<Intent> INTENT_IID = InstanceIdentifier.builder(Intents.class)
+            .child(Intent.class).build();
+
+    private final DataBroker dataBroker;
+    private ListenerRegistration<DataChangeListener> listenerRegistration;
+
+    public NEMORenderer(DataBroker dataBroker0) {
+        this.dataBroker = dataBroker0;
+    }
+
+    public void init() {
+        LOG.info("Initializing NEMORenderer");
+
+        listenerRegistration = dataBroker.registerDataChangeListener(LogicalDatastoreType.CONFIGURATION, INTENT_IID,
                 this, DataChangeScope.SUBTREE);
     }
 
     @Override
     public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
-        this.processCreatesChanges(changes.getCreatedData());
-        this.processUpdateChanges(changes.getUpdatedData());
-        this.processDeleteChanges(changes);
+        create(changes.getCreatedData());
+        update(changes.getUpdatedData());
+        delete(changes);
     }
 
-    private void processCreatesChanges(Map<InstanceIdentifier<?>, DataObject> changes) {
+    private void create(Map<InstanceIdentifier<?>, DataObject> changes) {
         for (Entry<InstanceIdentifier<?>, DataObject> created : changes.entrySet()) {
-            if (created.getValue() != null && created.getValue() instanceof Intent) {
+            if (created.getValue() instanceof Intent) {
                 LOG.info("Created Intent {}.", created);
-                Intent intent = (Intent) created.getValue();
-                this.nemoIntentMapper.map(this.nemoIntentParser.parse(intent));
 
+                createIntent((Intent) created.getValue());
             }
         }
     }
 
-    private void processUpdateChanges(Map<InstanceIdentifier<?>, DataObject> changes) {
+    private void createIntent(Intent intent) {
+        NEMOData data = NEMOIntentParser.parseForBandwidthOnDemand(intent);
+
+        // TODO: make call to NEMO
+    }
+
+    private void update(Map<InstanceIdentifier<?>, DataObject> changes) {
         for (Entry<InstanceIdentifier<?>, DataObject> updated : changes.entrySet()) {
-            if (updated.getValue() != null && updated.getValue() instanceof Intent) {
+            if (updated.getValue() instanceof Intent) {
                 LOG.info("Updated Intent {}.", updated);
             }
         }
     }
 
-    private void processDeleteChanges(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
+    private void delete(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
         for (InstanceIdentifier<?> deleted : changes.getRemovedPaths()) {
             LOG.info("Deleted Intent {}.", deleted);
         }
