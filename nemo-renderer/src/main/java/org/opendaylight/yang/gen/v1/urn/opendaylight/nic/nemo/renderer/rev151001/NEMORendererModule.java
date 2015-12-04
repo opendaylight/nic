@@ -33,7 +33,7 @@ public class NEMORendererModule extends
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating NEMO Renderer.");
 
-        final NEMORenderer renderer = new NEMORenderer(getDataBrokerDependency());
+        final NEMORenderer renderer = new NEMORenderer(getDataBrokerDependency(), getRpcRegistryDependency());
         renderer.init();
 
         final BundleContext context = FrameworkUtil.getBundle(NEMORendererModule.class).getBundleContext();
