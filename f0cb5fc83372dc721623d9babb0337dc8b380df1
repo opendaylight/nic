@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_6c6d4f32",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "Change an indent for identity and augment part for unifying others.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 8
+      },
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0c661b52",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "I think edge-type is better than edge-types.",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ac5a6781",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "Change an indent.",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8c6a0b19",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "Add a description for edge-type.\nex) Graph edge for specifying intent in PGA",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_cc5fa371",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "Make a line break after one for 80 characters rule.",
+      "range": {
+        "startLine": 58,
+        "startChar": 92,
+        "endLine": 58,
+        "endChar": 95
+      },
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0ccdbb31",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "In this model, you are defining input-graph which can have nodes and edges. Are you also reusing it for composed-graph?\n\nIn terms of OOP, we can define general policy-graph which can have common properties such as nodes, edges, identifier, etc.\nAnd then, we can define an input-graph and composed-graph extended from the policy-graph which can have different properties. This is just my thought but you don\u0027t have to redesign all.",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_2c4e77c2",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "I think we need an identifier for each graph.",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8c51ab64",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "We don\u0027t need an identifier for nodes or can we use a name for the identifier?",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6c546f54",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "Give one more indent for the description.",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ccd6c3c5",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "Remove a blank line.",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_6cdb0fee",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-05T00:48:45Z",
+      "side": 1,
+      "message": "I think type is better because it is an attribute of edges.",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
