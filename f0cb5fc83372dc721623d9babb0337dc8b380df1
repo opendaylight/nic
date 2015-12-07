@@ -116,6 +116,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_23a46a56",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2015-12-07T21:29:17Z",
+      "side": 1,
+      "message": "Changed this to graph. For input graph, we use any of the 4 types of edges and for composed graph, it will either be MustAllow (whitelist - composed to allow) etc.",
+      "parentUuid": "5aaae553_0ccdbb31",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_2c4e77c2",
         "filename": "intent-graph/src/main/yang/graph.yang",
         "patchSetId": 7
@@ -144,6 +162,24 @@
       "writtenOn": "2015-12-05T00:48:45Z",
       "side": 1,
       "message": "We don\u0027t need an identifier for nodes or can we use a name for the identifier?",
+      "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c388f6c8",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2015-12-07T21:29:17Z",
+      "side": 1,
+      "message": "The node name will be the identifier. It has the unique property when it is part of an intent/input graph and when composed.",
+      "parentUuid": "5aaae553_8c51ab64",
       "revId": "f0cb5fc83372dc721623d9babb0337dc8b380df1",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
