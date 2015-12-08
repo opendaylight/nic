@@ -30,7 +30,12 @@ module intent-actions {
     grouping redirect {
         uses action;
         description "Indicates traffic is to redirect";
+        leaf service-name {
+            type string;
+            description "Service name to redirect the flow.";
+        }
     }
+
     grouping log {
         uses action;
         description "Indicates log in the traffic";
