@@ -24,7 +24,7 @@ public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendayl
     @Override
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating a new NicProvider instance");
-        final NicProvider provider = new NicProvider(getDataBrokerDependency());
+        final NicProvider provider = new NicProvider(getDataBrokerDependency(), getIntentMappingServiceDependency());
         provider.init();
         return provider;
     }

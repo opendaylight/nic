@@ -7,7 +7,6 @@
 <!-- Configuration for Intent Engine module. -->
 <snapshot>
   <required-capabilities>
-      <capability>urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal:impl?module=intent-mapping-mdsal-impl&amp;revision=2015-11-11</capability>
       <capability>urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding?module=opendaylight-md-sal-binding&amp;revision=2013-10-28</capability>
   </required-capabilities>
 
@@ -15,7 +14,7 @@
     <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
       <modules xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
         <module>
-          <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal:impl">prefix:intent-mapping-mdsal-impl</type>
+          <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:intent:mapping">prefix:intent-mapping-mdsal-impl</type>
           <name>intent-mapping-mdsal-impl</name>
           <broker>
           <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">binding:binding-broker-osgi-registry</type>
@@ -25,7 +24,7 @@
       </modules>
         <services xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
             <service>
-                <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal">prefix:intent-mapping-service</type>
+                <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:intent:mapping">prefix:intent-mapping-service</type>
                 <instance>
                     <name>intent-mapping-service</name>
                     <provider>/modules/module[type='intent-mapping-mdsal-impl'][name='intent-mapping-mdsal-impl']</provider>
