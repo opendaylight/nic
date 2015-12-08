@@ -14,6 +14,7 @@ import org.opendaylight.nic.engine.impl.DisableServiceImpl;
 import org.opendaylight.nic.engine.impl.UndeployFailedServiceImpl;
 import org.opendaylight.nic.engine.impl.UndeployServiceImpl;
 import org.opendaylight.nic.engine.service.EngineService;
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 import java.util.HashMap;
@@ -22,12 +23,14 @@ import java.util.Map;
 public class StateMachineEngineImpl implements StateMachineEngineService {
 
     private Map<Intent.State, EngineService> engineServiceMap;
-    private Intent intent;
 
-    public StateMachineEngineImpl(Intent intent) {
-        this.intent = intent;
+    private EventType eventType;
+
+    public StateMachineEngineImpl(Intent.State state, EventType eventType) {
         engineServiceMap = new HashMap<>();
+        this.eventType = eventType;
         populate();
+        execute(state);
     }
 
     public void populate() {
@@ -42,12 +45,11 @@ public class StateMachineEngineImpl implements StateMachineEngineService {
         //TODO: Change intent state on MD-SAL
         final EngineService currentService = engineServiceMap.get(currentState);
         if(currentService != null) {
-            currentService.execute();
+            currentService.execute(eventType);
         }
     }
 
-    @Override
-    public void execute() {
-        changeState(intent.getState());
+    public void execute(Intent.State state) {
+        changeState(state);
     }
 }

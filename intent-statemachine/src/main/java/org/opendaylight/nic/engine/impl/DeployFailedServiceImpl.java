@@ -9,12 +9,18 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DeployFailedService;
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 public class DeployFailedServiceImpl implements DeployFailedService {
 
     private static DeployFailedService deployFailedService;
     private StateMachineEngineService engineService;
+
+    private int retries = 0;
+
+    //TODO: Make it configurable
+    private final int MAX_RETRY = 5;
 
     private DeployFailedServiceImpl(StateMachineEngineService engineService) {
         this.engineService = engineService;
@@ -28,9 +34,13 @@ public class DeployFailedServiceImpl implements DeployFailedService {
     }
 
     @Override
-    public void execute() {
-        //TODO: Retry
-        engineService.changeState(Intent.State.DEPLOYING);
+    public void execute(EventType eventType) {
+        if (retries < MAX_RETRY) {
+            engineService.changeState(Intent.State.DEPLOYING);
+            retries++;
+        } else {
+            cancelRetry();
+        }
     }
 
     @Override
