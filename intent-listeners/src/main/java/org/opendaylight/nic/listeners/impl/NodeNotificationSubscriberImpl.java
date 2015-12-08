@@ -27,6 +27,7 @@ class NodeNotificationSubscriberImpl implements IEventListener<NicNotification> 
         if (NodeUp.class.isInstance(event)) {
             NodeUp nodeUp = (NodeUp) event;
             flowService.pushARPFlow(nodeUp.getNodeId(), FlowAction.ADD_FLOW);
+            flowService.pushLLDPFlow(nodeUp.getNodeId(), FlowAction.ADD_FLOW);
         }
         if (NodeDeleted.class.isInstance(event)) {
             //TODO: Since node is deleted flow no longer exists on switch as there is no switch
