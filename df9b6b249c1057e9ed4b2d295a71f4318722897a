@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_e92151b5",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMOData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:40:05Z",
+      "side": 1,
+      "message": "could the string not be hardcoded and hold in a variable?",
+      "range": {
+        "startLine": 83,
+        "startChar": 48,
+        "endLine": 83,
+        "endChar": 56
+      },
+      "revId": "df9b6b249c1057e9ed4b2d295a71f4318722897a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_892e9da4",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMOData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:40:05Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 94,
+        "startChar": 51,
+        "endLine": 94,
+        "endChar": 60
+      },
+      "revId": "df9b6b249c1057e9ed4b2d295a71f4318722897a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_4918a584",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMOData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:40:05Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "df9b6b249c1057e9ed4b2d295a71f4318722897a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a92b5993",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMOData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:40:05Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 109,
+        "startChar": 96,
+        "endLine": 109,
+        "endChar": 108
+      },
+      "revId": "df9b6b249c1057e9ed4b2d295a71f4318722897a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_691d6173",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMOInputHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:40:05Z",
+      "side": 1,
+      "message": "could you create a private constructor so this class won\u0027t be instantiate, as I understand",
+      "revId": "df9b6b249c1057e9ed4b2d295a71f4318722897a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_29176953",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:40:05Z",
+      "side": 1,
+      "message": "would it make sense to create a class for that, either a inner class or a proper one?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 6
+      },
+      "revId": "df9b6b249c1057e9ed4b2d295a71f4318722897a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e908712f",
+        "filename": "nemo-renderer/src/main/yang/nemo-renderer.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:40:05Z",
+      "side": 1,
+      "message": "you also need to inject the rpc-registery in the src/main/config/default-config.xml https://github.com/opendaylight/nic/blob/master/nemo-renderer/src/main/config/default-config.xml\n\nexample: https://github.com/opendaylight/groupbasedpolicy/blob/master/neutron-mapper/src/main/config/default-config.xml#l19-l22",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 13
+      },
+      "revId": "df9b6b249c1057e9ed4b2d295a71f4318722897a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
