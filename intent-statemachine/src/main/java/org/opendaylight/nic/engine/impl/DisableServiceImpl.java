@@ -9,6 +9,7 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DisableService;
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 public class DisableServiceImpl implements DisableService {
@@ -27,7 +28,7 @@ public class DisableServiceImpl implements DisableService {
         return disableService;
     }
     @Override
-    public void execute() {
+    public void execute(EventType eventType) {
         //TODO: Try to disable Intent
     }
 
