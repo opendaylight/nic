@@ -20,6 +20,11 @@ import java.util.List;
 public interface IntentStateMachineExecutorService {
 
     /**
+     * Init Intent State Machine executor service
+     */
+    void init();
+
+    /**
      * Create a new transaction for a given Intent based in a given event
      * @param intent
      * @param receivedEvent Event received by event-listener
