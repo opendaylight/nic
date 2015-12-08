@@ -5,12 +5,10 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.engine;
+package org.opendaylight.nic.engine.service;
 
-
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-
-public interface StateMachineEngineService {
-
-    void changeState(Intent.State currentState);
+/**
+ * Service to handle Intent enable
+ */
+public interface EnableService extends EngineService {
 }

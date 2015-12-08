@@ -7,5 +7,13 @@
  */
 package org.opendaylight.nic.engine.service;
 
-public interface EnableService extends EngineService {
+/**
+ * Service to handle Undeploy failures
+ */
+public interface UndeployFailedService extends EngineService {
+
+    /**
+     * Cancel attempts to execute undeploy of a Intent
+     */
+    void cancelRetry();
 }
