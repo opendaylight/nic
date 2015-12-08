@@ -1,0 +1,28 @@
+/*
+* Copyright (c) 2015 Inocybe Technologies
+* All rights reserved.
+*
+* This program and the accompanying materials are made available under then
+* terms of the Eclipse Public License v1.0 which accompanies this distribution,
+* and is available at http://www.eclipse.org/legal/epl-v10.html
+*/
+
+module intent-mapping-service {
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:intent:mapping";
+    prefix "intent-mapping-service";
+
+    import config { prefix config; revision-date 2013-04-05; }
+
+    description
+        "Service definition for intent-mapping-mdsal module";
+
+    revision "2015-11-11" {
+        description "Initial revision of intent-mapping-mdsal service";
+    }
+
+    identity intent-mapping-service {
+        base config:service-type;
+        config:java-class "org.opendaylight.nic.api.IntentMappingService";
+    }
+}
