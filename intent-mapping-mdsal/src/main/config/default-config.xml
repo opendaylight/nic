@@ -25,7 +25,7 @@
       </modules>
         <services xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
             <service>
-                <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal">prefix:intent-mapping-service</type>
+                <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:intent:mapping">prefix:intent-mapping-service</type>
                 <instance>
                     <name>intent-mapping-service</name>
                     <provider>/modules/module[type='intent-mapping-mdsal-impl'][name='intent-mapping-mdsal-impl']</provider>

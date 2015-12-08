@@ -12,6 +12,8 @@ module intent-impl {
         revision-date 2013-10-28;
     }
 
+    import intent-mapping { prefix mapping-svc; revision-date 2015-11-11;}
+
     description
       "Service definition for the EntityEngine API project.";
 
@@ -41,6 +43,14 @@ module intent-impl {
                     refine type {
                         mandatory true;
                         config:required-identity mdsal:binding-async-data-broker;
+                    }
+                }
+            }
+            container intent-mapping-service {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity mapping-svc:intent-mapping-service;
                     }
                 }
             }

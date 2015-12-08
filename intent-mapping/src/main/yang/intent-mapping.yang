@@ -1,36 +1,29 @@
+/*
+* Copyright (c) 2015 Inocybe Technologies
+* All rights reserved.
+*
+* This program and the accompanying materials are made available under then
+* terms of the Eclipse Public License v1.0 which accompanies this distribution,
+* and is available at http://www.eclipse.org/legal/epl-v10.html
+*/
+
 module intent-mapping {
-
     yang-version 1;
-    namespace "urn:opendaylight:nic:intent:mapping";
-    prefix "mapping-impl";
+    namespace "urn:opendaylight:params:xml:ns:yang:intent:mapping";
+    prefix "intent-mapping";
 
-    // Dependency on service definition for config-demo
-    /* Service definitions could be also located in this yang file or even
-     * in a separate maven project that is marked as maven dependency
-     */
-
-    // Dependencies on config subsystem definition
     import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
 
     description
-        "Service implementation for config-mapping";
+        "Model definition for intent-mapping-hazelcast module";
 
-    revision "2015-10-05" {
-        description
-            "Initial revision";
+    revision "2015-11-11" {
+        description "Initial revision of intent-mapping-hazelcast model";
     }
 
-    // Module implementing foo service
-    identity intent-mapping {                                                                             //
-        base config:module-type;                                                                                                                             //
-        config:java-name-prefix MappingImpl;
-    }                                                                                                                                                       //
-
-    // Runtime state definition for foo-impl module
-    augment "/config:modules/config:module/config:state" {
-        case intent-mapping {                                                                             //
-            when "/config:modules/config:module/config:type = 'intent-mapping'";                          //
-
-        }
+    identity intent-mapping-service {
+         base config:service-type;
+            config:java-class "org.opendaylight.nic.api.IntentMappingService";
     }
 }
