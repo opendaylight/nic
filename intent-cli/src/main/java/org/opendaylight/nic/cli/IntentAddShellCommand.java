@@ -24,6 +24,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.AllowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.BlockBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.log.LogBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.redirect.RedirectBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroupBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -64,6 +65,13 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             multiValued = true)
     List<String> actions = new ArrayList<String>(Arrays.asList(NicProvider.ACTION_BLOCK));
 
+    @Option(name = "-s",
+            aliases = { "--servicename" },
+            description = "Service name to redirect the flow",
+            required = false,
+            multiValued = false)
+    String serviceName = "any";
+
     public IntentAddShellCommand(NicConsoleProvider provider) {
         this.provider = provider;
     }
@@ -80,6 +88,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
                 setId(new Uuid(uuid.toString()))
                 .setSubjects(subjects)
                 .setActions(intentActions)
+                .setServiceName(serviceName)
                 .build();
         if (provider.addIntent(intent)) {
             return String.format("Intent created (id: %s)", uuid.toString());
@@ -103,6 +112,9 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_LOG)) {
                 action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
                         .LogBuilder().setLog(new LogBuilder().build()).build();
+            } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_REDIRECT)) {
+                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
+                        .RedirectBuilder().setRedirect(new RedirectBuilder().build()).build();
             } else {
                 continue;
             }

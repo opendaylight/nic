@@ -64,6 +64,13 @@ module intent {
                         such as a reason for a failure.";
         }
 
+        leaf service-name {
+            type string;
+            config false;
+            mandatory false;
+            description "Service name to redirect the flow.";
+        }
+
         list subjects {
             key "order";
             leaf order {

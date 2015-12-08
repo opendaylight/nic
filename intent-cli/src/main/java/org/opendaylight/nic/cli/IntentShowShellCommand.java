@@ -18,6 +18,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -63,6 +64,8 @@ public class IntentShowShellCommand extends OsgiCommandSupport {
                     sb.append(String.format(VALUE , NicProvider.ACTION_BLOCK));
                 } else if (action instanceof Log) {
                     sb.append(String.format(VALUE , NicProvider.ACTION_LOG));
+                } else if (action instanceof Redirect) {
+                    sb.append(String.format(VALUE , NicProvider.ACTION_REDIRECT));
                 } else {
                     sb.append(String.format(VALUE , "UNKNOWN"));
                 }
