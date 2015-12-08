@@ -17,7 +17,12 @@ import java.util.List;
 /**
  * Service to handle State Machine transactions
  */
-public interface IntentStateMachineExecutorService {
+public interface IntentStateMachineExecutorService extends AutoCloseable {
+
+    /**
+     * Init Intent State Machine executor service
+     */
+    void init();
 
     /**
      * Create a new transaction for a given Intent based in a given event
