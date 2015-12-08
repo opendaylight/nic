@@ -45,6 +45,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     protected ServiceRegistration<OFRendererFlowService> nicFlowServiceRegistration;
     private IntentFlowManager intentFlowManager;
     private ArpFlowManager arpFlowManager;
+    private LldpFlowManager lldpFlowManager;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
 
@@ -60,6 +61,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         nicFlowServiceRegistration = context.registerService(OFRendererFlowService.class, this, null);
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
+        lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
     }
 
 
@@ -112,5 +114,10 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
       if (nicFlowServiceRegistration != null) {
           nicFlowServiceRegistration.unregister();
       }
+    }
+
+    @Override
+    public void pushLLDPFlow(NodeId nodeId, FlowAction flowAction) {
+        lldpFlowManager.pushFlow(nodeId, flowAction);
     }
 }
