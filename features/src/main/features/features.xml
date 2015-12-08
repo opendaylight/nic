@@ -25,7 +25,7 @@
     <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
 
     <!-- Mapping Service feature -->
-    <feature name="odl-nic-core-service" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: Mapping service'>
+    <feature name="odl-nic-core-service-hazelcast" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: Mapping service'>
         <feature version="${mdsal.version}">odl-restconf</feature>
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
