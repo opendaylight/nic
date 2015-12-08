@@ -7,6 +7,8 @@
  */
 package org.opendaylight.nic.engine.service;
 
+import org.opendaylight.nic.listeners.api.EventType;
+
 /**
  * Service to handle State Machine behaviors and events
  */
@@ -15,7 +17,7 @@ public interface EngineService {
     /**
      * Starts State Machine execution
      */
-    void execute();
+    void execute(EventType eventType);
 
     /**
      * Handle State Machine execution success
