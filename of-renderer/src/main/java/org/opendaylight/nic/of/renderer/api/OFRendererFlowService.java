@@ -16,4 +16,6 @@ public interface OFRendererFlowService {
     void pushIntentFlow(Intent intent, FlowAction flowAction);
 
     void pushARPFlow(NodeId nodeId, FlowAction flowAction);
+
+    void pushLLDPFlow(NodeId nodeId, FlowAction flowAction);
 }

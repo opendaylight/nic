@@ -107,6 +107,7 @@
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${project.version}">odl-nic-pipeline-manager</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-app-lldp-speaker-li</feature>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
             mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config
