@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_2c81b74a",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/impl/DeployFailedServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T14:01:01Z",
+      "side": 1,
+      "message": "could we make this configurable?",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "d730e53b4ed146ad399e85c6f84be11391ba5607",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ec92bf9e",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/impl/IntentStateMachineExecutor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T14:01:01Z",
+      "side": 1,
+      "message": "close the registration in the #close() method",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "d730e53b4ed146ad399e85c6f84be11391ba5607",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8c8f8b75",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/statemachine/rev150507/IntentStateMachineProviderModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T14:01:01Z",
+      "side": 1,
+      "message": "??\n\nyou want to return something here",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "d730e53b4ed146ad399e85c6f84be11391ba5607",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
