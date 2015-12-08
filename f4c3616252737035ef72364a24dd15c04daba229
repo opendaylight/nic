@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_8c1c6b6c",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "uncomment, this is fine",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 20
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ac19277b",
+        "filename": "features/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "uncomment, this is fine",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 21
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6c2b2f83",
+        "filename": "features/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "what is that for?",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 17
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_cc3903da",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "you need to create a feature holding the intent-graph implementation. something like odl-nic-graph. This is where you would add those 2 bundles, plus the intent-graph one",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 70
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8c330bf6",
+        "filename": "intent-graph/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "if this is not needed, please remove",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ac3047e9",
+        "filename": "intent-graph/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "make sure to use project.version",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ec363fe7",
+        "filename": "intent-graph/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "this is project specific dependency, could you move it under the right \"section\" (above)",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_4c4d1372",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/CompilerGraph.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "Please add proper javadoc",
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6c524f15",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/CompilerGraphException.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "please add a space before the curly braket",
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_0c571b04",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/InputGraph.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_2c5c5725",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/InputGraph.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "maybe those functions could have a more specific name. Note I said maybe.. so this might be fine with a good javadoc",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_4c74339c",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/InputGraphImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "add a carrier return between import and class definition",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6c79ef92",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/NodeImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "please specify modifier",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ec64ffe6",
+        "filename": "intent-graph/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/graph/rev150911/GraphProviderModule.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "you must return something here, the class that will rule the bundle",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_ecab9fd4",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "I rather like must-allow than mustAllow.\n\nLikewise for the others. To hell camel casing in yang :)",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6ca00ff5",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "id",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_0ca5db03",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "id",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 22
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8cb8eb2b",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "could the leaf name be more specific than node1 node2?\n\nAlso add a description please",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 10
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_acb5a732",
+        "filename": "pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-08T13:55:33Z",
+      "side": 1,
+      "message": "remove whitespace",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "f4c3616252737035ef72364a24dd15c04daba229",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
