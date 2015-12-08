@@ -16,4 +16,10 @@ public interface DeployService extends EngineService {
      * Cancel Deploy to the current intent
      */
     void cancel();
+
+    /**
+     * Retrieve the Next State based by Event
+     * @param eventType
+     * @return
+     */
 }

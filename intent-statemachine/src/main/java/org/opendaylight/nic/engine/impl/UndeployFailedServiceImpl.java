@@ -9,12 +9,15 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.UndeployFailedService;
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 public class UndeployFailedServiceImpl implements UndeployFailedService {
 
     private StateMachineEngineService engineService;
     private static UndeployFailedService undeployFailedService;
+    private int retries = 0;
+    private final int MAX_RETRY = 5;
 
     private UndeployFailedServiceImpl(StateMachineEngineService engineService) {
         this.engineService = engineService;
@@ -28,9 +31,13 @@ public class UndeployFailedServiceImpl implements UndeployFailedService {
     }
 
     @Override
-    public void execute() {
-        //TODO: Retry undeploy
-        engineService.changeState(Intent.State.UNDEPLOYING);
+    public void execute(EventType eventType) {
+        if(retries < MAX_RETRY) {
+            engineService.changeState(Intent.State.UNDEPLOYING);
+            retries++;
+        } else {
+            cancelRetry();
+        }
     }
 
     @Override
