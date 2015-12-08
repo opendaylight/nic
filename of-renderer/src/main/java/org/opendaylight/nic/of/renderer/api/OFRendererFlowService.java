@@ -13,7 +13,24 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 
 public interface OFRendererFlowService {
 
+    /**
+     * Push OF rules to add an Intent
+     * @param intent
+     * @param flowAction
+     */
     void pushIntentFlow(Intent intent, FlowAction flowAction);
 
+    /**
+     * Push ARP flows on node-up event
+     * @param nodeId
+     * @param flowAction
+     */
     void pushARPFlow(NodeId nodeId, FlowAction flowAction);
+
+    /**
+     * Push OF rules to forward LLDP packets to controller
+     * @param nodeId
+     * @param flowAction
+     */
+    void pushLLDPFlow(NodeId nodeId, FlowAction flowAction);
 }
