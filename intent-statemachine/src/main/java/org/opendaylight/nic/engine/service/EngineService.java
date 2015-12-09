@@ -12,20 +12,10 @@ import org.opendaylight.nic.listeners.api.EventType;
 /**
  * Service to handle State Machine behaviors and events
  */
-public interface EngineService {
+public interface EngineService extends StateMachineRendererListener{
 
     /**
      * Starts State Machine execution
      */
     void execute(EventType eventType);
-
-    /**
-     * Handle State Machine execution success
-     */
-    void onSuccess();
-
-    /**
-     * Handle State Machine in case of errors when engine execution
-     */
-    void onError();
 }

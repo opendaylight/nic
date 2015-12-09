@@ -9,16 +9,23 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DisableService;
+import org.opendaylight.nic.engine.service.StateMachineRendererService;
+import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DisableServiceImpl implements DisableService {
 
-    private StateMachineEngineService engineService;
+    private static final Logger LOG = LoggerFactory.getLogger(DisableServiceImpl.class);
+    private static StateMachineEngineService engineService;
     private static DisableService disableService;
+    private static StateMachineRendererService rendererService;
 
     private DisableServiceImpl(StateMachineEngineService engineService) {
         this.engineService = engineService;
+        rendererService = new StateMachineRendererExecutor(this);
     }
 
     public static DisableService getInstance(StateMachineEngineService engineService) {
@@ -29,7 +36,7 @@ public class DisableServiceImpl implements DisableService {
     }
     @Override
     public void execute(EventType eventType) {
-        //TODO: Try to disable Intent
+        rendererService.undeploy();
     }
 
     @Override
@@ -38,7 +45,7 @@ public class DisableServiceImpl implements DisableService {
     }
 
     @Override
-    public void onError() {
-        //DO NOTHING
+    public void onError(String message) {
+        LOG.error(message);
     }
 }

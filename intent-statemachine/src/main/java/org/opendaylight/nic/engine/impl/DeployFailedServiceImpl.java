@@ -9,13 +9,16 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DeployFailedService;
+import org.opendaylight.nic.engine.service.StateMachineRendererService;
+import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 public class DeployFailedServiceImpl implements DeployFailedService {
 
     private static DeployFailedService deployFailedService;
-    private StateMachineEngineService engineService;
+    private static StateMachineEngineService engineService;
+    private static StateMachineRendererService rendererService;
 
     private int retries = 0;
 
@@ -24,11 +27,13 @@ public class DeployFailedServiceImpl implements DeployFailedService {
 
     private DeployFailedServiceImpl(StateMachineEngineService engineService) {
         this.engineService = engineService;
+        rendererService = new StateMachineRendererExecutor(this);
+
     }
 
     public static DeployFailedService getInstance(StateMachineEngineService engineService) {
         if (deployFailedService == null) {
-           deployFailedService = new DeployFailedServiceImpl(engineService);
+            deployFailedService = new DeployFailedServiceImpl(engineService);
         }
         return deployFailedService;
     }
@@ -36,8 +41,8 @@ public class DeployFailedServiceImpl implements DeployFailedService {
     @Override
     public void execute(EventType eventType) {
         if (retries < MAX_RETRY) {
-            engineService.changeState(Intent.State.DEPLOYING);
             retries++;
+            engineService.changeState(Intent.State.DEPLOYING);
         } else {
             cancelRetry();
         }
@@ -49,7 +54,7 @@ public class DeployFailedServiceImpl implements DeployFailedService {
     }
 
     @Override
-    public void onError() {
+    public void onError(String message) {
         engineService.changeState(Intent.State.DEPLOYFAILED);
     }
 
