@@ -21,8 +21,8 @@ public class DeployServiceImpl implements DeployService {
         void execute();
     }
 
-    private StateMachineEngineService engineService;
     private Map<Intent.State, DeployExecutor> executorMap;
+    private static StateMachineEngineService engineService;
     private static DeployService deployService;
 
     private DeployServiceImpl(StateMachineEngineService engineService) {
@@ -36,6 +36,7 @@ public class DeployServiceImpl implements DeployService {
             @Override
             public void execute() {
                 //TODO: Create an async call to RENDERER for intent deploy
+                onSuccess();
             }
         });
 
