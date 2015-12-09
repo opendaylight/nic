@@ -15,7 +15,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 public class DeployFailedServiceImpl implements DeployFailedService {
 
     private static DeployFailedService deployFailedService;
-    private StateMachineEngineService engineService;
+    private static StateMachineEngineService engineService;
 
     private int retries = 0;
 
@@ -36,8 +36,8 @@ public class DeployFailedServiceImpl implements DeployFailedService {
     @Override
     public void execute(EventType eventType) {
         if (retries < MAX_RETRY) {
-            engineService.changeState(Intent.State.DEPLOYING);
             retries++;
+            engineService.changeState(Intent.State.DEPLOYING);
         } else {
             cancelRetry();
         }

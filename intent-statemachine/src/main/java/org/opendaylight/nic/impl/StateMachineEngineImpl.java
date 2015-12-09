@@ -22,23 +22,24 @@ import java.util.Map;
 
 public class StateMachineEngineImpl implements StateMachineEngineService {
 
-    private Map<Intent.State, EngineService> engineServiceMap;
+    private static Map<Intent.State, EngineService> engineServiceMap;
 
-    private EventType eventType;
+    private static EventType eventType;
 
-    public StateMachineEngineImpl(Intent.State state, EventType eventType) {
+    private static StateMachineEngineService engineService;
+
+    public StateMachineEngineImpl() {
+        engineService = this;
         engineServiceMap = new HashMap<>();
-        this.eventType = eventType;
         populate();
-        execute(state);
     }
 
-    public void populate() {
-        engineServiceMap.put(Intent.State.DEPLOYING, DeployServiceImpl.getInstance(this));
-        engineServiceMap.put(Intent.State.DEPLOYFAILED, DeployFailedServiceImpl.getInstance(this));
-        engineServiceMap.put(Intent.State.UNDEPLOYING, UndeployServiceImpl.getInstance(this));
-        engineServiceMap.put(Intent.State.UNDEPLOYFAILED, UndeployFailedServiceImpl.getInstance(this));
-        engineServiceMap.put(Intent.State.DISABLING, DisableServiceImpl.getInstance(this));
+    private void populate() {
+        engineServiceMap.put(Intent.State.DEPLOYING, DeployServiceImpl.getInstance(engineService));
+        engineServiceMap.put(Intent.State.DEPLOYFAILED, DeployFailedServiceImpl.getInstance(engineService));
+        engineServiceMap.put(Intent.State.UNDEPLOYING, UndeployServiceImpl.getInstance(engineService));
+        engineServiceMap.put(Intent.State.UNDEPLOYFAILED, UndeployFailedServiceImpl.getInstance(engineService));
+        engineServiceMap.put(Intent.State.DISABLING, DisableServiceImpl.getInstance(engineService));
     }
 
     public void changeState(final Intent.State currentState) {
@@ -49,7 +50,9 @@ public class StateMachineEngineImpl implements StateMachineEngineService {
         }
     }
 
-    public void execute(Intent.State state) {
+    @Override
+    public void execute(Intent.State state, EventType eventType) {
+        this.eventType = eventType;
         changeState(state);
     }
 }

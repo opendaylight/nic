@@ -15,7 +15,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 public class UndeployServiceImpl implements UndeployService {
 
     private static UndeployService undeployService;
-    private StateMachineEngineService engineService;
+    private static StateMachineEngineService engineService;
 
     private UndeployServiceImpl(StateMachineEngineService engineService) {
         this.engineService = engineService;
