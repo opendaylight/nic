@@ -14,7 +14,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 
 public class DisableServiceImpl implements DisableService {
 
-    private StateMachineEngineService engineService;
+    private static StateMachineEngineService engineService;
     private static DisableService disableService;
 
     private DisableServiceImpl(StateMachineEngineService engineService) {
