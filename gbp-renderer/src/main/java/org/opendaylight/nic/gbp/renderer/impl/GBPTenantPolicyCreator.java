@@ -42,28 +42,30 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.subject.feature.instance.ParameterValueBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.Tenant;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.TenantBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.Contract;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.ContractBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.EndpointGroup;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.EndpointGroupBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L2BridgeDomain;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L2BridgeDomainBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L2FloodDomain;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L2FloodDomainBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L3Context;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.L3ContextBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.SubjectFeatureInstancesBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.Subnet;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.SubnetBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.ClauseBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.Subject;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.SubjectBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.subject.RuleBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.contract.subject.RuleKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.endpoint.group.ConsumerNamedSelectorBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.endpoint.group.ProviderNamedSelectorBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.subject.feature.instances.ActionInstanceBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.subject.feature.instances.ClassifierInstanceBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.ForwardingContextBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.PolicyBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.L2BridgeDomain;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.L2BridgeDomainBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.L2FloodDomain;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.L2FloodDomainBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.L3Context;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.L3ContextBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.Subnet;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.forwarding.context.SubnetBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.Contract;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.ContractBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.EndpointGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.EndpointGroupBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.SubjectFeatureInstancesBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.contract.ClauseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.contract.Subject;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.contract.SubjectBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.contract.subject.RuleBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.contract.subject.RuleKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.endpoint.group.ConsumerNamedSelectorBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.endpoint.group.ProviderNamedSelectorBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.subject.feature.instances.ActionInstanceBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.policy.subject.feature.instances.ClassifierInstanceBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
@@ -181,6 +183,9 @@ public class GBPTenantPolicyCreator {
 
     private TenantBuilder getTenant() {
 
+        ForwardingContextBuilder forwardContextBuilder =  new ForwardingContextBuilder();
+        PolicyBuilder policyBuilder = new PolicyBuilder();
+
         // Prepare data for the tenant
         List<L3Context> l3Contexts = new ArrayList<>();
         List<L2BridgeDomain> l2BridgeDomains = new ArrayList<>();
@@ -212,26 +217,32 @@ public class GBPTenantPolicyCreator {
                     new L2FloodDomainBuilder().setId(this.providerFloodDomainId).setParent(bridgeDomainId).build());
         }
 
-        return new TenantBuilder().setId(this.tenantId).setEndpointGroup(ImmutableList.copyOf(endpointGroups))
-                .setL3Context(ImmutableList.copyOf(l3Contexts)).setL2BridgeDomain(ImmutableList.copyOf(l2BridgeDomains))
-                .setL2FloodDomain(ImmutableList.copyOf(l2FloodDomains))
-                .setContract(
-                        ImmutableList
-                                .of(this.getDefaultContract()))
-                .setSubjectFeatureInstances(new SubjectFeatureInstancesBuilder()
-                        .setClassifierInstance(ImmutableList.of(new ClassifierInstanceBuilder()
+        forwardContextBuilder.setL3Context(ImmutableList.copyOf(l3Contexts))
+                    .setL2BridgeDomain(ImmutableList.copyOf(l2BridgeDomains))
+                    .setL2FloodDomain(ImmutableList.copyOf(l2FloodDomains))
+                    .setSubnet(ImmutableList.of(
+                            this.createSubnet(consumerL3Addresses, consumerNetworkDomainId, consumerFloodDomainId),
+                            this.createSubnet(providerL3Addresses, providerNetworkDomainId, providerFloodDomainId)));
+
+        policyBuilder.setEndpointGroup(endpointGroups)
+                    .setContract(ImmutableList.of(this.getDefaultContract()))
+                    .setSubjectFeatureInstances(new SubjectFeatureInstancesBuilder()
+                    .setClassifierInstance(ImmutableList.of(
+                            new ClassifierInstanceBuilder()
                                 .setName(new ClassifierName(CLASSIFIER_NAME))
                                 .setClassifierDefinitionId(Classifier.ETHER_TYPE_CL.getId())
-                                .setParameterValue(ImmutableList.of(new ParameterValueBuilder()
-                                        .setName(new ParameterName(CLASSIFIER_NAME)).setStringValue("*").build()))
-                                .build()))
-                        .setActionInstance(
-                                ImmutableList.of(new ActionInstanceBuilder().setName(new ActionName(ACTION_ALLOW))
-                                        .setActionDefinitionId(new AllowAction().getId()).build()))
-                        .build())
-                .setSubnet(ImmutableList.of(
-                        this.createSubnet(consumerL3Addresses, consumerNetworkDomainId, consumerFloodDomainId),
-                        this.createSubnet(providerL3Addresses, providerNetworkDomainId, providerFloodDomainId)));
+                                .setParameterValue(ImmutableList.of(
+                                        new ParameterValueBuilder()
+                                            .setName(new ParameterName(CLASSIFIER_NAME)).setStringValue("*")
+                                        .build()))
+                             .build()))
+                    .setActionInstance(ImmutableList.of(
+                            new ActionInstanceBuilder()
+                                .setName(new ActionName(ACTION_ALLOW))
+                                .setActionDefinitionId(new AllowAction().getId())
+                            .build()))
+                    .build());
+        return new TenantBuilder().setId(this.tenantId).setPolicy(policyBuilder.build()).setForwardingContext(forwardContextBuilder.build());
     }
 
     private String getEndpointIdentifier(Subjects subject) {

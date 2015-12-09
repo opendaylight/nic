@@ -14,7 +14,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,21 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpPrefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv6Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv6Prefix;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.EndpointGroupId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.L2BridgeDomainId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.L3ContextId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.TenantId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.endpoint.rev140421.Endpoints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.endpoint.rev140421.endpoint.fields.L3Address;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.Tenant;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.policy.rev140421.tenants.tenant.EndpointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
@@ -108,30 +104,6 @@ public class GBPRendererHelperTest {
         assertTrue(instanceIdentifierTenant.toString().contains(TENANT_UUID));
         assertEquals(instanceIdentifierTenant.getTargetType().getName(),
                 Tenant.class.getName());
-    }
-
-    /**
-     * Test case for {@link GBPRendererHelper#createEndPointGroupIid()} is
-     * called to check EndpointGroup ID is created.
-     */
-    @Test
-    public void testCreateEndPointGroupIid() {
-        /**
-         * String declaration for EndpointGroup ID.
-         */
-        final String ENDPOINTGROUP_UUID = "b9a13232-525e-4d8c-be21-cd65e3436034";
-
-        /**
-         * Here checking createEndPointGroupIid() returning InstanceIdentifier
-         * object of type EndpointGroup with given EndpointGroup Id.
-         */
-        InstanceIdentifier<EndpointGroup> instanceIdentifierEndPointID = GBPRendererHelper
-                .createEndPointGroupIid(new EndpointGroupId(ENDPOINTGROUP_UUID));
-
-        assertTrue(instanceIdentifierEndPointID.toString().contains(
-                ENDPOINTGROUP_UUID));
-        assertEquals(instanceIdentifierEndPointID.getTargetType().getName(),
-                EndpointGroup.class.getName());
     }
 
     /**
