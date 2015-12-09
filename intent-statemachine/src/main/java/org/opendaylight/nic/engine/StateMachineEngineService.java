@@ -8,6 +8,7 @@
 package org.opendaylight.nic.engine;
 
 
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 /**
@@ -15,6 +16,12 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
  */
 public interface StateMachineEngineService {
 
+    /**
+     * Execute State Machine
+     * @param state
+     * @param eventType
+     */
+    void execute(Intent.State state, EventType eventType);
     /**
      * Change current state to a given state
      * @param currentState
