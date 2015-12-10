@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_58413f0a",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/InputGraph.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2015-12-10T18:25:11Z",
+      "side": 1,
+      "message": "InputGraph is also a general graph which can have multiple nodes and their edges. I think this class assumes only one source and destination with their edges.\nI think it should be same with yang model: a set of nodes and a set of edges.",
+      "revId": "7d6c59617a49c9bad8bf962fdcad56c7997e3da2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
