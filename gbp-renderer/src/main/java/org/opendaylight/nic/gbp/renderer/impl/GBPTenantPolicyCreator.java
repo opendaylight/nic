@@ -13,8 +13,6 @@ import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.groupbasedpolicy.renderer.ofoverlay.sf.AllowAction;
-import org.opendaylight.groupbasedpolicy.renderer.ofoverlay.sf.Classifier;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.ActionName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.groupbasedpolicy.common.rev140421.ClassifierName;
@@ -230,7 +228,6 @@ public class GBPTenantPolicyCreator {
                     .setClassifierInstance(ImmutableList.of(
                             new ClassifierInstanceBuilder()
                                 .setName(new ClassifierName(CLASSIFIER_NAME))
-                                .setClassifierDefinitionId(Classifier.ETHER_TYPE_CL.getId())
                                 .setParameterValue(ImmutableList.of(
                                         new ParameterValueBuilder()
                                             .setName(new ParameterName(CLASSIFIER_NAME)).setStringValue("*")
@@ -239,7 +236,6 @@ public class GBPTenantPolicyCreator {
                     .setActionInstance(ImmutableList.of(
                             new ActionInstanceBuilder()
                                 .setName(new ActionName(ACTION_ALLOW))
-                                .setActionDefinitionId(new AllowAction().getId())
                             .build()))
                     .build());
         return new TenantBuilder().setId(this.tenantId).setPolicy(policyBuilder.build()).setForwardingContext(forwardContextBuilder.build());
