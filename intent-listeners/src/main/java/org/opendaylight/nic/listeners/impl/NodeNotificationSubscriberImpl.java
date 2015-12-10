@@ -16,7 +16,7 @@ import org.opendaylight.nic.utils.FlowAction;
 
 class NodeNotificationSubscriberImpl implements IEventListener<NicNotification> {
 
-    private  OFRendererFlowService flowService;
+    private OFRendererFlowService flowService;
 
     public NodeNotificationSubscriberImpl(OFRendererFlowService flowService) {
         this.flowService = flowService;
@@ -26,6 +26,7 @@ class NodeNotificationSubscriberImpl implements IEventListener<NicNotification> 
     public void handleEvent(NicNotification event) {
         if (NodeUp.class.isInstance(event)) {
             NodeUp nodeUp = (NodeUp) event;
+            nodeUp.getNodeId();
             flowService.pushARPFlow(nodeUp.getNodeId(), FlowAction.ADD_FLOW);
         }
         if (NodeDeleted.class.isInstance(event)) {
