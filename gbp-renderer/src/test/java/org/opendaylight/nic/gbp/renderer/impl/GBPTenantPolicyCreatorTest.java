@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -82,6 +83,7 @@ import com.google.common.util.concurrent.CheckedFuture;
  * appropriate network devices.
  */
 @RunWith(PowerMockRunner.class)
+@Ignore
 public class GBPTenantPolicyCreatorTest {
 
     /**
