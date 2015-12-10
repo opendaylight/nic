@@ -25,6 +25,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.M
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ public class IntentFlowManager extends AbstractFlowManager {
     private static final String ANY_MATCH = "any";
     private static final String INTENT_L2_FLOW_NAME = "L2_Rule_";
     private static final String MPLS_LABEL_KEY = null;
+    private FlowStatisticsListener flowStatisticsListener;
 
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
@@ -56,6 +58,7 @@ public class IntentFlowManager extends AbstractFlowManager {
 
     IntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
+        flowStatisticsListener = new FlowStatisticsListener(dataBroker);
     }
 
     @Override
@@ -84,6 +87,9 @@ public class IntentFlowManager extends AbstractFlowManager {
         } else if (action instanceof Block) {
             // For Block Action the Instructions are not set
             // If block added for readability
+        } else if (action instanceof Log) {
+            // Logs the statistics data.
+            flowStatisticsListener.registerFlowStatisticsListener(dataBroker, nodeId, flowBuilder.getId());
         } else {
             String actionClass = action.getClass().getName();
             LOG.error("Invalid action: {}", actionClass);

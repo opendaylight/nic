@@ -31,4 +31,8 @@ module intent-actions {
         uses action;
         description "Indicates traffic is to redirect";
     }
+    grouping log {
+        uses action;
+        description "Indicates log in the traffic";
+    }
 }

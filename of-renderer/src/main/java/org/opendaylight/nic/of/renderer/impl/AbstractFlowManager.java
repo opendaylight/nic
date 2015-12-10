@@ -41,7 +41,7 @@ import com.google.common.collect.Lists;
 
 public abstract class AbstractFlowManager {
 
-    private final DataBroker dataBroker;
+    protected final DataBroker dataBroker;
     protected static final Integer DEFAULT_IDLE_TIMEOUT = 0;
     protected static final Integer DEFAULT_HARD_TIMEOUT = 0;
     protected static final Integer DEFAULT_PRIORITY = 9000;
