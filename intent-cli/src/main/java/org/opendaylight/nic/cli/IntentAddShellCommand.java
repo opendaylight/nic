@@ -23,6 +23,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.AllowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.BlockBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.log.LogBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroupBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -33,6 +34,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
          scope = "intent",
          description = "Adds an intent to the controller."
                  + "\nExamples: --actions [ALLOW] --from <subject> --to <subject>"
+                 + "\nExamples: --actions [LOG] --from <subject> --to <subject>"
                  + "\n          --actions [BLOCK] --from <subject>")
 public class IntentAddShellCommand extends OsgiCommandSupport {
 
@@ -57,7 +59,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
     @Option(name = "-a",
             aliases = { "--actions" },
-            description = "Action to be performed.\n-a / --actions BLOCK/ALLOW",
+            description = "Action to be performed.\n-a / --actions BLOCK/ALLOW/LOG",
             required = true,
             multiValued = true)
     List<String> actions = new ArrayList<String>(Arrays.asList(NicProvider.ACTION_BLOCK));
@@ -98,6 +100,9 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_BLOCK)) {
                 action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
                         .BlockBuilder().setBlock(new BlockBuilder().build()).build();
+            } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_LOG)) {
+                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
+                        .LogBuilder().setLog(new LogBuilder().build()).build();
             } else {
                 continue;
             }
