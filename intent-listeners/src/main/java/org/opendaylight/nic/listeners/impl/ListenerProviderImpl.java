@@ -12,12 +12,14 @@ import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.*;
+import org.opendaylight.nic.of.renderer.api.OFRenderedGraphService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -57,9 +59,12 @@ public class ListenerProviderImpl implements AutoCloseable {
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         ServiceReference<?> serviceReference = context.
                 getServiceReference(OFRendererFlowService.class);
+        ServiceReference<?> graphServiceReference = context.
+                getServiceReference(OFRenderedGraphService.class);
         OFRendererFlowService flowService = (OFRendererFlowService) context.
                 getService(serviceReference);
-
+        OFRenderedGraphService graphService = (OFRenderedGraphService) context
+                .getService(graphServiceReference);
         serviceRegistry = new EventRegistryServiceImpl();
 
         // Event providers
@@ -70,6 +75,7 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new NeutronSecGroupNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<SecurityRule, SecurityRuleAdded, SecurityRuleDeleted, SecurityRuleUpdated> secRulesSupp =
                 new NeutronSecRuleNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<Link, TopologyLinkUp, TopologyLinkDeleted, NicNotification> linkSupp = new TopologyLinkNotificationSupplierImpl(db);
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
@@ -80,6 +86,8 @@ public class ListenerProviderImpl implements AutoCloseable {
         EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =
                 new EndpointDiscoveryNotificationSubscriberImpl();
         serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
+        TopologyLinkNotificationSubscriberImpl topologyLinkNotifSubscriber = new TopologyLinkNotificationSubscriberImpl(graphService);
+        serviceRegistry.registerEventListener((IEventService) linkSupp, topologyLinkNotifSubscriber);
 
         supplierList = new ArrayList<NotificationSupplierDefinition<?>>(Arrays.asList(nodeSupp));
         supplierList.add(nodeSupp);
@@ -87,6 +95,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(intentSupp);
         supplierList.add(secGroupSupp);
         supplierList.add(secRulesSupp);
+        supplierList.add(linkSupp);
     }
 
     @Override
