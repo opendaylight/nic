@@ -16,7 +16,7 @@ import org.opendaylight.nic.utils.FlowAction;
 
 class NodeNotificationSubscriberImpl implements IEventListener<NicNotification> {
 
-    private  OFRendererFlowService flowService;
+    private OFRendererFlowService flowService;
 
     public NodeNotificationSubscriberImpl(OFRendererFlowService flowService) {
         this.flowService = flowService;

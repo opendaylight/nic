@@ -25,6 +25,7 @@
     <nemo.version>1.0.0-SNAPSHOT</nemo.version>
     <groupbasedpolicy.version>0.3.0-SNAPSHOT</groupbasedpolicy.version>
     <openflowplugin.version>0.2.0-SNAPSHOT</openflowplugin.version>
+    <jung2.version>2.0.1</jung2.version>
     <mdsal.version>1.3.0-SNAPSHOT</mdsal.version>
     <restconf.version>1.3.0-SNAPSHOT</restconf.version>
     <yangtools.version>0.8.0-SNAPSHOT</yangtools.version>
@@ -151,6 +152,11 @@
           <groupId>org.opendaylight.nic</groupId>
           <artifactId>pipeline-manager</artifactId>
           <version>${project.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.opendaylight.controller.thirdparty</groupId>
+          <artifactId>net.sf.jung2</artifactId>
+          <version>${jung2.version}</version>
       </dependency>
       <dependency>
           <groupId>org.opendaylight.nic</groupId>
