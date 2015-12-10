@@ -12,6 +12,7 @@ import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.*;
+import org.opendaylight.nic.of.renderer.api.OFRenderedGraphService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
@@ -57,9 +58,12 @@ public class ListenerProviderImpl implements AutoCloseable {
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         ServiceReference<?> serviceReference = context.
                 getServiceReference(OFRendererFlowService.class);
+        ServiceReference<?> graphServiceReference = context.
+                getServiceReference(OFRenderedGraphService.class);
         OFRendererFlowService flowService = (OFRendererFlowService) context.
                 getService(serviceReference);
-
+        OFRenderedGraphService graphService = (OFRenderedGraphService) context
+                .getService(graphServiceReference);
         serviceRegistry = new EventRegistryServiceImpl();
 
         // Event providers
@@ -75,7 +79,8 @@ public class ListenerProviderImpl implements AutoCloseable {
         // Event listeners
         IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
-        NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
+        NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService,
+                                                                                                graphService);
         serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
         EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =
                 new EndpointDiscoveryNotificationSubscriberImpl();
