@@ -15,6 +15,10 @@
  <version>1.1.0-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
+ <properties>
+  <powermock.version>1.5.5</powermock.version>
+ </properties>
+
  <dependencies>
   <!-- project specific dependency -->
   <dependency>
@@ -28,9 +32,37 @@
    <version>${project.version}</version>
   </dependency>
   <dependency>
+   <groupId>${project.groupId}</groupId>
+   <artifactId>intent-mapping-interface</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+  <dependency>
    <groupId>org.opendaylight.nic</groupId>
    <artifactId>intent-impl</artifactId>
    <version>${project.version}</version>
+  </dependency>
+  <!-- Testing Dependencies -->
+  <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <scope>test</scope>
+  </dependency>
+  <dependency>
+   <groupId>org.mockito</groupId>
+   <artifactId>mockito-all</artifactId>
+   <scope>test</scope>
+  </dependency>
+  <dependency>
+   <groupId>org.powermock</groupId>
+   <artifactId>powermock-module-junit4</artifactId>
+   <version>${powermock.version}</version>
+   <scope>test</scope>
+  </dependency>
+  <dependency>
+   <groupId>org.powermock</groupId>
+   <artifactId>powermock-api-mockito</artifactId>
+   <version>${powermock.version}</version>
+   <scope>test</scope>
   </dependency>
   <!-- graph dependency -->
   <dependency>
@@ -56,6 +88,10 @@
    <artifactId>jung-algorithms</artifactId>
    <version>2.0.1</version>
    <scope>compile</scope>
+  </dependency>
+  <dependency>
+   <groupId>com.google.code.gson</groupId>
+   <artifactId>gson</artifactId>
   </dependency>
  </dependencies>
 
