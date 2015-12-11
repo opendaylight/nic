@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_4935f344",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/TopologyLinkDeleted.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:58:53Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_093ffb26",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/TopologyLinkUp.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:58:53Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 23
+      },
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c94803cf",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/AbstractNotificationSupplierBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:58:53Z",
+      "side": 1,
+      "message": "missing a \"d\" ?",
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a917c7a2",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/TopologyLinkNotificationSubscriberImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:58:53Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 16,
+        "startChar": 52,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_490c1395",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/TopologyLinkNotificationSubscriberImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:58:53Z",
+      "side": 1,
+      "message": "carrier return",
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6911cfab",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/OFRenderedGraphService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:58:53Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_09261b17",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:58:53Z",
+      "side": 1,
+      "message": "add modifier",
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
