@@ -37,7 +37,7 @@ public class ListenerProviderImpl implements AutoCloseable {
     private List<NotificationSupplierDefinition<?>> supplierList;
     private  EventRegistryServiceImpl serviceRegistry = null;
     private NotificationService notificationService;
-
+    private OFRendererFlowService flowService;
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
 
     /**
@@ -45,27 +45,26 @@ public class ListenerProviderImpl implements AutoCloseable {
      *
      * @param db - dataBroker
      */
-    public ListenerProviderImpl(final DataBroker db, NotificationService notificationService) {
+    public ListenerProviderImpl(final DataBroker db, NotificationService notificationService,
+                                OFRendererFlowService flowService) {
         Preconditions.checkNotNull(db);
         Preconditions.checkNotNull(notificationService);
+        Preconditions.checkNotNull(flowService);
         this.db = db;
         this.notificationService = notificationService;
+        this.flowService = flowService;
     }
 
     public void start() {
-        // Retrieve reference for OFRenderer service
-        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        ServiceReference<?> serviceReference = context.
-                getServiceReference(OFRendererFlowService.class);
-        OFRendererFlowService flowService = (OFRendererFlowService) context.
-                getService(serviceReference);
-
         serviceRegistry = new EventRegistryServiceImpl();
 
         // Event providers
-        NotificationSupplierForItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> nodeSupp = new NodeNotificationSupplierImpl(db);
-        NotificationSupplierForItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted, NicNotification> connectorSupp = new NodeConnectorNotificationSupplierImpl(db);
-        NotificationSupplierForItemRoot<Intent, IntentAdded, IntentRemoved, IntentUpdated> intentSupp = new IntentNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> nodeSupp =
+                new NodeNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted, NicNotification> connectorSupp =
+                new NodeConnectorNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<Intent, IntentAdded, IntentRemoved, IntentUpdated> intentSupp =
+                new IntentNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<SecurityGroup, SecurityGroupAdded, SecurityGroupDeleted, SecurityGroupUpdated> secGroupSupp =
                 new NeutronSecGroupNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<SecurityRule, SecurityRuleAdded, SecurityRuleDeleted, SecurityRuleUpdated> secRulesSupp =
@@ -81,7 +80,7 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new EndpointDiscoveryNotificationSubscriberImpl();
         serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
 
-        supplierList = new ArrayList<NotificationSupplierDefinition<?>>(Arrays.asList(nodeSupp));
+        supplierList = new ArrayList<>();
         supplierList.add(nodeSupp);
         supplierList.add(connectorSupp);
         supplierList.add(intentSupp);

@@ -74,7 +74,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
     }
 
     //TODO: Refactor to avoid duplicated code
-    private void created(Map<InstanceIdentifier<?>, DataObject> change) {
+    protected void created(Map<InstanceIdentifier<?>, DataObject> change) {
         if (change != null && ! (change.isEmpty())) {
             for (final Entry<InstanceIdentifier<?>, DataObject> createDataObj : change.entrySet()) {
                 if (clazz.isAssignableFrom(createDataObj.getKey().getTargetType())) {
@@ -97,7 +97,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
         }
     }
 
-    private void update(Map<InstanceIdentifier<?>, DataObject> updatedData) {
+    protected void update(Map<InstanceIdentifier<?>, DataObject> updatedData) {
         if (updatedData != null && ! (updatedData.isEmpty())) {
             for (final Entry<InstanceIdentifier<?>, DataObject> updatedObject : updatedData.entrySet()) {
                 if (clazz.isAssignableFrom(updatedObject.getKey().getTargetType())) {
@@ -120,7 +120,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
         }
     }
 
-    private void deleted(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
+    protected void deleted(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
         if (change.getRemovedPaths() != null && !(change.getRemovedPaths().isEmpty())) {
             for (final InstanceIdentifier<?> deleteDataPath : change.getRemovedPaths()) {
                 if (clazz.isAssignableFrom(deleteDataPath.getTargetType())) {

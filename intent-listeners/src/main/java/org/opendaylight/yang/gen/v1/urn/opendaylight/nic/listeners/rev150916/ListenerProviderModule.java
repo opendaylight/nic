@@ -1,6 +1,10 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.listeners.rev150916;
 
 import org.opendaylight.nic.listeners.impl.ListenerProviderImpl;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +26,15 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
 
     @Override
     public java.lang.AutoCloseable createInstance() {
+        // Retrieve reference for OFRenderer service
+        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        ServiceReference<?> serviceReference = context.
+                getServiceReference(OFRendererFlowService.class);
+        OFRendererFlowService flowService = (OFRendererFlowService) context.
+                getService(serviceReference);
 
-        final ListenerProviderImpl provider = new ListenerProviderImpl(getDataBrokerDependency(), getNotificationAdapterDependency());
+        final ListenerProviderImpl provider = new ListenerProviderImpl(getDataBrokerDependency(), getNotificationAdapterDependency(),
+                flowService);
         provider.start();
         LOG.info("NIC Listeners started successfully.");
 
