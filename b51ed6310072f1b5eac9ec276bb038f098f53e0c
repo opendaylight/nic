@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_49e8937c",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/NodeImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T18:18:53Z",
+      "side": 1,
+      "message": "on top of the class declaration",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "b51ed6310072f1b5eac9ec276bb038f098f53e0c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
