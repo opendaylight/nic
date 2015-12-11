@@ -12,6 +12,7 @@ import com.google.common.collect.Sets;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
+import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.graph.api.CompilerGraph;
 import org.opendaylight.nic.graph.api.InputGraph;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
@@ -34,6 +35,11 @@ public class CompilerGraphImpl implements CompilerGraph {
             new DirectedSparseGraph<Set<Nodes>, Set<Edges>>();
 
     protected ServiceRegistration<CompilerGraph> graphRegistration;
+    protected IntentMappingService intentMappingService;
+
+    public CompilerGraphImpl (IntentMappingService mappingSvc){
+        this.intentMappingService = mappingSvc;
+    }
 
     public void addPolicy(InputGraph graph) {
 
