@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_89044b7f",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/DeployService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:51:58Z",
+      "side": 1,
+      "message": "aren\u0027t you missing a method here?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "2df6c7640a85e129e987e2e4e33560d79e850139",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_09f85b7b",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/impl/IntentStateMachineExecutor.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T17:51:58Z",
+      "side": 1,
+      "message": "add a null check please",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "2df6c7640a85e129e987e2e4e33560d79e850139",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
