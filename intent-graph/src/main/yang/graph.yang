@@ -12,6 +12,7 @@ module intent-graph {
 
     import config { prefix config; revision-date 2013-04-05; }
     import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+    import intent-mapping-interface { prefix intent-mapping-interface; revision-date 2015-11-11;}
 
     description
       "This module is yang structure definition for PGA graph";
@@ -32,6 +33,14 @@ module intent-graph {
     augment "/config:modules/config:module/config:configuration" {
         case intent-graph {
             when "/config:modules/config:module/config:type = 'intent-graph'";
+            container intent-mapping-interface {
+                uses config:service-ref {
+                    refine type {
+                        mandatory true;
+                        config:required-identity intent-mapping-interface:intent-mapping-interface;
+                    }
+                }
+            }
         }
     }
 
