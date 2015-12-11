@@ -40,7 +40,8 @@ public class NodeNotificationSupplierImpl extends
      */
     public NodeNotificationSupplierImpl(final DataBroker db) {
         super(db, FlowCapableNode.class, LogicalDatastoreType.OPERATIONAL);
-        serviceRegistry.setEventTypeService(this, EventType.NODE_UPDATED, EventType.NODE_REMOVED);
+        serviceRegistry.setEventTypeService(this,
+                EventType.NODE_UPDATED, EventType.NODE_REMOVED, EventType.NODE_UPDATED);
     }
 
     @Override

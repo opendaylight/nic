@@ -26,7 +26,7 @@ public class NodeUpdatedImpl implements NodeUpdated {
 
     @Override
     public NodeRef getNodeRef() {
-        return getNodeRef();
+        return nodeRef;
     }
 
     @Override
