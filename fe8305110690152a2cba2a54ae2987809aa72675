@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_1e208f48",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/FlowStatisticsListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T12:48:49Z",
+      "side": 1,
+      "message": "the name of the function could be more explicit to reflect the registration instead of readFlow.\n\ncould be registerFlowStatisticsListener or whatever make sense",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "fe8305110690152a2cba2a54ae2987809aa72675",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_3e1d4b10",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/FlowStatisticsListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T12:48:49Z",
+      "side": 1,
+      "message": "could you add a null check for registration please",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "fe8305110690152a2cba2a54ae2987809aa72675",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
