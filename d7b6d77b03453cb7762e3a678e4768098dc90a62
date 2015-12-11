@@ -46,6 +46,30 @@
       "revId": "d7b6d77b03453cb7762e3a678e4768098dc90a62",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_e91cdfc3",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T18:01:46Z",
+      "side": 1,
+      "message": "\u003e NEMO actually handles create and update the same way\n\nUnderstood, thanks for the explanation",
+      "parentUuid": "1aa4ed85_c9f1e396",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "d7b6d77b03453cb7762e3a678e4768098dc90a62",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
