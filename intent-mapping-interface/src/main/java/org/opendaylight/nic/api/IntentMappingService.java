@@ -47,4 +47,14 @@ public interface IntentMappingService extends AutoCloseable {
      * @return Return true if succeed, otherwise false
      */
     boolean delete(String outerKey);
+
+    /** Removes all objects based on a key.
+     *
+     * @param key
+     *          key
+     * @return collection of values that existed under the key, before removal
+     */
+
+    Collection<String> remove(String key);
+
 }
