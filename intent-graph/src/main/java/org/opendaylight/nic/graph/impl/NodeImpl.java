@@ -18,9 +18,9 @@ public class NodeImpl {
      **/
     // TODO: Extend this class to create label tree
 
-    private InetAddress ipAddress;
-    private Nodes macAddress;
-    private int port;
+    protected InetAddress ipAddress;
+    protected Nodes macAddress;
+    protected int port;
 
     public NodeImpl(InetAddress ipAddress) {
         this.ipAddress = ipAddress;

@@ -9,6 +9,12 @@
                         nic:intent-graph
                     </type>
                     <name>intent-graph</name>
+                    <intent-mapping-interface>
+                        <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:nic:mapping">
+                            prefix:intent-mapping-interface
+                        </type>
+                        <name>intent-mapping-interface</name>
+                    </intent-mapping-interface>
                 </module>
             </modules>
         </data>
@@ -16,5 +22,6 @@
 
     <required-capabilities>
         <capability>urn:opendaylight:nic:intent:graph?module=intent-graph&amp;revision=2015-09-11</capability>
+        <capability>urn:opendaylight:params:xml:ns:yang:nic:mapping?module=intent-mapping-interface&amp;revision=2015-11-11</capability>
     </required-capabilities>
 </snapshot>
