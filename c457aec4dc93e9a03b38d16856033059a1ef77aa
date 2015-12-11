@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_a4528e11",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/AbstractNotificationSupplierBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T19:35:06Z",
+      "side": 1,
+      "message": "ok my bad, I might have missed that in other reviews.. so yeah let it as is I guess",
+      "parentUuid": "1aa4ed85_44095a2b",
+      "revId": "c457aec4dc93e9a03b38d16856033059a1ef77aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_a917c7a2",
         "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/TopologyLinkNotificationSubscriberImpl.java",
         "patchSetId": 6
