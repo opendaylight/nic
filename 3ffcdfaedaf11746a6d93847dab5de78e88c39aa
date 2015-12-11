@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_bebffbcf",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/CompilerGraph.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T12:55:08Z",
+      "side": 1,
+      "message": "please put that on top of the public interface declaration",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 7
+      },
+      "revId": "3ffcdfaedaf11746a6d93847dab5de78e88c39aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5eb4c7f1",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/InputGraph.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T12:55:08Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "3ffcdfaedaf11746a6d93847dab5de78e88c39aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7eb983e8",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/CompilerGraphImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T12:55:08Z",
+      "side": 1,
+      "message": "add a null check",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 25
+      },
+      "revId": "3ffcdfaedaf11746a6d93847dab5de78e88c39aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1ece4f84",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/NodeImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T12:55:08Z",
+      "side": 1,
+      "message": "add this on top of the class declaration",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "3ffcdfaedaf11746a6d93847dab5de78e88c39aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_fec49360",
+        "filename": "pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-11T12:55:08Z",
+      "side": 1,
+      "message": "please remove whitspace",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "3ffcdfaedaf11746a6d93847dab5de78e88c39aa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
