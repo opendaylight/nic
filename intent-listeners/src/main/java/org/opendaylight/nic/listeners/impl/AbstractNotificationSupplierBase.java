@@ -97,7 +97,7 @@ public abstract class AbstractNotificationSupplierBase<O extends DataObject> imp
      * @param path pointer to element
      * @return extracted {@link NodeId}
      */
-    public static NodeId getNodeId(InstanceIdentifier<?> path) {
+    public NodeId getNodeId(InstanceIdentifier<?> path) {
         final NodeKey nodeKey = Preconditions.checkNotNull(path.firstKeyOf(Node.class));
         return nodeKey.getId();
     }

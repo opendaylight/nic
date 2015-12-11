@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.net.InetAddresses;
 
-public final class ArpUtils {
+public class ArpUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(ArpUtils.class);
 
