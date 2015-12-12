@@ -5,6 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
+
 package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.nic.listeners.api.EventRegistryService;
@@ -27,7 +28,7 @@ import java.util.Set;
  * to their supported types and Listeners
  *
  */
-public final class EventRegistryServiceImpl implements EventRegistryService{
+public class EventRegistryServiceImpl implements EventRegistryService{
 
     private Map<IEventService, Set<IEventListener<?>>> eventRegistry = new HashMap<>();
     private Map<EventType, IEventService> typeRegistry = new HashMap<>();
@@ -101,5 +102,13 @@ public final class EventRegistryServiceImpl implements EventRegistryService{
     public Set<IEventListener<?>> getEventListeners(EventType eventType) {
         IEventService eventService = getEventService(eventType);
         return eventRegistry.get(eventService);
+    }
+
+    protected Map<IEventService, Set<IEventListener<?>>> getEventRegistry() {
+        return eventRegistry;
+    }
+
+    protected Map<EventType, IEventService> getTypeRegistry() {
+        return typeRegistry;
     }
 }
