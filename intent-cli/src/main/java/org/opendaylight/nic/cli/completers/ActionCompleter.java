@@ -34,6 +34,7 @@ public class ActionCompleter implements Completer {
         StringsCompleter delegate = new StringsCompleter();
         delegate.getStrings().add(NicProvider.ACTION_ALLOW);
         delegate.getStrings().add(NicProvider.ACTION_BLOCK);
+        delegate.getStrings().add(NicProvider.ACTION_LOG);
         return delegate.complete(buffer, cursor, candidates);
     }
 }

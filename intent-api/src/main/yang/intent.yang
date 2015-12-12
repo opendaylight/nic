@@ -113,6 +113,11 @@ module intent {
                         uses actions:redirect;
                     }
                 }
+                case log {
+                    container log {
+                        uses actions:log;
+                    }
+                }
             }
 
             description "List of action references to apply to the connections between

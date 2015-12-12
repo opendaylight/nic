@@ -34,6 +34,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBui
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
@@ -54,6 +55,7 @@ public class NicProvider implements NicConsoleProvider {
     public static final String ACTION_ALLOW = "ALLOW";
     public static final String ACTION_BLOCK = "BLOCK";
     public static final String ACTION_REDIRECT = "REDIRECT";
+    public static final String ACTION_LOG = "LOG";
 
     protected DataBroker dataBroker;
 
@@ -225,6 +227,7 @@ public class NicProvider implements NicConsoleProvider {
         BasicAction allow = new BasicAction(ACTION_ALLOW, ActionConflictType.COMPOSABLE);
         BasicAction block = new BasicAction(ACTION_BLOCK, ActionConflictType.EXCLUSIVE);
         BasicAction redirect = new BasicAction(ACTION_REDIRECT, ActionConflictType.COMPOSABLE);
+        BasicAction log = new BasicAction(ACTION_LOG, ActionConflictType.COMPOSABLE);
 
         Collection<Policy> policies = new LinkedList<>();
 
@@ -257,7 +260,9 @@ public class NicProvider implements NicConsoleProvider {
                 action = block;
             } else if (actionContainer instanceof Redirect) {
                 action = redirect;
-            }else {
+            } else if (actionContainer instanceof Log) {
+                action = log;
+            } else {
                 String actionClass = actionContainer.getClass().getName();
                 LOG.error("Invalid action: {}", actionClass);
                 return "[ERROR] Invalid action: " + actionClass;
