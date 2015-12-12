@@ -25,7 +25,7 @@ module intent-conditions {
 
     typedef duration {
       type string {
-        pattern '[1-9][0-9]*[smdwMyx]';
+        pattern '[1-9][0-9]*[smhdwMyx]';
       }
       description "Represents a duration and a duration unit.";
     }
