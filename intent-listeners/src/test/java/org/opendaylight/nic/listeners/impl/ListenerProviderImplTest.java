@@ -16,6 +16,7 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.NotificationSupplierDefinition;
+import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -49,6 +50,10 @@ public class ListenerProviderImplTest {
      */
     private OFRendererFlowService mockFlowService;
     /**
+     * Mock instance of OFRendererGraphService to perform unit testing.
+     */
+    private OFRendererGraphService graphService;
+    /**
      * Stubbed instance of ListenerProviderImpl to perform unit testing.
      */
     private ListenerProviderImpl provider;
@@ -63,7 +68,10 @@ public class ListenerProviderImplTest {
         mockDataBroker = mock(DataBroker.class);
         mockNotificationService = mock(NotificationService.class);
         mockFlowService = mock(OFRendererFlowService.class);
-        provider = PowerMockito.spy(new ListenerProviderImpl(mockDataBroker, mockNotificationService, mockFlowService));
+        provider = PowerMockito.spy(new ListenerProviderImpl(mockDataBroker,
+                                                             mockNotificationService,
+                                                             mockFlowService,
+                                                             graphService));
     }
 
 
