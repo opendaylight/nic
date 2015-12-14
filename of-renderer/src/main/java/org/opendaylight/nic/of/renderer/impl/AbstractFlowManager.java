@@ -61,9 +61,17 @@ public abstract class AbstractFlowManager {
      * the Node object in the inventory. 3. FlowProgrammer module of
      * OpenFlowPlugin picks up this data change and eventually program the
      * switch.
+     * @param nodeId The OpenDaylight Inventory OpenFlow {@link NodeId}
+     * @param flowAction The {@link FlowAction}
      */
     abstract void pushFlow(NodeId nodeId, FlowAction flowAction);
 
+    /**
+     * Creates a set of Instruction based on the port values
+     * received.
+     * @param portValues Represents ports (example LOCAL, CONTROLLER, etc) {@link OutputPortValues}}
+     * @return OpenFlow Flow Instructions
+     */
     protected Instructions createOutputInstructions(OutputPortValues... portValues) {
         List<Action> actionList = Lists.newArrayList();
         int order = 0;
@@ -94,6 +102,7 @@ public abstract class AbstractFlowManager {
      * @param popLabel Boolean for pop action
      * @param bos Bottom of Stack value
      * @param outputPort OVS port to output the packet to
+     * @return A set of OpenFlow {@link Instructions} that have been construction
      */
     protected Instructions createMPLSIntentInstructions(List<Long> labels, boolean popLabel, Short bos,
             String outputPort) {
@@ -113,6 +122,14 @@ public abstract class AbstractFlowManager {
         return instructions;
     }
 
+    /**
+     * Writes a Flow with a flow action on the Configuration
+     * data store so that it can be applied to an OF switch.
+     * @param nodeId The {@link NodeId} of the OF Switch
+     * @param flowBuilder The {@link FlowBuilder} that is built and submitted
+     * @param flowAction The {@link FlowAction} the flow action (ADD or REMOVE)
+     * @return A boolean representing the transaction result
+     */
     protected boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder, FlowAction flowAction) {
         boolean result;
         MdsalUtils mdsal = new MdsalUtils(dataBroker);

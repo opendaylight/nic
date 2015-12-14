@@ -35,8 +35,10 @@ public class FlowUtils {
 
     private FlowUtils() {
     }
+
     /**
      * Creates {@link EthernetMatch} containing ARP ether-type and the given destination MAC address
+     * @return EthernetMatch
      */
     public static EthernetMatch createEthernetMatch() {
         return new EthernetMatchBuilder().setEthernetType(
@@ -52,10 +54,11 @@ public class FlowUtils {
 //    public static ArpMatch createArpMatch() {
 //        return new ArpMatchBuilder().setArpOp(ArpOperation.REPLY.intValue()).build();
 //    }
+
     /**
      * Creates {@link Action} representing output to the controller
-     *
      * @param order the order for the action
+     * @return Action
      */
     public static Action createSendToControllerAction(int order) {
         return new ActionBuilder().setOrder(order)
@@ -68,6 +71,12 @@ public class FlowUtils {
             .build();
     }
 
+    /**
+     * 
+     * @param order An integer representing the order of the Action
+     * withinin the table.
+     * @return Action with an order
+     */
     public static Action createOutputNormal(int order) {
         return new ActionBuilder().setOrder(order)
                 .setKey(new ActionKey(order))
@@ -81,8 +90,10 @@ public class FlowUtils {
 
     /**
      * Create OF action to perform MPLS push or pop label
-     * @param order
+     * @param order An integer representing the order of the Action
+     * within the table.
      * @param popLabel true for MPLS pop action
+     * @return Action containing MPLS informations
      */
     public static Action createMPLSAction(int order, boolean popLabel) {
         Action action = null;
@@ -107,9 +118,11 @@ public class FlowUtils {
 
     /**
      * Create OF action to set the set_field with mpls label
-     * @param order
+     * @param order An integer representing the order of the Action
+     * within the table.
      * @param label MPLS label value
      * @param bos Bottom of Stack value
+     * @return Action with an Order, Label and Bottom of Stack value
      */
     public static Action createSetFieldMPLSLabelAction(int order, Long label, Short bos) {
         Action action = null;
@@ -124,8 +137,10 @@ public class FlowUtils {
 
     /**
      * Create OF action to output to a specific port
-     * @param order
+     * @param order An integer representing the order of the Action
+     * within the table.
      * @param outputPort OVS port to output the packet to
+     * @return Action with Order and Output port
      */
     public static Action createOutputToPort(int order, String outputPort) {
         return new ActionBuilder().setOrder(order)

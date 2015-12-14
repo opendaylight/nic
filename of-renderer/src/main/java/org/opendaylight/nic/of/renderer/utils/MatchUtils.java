@@ -77,6 +77,7 @@ public class MatchUtils {
      * Create Ingress Port Match dpidLong, inPort
      *
      * @param matchBuilder Map matchBuilder MatchBuilder Object without a match
+     * @param ncId OpenFlow Node Connector ID: the OF Node Port
      * @return matchBuilder Map MatchBuilder Object with a match
      */
     public static MatchBuilder createInPortMatch(MatchBuilder matchBuilder, NodeConnectorId ncId) {
@@ -110,6 +111,7 @@ public class MatchUtils {
      *
      * @param matchBuilder MatchBuilder Object without a match yet
      * @param vlanId       Integer representing a VLAN ID Integer representing a VLAN ID
+     * @param present Boolean telling if there's a VLAN ID or not
      * @return matchBuilder Map MatchBuilder Object with a match
      */
     public static MatchBuilder createVlanIdMatch(MatchBuilder matchBuilder, Integer vlanId, boolean present) {
@@ -425,11 +427,14 @@ public class MatchUtils {
     }
 
     /**
+     * @param matchBuilder An OF Match builder needed to build OF rules
+     * @param metaData A maskable register value that is used to carry information from one table to the next
+     * @param metaDataMask The mask specifies which bits of the metadata register should be modified
      * @return MatchBuilder containing the metadata match values
      */
     public static MatchBuilder createMetadataMatch(MatchBuilder matchBuilder,
-                                                   BigInteger metaData,  BigInteger metaDataMask) {
-
+                                                   BigInteger metaData,
+                                                   BigInteger metaDataMask) {
         // metadata matchbuilder
         MetadataBuilder metadata = new MetadataBuilder();
         metadata.setMetadata(metaData);
@@ -446,6 +451,7 @@ public class MatchUtils {
      * Create  TCP Port Match
      *
      * @param matchBuilder MatchBuilder Object without a match yet
+     * @param ipProtocol Represents the
      * @return matchBuilder Map MatchBuilder Object with a match
      */
     public static MatchBuilder createIpProtocolMatch(MatchBuilder matchBuilder, short ipProtocol) {
@@ -525,7 +531,9 @@ public class MatchUtils {
      * @return match containing TCP_Flag (), IP Protocol (TCP), TCP_Flag (SYN)
      */
     public static MatchBuilder createDmacTcpPortWithFlagMatch(MatchBuilder matchBuilder,
-                                                              String attachedMac, Integer tcpFlag, String tunnelID) {
+                                                              String attachedMac,
+                                                              Integer tcpFlag,
+                                                              String tunnelID) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
@@ -565,8 +573,10 @@ public class MatchUtils {
      * @return the match builder
      */
     public static MatchBuilder createDmacTcpSynMatch(MatchBuilder matchBuilder,
-                                                     String attachedMac, PortNumber tcpPort,
-                                                     Integer tcpFlag, String tunnelID) {
+                                                     String attachedMac,
+                                                     PortNumber tcpPort,
+                                                     Integer tcpFlag,
+                                                     String tunnelID) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
@@ -613,8 +623,10 @@ public class MatchUtils {
      * @return the match builder
      */
     public static MatchBuilder createDmacTcpSynDstIpPrefixTcpPort(MatchBuilder matchBuilder,
-                                                                  MacAddress attachedMac, PortNumber tcpPort,
-                                                                  Integer tcpFlag, String segmentationId,
+                                                                  MacAddress attachedMac,
+                                                                  PortNumber tcpPort,
+                                                                  Integer tcpFlag,
+                                                                  String segmentationId,
                                                                   Ipv4Prefix dstIp) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
@@ -665,7 +677,9 @@ public class MatchUtils {
      * @return MatchBuilder containing the metadata match values
      */
     public static MatchBuilder createDmacIpTcpSynMatch(MatchBuilder matchBuilder,
-                                                       MacAddress dstMac, MacAddress mask, Ipv4Prefix ipPrefix) {
+                                                       MacAddress dstMac,
+                                                       MacAddress mask,
+                                                       Ipv4Prefix ipPrefix) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetDestinationBuilder ethDestBuilder = new EthernetDestinationBuilder();
@@ -710,9 +724,12 @@ public class MatchUtils {
      * @param dstIp the dst ip
      * @return the match builder
      */
-    public static MatchBuilder createSmacTcpSynDstIpPrefixTcpPort(MatchBuilder matchBuilder, MacAddress attachedMac,
-                                                                  PortNumber tcpPort, Integer tcpFlag,
-                                                                  String segmentationId, Ipv4Prefix dstIp) {
+    public static MatchBuilder createSmacTcpSynDstIpPrefixTcpPort(MatchBuilder matchBuilder,
+                                                                  MacAddress attachedMac,
+                                                                  PortNumber tcpPort,
+                                                                  Integer tcpFlag,
+                                                                  String segmentationId,
+                                                                  Ipv4Prefix dstIp) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
@@ -761,8 +778,10 @@ public class MatchUtils {
      * @param tunnelID the tunnel iD
      * @return matchBuilder
      */
-    public static MatchBuilder createSmacTcpPortWithFlagMatch(MatchBuilder matchBuilder, String attachedMac,
-                                                              Integer tcpFlag, String tunnelID) {
+    public static MatchBuilder createSmacTcpPortWithFlagMatch(MatchBuilder matchBuilder,
+                                                              String attachedMac,
+                                                              Integer tcpFlag,
+                                                              String tunnelID) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
@@ -800,8 +819,10 @@ public class MatchUtils {
      * @param ipPrefix the ip prefix
      * @return MatchBuilder containing the metadata match values
      */
-    public static MatchBuilder createSmacIpTcpSynMatch(MatchBuilder matchBuilder, MacAddress dstMac,
-                                                       MacAddress mask, Ipv4Prefix ipPrefix) {
+    public static MatchBuilder createSmacIpTcpSynMatch(MatchBuilder matchBuilder,
+                                                       MacAddress dstMac,
+                                                       MacAddress mask,
+                                                       Ipv4Prefix ipPrefix) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetSourceBuilder ethSrcBuilder = new EthernetSourceBuilder();
@@ -846,8 +867,10 @@ public class MatchUtils {
      * @return the match builder
      */
     public static MatchBuilder createSmacTcpSyn(MatchBuilder matchBuilder,
-                                                String attachedMac, PortNumber tcpPort,
-                                                Integer tcpFlag, String tunnelID) {
+                                                String attachedMac,
+                                                PortNumber tcpPort,
+                                                Integer tcpFlag,
+                                                String tunnelID) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
@@ -884,10 +907,18 @@ public class MatchUtils {
     }
 
     /**
+     * Creates an OF Rule Match based on mac destination,
+     * netmask and ip prefix.
+     * @param matchBuilder Needed to create OF Rules
+     * @param dstMac Destination Mac Address
+     * @param mask The netmask
+     * @param ipPrefix The IP Prefix
      * @return MatchBuilder containing the metadata match values
      */
     public static MatchBuilder createMacSrcIpTcpSynMatch(MatchBuilder matchBuilder,
-                                                         MacAddress dstMac,  MacAddress mask, Ipv4Prefix ipPrefix) {
+                                                         MacAddress dstMac,
+                                                         MacAddress mask,
+                                                         Ipv4Prefix ipPrefix) {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetDestinationBuilder ethDestinationBuilder = new EthernetDestinationBuilder();
@@ -924,6 +955,15 @@ public class MatchUtils {
         return matchBuilder;
     }
 
+    /**
+     * Creates an EthernetMatch needed to create
+     * OF rules.
+     * @param srcMac Source mac address
+     * @param dstMac Destination mac address
+     * @param etherType Used to indicate what protocol
+     *        is encapsulated by the ethernet frame
+     * @return The EthernetMatch
+     */
     public static EthernetMatch ethernetMatch(MacAddress srcMac,
                                               MacAddress dstMac,
                                               Long etherType) {
@@ -951,7 +991,9 @@ public class MatchUtils {
      * @param dstPrefix IPv4 destination prefix
      * @param matchBuilder will contain the metadata match values
      */
-    public static void createIPv4PrefixMatch(Ipv4Prefix srcPrefix, Ipv4Prefix dstPrefix, MatchBuilder matchBuilder) {
+    public static void createIPv4PrefixMatch(Ipv4Prefix srcPrefix,
+                                             Ipv4Prefix dstPrefix,
+                                             MatchBuilder matchBuilder) {
         if (srcPrefix != null || dstPrefix != null) {
             long IPV4_LONG = 0x800;
             EthernetMatchBuilder eth = new EthernetMatchBuilder();
@@ -975,7 +1017,9 @@ public class MatchUtils {
      * @param dstPrefix IPv6 destination prefix
      * @param matchBuilder will contain the metadata match values
      */
-    public static void createIPv6PrefixMatch(Ipv6Prefix srcPrefix, Ipv6Prefix dstPrefix, MatchBuilder matchBuilder) {
+    public static void createIPv6PrefixMatch(Ipv6Prefix srcPrefix,
+                                             Ipv6Prefix dstPrefix,
+                                             MatchBuilder matchBuilder) {
         if (srcPrefix != null || dstPrefix != null) {
             long IPV6_LONG = 0x86DD;
             EthernetMatchBuilder eth = new EthernetMatchBuilder();
