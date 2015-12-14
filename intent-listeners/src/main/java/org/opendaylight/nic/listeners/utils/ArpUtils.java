@@ -32,8 +32,8 @@ public class ArpUtils {
 
     /**
      * Returns Ethernet and ARP in readable string format
-     * @param eth
-     * @return {@link String}
+     * @param eth The {@link Ethernet} packet representation
+     * @return {@link String} that represents Ethernet and ARP
      */
     public static String getArpFrameToStringFormat(Ethernet eth) {
         String ethernetString = "Ethernet [getEtherType()="
@@ -53,8 +53,8 @@ public class ArpUtils {
 
     /**
      * Returns ARP in readable string format
-     * @param arp
-     * @return {@link String}
+     * @param arp The {@link Arp} packet representation
+     * @return {@link String} that represents an ARP packet
      */
     public static String getArpToStringFormat(Arp arp) {
         try {
@@ -75,10 +75,21 @@ public class ArpUtils {
         }
     }
 
+    /**
+     * Converts a {@link MacAddress} object into a byte array.
+     * @param mac {@link MacAddress} Mac Address Object
+     * @return mac as a byte array
+     */
     public static byte[] macToBytes(MacAddress mac) {
         return HexEncode.bytesFromHexString(mac.getValue());
     }
 
+    /**
+     * Converts a byte array representing a mac address into
+     * an object {@link MacAddress}.
+     * @param macBytes Byte array representing the mac address.
+     * @return mac as a {@link MacAddress} object
+     */
     public static MacAddress bytesToMac(byte[] macBytes) {
         String mac = HexEncode.bytesToHexStringFormat(macBytes);
         if (!"null".equals(mac)) {
@@ -87,10 +98,20 @@ public class ArpUtils {
         return null;
     }
 
+    /**
+     * Converts an {@link Ipv4Address} object to a byte array.
+     * @param ip {@link Ipv4Address} IPv4 object
+     * @return ip as a byte array
+     */
     public static byte[] ipToBytes(Ipv4Address ip) {
         return InetAddresses.forString(ip.getValue()).getAddress();
     }
 
+    /**
+     * Converts a byte array to a {@link Ipv4Address} object.
+     * @param ipv4AsBytes byte array
+     * @return ip as a {@link Ipv4Address} object
+     */
     public static Ipv4Address bytesToIp(byte[] ipv4AsBytes) {
         try {
             return new Ipv4Address(InetAddress.getByAddress(ipv4AsBytes).getHostAddress());
