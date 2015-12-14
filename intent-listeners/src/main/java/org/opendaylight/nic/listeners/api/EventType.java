@@ -41,5 +41,11 @@ public enum EventType {
     /** Indicates that an existing security rule is deleted by neutron*/
     SECURITY_RULE_DELETED,
     /** Indicates that an existing security rule is modified by neutron*/
-    SECURITY_RULE_UPDATED
+    SECURITY_RULE_UPDATED,
+
+    TOPOLOGY_LINK_DISCOVERED,
+
+    TOPOLOGY_LINK_REMOVED,
+
+    TOPOLOGY_LINK_UPDATED
 }
