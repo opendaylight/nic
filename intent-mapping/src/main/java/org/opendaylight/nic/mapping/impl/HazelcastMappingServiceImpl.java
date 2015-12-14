@@ -104,4 +104,9 @@ public class HazelcastMappingServiceImpl implements IntentMappingService {
     public Map<String, String> get(String outerKey) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean delete(String outerKey) {
+        throw new UnsupportedOperationException();
+    }
 }
