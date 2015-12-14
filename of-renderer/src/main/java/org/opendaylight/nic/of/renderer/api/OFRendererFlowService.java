@@ -15,22 +15,22 @@ public interface OFRendererFlowService {
 
     /**
      * Push OF rules to add an Intent
-     * @param intent
-     * @param flowAction
+     * @param intent The {@link Intent} that has been created
+     * @param flowAction The {@link FlowAction} (Add or Remove)
      */
     void pushIntentFlow(Intent intent, FlowAction flowAction);
 
     /**
      * Push ARP flows on node-up event
-     * @param nodeId
-     * @param flowAction
+     * @param nodeId The OF {@link NodeId}
+     * @param flowAction The {@link FlowAction}
      */
     void pushARPFlow(NodeId nodeId, FlowAction flowAction);
 
     /**
      * Push OF rules to forward LLDP packets to controller
-     * @param nodeId
-     * @param flowAction
+     * @param nodeId The OF {@link NodeId}
+     * @param flowAction The {@link FlowAction}
      */
     void pushLLDPFlow(NodeId nodeId, FlowAction flowAction);
 }
