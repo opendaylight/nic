@@ -2,6 +2,7 @@ package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.listeners.rev150916;
 
 import org.opendaylight.nic.listeners.impl.ListenerProviderImpl;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -32,9 +33,13 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
                 getServiceReference(OFRendererFlowService.class);
         OFRendererFlowService flowService = (OFRendererFlowService) context.
                 getService(serviceReference);
+        OFRendererGraphService graphService = (OFRendererGraphService) context
+                .getService(serviceReference);
 
-        final ListenerProviderImpl provider = new ListenerProviderImpl(getDataBrokerDependency(), getNotificationAdapterDependency(),
-                flowService);
+        final ListenerProviderImpl provider = new ListenerProviderImpl(getDataBrokerDependency(),
+                                                                       getNotificationAdapterDependency(),
+                                                                       flowService,
+                                                                       graphService);
         provider.start();
         LOG.info("NIC Listeners started successfully.");
 
