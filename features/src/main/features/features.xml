@@ -42,6 +42,7 @@
         <feature version="${mdsal.version}">odl-restconf</feature>
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+        <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-mdsal.xml">

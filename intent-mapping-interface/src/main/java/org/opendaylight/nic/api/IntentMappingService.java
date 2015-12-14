@@ -40,4 +40,11 @@ public interface IntentMappingService extends AutoCloseable {
     Collection<String> keys();
 
     String stringRepresentation(String key);
+
+    /**
+     * @param outerKey
+     *            indexed key
+     * @return Return true if succeed, otherwise false
+     */
+    boolean delete(String outerKey);
 }
