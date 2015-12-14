@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_7726816a",
+        "filename": "features/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "could you add this under a controller dependencies comment, as it\u0027s done for project specific dependencies and external features dependencies.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 19
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_972bfd2f",
+        "filename": "features/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "Also could you fix the indentation please",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 19
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_17ee2ded",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure how much how need to bring the bundle in the feature. Bringing it to the bundle isn\u0027t sufficient?",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 92
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_37200949",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/EventType.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_571d850e",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/AbstractNotificationSupplierBase.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "Link",
+      "range": {
+        "startLine": 122,
+        "startChar": 62,
+        "endLine": 122,
+        "endChar": 66
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b7d39937",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/TopologyLinkNotificationSupplierImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to hold this var",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 77
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_17170def",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/TopologyLinkNotificationSupplierImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "you could directly return getLinkWildII();",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d7d89555",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "controller",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_97e21d02",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "this can be moved under the controller dependency comment",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_57e4a50c",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-14T21:27:36Z",
+      "side": 1,
+      "message": "could this be moved under mdsal dependencies",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "d5d4b9ad4792ee1fc729a1e8ef2b0ad3277642eb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
