@@ -16,6 +16,7 @@
     <packaging>bundle</packaging>
 
     <properties>
+        <jung2.version>2.0.1</jung2.version>
         <openflowplugin.version>0.2.0-SNAPSHOT</openflowplugin.version>
         <mdsal.version>1.3.0-SNAPSHOT</mdsal.version>
         <powermock.version>1.5.5</powermock.version>
@@ -50,11 +51,22 @@
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- controller dependency -->
+        <!-- controller dependencies -->
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>liblldp</artifactId>
             <version>${liblldp.version}</version>
+        </dependency>
+        <!-- Controller Third party Graph library -->
+        <dependency>
+            <groupId>org.opendaylight.controller.thirdparty</groupId>
+            <artifactId>net.sf.jung2</artifactId>
+            <version>${jung2.version}</version>
+        </dependency>
+        <!-- MDSAL Dependencies -->
+        <dependency>
+           <groupId>org.opendaylight.mdsal.model</groupId>
+           <artifactId>ietf-topology</artifactId>
         </dependency>
         <!-- Testing Dependencies -->
         <dependency>

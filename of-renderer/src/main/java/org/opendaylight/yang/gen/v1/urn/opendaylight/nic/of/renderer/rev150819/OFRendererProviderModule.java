@@ -23,8 +23,9 @@ public class OFRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.o
     @Override
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating Open flow renderer");
-        final OFRendererFlowManagerProvider provider = new OFRendererFlowManagerProvider(getDataBrokerDependency(),
-                getPipelineManagerDependency());
+        final OFRendererFlowManagerProvider provider =
+                new OFRendererFlowManagerProvider(getDataBrokerDependency(),
+                                                  getPipelineManagerDependency());
         provider.init();
         return provider;
     }

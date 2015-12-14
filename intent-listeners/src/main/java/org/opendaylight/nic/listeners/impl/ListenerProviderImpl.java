@@ -12,18 +12,15 @@ import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.*;
+import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,24 +32,31 @@ public class ListenerProviderImpl implements AutoCloseable {
 
     /* Supplier List property help for easy close method implementation and testing */
     private List<NotificationSupplierDefinition<?>> supplierList;
-    private  EventRegistryServiceImpl serviceRegistry = null;
+    private EventRegistryServiceImpl serviceRegistry = null;
     private NotificationService notificationService;
     private OFRendererFlowService flowService;
+    private OFRendererGraphService graphService;
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
 
     /**
      * Provider constructor set all needed final parameters
-     *
-     * @param db - dataBroker
+     * @param db The {@link DataBroker}
+     * @param notificationService The {@link NotificationService} used with pub-sub pattern
+     * @param flowService The {@link OFRendererFlowService} used to render and push OF Rules
+     * @param graphService The {@link OFRendererGraphService} used to represent and solve a
+     *                     Network-Topology.
      */
-    public ListenerProviderImpl(final DataBroker db, NotificationService notificationService,
-                                OFRendererFlowService flowService) {
+    public ListenerProviderImpl(final DataBroker db,
+                                NotificationService notificationService,
+                                OFRendererFlowService flowService,
+                                OFRendererGraphService graphService) {
         Preconditions.checkNotNull(db);
         Preconditions.checkNotNull(notificationService);
         Preconditions.checkNotNull(flowService);
         this.db = db;
         this.notificationService = notificationService;
         this.flowService = flowService;
+        this.graphService = graphService;
     }
 
     public void start() {
@@ -69,6 +73,8 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new NeutronSecGroupNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<SecurityRule, SecurityRuleAdded, SecurityRuleDeleted, SecurityRuleUpdated> secRulesSupp =
                 new NeutronSecRuleNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<Link, TopologyLinkUp, TopologyLinkDeleted, NicNotification> linkSupp =
+                new TopologyLinkNotificationSupplierImpl(db);
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
@@ -79,6 +85,9 @@ public class ListenerProviderImpl implements AutoCloseable {
         EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =
                 new EndpointDiscoveryNotificationSubscriberImpl();
         serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
+        TopologyLinkNotificationSubscriberImpl topologyLinkNotifSubscriber =
+                new TopologyLinkNotificationSubscriberImpl(graphService);
+        serviceRegistry.registerEventListener((IEventService) linkSupp, topologyLinkNotifSubscriber);
 
         supplierList = new ArrayList<>();
         supplierList.add(nodeSupp);
@@ -86,6 +95,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(intentSupp);
         supplierList.add(secGroupSupp);
         supplierList.add(secRulesSupp);
+        supplierList.add(linkSupp);
     }
 
     @Override

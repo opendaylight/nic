@@ -19,6 +19,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeRef
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NetworkTopology;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.Topology;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.LinkKey;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -62,14 +66,14 @@ public abstract class AbstractNotificationSupplierBase<O extends DataObject> imp
      * Method returns a wildCard {@link InstanceIdentifier} for {@link Node} from inventory
      * because this path is a base for every OF paths.
      *
-     * @return WildCarded InstanceIdentifier for Node
+     * @return WildCarded InstanceIdentifieis a base for every OF paths.r for Node
      */
     protected static InstanceIdentifier<Node> getNodeWildII() {
         return InstanceIdentifier.create(Nodes.class).child(Node.class);
     }
 
     /**
-     * Method returns a {@link InstanceIdentifier} for {@link Node} from inventory
+     * Method returns an {@link InstanceIdentifier} for {@link Node} from inventory
      * because this path is a base for every OF paths.
      *
      * @param ii - key for keyed {@link Node} {@link InstanceIdentifier}
@@ -102,4 +106,34 @@ public abstract class AbstractNotificationSupplierBase<O extends DataObject> imp
         return nodeKey.getId();
     }
 
+    /**
+     * Method returns a wildCard {@link InstanceIdentifier} for {@link Link} from
+     * Network-Topology because this path is a base for every OF paths.
+     *
+     * @return WildCarded InstanceIdentifier for Link
+     */
+    protected static InstanceIdentifier<Link> getLinkWildII() {
+        return InstanceIdentifier.create(NetworkTopology.class)
+                                 .child(Topology.class)
+                                 .child(Link.class);
+    }
+
+    /**
+     * Method returns an {@link InstanceIdentifier} for {@link Link} from
+     * Network-Topology because this path is updated within the OF
+     * project.
+     *
+     * @param path key for keyed {@link Link} {@link InstanceIdentifier}
+     * @return InstanceIdentifier for Link
+     */
+    protected static InstanceIdentifier<Link> getLinkII(final InstanceIdentifier<?> path) {
+        final LinkKey key = path.firstKeyOf(Link.class);
+        Preconditions.checkArgument(key != null);
+        final InstanceIdentifier<Link> link = InstanceIdentifier
+                                                  .builder(NetworkTopology.class)
+                                                  .child(Topology.class)
+                                                  .child(Link.class, key)
+                                                  .build();
+        return link;
+    }
 }
