@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_4752b2de",
+        "filename": "intent-mapping-mdsal/src/test/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProviderTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-15T17:33:42Z",
+      "side": 1,
+      "message": "you\u0027re not testing anything here, no assert, no verify",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 5
+      },
+      "revId": "7da9b46f6a5ea1d6fc316588ad442425d76c3127",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
