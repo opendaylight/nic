@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_e33393f4",
+        "filename": "intent-mapping-mdsal/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-15T14:06:19Z",
+      "side": 1,
+      "message": "please add this on top of the Testing dependencies comment.\n\nAlso use ${project.version) instead of hardcoding the version number",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 15
+      },
+      "revId": "364715ff8bb981c530cee90ce63d7e4f13640860",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_03310fec",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-15T14:06:19Z",
+      "side": 1,
+      "message": "this is useless",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "364715ff8bb981c530cee90ce63d7e4f13640860",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_2341ab39",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-15T14:06:19Z",
+      "side": 1,
+      "message": "this try {} catch{} block is useless because MdsalUtils#delete doesn\u0027t throw any exeption.\n\nYou can safely \n\n   return mdsal.delete(LogicalDatastoreType.CONFIGURATION, outerMapIid);",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 22
+      },
+      "revId": "364715ff8bb981c530cee90ce63d7e4f13640860",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
