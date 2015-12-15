@@ -15,6 +15,7 @@ import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.LinkDeleted;
 import org.opendaylight.nic.listeners.api.LinkUp;
 import org.opendaylight.nic.listeners.api.NicNotification;
+import org.opendaylight.nic.utils.IidFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
@@ -27,9 +28,6 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 public class NodeConnectorNotificationSupplierImpl extends
         AbstractNotificationSupplierItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted, NicNotification> {
 
-    private static final InstanceIdentifier<FlowCapableNodeConnector> FLOW_CAPABLE_NODE_CONNECTOR_IID =
-            getNodeWildII().child(NodeConnector.class).augmentation(FlowCapableNodeConnector.class);
-
     /**
      * Constructor register supplier as DataChangeLister and create wildCarded InstanceIdentifier.
      *
@@ -41,7 +39,7 @@ public class NodeConnectorNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<FlowCapableNodeConnector> getWildCardPath() {
-        return FLOW_CAPABLE_NODE_CONNECTOR_IID;
+        return IidFactory.getNodeWildII().child(NodeConnector.class).augmentation(FlowCapableNodeConnector.class);
     }
 
     @Override
@@ -64,7 +62,8 @@ public class NodeConnectorNotificationSupplierImpl extends
     }
 
     @Override
-    public NicNotification updateNotification(FlowCapableNodeConnector object, InstanceIdentifier<FlowCapableNodeConnector> path) {
+    public NicNotification updateNotification(FlowCapableNodeConnector object,
+                                              InstanceIdentifier<FlowCapableNodeConnector> path) {
         //Do nothing
         return null;
     }
