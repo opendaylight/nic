@@ -23,6 +23,7 @@ import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.nic.api.IntentMappingService;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.Mappings;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.MappingsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.OuterMap;
@@ -32,8 +33,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.m
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.outer.map.InnerMapBuilder;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +47,13 @@ public class MappingMdsalProvider
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
     private DataBroker dataBroker;
     public static final InstanceIdentifier<Mappings> MAPPINGS_IID = InstanceIdentifier.builder(Mappings.class).build();
+
+    public MappingMdsalProvider() {
+    }
+
+    public MappingMdsalProvider(DataBroker databroker) {
+        this.dataBroker = databroker;
+    }
 
     @Override
     public void close() throws Exception {
@@ -159,5 +165,16 @@ public class MappingMdsalProvider
             subjectMappings.put(innerMap.getInnerKey(), innerMap.getValue());
         }
         return subjectMappings;
+    }
+
+    @Override
+    public boolean delete(String key) {
+        OuterMapKey mapKey = new OuterMapKey(key);
+        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier.builder(Mappings.class)
+                .child(OuterMap.class, mapKey).build();
+
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+
+        return mdsal.delete(LogicalDatastoreType.CONFIGURATION, outerMapIid);
     }
 }
