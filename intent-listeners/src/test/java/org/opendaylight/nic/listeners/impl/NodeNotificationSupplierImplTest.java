@@ -15,6 +15,9 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -86,8 +89,14 @@ public class NodeNotificationSupplierImplTest {
         @Test
         public void createNotificationTest() throws Exception {
                 NodeId mockNodeId = mock(NodeId.class);
-                PowerMockito.doReturn(mockNodeId).when(mockNodeSupplier).getNodeId(mockInstanceIdentifier);
-                NodeUp mockNodeUp = mockNodeSupplier.createNotification(mockNode, mockInstanceIdentifier);
+                NodeKey mockNodeKey = new NodeKey(mockNodeId);
+                FlowCapableNode mockFcn = mock(FlowCapableNode.class);
+                InstanceIdentifier<FlowCapableNode> fcnIid = InstanceIdentifier
+                                                                 .builder(Nodes.class)
+                                                                 .child(Node.class, mockNodeKey)
+                                                                 .augmentation(FlowCapableNode.class)
+                                                                 .build();
+                NodeUp mockNodeUp = mockNodeSupplier.createNotification(mockFcn, fcnIid);
                 assertNotNull(mockNodeUp);
                 assertEquals(mockNodeUp.getIp(),mockNode.getIpAddress());
                 assertEquals(mockNodeUp.getNodeId(), mockNodeId);

@@ -12,6 +12,7 @@ import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.*;
+import org.opendaylight.nic.utils.IidFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdated;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeUpdatedBuilder;
@@ -29,9 +30,6 @@ import org.slf4j.LoggerFactory;
 public class NodeNotificationSupplierImpl extends
         AbstractNotificationSupplierItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> implements IEventService {
 
-    private static final InstanceIdentifier<FlowCapableNode> FLOW_CAPABLE_NODE_IID =
-            getNodeWildII().augmentation(FlowCapableNode.class);
-
     private static final Logger LOG = LoggerFactory.getLogger(NodeNotificationSupplierImpl.class);
     /**
      * Constructor register supplier as DataChangeLister and create wildCarded InstanceIdentifier.
@@ -46,7 +44,7 @@ public class NodeNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<FlowCapableNode> getWildCardPath() {
-        return FLOW_CAPABLE_NODE_IID;
+        return IidFactory.getNodeWildII().augmentation(FlowCapableNode.class);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class NodeNotificationSupplierImpl extends
         FlowCapableNodeUpdated flowCapableNodeUpdated = flowNodeNotifBuilder.build();
         //TODO: Create a builder for NodeUp notification
         NodeUp nodeUpNotif = new NodeUpImpl(flowCapableNodeUpdated.getIpAddress(),
-                getNodeId(ii));
+                IidFactory.getNodeId(ii));
         LOG.info("NicNotification created for Node up: IP", nodeUpNotif.getIp());
         return nodeUpNotif;
     }
