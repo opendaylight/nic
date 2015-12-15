@@ -13,6 +13,7 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
@@ -32,11 +33,13 @@ public class ListenerProviderImpl implements AutoCloseable {
 
     /* Supplier List property help for easy close method implementation and testing */
     private List<NotificationSupplierDefinition<?>> supplierList;
+    private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
     private EventRegistryServiceImpl serviceRegistry = null;
+    private MdsalUtils mdsalUtils;
     private NotificationService notificationService;
     private OFRendererFlowService flowService;
     private OFRendererGraphService graphService;
-    private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
+
 
     /**
      * Provider constructor set all needed final parameters
@@ -57,6 +60,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         this.notificationService = notificationService;
         this.flowService = flowService;
         this.graphService = graphService;
+        this.mdsalUtils = new MdsalUtils(db);
     }
 
     public void start() {
@@ -86,7 +90,7 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new EndpointDiscoveryNotificationSubscriberImpl();
         serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
         TopologyLinkNotificationSubscriberImpl topologyLinkNotifSubscriber =
-                new TopologyLinkNotificationSubscriberImpl(graphService);
+                new TopologyLinkNotificationSubscriberImpl(graphService, mdsalUtils);
         serviceRegistry.registerEventListener((IEventService) linkSupp, topologyLinkNotifSubscriber);
 
         supplierList = new ArrayList<>();
