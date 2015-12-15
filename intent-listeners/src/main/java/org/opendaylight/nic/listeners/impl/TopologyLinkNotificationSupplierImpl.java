@@ -29,8 +29,6 @@ public class TopologyLinkNotificationSupplierImpl extends
                                              NicNotification>
                                                   implements IEventService {
 
-    private static final InstanceIdentifier<Link> LINK_IID = getLinkWildII();
-
     public TopologyLinkNotificationSupplierImpl(final DataBroker db) {
         super(db, Link.class, LogicalDatastoreType.OPERATIONAL);
         serviceRegistry.setEventTypeService(this,
@@ -41,7 +39,7 @@ public class TopologyLinkNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<Link> getWildCardPath() {
-        return LINK_IID;
+        return mdsalMapper.getLinkWildII();
     }
 
     @Override

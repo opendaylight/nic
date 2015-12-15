@@ -86,7 +86,7 @@ public class NodeNotificationSupplierImplTest {
         @Test
         public void createNotificationTest() throws Exception {
                 NodeId mockNodeId = mock(NodeId.class);
-                PowerMockito.doReturn(mockNodeId).when(mockNodeSupplier).getNodeId(mockInstanceIdentifier);
+                PowerMockito.doReturn(mockNodeId).when(mockNodeSupplier).mdsalMapper.getNodeId(mockInstanceIdentifier);
                 NodeUp mockNodeUp = mockNodeSupplier.createNotification(mockNode, mockInstanceIdentifier);
                 assertNotNull(mockNodeUp);
                 assertEquals(mockNodeUp.getIp(),mockNode.getIpAddress());

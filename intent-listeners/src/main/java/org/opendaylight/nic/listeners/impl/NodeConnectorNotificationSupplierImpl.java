@@ -27,9 +27,6 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 public class NodeConnectorNotificationSupplierImpl extends
         AbstractNotificationSupplierItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted, NicNotification> {
 
-    private static final InstanceIdentifier<FlowCapableNodeConnector> FLOW_CAPABLE_NODE_CONNECTOR_IID =
-            getNodeWildII().child(NodeConnector.class).augmentation(FlowCapableNodeConnector.class);
-
     /**
      * Constructor register supplier as DataChangeLister and create wildCarded InstanceIdentifier.
      *
@@ -41,7 +38,7 @@ public class NodeConnectorNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<FlowCapableNodeConnector> getWildCardPath() {
-        return FLOW_CAPABLE_NODE_CONNECTOR_IID;
+        return mdsalMapper.getNodeWildII().child(NodeConnector.class).augmentation(FlowCapableNodeConnector.class);
     }
 
     @Override

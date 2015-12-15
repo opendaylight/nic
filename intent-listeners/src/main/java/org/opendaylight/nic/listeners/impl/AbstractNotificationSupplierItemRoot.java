@@ -16,6 +16,7 @@ import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NotificationSupplierForItemRoot;
+import org.opendaylight.nic.utils.MdsalMapper;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.BundleContext;

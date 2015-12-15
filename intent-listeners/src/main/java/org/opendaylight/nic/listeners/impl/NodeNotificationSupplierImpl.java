@@ -29,9 +29,6 @@ import org.slf4j.LoggerFactory;
 public class NodeNotificationSupplierImpl extends
         AbstractNotificationSupplierItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> implements IEventService {
 
-    private static final InstanceIdentifier<FlowCapableNode> FLOW_CAPABLE_NODE_IID =
-            getNodeWildII().augmentation(FlowCapableNode.class);
-
     private static final Logger LOG = LoggerFactory.getLogger(NodeNotificationSupplierImpl.class);
     /**
      * Constructor register supplier as DataChangeLister and create wildCarded InstanceIdentifier.
@@ -46,7 +43,7 @@ public class NodeNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<FlowCapableNode> getWildCardPath() {
-        return FLOW_CAPABLE_NODE_IID;
+        return mdsalMapper.getNodeWildII().augmentation(FlowCapableNode.class);
     }
 
     @Override
@@ -57,7 +54,7 @@ public class NodeNotificationSupplierImpl extends
         FlowCapableNodeUpdated flowCapableNodeUpdated = flowNodeNotifBuilder.build();
         //TODO: Create a builder for NodeUp notification
         NodeUp nodeUpNotif = new NodeUpImpl(flowCapableNodeUpdated.getIpAddress(),
-                getNodeId(ii));
+                mdsalMapper.getNodeId(ii));
         LOG.info("NicNotification created for Node up: IP", nodeUpNotif.getIp());
         return nodeUpNotif;
     }

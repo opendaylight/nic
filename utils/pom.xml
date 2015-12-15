@@ -47,6 +47,11 @@
     <artifactId>model-flow-service</artifactId>
     <version>${openflowplugin.version}</version>
   </dependency>
+  <!-- MDSAL Dependencies -->
+  <dependency>
+    <groupId>org.opendaylight.mdsal.model</groupId>
+    <artifactId>ietf-topology</artifactId>
+  </dependency>
   <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
