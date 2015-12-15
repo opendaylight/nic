@@ -43,6 +43,7 @@
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}</bundle>
@@ -61,6 +62,7 @@
         <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">
             mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config

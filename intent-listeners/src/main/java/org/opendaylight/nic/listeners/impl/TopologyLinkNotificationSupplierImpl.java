@@ -17,6 +17,7 @@ import org.opendaylight.nic.listeners.api.IEventService;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.TopologyLinkDeleted;
 import org.opendaylight.nic.listeners.api.TopologyLinkUp;
+import org.opendaylight.nic.utils.IidFactory;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.LinkBuilder;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -29,8 +30,6 @@ public class TopologyLinkNotificationSupplierImpl extends
                                              NicNotification>
                                                   implements IEventService {
 
-    private static final InstanceIdentifier<Link> LINK_IID = getLinkWildII();
-
     public TopologyLinkNotificationSupplierImpl(final DataBroker db) {
         super(db, Link.class, LogicalDatastoreType.OPERATIONAL);
         serviceRegistry.setEventTypeService(this,
@@ -41,7 +40,7 @@ public class TopologyLinkNotificationSupplierImpl extends
 
     @Override
     public InstanceIdentifier<Link> getWildCardPath() {
-        return LINK_IID;
+        return IidFactory.getLinkWildII();
     }
 
     @Override
