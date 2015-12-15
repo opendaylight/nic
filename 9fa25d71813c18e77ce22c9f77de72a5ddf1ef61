@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_8325ffac",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-15T14:00:05Z",
+      "side": 1,
+      "message": "would it make sense to have protected modifier?",
+      "revId": "9fa25d71813c18e77ce22c9f77de72a5ddf1ef61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
