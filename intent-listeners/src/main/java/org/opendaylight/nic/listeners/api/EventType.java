@@ -41,5 +41,12 @@ public enum EventType {
     /** Indicates that an existing security rule is deleted by neutron*/
     SECURITY_RULE_DELETED,
     /** Indicates that an existing security rule is modified by neutron*/
-    SECURITY_RULE_UPDATED
+    SECURITY_RULE_UPDATED,
+    /** Indicates that a Network-Topology Link has been discovered. The OpenFlowPlugin
+     * project is taking care of keeping an up to date Network-Topology.*/
+    TOPOLOGY_LINK_DISCOVERED,
+    /** Incidates that a Network-Topology Link has been removed. See TOPOLOGY_LINK_DISCOVERED.*/
+    TOPOLOGY_LINK_REMOVED,
+    /** Indicates that a Network-Topology Link has been updated. See TOPOLOGY_LINK_DISCOVERED.*/
+    TOPOLOGY_LINK_UPDATED
 }

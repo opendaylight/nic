@@ -11,6 +11,7 @@ import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -33,8 +34,10 @@ import org.slf4j.LoggerFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by saket on 8/19/15.
@@ -42,7 +45,7 @@ import java.util.Map;
 public class OFRendererFlowManagerProvider implements OFRendererFlowService, AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(OFRendererFlowManagerProvider.class);
 
-    protected ServiceRegistration<OFRendererFlowService> nicFlowServiceRegistration;
+    private Set<ServiceRegistration<?>> serviceRegistration;
     private IntentFlowManager intentFlowManager;
     private ArpFlowManager arpFlowManager;
     private LldpFlowManager lldpFlowManager;
@@ -52,19 +55,21 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
+        this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
     }
 
     public void init() {
         LOG.info("OF Renderer Provider Session Initiated");
         // Register this service with karaf
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        nicFlowServiceRegistration = context.registerService(OFRendererFlowService.class, this, null);
+        serviceRegistration.add(context.registerService(OFRendererFlowService.class, this, null));
+        serviceRegistration.add(context.registerService(OFRendererGraphService.class,
+                                   new NetworkGraphManager(),
+                                   null));
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
     }
-
-
 
     @Override
     public void pushIntentFlow(Intent intent, FlowAction flowAction) {
@@ -111,9 +116,11 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
 
     @Override
     public void close() throws Exception {
-      if (nicFlowServiceRegistration != null) {
-          nicFlowServiceRegistration.unregister();
-      }
+        for (ServiceRegistration<?> service: serviceRegistration) {
+            if (service != null) {
+                service.unregister();
+            }
+        }
     }
 
     @Override
