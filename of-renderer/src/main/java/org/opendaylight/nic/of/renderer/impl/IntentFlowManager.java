@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
 public class IntentFlowManager extends AbstractFlowManager {
 
     private List<String> endPointGroups = null;
-    private Map<String, Map<String, String>> subjectsMapping = null;
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(IntentFlowManager.class);
 
@@ -41,7 +40,6 @@ public class IntentFlowManager extends AbstractFlowManager {
     private static final Integer DST_END_POINT_GROUP_INDEX = 1;
     private static final String ANY_MATCH = "any";
     private static final String INTENT_L2_FLOW_NAME = "L2_Rule_";
-    private static final String MPLS_LABEL_KEY = null;
     private FlowStatisticsListener flowStatisticsListener;
 
     public void setEndPointGroups(List<String> endPointGroups) {
@@ -50,10 +48,6 @@ public class IntentFlowManager extends AbstractFlowManager {
 
     public void setAction(Action action) {
         this.action = action;
-    }
-
-    public void setSubjectsMapping(Map<String, Map<String, String>> subjectsMapping) {
-        this.subjectsMapping = subjectsMapping;
     }
 
     IntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
@@ -136,21 +130,6 @@ public class IntentFlowManager extends AbstractFlowManager {
             MatchUtils.createEthMatch(matchBuilder, srcMac, dstMac);
         } catch (IllegalArgumentException e) {
             LOG.error("Can only accept valid MAC addresses as subjects", e);
-        }
-    }
-
-    /*
-     * Create an MPLS packet match using MatchUtils createMplsLabelBosMatch() method
-     */
-    private void createMplsMatch(List<String> endPointGroups, Map<String, Map<String, String>> subjectsMapping,
-            MatchBuilder matchBuilder) {
-        for (String value : endPointGroups) {
-            if (subjectsMapping.containsKey(value) && subjectsMapping.get(value).containsKey((MPLS_LABEL_KEY))) {
-                Long mplsLabel = new Long(subjectsMapping.get(value).get(MPLS_LABEL_KEY));
-                // since we add only one MPLS label for now bos field is 1 or true
-                boolean bos = true;
-                MatchUtils.createMplsLabelBosMatch(matchBuilder, mplsLabel, bos);
-            }
         }
     }
 

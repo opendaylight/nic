@@ -102,16 +102,19 @@ public abstract class AbstractFlowManager {
      * @param popLabel Boolean for pop action
      * @param bos Bottom of Stack value
      * @param outputPort OVS port to output the packet to
+     * @param forward Boolean for forward MPLS packet action
      * @return A set of OpenFlow {@link Instructions} that have been construction
      */
     protected Instructions createMPLSIntentInstructions(List<Long> labels, boolean popLabel, Short bos,
-            String outputPort) {
+            String outputPort, boolean forward) {
         int order = 0;
         List<Action> actionList = new ArrayList<>();
-        for (Long labelValue : labels) {
-            actionList.add(FlowUtils.createMPLSAction(order++, popLabel));
-            if (!popLabel) {
-                actionList.add(FlowUtils.createSetFieldMPLSLabelAction(order++, labelValue, bos));
+        if(!forward) {
+            for (Long labelValue : labels) {
+                actionList.add(FlowUtils.createMPLSAction(order++, popLabel));
+                if (!popLabel) {
+                    actionList.add(FlowUtils.createSetFieldMPLSLabelAction(order++, labelValue, bos));
+                }
             }
         }
         actionList.add(FlowUtils.createOutputToPort(order++, outputPort));
