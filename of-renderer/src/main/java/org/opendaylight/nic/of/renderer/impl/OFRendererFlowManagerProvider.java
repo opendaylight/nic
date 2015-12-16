@@ -10,6 +10,7 @@ package org.opendaylight.nic.of.renderer.impl;
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 
+import org.opendaylight.nic.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -28,6 +29,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private IntentFlowManager intentFlowManager;
     private ArpFlowManager arpFlowManager;
     private LldpFlowManager lldpFlowManager;
+    private IntentMappingService intentMappingService;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
 
@@ -66,6 +69,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         serviceRegistration.add(context.registerService(OFRendererGraphService.class,
                                    new NetworkGraphManager(),
                                    null));
+        ServiceReference<?> serviceReference = context.getServiceReference(IntentMappingService.class);
+        intentMappingService = (IntentMappingService) context.getService(serviceReference);
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
@@ -114,6 +119,30 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         return nodeMap;
     }
 
+    /**
+     * Creates a hashmap of the mapping information map for every subject
+     * @param endPointGroups :list of endpoint group from Intent request
+     * @return :double hashmap with mapping details of sujects
+     */
+    private Map<String, Map<String, String>> extractSubjectDetails(List<String> endPointGroups) {
+        Map<String, Map<String, String>> subjectsMapping = new HashMap<String, Map<String, String>>();
+        for (String id : endPointGroups) {
+            Map<String, String> values = null;
+            try {
+                values = intentMappingService.get(id);
+            } catch (Exception e) {
+                LOG.warn("No key found for {" + id + "} in IntentMappingService");
+            }
+
+            if (values != null) {
+                Map<String, String> innerKeys = intentMappingService.get(id);
+                if (innerKeys != null && innerKeys.size() > 0) {
+                    subjectsMapping.put(id, innerKeys);
+                }
+            }
+        }
+        return subjectsMapping;
+    }
     @Override
     public void close() throws Exception {
         for (ServiceRegistration<?> service: serviceRegistration) {
