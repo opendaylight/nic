@@ -22,6 +22,30 @@
       "revId": "c8da960e07457685c6d4d6bd0bb84cb5848c12ad",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_01d4a21e",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/MdsalMapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-16T20:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_67db2eee",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "c8da960e07457685c6d4d6bd0bb84cb5848c12ad",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
