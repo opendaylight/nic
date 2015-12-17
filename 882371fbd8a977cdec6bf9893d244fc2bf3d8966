@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_26ef6fb2",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IidFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T16:03:39Z",
+      "side": 1,
+      "message": "please find a name more meaningful getTopologyLinkInstanceIdentifier\n\nalso II instead of InstanceIdentifier to be consistent within the class",
+      "range": {
+        "startLine": 106,
+        "startChar": 47,
+        "endLine": 106,
+        "endChar": 80
+      },
+      "revId": "882371fbd8a977cdec6bf9893d244fc2bf3d8966",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
