@@ -45,6 +45,30 @@
       "revId": "87d11297c5f6866b46341a85ade29ca751a54f92",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_09c84473",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-17T18:08:43Z",
+      "side": 1,
+      "message": "Can\u0027t add javadoc for the constants as I didn\u0027t create them. Don\u0027t have the time to check what they mean.",
+      "parentUuid": "1aa4ed85_a981f04b",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "87d11297c5f6866b46341a85ade29ca751a54f92",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
