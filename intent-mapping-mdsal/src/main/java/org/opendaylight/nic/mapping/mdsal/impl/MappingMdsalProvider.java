@@ -20,15 +20,15 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
-import org.opendaylight.nic.api.IntentMappingService;
+import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.utils.MdsalUtils;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.Mappings;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.MappingsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.OuterMap;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.OuterMapBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.OuterMapKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.outer.map.InnerMap;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.intent.mapping.mdsal.rev151111.map.outer.map.InnerMapBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nic.mapping.rev151111.Mappings;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nic.mapping.rev151111.MappingsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nic.mapping.rev151111.multimap.OuterMap;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nic.mapping.rev151111.multimap.OuterMapBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nic.mapping.rev151111.multimap.OuterMapKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nic.mapping.rev151111.multimap.outer.map.InnerMap;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nic.mapping.rev151111.multimap.outer.map.InnerMapBuilder;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.ServiceRegistration;
@@ -44,9 +44,9 @@ public class MappingMdsalProvider implements IntentMappingService,
     protected ServiceRegistration<IntentMappingService> intentMappingServiceRegistration;
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
 
-    @SuppressWarnings("unused")
     private DataBroker dataBroker;
     private MdsalUtils mdsalUtils;
+
     //FIXME extract this constant to the Utils bundle
     public static final InstanceIdentifier<Mappings> MAPPINGS_IID =
                                                         InstanceIdentifier
@@ -54,11 +54,6 @@ public class MappingMdsalProvider implements IntentMappingService,
                                                             .build();
 
     public MappingMdsalProvider() {
-    }
-
-    public MappingMdsalProvider(DataBroker databroker) {
-        this.dataBroker = databroker;
-        this.mdsalUtils = new MdsalUtils(databroker);
     }
 
     @Override
@@ -77,6 +72,7 @@ public class MappingMdsalProvider implements IntentMappingService,
     public void onSessionInitiated(ProviderContext session) {
         // Retrieve the data broker to create transactions
         dataBroker = session.getSALService(DataBroker.class);
+        this.mdsalUtils = new MdsalUtils(dataBroker);
 
         Mappings mappings = new MappingsBuilder().build();
 
