@@ -10,7 +10,7 @@ package org.opendaylight.nic.cli;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
-import org.opendaylight.nic.api.IntentMappingService;
+import org.opendaylight.nic.mapping.api.IntentMappingService;
 
 @Command(name = "map",
          scope = "intent",
