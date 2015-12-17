@@ -28,8 +28,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026
 
 public class ArpFlowManager extends AbstractFlowManager {
 
-    private static final String ARP_REPLY_TO_CONTROLLER_FLOW_NAME = "arpReplyToController";
-    private static final int ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY = 10000;
+//    private static final String ARP_REPLY_TO_CONTROLLER_FLOW_NAME = "arpReplyToController";
+//    private static final int ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY = 10000;
     private final AtomicLong flowCookie = new AtomicLong();
 
     public ArpFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
@@ -46,14 +46,14 @@ public class ArpFlowManager extends AbstractFlowManager {
 
     private FlowBuilder createArpReplyToControllerFlow() {
         FlowBuilder arpFlow = new FlowBuilder()
-                .setPriority(ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY)
+                .setPriority(OFRendererConstants.ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY)
                 .setIdleTimeout(0)
                 .setHardTimeout(0)
                 .setCookie(new FlowCookie(BigInteger.valueOf(flowCookie.incrementAndGet())))
                 .setFlags(new FlowModFlags(false, false, false, false, false));
         EthernetMatch ethernetMatch = FlowUtils.createEthernetMatch();
         /** NOTE:
-         * Setting layer 3 match seems to be messing with the flow ID
+         * Setting layer 3 match seems to be messing with the flow ID.
          * check for possible bug on openflow plugin side.
          * Use following code for specific ARP REQUEST or REPLY packet capture
          * ArpMatch arpMatch = FlowUtils.createArpMatch();
@@ -73,7 +73,7 @@ public class ArpFlowManager extends AbstractFlowManager {
     @Override
     protected String createFlowName() {
         StringBuilder sb = new StringBuilder();
-        sb.append(ARP_REPLY_TO_CONTROLLER_FLOW_NAME);
+        sb.append(OFRendererConstants.ARP_REPLY_TO_CONTROLLER_FLOW_NAME);
         sb.append("_EthernetType_").append(flowCookie.get());
         return sb.toString();
     }
