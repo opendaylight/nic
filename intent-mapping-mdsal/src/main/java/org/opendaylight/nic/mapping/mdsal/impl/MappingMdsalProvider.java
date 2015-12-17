@@ -16,8 +16,6 @@ import java.util.Map;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
@@ -37,22 +35,30 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
 
-public class MappingMdsalProvider
-        implements IntentMappingService, BindingAwareProvider, DataChangeListener, AutoCloseable {
+public class MappingMdsalProvider implements IntentMappingService,
+                                             BindingAwareProvider,
+                                             DataChangeListener,
+                                             AutoCloseable {
 
     protected ServiceRegistration<IntentMappingService> intentMappingServiceRegistration;
     private static final Logger LOG = LoggerFactory.getLogger(MappingMdsalProvider.class);
+
+    @SuppressWarnings("unused")
     private DataBroker dataBroker;
-    public static final InstanceIdentifier<Mappings> MAPPINGS_IID = InstanceIdentifier.builder(Mappings.class).build();
+    private MdsalUtils mdsalUtils;
+    //FIXME extract this constant to the Utils bundle
+    public static final InstanceIdentifier<Mappings> MAPPINGS_IID =
+                                                        InstanceIdentifier
+                                                            .builder(Mappings.class)
+                                                            .build();
 
     public MappingMdsalProvider() {
     }
 
     public MappingMdsalProvider(DataBroker databroker) {
         this.dataBroker = databroker;
+        this.mdsalUtils = new MdsalUtils(databroker);
     }
 
     @Override
@@ -76,25 +82,15 @@ public class MappingMdsalProvider
 
         // Initialize default config data in MD-SAL data store
         initDatastore(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID, mappings);
+        // Initialize the Operational datastore so that we can copy data to it
+        // in the future.
+        initDatastore(LogicalDatastoreType.OPERATIONAL, MAPPINGS_IID, mappings);
     }
 
-    private void initDatastore(LogicalDatastoreType store, InstanceIdentifier<Mappings> iid, Mappings mappings) {
-        // Put the Mapping data to MD-SAL data store
-        WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
-        transaction.put(store, iid, mappings);
-
-        // Perform the tx.submit asynchronously
-        Futures.addCallback(transaction.submit(), new FutureCallback<Void>() {
-            @Override
-            public void onSuccess(final Void result) {
-                LOG.info("initDatastore for mappings: transaction succeeded");
-            }
-
-            @Override
-            public void onFailure(final Throwable throwable) {
-                LOG.error("initDatastore for mappings: transaction failed");
-            }
-        });
+    private void initDatastore(LogicalDatastoreType store,
+                               InstanceIdentifier<Mappings> iid,
+                               Mappings mappings) {
+        mdsalUtils.put(store, iid, mappings);
         LOG.info("initDatastore: mappings data populated: {}", store, iid, mappings);
     }
 
@@ -127,40 +123,33 @@ public class MappingMdsalProvider
     @Override
     public void add(String key, Map<String, String> objs) {
         OuterMapKey mapKey = new OuterMapKey(key);
-        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier.builder(Mappings.class)
-                .child(OuterMap.class, mapKey).build();
-        try {
-            List<InnerMap> innerMap = new ArrayList<>();
-            for (String keyy : objs.keySet()) {
-                String valuee = objs.get(keyy);
-                InnerMap innerElement = new InnerMapBuilder().setInnerKey(keyy).setValue(valuee).build();
-                innerMap.add(innerElement);
-            }
-
-            OuterMap outerMap = new OuterMapBuilder().setId(key).setKey(mapKey).setInnerMap(innerMap).build();
-
-            WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
-            tx.put(LogicalDatastoreType.CONFIGURATION, outerMapIid, outerMap);
-            // Perform the tx.submit synchronously
-            tx.submit();
-        } catch (Exception e) {
-            LOG.error("add: failed: {}", e);
+        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier
+                                                        .builder(Mappings.class)
+                                                       .child(OuterMap.class, mapKey)
+                                                       .build();
+        List<InnerMap> innerMap = new ArrayList<>();
+        for (String keyy : objs.keySet()) {
+            String valuee = objs.get(keyy);
+            InnerMap innerElement = new InnerMapBuilder().setInnerKey(keyy).setValue(valuee).build();
+            innerMap.add(innerElement);
         }
+        OuterMap outerMap = new OuterMapBuilder().setId(key).setKey(mapKey).setInnerMap(innerMap).build();
+        // FIXME Copy data from config to oper on the datachange
+        mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, outerMapIid, outerMap);
     }
 
     @Override
     public Map<String, String> get(String key) {
         Map<String, String> subjectMappings = new HashMap<>();
         List<InnerMap> listInnerMap = null;
-        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier.builder(Mappings.class)
-                .child(OuterMap.class, new OuterMapKey(key)).build();
-        try {
-            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
-            listInnerMap = tx.read(LogicalDatastoreType.CONFIGURATION, outerMapIid).checkedGet().get().getInnerMap();
-        } catch (Exception e) {
-            LOG.error("get() failed for key:", key);
-        }
-
+        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier
+                                                       .builder(Mappings.class)
+                                                       .child(OuterMap.class,
+                                                              new OuterMapKey(key))
+                                                       .build();
+        // We want the Operational data
+        //FIXME use datachange to sync config datachange to oper
+        listInnerMap = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, outerMapIid).getInnerMap();
         for (InnerMap innerMap : listInnerMap) {
             subjectMappings.put(innerMap.getInnerKey(), innerMap.getValue());
         }
@@ -170,11 +159,10 @@ public class MappingMdsalProvider
     @Override
     public boolean delete(String key) {
         OuterMapKey mapKey = new OuterMapKey(key);
-        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier.builder(Mappings.class)
-                .child(OuterMap.class, mapKey).build();
-
-        MdsalUtils mdsal = new MdsalUtils(dataBroker);
-
-        return mdsal.delete(LogicalDatastoreType.CONFIGURATION, outerMapIid);
+        InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier
+                                                       .builder(Mappings.class)
+                                                       .child(OuterMap.class, mapKey)
+                                                       .build();
+        return mdsalUtils.delete(LogicalDatastoreType.CONFIGURATION, outerMapIid);
     }
 }
