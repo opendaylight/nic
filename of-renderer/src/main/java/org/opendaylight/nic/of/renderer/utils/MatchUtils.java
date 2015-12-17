@@ -42,16 +42,6 @@ import com.google.common.base.Preconditions;
 
 public class MatchUtils {
     private static final Logger LOG = LoggerFactory.getLogger(MatchUtils.class);
-    public static final short ICMP_SHORT = 1;
-    public static final short TCP_SHORT = 6;
-    public static final short UDP_SHORT = 17;
-    public static final String TCP = "tcp";
-    public static final String UDP = "udp";
-    public static final int TCP_SYN = 0x0002;
-    public static final long IPV4_LONG = 0x800;
-    public static final long LLDP_LONG = 0x88CC;
-    public static final long VLANTAGGED_LONG = 0x8100;
-    public static final long MPLSUCAST_LONG = 0x8847;
 
     private MatchUtils() {
     }
@@ -117,7 +107,7 @@ public class MatchUtils {
     public static MatchBuilder createVlanIdMatch(MatchBuilder matchBuilder, Integer vlanId, boolean present) {
         EthernetMatchBuilder eth = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(VLANTAGGED_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.VLANTAGGED_LONG));
         eth.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(eth.build());
 
@@ -142,7 +132,7 @@ public class MatchUtils {
     public static MatchBuilder createMplsLabelBosMatch(MatchBuilder matchBuilder, Long label, boolean bos) {
         EthernetMatchBuilder eth = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(MPLSUCAST_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.MPLSUCAST_LONG));
         eth.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(eth.build());
 
@@ -206,7 +196,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder eth = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         eth.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(eth.build());
 
@@ -233,7 +223,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder eth = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         eth.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(eth.build());
 
@@ -268,7 +258,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder eth = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         eth.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(eth.build());
 
@@ -291,7 +281,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethType.build());
 
@@ -318,7 +308,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethType.build());
 
@@ -351,7 +341,7 @@ public class MatchUtils {
         // Ethertype match
         EthernetMatchBuilder ethernetType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethernetType.build());
 
@@ -384,7 +374,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethType.build());
 
@@ -411,7 +401,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethType.build());
 
@@ -458,17 +448,17 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethType.build());
 
         IpMatchBuilder ipMmatch = new IpMatchBuilder();
-        if (ipProtocol == TCP_SHORT) {
-            ipMmatch.setIpProtocol(TCP_SHORT);
-        } else if (ipProtocol == UDP_SHORT) {
-            ipMmatch.setIpProtocol(UDP_SHORT);
-        } else if (ipProtocol == ICMP_SHORT) {
-            ipMmatch.setIpProtocol(ICMP_SHORT);
+        if (ipProtocol == UtilsConstants.TCP_SHORT) {
+            ipMmatch.setIpProtocol(UtilsConstants.TCP_SHORT);
+        } else if (ipProtocol == UtilsConstants.UDP_SHORT) {
+            ipMmatch.setIpProtocol(UtilsConstants.UDP_SHORT);
+        } else if (ipProtocol == UtilsConstants.ICMP_SHORT) {
+            ipMmatch.setIpProtocol(UtilsConstants.ICMP_SHORT);
         }
         matchBuilder.setIpMatch(ipMmatch.build());
         return matchBuilder;
@@ -485,7 +475,7 @@ public class MatchUtils {
         // Ethertype match
         EthernetMatchBuilder ethernetType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethernetType.build());
 
@@ -496,7 +486,7 @@ public class MatchUtils {
         matchBuilder.setIpMatch(ipMatch.build());
 
         TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
+        tcpFlagMatch.setTcpFlag(UtilsConstants.TCP_SYN);
         matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
         return matchBuilder;
     }
@@ -516,7 +506,7 @@ public class MatchUtils {
         matchBuilder.setIpMatch(ipMatch.build());
 
         TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
+        tcpFlagMatch.setTcpFlag(UtilsConstants.TCP_SYN);
         matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
         return matchBuilder;
     }
@@ -537,7 +527,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetMatch.setEthernetType(ethTypeBuilder.build());
 
         EthernetDestinationBuilder ethDestinationBuilder = new EthernetDestinationBuilder();
@@ -548,7 +538,7 @@ public class MatchUtils {
         // TCP Protocol Match
         // ipv4 version
         IpMatchBuilder ipMatch = new IpMatchBuilder();
-        ipMatch.setIpProtocol(TCP_SHORT);
+        ipMatch.setIpProtocol(UtilsConstants.TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
         TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
@@ -580,7 +570,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetMatch.setEthernetType(ethTypeBuilder.build());
 
         EthernetDestinationBuilder ethDestinationBuilder = new EthernetDestinationBuilder();
@@ -631,7 +621,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetMatch.setEthernetType(ethTypeBuilder.build());
 
         EthernetDestinationBuilder ethDestinationBuilder = new EthernetDestinationBuilder();
@@ -647,7 +637,7 @@ public class MatchUtils {
         // TCP Protocol Match
         // ipv4 version
         IpMatchBuilder ipMatch = new IpMatchBuilder();
-        ipMatch.setIpProtocol(TCP_SHORT);
+        ipMatch.setIpProtocol(UtilsConstants.TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
         // TCP Port Match
@@ -692,7 +682,7 @@ public class MatchUtils {
         // Ethertype match
         EthernetMatchBuilder ethernetType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethernetType.build());
         if (ipPrefix != null) {
@@ -703,11 +693,11 @@ public class MatchUtils {
         // TCP Protocol Match
         // ipv4 version
         IpMatchBuilder ipMatch = new IpMatchBuilder();
-        ipMatch.setIpProtocol(TCP_SHORT);
+        ipMatch.setIpProtocol(UtilsConstants.TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
         // TCP Flag Match
         TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
+        tcpFlagMatch.setTcpFlag(UtilsConstants.TCP_SYN);
         matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
 
         return matchBuilder;
@@ -733,7 +723,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetMatch.setEthernetType(ethTypeBuilder.build());
 
         EthernetSourceBuilder ethSourceBuilder = new EthernetSourceBuilder();
@@ -749,7 +739,7 @@ public class MatchUtils {
         // TCP Protocol Match
         // ipv4 version
         IpMatchBuilder ipMatch = new IpMatchBuilder();
-        ipMatch.setIpProtocol(TCP_SHORT);
+        ipMatch.setIpProtocol(UtilsConstants.TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
         // TCP Port Match
@@ -785,7 +775,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetMatch.setEthernetType(ethTypeBuilder.build());
 
         EthernetSourceBuilder ethSrcBuilder = new EthernetSourceBuilder();
@@ -796,7 +786,7 @@ public class MatchUtils {
         // TCP Protocol Match
         // ipv4 version
         IpMatchBuilder ipMatch = new IpMatchBuilder();
-        ipMatch.setIpProtocol(TCP_SHORT);
+        ipMatch.setIpProtocol(UtilsConstants.TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
         TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
@@ -835,7 +825,7 @@ public class MatchUtils {
         // Ethertype match
         EthernetMatchBuilder ethernetType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethernetType.build());
         if (ipPrefix != null) {
@@ -846,11 +836,11 @@ public class MatchUtils {
         // TCP Protocol Match
         // ipv4 version
         IpMatchBuilder ipMatch = new IpMatchBuilder();
-        ipMatch.setIpProtocol(TCP_SHORT);
+        ipMatch.setIpProtocol(UtilsConstants.TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
         // TCP Flag Match
         TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
+        tcpFlagMatch.setTcpFlag(UtilsConstants.TCP_SYN);
         matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
 
         return matchBuilder;
@@ -874,7 +864,7 @@ public class MatchUtils {
 
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetMatch.setEthernetType(ethTypeBuilder.build());
 
         EthernetSourceBuilder ethSrcBuilder = new EthernetSourceBuilder();
@@ -932,7 +922,7 @@ public class MatchUtils {
         // Ethertype match
         EthernetMatchBuilder ethernetType = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
-        ethTypeBuilder.setType(new EtherType(IPV4_LONG));
+        ethTypeBuilder.setType(new EtherType(UtilsConstants.IPV4_LONG));
         ethernetType.setEthernetType(ethTypeBuilder.build());
         matchBuilder.setEthernetMatch(ethernetType.build());
         if (ipPrefix != null) {
@@ -944,12 +934,12 @@ public class MatchUtils {
         // TCP Protocol Match
         // ipv4 version
         IpMatchBuilder ipMatch = new IpMatchBuilder();
-        ipMatch.setIpProtocol(TCP_SHORT);
+        ipMatch.setIpProtocol(UtilsConstants.TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
         // TCP Flag Match
         TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
+        tcpFlagMatch.setTcpFlag(UtilsConstants.TCP_SYN);
         matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
 
         return matchBuilder;

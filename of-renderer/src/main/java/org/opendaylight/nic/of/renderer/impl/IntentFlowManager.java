@@ -36,12 +36,6 @@ public class IntentFlowManager extends AbstractFlowManager {
     private Map<String, Map<String, String>> subjectsMapping = null;
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(IntentFlowManager.class);
-
-    private static final Integer SRC_END_POINT_GROUP_INDEX = 0;
-    private static final Integer DST_END_POINT_GROUP_INDEX = 1;
-    private static final String ANY_MATCH = "any";
-    private static final String INTENT_L2_FLOW_NAME = "L2_Rule_";
-    private static final String MPLS_LABEL_KEY = null;
     private FlowStatisticsListener flowStatisticsListener;
 
     public void setEndPointGroups(List<String> endPointGroups) {
@@ -111,26 +105,26 @@ public class IntentFlowManager extends AbstractFlowManager {
         flowBuilder.setId(flowId);
         flowBuilder.setKey(key);
         flowBuilder.setBarrier(true);
-        flowBuilder.setPriority(DEFAULT_PRIORITY);
+        flowBuilder.setPriority(OFRendererConstants.DEFAULT_PRIORITY);
         flowBuilder.setFlowName(flowName);
-        flowBuilder.setHardTimeout(DEFAULT_HARD_TIMEOUT);
-        flowBuilder.setIdleTimeout(DEFAULT_IDLE_TIMEOUT);
+        flowBuilder.setHardTimeout(OFRendererConstants.DEFAULT_HARD_TIMEOUT);
+        flowBuilder.setIdleTimeout(OFRendererConstants.DEFAULT_IDLE_TIMEOUT);
 
         return flowBuilder;
     }
 
     private void createEthMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
-        String endPointSrc = endPointGroups.get(SRC_END_POINT_GROUP_INDEX);
-        String endPointDst = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
+        String endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
+        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
         MacAddress srcMac = null;
         MacAddress dstMac = null;
 
         LOG.info("Creating block intent for endpoints: source{} destination {}", endPointSrc, endPointDst);
         try {
-            if (!endPointSrc.equalsIgnoreCase(ANY_MATCH)) {
+            if (!endPointSrc.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
                 srcMac = new MacAddress(endPointSrc);
             }
-            if (!endPointDst.equalsIgnoreCase(ANY_MATCH)) {
+            if (!endPointDst.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
                 dstMac = new MacAddress(endPointDst);
             }
             MatchUtils.createEthMatch(matchBuilder, srcMac, dstMac);
@@ -145,8 +139,8 @@ public class IntentFlowManager extends AbstractFlowManager {
     private void createMplsMatch(List<String> endPointGroups, Map<String, Map<String, String>> subjectsMapping,
             MatchBuilder matchBuilder) {
         for (String value : endPointGroups) {
-            if (subjectsMapping.containsKey(value) && subjectsMapping.get(value).containsKey((MPLS_LABEL_KEY))) {
-                Long mplsLabel = new Long(subjectsMapping.get(value).get(MPLS_LABEL_KEY));
+            if (subjectsMapping.containsKey(value) && subjectsMapping.get(value).containsKey((OFRendererConstants.MPLS_LABEL_KEY))) {
+                Long mplsLabel = new Long(subjectsMapping.get(value).get(OFRendererConstants.MPLS_LABEL_KEY));
                 // since we add only one MPLS label for now bos field is 1 or true
                 boolean bos = true;
                 MatchUtils.createMplsLabelBosMatch(matchBuilder, mplsLabel, bos);
@@ -157,9 +151,9 @@ public class IntentFlowManager extends AbstractFlowManager {
     @Override
     protected String createFlowName() {
         StringBuilder sb = new StringBuilder();
-        sb.append(INTENT_L2_FLOW_NAME);
-        sb.append(endPointGroups.get(SRC_END_POINT_GROUP_INDEX));
-        sb.append(endPointGroups.get(DST_END_POINT_GROUP_INDEX));
+        sb.append(OFRendererConstants.INTENT_L2_FLOW_NAME);
+        sb.append(endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX));
+        sb.append(endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX));
         return sb.toString();
     }
 }

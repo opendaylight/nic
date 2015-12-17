@@ -30,10 +30,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026
 
 public class LldpFlowManager extends AbstractFlowManager {
 
-    private static final String LLDP_REPLY_TO_CONTROLLER_FLOW_NAME = "lldpReplyToController";
-    private static final int LLDP_REPLY_TO_CONTROLLER_FLOW_PRIORITY = 9500;
-    private final int LLDP_ETHER_TYPE = 35020;
-    private static final String ETHERNET_TYPE = "_EthernetType_";
     private final AtomicLong flowCookie = new AtomicLong();
 
     LldpFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
@@ -43,8 +39,8 @@ public class LldpFlowManager extends AbstractFlowManager {
     @Override
     protected String createFlowName() {
         StringBuilder sb = new StringBuilder();
-        sb.append(LLDP_REPLY_TO_CONTROLLER_FLOW_NAME);
-        sb.append(ETHERNET_TYPE).append(flowCookie.get());
+        sb.append(OFRendererConstants.LLDP_REPLY_TO_CONTROLLER_FLOW_NAME);
+        sb.append(OFRendererConstants.ETHERNET_TYPE).append(flowCookie.get());
         return sb.toString();
     }
 
@@ -60,11 +56,11 @@ public class LldpFlowManager extends AbstractFlowManager {
                 .setHardTimeout(0)
                 .setCookie(new FlowCookie(BigInteger.valueOf(flowCookie.incrementAndGet())))
                 .setFlags(new FlowModFlags(false, false, false, false, false))
-                .setPriority(LLDP_REPLY_TO_CONTROLLER_FLOW_PRIORITY);
+                .setPriority(OFRendererConstants.LLDP_REPLY_TO_CONTROLLER_FLOW_PRIORITY);
 
         EthernetMatchBuilder ethernetMatchBuilder = new EthernetMatchBuilder()
                 .setEthernetType(new EthernetTypeBuilder()
-                .setType(new EtherType(Long.valueOf(LLDP_ETHER_TYPE))).build());
+                .setType(new EtherType(Long.valueOf(OFRendererConstants.LLDP_ETHER_TYPE))).build());
         Match match = new MatchBuilder().setEthernetMatch(ethernetMatchBuilder.build()).build();
 
         lldpFlow.setMatch(match);
