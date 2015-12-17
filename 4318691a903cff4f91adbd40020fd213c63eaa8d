@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_bc9ff102",
+        "filename": "intent-impl/src/test/java/org/opendaylight/nic/impl/NicProviderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 4331
+      },
+      "writtenOn": "2015-12-17T01:07:22Z",
+      "side": 1,
+      "message": "IntentMappingService",
+      "range": {
+        "startLine": 97,
+        "startChar": 19,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "4318691a903cff4f91adbd40020fd213c63eaa8d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
