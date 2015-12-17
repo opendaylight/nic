@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_897c3474",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/MatchUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T17:11:20Z",
+      "side": 0,
+      "message": "it makes sense to have those there, it only related to match",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 53
+      },
+      "revId": "63d53342268394e7aa23ba5c9583fad7efcd4ff5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_6993f8a3",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/ArpFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T17:11:20Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 77
+      },
+      "revId": "87d11297c5f6866b46341a85ade29ca751a54f92",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a981f04b",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererConstants.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T17:11:20Z",
+      "side": 1,
+      "message": "I like this change but two things:\n\n- create a private constructor so nobody instantiate this class.\n- add javadoc so we know what we\u0027re dealing with",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "87d11297c5f6866b46341a85ade29ca751a54f92",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
