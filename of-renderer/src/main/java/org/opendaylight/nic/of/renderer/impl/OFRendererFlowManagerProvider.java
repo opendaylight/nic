@@ -54,6 +54,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private IntentMappingService intentMappingService;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
+    private OFRendererGraphService graphService;
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
@@ -66,8 +67,9 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         // Register this service with karaf
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         serviceRegistration.add(context.registerService(OFRendererFlowService.class, this, null));
+        graphService = new NetworkGraphManager();
         serviceRegistration.add(context.registerService(OFRendererGraphService.class,
-                                   new NetworkGraphManager(),
+                                   graphService,
                                    null));
         ServiceReference<?> serviceReference = context.getServiceReference(IntentMappingService.class);
         intentMappingService = (IntentMappingService) context.getService(serviceReference);
@@ -78,6 +80,17 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
 
     @Override
     public void pushIntentFlow(Intent intent, FlowAction flowAction) {
+        Set<String> mplsKeys = new HashSet<String>();
+        for (String key: intentMappingService.keys()) {
+            Map<String, String> innerMap = intentMappingService.get(key);
+            for (Map.Entry<String, String> innerData: innerMap.entrySet()) {
+                if (innerData.getValue().equals(OFRendererConstants.MPLS_KEY)) {
+                    mplsKeys.add(key);
+                    break;
+                }
+            }
+        }
+
         // TODO: Extend to support other actions
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
         Action actionContainer = (Action) intent.getActions().get(0).getAction();
