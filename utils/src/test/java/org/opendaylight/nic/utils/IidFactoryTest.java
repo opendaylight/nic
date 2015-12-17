@@ -9,6 +9,9 @@
 package org.opendaylight.nic.utils;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,9 +21,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeRef;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier.InstanceIdentifierBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NetworkTopology;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.Topology;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.TopologyKey;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.LinkKey;
 
@@ -68,5 +73,13 @@ public class IidFactoryTest {
                                         .child(Link.class, mockLinkKey)
                                         .build();
         assertTrue(IidFactory.getLinkII(iid) instanceof InstanceIdentifier);
+    }
+
+    @Test
+    public void testGetTopologyLinkInstanceIdentifier() throws Exception {
+        InstanceIdentifierBuilder<NetworkTopology> iidNetTopo = mock(InstanceIdentifierBuilder.class);
+        InstanceIdentifierBuilder<Topology> iidTopo = mock(InstanceIdentifierBuilder.class);
+        when(iidNetTopo.child(eq(Topology.class), any(TopologyKey.class))).thenReturn(iidTopo);
+        assertTrue(IidFactory.getFlowTopologyII() instanceof InstanceIdentifier);
     }
 }
