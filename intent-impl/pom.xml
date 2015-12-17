@@ -40,7 +40,7 @@
   </dependency>
   <dependency>
    <groupId>${project.groupId}</groupId>
-   <artifactId>intent-mapping</artifactId>
+   <artifactId>intent-mapping-interface</artifactId>
    <version>${project.version}</version>
   </dependency>
   <dependency>

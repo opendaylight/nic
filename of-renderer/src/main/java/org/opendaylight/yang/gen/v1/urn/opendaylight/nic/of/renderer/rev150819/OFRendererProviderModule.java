@@ -25,7 +25,8 @@ public class OFRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.o
         LOG.info("Creating Open flow renderer");
         final OFRendererFlowManagerProvider provider =
                 new OFRendererFlowManagerProvider(getDataBrokerDependency(),
-                                                  getPipelineManagerDependency());
+                                                  getPipelineManagerDependency(),
+                                                  getIntentMappingInterfaceDependency());
         provider.init();
         return provider;
     }
