@@ -42,10 +42,6 @@ import com.google.common.collect.Lists;
 public abstract class AbstractFlowManager {
 
     protected final DataBroker dataBroker;
-    protected static final Integer DEFAULT_IDLE_TIMEOUT = 0;
-    protected static final Integer DEFAULT_HARD_TIMEOUT = 0;
-    protected static final Integer DEFAULT_PRIORITY = 9000;
-    protected static final Short FALLBACK_TABLE_ID = 0;
     private final PipelineManager pipelineManager;
 
     AbstractFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
@@ -137,7 +133,7 @@ public abstract class AbstractFlowManager {
         boolean result;
         MdsalUtils mdsal = new MdsalUtils(dataBroker);
         if (!pipelineManager.setTableId(nodeId, flowBuilder)) {
-            flowBuilder.setTableId(FALLBACK_TABLE_ID);
+            flowBuilder.setTableId(OFRendererConstants.FALLBACK_TABLE_ID);
         }
 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)

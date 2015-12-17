@@ -37,13 +37,6 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(MplsIntentFlowManager.class);
 
-    private static final Integer SRC_END_POINT_GROUP_INDEX = 0;
-    private static final Integer DST_END_POINT_GROUP_INDEX = 1;
-    private static final String MPLS_LABEL_KEY = "mpls_label";
-    private static final String IP_PREFIX_KEY = "ip_prefix";
-    private static final String SWITCH_PORT_KEY = "switch_port";
-    private static final String INTENT_MPLS_FLOW_NAME = "MPLS_Rule_";
-
     MplsIntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
     }
@@ -79,15 +72,15 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
 
         MatchBuilder matchBuilder = new MatchBuilder();
 
-        String endPointSrc = endPointGroups.get(SRC_END_POINT_GROUP_INDEX);
-        String endPointDst = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
+        String endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
+        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
         Ipv4Prefix srcPrefix = null;
         Ipv4Prefix dstPrefix = null;
         String label = null;
         try {
-            srcPrefix = new Ipv4Prefix(subjectsMapping.get(endPointSrc).get(IP_PREFIX_KEY));
-            dstPrefix = new Ipv4Prefix(subjectsMapping.get(endPointDst).get(IP_PREFIX_KEY));
-            label = subjectsMapping.get(endPointDst).get(MPLS_LABEL_KEY);
+            srcPrefix = new Ipv4Prefix(subjectsMapping.get(endPointSrc).get(OFRendererConstants.IP_PREFIX_KEY));
+            dstPrefix = new Ipv4Prefix(subjectsMapping.get(endPointDst).get(OFRendererConstants.IP_PREFIX_KEY));
+            label = subjectsMapping.get(endPointDst).get(OFRendererConstants.MPLS_LABEL_KEY);
         } catch (Exception e) {
             LOG.error("Subject does not have mapping information for pushing MPLS label", e);
         }
@@ -129,12 +122,12 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
 
         MatchBuilder matchBuilder = new MatchBuilder();
 
-        String endPointDst = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
+        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
         String label = null;
         String outputPort = null;
         try {
-            label = subjectsMapping.get(endPointDst).get(MPLS_LABEL_KEY);
-            String switchPort = subjectsMapping.get(endPointDst).get(SWITCH_PORT_KEY);
+            label = subjectsMapping.get(endPointDst).get(OFRendererConstants.MPLS_LABEL_KEY);
+            String switchPort = subjectsMapping.get(endPointDst).get(OFRendererConstants.SWITCH_PORT_KEY);
             String[] switchInfo = switchPort.split(":");
             outputPort = switchInfo[switchInfo.length - 1];
         } catch (Exception e) {
@@ -178,10 +171,10 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
 
         MatchBuilder matchBuilder = new MatchBuilder();
 
-        String endPointDst = endPointGroups.get(DST_END_POINT_GROUP_INDEX);
+        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
         String label = null;
         try {
-            label = subjectsMapping.get(endPointDst).get(MPLS_LABEL_KEY);
+            label = subjectsMapping.get(endPointDst).get(OFRendererConstants.MPLS_LABEL_KEY);
         } catch (Exception e) {
             LOG.error("Subject does not have mapping information for forwarding MPLS packets", e);
         }
@@ -214,18 +207,18 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
         flowBuilder.setId(flowId);
         flowBuilder.setKey(key);
         flowBuilder.setBarrier(true);
-        flowBuilder.setPriority(DEFAULT_PRIORITY);
+        flowBuilder.setPriority(OFRendererConstants.DEFAULT_PRIORITY);
         flowBuilder.setFlowName(flowName);
-        flowBuilder.setHardTimeout(DEFAULT_HARD_TIMEOUT);
-        flowBuilder.setIdleTimeout(DEFAULT_IDLE_TIMEOUT);
+        flowBuilder.setHardTimeout(OFRendererConstants.DEFAULT_HARD_TIMEOUT);
+        flowBuilder.setIdleTimeout(OFRendererConstants.DEFAULT_IDLE_TIMEOUT);
         return flowBuilder;
     }
 
     @Override
     protected String createFlowName() {
-        StringBuilder sb = new StringBuilder(INTENT_MPLS_FLOW_NAME);
-        sb.append(endPointGroups.get(SRC_END_POINT_GROUP_INDEX));
-        sb.append(endPointGroups.get(DST_END_POINT_GROUP_INDEX));
+        StringBuilder sb = new StringBuilder(OFRendererConstants.INTENT_MPLS_FLOW_NAME);
+        sb.append(endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX));
+        sb.append(endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX));
         return sb.toString();
     }
 }
