@@ -107,7 +107,7 @@ public class MplsIntentFlowManagerTest {
 
     @Test
     public void testPopMplsFlow() {
-      mplsIntentFlowManager.popMplsFlow(mock(NodeId.class), FlowAction.ADD_FLOW);
+      mplsIntentFlowManager.popMplsFlow(mock(NodeId.class), FlowAction.ADD_FLOW, new String("openflow:1"));
       verify(mplsIntentFlowManager).writeDataTransaction(any(NodeId.class), any(FlowBuilder.class), any(FlowAction.class));
     }
 

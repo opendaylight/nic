@@ -8,27 +8,24 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
+import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.SparseMultigraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 
 public class NetworkGraphManager implements OFRendererGraphService {
 
     private Graph<NodeId, Link> networkGraph;
-    private Set<String> linkAdded = new HashSet<>();
     private DijkstraShortestPath<NodeId, Link> shortestPath;
 
     public NetworkGraphManager() {
-        networkGraph = new SparseMultigraph<>();
+        networkGraph = new DirectedSparseMultigraph<>();
         shortestPath = new DijkstraShortestPath<>(networkGraph);
     }
 
@@ -64,39 +61,18 @@ public class NetworkGraphManager implements OFRendererGraphService {
      */
     @Override
     public synchronized void setLinks(List<Link> links) {
-        if (links != null && !links.isEmpty()) {
-            for(Link link : links) {
-                if(linkAlreadyAdded(link)) {
-                  continue;
+        for (Link link: links) {
+          NodeId sourceNodeId = link.getSource().getSourceNode();
+          NodeId destinationNodeId = link.getDestination().getDestNode();
+            if (networkGraph.findEdge(sourceNodeId, destinationNodeId) == null) {
+                if (!networkGraph.containsVertex(sourceNodeId)) {
+                    networkGraph.addVertex(sourceNodeId);
                 }
-                NodeId sourceNodeId = link.getSource().getSourceNode();
-                NodeId destinationNodeId = link.getDestination().getDestNode();
-                networkGraph.addVertex(sourceNodeId);
-                networkGraph.addVertex(destinationNodeId);
-                networkGraph.addEdge(link, sourceNodeId, destinationNodeId, EdgeType.UNDIRECTED);
-              }
+                if (!networkGraph.containsVertex(destinationNodeId)) {
+                    networkGraph.addVertex(destinationNodeId);
+                }
+                networkGraph.addEdge(link, sourceNodeId, destinationNodeId, EdgeType.DIRECTED);
+            }
         }
     }
-
-    /**
-     * Check if a specific Network-Topology Link
-     * has already been added to the Graph.
-     * @param link Network-Topology The Network-Topology {@link Link}
-     * @return true or false
-     */
-    protected boolean linkAlreadyAdded(Link link) {
-        String linkAddedKey = null;
-        if(link.getDestination().getDestTp().hashCode() > link.getSource().getSourceTp().hashCode()) {
-          linkAddedKey = link.getSource().getSourceTp().getValue() + link.getDestination().getDestTp().getValue();
-        } else {
-          linkAddedKey = link.getDestination().getDestTp().getValue() + link.getSource().getSourceTp().getValue();
-        }
-        if(linkAdded.contains(linkAddedKey)) {
-          return true;
-        } else {
-          linkAdded.add(linkAddedKey);
-          return false;
-        }
-    }
-
 }
