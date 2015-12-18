@@ -21,7 +21,7 @@ public class MappingMdsalProviderTests {
         when(transaction.submit()).thenReturn(value);
         when(databroker.newWriteOnlyTransaction()).thenReturn(transaction);
 
-        MappingMdsalProvider provider = new MappingMdsalProvider();
+        MappingMdsalProvider provider = new MappingMdsalProvider(databroker);
 
         String key = "key";
         try {

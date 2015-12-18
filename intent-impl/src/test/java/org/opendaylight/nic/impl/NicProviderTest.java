@@ -33,7 +33,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.Test;
-import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -94,10 +93,6 @@ public class NicProviderTest {
      */
     private NicProvider nicProvider;
     /**
-     * Instance of NicProvider to perform unit testing.
-     */
-    private IntentMappingService mockMappingService;
-    /**
      * It creates the required objects for every unit test cases.
      *
      * @throws Exception
@@ -113,11 +108,10 @@ public class NicProviderTest {
         mockWriteTransaction = mock(WriteTransaction.class);
         mockReadOnlyTransaction = mock(ReadOnlyTransaction.class);
         mockDataBroker = mock(DataBroker.class);
-        mockMappingService = mock(IntentMappingService.class);
         when(mockWriteTransaction.submit()).thenReturn(mockListenableFuture);
         when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
         when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadOnlyTransaction);
-        nicProvider = new NicProvider(mockDataBroker, mockMappingService);
+        nicProvider = new NicProvider(mockDataBroker);
     }
 
     /**

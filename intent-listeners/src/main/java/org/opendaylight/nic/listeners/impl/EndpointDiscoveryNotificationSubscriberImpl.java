@@ -7,7 +7,7 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
-import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.api.IntentMappingService;
 import org.opendaylight.nic.listeners.api.EndpointDiscovered;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.NicNotification;

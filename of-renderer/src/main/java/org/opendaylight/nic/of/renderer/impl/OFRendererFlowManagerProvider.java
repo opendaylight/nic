@@ -10,7 +10,7 @@ package org.opendaylight.nic.of.renderer.impl;
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 
-import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -56,11 +56,10 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
 
-    public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager, IntentMappingService intentMappingService) {
+    public OFRendererFlowManagerProvider(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
         this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
-        this.intentMappingService = intentMappingService;
     }
 
     public void init() {
@@ -71,6 +70,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         serviceRegistration.add(context.registerService(OFRendererGraphService.class,
                                    new NetworkGraphManager(),
                                    null));
+        ServiceReference<?> serviceReference = context.getServiceReference(IntentMappingService.class);
+        intentMappingService = (IntentMappingService) context.getService(serviceReference);
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);

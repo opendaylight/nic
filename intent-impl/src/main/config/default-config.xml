@@ -23,13 +23,6 @@
             <name>binding-data-broker</name>
           </data-broker>
 
-          <intent-mapping-interface>
-            <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:nic:mapping">
-              prefix:intent-mapping-interface
-            </type>
-            <name>intent-mapping-interface</name>
-          </intent-mapping-interface>
-
         </module>
       </modules>
         <services xmlns="urn:opendaylight:params:xml:ns:yang:controller:config">
@@ -45,7 +38,8 @@
   </configuration>
 
   <required-capabilities>
-    <capability>urn:opendaylight:nic:intent:impl?module=intent-impl&amp;revision=2015-05-07</capability>
-    <capability>urn:opendaylight:params:xml:ns:yang:nic:mapping?module=intent-mapping-interface&amp;revision=2015-11-11</capability>
+    <capability>
+      urn:opendaylight:nic:intent:impl?module=intent-impl&amp;revision=2015-05-07
+    </capability>
   </required-capabilities>
 </snapshot>

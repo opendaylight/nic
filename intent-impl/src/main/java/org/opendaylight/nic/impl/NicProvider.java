@@ -9,13 +9,17 @@
 package org.opendaylight.nic.impl;
 
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.compiler.api.Action;
 import org.opendaylight.nic.compiler.api.ActionConflictType;
@@ -54,11 +58,9 @@ public class NicProvider implements NicConsoleProvider {
     public static final String ACTION_LOG = "LOG";
 
     protected DataBroker dataBroker;
-    protected IntentMappingService mappingSvc;
 
-    public NicProvider(DataBroker dataBroker, IntentMappingService mappingSvc) {
+    public NicProvider(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
-        this.mappingSvc = mappingSvc;
     }
 
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
@@ -96,7 +98,7 @@ public class NicProvider implements NicConsoleProvider {
             }
 
             @Override
-            public void onFailure(final Throwable throwable) {
+            public void onFailure(final Throwable throwable)  {
                 LOG.error("initIntentsOperational: transaction failed");
             }
         });
@@ -239,14 +241,14 @@ public class NicProvider implements NicConsoleProvider {
             String destinationSubject = destinationContainer.getEndPointGroup().getName();
             Set<Endpoint> sources;
             try {
-                sources = translateSubject(compiler, sourceSubject);
+                sources = compiler.parseEndpointGroup(sourceSubject);
             } catch (UnknownHostException e) {
                 LOG.error("Invalid source subject: {}", sourceSubject, e);
                 return "[ERROR] Invalid subject: " + sourceSubject;
             }
             Set<Endpoint> destinations;
             try {
-                destinations = translateSubject(compiler, destinationSubject);
+                destinations = compiler.parseEndpointGroup(destinationSubject);
             } catch (UnknownHostException e) {
                 LOG.error("Invalid destination subject: {}", destinationSubject, e);
                 return "[ERROR] Invalid subject: " + destinationSubject;
@@ -294,17 +296,6 @@ public class NicProvider implements NicConsoleProvider {
         stringBuilder.append(formatPolicies(compiledPolicies));
 
         return stringBuilder.toString();
-    }
-
-    private Set<Endpoint> translateSubject(IntentCompiler compiler, String sourceSubject) throws UnknownHostException {
-        StringBuilder csv = new StringBuilder();
-        Map<String, String> innerMap = mappingSvc.get(sourceSubject);
-        for(String ipAddress : innerMap.values()){
-            if(csv.length() == 0) csv.append(ipAddress);
-            else csv.append(",").append(ipAddress);
-        }
-
-        return compiler.parseEndpointGroup(sourceSubject);
     }
 
     private String formatPolicies(Collection<Policy> policies) {

@@ -9,12 +9,12 @@
 
 module intent-mapping-mdsal-impl {
     yang-version 1;
-    namespace "urn:opendaylight:params:xml:ns:yang:nic:mapping:impl";
+    namespace "urn:opendaylight:params:xml:ns:yang:intent:mapping:mdsal:impl";
     prefix "intent-mapping-mdsal-impl";
 
     import config { prefix config; revision-date 2013-04-05; }
     import opendaylight-md-sal-binding { prefix md-sal-binding; revision-date 2013-10-28;}
-    import intent-mapping-interface { prefix intent-mapping-interface; revision-date 2015-11-11;}
+    import intent-mapping-mdsal { prefix mapping-svc; revision-date 2015-11-11;}
 
     description
         "Service definition for intent-mapping-mdsal implementation module";
@@ -26,7 +26,7 @@ module intent-mapping-mdsal-impl {
     identity intent-mapping-mdsal-impl {
         base config:module-type;
         config:java-name-prefix MappingMdsalImpl;
-        config:provided-service intent-mapping-interface:intent-mapping-interface;
+        config:provided-service mapping-svc:intent-mapping-service;
     }
 
     augment "/config:modules/config:module/config:configuration" {
