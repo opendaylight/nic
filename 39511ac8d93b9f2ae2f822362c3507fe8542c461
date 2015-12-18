@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_d96af519",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:35:18Z",
+      "side": 1,
+      "message": "this could be moved inside the if statement",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 98
+      },
+      "revId": "39511ac8d93b9f2ae2f822362c3507fe8542c461",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
