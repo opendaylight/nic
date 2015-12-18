@@ -115,6 +115,7 @@
         <feature version="${openflowplugin.version}">odl-openflowplugin-app-lldp-speaker-li</feature>
         <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
             mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config
         </configfile>

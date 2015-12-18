@@ -21,6 +21,12 @@
                         </type>
                         <name>pipeline-manager</name>
                     </pipeline-manager>
+                    <intent-mapping-interface>
+                        <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:nic:mapping">
+                            prefix:intent-mapping-interface
+                        </type>
+                        <name>intent-mapping-interface</name>
+                    </intent-mapping-interface>
                 </module>
             </modules>
         </data>
@@ -29,6 +35,7 @@
     <required-capabilities>
         <capability>urn:opendaylight:nic:of:renderer?module=of-renderer&amp;revision=2015-08-19</capability>
         <capability>urn:opendaylight:params:xml:ns:yang:nic:pipeline-manager?module=pipeline-manager&amp;revision=2015-09-25</capability>
+        <capability>urn:opendaylight:params:xml:ns:yang:nic:mapping?module=intent-mapping-interface&amp;revision=2015-11-11</capability>
     </required-capabilities>
 </snapshot>
 
