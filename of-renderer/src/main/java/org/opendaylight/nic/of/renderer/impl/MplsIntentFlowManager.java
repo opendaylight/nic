@@ -37,9 +37,10 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(MplsIntentFlowManager.class);
 
-    MplsIntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
+    public MplsIntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
     }
+
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
     }
