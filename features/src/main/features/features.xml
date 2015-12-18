@@ -125,6 +125,7 @@
              description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${nemo.version}">odl-nemo-engine</feature>
+        <bundle>mvn:joda-time/joda-time/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">
             mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}/xml/config
