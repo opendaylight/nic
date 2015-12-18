@@ -24,7 +24,7 @@
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
 
-    <!-- Mapping Service feature -->
+    <!-- Mapping Service feature
     <feature name="odl-nic-core-service" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: Mapping service'>
         <feature version="${mdsal.version}">odl-restconf</feature>
         <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
@@ -36,6 +36,7 @@
             mvn:org.opendaylight.nic/intent-mapping/{{VERSION}}/xml/config
         </configfile>
     </feature>
+    -->
 
     <!-- Mapping Service feature for MDSAL -->
     <feature name="odl-nic-core-service-mdsal" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: MDSAL based mapping service'>
