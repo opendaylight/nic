@@ -102,7 +102,8 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
 
         StructureStyleNemoUpdateInputBuilder builder;
         try {
-            builder = NEMOIntentParser.parseBandwidthOnDemand(intent);
+            BandwidthOnDemandParameters params = NEMOIntentParser.parseBandwidthOnDemand(intent);
+            builder = NemoInputBuilders.getUpdateBuilder(params);
         } catch (Exception e) {
             builder = null;
         }

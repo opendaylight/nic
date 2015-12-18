@@ -73,7 +73,8 @@ public class NEMOIntentParserTest {
         }
 
         Intent intent = getBandwidthOnDemandIntent();
-        StructureStyleNemoUpdateInputBuilder inputBuilder = NEMOIntentParser.parseBandwidthOnDemand(intent);
+        BandwidthOnDemandParameters params = NEMOIntentParser.parseBandwidthOnDemand(intent);
+        StructureStyleNemoUpdateInputBuilder inputBuilder = NemoInputBuilders.getUpdateBuilder(params);
         assertNotNull("Expected valid inputBuilder", inputBuilder);
     }
 
@@ -81,7 +82,7 @@ public class NEMOIntentParserTest {
     public static final String TO = "marketing";
     public static final String BANDWIDTH = "10G";
     public static final String START_TIME = "08:00:00Z";
-    public static final String DURATION = "60m";
+    public static final String DURATION = "1h";
 
     public static Intent getBandwidthOnDemandIntent() {
         IntentBuilder b = new IntentBuilder();
