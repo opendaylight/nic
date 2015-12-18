@@ -134,12 +134,12 @@ public class MatchUtils {
     /**
      * Create MPLS label Match
      *
-     * @param matchBuilder MatchBuilder Object
      * @param label  Long representing a Label value
      * @param bos Boolean indicating bottom of stack for this label
      * @return matchBuilder Map MatchBuilder Object with a match
      */
-    public static MatchBuilder createMplsLabelBosMatch(MatchBuilder matchBuilder, Long label, boolean bos) {
+    public static MatchBuilder createMplsLabelBosMatch(Long label, boolean bos) {
+        MatchBuilder matchBuilder = new MatchBuilder();
         EthernetMatchBuilder eth = new EthernetMatchBuilder();
         EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
         ethTypeBuilder.setType(new EtherType(MPLSUCAST_LONG));

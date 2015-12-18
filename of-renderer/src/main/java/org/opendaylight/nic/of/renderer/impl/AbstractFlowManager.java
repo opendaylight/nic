@@ -101,8 +101,11 @@ public abstract class AbstractFlowManager {
      * @param forward Boolean for forward MPLS packet action
      * @return A set of OpenFlow {@link Instructions} that have been construction
      */
-    protected Instructions createMPLSIntentInstructions(List<Long> labels, boolean popLabel, Short bos,
-            String outputPort, boolean forward) {
+    protected Instructions createMPLSIntentInstructions(List<Long> labels,
+                                                        boolean popLabel,
+                                                        Short bos,
+                                                        String outputPort,
+                                                        boolean forward) {
         int order = 0;
         List<Action> actionList = new ArrayList<>();
         if(!forward) {
@@ -136,12 +139,16 @@ public abstract class AbstractFlowManager {
             flowBuilder.setTableId(OFRendererConstants.FALLBACK_TABLE_ID);
         }
 
-        InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
-                .child(Node.class, new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
-                .child(Table.class, new TableKey(flowBuilder.getTableId())).child(Flow.class, flowBuilder.getKey())
-                .build();
+        InstanceIdentifier<Flow> flowIID = InstanceIdentifier
+                                               .builder(Nodes.class)
+                                               .child(Node.class,
+                                                      new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
+                                               .child(Table.class,
+                                                      new TableKey(flowBuilder.getTableId()))
+                                               .child(Flow.class, flowBuilder.getKey())
+                                               .build();
 
-        result = mdsal.put(LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build(), flowAction);
+        result = mdsal.put(LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build());
 
         return result;
     }

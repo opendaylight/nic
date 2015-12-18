@@ -143,12 +143,13 @@ public class FlowUtils {
      */
     public static Action createOutputToPort(int order, String outputPort) {
         return new ActionBuilder().setOrder(order)
-                .setKey(new ActionKey(order))
-                .setAction(
-                        new OutputActionCaseBuilder()
-                        .setOutputAction(new OutputActionBuilder().setMaxLength(0xffff)
-                                .setOutputNodeConnector(new Uri(outputPort)).build())
-                                .build())
-                                .build();
+                                  .setKey(new ActionKey(order))
+                                  .setAction(new OutputActionCaseBuilder()
+                                                     .setOutputAction(new OutputActionBuilder()
+                                                                              .setMaxLength(0xffff)
+                                                                              .setOutputNodeConnector(new Uri(outputPort))
+                                                                              .build())
+                                                     .build())
+                                  .build();
     }
 }

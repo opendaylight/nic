@@ -84,10 +84,10 @@ public class MatchUtilsTest {
 
     @Test
     public void testCreateMplsLabelBosMatch() {
-        result = MatchUtils.createMplsLabelBosMatch(matchBuilderMock, 2L, true);
+        result = MatchUtils.createMplsLabelBosMatch(2L, true);
         Assert.assertNotNull(result);
 
-        result = MatchUtils.createMplsLabelBosMatch(matchBuilderMock, 2L, false);
+        result = MatchUtils.createMplsLabelBosMatch(2L, false);
         Assert.assertNotNull(result);
     }
 
@@ -132,8 +132,8 @@ public class MatchUtilsTest {
         MatchUtils.createEtherTypeMatch(null, 2L);
         MatchUtils.createVlanIdMatch(null, VLAN_ID, true);
         MatchUtils.createVlanIdMatch(null, null, true);
-        MatchUtils.createMplsLabelBosMatch(null, 2L, true);
-        MatchUtils.createMplsLabelBosMatch(null, null, true);
+        MatchUtils.createMplsLabelBosMatch(2L, true);
+        MatchUtils.createMplsLabelBosMatch(null, true);
         MatchUtils.createEthMatch(null, macAddressMock, macAddressMock);
         MatchUtils.createEthMatch(matchBuilderMock, null, macAddressMock);
         MatchUtils.createEthMatch(matchBuilderMock, macAddressMock, null);
