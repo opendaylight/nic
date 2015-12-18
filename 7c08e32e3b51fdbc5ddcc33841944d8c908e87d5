@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_59312559",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/GraphMapImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "Gson json \u003d new Gson(); would work",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f9357146",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/GraphMapImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "please specify what this is",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_193bad3b",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/GraphMapImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "like above",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b93ff924",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/GraphMapImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_794981cf",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/GraphMapImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "can we have a more relevenat name?",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_391309ba",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "you could add a null check on children",
+      "range": {
+        "startLine": 28,
+        "startChar": 28,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f98331ca",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "use addChildren method",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_591845d3",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "you can call the first constructor here",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f90c9196",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "use Preconditions.checkNotNull(node)\nthen safely assign this.node \u003d node;",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1912cdb1",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "use second constructor",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 9
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b9261915",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-18T19:31:31Z",
+      "side": 1,
+      "message": "use precondition",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "7c08e32e3b51fdbc5ddcc33841944d8c908e87d5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
