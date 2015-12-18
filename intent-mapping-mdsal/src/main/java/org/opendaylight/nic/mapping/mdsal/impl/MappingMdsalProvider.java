@@ -108,7 +108,13 @@ public class MappingMdsalProvider implements IntentMappingService,
 
     @Override
     public Collection<String> keys() {
-        throw new UnsupportedOperationException();
+        Collection<String> keys = new ArrayList<String>();
+        Mappings mappings = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID);
+        List<OuterMap> outerMap = mappings.getOuterMap();
+        for (OuterMap map: outerMap) {
+            keys.add(map.getKey().getId());
+        }
+        return keys;
     }
 
     @Override
@@ -146,8 +152,10 @@ public class MappingMdsalProvider implements IntentMappingService,
         // We want the Operational data
         //FIXME use datachange to sync config datachange to oper
         listInnerMap = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, outerMapIid).getInnerMap();
-        for (InnerMap innerMap : listInnerMap) {
-            subjectMappings.put(innerMap.getInnerKey(), innerMap.getValue());
+        if (listInnerMap != null && !listInnerMap.isEmpty()) {
+            for (InnerMap innerMap : listInnerMap) {
+                subjectMappings.put(innerMap.getInnerKey(), innerMap.getValue());
+            }
         }
         return subjectMappings;
     }

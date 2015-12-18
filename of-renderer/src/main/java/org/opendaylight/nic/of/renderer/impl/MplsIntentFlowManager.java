@@ -37,9 +37,10 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(MplsIntentFlowManager.class);
 
-    MplsIntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
+    public MplsIntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
     }
+
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
     }
@@ -113,47 +114,43 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
      * @param flowAction :Add flow action
      * @param outputPort :Port to which packet should be sent to after popping label
      */
-    void popMplsFlow(NodeId nodeId, FlowAction flowAction) {
+    void popMplsFlow(NodeId nodeId, FlowAction flowAction, String outputPort) {
         if (endPointGroups == null || action == null) {
             LOG.error("Endpoints and action cannot be null");
             return;
         }
-        LOG.info("popMplsFlow on Node: {}", nodeId.getValue());
+        LOG.info("popMplsFlow on Node {} and output on port {}", nodeId.getValue(), outputPort);
 
         MatchBuilder matchBuilder = new MatchBuilder();
 
         String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
         String label = null;
-        String outputPort = null;
         try {
             label = subjectsMapping.get(endPointDst).get(OFRendererConstants.MPLS_LABEL_KEY);
-            String switchPort = subjectsMapping.get(endPointDst).get(OFRendererConstants.SWITCH_PORT_KEY);
-            String[] switchInfo = switchPort.split(":");
-            outputPort = switchInfo[switchInfo.length - 1];
         } catch (Exception e) {
             LOG.error("Subject does not have mapping information for popping MPLS label", e);
         }
-        // Create MPLS label match
-        MatchUtils.createMplsLabelBosMatch(matchBuilder, new Long(label), true);
 
         List<Long> labels = new ArrayList<>();
         labels.add(new Long(label));
 
         // Create Flow
-        FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
+        FlowBuilder flowBuilder = createFlowBuilder(MatchUtils.createMplsLabelBosMatch(matchBuilder,
+                                                                                       new Long(label),
+                                                                                       true));
         if (action instanceof Allow) {
             //bos field is set to 1 since we only use one MPLS label
             Short bos = 1;
-            Instructions buildedInstructions = createMPLSIntentInstructions(labels, true, bos, outputPort, false);
-            flowBuilder.setInstructions(buildedInstructions);
-            LOG.info("Pop MPLS label at switch: {}", nodeId);
+            Instructions builtInstructions = createMPLSIntentInstructions(labels, true, bos, outputPort, false);
+            flowBuilder.setInstructions(builtInstructions);
+            LOG.info("Pop MPLS label at switch: {}", nodeId.getValue());
+            writeDataTransaction(nodeId, flowBuilder, flowAction);
         } else if (action instanceof Block) {
             LOG.warn("For Block Action the Instructions are not set");
         } else {
             LOG.error("Invalid action: {}", action.getClass().getName());
             return;
         }
-        writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
     /**
