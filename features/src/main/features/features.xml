@@ -136,6 +136,7 @@
              description='OpenDaylight :: Network Intent Composition :: Listeners'>
         <feature version="${project.version}">odl-nic-renderer-of</feature>
         <feature version="${neutron.version}">odl-neutron-service</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-intent-listeners.xml">
             mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config
