@@ -88,9 +88,6 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
         Action actionContainer = (Action) intent.getActions().get(0).getAction();
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
-        intentFlowManager.setEndPointGroups(endPointGroups);
-        intentFlowManager.setAction(actionContainer);
-        mplsIntentFlowManager.setSubjectsMapping(extractSubjectDetails(endPointGroups));
         // MPLS stuff
         String sourceIntent = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
         String targetIntent = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
@@ -100,8 +97,11 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
                 && targetContent.containsKey(OFRendererConstants.MPLS_LABEL_KEY)) {
             mplsIntentFlowManager.setEndPointGroups(endPointGroups);
             mplsIntentFlowManager.setAction(actionContainer);
+            mplsIntentFlowManager.setSubjectsMapping(extractSubjectDetails(endPointGroups));
             generateMplsFlows(sourceIntent, targetIntent);
         } else {
+            intentFlowManager.setEndPointGroups(endPointGroups);
+            intentFlowManager.setAction(actionContainer);
             //Get all node Id's
             Map<Node, List<NodeConnector>> nodeMap = getNodes();
             for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
@@ -134,21 +134,22 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         LOG.trace("MPLS Source NodeId {}", sourceNodeId.getValue());
         LOG.trace("MPLS Target NodeId {}", targetNodeId.getValue());
         LOG.info("Retrieved shortest path, there are {} hops.", shortestPath.size());
-        for (Link link: shortestPath) {
-            NodeId linkSourceNodeId = new NodeId(link.getSource().getSourceNode().getValue());
-            NodeId linkTargetNodeId = new NodeId(link.getDestination().getDestNode().getValue());
-            String linkSourceTp = link.getSource().getSourceTp().getValue();
-            String linkTargetTp = link.getDestination().getDestTp().getValue();
-            // Shortest path is giving result from end to beginning
-            if (sourceNodeId.getValue().equals(linkSourceNodeId.getValue())) {
-                mplsIntentFlowManager.pushMplsFlow(linkSourceNodeId,
-                                                   FlowAction.ADD_FLOW,
-                                                   linkSourceTp);
-            } else if(linkTargetNodeId.getValue().equals(targetNodeId.getValue())) {
-                mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, FlowAction.ADD_FLOW, linkSourceTp);
-                mplsIntentFlowManager.popMplsFlow(linkTargetNodeId, FlowAction.ADD_FLOW, targetNodeConnectorId);
-            } else {
-                mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, FlowAction.ADD_FLOW, linkSourceTp);
+        if (shortestPath != null && !shortestPath.isEmpty()) {
+            for (Link link: shortestPath) {
+                NodeId linkSourceNodeId = new NodeId(link.getSource().getSourceNode().getValue());
+                NodeId linkTargetNodeId = new NodeId(link.getDestination().getDestNode().getValue());
+                String linkSourceTp = link.getSource().getSourceTp().getValue();
+                // Shortest path is giving result from end to beginning
+                if (sourceNodeId.getValue().equals(linkSourceNodeId.getValue())) {
+                    mplsIntentFlowManager.pushMplsFlow(linkSourceNodeId,
+                                                       FlowAction.ADD_FLOW,
+                                                       linkSourceTp);
+                } else if(linkTargetNodeId.getValue().equals(targetNodeId.getValue())) {
+                    mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, FlowAction.ADD_FLOW, linkSourceTp);
+                    mplsIntentFlowManager.popMplsFlow(linkTargetNodeId, FlowAction.ADD_FLOW, targetNodeConnectorId);
+                } else {
+                    mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, FlowAction.ADD_FLOW, linkSourceTp);
+                }
             }
         }
     }

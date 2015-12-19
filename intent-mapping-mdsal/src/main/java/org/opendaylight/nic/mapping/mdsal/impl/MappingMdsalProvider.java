@@ -111,8 +111,10 @@ public class MappingMdsalProvider implements IntentMappingService,
         Collection<String> keys = new ArrayList<String>();
         Mappings mappings = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID);
         List<OuterMap> outerMap = mappings.getOuterMap();
-        for (OuterMap map: outerMap) {
-            keys.add(map.getKey().getId());
+        if (outerMap != null && !outerMap.isEmpty()) {
+            for (OuterMap map: outerMap) {
+                keys.add(map.getKey().getId());
+            }
         }
         return keys;
     }
