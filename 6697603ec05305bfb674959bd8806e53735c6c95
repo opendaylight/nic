@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_bfafd9e2",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T11:30:09Z",
+      "side": 1,
+      "message": "null check on mappings and #getOuterMap could be wise",
+      "range": {
+        "startLine": 113,
+        "startChar": 34,
+        "endLine": 113,
+        "endChar": 42
+      },
+      "revId": "6697603ec05305bfb674959bd8806e53735c6c95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_dfac15f0",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T11:30:09Z",
+      "side": 1,
+      "message": "null check and size() \u003e 0 or !isEmpty",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 36
+      },
+      "revId": "6697603ec05305bfb674959bd8806e53735c6c95",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
