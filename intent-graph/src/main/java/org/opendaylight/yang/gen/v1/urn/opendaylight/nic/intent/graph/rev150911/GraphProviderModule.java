@@ -23,7 +23,7 @@ public class GraphProviderModule extends org.opendaylight.yang.gen.v1.urn.openda
     @Override
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating Graph instance");
-        final CompilerGraphImpl provider = new CompilerGraphImpl();
+        final CompilerGraphImpl provider = new CompilerGraphImpl(getIntentMappingInterfaceDependency());
         provider.init();
         return provider;
     }

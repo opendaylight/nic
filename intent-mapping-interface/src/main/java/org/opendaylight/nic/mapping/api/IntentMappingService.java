@@ -47,4 +47,6 @@ public interface IntentMappingService extends AutoCloseable {
      * @return Return true if succeed, otherwise false
      */
     boolean delete(String outerKey);
+
+
 }
