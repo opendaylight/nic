@@ -9,11 +9,15 @@ package org.opendaylight.nic.nemo.renderer;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+
+import java.util.concurrent.ExecutionException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,8 +32,16 @@ import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFaile
 import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.CommonRpcResult.ResultCode;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.NemoIntentService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateOutputBuilder;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -123,7 +135,6 @@ public class NEMORendererTest {
                 dataBroker.registerDataChangeListener(eq(LogicalDatastoreType.CONFIGURATION),
                         eq(NEMORenderer.INTENT_IID), isA(DataChangeListener.class), eq(DataChangeScope.SUBTREE)))
                 .thenReturn(nemoRendererListenerRegistration);
-
         when(rpcProviderRegistry.getRpcService(NemoIntentService.class)).thenReturn(nemoEngine);
 
         when(writeTransactionMock.submit()).thenReturn(checkedFuture);
@@ -152,19 +163,36 @@ public class NEMORendererTest {
     /**
      * Test
      *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     *
      * @throws Exception
      */
     @Test
-    public void testCreateOrUpdateIntent() {
+    public void testCreateOrUpdateIntent() throws InterruptedException, ExecutionException {
+
+        when(nemoEngine.beginTransaction(any(BeginTransactionInput.class))).thenReturn(
+                RpcResultBuilder.success(new BeginTransactionOutputBuilder().setResultCode(ResultCode.Ok))
+                        .buildFuture());
+        when(nemoEngine.structureStyleNemoUpdate(any(StructureStyleNemoUpdateInput.class))).thenReturn(
+                RpcResultBuilder.success(new StructureStyleNemoUpdateOutputBuilder().setResultCode(ResultCode.Ok))
+                        .buildFuture());
+        when(nemoEngine.endTransaction(any(EndTransactionInput.class))).thenReturn(
+                RpcResultBuilder.success(new EndTransactionOutputBuilder().setResultCode(ResultCode.Ok)).buildFuture());
 
         nemoRenderer.init();
 
         // empty intent
         Intent emptyIntent = new IntentBuilder().build();
-        assertFalse("Should not be able to create empty intent", nemoRenderer.createOrUpdateIntent(emptyIntent));
+        assertFalse("Should not be able to process empty intent", nemoRenderer.createOrUpdateIntent(emptyIntent));
+        verifyZeroInteractions(nemoEngine);
 
+        // BandwidthOnDemand intent
         Intent intent = NEMOIntentParserTest.getBandwidthOnDemandIntent();
-        assertTrue("Should be able to create BoD intent", nemoRenderer.createOrUpdateIntent(intent));
+        assertTrue("Should be able to process BoD intent", nemoRenderer.createOrUpdateIntent(intent));
+        verify(nemoEngine).beginTransaction(any(BeginTransactionInput.class));
+        verify(nemoEngine).structureStyleNemoUpdate(any(StructureStyleNemoUpdateInput.class));
+        verify(nemoEngine).endTransaction(any(EndTransactionInput.class));
     }
 
     /**

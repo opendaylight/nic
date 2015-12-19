@@ -12,7 +12,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,18 +20,15 @@ import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandPara
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.conditions.rev150122.Duration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.conditions.rev150122.TimeOfDay;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Conditions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ConditionsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ConstraintsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.AllowBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.conditions.Condition;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.conditions.condition.Daily;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.conditions.condition.DailyBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.conditions.condition.daily.Daily;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.BandwidthConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.BandwidthConstraintBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.bandwidth.constraint.BandwidthConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
@@ -89,35 +85,41 @@ public class NEMOIntentParserTest {
         IntentBuilder b = new IntentBuilder();
         b.setActions(Arrays.asList(new ActionsBuilder().setAction(new AllowBuilder().build()).build()));
 
-        Subjects from = buildSubject(FROM, (short) 1);
-        Subjects to = buildSubject(TO, (short) 2);
+        Subjects from = subject((short) 1, FROM);
+        Subjects to = subject((short) 2, TO);
         b.setSubjects(Arrays.asList(from, to));
 
-        BandwidthConstraint bandwidth = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.bandwidth.constraint.BandwidthConstraintBuilder()
-                .setBandwidth(BANDWIDTH).build();
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = new BandwidthConstraintBuilder()
-                .setBandwidthConstraint(bandwidth).build();
-        List<Constraints> constraints = Arrays.asList(new ConstraintsBuilder().setOrder((short) 1)
-                .setConstraints(constraint).build());
-        b.setConstraints(constraints);
+        BandwidthConstraint constraint = bandwidth(BANDWIDTH);
+        b.setConstraints(Arrays.asList(new ConstraintsBuilder().setOrder((short) 1).setConstraints(constraint).build()));
 
-        Daily d = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.conditions.condition.daily.DailyBuilder()
-                .setStartTime(new TimeOfDay(START_TIME)).setDuration(new Duration(DURATION)).build();
-        Condition condition = new DailyBuilder().setDaily(d).build();
-        List<Conditions> conditions = Arrays.asList(new ConditionsBuilder().setOrder((short) 1).setCondition(condition)
-                .build());
-        b.setConditions(conditions);
+        Daily condition = daily(START_TIME, DURATION);
+        b.setConditions(Arrays.asList(new ConditionsBuilder().setOrder((short) 1).setCondition(condition).build()));
 
         return b.build();
     }
 
-    private static Subjects buildSubject(String name, short order) {
+    private static Subjects subject(short order, String name) {
         return new SubjectsBuilder()
                 .setSubject(
                         new EndPointGroupBuilder()
                                 .setEndPointGroup(
                                         new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroupBuilder()
                                                 .setName(name).build()).build()).setOrder(order).build();
+    }
+
+    private static BandwidthConstraint bandwidth(String bandwidth) {
+        return new BandwidthConstraintBuilder()
+                .setBandwidthConstraint(
+                        new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.bandwidth.constraint.BandwidthConstraintBuilder()
+                                .setBandwidth(BANDWIDTH).build()).build();
+    }
+
+    private static Daily daily(String startTime, String duration) {
+        return new DailyBuilder()
+                .setDaily(
+                        new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.conditions.condition.daily.DailyBuilder()
+                                .setStartTime(new TimeOfDay(startTime)).setDuration(new Duration(duration)).build())
+                .build();
     }
 
 }
