@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_3c2d3747",
+        "filename": "intent-graph/src/main/config/default-config.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T00:15:28Z",
+      "side": 1,
+      "message": "sorry in previous review I forget to mentioned you need to add the capabilities for intent-mapping-service",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 110
+      },
+      "revId": "25761a8dc0b954e16ba17bffc890d1cedf28a994",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7c1acf18",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T00:15:28Z",
+      "side": 1,
+      "message": "it doesn\u0027t work like that.\nPlease lookup for Preconditions usage.\n\nBasically, Preconditions.checkNotNull(object) will throw a NPE is the object is null.\n\nso just do \nPreconditions.checkNotNull(object)\nthis.node \u003d node;",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "25761a8dc0b954e16ba17bffc890d1cedf28a994",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_fc26bf67",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T00:15:28Z",
+      "side": 1,
+      "message": "remove whitespaces",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "25761a8dc0b954e16ba17bffc890d1cedf28a994",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9c178bed",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/LabelImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T00:15:28Z",
+      "side": 1,
+      "message": "call addChildren() method",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 9
+      },
+      "revId": "25761a8dc0b954e16ba17bffc890d1cedf28a994",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_1ce39b08",
+        "filename": "intent-graph/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/impl/rev150507/NicProviderModule.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T00:15:28Z",
+      "side": 1,
+      "message": "remove this class",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "25761a8dc0b954e16ba17bffc890d1cedf28a994",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_bce7e711",
+        "filename": "intent-graph/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/impl/rev150507/NicProviderModuleFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-19T00:15:28Z",
+      "side": 1,
+      "message": "remove this class",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 1
+      },
+      "revId": "25761a8dc0b954e16ba17bffc890d1cedf28a994",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
