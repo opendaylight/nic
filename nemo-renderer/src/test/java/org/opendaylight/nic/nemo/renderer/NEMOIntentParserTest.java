@@ -17,6 +17,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandParameters;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.conditions.rev150122.Duration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.conditions.rev150122.TimeOfDay;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
@@ -73,7 +74,8 @@ public class NEMOIntentParserTest {
         }
 
         Intent intent = getBandwidthOnDemandIntent();
-        StructureStyleNemoUpdateInputBuilder inputBuilder = NEMOIntentParser.parseBandwidthOnDemand(intent);
+        BandwidthOnDemandParameters params = NEMOIntentParser.parseBandwidthOnDemand(intent);
+        StructureStyleNemoUpdateInputBuilder inputBuilder = NemoInputBuilders.getUpdateBuilder(params);
         assertNotNull("Expected valid inputBuilder", inputBuilder);
     }
 
@@ -81,7 +83,7 @@ public class NEMOIntentParserTest {
     public static final String TO = "marketing";
     public static final String BANDWIDTH = "10G";
     public static final String START_TIME = "08:00:00Z";
-    public static final String DURATION = "60m";
+    public static final String DURATION = "1h";
 
     public static Intent getBandwidthOnDemandIntent() {
         IntentBuilder b = new IntentBuilder();

@@ -17,6 +17,7 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataCh
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
+import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandParameters;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserId;
@@ -102,7 +103,8 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
 
         StructureStyleNemoUpdateInputBuilder builder;
         try {
-            builder = NEMOIntentParser.parseBandwidthOnDemand(intent);
+            BandwidthOnDemandParameters params = NEMOIntentParser.parseBandwidthOnDemand(intent);
+            builder = NemoInputBuilders.getUpdateBuilder(params);
         } catch (Exception e) {
             builder = null;
         }

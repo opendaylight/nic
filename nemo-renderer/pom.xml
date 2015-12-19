@@ -42,6 +42,11 @@
       <artifactId>nemo-impl</artifactId>
       <version>${nemo.version}</version>
     </dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.9.1</version>
+    </dependency>
     <!-- Testing -->
     <dependency>
       <groupId>junit</groupId>
