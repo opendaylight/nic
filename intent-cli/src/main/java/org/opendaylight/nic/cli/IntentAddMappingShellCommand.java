@@ -12,6 +12,8 @@ import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 
+import java.util.Map;
+
 @Command(name = "map",
          scope = "intent",
          description = "List current state of the mapping service."
@@ -86,9 +88,11 @@ public class IntentAddMappingShellCommand extends OsgiCommandSupport {
     }
 
     private void printContents(StringBuilder builder, String key) {
+        Map<String, String> contents = service.get(key);
+
         builder.append(key)
                .append(" = {\n")
-               .append(service.stringRepresentation(key))
+               .append((contents != null) ? contents.toString() : "{}")
                .append("}\n");
     }
 }

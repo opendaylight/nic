@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface IntentMappingService extends AutoCloseable {
-    void add(String key, String obj);
 
     /**
      * Index a map of objects based on a key.
@@ -24,10 +23,6 @@ public interface IntentMappingService extends AutoCloseable {
      */
     void add(String key, Map<String, String> objs);
 
-    void addList(String key, List<String> objs);
-
-    Collection<String> retrieve(String key);
-
     /**
      * Returns a map based on an indexed key.
      *
@@ -37,9 +32,10 @@ public interface IntentMappingService extends AutoCloseable {
      */
     Map<String, String> get(String outerKey);
 
+    /**
+     * @return Return a collection with all the outerKeys
+     */
     Collection<String> keys();
-
-    String stringRepresentation(String key);
 
     /**
      * @param outerKey
@@ -47,6 +43,4 @@ public interface IntentMappingService extends AutoCloseable {
      * @return Return true if succeed, otherwise false
      */
     boolean delete(String outerKey);
-
-
 }
