@@ -91,22 +91,6 @@ public class MappingMdsalProvider implements IntentMappingService,
     }
 
     @Override
-    public void add(String key, String obj) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void addList(String key, List<String> objs) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Collection<String> retrieve(String key) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public Collection<String> keys() {
         Collection<String> keys = new ArrayList<String>();
         Mappings mappings = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID);
@@ -118,12 +102,7 @@ public class MappingMdsalProvider implements IntentMappingService,
         }
         return keys;
     }
-
-    @Override
-    public String stringRepresentation(String key) {
-        throw new UnsupportedOperationException();
-    }
-
+    
     @Override
     public void add(String key, Map<String, String> objs) {
         OuterMapKey mapKey = new OuterMapKey(key);
