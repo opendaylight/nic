@@ -67,7 +67,6 @@ module intent-graph {
     }
 
     container graph {
-       key "id";
        leaf id {
          type string;
        }
