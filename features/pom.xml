@@ -148,29 +148,41 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
-      <dependency>
-        <groupId>org.opendaylight.nic</groupId>
-        <artifactId>pipeline-manager</artifactId>
-        <version>${project.version}</version>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>pipeline-manager</artifactId>
+      <version>${project.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.opendaylight.nic</groupId>
-        <artifactId>pipeline-manager</artifactId>
-        <version>${project.version}</version>
-        <classifier>config</classifier>
-        <type>xml</type>
-      </dependency>
-      <!-- controller dependencies -->
-      <dependency>
-        <groupId>org.opendaylight.controller.thirdparty</groupId>
-        <artifactId>net.sf.jung2</artifactId>
-        <version>${jung2.version}</version>
-      </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>pipeline-manager</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    <!-- controller dependencies -->
+    <dependency>
+      <groupId>org.opendaylight.controller.thirdparty</groupId>
+      <artifactId>net.sf.jung2</artifactId>
+      <version>${jung2.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>intent-graph</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intent-mapping-hazelcast</artifactId>
+      <version>${project.version}</version>
+      </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intent-mapping-hazelcast</artifactId>
+      <version>${project.version}</version>
+      <classifier>config</classifier>
+      <type>xml</type>
+      </dependency>
     <dependency>
       <groupId>org.opendaylight.nic</groupId>
       <artifactId>intent-mapping-mdsal</artifactId>

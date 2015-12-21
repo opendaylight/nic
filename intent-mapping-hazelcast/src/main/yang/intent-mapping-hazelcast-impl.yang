@@ -1,0 +1,37 @@
+module intent-mapping-hazelcast-impl {
+
+    yang-version 1;
+    namespace "urn:opendaylight:nic:intent:mapping";
+    prefix "intent-mapping-hazelcast-impl";
+
+    // Dependency on service definition for config-demo
+    /* Service definitions could be also located in this yang file or even
+     * in a separate maven project that is marked as maven dependency
+     */
+
+    // Dependencies on config subsystem definition
+    import config { prefix config; revision-date 2013-04-05; }
+    import intent-mapping-interface { prefix intent-mapping-interface; revision-date 2015-11-11;}
+
+    description
+        "Service implementation for config-mapping-hazelcast-impl";
+
+    revision "2015-10-05" {
+        description
+            "Initial revision";
+    }
+
+       identity intent-mapping-hazelcast-impl {
+            base config:module-type;
+            config:java-name-prefix MappingHazelcastImpl;
+            config:provided-service intent-mapping-interface:intent-mapping-interface;
+        }                                                                                                                                                     //
+
+    // Runtime state definition for foo-impl module
+    augment "/config:modules/config:module/config:state" {
+        case intent-mapping-hazelcast-impl {                                                                             //
+            when "/config:modules/config:module/config:type = 'intent-mapping-hazelcast-impl'";                          //
+
+        }
+    }
+}
