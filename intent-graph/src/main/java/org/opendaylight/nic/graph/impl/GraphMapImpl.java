@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class to implement Label tree Map
@@ -43,54 +45,34 @@ public class GraphMapImpl{
         //use gson to convert label to json, then add to map
         Gson gson = new Gson();
         String object = gson.toJson(label); //convert to string (Json form) to be added to map
+        Map<String, String> mapObject = new HashMap<>();
+        mapObject.put(label.toString(), object);
 
-        try {
-            intentMappingService.add(key, object); //add key/object to map
+        intentMappingService.add(key, mapObject); //add key/object to map
 
-            //check parent's children to make sure new obj is part of parent
-            Collection<String> parentJson = intentMappingService.retrieve(parent);
-            boolean delete = intentMappingService.delete(parent); //remove parent objects since they will be replaced with updated forms
-            if (parentJson != null && delete) {
-                for (String parentIndex : parentJson) {
-                    LabelImpl parentObj = gson.fromJson(parentIndex, LabelImpl.class);
-                    parentObj.addChild(key); //add children to parent (key)
-                    //add back to map
-                    String parent2Map = gson.toJson(parentObj);
-                    intentMappingService.add(parent, parent2Map);
-                }
+        //check parent's children to make sure new obj is part of parent
+        Map<String, String> parentJson = intentMappingService.get(parent);
+        intentMappingService.delete(parent); //remove parent objects since they will be replaced with updated forms
+        if (parentJson != null) {
+            Map<String, String> mapParent = new HashMap<>();
+            Integer index = 0;
+            for (String parentIndex : parentJson.values()) {
+                LabelImpl parentObj = gson.fromJson(parentIndex, LabelImpl.class);
+                parentObj.addChild(key); //add children to parent (key)
+                //add back to map
+                String parent2Map = gson.toJson(parentObj);
+                mapParent.put(index.toString(), parent2Map);
+                index++;
             }
-        } catch (Exception e) {
-            LOG.error("addLabelChild: failed: {}", e);
-            return false;
+            intentMappingService.add(parent, mapParent);
         }
         return true;
     }
 
     public boolean addLabelChildren(String key, String parent, String[] children) {
-        LabelImpl label = new LabelImpl(parent, children, null);
-        //use gson to convert label to json, then add to map
-        Gson gson = new Gson();
-        String object = gson.toJson(label); //convert to string (Json form) to be added to map
-
-        try {
-            intentMappingService.add(key, object); //add key/object to map
-
-            //check parent's children to make sure new obj is part of parent
-            Collection<String> parentJson = intentMappingService.retrieve(parent);
-            boolean delete = intentMappingService.delete(parent); //remove parent objects since they will be replaced with updated forms
-            if (parentJson != null && delete) {
-                for (String parentIndex : parentJson) {
-                    LabelImpl parentObj = gson.fromJson(parentIndex, LabelImpl.class);
-                    parentObj.addChild(key); //add children to parent (key)
-                    //add back to map
-                    String parent2Map = gson.toJson(parentObj);
-                    intentMappingService.add(parent, parent2Map);
-
-                }
-            }
-        } catch (Exception e) {
-            LOG.error("addLabelChildren: failed: {}", e);
-            return false;
+        for (String child : children) {
+            if(!addLabelChild(key, parent, child))
+                return false;
         }
         return true;
     }
