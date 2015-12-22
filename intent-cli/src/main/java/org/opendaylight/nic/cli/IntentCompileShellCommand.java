@@ -25,5 +25,7 @@ public class IntentCompileShellCommand extends OsgiCommandSupport {
     @Override
     protected Object doExecute() throws Exception {
         return provider.compile();
+        // TODO: Use below return statement, if PGA compiler is used.
+        //return provider.compile(1);
     }
 }

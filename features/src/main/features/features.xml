@@ -65,7 +65,11 @@
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
+        <bundle>wrap:mvn:net.sf.jung/jung-api/2.0.1</bundle>
+        <bundle>wrap:mvn:net.sf.jung/jung-visualization/2.0.1</bundle>
+        <bundle>mvn:com.google.code.gson/gson/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">
             mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config
         </configfile>
@@ -171,6 +175,7 @@
     <feature name='odl-nic-graph' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Intent Graph'>
         <feature version="${project.version}">odl-nic-core</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>wrap:mvn:net.sf.jung/jung-api/2.0.1</bundle>
