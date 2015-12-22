@@ -36,11 +36,11 @@
    <artifactId>intent-mapping-interface</artifactId>
    <version>${project.version}</version>
   </dependency>
-  <dependency>
+  <!--<dependency>
    <groupId>org.opendaylight.nic</groupId>
    <artifactId>intent-impl</artifactId>
    <version>${project.version}</version>
-  </dependency>
+  </dependency> -->
   <!-- Testing Dependencies -->
   <dependency>
    <groupId>junit</groupId>
