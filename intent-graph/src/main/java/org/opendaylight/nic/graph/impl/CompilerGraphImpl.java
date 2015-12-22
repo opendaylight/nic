@@ -12,9 +12,12 @@ import com.google.common.collect.Sets;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
+import org.opendaylight.nic.graph.api.CompilerGraphException;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.graph.api.CompilerGraph;
 import org.opendaylight.nic.graph.api.InputGraph;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.GraphBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 import org.osgi.framework.BundleContext;
@@ -33,6 +36,7 @@ public class CompilerGraphImpl implements CompilerGraph {
     // Graph representation is utilized for Graph visualization.
     private static DirectedGraph<Set<Nodes>, Set<Edges>> policyGraph =
             new DirectedSparseGraph<Set<Nodes>, Set<Edges>>();
+    private static Graph policyGraphMDSAL = new GraphBuilder().build();
 
     protected ServiceRegistration<CompilerGraph> graphRegistration;
     protected IntentMappingService intentMappingService;
@@ -52,6 +56,19 @@ public class CompilerGraphImpl implements CompilerGraph {
 
         policyGraph
                 .addEdge(graph.action(), graph.src(), graph.dst(), EdgeType.DIRECTED);
+
+        //TODO: store the graph in MD-SAL
+
+    }
+
+    public void addPolicy(Graph graph) {
+
+        if (!policyGraphMDSAL.getNodes().equals(graph.getNodes())) {
+            policyGraphMDSAL.getNodes().add((Nodes) graph.getNodes());
+        }
+        if (!policyGraphMDSAL.getEdges().equals(graph.getEdges())) {
+            policyGraphMDSAL.getEdges().add((Edges) graph.getEdges());
+        }
 
     }
 
@@ -77,10 +94,10 @@ public class CompilerGraphImpl implements CompilerGraph {
     /* Temporary compilation method */
     // TODO: Replaced by Composed graph implementation
     @Override
-    public DirectedGraph<Set<Nodes>, Set<Edges>> compile(Collection<InputGraph> policies) {
+    public DirectedGraph<Set<Nodes>, Set<Edges>> compile(Collection<InputGraph> policies) throws CompilerGraphException {
 
-        DirectedGraph<Set<Nodes>, Set<Edges>> policyGraph1 =
-                new DirectedSparseGraph<Set<Nodes>, Set<Edges>>();
+        DirectedGraph<Set<Nodes>, Set<Edges>> policyGraph1 = new DirectedSparseGraph<Set<Nodes>, Set<Edges>>();
+        Graph policyGraph2 = new GraphBuilder().build();
         // to be utilization for modifications on the graph
         policyGraph = policyGraph1;
 
@@ -105,19 +122,218 @@ public class CompilerGraphImpl implements CompilerGraph {
         return policyGraph;
     }
 
-    private boolean conflicts(InputGraph p1, InputGraph p2) {
+    private boolean conflicts(InputGraph p1, InputGraph p2) throws NullPointerException {
+        ClassifierImpl ci;
 
-        if (p1.src().equals(p2.src()) && p1.dst().equals(p2.dst())) {
-            return true;
+        if ((p1.classifier().equals(ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL)))
+                && (p2.classifier().equals(ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL)))) {
+            if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
+                    && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()) {
+                return true;
+            }
+        } else {
+            ci = (p1.classifier()).and(p2.classifier());
+            if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
+                    && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()
+                    && !ci.isEmpty()) {
+                return true;
+            }
         }
+        //if (p1.src().equals(p2.src()) && p1.dst().equals(p2.dst())) {
+        //    return true;
+        //}
         return false;
     }
 
-    //TODO expand this method to remove all combinations of conflicts
-    private Collection<InputGraph> resolve(InputGraph p1, InputGraph p2) {
+    /* Classifiers are used to resolve the
+     * @param p1  */
+    private Collection<InputGraph> resolve(InputGraph p1, InputGraph p2) throws CompilerGraphException {
+
         Collection<InputGraph> policies = new LinkedList<>();
-        policies.add(new InputGraphImpl(p1.src(), p1.dst(), merge(p1.action(),
-                p2.action())));
+        Sets.SetView<Nodes> src;
+        Sets.SetView<Nodes> dst;
+        ClassifierImpl ci;
+        boolean nc = true;
+
+        // All the possible cases below
+
+        src = Sets.difference(p1.src(), p2.src());
+        if (!src.isEmpty()) {
+
+            // Case: S1 and not S2 , D1 and not D2
+            dst = Sets.difference(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action()));
+                }
+            }
+
+            // Case: S1 and not S2 , D1 and D2
+            dst = Sets.intersection(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action()));
+                }
+            }
+        }
+        src = Sets.intersection(p1.src(), p2.src());
+        if (!src.isEmpty()) {
+
+            // Case: S1 and S2 , D1 and D2
+            dst = Sets.intersection(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    Set<Edges> mergedActions = merge(p1.action(), p2.action());
+                    if (mergedActions == null) {
+                        throw new CompilerGraphException(
+                                "Unable to merge exclusive actions",
+                                Arrays.asList(p1, p2));
+                    }
+
+                    policies.add(new InputGraphImpl(src, dst, mergedActions, ((p1
+                            .classifier()).and(p2.classifier()))));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    Set<Edges> mergedActions = merge(p1.action(), p2.action());
+                    if (mergedActions == null) {
+                        throw new CompilerGraphException(
+                                "Unable to merge exclusive actions",
+                                Arrays.asList(p1, p2));
+                    }
+                    policies.add(new InputGraphImpl(src, dst, mergedActions));
+                }
+            }
+
+            // Case: S1 and S2 , D1 and not D2
+            dst = Sets.difference(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+
+                // C1 and not C2
+                ci = (p1.classifier()).sub(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new InputGraphImpl(src, dst, p1.action()));
+                }
+            }
+
+            // Case: S1 and S2 , D2 and not D1
+            dst = Sets.difference(p2.dst(), p1.dst());
+            if (!dst.isEmpty()) {
+
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action()));
+                }
+            }
+        }
+        src = Sets.difference(p2.src(), p1.src());
+        if (!src.isEmpty()) {
+
+            // Case: S2 and not S1 , D1 and D2
+            dst = Sets.intersection(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+
+                // C1 and C2
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action()));
+                }
+
+            }
+            // Case: S2 and not S1 , D2 and not D1
+            dst = Sets.difference(p2.dst(), p1.dst());
+            if (!dst.isEmpty()) {
+
+                // C2 and C1
+                ci = (p1.classifier()).and(p2.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                // C2 and not C1
+                ci = (p2.classifier()).sub(p1.classifier());
+                if (!ci.isEmpty()) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    nc = false;
+                }
+                if (nc) {
+                    policies.add(new InputGraphImpl(src, dst, p2.action()));
+                }
+            }
+        }
+        //policies.add(new InputGraphImpl(p1.src(), p1.dst(), merge(p1.action(),p2.action()), ci));
         return policies;
 
     }
@@ -128,7 +344,7 @@ public class CompilerGraphImpl implements CompilerGraph {
      * @param a2 set of edges or intents
      * @return a composed list of actions
      */
-    private Set<Edges> merge(Set<Edges> a1, Set<Edges> a2) {
+    private Set<Edges> merge(Set<Edges> a1, Set<Edges> a2) throws CompilerGraphException {
         Set<Edges> composebleActions = new LinkedHashSet<>();
         Set<Edges> observableActions = new LinkedHashSet<>();
         Set<Edges> exclusiveActions = new LinkedHashSet<>();
@@ -163,5 +379,10 @@ public class CompilerGraphImpl implements CompilerGraph {
     @Override
     public InputGraph createGraph(Set<Nodes> source, Set<Nodes> destination, Set<Edges> action) {
         return new InputGraphImpl (source, destination, action);
+    }
+
+    @Override
+    public InputGraph createGraph(Set<Nodes> source, Set<Nodes> destination, Set<Edges> action, ClassifierImpl classifier) {
+        return new InputGraphImpl (source, destination, action, classifier);
     }
 }

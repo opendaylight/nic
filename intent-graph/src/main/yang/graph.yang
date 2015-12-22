@@ -66,6 +66,24 @@ module intent-graph {
          description "Graph edge for specifying intent in PGA";
     }
 
+    typedef action-types {
+             type enumeration {
+                enum composable {
+                    value 1;
+                    description "edge-types that can be composed";
+                }
+                enum observer {
+                    value 2;
+                    description "edge-types that are used for observing";
+                }
+                enum exclusive {
+                    value 4;
+                    description "edge-types that conflict";
+                }
+             }
+             description "Characteristics of edge-types";
+        }
+
     container graph {
        key "id";
        leaf id {
@@ -91,6 +109,16 @@ module intent-graph {
          }
          leaf type {
              type edge-types;
+         }
+         leaf action-type {
+             type action-types;
+         }
+       }
+       list classifiers {
+         key "classifier";
+         leaf classifier {
+             type string;
+             description "classifiers for application description";
          }
        }
        description "The common graph structure for input and composed graph with source and destination node and edge action type";
