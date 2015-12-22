@@ -14,7 +14,8 @@ import org.opendaylight.nic.mapping.api.IntentMappingService;
 import java.util.Collection;
 
 /**
- * Class to implement Label tree Map*/
+ * Class to implement Label tree Map
+ */
 
 public class GraphMapImpl{
 
@@ -50,7 +51,6 @@ public class GraphMapImpl{
                 //add back to map
                 String parent2Map = gson.toJson(parentObj);
                 intentMappingService.add(parent, parent2Map);
-
             }
         }
 

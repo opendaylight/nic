@@ -23,18 +23,20 @@ import static org.mockito.Mockito.*;
 public class GraphMapImplTest {
     protected IntentMappingService intentMappingService;
 
-    private GraphMapImpl service = new GraphMapImpl(intentMappingService);
+    private GraphMapImpl service;
 
     @Before
     public void setUp() throws Exception {
-        this.service = spy(service);
+        //this.service = spy(service);
         this.intentMappingService = mock(IntentMappingService.class);
+        service = new GraphMapImpl(intentMappingService);
     }
 
     //create a simple tree and test that each one is initialized properly with the right parent/children pairs.
     //TODO: complete this test case
     @Test
     public final void testCreateGraph() throws Exception {
+        service = spy(service);
         PowerMockito.mockStatic(FrameworkUtil.class);
         BundleContext mockBundleContext = mock(BundleContext.class);
         ServiceRegistration<GraphMapImpl> intentServiceMock = mock(ServiceRegistration.class);

@@ -15,9 +15,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.
 import java.util.Set;
 
 public class InputGraphImpl implements InputGraph {
-    private final Set<Nodes> src;
-    private final Set<Nodes> dst;
-    private final Set<Edges> action;
+    protected final Set<Nodes> src;
+    protected final Set<Nodes> dst;
+    protected final Set<Edges> action;
     /* based on the description of nodes and edges, the edge can describe a complete intent */
 
     public InputGraphImpl(Set<Nodes> src, Set<Nodes> dst, Set<Edges> action) {
