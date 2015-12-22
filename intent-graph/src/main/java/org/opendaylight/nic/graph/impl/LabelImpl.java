@@ -11,7 +11,6 @@ package org.opendaylight.nic.graph.impl;
 import com.google.common.base.Preconditions;
 
 import java.util.Set;
-import java.util.HashSet;
 
 public class LabelImpl{
     protected String parent;
