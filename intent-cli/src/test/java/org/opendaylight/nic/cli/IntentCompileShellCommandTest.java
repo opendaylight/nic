@@ -9,16 +9,15 @@
 
 package org.opendaylight.nic.cli;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import org.opendaylight.nic.api.NicConsoleProvider;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 /**
  * JUnit test for {@link IntentCompileShellCommand}
@@ -64,6 +63,7 @@ public class IntentCompileShellCommandTest {
         final String result = expected.toString();
 
         when(nicConsole.compile()).thenReturn(result);
+        //when(nicConsole.compile(1)).thenReturn(result);
 
         intentCompileShellCmd = new IntentCompileShellCommand(nicConsole);
         Object output = intentCompileShellCmd.doExecute();
