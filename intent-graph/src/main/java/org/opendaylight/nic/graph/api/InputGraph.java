@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.graph.api;
 
+import org.opendaylight.nic.graph.impl.ClassifierImpl;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import java.util.Set;
@@ -33,5 +34,7 @@ public interface InputGraph {
      * The edge is a representation of the source and destination node and the action associated to it.
      */
     Set<Edges> action();
+
+    ClassifierImpl classifier();
 }
 
