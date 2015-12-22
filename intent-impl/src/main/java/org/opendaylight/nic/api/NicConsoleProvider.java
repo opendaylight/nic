@@ -29,4 +29,7 @@ public interface NicConsoleProvider extends AutoCloseable {
     Intent getIntent(Uuid id);
 
     String compile();
+
+    /* Intent Engine Compiler using PGA Algorithm */
+    String compile(int flag);
 }
