@@ -9,6 +9,7 @@
 package org.opendaylight.nic.graph.impl;
 
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.NodesKey;
 
 import java.net.InetAddress;
 
@@ -21,6 +22,10 @@ public class NodeImpl {
     protected InetAddress ipAddress;
     protected Nodes macAddress;
     protected int port;
+    protected String nodename;
+    protected NodesKey key;
+
+    public NodeImpl (String nodename) {this.nodename = nodename; }
 
     public NodeImpl(InetAddress ipAddress) {
         this.ipAddress = ipAddress;
@@ -31,6 +36,7 @@ public class NodeImpl {
     }
 
     public NodeImpl(int port) {
+        
         this.port = port;
     }
 
@@ -44,6 +50,14 @@ public class NodeImpl {
 
     public int getPortAddress() {
         return port;
+    }
+
+    public String getName() {
+        return nodename;
+    }
+
+    public NodesKey getKey() {
+        return key;
     }
 
     @Override

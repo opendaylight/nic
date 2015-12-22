@@ -15,15 +15,26 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.
 import java.util.Set;
 
 public class InputGraphImpl implements InputGraph {
+
     protected final Set<Nodes> src;
     protected final Set<Nodes> dst;
     protected final Set<Edges> action;
+    protected final ClassifierImpl classifier;
+
     /* based on the description of nodes and edges, the edge can describe a complete intent */
 
     public InputGraphImpl(Set<Nodes> src, Set<Nodes> dst, Set<Edges> action) {
         this.src = src;
         this.dst = dst;
         this.action = action;
+        this.classifier = null;
+    }
+
+    public InputGraphImpl(Set<Nodes> src, Set<Nodes> dst, Set<Edges> action, ClassifierImpl classifier) {
+        this.src = src;
+        this.dst = dst;
+        this.action = action;
+        this.classifier = classifier;
     }
 
     @Override
@@ -39,6 +50,11 @@ public class InputGraphImpl implements InputGraph {
     @Override
     public Set<Edges> action() {
         return action;
+    }
+
+    @Override
+    public ClassifierImpl classifier() {
+        return classifier;
     }
 
     @Override
@@ -61,6 +77,13 @@ public class InputGraphImpl implements InputGraph {
         if (action != null ? !action.equals(graph.action) : graph.action != null) {
             return false;
         }
+        if (classifier == null) {
+            if (graph.classifier != null) {
+                return false;
+            }
+        } else if (!classifier.equals(graph.classifier)) {
+            return false;
+        }
         return true;
     }
 
@@ -70,11 +93,12 @@ public class InputGraphImpl implements InputGraph {
         int result = src != null ? src.hashCode() : 0;
         result = prime * result + (dst != null ? dst.hashCode() : 0);
         result = prime * result + (action != null ? action.hashCode() : 0);
+        result = 31 * result + (classifier != null ? classifier.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("from %s to %s apply %s", src, dst, action);
+        return String.format("from %s to %s apply %s when %s", src, dst, action, classifier);
     }
 }
