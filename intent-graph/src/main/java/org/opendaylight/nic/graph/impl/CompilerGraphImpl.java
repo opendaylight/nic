@@ -113,6 +113,7 @@ public class CompilerGraphImpl implements CompilerGraph {
         return false;
     }
 
+    //TODO expand this method to remove all combinations of conflicts
     private Collection<InputGraph> resolve(InputGraph p1, InputGraph p2) {
         Collection<InputGraph> policies = new LinkedList<>();
         policies.add(new InputGraphImpl(p1.src(), p1.dst(), merge(p1.action(),
