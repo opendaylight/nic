@@ -8,27 +8,26 @@
 
 package org.opendaylight.nic.graph.impl;
 
-import com.google.common.base.Preconditions;
-
 import java.util.Set;
 import java.util.HashSet;
 
 public class LabelImpl{
     protected String parent;
-    protected Set<String> children;
+    protected Set<String> children = new HashSet<>();
     protected NodeImpl node;
 
     public LabelImpl(String parent, String child, NodeImpl node) {
         this.parent = parent;
         this.addChild(child);
-        Preconditions.checkNotNull(node);
+        //TODO Redo preconditions after node has a value. for noe, node = null
+        //Preconditions.checkNotNull(node);
         this.node = node;
     }
 
     public LabelImpl(String parent, String[] children, NodeImpl node) {
         this.parent = parent;
         this.addChildren(children);
-        Preconditions.checkNotNull(node);
+        //Preconditions.checkNotNull(node);
         this.node = node;
     }
 

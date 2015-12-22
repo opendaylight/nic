@@ -16,25 +16,28 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.powermock.api.mockito.PowerMockito;
-
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GraphMapImplTest {
     protected IntentMappingService intentMappingService;
 
-    private GraphMapImpl service = new GraphMapImpl(intentMappingService);
+    private GraphMapImpl service;
 
     @Before
     public void setUp() throws Exception {
-        this.service = spy(service);
+        //this.service = spy(service);
         this.intentMappingService = mock(IntentMappingService.class);
+        service = new GraphMapImpl(intentMappingService);
     }
 
     //create a simple tree and test that each one is initialized properly with the right parent/children pairs.
     //TODO: complete this test case
     @Test
     public final void testCreateGraph() throws Exception {
+        boolean actualResult, expectedResult;
+        service = spy(service);
         PowerMockito.mockStatic(FrameworkUtil.class);
         BundleContext mockBundleContext = mock(BundleContext.class);
         ServiceRegistration<GraphMapImpl> intentServiceMock = mock(ServiceRegistration.class);
@@ -42,7 +45,11 @@ public class GraphMapImplTest {
         //doReturn(mockBundleContext).when(GraphMapImpl.class);
         when(mockBundleContext.registerService(GraphMapImpl.class, service, null))
                 .thenReturn(intentServiceMock);
-	/* TODO: Completion after the merge of IntentServiceMapping implementation */
+        expectedResult = true;
+        actualResult = service.addLabelChild("apps", "Tnt", "app1");
+        assertEquals(expectedResult, actualResult);
+        actualResult = service.addLabelChildren("Tnt", "pga_label_tree", new String[]{"Dpts", "apps"}); //make null first
+        assertEquals(expectedResult, actualResult);
         //service.addLabelChild("apps", "Tnt", "app1");
         //service.addLabelChildren("Tnt", "pga_label_tree", new String[]{"Dpts", "apps"}); //make null first
         //service.addLabelChildren("Dpts", "Tnt", new String[]{"IT", "Engg"});
