@@ -49,4 +49,39 @@ module intent-constraints {
 
       description "Constraint that requires the specified bandwidth.";
     }
+
+    grouping protection-constraint {
+      uses constraint;
+
+      leaf is-protected {
+        type boolean;
+      }
+
+      description "Constraint that requires an end-to-end connectivity to be
+          protected by providing redundant paths. It reduces the risk of connectivity
+          failure due to a single link or port down event on a forwarding device.";
+    }
+
+    typedef failover-type {
+        type enumeration {
+            enum fast-reroute {
+                value 1;
+                description "Uses failure detection feature in hardware forwarding
+                    device through OF group table features.";
+            }
+            enum slow-reroute {
+                value 2;
+                description "Uses disjoint path calculation algorithms to provide
+                    alternate end-to-end routes.";
+            }
+        }
+    }
+
+    grouping failover-constraint {
+      uses constraint;
+      leaf failover-selector {
+        type failover-type;
+      }
+      description "Constraint that specifies the type of failover implementation.";
+    }
 }
