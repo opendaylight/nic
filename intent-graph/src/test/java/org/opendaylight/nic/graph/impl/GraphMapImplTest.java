@@ -17,6 +17,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.powermock.api.mockito.PowerMockito;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,6 +37,7 @@ public class GraphMapImplTest {
     //TODO: complete this test case
     @Test
     public final void testCreateGraph() throws Exception {
+        boolean actualResult, expectedResult;
         service = spy(service);
         PowerMockito.mockStatic(FrameworkUtil.class);
         BundleContext mockBundleContext = mock(BundleContext.class);
@@ -45,8 +47,11 @@ public class GraphMapImplTest {
         when(mockBundleContext.registerService(GraphMapImpl.class, service, null))
                 .thenReturn(intentServiceMock);
 	/* TODO: Completion after the merge of IntentServiceMapping implementation */
-        service.addLabelChild("apps", "Tnt", "app1");
-        //service.addLabelChildren("Tnt", "pga_label_tree", new String[]{"Dpts", "apps"}); //make null first
+        expectedResult = true;
+        actualResult = service.addLabelChild("apps", "Tnt", "app1");
+        assertEquals(expectedResult, actualResult);
+        actualResult = service.addLabelChildren("Tnt", "pga_label_tree", new String[]{"Dpts", "apps"}); //make null first
+        assertEquals(expectedResult, actualResult);
         //service.addLabelChildren("Dpts", "Tnt", new String[]{"IT", "Engg"});
         //service.addLabelChildren("app1", "apps", new String[]{"Web", "DB"});
         //service.add("IT", "Dpts");

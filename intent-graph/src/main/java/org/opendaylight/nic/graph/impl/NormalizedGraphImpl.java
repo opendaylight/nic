@@ -32,6 +32,7 @@ public class NormalizedGraphImpl {
         Set<Nodes> srcN = null;
         Set<Nodes> dstN = null;
         Set<Edges> actionN = null;
+        Set<InputGraphImpl> graphsN = null;
 
         for (InputGraphImpl graph1 : graphs ) {
             for (InputGraphImpl graph2 : graphs ) {
@@ -48,13 +49,11 @@ public class NormalizedGraphImpl {
                 }
                 InputGraphImpl graphN = new InputGraphImpl(srcN, dstN, actionN);
                 if (graphN.src != null && graphN.dst != null && graphN.action != null) {
-                    graphs.remove(graph1);
-                    graphs.remove(graph2);
-                    graphs.add(graphN);
+                    graphsN.add(graphN);
                 }
             }
         }
-
-        return graphs;
+        /* @param graphsN will be used for the composed graph */
+        return graphsN;
     }
 }
