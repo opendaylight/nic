@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.graph.api;
 
+import org.opendaylight.nic.graph.impl.ClassifierImpl;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 import edu.uci.ics.jung.graph.DirectedGraph;
@@ -35,7 +36,8 @@ public interface CompilerGraph extends AutoCloseable {
      *  @param source source node
      *  @param destination destinate node
      *  @param action the Edge attribute with its association to source and destination nodes
+     *  @param classifier intent classifier
      *  @return       the InputGraph from the list of intents
      * */
-    InputGraph createGraph(Set<Nodes> source, Set<Nodes> destination, Set<Edges> action);
+    InputGraph createGraph(Set<Nodes> source, Set<Nodes> destination, Set<Edges> action, ClassifierImpl classifier);
 }
