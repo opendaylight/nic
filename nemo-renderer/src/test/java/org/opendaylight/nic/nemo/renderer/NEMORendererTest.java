@@ -38,6 +38,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.int
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.NemoIntentService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.RegisterUserInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.RegisterUserOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateOutputBuilder;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
@@ -170,6 +172,9 @@ public class NEMORendererTest {
      */
     @Test
     public void testCreateOrUpdateIntent() throws InterruptedException, ExecutionException {
+
+        when(nemoEngine.registerUser(any(RegisterUserInput.class))).thenReturn(
+                RpcResultBuilder.success(new RegisterUserOutputBuilder().setResultCode(ResultCode.Ok)).buildFuture());
 
         when(nemoEngine.beginTransaction(any(BeginTransactionInput.class))).thenReturn(
                 RpcResultBuilder.success(new BeginTransactionOutputBuilder().setResultCode(ResultCode.Ok))
