@@ -18,15 +18,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandParameters;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ActionName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ConditionParameterName;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ConditionSegmentId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ConnectionId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ConnectionName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ConnectionType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.NodeName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.NodeType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.OperationId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.OperationName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.user.intent.Objects;
@@ -63,6 +68,7 @@ public class NemoInputBuilders {
     private static final ConnectionName CONNECTION_C1 = new ConnectionName("c1");
     private static final NodeType L2_GROUP = new NodeType("l2-group");
     private static final ConditionParameterName CONDITION_TIME = new ConditionParameterName("time");
+    private static final DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("HH:mm:ss");
 
     private NemoInputBuilders() {
     }
@@ -86,11 +92,11 @@ public class NemoInputBuilders {
 
         Objects objects = new ObjectsBuilder().setNode(nodes).setConnection(connections).build();
 
-        int startHour = params.startTime.getHourOfDay();
-        int endHour = startHour + params.duration.getHours();
+        LocalTime endTime = params.startTime.plus(params.duration);
 
-        ConditionSegment cs1 = condition(1L, None, CONDITION_TIME, NotLessThan, startHour);
-        ConditionSegment cs2 = condition(2L, And, CONDITION_TIME, LessThan, endHour);
+        ConditionSegment cs1 = condition(1L, None, CONDITION_TIME, NotLessThan,
+                params.startTime.toString(timeFormatter));
+        ConditionSegment cs2 = condition(2L, And, CONDITION_TIME, LessThan, endTime.toString(timeFormatter));
         List<ConditionSegment> conditions = Arrays.asList(cs1, cs2);
 
         Action action = action(1L, ACTION_QOS_BANDWIDTH, params.bandwidth);
@@ -131,20 +137,22 @@ public class NemoInputBuilders {
     }
 
     private static ConditionSegment condition(long order, PrecursorRelationOperator relation,
-            ConditionParameterName parameterName, ConditionParameterMatchPattern matchPattern, int targetValue) {
+            ConditionParameterName parameterName, ConditionParameterMatchPattern matchPattern, String targetValue) {
         return new ConditionSegmentBuilder()
                 .setOrder(order)
                 .setPrecursorRelationOperator(relation)
+                .setConditionSegmentId(new ConditionSegmentId(UUID.randomUUID().toString()))
                 .setConditionParameterName(parameterName)
                 .setConditionParameterMatchPattern(matchPattern)
                 .setConditionParameterTargetValue(
-                        new ConditionParameterTargetValueBuilder().setIntValue((long) targetValue).build()).build();
+                        new ConditionParameterTargetValueBuilder().setStringValue(targetValue).build()).build();
     }
 
     private static Operation operation(OperationName operationO1, long priority, ConnectionId target,
             List<ConditionSegment> conditions, List<Action> actions) {
 
-        return new OperationBuilder().setOperationName(OPERATION_O1).setTargetObject(target).setPriority(priority)
+        return new OperationBuilder().setOperationId(new OperationId(UUID.randomUUID().toString()))
+                .setOperationName(OPERATION_O1).setTargetObject(target).setPriority(priority)
                 .setConditionSegment(conditions).setAction(actions).build();
     }
 
