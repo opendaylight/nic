@@ -33,6 +33,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 
@@ -98,7 +99,16 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
             mplsIntentFlowManager.setEndPointGroups(endPointGroups);
             mplsIntentFlowManager.setAction(actionContainer);
             mplsIntentFlowManager.setSubjectsMapping(extractSubjectDetails(endPointGroups));
-            generateMplsFlows(sourceIntent, targetIntent);
+            if(intent.getConstraints()!=null &&
+                    intent.getConstraints().size() == OFRendererConstants.FAILOVER_CONSTRAINT_INPUT_SIZE) {
+                List<Constraints> constraintsList = intent.getConstraints();
+                LOG.info("Intent has constraints: {}, {}", constraintsList);
+                // TO-DO: Suurballe disjoint path algorithm is used
+            } else {
+                LOG.info("Intent has no constraints for protection");
+                // Dijkstra shortest path algorithm is used
+                generateMplsFlows(sourceIntent, targetIntent);
+            }
         } else {
             intentFlowManager.setEndPointGroups(endPointGroups);
             intentFlowManager.setAction(actionContainer);
