@@ -10,8 +10,8 @@ package org.opendaylight.nic.nemo.renderer;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
@@ -23,12 +23,18 @@ import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandPara
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserName;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserPassword;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserRoleName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.CommonRpcResult;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.CommonRpcResult.ResultCode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.NemoIntentService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.RegisterUserInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.RegisterUserInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.RegisterUserOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInputBuilder;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
@@ -112,7 +118,9 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
         }
     }
 
-    public static UserId USER_ID = new UserId("f81d4fae-7dec-11d0-a765-00a0c91e6bf6");
+    private static final String USER_NAME = "nic";
+    private static final UserPassword USER_PASSWORD = new UserPassword("nic");
+    private static final UserRoleName USER_ROLE = new UserRoleName("nic");
 
     /**
      *
@@ -133,31 +141,45 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
         }
 
         if (builder != null) {
+
+            boolean result = true;
+
+            final UserId userId = new UserId(UUID.randomUUID().toString());
+            final UserName userName = new UserName(USER_NAME + "-" + userId.getValue());
+
             // make call to NEMO via MD-SAL RPC
             NemoIntentService nemoEngine = rpcProviderRegistry.getRpcService(NemoIntentService.class);
 
+            RegisterUserInput input = new RegisterUserInputBuilder().setUserId(userId).setUserName(userName)
+                    .setUserPassword(USER_PASSWORD).setUserRole(USER_ROLE).build();
+            RpcResult<RegisterUserOutput> r0 = nemoEngine.registerUser(input).get();
+            if (!r0.isSuccessful() || r0.getResult().getResultCode() != ResultCode.Ok) {
+                LOG.warn("NemoEngine register failed: " + r0.getResult());
+                // continue, since the error may be that the same user has already been registered before
+            }
+
             RpcResult<BeginTransactionOutput> r1 = nemoEngine.beginTransaction(
-                    new BeginTransactionInputBuilder().setUserId(USER_ID).build()).get();
+                    new BeginTransactionInputBuilder().setUserId(userId).build()).get();
             if (!r1.isSuccessful() || r1.getResult().getResultCode() != ResultCode.Ok) {
                 LOG.warn("NemoEngine beginTransaction failed: " + r1.getResult());
-                return false;
+                result = false;
             }
 
             RpcResult<? extends CommonRpcResult> r2 = nemoEngine.structureStyleNemoUpdate(
-                    builder.setUserId(USER_ID).build()).get();
+                    builder.setUserId(userId).build()).get();
             if (!r2.isSuccessful() || r2.getResult().getResultCode() != ResultCode.Ok) {
                 LOG.warn("NemoEngine structureStyleNemoUpdate failed: " + r2.getResult());
-                return false;
+                result = false;
             }
 
             RpcResult<? extends CommonRpcResult> r3 = nemoEngine.endTransaction(
-                    new EndTransactionInputBuilder().setUserId(USER_ID).build()).get();
+                    new EndTransactionInputBuilder().setUserId(userId).build()).get();
             if (!r3.isSuccessful() || r3.getResult().getResultCode() != ResultCode.Ok) {
                 LOG.warn("NemoEngine endTransaction failed: " + r3.getResult());
-                return false;
+                result = false;
             }
 
-            return true;
+            return result;
         } else {
             LOG.info("Not a valid BoD intent");
             return false;
