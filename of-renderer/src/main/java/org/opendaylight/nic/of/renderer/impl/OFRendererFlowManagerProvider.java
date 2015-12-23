@@ -20,6 +20,7 @@ import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.constraints.rev150122.FailoverType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
@@ -33,8 +34,11 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.failover.constraint.FailoverConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.protection.constraint.ProtectionConstraint;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -98,7 +102,34 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
             mplsIntentFlowManager.setEndPointGroups(endPointGroups);
             mplsIntentFlowManager.setAction(actionContainer);
             mplsIntentFlowManager.setSubjectsMapping(extractSubjectDetails(endPointGroups));
-            generateMplsFlows(sourceIntent, targetIntent);
+
+            // Look for protection and failover constraints for intent
+            boolean isProtected = false;
+            FailoverType failoverType = null;
+            if(intent.getConstraints()!=null) {
+                List<Constraints> constraintsList = intent.getConstraints();
+                LOG.info("Constraints: {}", constraintsList);
+                for (Constraints constraints : constraintsList) {
+                    if (constraints.getConstraints() instanceof ProtectionConstraint) {
+                        ProtectionConstraint protectionConstraint = (ProtectionConstraint) constraints.getConstraints();
+                        isProtected = protectionConstraint.isIsProtected();
+                        LOG.info("Protection is set to: {}", isProtected);
+                    } else if (constraints.getConstraints() instanceof FailoverConstraint) {
+                        FailoverConstraint failoverConstraint = (FailoverConstraint) constraints.getConstraints();
+                        failoverType = failoverConstraint.getFailoverSelector();
+                        LOG.info("failoverType is set to: {}", failoverType);
+                    }
+                }
+            }
+
+            if (isProtected && failoverType!=null) {
+                LOG.info("Intent has constraints: {}, {}", isProtected, failoverType);
+                // TO-DO: Suurballe disjoint path algorithm is used
+            } else {
+                LOG.info("Intent has no constraints for protection");
+                // Dijkstra shortest path algorithm is used
+                generateMplsFlows(sourceIntent, targetIntent);
+            }
         } else {
             intentFlowManager.setEndPointGroups(endPointGroups);
             intentFlowManager.setAction(actionContainer);
