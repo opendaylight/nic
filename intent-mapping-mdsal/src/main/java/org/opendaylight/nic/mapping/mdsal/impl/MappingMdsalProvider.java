@@ -145,7 +145,6 @@ public class MappingMdsalProvider implements IntentMappingService,
     @Override
     public Map<String, String> get(String key) {
         Map<String, String> subjectMappings = new HashMap<>();
-        List<InnerMap> listInnerMap = null;
         InstanceIdentifier<OuterMap> outerMapIid = InstanceIdentifier
                                                        .builder(Mappings.class)
                                                        .child(OuterMap.class,
@@ -153,9 +152,10 @@ public class MappingMdsalProvider implements IntentMappingService,
                                                        .build();
         // We want the Operational data
         //FIXME use datachange to sync config datachange to oper
-        listInnerMap = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, outerMapIid).getInnerMap();
-        if (listInnerMap != null && !listInnerMap.isEmpty()) {
-            for (InnerMap innerMap : listInnerMap) {
+        OuterMap outerMap = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, outerMapIid);
+
+        if (outerMap != null && outerMap.getInnerMap() != null && !outerMap.getInnerMap().isEmpty()) {
+            for (InnerMap innerMap : outerMap.getInnerMap()) {
                 subjectMappings.put(innerMap.getInnerKey(), innerMap.getValue());
             }
         }
