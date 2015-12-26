@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2015 - 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -88,6 +88,23 @@ public abstract class AbstractFlowManager {
                 .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyOutputActions).build()).build();
         Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(outputInstruction))
                 .build();
+        return instructions;
+    }
+
+    /**
+     * Creates a set of redirect Instruction based on the port values
+     * received.
+     * @param outputPort OVS port to output the packet to
+     * @return OpenFlow Flow Instructions
+     */
+    protected Instructions createRedirectIntentInstructions(String outputPort) {
+        List<Action> actionList = Lists.newArrayList();
+        int order = 0;
+        actionList.add(FlowUtils.createOutputToPort(order++, outputPort));
+        ApplyActions applyRedirectActions = new ApplyActionsBuilder().setAction(actionList).build();
+        Instruction redirectInstruction = new InstructionBuilder().setOrder(0)
+                .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyRedirectActions).build()).build();
+        Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(redirectInstruction)).build();
         return instructions;
     }
 
