@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2015 - 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -39,6 +39,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.FailoverConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ProtectionConstraint;
+import org.opendaylight.yangtools.concepts.Registration;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
+import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -63,14 +66,20 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private final PipelineManager pipelineManager;
     private OFRendererGraphService graphService;
     private MplsIntentFlowManager mplsIntentFlowManager;
+    private NotificationProviderService notificationProviderService;
+    private Registration pktInRegistration;
+    private RedirectFlowManager redirectFlowManager;
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker,
                                          PipelineManager pipelineManager,
-                                         IntentMappingService intentMappingService) {
+                                         IntentMappingService intentMappingService, 
+                                         NotificationProviderService notificationProviderService) {
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
         this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
         this.intentMappingService = intentMappingService;
+        this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager);
+        this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
     }
 
     public void init() {
@@ -128,6 +137,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
                 // Dijkstra shortest path algorithm is used
                 generateMplsFlows(sourceIntent, targetIntent, flowAction);
             }
+        } else if (actionContainer instanceof Redirect) {
+            redirectFlowManager.redirectFlowConstruction(intent, flowAction);
         } else {
             intentFlowManager.setEndPointGroups(endPointGroups);
             intentFlowManager.setAction(actionContainer);
