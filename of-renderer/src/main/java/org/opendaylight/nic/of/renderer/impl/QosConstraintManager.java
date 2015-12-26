@@ -72,6 +72,7 @@ public class QosConstraintManager extends AbstractFlowManager {
 
     /**
      * Set the EndPointGroups.
+     * @param endPointGroups : Source and destination end points
      */
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
@@ -79,6 +80,7 @@ public class QosConstraintManager extends AbstractFlowManager {
 
     /**
      * Set the Action.
+     * @param action : Set the flow action
      */
     public void setAction(Action action) {
         this.action = action;
@@ -86,6 +88,7 @@ public class QosConstraintManager extends AbstractFlowManager {
 
     /**
      * Set the Constraints.
+     * @param constraint : Set the QoS constraints
      */
     public void setConstraint(Constraints constraint) {
         this.constraint = constraint;
@@ -93,6 +96,7 @@ public class QosConstraintManager extends AbstractFlowManager {
 
     /**
      * Set the Constraint profile name.
+     * @param qosName : Set the QoS name
      */
     public void setQosName(String qosName) {
         this.qosName = qosName;
