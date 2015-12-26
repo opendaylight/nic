@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_11f93480",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-26T17:51:18Z",
+      "side": 1,
+      "message": "could we avoid the use of this var and return the appropriate value when needed?",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_31f47086",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-26T17:51:18Z",
+      "side": 1,
+      "message": "i.e. return false;",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 31
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d1f2bc99",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-26T17:51:18Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 31
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f1ed78b8",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NemoInputBuilders.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-26T17:51:18Z",
+      "side": 1,
+      "message": "could you use a var to hold this value? same for the others",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_912c4404",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NemoInputBuilders.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-26T17:51:18Z",
+      "side": 1,
+      "message": "could you give this var an understandable value?",
+      "range": {
+        "startLine": 138,
+        "startChar": 102,
+        "endLine": 138,
+        "endChar": 108
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
