@@ -26,7 +26,8 @@ public class OFRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.o
         final OFRendererFlowManagerProvider provider =
                 new OFRendererFlowManagerProvider(getDataBrokerDependency(),
                                                   getPipelineManagerDependency(),
-                                                  getIntentMappingInterfaceDependency());
+                                                  getIntentMappingInterfaceDependency(),
+                                                  getNotificationServiceDependency());
         provider.init();
         return provider;
     }
