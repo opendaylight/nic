@@ -24,6 +24,8 @@
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.ovsdb/southbound-features/{{VERSION}}/xml/features</repository>
+    <!-- Repos needed by ofrenderer for SFC -->
+    <repository>mvn:org.opendaylight.sfc/features-sfc/{{VERSION}}/xml/features</repository>
 
     <!-- Mapping Service feature
     <feature name="odl-nic-core-service" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: Mapping service'>
@@ -115,6 +117,7 @@
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${project.version}">odl-nic-pipeline-manager</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-app-lldp-speaker-li</feature>
+        <feature version="${sfc.version}">odl-sfc-provider</feature>
         <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
