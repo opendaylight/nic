@@ -22,6 +22,7 @@
         <powermock.version>1.5.5</powermock.version>
         <pitest.version>1.1.4</pitest.version>
         <liblldp.version>0.10.0-SNAPSHOT</liblldp.version>
+        <sfc.version>0.2.0-SNAPSHOT</sfc.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->
@@ -95,6 +96,17 @@
             <artifactId>powermock-api-mockito</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
+        </dependency>
+        <!-- SFC Dependency -->
+        <dependency>
+            <groupId>org.opendaylight.sfc</groupId>
+            <artifactId>sfc-model</artifactId>
+            <version>${sfc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.sfc</groupId>
+            <artifactId>sfc-provider</artifactId>
+            <version>${sfc.version}</version>
         </dependency>
     </dependencies>
 
