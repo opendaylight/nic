@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_df1de367",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3172
+      },
+      "writtenOn": "2015-12-28T19:01:12Z",
+      "side": 1,
+      "message": "The reason to not return directly is so that the later sections still get executed even if the earlier ones have already failed.",
+      "parentUuid": "1aa4ed85_11f93480",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_31f47086",
         "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NEMORenderer.java",
         "patchSetId": 1
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_ff18df76",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NemoInputBuilders.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3172
+      },
+      "writtenOn": "2015-12-28T19:01:12Z",
+      "side": 1,
+      "message": "Will rewrite to make the format more understandable.",
+      "parentUuid": "1aa4ed85_f1ed78b8",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 37
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_912c4404",
         "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NemoInputBuilders.java",
         "patchSetId": 1
@@ -105,6 +153,30 @@
       "writtenOn": "2015-12-26T17:51:18Z",
       "side": 1,
       "message": "could you give this var an understandable value?",
+      "range": {
+        "startLine": 138,
+        "startChar": 102,
+        "endLine": 138,
+        "endChar": 108
+      },
+      "revId": "f5b4f5d564a342f6c62fc9dac242006a0205465c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_9f276bb6",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/renderer/NemoInputBuilders.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3172
+      },
+      "writtenOn": "2015-12-28T19:01:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_912c4404",
       "range": {
         "startLine": 138,
         "startChar": 102,
