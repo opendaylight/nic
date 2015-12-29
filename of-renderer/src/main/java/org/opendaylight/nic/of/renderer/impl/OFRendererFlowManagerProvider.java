@@ -126,7 +126,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
             } else {
                 LOG.info("Intent has no constraints for protection");
                 // Dijkstra shortest path algorithm is used
-                generateMplsFlows(sourceIntent, targetIntent);
+                generateMplsFlows(sourceIntent, targetIntent, flowAction);
             }
         } else {
             intentFlowManager.setEndPointGroups(endPointGroups);
@@ -145,8 +145,9 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
      * route between a source and a target.
      * @param source The Source {@link Subjects}
      * @param target The target {@link Subjects}
+     * @param flowAction
      */
-    private void generateMplsFlows(String source, String target) {
+    private void generateMplsFlows(String source, String target, FlowAction flowAction) {
         LOG.info("Generating Intent Flow from {} to {}", source, target);
         String sourceNodeConnectorId = intentMappingService.get(source)
                                                            .get(OFRendererConstants.SWITCH_PORT_KEY);
@@ -171,13 +172,13 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
                 // Shortest path is giving result from end to beginning
                 if (sourceNodeId.getValue().equals(linkSourceNodeId.getValue())) {
                     mplsIntentFlowManager.pushMplsFlow(linkSourceNodeId,
-                                                       FlowAction.ADD_FLOW,
+                                                       flowAction,
                                                        linkSourceTp);
                 } else if(linkTargetNodeId.getValue().equals(targetNodeId.getValue())) {
-                    mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, FlowAction.ADD_FLOW, linkSourceTp);
-                    mplsIntentFlowManager.popMplsFlow(linkTargetNodeId, FlowAction.ADD_FLOW, targetNodeConnectorId);
+                    mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, flowAction, linkSourceTp);
+                    mplsIntentFlowManager.popMplsFlow(linkTargetNodeId, flowAction, targetNodeConnectorId);
                 } else {
-                    mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, FlowAction.ADD_FLOW, linkSourceTp);
+                    mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, flowAction, linkSourceTp);
                 }
             }
         }
