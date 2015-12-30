@@ -59,8 +59,11 @@ public abstract class AbstractFlowManager {
      * the Node object in the inventory. 3. FlowProgrammer module of
      * OpenFlowPlugin picks up this data change and eventually program the
      * switch.
-     * @param nodeId The OpenDaylight Inventory OpenFlow {@link NodeId}
-     * @param flowAction The {@link FlowAction}
+     * 
+     * @param nodeId
+     *            The OpenDaylight Inventory OpenFlow {@link NodeId}
+     * @param flowAction
+     *            The {@link FlowAction}
      */
     abstract void pushFlow(NodeId nodeId, FlowAction flowAction);
 

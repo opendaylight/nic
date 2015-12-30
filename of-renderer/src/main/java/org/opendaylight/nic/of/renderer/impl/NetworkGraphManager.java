@@ -8,9 +8,16 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections15.Transformer;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
+import org.opendaylight.nic.of.renderer.api.Observer;
+import org.opendaylight.nic.of.renderer.utils.GraphUtils;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 
@@ -21,12 +28,19 @@ import edu.uci.ics.jung.graph.util.EdgeType;
 
 public class NetworkGraphManager implements OFRendererGraphService {
 
+    private List<Observer> observers;
+    private Intent message;
+    private boolean changed;
+    private final Object MUTEX = new Object();
     private Graph<NodeId, Link> networkGraph;
     private DijkstraShortestPath<NodeId, Link> shortestPath;
+    public static List<Link> CurrentLinks = new ArrayList<>();
+    public static Map<Intent, List<List<Link>>> ProtectedLinks = new HashMap<>();
 
     public NetworkGraphManager() {
         networkGraph = new DirectedSparseMultigraph<>();
         shortestPath = new DijkstraShortestPath<>(networkGraph);
+        observers = new ArrayList<>();
     }
 
     /**
@@ -55,13 +69,15 @@ public class NetworkGraphManager implements OFRendererGraphService {
     }
 
     /**
-     * Set the Graph's links so that it
-     * can be built.
-     * @param links All the Network-Topology Links.
+     * Set the Graph's links so that it can be built.
+     * 
+     * @param newlinks
+     *            All the Network-Topology Links.
      */
     @Override
-    public synchronized void setLinks(List<Link> links) {
-        for (Link link: links) {
+    public synchronized void setLinks(List<Link> newlinks) {
+        CurrentLinks = new ArrayList<>(newlinks);
+        for (Link link : newlinks) {
           NodeId sourceNodeId = link.getSource().getSourceNode();
           NodeId destinationNodeId = link.getDestination().getDestNode();
             if (networkGraph.findEdge(sourceNodeId, destinationNodeId) == null) {
@@ -74,5 +90,205 @@ public class NetworkGraphManager implements OFRendererGraphService {
                 networkGraph.addEdge(link, sourceNodeId, destinationNodeId, EdgeType.DIRECTED);
             }
         }
+    }
+
+    /**
+     * @param changedLink
+     *            Link that was updated/deleted
+     * @return Identify which intents were affected
+     */
+    public List<Intent> getAffectedIntents(Link changedLink) {
+        List<Intent> affectedIntents = new ArrayList<>();
+
+        if (changedLink == null)
+            return affectedIntents;
+
+        for (Intent key : ProtectedLinks.keySet()) {
+            List<List<Link>> linkss = ProtectedLinks.get(key);
+
+            for (List<Link> list : linkss) {
+                for (Link link : list) {
+                    if (link.getLinkId().getValue().equals(changedLink.getLinkId().getValue())) {
+                        if (!affectedIntents.contains(key))
+                            affectedIntents.add(key);
+                    }
+                }
+            }
+        }
+        return affectedIntents;
+    }
+
+    /**
+     * @param currentLinks
+     *            Current links in topology
+     * @param newLinks
+     *            New links in topology
+     * @return Affected links by some change
+     */
+    public List<Link> identifyChangedLink(List<Link> currentLinks, List<Link> newLinks) {
+        List<Link> linksRemoved = new ArrayList<>();
+
+        // Identify if a link is affected in some protected Intent
+        for (Link link : currentLinks) {
+            int value = 0;
+            for (Link linkk : newLinks) {
+                if (link.getLinkId().equals(linkk.getLinkId())) {
+                    value++;
+                    break;
+                }
+            }
+            if (value == 0) {
+                // Topology hasChanged
+                linksRemoved.add(link);
+            }
+        }
+        return linksRemoved;
+    }
+
+    /**
+     * Returns a list of Network-Topology Links
+     * that represents the Suurbale's algorithm
+     * for finding shortest pairs of disjoint paths
+     * OF Node.
+     * @param startVertex Network-Topology Node
+     * @param endVertex Network-Topology Node
+     * @return Shortest pairs of disjoint paths
+     */
+    @Override
+    public List<List<Link>> getDisjointPaths(NodeId startVertex, NodeId endVertex) {
+        Transformer<Link, Double> customTransformer = new Transformer<Link, Double>() {
+
+            @Override
+            public Double transform(Link arg0) {
+                return new Double(1);
+            }
+        };
+        GraphUtils.SuurballeTarjanAlgorithm<NodeId, Link> suurballe = new GraphUtils.SuurballeTarjanAlgorithm<>(
+                getGraph(), customTransformer,
+                true);
+        return suurballe.getDisjointPaths(startVertex, endVertex);
+    }
+
+    @Override
+    public void updateLinks(List<Link> newLink) {
+        List<Link> changedLinks = identifyChangedLink(CurrentLinks, newLink);
+        List<Intent> affectedIntents = new ArrayList<>();
+
+        for (Link changedLink : changedLinks) {
+            List<Intent> value = getAffectedIntents(changedLink);
+            if (!affectedIntents.contains(value)) {
+                affectedIntents.addAll(value);
+            }
+        }
+
+        // Get 2nd route for affected Intents
+        for (Intent intent : affectedIntents) {
+            if (ProtectedLinks.containsKey(intent)) {
+                List<List<Link>> paths = ProtectedLinks.get(intent);
+
+                // Identify removed paths that contain the links down
+                List<Link> removedPath = new ArrayList<>();
+                for (Link changedLink : changedLinks) {
+                    List<Link> removedPathh = identifyRemovedPathByLink(changedLink, paths);
+
+                    if (removedPathh != null && removedPathh.size() > 0)
+                        removedPath.addAll(removedPathh);
+
+                 // Remove path
+                    if (ProtectedLinks.get(intent).contains(removedPathh))
+                        ProtectedLinks.get(intent).remove(removedPathh);
+
+                    // Removing the vertex from the network graph
+                    networkGraph.removeEdge(changedLink);
+                    // networkGraph.removeVertex(changedLink.getDestination().getDestNode());
+                }
+
+                // Assign a new path different of the removed one
+                List<Link> newPath = getNewPath(paths, removedPath);
+                if (newPath != null)
+                    setLinks(newPath);
+
+                this.message = intent;
+                this.changed = true;
+                notifyObservers();
+            }
+        }
+    }
+
+    /**
+     * @param allPaths All calculated path links
+     * @param removedPath List of removed links
+     * @return List of other Links
+     */
+    private List<Link> getNewPath(List<List<Link>> allPaths, List<Link> removedPath) {
+        for (List<Link> link : allPaths) {
+            if (link.hashCode() != removedPath.hashCode())
+                return link;
+        }
+        return null;
+    }
+
+
+    /**
+     * @param changedLink Updated/Deleted link
+     * @param paths All calculated path links
+     * @return Path which contains the updated/removed links
+     */
+    private List<Link> identifyRemovedPathByLink(Link changedLink, List<List<Link>> paths) {
+        for (List<Link> list : paths) {
+            for (Link link : list) {
+                if (link.getDestination().getDestNode().getValue()
+                        .equals(changedLink.getDestination().getDestNode().getValue())) {
+                    return list;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void addProtectedLink(
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent intent,
+            List<List<Link>> disjointPaths) {
+        ProtectedLinks.put(intent, disjointPaths);
+    }
+
+    @Override
+    public void register(Observer obj) {
+        if (obj == null)
+            throw new NullPointerException("Null Observer");
+        synchronized (MUTEX) {
+            if (!observers.contains(obj)) {
+                observers.add(obj);
+                obj.setSubject(this);
+            }
+        }
+    }
+
+    @Override
+    public void unregister(Observer obj) {
+        synchronized (MUTEX) {
+            observers.remove(obj);
+        }
+    }
+
+    @Override
+    public void notifyObservers() {
+        List<Observer> observersLocal = null;
+        // synchronization is used to make sure any observer registered after
+        // message is received is not notified
+        synchronized (MUTEX) {
+            if (!changed)
+                return;
+            observersLocal = new ArrayList<>(this.observers);
+            this.changed = false;
+        }
+        for (Observer obj : observersLocal) {
+            obj.update();
+        }
+    }
+
+    @Override
+    public Object getUpdate(Observer obj) {
+        return this.message;
     }
 }
