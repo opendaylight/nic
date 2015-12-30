@@ -97,7 +97,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
             //bos field is set to 1 since we only use one MPLS label
             Short bos = 1;
             Instructions buildedInstructions = null;
-            if(flowAction.equals(FlowAction.ADD_FLOW)) {
+            if (flowAction.equals(FlowAction.ADD_FLOW)) {
                 buildedInstructions = createMPLSIntentInstructions(labels, false, bos, outputPort, false);
                 LOG.info("Push MPLS label: {}", label, " to switch: {}", nodeId);
             } else if (flowAction.equals(FlowAction.REMOVE_FLOW)) {
@@ -144,7 +144,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
             //bos field is set to 1 since we only use one MPLS label
             Short bos = 1;
             Instructions builtInstructions = null;
-            if(flowAction.equals(FlowAction.ADD_FLOW)) {
+            if (flowAction.equals(FlowAction.ADD_FLOW)) {
                 builtInstructions = createMPLSIntentInstructions(labels, true, bos, outputPort, false);
                 LOG.info("Pop MPLS label at switch: {}", nodeId.getValue());
             } else if (flowAction.equals(FlowAction.REMOVE_FLOW)) {
@@ -187,7 +187,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
         FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
         if (action instanceof Allow) {
             Instructions buildedInstructions = null;
-            if(flowAction.equals(FlowAction.ADD_FLOW)) {
+            if (flowAction.equals(FlowAction.ADD_FLOW)) {
                 buildedInstructions = createMPLSIntentInstructions(null, false, null, outputPort, true);
                 LOG.info("Forward MPLS label at switch: {}", nodeId);
             } else if (flowAction.equals(FlowAction.REMOVE_FLOW)) {
