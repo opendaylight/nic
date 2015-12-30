@@ -46,6 +46,7 @@ public class TopologyLinkNotificationSubscriberImpl implements IEventListener<Ni
             Topology topo = mdsalUtils.read(LogicalDatastoreType.OPERATIONAL,
                     IidFactory.getFlowTopologyII());
             if (graphService.getGraph() != null) {
+                graphService.updateLinks(topo.getLink());
                 graphService.setLinks(topo.getLink());
             }
         }
