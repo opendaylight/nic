@@ -7,46 +7,6 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import com.google.common.base.Optional;
-import com.google.common.util.concurrent.CheckedFuture;
-
-import org.opendaylight.nic.mapping.api.IntentMappingService;
-import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
-import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
-import org.opendaylight.nic.pipeline_manager.PipelineManager;
-import org.opendaylight.nic.utils.FlowAction;
-import org.opendaylight.nic.utils.IntentUtils;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Dscp;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.constraints.rev150122.FailoverType;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodesBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
-import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.FailoverConstraint;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ProtectionConstraint;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.Qos;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos.DscpType;
-import org.opendaylight.yangtools.concepts.Registration;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
-import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,10 +14,49 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
+import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
+import org.opendaylight.nic.of.renderer.api.Observer;
+import org.opendaylight.nic.of.renderer.api.Subject;
+import org.opendaylight.nic.pipeline_manager.PipelineManager;
+import org.opendaylight.nic.utils.FlowAction;
+import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.constraints.rev150122.FailoverType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.FailoverConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ProtectionConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodesBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
+import org.opendaylight.yangtools.concepts.Registration;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
+
 /**
  * Created by saket on 8/19/15.
  */
-public class OFRendererFlowManagerProvider implements OFRendererFlowService, AutoCloseable {
+public class OFRendererFlowManagerProvider implements OFRendererFlowService, Observer, AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(OFRendererFlowManagerProvider.class);
 
@@ -73,6 +72,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private QosConstraintManager qosConstraintManager;
     private Registration pktInRegistration;
     private RedirectFlowManager redirectFlowManager;
+    private Subject topic;
+
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker,
                                          PipelineManager pipelineManager,
@@ -91,6 +92,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         // Register this service with karaf
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         graphService = new NetworkGraphManager();
+        graphService.register(this);
         mplsIntentFlowManager = new MplsIntentFlowManager(dataBroker, pipelineManager);
         serviceRegistration.add(context.registerService(OFRendererFlowService.class, this, null));
         serviceRegistration.add(context.registerService(OFRendererGraphService.class, graphService, null));
@@ -104,11 +106,14 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     public void pushIntentFlow(Intent intent, FlowAction flowAction) {
         // TODO: Extend to support other actions
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
+
         // Creates QoS configuration and stores profile in the Data Store.
         if (intent.getQosConfig() != null) {
             return;
         }
-        Action actionContainer = (Action) intent.getActions().get(0).getAction();
+
+        Action actionContainer = intent.getActions().get(0).getAction();
+
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         // MPLS stuff
         String sourceIntent = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
@@ -137,15 +142,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
                     }
                 }
             }
-
-            if (isProtected && failoverType != null) {
-                LOG.info("Intent has constraints: {}, {}", isProtected, failoverType);
-                // TO-DO: Suurballe disjoint path algorithm is used
-            } else {
-                LOG.info("Intent has no constraints for protection");
-                // Dijkstra shortest path algorithm is used
-                generateMplsFlows(sourceIntent, targetIntent, flowAction);
-            }
+            generateMplsFlows(intent, sourceIntent, targetIntent, failoverType, flowAction, isProtected);
         } else if (checkQosConstraint(intent, actionContainer, endPointGroups)) {
             //Get all node Id's
             Map<Node, List<NodeConnector>> nodeMap = getNodes();
@@ -174,7 +171,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
      * @param target The target {@link Subjects}
      * @param flowAction
      */
-    private void generateMplsFlows(String source, String target, FlowAction flowAction) {
+    private void generateMplsFlows(Intent intent, String source, String target, FailoverType failoverType,
+            FlowAction flowAction, boolean isProtected) {
         LOG.info("Generating Intent Flow from {} to {}", source, target);
         String sourceNodeConnectorId = intentMappingService.get(source)
                                                            .get(OFRendererConstants.SWITCH_PORT_KEY);
@@ -187,20 +185,33 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         org.opendaylight.yang.gen.v1.urn
             .tbd.params.xml.ns.yang.network
             .topology.rev131021.NodeId targetNodeId = extractTopologyNodeId(targetNodeConnectorId);
-        List<Link> shortestPath = graphService.getShortestPath(sourceNodeId, targetNodeId);
+        List<Link> paths = null;
+        if (isProtected && failoverType != null && failoverType == FailoverType.SlowReroute) {
+            if (flowAction.equals(FlowAction.ADD_FLOW)) {
+                NetworkGraphManager.ProtectedLinks.put(intent,
+                        graphService.getDisjointPaths(sourceNodeId, targetNodeId));
+                paths = NetworkGraphManager.ProtectedLinks.get(intent).get(0);
+            } else if (flowAction.equals(FlowAction.REMOVE_FLOW)) {
+                paths = NetworkGraphManager.ProtectedLinks.get(intent).get(0);
+                NetworkGraphManager.ProtectedLinks.remove(intent);
+            }
+        } else {
+            LOG.info("Intent has no constraints for protection");
+            paths = graphService.getShortestPath(sourceNodeId, targetNodeId);
+        }
+
         LOG.trace("MPLS Source NodeId {}", sourceNodeId.getValue());
         LOG.trace("MPLS Target NodeId {}", targetNodeId.getValue());
-        LOG.info("Retrieved shortest path, there are {} hops.", shortestPath.size());
-        if (shortestPath != null && !shortestPath.isEmpty()) {
-            for (Link link: shortestPath) {
+        LOG.info("Retrieved shortest path, there are {} hops.", paths.size());
+        if (paths != null && !paths.isEmpty()) {
+            LOG.info("Retrieved shortest path, there are {} hops.", paths.size());
+            for (Link link : paths) {
                 NodeId linkSourceNodeId = new NodeId(link.getSource().getSourceNode().getValue());
                 NodeId linkTargetNodeId = new NodeId(link.getDestination().getDestNode().getValue());
                 String linkSourceTp = link.getSource().getSourceTp().getValue();
                 // Shortest path is giving result from end to beginning
                 if (sourceNodeId.getValue().equals(linkSourceNodeId.getValue())) {
-                    mplsIntentFlowManager.pushMplsFlow(linkSourceNodeId,
-                                                       flowAction,
-                                                       linkSourceTp);
+                    mplsIntentFlowManager.pushMplsFlow(linkSourceNodeId, flowAction, linkSourceTp);
                 } else if(linkTargetNodeId.getValue().equals(targetNodeId.getValue())) {
                     mplsIntentFlowManager.forwardMplsFlow(linkSourceNodeId, flowAction, linkSourceTp);
                     mplsIntentFlowManager.popMplsFlow(linkTargetNodeId, flowAction, targetNodeConnectorId);
@@ -316,8 +327,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private boolean checkQosConstraint(Intent intent, Action actionContainer, List<String> endPointGroups) {
         //Check for constrain name in the intent.
         org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
-                    = (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints)
-                    intent.getConstraints().get(0).getConstraints();
+                    = intent.getConstraints().get(0).getConstraints();
         String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
         LOG.info("QosConstraint is set to: {}", qosName);
         if (qosName != null) {
@@ -331,5 +341,18 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void update() {
+        Intent msg = (Intent) topic.getUpdate(this);
+        if (msg != null) {
+            pushIntentFlow(msg, FlowAction.ADD_FLOW);
+        }
+    }
+
+    @Override
+    public void setSubject(Subject sub) {
+        this.topic = sub;
     }
 }
