@@ -14,7 +14,7 @@ import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.
 
 import edu.uci.ics.jung.graph.Graph;
 
-public interface OFRendererGraphService {
+public interface OFRendererGraphService extends Subject {
 
     /**
      * Returns a list of Network-Topology Links
@@ -27,6 +27,17 @@ public interface OFRendererGraphService {
      */
     List<Link> getShortestPath(NodeId source, NodeId target);
 
+    /**
+     * Returns a list of Network-Topology Links
+     * that represents the Suurbale's algorithm
+     * for finding shortest pairs of disjoint paths
+     * OF Node.
+     * @param startVertex Network-Topology Node
+     * @param endVertex Network-Topology Node
+     * @return Shortest pairs of disjoint paths
+     */
+    List<List<Link>> getDisjointPaths(NodeId startVertex,
+            NodeId endVertex);
     /**
      * Set the Graph's links so that it
      * can be built.
@@ -41,5 +52,13 @@ public interface OFRendererGraphService {
      * @return Graph The instance of the Graph.
      */
     Graph<NodeId, Link> getGraph();
+
+    /**
+     * Update the Graph's links so that it can be built.
+     *
+     * @param link
+     *            All the new Network-Topology Links.
+     */
+    void updateLinks(List<Link> link);
 
 }
