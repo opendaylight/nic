@@ -35,7 +35,8 @@ public class NemoInputBuildersTest {
         LocalTime startTime = NEMOIntentParser.parseTime(NEMOIntentParserTest.START_TIME);
         Period duration = NEMOIntentParser.parsePeriod(NEMOIntentParserTest.DURATION);
         BandwidthOnDemandParameters params = new BandwidthOnDemandParameters(NEMOIntentParserTest.FROM,
-                NEMOIntentParserTest.TO, NEMOIntentParserTest.BANDWIDTH, startTime, duration);
+                NEMOIntentParserTest.TO, NEMOIntentParser.parseBandwidthString(NEMOIntentParserTest.BANDWIDTH),
+                startTime, duration);
         StructureStyleNemoUpdateInput input = NemoInputBuilders.getUpdateBuilder(params).build();
         assertNotNull("Expected valid input", input);
 
@@ -46,8 +47,9 @@ public class NemoInputBuildersTest {
         assertEquals(1, input.getOperations().getOperation().size());
         assertEquals(1, input.getOperations().getOperation().get(0).getAction().size());
         assertEquals(1, input.getOperations().getOperation().get(0).getAction().get(0).getParameterValues()
-                .getStringValue().size());
-        assertEquals(NEMOIntentParserTest.BANDWIDTH, input.getOperations().getOperation().get(0).getAction().get(0)
-                .getParameterValues().getStringValue().get(0).getValue());
+                .getIntValue().size());
+        assertEquals(NEMOIntentParser.parseBandwidthString(NEMOIntentParserTest.BANDWIDTH), input.getOperations()
+                .getOperation().get(0).getAction().get(0).getParameterValues().getIntValue().get(0).getValue()
+                .longValue());
     }
 }

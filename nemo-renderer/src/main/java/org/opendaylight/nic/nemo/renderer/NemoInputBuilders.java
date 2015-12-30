@@ -48,8 +48,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.obj
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.object.rev151010.connection.instance.EndNodeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.object.rev151010.node.instance.SubNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.action.instance.ParameterValuesBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.action.instance.parameter.values.StringValue;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.action.instance.parameter.values.StringValueBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.action.instance.parameter.values.IntValue;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.action.instance.parameter.values.IntValueBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.condition.instance.ConditionSegment;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.condition.instance.ConditionSegment.ConditionParameterMatchPattern;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.condition.instance.ConditionSegment.PrecursorRelationOperator;
@@ -109,10 +109,10 @@ public class NemoInputBuilders {
         return new StructureStyleNemoUpdateInputBuilder().setObjects(objects).setOperations(operations);
     }
 
-    private static Action action(long order, ActionName name, String value) {
-        StringValue v = new StringValueBuilder().setOrder(1L).setValue(value).build();
+    private static Action action(long order, ActionName name, long value) {
+        IntValue v = new IntValueBuilder().setOrder(1L).setValue(value).build();
         return new ActionBuilder().setActionName(name).setOrder(order)
-                .setParameterValues(new ParameterValuesBuilder().setStringValue(Arrays.asList(v)).build()).build();
+                .setParameterValues(new ParameterValuesBuilder().setIntValue(Arrays.asList(v)).build()).build();
     }
 
     private static Node node(String name, NodeType type) {

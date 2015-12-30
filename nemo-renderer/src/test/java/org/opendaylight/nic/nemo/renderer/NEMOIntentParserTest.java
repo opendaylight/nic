@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.nemo.renderer;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -52,6 +53,18 @@ public class NEMOIntentParserTest {
      */
     @After
     public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void testParseBandwidthString() {
+        final long KILO = 1024L;
+        assertEquals(10 * KILO * KILO, NEMOIntentParser.parseBandwidthString("10G"));
+        assertEquals(1, NEMOIntentParser.parseBandwidthString("1"));
+        assertEquals(1, NEMOIntentParser.parseBandwidthString("1k"));
+        assertEquals(1, NEMOIntentParser.parseBandwidthString("1K"));
+        assertEquals(KILO, NEMOIntentParser.parseBandwidthString("1M"));
+        assertEquals(KILO * KILO, NEMOIntentParser.parseBandwidthString("1G"));
+        assertEquals(KILO * KILO * KILO, NEMOIntentParser.parseBandwidthString("1T"));
     }
 
     /**

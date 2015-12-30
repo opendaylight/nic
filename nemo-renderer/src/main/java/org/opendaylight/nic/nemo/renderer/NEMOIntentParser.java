@@ -8,7 +8,10 @@
 
 package org.opendaylight.nic.nemo.renderer;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -26,6 +29,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.BandwidthConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
@@ -37,6 +42,8 @@ import com.google.common.collect.Ordering;
  */
 public class NEMOIntentParser {
 
+    private static final Logger LOG = LoggerFactory.getLogger(NEMOIntentParser.class);
+
     private NEMOIntentParser() {
     }
 
@@ -44,18 +51,50 @@ public class NEMOIntentParser {
     public static class BandwidthOnDemandParameters {
         public final String from;
         public final String to;
-        public final String bandwidth;
+        public final long bandwidth;
         public final LocalTime startTime;
         public final Period duration;
 
-        public BandwidthOnDemandParameters(String from, String to, String bandwidth, LocalTime startTime,
-                Period duration) {
+        public BandwidthOnDemandParameters(String from, String to, long bandwidth, LocalTime startTime, Period duration) {
             super();
             this.from = from;
             this.to = to;
             this.bandwidth = bandwidth;
             this.startTime = startTime;
             this.duration = duration;
+        }
+    }
+
+    private static final Pattern BANDWIDTH_PATTERN = Pattern.compile("(\\d+)([kmgt]?)", Pattern.CASE_INSENSITIVE);
+
+    /**
+     * Simple parsing of strings like "10G" bps into a long value in number of kbps.
+     *
+     * @param bandwidthStr
+     * @return number of kbps
+     */
+    public static long parseBandwidthString(String bandwidthStr) {
+        Matcher matcher = BANDWIDTH_PATTERN.matcher(bandwidthStr);
+        if (matcher.matches()) {
+            BigDecimal num = new BigDecimal(matcher.group(1));
+            String unit = matcher.group(2).toLowerCase();
+            final BigDecimal KILO = new BigDecimal(1024L);
+            if (unit.equals("k")) {
+                num = num.multiply(KILO);
+            } else if (unit.equals("m")) {
+                num = num.multiply(KILO.pow(2));
+            } else if (unit.equals("g")) {
+                num = num.multiply(KILO.pow(3));
+            } else if (unit.equals("t")) {
+                num = num.multiply(KILO.pow(4));
+            }
+            // divide to get kbps
+            return num.divide(KILO, BigDecimal.ROUND_CEILING).longValueExact();
+        } else {
+            NumberFormatException exception = new NumberFormatException("Invalid bandwidth string " + bandwidthStr
+                    + "; must be of pattern " + BANDWIDTH_PATTERN.pattern());
+            LOG.warn(exception.getMessage(), exception);
+            throw exception;
         }
     }
 
@@ -95,7 +134,8 @@ public class NEMOIntentParser {
 
                 String from = ((EndPointGroup) subjects.get(0).getSubject()).getEndPointGroup().getName();
                 String to = ((EndPointGroup) subjects.get(1).getSubject()).getEndPointGroup().getName();
-                String bandwidth = constraint.getBandwidthConstraint().getBandwidth();
+                String bandwidthStr = constraint.getBandwidthConstraint().getBandwidth();
+                long bandwidth = parseBandwidthString(bandwidthStr);
 
                 String startTimeStr = condition.getDaily().getStartTime().getValue();
                 LocalTime startTime = parseTime(startTimeStr);
