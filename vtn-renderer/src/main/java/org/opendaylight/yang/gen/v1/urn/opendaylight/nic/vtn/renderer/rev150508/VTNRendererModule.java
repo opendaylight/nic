@@ -1,21 +1,8 @@
-/**
- * Copyright (c) 2015 NEC Corporation and others.  All rights reserved.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution,
- * and is available at http://www.eclipse.org/legal/epl-v10.html
- */
-
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.vtn.renderer.rev150508;
 
 import org.opendaylight.nic.vtn.renderer.VTNRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.vtn.renderer.rev150508.AbstractVTNRendererModule {
-
-    private static final Logger LOG = LoggerFactory.getLogger(VTNRendererModule.class);
-
     public VTNRendererModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
     }
@@ -31,8 +18,10 @@ public class VTNRendererModule extends org.opendaylight.yang.gen.v1.urn.opendayl
 
     @Override
     public java.lang.AutoCloseable createInstance() {
-        LOG.info("VTN Renderer createInstance()");
-        final VTNRenderer renderer = new VTNRenderer(getDataBrokerDependency());
-        return renderer;
+        VTNRenderer provider = new VTNRenderer();
+        getBrokerDependency().registerProvider(provider);
+
+        return provider;
     }
+
 }

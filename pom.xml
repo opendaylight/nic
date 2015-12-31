@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+     (c) Copyright 2015-2016 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
 
      This program is made available under the terms of the
      Eclipse Public License v1.0 which accompanies this distribution,
@@ -39,17 +39,14 @@
         <!-- Well-known -->
         <module>intent-api</module>
         <module>intent-graph</module>
-	<module>intent-mapping-interface</module>
+        <module>intent-mapping-interface</module>
         <module>intent-impl</module>
         <module>utils</module>
         <module>intent-cli</module>
         <module>intent-compiler</module>
         <module>intent-mapping-mdsal</module>
         <module>gbp-renderer</module>
-        <!--
-             TODO: Add the module "vtn-renderer" after the Bug 4426 is fixed.
         <module>vtn-renderer</module>
-        -->
         <module>nemo-renderer</module>
         <module>of-renderer</module>
         <module>intent-listeners</module>
