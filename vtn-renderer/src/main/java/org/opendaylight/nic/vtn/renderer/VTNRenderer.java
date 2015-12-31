@@ -15,32 +15,37 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
+import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The VTNRenderer class parse the intents received.
  */
-public class VTNRenderer implements AutoCloseable, DataChangeListener {
-
-    private static final Logger LOG = LoggerFactory
+public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataChangeListener {
+  private static final Logger LOG = LoggerFactory
             .getLogger(VTNRenderer.class);
 
     private VTNIntentParser vtnIntentParser;
@@ -73,24 +78,33 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
 
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
 
-    public VTNRenderer(DataBroker dataBroker) {
-        this.dataProvider = dataBroker;
-        this.vtnRendererUtility = new VTNRendererUtility(dataProvider);
-        this.vtnIntentParser = new VTNIntentParser(dataProvider);
-        vtnRendererListener = dataBroker.registerDataChangeListener(
-                LogicalDatastoreType.CONFIGURATION,
-                INTENTS_IID, this, DataChangeScope.SUBTREE);
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void close() throws Exception {
-        LOG.info("VTNRendererListener closed.");
+        LOG.trace("VTNRendererListener closed.");
         if (vtnRendererListener != null) {
             vtnRendererListener.close();
         }
+    }
+
+    /**
+     * Method invoked by Factory class.
+     * @param session the session object
+     */
+    @Override
+    public void onSessionInitiated(ProviderContext session) {
+
+        this.dataProvider = session.getSALService(DataBroker.class);
+        MdsalUtils md = new MdsalUtils(this.dataProvider);
+        VTNManagerService vtn = new VTNManagerService(md, session);
+        this.vtnIntentParser = new VTNIntentParser(dataProvider , vtn);
+
+        this.vtnRendererUtility = new VTNRendererUtility(dataProvider);
+        vtnRendererListener = dataProvider.registerDataChangeListener(
+                LogicalDatastoreType.CONFIGURATION,
+                INTENTS_IID, this, DataChangeScope.SUBTREE);
     }
 
     /**
@@ -99,13 +113,13 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
     @Override
     public void onDataChanged(
             final AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> ev) {
-        LOG.info("Intent configuration changed.");
+        LOG.trace("Intent configuration changed.");
 
         for (DataObject dao: ev.getCreatedData().values()) {
             LOG.trace("A new data object is created: {}", dao);
             if (dao instanceof Intent) {
                 Intent intent = (Intent) dao;
-                LOG.debug("A new intent is created: {}", intent.getId());
+                LOG.trace("A new intent is created: {}", intent.getId());
                 intentParser(intent);
             }
         }
@@ -113,7 +127,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             LOG.trace("A data object is updated: {}", dao);
             if (dao instanceof Intent) {
                 Intent intent = (Intent) dao;
-                LOG.debug("An intent is updated: {}", intent.getId());
+                LOG.trace("An intent is updated: {}", intent.getId());
                 intentParser(intent);
             }
         }
@@ -161,7 +175,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         for (Subjects subjects: listSubjects) {
             Subject subject = subjects.getSubject();
             if (!(subject instanceof EndPointGroup)) {
-                LOG.info("Subject is not specified: {}", intentID);
+                LOG.trace("Subject is not specified: {}", intentID);
                 return;
             }
             EndPointGroup endPointGroup = (EndPointGroup)subject;
@@ -169,7 +183,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
                 .EndPointGroup epg = endPointGroup.getEndPointGroup();
             if (epg == null) {
-                LOG.info("End Point Group is not specified: {}", intentID);
+                LOG.trace("End Point Group is not specified: {}", intentID);
                 return;
             }
             endPointGroups.add(epg.getName());
@@ -179,7 +193,7 @@ public class VTNRenderer implements AutoCloseable, DataChangeListener {
         // Retrieve the action.
         final List<Actions> listActions = intent.getActions();
         if (listActions == null) {
-            LOG.info("Actions are not specified: {}", intentID);
+            LOG.trace("Actions are not specified: {}", intentID);
             return;
         } else if (listActions.size() != NUM_OF_SUPPORTED_ACTIONS) {
             LOG.warn("VTN Renderer supports only one action per Intent: {}", intentID);
