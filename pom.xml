@@ -39,17 +39,14 @@
         <!-- Well-known -->
         <module>intent-api</module>
         <module>intent-graph</module>
-	<module>intent-mapping-interface</module>
+        <module>intent-mapping-interface</module>
         <module>intent-impl</module>
         <module>utils</module>
         <module>intent-cli</module>
         <module>intent-compiler</module>
         <module>intent-mapping-mdsal</module>
         <module>gbp-renderer</module>
-        <!--
-             TODO: Add the module "vtn-renderer" after the Bug 4426 is fixed.
         <module>vtn-renderer</module>
-        -->
         <module>nemo-renderer</module>
         <module>of-renderer</module>
         <module>intent-listeners</module>
