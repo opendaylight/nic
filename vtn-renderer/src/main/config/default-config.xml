@@ -23,12 +23,12 @@
 
           <name>vtn-renderer</name>
 
-          <data-broker>
+          <broker>
             <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">
-              binding:binding-async-data-broker
+              binding:binding-broker-osgi-registry
             </type>
-            <name>binding-data-broker</name>
-          </data-broker>
+            <name>binding-osgi-broker</name>
+          </broker>
 
         </module>
       </modules>
@@ -38,6 +38,9 @@
   <required-capabilities>
     <capability>
       urn:opendaylight:nic:vtn:renderer?module=vtn-renderer&amp;revision=2015-05-08
+    </capability>
+    <capability>
+      urn:opendaylight:vtn:impl:provider?module=vtn-provider&amp;revision=2015-02-09
     </capability>
   </required-capabilities>
 </snapshot>
