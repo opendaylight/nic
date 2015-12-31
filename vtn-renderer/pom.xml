@@ -33,7 +33,12 @@
    <artifactId>intent-api</artifactId>
    <version>${project.version}</version>
   </dependency>
-
+<!-- NIC Dependency -->
+    <dependency>
+   <groupId>org.opendaylight.nic</groupId>
+   <artifactId>utils</artifactId>
+   <version>${project.version}</version>
+  </dependency>
   <!-- OpenDaylight VTN Manager -->
   <dependency>
    <groupId>org.opendaylight.vtn</groupId>
