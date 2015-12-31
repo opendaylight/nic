@@ -12,14 +12,9 @@ module vtn-renderer {
     namespace "urn:opendaylight:nic:vtn:renderer";
     prefix vtn-renderer;
 
-    import config {
-        prefix config;
-        revision-date 2013-04-05;
-    }
-    import opendaylight-md-sal-binding {
-        prefix mdsal;
-        revision-date 2013-10-28;
-    }
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix md-sal-binding; revision-date 2013-10-28;}
+    import opendaylight-md-sal-dom {prefix dom; revision-date 2013-10-28;}
 
     description
       "This module contains the base YANG definition for the VTN Renderer
@@ -40,13 +35,12 @@ module vtn-renderer {
     augment "/config:modules/config:module/config:configuration" {
         case vtn-renderer {
             when "/config:modules/config:module/config:type = 'vtn-renderer'";
-
-            container data-broker {
+            container broker {
                 uses config:service-ref {
                     refine type {
                         mandatory true;
                         config:required-identity
-                          mdsal:binding-async-data-broker;
+                           md-sal-binding:binding-broker-osgi-registry;
                     }
                 }
             }
