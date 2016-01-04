@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_1dd299d2",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/NormalizedGraphImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2016-01-04T22:55:26Z",
+      "side": 1,
+      "message": "Thank you for the update.\nMy concern is to remove objects in the list which we are using the loop. Can we create a new set for the normalization outside the loop?",
+      "revId": "5495b64ec119cb22334225dc4f342fcdd74e31c3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
