@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_ddc40194",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/NormalizedGraphImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2016-01-04T21:16:28Z",
+      "side": 1,
+      "message": "In this code, why are you changing the graphs object which you are using in the loop? Do you want to reduce original input graph list by normalizing?\nI think we can create a new graph for the composition including normalization.",
+      "revId": "2549409d6d8cb27f743b7f79e867f1ed9c4147cf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
