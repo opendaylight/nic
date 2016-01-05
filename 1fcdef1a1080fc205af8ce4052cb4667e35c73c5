@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_a01d5e68",
+        "filename": "intent-graph/src/test/java/org/opendaylight/nic/graph/impl/GraphMapImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-01-05T00:33:47Z",
+      "side": 1,
+      "message": "you\u0027re not testing anything yet, right?",
+      "revId": "1fcdef1a1080fc205af8ce4052cb4667e35c73c5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
