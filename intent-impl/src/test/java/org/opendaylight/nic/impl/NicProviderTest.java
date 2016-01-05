@@ -11,16 +11,7 @@ package org.opendaylight.nic.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.net.UnknownHostException;
 import java.security.AccessController;
@@ -285,6 +276,7 @@ public class NicProviderTest {
         Optional mockOptional = mock(Optional.class);
         CheckedFuture mockCheckedFuture = mock(CheckedFuture.class);
         when(mockIntents.getIntent()).thenReturn(mockListOfIntentsForConfiguration);
+        when(mockOptional.isPresent()).thenReturn(true);
         when(mockOptional.get()).thenReturn(mockIntents);
         when(mockCheckedFuture.checkedGet()).thenReturn(mockOptional);
         when(mockReadOnlyTransaction.read(LogicalDatastoreType.CONFIGURATION,
@@ -293,6 +285,7 @@ public class NicProviderTest {
         Optional mockOptionalTwo = mock(Optional.class);
         CheckedFuture mockCheckedFutureTwo = mock(CheckedFuture.class);
         when(mockIntentsTwo.getIntent()).thenReturn(mockListOfIntentsForOperational);
+        when(mockOptionalTwo.isPresent()).thenReturn(true);
         when(mockOptionalTwo.get()).thenReturn(mockIntentsTwo);
         when(mockCheckedFutureTwo.checkedGet()).thenReturn(mockOptionalTwo);
         when(mockReadOnlyTransaction.read(LogicalDatastoreType.OPERATIONAL,
@@ -307,6 +300,7 @@ public class NicProviderTest {
         verify(mockReadOnlyTransaction, times(1)).read(
                 LogicalDatastoreType.CONFIGURATION, NicProvider.INTENTS_IID);
         verify(mockCheckedFuture, times(1)).checkedGet();
+        verify(mockOptional, times(1)).isPresent();
         verify(mockOptional, times(1)).get();
         verify(mockIntents, times(1)).getIntent();
         /**
@@ -319,6 +313,7 @@ public class NicProviderTest {
         verify(mockReadOnlyTransaction, times(1)).read(
                 LogicalDatastoreType.OPERATIONAL, NicProvider.INTENTS_IID);
         verify(mockCheckedFutureTwo, times(1)).checkedGet();
+        verify(mockOptionalTwo, times(1)).isPresent();
         verify(mockOptionalTwo, times(1)).get();
         verify(mockIntentsTwo, times(1)).getIntent();
         /**
@@ -331,6 +326,38 @@ public class NicProviderTest {
         assertEquals(new ArrayList<>(), actualListOfIntents);
         assertTrue(actualListOfIntents.isEmpty());
     }
+
+    /**
+     * Test case for {@link NicProvider#listIntentsWithEmptyConfigTree()}
+     */
+    @Test
+    public void testListIntentsWithEmpytConfigTree() throws Exception {
+        List<Intent> actualListOfIntents;
+        /**
+         * Here creates required mock objects and defines mocking functionality
+         * for mock objects.
+         */
+        List<Intent> mockListOfIntentsForConfiguration = mock(List.class);
+        List<Intent> mockListOfIntentsForOperational = mock(List.class);
+        Optional mockOptional = mock(Optional.class);
+        CheckedFuture mockCheckedFuture = mock(CheckedFuture.class);
+        when(mockCheckedFuture.checkedGet()).thenReturn(mockOptional);
+        when(mockOptional.isPresent()).thenReturn(false);
+        when(mockReadOnlyTransaction.read(LogicalDatastoreType.CONFIGURATION,
+                NicProvider.INTENTS_IID)).thenReturn(mockCheckedFuture);
+        /**
+         * Here verifying listIntents() should return list of Intents from
+         * configuration data store if isConfigurationDatastore is true.
+         */
+        actualListOfIntents = nicProvider.listIntents(true);
+        verify(mockDataBroker, times(1)).newReadOnlyTransaction();
+        verify(mockReadOnlyTransaction, times(1)).read(
+                LogicalDatastoreType.CONFIGURATION, NicProvider.INTENTS_IID);
+        verify(mockCheckedFuture, times(1)).checkedGet();
+        verify(mockOptional, times(1)).isPresent();
+        assertTrue(actualListOfIntents.isEmpty());
+    }
+
 
     /**
      * Test case for {@link NicProvider#getIntent()}

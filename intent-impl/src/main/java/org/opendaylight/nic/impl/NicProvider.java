@@ -42,6 +42,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Optional;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 
@@ -182,10 +183,17 @@ public class NicProvider implements NicConsoleProvider {
 
         try {
             ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
-            listOfIntents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION
-                    : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet().get().getIntent();
+            Optional<Intents> intents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION
+                    : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet();
+
+            if(intents.isPresent()) {
+                listOfIntents = intents.get().getIntent();
+            }
+            else {
+                LOG.info("Intent tree was empty!");
+            }
         } catch (Exception e) {
-            LOG.error("ListIntents: failed: {}", e);
+            LOG.error("ListIntents: failed: {}", e.getMessage(), e);
         }
 
         if (listOfIntents == null) {
