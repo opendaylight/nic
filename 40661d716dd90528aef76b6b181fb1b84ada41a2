@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_315bfe2f",
+        "filename": "intent-mapping-hazelcast/src/main/config/default-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:29:55Z",
+      "side": 1,
+      "message": "not sure about this namespace",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "40661d716dd90528aef76b6b181fb1b84ada41a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d1414a3a",
+        "filename": "intent-mapping-hazelcast/src/main/config/default-config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:29:55Z",
+      "side": 1,
+      "message": "not sure about this module",
+      "range": {
+        "startLine": 24,
+        "startChar": 49,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "40661d716dd90528aef76b6b181fb1b84ada41a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f13c86c1",
+        "filename": "intent-mapping-hazelcast/src/main/java/org/opendaylight/nic/mapping/hazelcast/impl/MappedObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:29:55Z",
+      "side": 1,
+      "message": "why not an interface?",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "40661d716dd90528aef76b6b181fb1b84ada41a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_116fe2c6",
+        "filename": "intent-mapping-hazelcast/src/main/yang/intent-mapping-hazelcast-impl.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:29:55Z",
+      "side": 1,
+      "message": "please indent correctly",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "40661d716dd90528aef76b6b181fb1b84ada41a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_31721eae",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:29:55Z",
+      "side": 1,
+      "message": "please remove tab",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "40661d716dd90528aef76b6b181fb1b84ada41a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
