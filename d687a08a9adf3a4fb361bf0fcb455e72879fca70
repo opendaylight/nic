@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_80994221",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-05T08:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_d91656a7",
+      "range": {
+        "startLine": 806,
+        "startChar": 33,
+        "endLine": 806,
+        "endChar": 49
+      },
+      "revId": "d687a08a9adf3a4fb361bf0fcb455e72879fca70",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_b97a7aef",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_20a08e42",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-05T08:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_b97a7aef",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 5
+      },
+      "revId": "d687a08a9adf3a4fb361bf0fcb455e72879fca70",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_d97df6e8",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/vtn/renderer/rev150508/VTNRendererModule.java",
         "patchSetId": 5
@@ -59,6 +107,24 @@
       "writtenOn": "2016-01-04T17:59:01Z",
       "side": 1,
       "message": "I think we should keep the copyright header.",
+      "revId": "d687a08a9adf3a4fb361bf0fcb455e72879fca70",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_40a34a4f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/vtn/renderer/rev150508/VTNRendererModule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-05T08:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_d97df6e8",
       "revId": "d687a08a9adf3a4fb361bf0fcb455e72879fca70",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
