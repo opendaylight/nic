@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_f11b261a",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/impl/DeployServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T18:43:26Z",
+      "side": 1,
+      "message": "maybe throwing an exception could be a good idea?",
+      "range": {
+        "startLine": 79,
+        "startChar": 16,
+        "endLine": 79,
+        "endChar": 23
+      },
+      "revId": "bc5648a1c5f53ef00f4218640a4651fc178971c7",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
