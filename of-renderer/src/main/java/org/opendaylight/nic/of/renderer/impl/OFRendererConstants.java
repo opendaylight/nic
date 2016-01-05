@@ -24,9 +24,9 @@ public class OFRendererConstants {
 
     public static final int ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY = 10000;
 
-    public static final Integer SRC_END_POINT_GROUP_INDEX = 0;
+    public static final Integer SRC_END_POINT_GROUP_INDEX = 1;
 
-    public static final Integer DST_END_POINT_GROUP_INDEX = 1;
+    public static final Integer DST_END_POINT_GROUP_INDEX = 0;
 
     public static final String ANY_MATCH = "any";
 

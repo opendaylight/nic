@@ -11,8 +11,8 @@ package org.opendaylight.nic.utils;
  * Created by yrineu on 22/09/15.
  */
 public enum FlowAction {
-    ADD_FLOW(0),
-    REMOVE_FLOW(1);
+    ADD_FLOW(1),
+    REMOVE_FLOW(0);
 
     private final int value;
 
