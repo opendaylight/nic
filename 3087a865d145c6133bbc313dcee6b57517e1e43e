@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1aa4ed85_71be56d6",
+        "filename": "vtn-renderer/src/main/config/default-config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-01-05T20:04:48Z",
+      "side": 1,
+      "message": "Does this not need the capability \"vtn-provider\"?\n\nSince the VTN Renderer depends on that feature, I think it needs to add the \"vtn-provider\" as follows.\n\n\u003ccapability\u003e\nurn:opendaylight:vtn:impl:provider?module\u003dvtn-provider\u0026amp;revision\u003d2015-02-09\n\u003c/capability\u003e",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_11e842b3",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/MdsalUtils.java",
         "patchSetId": 6
@@ -25,6 +48,75 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_11d282d2",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-01-05T20:04:48Z",
+      "side": 1,
+      "message": "I think you need to specify flow filters to be removed.\n\nThe method does not set these mandatory input, VTN Renderer output the following error message when an user deletes the intent.\n\n\nFailed to unset Flow Filter: input\u003dRemoveFlowFilterInput [augmentation\u003d[]], err\u003dBADREQUEST: VTN name cannot be null\n\n\nFYI: https://jenkins.opendaylight.org/releng/view/vtn/job/vtn-merge-beryllium/lastSuccessfulBuild/artifact/manager/model/target/site/models/vtn-flow-filter.html#remove-flow-filter",
+      "range": {
+        "startLine": 652,
+        "startChar": 0,
+        "endLine": 653,
+        "endChar": 20
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b1edaeb9",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-01-05T20:04:48Z",
+      "side": 1,
+      "message": "I think the explanation for the return value is not correct. I think this method returns a value of boolean, so the value is true or false. I think many explanation for return values in this file has similar issue.",
+      "range": {
+        "startLine": 405,
+        "startChar": 1,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d154ea55",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-01-05T20:04:48Z",
+      "side": 1,
+      "message": "The getRpcResult method does not correctly handle the output of the removeFlowCondition. In the result, VTN Renderer output the following error message when a user deletes an intent.\n\nFailed to unset FlowCondition: input\u003dRemoveFlowConditionInput [_name\u003duaEyMlJeTYyIc1l40NgNA_F_1, augmentation\u003d[]], err\u003dRPC did not set output.\n\n\nFYI: https://jenkins.opendaylight.org/releng/view/vtn/job/vtn-merge-beryllium/lastSuccessfulBuild/artifact/manager/model/target/site/models/vtn-flow-condition.html#remove-flow-condition",
+      "range": {
+        "startLine": 779,
+        "startChar": 12,
+        "endLine": 779,
+        "endChar": 73
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_31ebfeb1",
         "filename": "vtn-renderer/src/main/yang/vtn-renderer.yang",
         "patchSetId": 6
@@ -39,6 +131,29 @@
       "range": {
         "startLine": 17,
         "startChar": 0,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b167eeb6",
+        "filename": "vtn-renderer/src/main/yang/vtn-renderer.yang",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-01-05T20:04:48Z",
+      "side": 1,
+      "message": "Why is this needed?\n\nSince this file (vtn-renderer.yang) does not use the \"opendaylight-md-sal-dom\", I don\u0027t think it needs to import the \"opendaylight-md-sal-dom\".",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
         "endLine": 17,
         "endChar": 74
       },
