@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_710976dc",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/engine/service/DeployService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T18:39:33Z",
+      "side": 1,
+      "message": "useless?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "57f4f48c21905fa47d24456abb328f16813803ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_5106bacf",
+        "filename": "intent-statemachine/src/main/java/org/opendaylight/nic/impl/StateMachineEventsHandler.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T18:39:33Z",
+      "side": 1,
+      "message": "please indent correctly",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "57f4f48c21905fa47d24456abb328f16813803ba",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
