@@ -16,6 +16,24 @@
       "revId": "024b117debd572476da291380c4771fd8b2a66ee",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_11136267",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-01-05T23:16:29Z",
+      "side": 1,
+      "message": "So, yesterday I did some tests using the mininet. It isn\u0027t a new bug. Please, can you verify with a dpctl dump-flows too?\nThanks.",
+      "parentUuid": "1aa4ed85_f13a4633",
+      "revId": "024b117debd572476da291380c4771fd8b2a66ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
