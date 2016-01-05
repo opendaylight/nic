@@ -26,8 +26,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.Output
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.InstructionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.instruction.ApplyActionsCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.instruction.ClearActionsCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.instruction.apply.actions._case.ApplyActions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.instruction.apply.actions._case.ApplyActionsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.instruction.clear.actions._case.ClearActionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.Instruction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.InstructionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
@@ -121,6 +123,18 @@ public abstract class AbstractFlowManager {
         Instruction mplsInstruction = new InstructionBuilder().setOrder(0)
                 .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyMplsActions).build()).build();
         Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(mplsInstruction)).build();
+        return instructions;
+    }
+
+    /**
+     * Creates a set of clear instructions to remove flows from switch
+     * @return Instructions
+     */
+    protected Instructions createClearFlowsInstructions() {
+        Instruction clearInstruction = new InstructionBuilder().setOrder(0)
+                .setInstruction(new ClearActionsCaseBuilder().setClearActions(new ClearActionsBuilder().build()).build()).build();
+        Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(clearInstruction))
+                .build();
         return instructions;
     }
 
