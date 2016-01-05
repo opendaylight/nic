@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_f13a4633",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2016-01-05T19:44:35Z",
+      "side": 1,
+      "message": "I think I remember reading 0 was the source and 1 the destination",
+      "revId": "024b117debd572476da291380c4771fd8b2a66ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
