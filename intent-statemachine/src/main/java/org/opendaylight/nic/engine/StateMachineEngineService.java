@@ -20,9 +20,4 @@ public interface StateMachineEngineService {
      * @param currentState
      */
     void changeState(Intent.State currentState);
-
-    /**
-     * Execute State Machine Engine
-     */
-    void execute();
 }

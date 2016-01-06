@@ -9,6 +9,7 @@
 package org.opendaylight.nic.impl;
 
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
@@ -40,10 +41,11 @@ public class StateMachineEventsHandler implements IEventListener {
 
     public StateMachineEventsHandler() {
         BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        ServiceReference<?> serviceReference = bundleContext.getServiceReference(EventRegistryService.class);
-        eventRegistryService = (EventRegistryService) bundleContext.getService(serviceReference);
+        ServiceReference<?> eventRegistryReference = bundleContext.getServiceReference(EventRegistryService.class);
+        ServiceReference<?> stateMachineService = bundleContext.getServiceReference(StateMachineEngineService.class);
+        eventRegistryService = (EventRegistryService) bundleContext.getService(eventRegistryReference);
+        stateMachineExecutorService = (IntentStateMachineExecutorService) bundleContext.getService(stateMachineService);
         eventExecutorMap = new HashMap<>();
-        stateMachineExecutorService = new IntentStateMachineExecutor();
         populateEventListener(EventType.INTENT_ADDED,
                 EventType.INTENT_REMOVED,
                 EventType.INTENT_UPDATE,
