@@ -5,6 +5,7 @@ module neutron-integration {
 
     import config { prefix config; revision-date 2013-04-05; }
     import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+    import intent-impl { prefix intent-impl; revision-date 2015-05-07; }
 
     description
       "This module contains the base YANG definition for the integration with
@@ -36,6 +37,17 @@ module neutron-integration {
                         }
                     }
                 }
+
+                //wires in the intent implementation
+                container intent-impl {
+                    uses config:service-ref {
+                        refine type {
+                            mandatory true;
+                            config:required-identity intent-impl:nic-console-provider;
+                        }
+                    }
+                }
+
             }
         }
 

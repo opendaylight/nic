@@ -15,13 +15,20 @@
                         </type>
                         <name>binding-data-broker</name>
                     </data-broker>
+                    <intent-impl>
+                        <type xmlns:prefix="urn:opendaylight:nic:intent:impl">
+                            prefix:nic-console-provider
+                        </type>
+                        <name>nic-console-provider</name>
+                    </intent-impl>
                 </module>
             </modules>
         </data>
     </configuration>
 
     <required-capabilities>
-        <capability>urn:opendaylight:nic:listeners?module=intent-listeners&amp;revision=2015-09-16</capability>
+        <capability>urn:opendaylight:nic:neutron:integration?module=neutron-integration&amp;revision=2015-11-25</capability>
+        <capability>urn:opendaylight:nic:intent:impl?module=intent-impl&amp;revision=2015-05-07</capability>
     </required-capabilities>
 </snapshot>
 

@@ -23,6 +23,7 @@
     <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.ovsdb/southbound-features/{{VERSION}}/xml/features</repository>
 
     <!-- Mapping Service feature
     <feature name="odl-nic-core-service" version="${project.version}" description='OpenDaylight :: Network Intent Composition :: Mapping service'>
@@ -139,6 +140,8 @@
         <feature version="${project.version}">odl-nic-renderer-of</feature>
         <feature version="${neutron.version}">odl-neutron-service</feature>
         <bundle>mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.neutron/dummyprovider/{{VERSION}}</bundle>
+        <feature version='${odl.ovsdb.version}'>odl-ovsdb-southbound-impl</feature>
         <configfile finalname="etc/opendaylight/karaf/92-intent-listeners.xml">
             mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config
         </configfile>

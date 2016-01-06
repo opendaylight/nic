@@ -40,7 +40,7 @@ public class NeutronIntegrationProviderModule extends org.opendaylight.yang.gen.
         EventRegistryService serviceRegistry = (EventRegistryService) context.
                 getService(serviceReference);
         final NeutronIntegrationProviderImpl provider =
-                new NeutronIntegrationProviderImpl(getDataBrokerDependency(), serviceRegistry);
+                new NeutronIntegrationProviderImpl(getDataBrokerDependency(), serviceRegistry, getIntentImplDependency());
         provider.start();
         LOG.info("Neutron integration bundle started successfully.");
 

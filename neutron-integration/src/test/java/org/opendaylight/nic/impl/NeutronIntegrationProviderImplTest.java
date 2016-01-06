@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.impl.EventRegistryServiceImpl;
@@ -38,6 +39,11 @@ public class NeutronIntegrationProviderImplTest {
      * Mock instance of EventRegistryService to perform unit testing.
      */
     private EventRegistryService mockServiceRegistry;
+    /**
+     * Mock instance of NicConsoleProvider to perform unit testing.
+     */
+    private NicConsoleProvider mockConsoleProvider;
+
     private NeutronIntegrationProviderImpl provider = null;
 
 
@@ -49,7 +55,8 @@ public class NeutronIntegrationProviderImplTest {
          */
         mockServiceRegistry = mock(EventRegistryService.class);
         mockDataBroker = mock(DataBroker.class);
-        provider = spy(new NeutronIntegrationProviderImpl(mockDataBroker, mockServiceRegistry));
+        mockConsoleProvider = mock(NicConsoleProvider.class);
+        provider = spy(new NeutronIntegrationProviderImpl(mockDataBroker, mockServiceRegistry, mockConsoleProvider));
     }
 
     /**

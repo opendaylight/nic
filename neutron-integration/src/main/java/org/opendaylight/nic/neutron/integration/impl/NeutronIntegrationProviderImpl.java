@@ -10,6 +10,7 @@ package org.opendaylight.nic.neutron.integration.impl;
 
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.EventType;
 
@@ -20,6 +21,8 @@ public class NeutronIntegrationProviderImpl implements AutoCloseable {
 
     private final DataBroker db;
 
+    private final NicConsoleProvider nicConsoleProvider;
+
     private EventRegistryService serviceRegistry;
 
     /**
@@ -27,11 +30,12 @@ public class NeutronIntegrationProviderImpl implements AutoCloseable {
      *
      * @param db - dataBroker
      */
-    public NeutronIntegrationProviderImpl(final DataBroker db, EventRegistryService serviceRegistry) {
+    public NeutronIntegrationProviderImpl(final DataBroker db, EventRegistryService serviceRegistry, NicConsoleProvider nicConsoleProvider) {
         Preconditions.checkNotNull(db);
         Preconditions.checkNotNull(serviceRegistry);
         this.db = db;
         this.serviceRegistry = serviceRegistry;
+        this.nicConsoleProvider = nicConsoleProvider;
     }
 
     public void start() {
