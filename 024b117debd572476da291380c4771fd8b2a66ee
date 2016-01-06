@@ -34,6 +34,24 @@
       "revId": "024b117debd572476da291380c4771fd8b2a66ee",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_4c75c196",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-01-06T00:28:45Z",
+      "side": 1,
+      "message": "mininet\u003e dpctl dump-flows\n*** s1 -------------------------------------------------------------\nNXST_FLOW reply (xid\u003d0x4):\n cookie\u003d0x0, duration\u003d14.102s, table\u003d0, n_packets\u003d0, n_bytes\u003d0, idle_age\u003d14, priority\u003d9000,dl_src\u003d00:00:00:00:00:02,dl_dst\u003d00:00:00:00:00:01 actions\u003dNORMAL\n cookie\u003d0x1, duration\u003d59.087s, table\u003d0, n_packets\u003d0, n_bytes\u003d0, idle_age\u003d59, priority\u003d9500,dl_type\u003d0x88cc actions\u003dCONTROLLER:65535\n cookie\u003d0x1, duration\u003d59.123s, table\u003d0, n_packets\u003d0, n_bytes\u003d0, idle_age\u003d59, priority\u003d10000,arp actions\u003dCONTROLLER:65535,NORMAL\n\nFor Intent as follow:\n\nintent:add -f 00:00:00:00:00:01 -t 00:00:00:00:00:02 -a ALLOW",
+      "parentUuid": "1aa4ed85_11136267",
+      "revId": "024b117debd572476da291380c4771fd8b2a66ee",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
