@@ -48,6 +48,17 @@
                 <argument ref="intentMappingService" />
             </action>
         </command>
+        <command>
+            <action class="org.opendaylight.nic.cli.IntentEnableShellCommand" >
+                <argument ref="nicConsoleProvider" />
+            </action>
+        </command>
+
+        <command>
+            <action class="org.opendaylight.nic.cli.IntentDisableShellCommand" >
+                <argument ref="nicConsoleProvider" />
+            </action>
+        </command>
     </command-bundle>
 
     <bean id="actionCompleter" class="org.opendaylight.nic.cli.completers.ActionCompleter" >

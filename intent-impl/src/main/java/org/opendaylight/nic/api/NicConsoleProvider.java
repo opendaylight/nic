@@ -24,6 +24,10 @@ public interface NicConsoleProvider extends AutoCloseable {
 
     boolean removeIntents(List<Uuid> intents);
 
+    boolean enableIntent(Uuid id);
+
+    boolean disableIntent(Uuid id);
+
     List<Intent> listIntents(boolean isConfigurationDatastore);
 
     Intent getIntent(Uuid id);

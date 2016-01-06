@@ -178,6 +178,20 @@ public class NicProvider implements NicConsoleProvider {
     }
 
     @Override
+    public boolean enableIntent(Uuid id) {
+        LOG.info("Enabling intent with ID: {}.",id.toString());
+        //TODO: Call Intent state machine
+        return false;
+    }
+
+    @Override
+    public boolean disableIntent(Uuid id) {
+        LOG.info("Disabling intent with ID: {}.", id.toString());
+        //TODO: Call Intent state machine
+        return false;
+    }
+
+    @Override
     public List<Intent> listIntents(boolean isConfigurationDatastore) {
         List<Intent> listOfIntents = null;
 
