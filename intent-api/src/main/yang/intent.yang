@@ -154,6 +154,11 @@ module intent {
                         uses constraints:failover-constraint;
                     }
                 }
+                case classification-constraint {
+                    container classification-constraint {
+                        uses constraints:classification-constraint;
+                    }
+                }
             }
             description "List of additional constraints to apply to the when implementing
                         the intent.";

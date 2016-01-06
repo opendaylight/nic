@@ -50,6 +50,16 @@ module intent-constraints {
       description "Constraint that requires the specified bandwidth.";
     }
 
+    grouping classification-constraint {
+          uses constraint;
+
+          leaf classifier {
+            type string;
+          }
+
+          description "Constraint that requires the specified classifier.";
+    }
+
     grouping protection-constraint {
       uses constraint;
 
