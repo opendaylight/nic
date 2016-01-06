@@ -33,8 +33,10 @@ public class GraphMapImpl{
         this.intentMappingService = mappingSvc;
     }
 
-    //override add method to correct LabelImpl's parent and children declaration
-    //using Gson serializer to convert obj to string to be passed to intentmappingservice
+    /*
+     * Override add method to correct LabelImpl's parent and children declaration
+     * using Gson serializer to convert obj to string to be passed to intentmappingservice
+     */
     public boolean addLabelChild(String key, String parent, String child) {
         LabelImpl label = new LabelImpl(parent, child, null);
 

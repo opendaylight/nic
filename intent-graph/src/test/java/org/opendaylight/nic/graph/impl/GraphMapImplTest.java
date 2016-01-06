@@ -27,7 +27,6 @@ public class GraphMapImplTest {
 
     @Before
     public void setUp() throws Exception {
-        //this.service = spy(service);
         this.intentMappingService = mock(IntentMappingService.class);
         service = new GraphMapImpl(intentMappingService);
     }
@@ -42,7 +41,6 @@ public class GraphMapImplTest {
         BundleContext mockBundleContext = mock(BundleContext.class);
         ServiceRegistration<GraphMapImpl> intentServiceMock = mock(ServiceRegistration.class);
 
-        //doReturn(mockBundleContext).when(GraphMapImpl.class);
         when(mockBundleContext.registerService(GraphMapImpl.class, service, null))
                 .thenReturn(intentServiceMock);
         expectedResult = true;
@@ -50,16 +48,5 @@ public class GraphMapImplTest {
         assertEquals(expectedResult, actualResult);
         actualResult = service.addLabelChildren("Tnt", "pga_label_tree", new String[]{"Dpts", "apps"}); //make null first
         assertEquals(expectedResult, actualResult);
-        //service.addLabelChild("apps", "Tnt", "app1");
-        //service.addLabelChildren("Tnt", "pga_label_tree", new String[]{"Dpts", "apps"}); //make null first
-        //service.addLabelChildren("Dpts", "Tnt", new String[]{"IT", "Engg"});
-        //service.addLabelChildren("app1", "apps", new String[]{"Web", "DB"});
-        //service.add("IT", "Dpts");
-        //service.add("Eng", "Dpts");
-        //service.add("web", "App1");
-        //service.add("db", "App1");
-        //System.out.println(service.intentMappingService.get("Tnt")); //get parent and children information
-        //System.out.println(service.intentMappingService.get("Dpts"));
-        //System.out.println(service.intentMappingService.get("apps"));
     }
 }
