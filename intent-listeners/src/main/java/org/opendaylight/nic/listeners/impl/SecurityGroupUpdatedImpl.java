@@ -7,16 +7,17 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
-import org.opendaylight.nic.listeners.api.SecurityGroupAdded;
+import org.opendaylight.nic.listeners.api.SecurityGroupUpdated;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
-//TODO: Add relevant fields to this POJO
-public class SecurityGroupUpdatedImpl implements SecurityGroupAdded {
+public class SecurityGroupUpdatedImpl extends NeutronSecurityGroup implements SecurityGroupUpdated {
     private final Timestamp timeStamp;
 
-    public SecurityGroupUpdatedImpl() {
+    public SecurityGroupUpdatedImpl(SecurityGroup secGroup) {
+        super(secGroup);
         Date date= new Date();
         timeStamp = new Timestamp(date.getTime());
     }

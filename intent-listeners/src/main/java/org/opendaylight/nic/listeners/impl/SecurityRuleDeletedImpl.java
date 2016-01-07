@@ -8,15 +8,16 @@
 package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.nic.listeners.api.SecurityRuleDeleted;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
-//TODO: Add relevant fields to this POJO
-public class SecurityRuleDeletedImpl implements SecurityRuleDeleted {
+public class SecurityRuleDeletedImpl extends NeutronSecurityRule implements SecurityRuleDeleted {
     private final Timestamp timeStamp;
 
-    public SecurityRuleDeletedImpl() {
+    public SecurityRuleDeletedImpl(SecurityRule secRule) {
+        super(secRule);
         Date date= new Date();
         timeStamp = new Timestamp(date.getTime());
     }

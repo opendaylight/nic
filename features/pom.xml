@@ -32,10 +32,23 @@
     <karaf.cellar.version>3.0.3</karaf.cellar.version>
     <hazelcast.version>3.4.2</hazelcast.version>
     <neutron.version>0.6.0-SNAPSHOT</neutron.version>
+    <odl.ovsdb.version>1.2.1-SNAPSHOT</odl.ovsdb.version>
   </properties>
 
   <dependencies>
 <!-- external projects feature repository -->
+    <dependency>
+      <groupId>org.opendaylight.neutron</groupId>
+      <artifactId>features-neutron</artifactId>
+      <version>${neutron.version}</version>
+      <classifier>features</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.neutron</groupId>
+      <artifactId>dummyprovider</artifactId>
+      <version>${neutron.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.opendaylight.yangtools</groupId>
       <artifactId>features-yangtools</artifactId>
@@ -89,12 +102,33 @@
       <classifier>features</classifier>
       <type>xml</type>
     </dependency>
+    <!-- OpenDaylight ovsdb -->
     <dependency>
-      <groupId>org.opendaylight.neutron</groupId>
-      <artifactId>features-neutron</artifactId>
-      <version>${neutron.version}</version>
+      <groupId>org.opendaylight.ovsdb</groupId>
+      <artifactId>features-ovsdb</artifactId>
       <classifier>features</classifier>
       <type>xml</type>
+      <version>${odl.ovsdb.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.ovsdb</groupId>
+      <artifactId>southbound-features</artifactId>
+      <classifier>features</classifier>
+      <type>xml</type>
+      <version>${odl.ovsdb.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.ovsdb</groupId>
+      <artifactId>southbound-impl</artifactId>
+      <version>${odl.ovsdb.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.opendaylight.ovsdb</groupId>
+      <artifactId>southbound-api</artifactId>
+      <version>${odl.ovsdb.version}</version>
     </dependency>
 <!-- project specific dependencies -->
     <dependency>

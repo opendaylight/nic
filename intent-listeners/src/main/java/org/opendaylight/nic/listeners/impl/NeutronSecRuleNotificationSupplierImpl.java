@@ -53,14 +53,15 @@ public class NeutronSecRuleNotificationSupplierImpl extends
     public SecurityRuleAdded createNotification(final SecurityRule object, final InstanceIdentifier<SecurityRule> ii) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(ii != null);
-        return null;
+        return new SecurityRuleAddedImpl(object);
     }
 
     @Override
     public SecurityRuleDeleted deleteNotification(final SecurityRule object,
                                           final InstanceIdentifier<SecurityRule> path) {
+        Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(path != null);
-        return null;
+        return new SecurityRuleDeletedImpl(object);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class NeutronSecRuleNotificationSupplierImpl extends
                                           InstanceIdentifier<SecurityRule> path) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(path != null);
-        return null;
+        return new SecurityRuleUpdatedImpl(object);
     }
 
     @Override
