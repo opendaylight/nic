@@ -9,39 +9,49 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DeployService;
+import org.opendaylight.nic.engine.service.StateMachineRendererService;
+import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 public class DeployServiceImpl implements DeployService {
 
     private interface DeployExecutor {
-        void execute();
+        void execute ();
     }
 
-    private StateMachineEngineService engineService;
+    private static final Logger LOG = LoggerFactory.getLogger(DeployServiceImpl.class);
     private Map<Intent.State, DeployExecutor> executorMap;
+    private static StateMachineEngineService engineService;
     private static DeployService deployService;
+    private static StateMachineRendererService rendererService;
 
     private DeployServiceImpl(StateMachineEngineService engineService) {
         executorMap = new HashMap<>();
         populateExecutorMap();
         this.engineService = engineService;
+        this.rendererService = new StateMachineRendererExecutor(this);
     }
 
     private void populateExecutorMap() {
         executorMap.put(Intent.State.DEPLOYING, new DeployExecutor() {
             @Override
             public void execute() {
-                //TODO: Create an async call to RENDERER for intent deploy
+                rendererService.deploy();
             }
         });
 
         executorMap.put(Intent.State.UNDEPLOYED, new DeployExecutor() {
             @Override
             public void execute() {
+                rendererService.undeploy();
                 cancel();
             }
         });
@@ -66,7 +76,8 @@ public class DeployServiceImpl implements DeployService {
     }
 
     @Override
-    public void onError() {
+    public void onError(String message) {
+        LOG.error(message);
         engineService.changeState(Intent.State.DEPLOYFAILED);
     }
 

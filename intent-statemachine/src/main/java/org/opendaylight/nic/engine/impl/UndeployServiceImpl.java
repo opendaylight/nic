@@ -8,17 +8,24 @@
 package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
+import org.opendaylight.nic.engine.service.StateMachineRendererService;
 import org.opendaylight.nic.engine.service.UndeployService;
+import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UndeployServiceImpl implements UndeployService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(UndeployServiceImpl.class);
     private static UndeployService undeployService;
-    private StateMachineEngineService engineService;
+    private static StateMachineEngineService engineService;
+    private static StateMachineRendererService rendererService;
 
     private UndeployServiceImpl(StateMachineEngineService engineService) {
         this.engineService = engineService;
+        rendererService = new StateMachineRendererExecutor(this);
     }
 
     public static UndeployService getInstance(StateMachineEngineService engineService) {
@@ -30,7 +37,7 @@ public class UndeployServiceImpl implements UndeployService {
 
     @Override
     public void execute(EventType eventType) {
-        //TODO: Create an async call to undeploy Intent
+        rendererService.undeploy();
     }
 
     @Override
@@ -39,7 +46,8 @@ public class UndeployServiceImpl implements UndeployService {
     }
 
     @Override
-    public void onError() {
+    public void onError(String message) {
+        LOG.error(message);
         engineService.changeState(Intent.State.UNDEPLOYFAILED);
     }
 
