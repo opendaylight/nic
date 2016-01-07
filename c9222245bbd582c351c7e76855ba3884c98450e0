@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_4137f2b0",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/InputGraph.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2016-01-07T22:52:41Z",
+      "side": 1,
+      "message": "Why does it returns ClassifierImpl type? I think it can return Classifier interface as a return type.",
+      "revId": "c9222245bbd582c351c7e76855ba3884c98450e0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a147de1c",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/impl/ClassifierImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4853
+      },
+      "writtenOn": "2016-01-07T22:52:41Z",
+      "side": 1,
+      "message": "Set\u003cExpression\u003e ?",
+      "revId": "c9222245bbd582c351c7e76855ba3884c98450e0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
