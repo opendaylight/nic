@@ -17,7 +17,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandParameters;
+import org.opendaylight.nic.nemo.rpc.NemoUpdate;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.UserBuilder;
 
 public class NemoInputBuildersTest {
 
@@ -37,7 +39,7 @@ public class NemoInputBuildersTest {
         BandwidthOnDemandParameters params = new BandwidthOnDemandParameters(NEMOIntentParserTest.FROM,
                 NEMOIntentParserTest.TO, NEMOIntentParser.parseBandwidthString(NEMOIntentParserTest.BANDWIDTH),
                 startTime, duration);
-        StructureStyleNemoUpdateInput input = NemoInputBuilders.getUpdateBuilder(params).build();
+        StructureStyleNemoUpdateInput input = NemoUpdate.prepareInputBuilder(params, new UserBuilder().build()).build();
         assertNotNull("Expected valid input", input);
 
         assertEquals(2, input.getObjects().getNode().size());
