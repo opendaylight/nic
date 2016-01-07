@@ -32,6 +32,11 @@
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>intent-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Neutron Dependency -->
         <dependency>
             <groupId>org.opendaylight.neutron</groupId>

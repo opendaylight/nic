@@ -53,14 +53,15 @@ public class NeutronSecGroupNotificationSupplierImpl extends
     public SecurityGroupAdded createNotification(final SecurityGroup object, final InstanceIdentifier<SecurityGroup> ii) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(ii != null);
-        return null;
+        return new SecurityGroupAddedImpl(object);
     }
 
     @Override
     public SecurityGroupDeleted deleteNotification(final SecurityGroup object,
                                           final InstanceIdentifier<SecurityGroup> path) {
+        Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(path != null);
-        return null;
+        return new SecurityGroupDeletedImpl(object);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class NeutronSecGroupNotificationSupplierImpl extends
                                           InstanceIdentifier<SecurityGroup> path) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(path != null);
-        return null;
+        return new SecurityGroupUpdatedImpl(object);
     }
 
     @Override

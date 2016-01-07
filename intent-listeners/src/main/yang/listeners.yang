@@ -39,16 +39,6 @@ module intent-listeners {
                     }
                 }
 
-                // RPC Registry
-                container rpc-registry {
-                    uses config:service-ref {
-                        refine type {
-                            mandatory true;
-                            config:required-identity mdsal:binding-rpc-registry;
-                        }
-                    }
-                }
-
                 // Notification service
                 container notification-adapter {
                     uses config:service-ref {
