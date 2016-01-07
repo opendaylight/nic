@@ -17,6 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Before;
@@ -25,13 +26,19 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
+import org.opendaylight.controller.md.sal.binding.api.ReadWriteTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.CommonRpcResult.ResultCode;
@@ -42,7 +49,12 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.int
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.RegisterUserOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.Users;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.User;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.UserBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.UserKey;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -52,6 +64,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
 
 /**
@@ -108,6 +121,18 @@ public class NEMORendererTest {
     WriteTransaction writeTransactionMock;
 
     /**
+     * create a mock Object for the class ReadTransaction.
+     */
+    @Mock
+    ReadOnlyTransaction readTransactionMock;
+
+    /**
+     * create a mock Object for the class ReadWriteTransaction.
+     */
+    @Mock
+    ReadWriteTransaction readWriteTransactionMock;
+
+    /**
      * create a mock Object for the class CheckedFuture.
      */
     @Mock
@@ -118,6 +143,9 @@ public class NEMORendererTest {
      */
     @Mock
     NemoIntentService nemoEngine;
+
+    @Mock
+    CheckedFuture<Optional<User>, ReadFailedException> mockUserFuture;
 
     /**
      * Initial set up.
@@ -141,6 +169,9 @@ public class NEMORendererTest {
 
         when(writeTransactionMock.submit()).thenReturn(checkedFuture);
         when(dataBroker.newWriteOnlyTransaction()).thenReturn(writeTransactionMock);
+        when(dataBroker.newReadOnlyTransaction()).thenReturn(readTransactionMock);
+        when(dataBroker.newReadWriteTransaction()).thenReturn(readWriteTransactionMock);
+
     }
 
     /**
@@ -185,15 +216,21 @@ public class NEMORendererTest {
         when(nemoEngine.endTransaction(any(EndTransactionInput.class))).thenReturn(
                 RpcResultBuilder.success(new EndTransactionOutputBuilder().setResultCode(ResultCode.Ok)).buildFuture());
 
+        IntentKey intentKey = new IntentKey(new Uuid(UUID.randomUUID().toString()));
+        InstanceIdentifier<User> userPath = InstanceIdentifier.builder(Users.class)
+                .child(User.class, new UserKey(new UserId(intentKey.getId().getValue()))).build();
+        when(readTransactionMock.read(LogicalDatastoreType.CONFIGURATION, userPath)).thenReturn(mockUserFuture);
+        when(mockUserFuture.get()).thenReturn(Optional.of(new UserBuilder().build()));
+
         nemoRenderer.init();
 
         // empty intent
-        Intent emptyIntent = new IntentBuilder().build();
+        Intent emptyIntent = new IntentBuilder().setKey(intentKey).build();
         assertFalse("Should not be able to process empty intent", nemoRenderer.createOrUpdateIntent(emptyIntent));
         verifyZeroInteractions(nemoEngine);
 
         // BandwidthOnDemand intent
-        Intent intent = NEMOIntentParserTest.getBandwidthOnDemandIntent();
+        Intent intent = NEMOIntentParserTest.getBandwidthOnDemandIntent(intentKey);
         assertTrue("Should be able to process BoD intent", nemoRenderer.createOrUpdateIntent(intent));
         verify(nemoEngine).beginTransaction(any(BeginTransactionInput.class));
         verify(nemoEngine).structureStyleNemoUpdate(any(StructureStyleNemoUpdateInput.class));

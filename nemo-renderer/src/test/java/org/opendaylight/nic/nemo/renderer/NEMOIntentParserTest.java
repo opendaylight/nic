@@ -13,11 +13,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandParameters;
+import org.opendaylight.nic.nemo.rpc.NemoUpdate;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.conditions.rev150122.Duration;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.conditions.rev150122.TimeOfDay;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
@@ -33,7 +35,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.UserBuilder;
 
 /**
  * @author gwu
@@ -75,16 +80,18 @@ public class NEMOIntentParserTest {
     @Test
     public void testParseBandwidthOnDemand() {
 
-        Intent emptyIntent = new IntentBuilder().build();
+        IntentKey intentKey = new IntentKey(new Uuid(UUID.randomUUID().toString()));
+        Intent emptyIntent = new IntentBuilder().setKey(intentKey).build();
         try {
             NEMOIntentParser.parseBandwidthOnDemand(emptyIntent);
             fail("Did not throw expected NullPointerException");
         } catch (NullPointerException expectedException) {
         }
 
-        Intent intent = getBandwidthOnDemandIntent();
+        Intent intent = getBandwidthOnDemandIntent(intentKey);
         BandwidthOnDemandParameters params = NEMOIntentParser.parseBandwidthOnDemand(intent);
-        StructureStyleNemoUpdateInputBuilder inputBuilder = NemoInputBuilders.getUpdateBuilder(params);
+        StructureStyleNemoUpdateInputBuilder inputBuilder = NemoUpdate.prepareInputBuilder(params,
+                new UserBuilder().build());
         assertNotNull("Expected valid inputBuilder", inputBuilder);
     }
 
@@ -94,8 +101,9 @@ public class NEMOIntentParserTest {
     public static final String START_TIME = "08:00:00Z";
     public static final String DURATION = "1h";
 
-    public static Intent getBandwidthOnDemandIntent() {
+    public static Intent getBandwidthOnDemandIntent(IntentKey intentKey) {
         IntentBuilder b = new IntentBuilder();
+        b.setKey(intentKey);
         b.setActions(Arrays.asList(new ActionsBuilder().setAction(new AllowBuilder().build()).build()));
 
         Subjects from = subject((short) 1, FROM);
