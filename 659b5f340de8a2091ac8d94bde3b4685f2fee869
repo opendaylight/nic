@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_d5245cc8",
+        "filename": "intent-api/src/main/yang/intent.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-01-08T22:21:44Z",
+      "side": 1,
+      "message": "The service name should not be here. It should be a parameter of the redirect action.",
+      "revId": "659b5f340de8a2091ac8d94bde3b4685f2fee869",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
