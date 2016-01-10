@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_762596aa",
+        "filename": "vtn-renderer/src/main/config/default-config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-10T11:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_71be56d6",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_11e842b3",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/MdsalUtils.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-05T19:36:43Z",
       "side": 1,
       "message": "Please use/update the utility class present in the util bundle.\n\nhttps://github.com/opendaylight/nic/blob/master/utils/src/main/java/org/opendaylight/nic/utils/MdsalUtils.java",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_f619a67a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/MdsalUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-10T11:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_11e842b3",
       "range": {
         "startLine": 34,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_362b0e84",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-10T11:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_11d282d2",
+      "range": {
+        "startLine": 652,
+        "startChar": 0,
+        "endLine": 653,
+        "endChar": 20
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_b1edaeb9",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2016-01-05T20:04:48Z",
       "side": 1,
       "message": "I think the explanation for the return value is not correct. I think this method returns a value of boolean, so the value is true or false. I think many explanation for return values in this file has similar issue.",
+      "range": {
+        "startLine": 405,
+        "startChar": 1,
+        "endLine": 407,
+        "endChar": 38
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_96201a9d",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-10T11:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_b1edaeb9",
       "range": {
         "startLine": 405,
         "startChar": 1,
@@ -151,6 +247,30 @@
       "writtenOn": "2016-01-05T20:04:48Z",
       "side": 1,
       "message": "Why is this needed?\n\nSince this file (vtn-renderer.yang) does not use the \"opendaylight-md-sal-dom\", I don\u0027t think it needs to import the \"opendaylight-md-sal-dom\".",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_562692bb",
+        "filename": "vtn-renderer/src/main/yang/vtn-renderer.yang",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-10T11:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_b167eeb6",
       "range": {
         "startLine": 17,
         "startChar": 4,
