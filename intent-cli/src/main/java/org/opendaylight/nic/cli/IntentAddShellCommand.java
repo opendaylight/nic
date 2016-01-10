@@ -19,15 +19,18 @@ import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.impl.NicProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ConstraintsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.AllowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.BlockBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.log.LogBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.redirect.RedirectBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.qos.constraint.QosConstraintBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroupBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -36,6 +39,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
          scope = "intent",
          description = "Adds an intent to the controller."
                  + "\nExamples: --actions [ALLOW] --from <subject> --to <subject>"
+                 + "\nExamples: --actions [ALLOW] --from <subject> --to <subject> --constraints [QOS] --profilename<profile>"
                  + "\nExamples: --actions [LOG] --from <subject> --to <subject>"
                  + "\n          --actions [BLOCK] --from <subject>")
 public class IntentAddShellCommand extends OsgiCommandSupport {
@@ -73,6 +77,20 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             multiValued = false)
     String serviceName = "any";
 
+    @Option(name = "-q",
+            aliases = { "--constraints" },
+            description = "Constraints to be performed.\n-q / --Constraints HIGH/LOW/MEDIUM",
+            required = false,
+            multiValued = true)
+    List<String> constraints = new ArrayList<String>(Arrays.asList(NicProvider.CONSTRAINT_QOS));
+
+    @Option(name = "-p",
+            aliases = { "--profilename" },
+            description = "profile name for constraint",
+            required = false,
+            multiValued = false)
+    String profilename;
+
     public IntentAddShellCommand(NicConsoleProvider provider) {
         this.provider = provider;
     }
@@ -84,11 +102,13 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
         List<Subjects> subjects = createSubjects();
         List<Actions> intentActions = createActions();
+        List<Constraints> intentConstraints = createConstraints();
 
         Intent intent = new IntentBuilder().
                 setId(new Uuid(uuid.toString()))
                 .setSubjects(subjects)
                 .setActions(intentActions)
+                .setConstraints(intentConstraints)
                 .build();
         if (provider.addIntent(intent)) {
             return String.format("Intent created (id: %s)", uuid.toString());
@@ -147,5 +167,27 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         subjectList.add(subjects2);
 
         return subjectList;
+    }
+
+    /**
+     * Returns the list of Constraints.
+     */
+    protected List<Constraints> createConstraints() {
+        final List<Constraints> constraintsList = new ArrayList<Constraints>();
+        short order = 1;
+        for (String intentConstraint : this.constraints) {
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = null;
+            if (intentConstraint.equalsIgnoreCase(NicProvider.CONSTRAINT_QOS)) {
+                constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints
+                        .QosConstraintBuilder().setQosConstraint(new QosConstraintBuilder().setQosName(this.profilename).build()).build();
+            } else {
+                continue;
+            }
+            Constraints intentConstraints = new ConstraintsBuilder().setOrder(order).setConstraints(constraint).build();
+            constraintsList.add(intentConstraints);
+            order++;
+        }
+
+        return constraintsList;
     }
 }
