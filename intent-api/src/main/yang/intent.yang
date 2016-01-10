@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------
-// Copyright (c) 2015 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
+// Copyright (c) 2015-2016 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -14,6 +14,7 @@ module intent {
     import intent-actions { prefix actions; revision-date 2015-01-22; }
     import intent-conditions { prefix conditions; revision-date 2015-01-22; }
     import intent-constraints { prefix constraints; revision-date 2015-01-22; }
+    import intent-qos { prefix qos-config; revision-date 2015-01-22; }
 
     revision 2015-01-22 {
         description "Initial revision";
@@ -123,6 +124,22 @@ module intent {
             description "List of action references to apply to the connections between
                         the subjects.";
         }
+
+        list qos-config {
+            key "order";
+            leaf order {
+                type uint8;
+            }
+            choice qos {
+                case dscp-type {
+                    container dscp-type {
+                        uses qos-config:dscp-type;
+                    }
+                }
+            }
+            description "List of configuration to apply to the QoS Configuration.";
+        }
+
         list constraints {
             key "order";
             leaf order {
@@ -157,6 +174,11 @@ module intent {
                 case classification-constraint {
                     container classification-constraint {
                         uses constraints:classification-constraint;
+                    }
+                }
+                case qos-constraint {
+                    container qos-constraint {
+                        uses constraints:qos-constraint;
                     }
                 }
             }
