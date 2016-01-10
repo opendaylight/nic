@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------------
-// Copyright (c) 2015 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
+// Copyright (c) 2015-2016 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
 //
 // This program and the accompanying materials are made available under the
 // terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -115,5 +115,15 @@ module intent-constraints {
       }
 
       description "Constraint that matches the specified port range, protocol and ethertype.";
+    }
+
+    // Constraint that specify QoS Mapping attributes.
+    // Contains a leaf node for QoS Constraint name.
+    grouping qos-constraint {
+      uses constraint;
+      leaf qos-name {
+        type string;
+      }
+      description "Constraint that specifies the type of priority implementation.";
     }
 }

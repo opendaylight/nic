@@ -1,0 +1,37 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2016 NEC Corporation.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module intent-qos {
+    namespace "urn:opendaylight:intent:qos";
+    prefix "intent-qos";
+
+    import ietf-inet-types {
+        prefix inet;
+        revision-date 2010-09-24;
+    }
+
+    revision 2015-01-22 {
+        description "Initial revision";
+    }
+
+    // Configuring the QoS attribute mapping.
+    // Configure type: DSCP
+    // Contains DSCP Value and QoS Profile name.
+
+    grouping dscp-type {
+
+      leaf name {
+        type string;
+      }
+
+      leaf dscp {
+        type inet:dscp;
+        default 0;
+      }
+      description "Represents a DSCP configuration.";
+    }
+}
