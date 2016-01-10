@@ -53,6 +53,7 @@ public class NicProvider implements NicConsoleProvider {
     public static final String ACTION_BLOCK = "BLOCK";
     public static final String ACTION_REDIRECT = "REDIRECT";
     public static final String ACTION_LOG = "LOG";
+    public static final String CONSTRAINT_QOS = "QOS";
 
     protected DataBroker dataBroker;
     protected IntentMappingService mappingSvc;
