@@ -94,4 +94,26 @@ module intent-constraints {
       }
       description "Constraint that specifies the type of failover implementation.";
     }
+
+    grouping port-constraint {
+      uses constraint;
+
+      leaf portmin {
+        type string;
+      }
+
+      leaf portmax {
+        type string;
+      }
+
+      leaf protocol {
+        type string;
+      }
+
+      leaf ethertype {
+        type string;
+      }
+
+      description "Constraint that matches the specified port range, protocol and ethertype.";
+    }
 }

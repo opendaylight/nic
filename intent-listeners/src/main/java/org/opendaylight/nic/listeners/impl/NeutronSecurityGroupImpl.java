@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import org.opendaylight.nic.listeners.api.NeutronSecurityGroup;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
 
@@ -20,13 +21,13 @@ import java.util.List;
  * name                 String name of the security group.
  * description          String name of the security group.
  * tenant_id            uuid-str Owner of security rule..
- * security_group_rules List&lt;NeutronSecurityRule&gt; nested in the sec group.
+ * security_group_rules List&lt;NeutronSecurityRuleImpl&gt; nested in the sec group.
  */
 
-public class NeutronSecurityGroup {
+public class NeutronSecurityGroupImpl implements NeutronSecurityGroup {
     protected final SecurityGroup secGroup;
 
-    public NeutronSecurityGroup(SecurityGroup secGroup) {
+    public NeutronSecurityGroupImpl(SecurityGroup secGroup) {
         this.secGroup = secGroup;
     }
 
