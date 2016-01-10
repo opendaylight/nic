@@ -20,6 +20,7 @@ import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Dscp;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.constraints.rev150122.FailoverType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
@@ -39,6 +40,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.FailoverConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ProtectionConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.Qos;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos.DscpType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -63,6 +67,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
     private final PipelineManager pipelineManager;
     private OFRendererGraphService graphService;
     private MplsIntentFlowManager mplsIntentFlowManager;
+    private QosConstraintManager qosConstraintManager;
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker,
                                          PipelineManager pipelineManager,
@@ -84,12 +89,17 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
+        qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
     }
 
     @Override
     public void pushIntentFlow(Intent intent, FlowAction flowAction) {
         // TODO: Extend to support other actions
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
+        // Creates QoS configuration and stores profile in the Data Store.
+        if (intent.getQosConfig() != null) {
+            return;
+        }
         Action actionContainer = (Action) intent.getActions().get(0).getAction();
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         // MPLS stuff
@@ -127,6 +137,13 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
                 LOG.info("Intent has no constraints for protection");
                 // Dijkstra shortest path algorithm is used
                 generateMplsFlows(sourceIntent, targetIntent, flowAction);
+            }
+        } else if (checkQosConstraint(intent, actionContainer, endPointGroups)) {
+            //Get all node Id's
+            Map<Node, List<NodeConnector>> nodeMap = getNodes();
+            for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
+                //Push flow to every node for now
+                qosConstraintManager.pushFlow(entry.getKey().getId(), flowAction);
             }
         } else {
             intentFlowManager.setEndPointGroups(endPointGroups);
@@ -271,5 +288,30 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
      */
     public void pushLLDPFlow(NodeId nodeId, FlowAction flowAction) {
         lldpFlowManager.pushFlow(nodeId, flowAction);
+    }
+
+    /**
+     * Checks the Constraint name is present in the constraint container.
+     * @param intent The Intent
+     * @return boolean
+     */
+    private boolean checkQosConstraint(Intent intent, Action actionContainer, List<String> endPointGroups) {
+        //Check for constrain name in the intent.
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
+                    = (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints)
+                    intent.getConstraints().get(0).getConstraints();
+        String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
+        LOG.info("QosConstraint is set to: {}", qosName);
+        if (qosName != null) {
+            //Set the values to QosConstraintManager
+            qosConstraintManager.setQosName(qosName);
+            qosConstraintManager.setEndPointGroups(endPointGroups);
+            qosConstraintManager.setAction(actionContainer);
+            qosConstraintManager.setConstraint(constraintContainer);
+        } else {
+            LOG.trace("QoS Name is not set");
+            return false;
+        }
+        return true;
     }
 }

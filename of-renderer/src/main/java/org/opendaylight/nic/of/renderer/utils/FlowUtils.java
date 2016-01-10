@@ -9,6 +9,7 @@
 package org.opendaylight.nic.of.renderer.utils;
 
 import org.opendaylight.controller.liblldp.EtherTypes;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Dscp;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PopMplsActionCaseBuilder;
@@ -18,6 +19,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.acti
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.pop.mpls.action._case.PopMplsActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.push.mpls.action._case.PushMplsActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetFieldBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.SetNwTosActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.nw.tos.action._case.SetNwTosAction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.nw.tos.action._case.SetNwTosActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionKey;
@@ -32,6 +36,17 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026
  * Contains methods creating flow part for ARP flow.
  */
 public class FlowUtils {
+
+    /**
+     * The number of bits in IP ECN field.
+     */
+    private static final int  NBITS_IP_ECN = 2;
+
+    /**
+     * A mask value which represents valid bits in an DSCP value for
+     * IP protocol.
+     */
+    private static final short  MASK_IP_DSCP = 0x3f;
 
     private FlowUtils() {
     }
@@ -151,5 +166,33 @@ public class FlowUtils {
                                                                               .build())
                                                      .build())
                                   .build();
+    }
+
+    /**
+     * @param order An integer representing the order of the Action
+     * within the table.
+     * @param dscp  A DSCP value
+     * @return Action with an order
+     */
+    public static Action createQosNormal(int order, Dscp dscp) {
+        short dscpValue = dscp.getValue();
+        Integer tos = Integer.valueOf(dscpToTos(dscpValue));
+        SetNwTosAction nw = new SetNwTosActionBuilder().setTos(tos).build();
+        return new ActionBuilder().setOrder(order)
+                                  .setKey(new ActionKey(order))
+                                  .setAction(new SetNwTosActionCaseBuilder()
+                                                     .setSetNwTosAction(nw)
+                                                     .build())
+                                  .build();
+    }
+
+    /**
+     * Convert the given IP DSCP value into a TOS value.
+     *
+     * @param dscpValue  A DSCP value.
+     * @return  A TOS value.
+     */
+    public static int dscpToTos(short dscpValue) {
+        return ((dscpValue & MASK_IP_DSCP) << NBITS_IP_ECN);
     }
 }

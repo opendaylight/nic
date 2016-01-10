@@ -16,6 +16,7 @@ import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.MdsalUtils;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Dscp;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.Table;
@@ -165,6 +166,36 @@ public abstract class AbstractFlowManager {
         result = mdsal.put(LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build());
 
         return result;
+    }
+
+    /**
+     * Creates a set of Instruction based on the port values and DSCP
+     * received.
+     * @param portValues Represents ports (example LOCAL, CONTROLLER, etc) {@link OutputPortValues}}
+     * @param dscp Dscp Value.
+     * @return OpenFlow Flow Instructions
+     */
+    protected Instructions createQoSInstructions(Dscp dscp, OutputPortValues... portValues) {
+        List<Action> actionList = Lists.newArrayList();
+        int order = 0;
+        for (OutputPortValues outputPort : portValues) {
+            if (outputPort.equals(OutputPortValues.NORMAL)) {
+                actionList.add(FlowUtils.createOutputNormal(order));
+                order++
+                actionList.add(FlowUtils.createQosNormal(order, dscp));
+                order++;
+            }
+            if (outputPort.equals(OutputPortValues.CONTROLLER)) {
+                actionList.add(FlowUtils.createSendToControllerAction(order));
+                order++;
+            }
+        }
+        ApplyActions applyOutputActions = new ApplyActionsBuilder().setAction(actionList).build();
+        Instruction outputInstruction = new InstructionBuilder().setOrder(0)
+                .setInstruction(new ApplyActionsCaseBuilder().setApplyActions(applyOutputActions).build()).build();
+        Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(outputInstruction))
+                .build();
+        return instructions;
     }
 
 }
