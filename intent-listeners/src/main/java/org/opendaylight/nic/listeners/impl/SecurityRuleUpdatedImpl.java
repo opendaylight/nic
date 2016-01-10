@@ -13,7 +13,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class SecurityRuleUpdatedImpl extends NeutronSecurityRule implements SecurityRuleUpdated {
+public class SecurityRuleUpdatedImpl extends NeutronSecurityRuleImpl implements SecurityRuleUpdated {
     private final Timestamp timeStamp;
 
     public SecurityRuleUpdatedImpl(SecurityRule secRule) {

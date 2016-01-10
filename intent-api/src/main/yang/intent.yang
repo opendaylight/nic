@@ -159,6 +159,11 @@ module intent {
                         uses constraints:classification-constraint;
                     }
                 }
+                case port-constraint {
+                    container port-constraint {
+                        uses constraints:port-constraint;
+                    }
+                }
             }
             description "List of additional constraints to apply to the when implementing
                         the intent.";

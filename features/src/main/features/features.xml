@@ -153,7 +153,7 @@
         <bundle>mvn:org.opendaylight.neutron/dummyprovider/{{VERSION}}</bundle>
         <feature version='${odl.ovsdb.version}'>odl-ovsdb-southbound-impl</feature>
         <configfile finalname="etc/opendaylight/karaf/92-neutron-integration.xml">
-            mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config
+            mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}/xml/config
         </configfile>
     </feature>
 

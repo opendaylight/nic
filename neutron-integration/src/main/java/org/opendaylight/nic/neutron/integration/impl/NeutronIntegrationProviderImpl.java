@@ -43,7 +43,7 @@ public class NeutronIntegrationProviderImpl implements AutoCloseable {
         // for Deleted and Modified
         serviceRegistry.registerEventListener(EventType.SECURITY_GROUP_ADDED, secGroupNotificationSubscriber);
         SecRuleNotificationSubscriberImpl secRuleNotificationSubscriber =
-                new SecRuleNotificationSubscriberImpl();
+                new SecRuleNotificationSubscriberImpl(db);
         serviceRegistry.registerEventListener(EventType.SECURITY_RULE_ADDED, secRuleNotificationSubscriber);
     }
 
