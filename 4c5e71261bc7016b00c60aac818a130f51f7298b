@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_e088b7c8",
+        "filename": "features/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "why adding a whitespace?",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 25
+      },
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_c085b3ae",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "please indent correctly",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_60bca76d",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "would make sense to give a more meaningful name, like vtnManangerService",
+      "range": {
+        "startLine": 138,
+        "startChar": 30,
+        "endLine": 138,
+        "endChar": 33
+      },
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_00903beb",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "remove whitespaces",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 7
+      },
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_a0b6af88",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "return mgr.updateTenant(tenantName, VnodeUpdateMode.UPDATE);",
+      "range": {
+        "startLine": 431,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 22
+      },
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_40c1a3e3",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "return mgr.removeTenant(tenantName);",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 22
+      },
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_e0af172a",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "please add a carrier return",
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_80728be3",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T20:12:03Z",
+      "side": 1,
+      "message": "please use one space between type and name. same goes elswhere",
+      "range": {
+        "startLine": 176,
+        "startChar": 25,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "4c5e71261bc7016b00c60aac818a130f51f7298b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
