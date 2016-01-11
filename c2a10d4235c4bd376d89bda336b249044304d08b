@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_e0e6f715",
+        "filename": "intent-api/src/main/yang/intent-qos.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T18:57:01Z",
+      "side": 1,
+      "message": "what\u0027s the purpose of this grouping?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "c2a10d4235c4bd376d89bda336b249044304d08b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_c0e3f303",
+        "filename": "intent-api/src/main/yang/intent.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T18:57:01Z",
+      "side": 1,
+      "message": "Will there really be a choice here?\n\nI believe for now you can directly \n\nuses qos-config:dscp-type instead of \n\n            choice qos {\n                case dscp-type {\n                    container dscp-type {\n                        uses qos-config:dscp-type;\n                    }\n                }\n            }",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 13
+      },
+      "revId": "c2a10d4235c4bd376d89bda336b249044304d08b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_00ee7bec",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentQoSConfigAddShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T18:57:01Z",
+      "side": 1,
+      "message": "please indent consistently",
+      "range": {
+        "startLine": 65,
+        "startChar": 43,
+        "endLine": 68,
+        "endChar": 25
+      },
+      "revId": "c2a10d4235c4bd376d89bda336b249044304d08b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_80b9ebeb",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentQoSConfigAddShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T18:57:01Z",
+      "side": 1,
+      "message": "What about something like: Added Intent with QoS profile..",
+      "revId": "c2a10d4235c4bd376d89bda336b249044304d08b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_80b0cbf5",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T18:57:01Z",
+      "side": 1,
+      "message": "I don\u0027t agree here. \nWhat if my intent doesn\u0027t care about QoS, I won\u0027t be able to create the flows based on this.\n\nThis will break many other use cases. I\u0027ll -2 for that to make sure this is not merged.\n\nYou should do that in checkQosConstraint",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 9
+      },
+      "revId": "c2a10d4235c4bd376d89bda336b249044304d08b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_c078132e",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/QosConstraintManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T18:57:01Z",
+      "side": 1,
+      "message": "please add modifier",
+      "revId": "c2a10d4235c4bd376d89bda336b249044304d08b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
