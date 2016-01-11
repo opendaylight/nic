@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_6dd02054",
+        "filename": "intent-api/src/main/yang/intent-constraints.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T13:36:36Z",
+      "side": 1,
+      "message": "port-min",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 18
+      },
+      "revId": "b835663a781b30aca1df8ea4ec76ed1690985f7c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4dd55c42",
+        "filename": "intent-api/src/main/yang/intent-constraints.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T13:36:36Z",
+      "side": 1,
+      "message": "port-max",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "b835663a781b30aca1df8ea4ec76ed1690985f7c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_8dcf64b0",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/NeutronSecurityGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T13:36:36Z",
+      "side": 1,
+      "message": "redondant modifier, can be removed. Same goes with the other methods",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "b835663a781b30aca1df8ea4ec76ed1690985f7c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_edc39088",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/NeutronSecurityGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T13:36:36Z",
+      "side": 1,
+      "message": "could you add javadoc please?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "b835663a781b30aca1df8ea4ec76ed1690985f7c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6d3780b1",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/NeutronSecurityRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T13:36:36Z",
+      "side": 1,
+      "message": "redundant modifier, can be remove. Same goes with other methods",
+      "revId": "b835663a781b30aca1df8ea4ec76ed1690985f7c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_4d3c3c94",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/NeutronSecurityRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T13:36:36Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "b835663a781b30aca1df8ea4ec76ed1690985f7c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
