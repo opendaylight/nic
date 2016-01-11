@@ -111,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_e001d73a",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-11T19:50:46Z",
+      "side": 1,
+      "message": "Please pardon my previous comment, I believe I had the eyes to close to the screen, I thought I read intent.getQosConfig() \u003d\u003d null\n\nWhat you\u0027ve done here is really fine.",
+      "parentUuid": "da33351e_80b0cbf5",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 9
+      },
+      "revId": "c2a10d4235c4bd376d89bda336b249044304d08b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_c078132e",
         "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/QosConstraintManager.java",
         "patchSetId": 2
