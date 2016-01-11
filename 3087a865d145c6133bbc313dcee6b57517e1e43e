@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da33351e_4aa0a2f4",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-11T06:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_d154ea55",
+      "range": {
+        "startLine": 779,
+        "startChar": 12,
+        "endLine": 779,
+        "endChar": 73
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_31ebfeb1",
         "filename": "vtn-renderer/src/main/yang/vtn-renderer.yang",
         "patchSetId": 6
