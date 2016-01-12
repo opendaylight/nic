@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_4f038bb8",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/OFRendererGraphService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-12T20:56:49Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "revId": "1ea0a7de14abb84268d0d883be78e19b3884b04c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_2f00c7a9",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Observer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-12T20:56:49Z",
+      "side": 1,
+      "message": "please remove redundant modifier.\n\nmethod declared in an interface as per default public.\n\ndo that everywhere you define a public method please. same goes in other classes",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "1ea0a7de14abb84268d0d883be78e19b3884b04c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_af2b372f",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/SuurballeTarjanAlgorithm.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-12T20:56:49Z",
+      "side": 1,
+      "message": "would it make sense to add this in topoprocessing project?",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 43
+      },
+      "revId": "1ea0a7de14abb84268d0d883be78e19b3884b04c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
