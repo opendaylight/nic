@@ -170,7 +170,8 @@ public class CompilerGraphImpl implements CompilerGraph {
                 }
             }
         }
-        else if (p1.src().contains(p2.src()) && p1.dst().contains(p2.dst())) {
+        else if (!Sets.intersection(p1.src(), p2.src()).isEmpty()
+                && !Sets.intersection(p1.dst(), p2.dst()).isEmpty()) {
             return true;
         }
         return false;
@@ -178,20 +179,24 @@ public class CompilerGraphImpl implements CompilerGraph {
 
     private boolean conflicts(Graph p1, Graph p2) throws NullPointerException {
 
-        if ((p1.getClassifiers().equals(ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL)))
-                && (p2.getClassifiers().equals(ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL)))) {
-            if (!p1.getEdges().contains(p2.getEdges())) {
-                return true;
+        if (p1.getClassifiers() != null) {
+            if ((p1.getClassifiers().equals(ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL)))
+                    && (p2.getClassifiers().equals(ClassifierImpl.getInstance(ExpressionImpl.EXPRESSION_NULL)))) {
+                if (!p1.getEdges().contains(p2.getEdges())) {
+                    return true;
+                }
+            } else {
+                if (!p1.getEdges().contains(p2.getEdges())
+                        && !p1.getClassifiers().contains(p2.getClassifiers())) {
+                    return true;
+                }
             }
-        } else {
-            if (!p1.getEdges().contains(p2.getEdges())
-                    && !p1.getClassifiers().contains(p2.getClassifiers())) {
+        }
+        else {
+            if (p1.getNodes().equals(p2.getNodes())) {
                 return true;
             }
         }
-        //if (p1.src().equals(p2.src()) && p1.dst().equals(p2.dst())) {
-        //    return true;
-        //}
         return false;
     }
 
@@ -203,67 +208,60 @@ public class CompilerGraphImpl implements CompilerGraph {
         Sets.SetView<Nodes> src;
         Sets.SetView<Nodes> dst;
         ClassifierImpl ci;
-        boolean nc = true;
 
-        if (p1.classifier() != null && p2.classifier() != null) {
-            // All the possible cases below for classifiers
-            src = Sets.difference(p1.src(), p2.src());
-            if (!src.isEmpty()) {
-
-                // Case: S1 and not S2 , D1 and not D2
-                dst = Sets.difference(p1.dst(), p2.dst());
-                if (!dst.isEmpty()) {
-
+        // All the possible cases below for classifiers
+        src = Sets.difference(p1.src(), p2.src());
+        if (!src.isEmpty()) {
+            // Case: S1 and not S2 , D1 and not D2
+            dst = Sets.difference(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+                if (p1.classifier() != null && p2.classifier() != null) {
                     // C1 and not C2
                     ci = (p1.classifier()).sub(p2.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
-                        nc = false;
                     }
                     // C1 and C2
                     ci = (p1.classifier()).and(p2.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
-                        nc = false;
-                    }
-                    if (nc) {
-                        policies.add(new InputGraphImpl(src, dst, p1.action()));
                     }
                 }
-
-                // Case: S1 and not S2 , D1 and D2
-                dst = Sets.intersection(p1.dst(), p2.dst());
-                if (!dst.isEmpty()) {
-
-                    // C1 and not C2
-                    ci = (p1.classifier()).sub(p2.classifier());
-                    if (!ci.isEmpty()) {
-                        policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
-                        nc = false;
-                    }
-                    // C1 and C2
-                    ci = (p1.classifier()).and(p2.classifier());
-                    if (!ci.isEmpty()) {
-                        policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
-                        nc = false;
-                    }
-                    if (nc) {
-                        policies.add(new InputGraphImpl(src, dst, p1.action()));
-                    }
+                else {
+                    policies.add(new InputGraphImpl(src, dst, p1.action()));
                 }
             }
-            src = Sets.intersection(p1.src(), p2.src());
-            if (!src.isEmpty()) {
 
-                // Case: S1 and S2 , D1 and D2
-                dst = Sets.intersection(p1.dst(), p2.dst());
-                if (!dst.isEmpty()) {
-
+            // Case: S1 and not S2 , D1 and D2
+            dst = Sets.intersection(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+                if (p1.classifier() != null && p2.classifier() != null) {
                     // C1 and not C2
                     ci = (p1.classifier()).sub(p2.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
-                        nc = false;
+                    }
+                    // C1 and C2
+                    ci = (p1.classifier()).and(p2.classifier());
+                    if (!ci.isEmpty()) {
+                        policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
+                    }
+                }
+                else {
+                    policies.add(new InputGraphImpl(src, dst, p1.action()));
+                }
+            }
+        }
+        src = Sets.intersection(p1.src(), p2.src());
+        if (!src.isEmpty()) {
+            // Case: S1 and S2 , D1 and D2
+            dst = Sets.intersection(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+                // C1 and not C2
+                if (p1.classifier() != null && p2.classifier() != null) {
+                    ci = (p1.classifier()).sub(p2.classifier());
+                    if (!ci.isEmpty()) {
+                        policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
                     }
                     // C1 and C2
                     ci = (p1.classifier()).and(p2.classifier());
@@ -277,114 +275,104 @@ public class CompilerGraphImpl implements CompilerGraph {
 
                         policies.add(new InputGraphImpl(src, dst, mergedActions, ((p1
                                 .classifier()).and(p2.classifier()))));
-                        nc = false;
                     }
                     // C2 and not C1
                     ci = (p2.classifier()).sub(p1.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
-                        nc = false;
-                    }
-                    if (nc) {
-                        Set<Edges> mergedActions = merge(p1.action(), p2.action());
-                        if (mergedActions == null) {
-                            throw new CompilerGraphException(
-                                    "Unable to merge exclusive actions",
-                                    Arrays.asList(p1, p2));
-                        }
-                        policies.add(new InputGraphImpl(src, dst, mergedActions));
                     }
                 }
+                else {
+                    Set<Edges> mergedActions = merge(p1.action(), p2.action());
+                    if (mergedActions == null) {
+                        throw new CompilerGraphException(
+                                "Unable to merge exclusive actions",
+                                Arrays.asList(p1, p2));
+                    }
+                    policies.add(new InputGraphImpl(src, dst, mergedActions));
+                }
+            }
 
-                // Case: S1 and S2 , D1 and not D2
-                dst = Sets.difference(p1.dst(), p2.dst());
-                if (!dst.isEmpty()) {
-
+            // Case: S1 and S2 , D1 and not D2
+            dst = Sets.difference(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+                if (p1.classifier() != null && p2.classifier() != null) {
                     // C1 and not C2
                     ci = (p1.classifier()).sub(p2.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
-                        nc = false;
                     }
                     // C1 and C2
                     ci = (p1.classifier()).and(p2.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p1.action(), ci));
-                        nc = false;
-                    }
-                    if (nc) {
-                        policies.add(new InputGraphImpl(src, dst, p1.action()));
                     }
                 }
-
-                // Case: S1 and S2 , D2 and not D1
-                dst = Sets.difference(p2.dst(), p1.dst());
-                if (!dst.isEmpty()) {
-
-                    // C1 and C2
-                    ci = (p1.classifier()).and(p2.classifier());
-                    if (!ci.isEmpty()) {
-                        policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
-                        nc = false;
-                    }
-                    // C2 and not C1
-                    ci = (p2.classifier()).sub(p1.classifier());
-                    if (!ci.isEmpty()) {
-                        policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
-                        nc = false;
-                    }
-                    if (nc) {
-                        policies.add(new InputGraphImpl(src, dst, p2.action()));
-                    }
+                else {
+                    policies.add(new InputGraphImpl(src, dst, p1.action()));
                 }
             }
-            src = Sets.difference(p2.src(), p1.src());
-            if (!src.isEmpty()) {
 
-                // Case: S2 and not S1 , D1 and D2
-                dst = Sets.intersection(p1.dst(), p2.dst());
-                if (!dst.isEmpty()) {
-
+            // Case: S1 and S2 , D2 and not D1
+            dst = Sets.difference(p2.dst(), p1.dst());
+            if (!dst.isEmpty()) {
+                if (p1.classifier() != null && p2.classifier() != null) {
                     // C1 and C2
                     ci = (p1.classifier()).and(p2.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
-                        nc = false;
                     }
                     // C2 and not C1
                     ci = (p2.classifier()).sub(p1.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
-                        nc = false;
                     }
-                    if (nc) {
-                        policies.add(new InputGraphImpl(src, dst, p2.action()));
-                    }
-
                 }
-                // Case: S2 and not S1 , D2 and not D1
-                dst = Sets.difference(p2.dst(), p1.dst());
-                if (!dst.isEmpty()) {
-
+                else {
+                    policies.add(new InputGraphImpl(src, dst, p2.action()));
+                }
+            }
+        }
+        src = Sets.difference(p2.src(), p1.src());
+        if (!src.isEmpty()) {
+            // Case: S2 and not S1 , D1 and D2
+            dst = Sets.intersection(p1.dst(), p2.dst());
+            if (!dst.isEmpty()) {
+                if (p1.classifier() != null && p2.classifier() != null) {
+                    // C1 and C2
+                    ci = (p1.classifier()).and(p2.classifier());
+                    if (!ci.isEmpty()) {
+                        policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    }
+                    // C2 and not C1
+                    ci = (p2.classifier()).sub(p1.classifier());
+                    if (!ci.isEmpty()) {
+                        policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
+                    }
+                }
+                else {
+                    policies.add(new InputGraphImpl(src, dst, p2.action()));
+                }
+            }
+            // Case: S2 and not S1 , D2 and not D1
+            dst = Sets.difference(p2.dst(), p1.dst());
+            if (!dst.isEmpty()) {
+                if (p1.classifier() != null && p2.classifier() != null) {
                     // C2 and C1
                     ci = (p1.classifier()).and(p2.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
-                        nc = false;
                     }
                     // C2 and not C1
                     ci = (p2.classifier()).sub(p1.classifier());
                     if (!ci.isEmpty()) {
                         policies.add(new InputGraphImpl(src, dst, p2.action(), ci));
-                        nc = false;
-                    }
-                    if (nc) {
-                        policies.add(new InputGraphImpl(src, dst, p2.action()));
                     }
                 }
+                else {
+                    policies.add(new InputGraphImpl(src, dst, p2.action()));
+                }
             }
-        } else {
-            policies.add(new InputGraphImpl(p1.src(), p1.dst(), merge(p1.action(),p2.action())));
         }
         return policies;
 
