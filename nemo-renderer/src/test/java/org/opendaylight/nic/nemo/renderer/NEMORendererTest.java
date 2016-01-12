@@ -155,7 +155,6 @@ public class NEMORendererTest {
         /**
          * Here creates objects and defines mocking functionality for mock objects.
          */
-        nemoRenderer = new NEMORenderer(dataBroker, rpcProviderRegistry);
         PowerMockito.mockStatic(FrameworkUtil.class);
         when(FrameworkUtil.getBundle(NEMORenderer.class)).thenReturn(bundle);
         when(bundle.getBundleContext()).thenReturn(context);
@@ -171,6 +170,7 @@ public class NEMORendererTest {
         when(dataBroker.newWriteOnlyTransaction()).thenReturn(writeTransactionMock);
         when(dataBroker.newReadOnlyTransaction()).thenReturn(readTransactionMock);
         when(dataBroker.newReadWriteTransaction()).thenReturn(readWriteTransactionMock);
+        nemoRenderer = new NEMORenderer(dataBroker, rpcProviderRegistry);
 
     }
 

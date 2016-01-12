@@ -20,21 +20,21 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.RpcProviderRegistry;
 import org.opendaylight.nemo.intent.IntentResolverUtils;
-import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandParameters;
 import org.opendaylight.nic.nemo.rpc.NemoDelete;
+import org.opendaylight.nic.nemo.rpc.NemoRpc;
 import org.opendaylight.nic.nemo.rpc.NemoUpdate;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.UserId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.BeginTransactionOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.CommonRpcResult;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.CommonRpcResult.ResultCode;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.EndTransactionInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.NemoIntentService;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoDeleteInputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.Users;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.User;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.UserKey;
@@ -64,11 +64,13 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
 
     private final DataBroker dataBroker;
     private final RpcProviderRegistry rpcProviderRegistry;
+    private final NemoIntentService nemoEngine;
     private ListenerRegistration<DataChangeListener> listenerRegistration;
 
     public NEMORenderer(DataBroker dataBroker0, RpcProviderRegistry rpcProviderRegistry0) {
         this.dataBroker = dataBroker0;
         this.rpcProviderRegistry = rpcProviderRegistry0;
+        this.nemoEngine = rpcProviderRegistry.getRpcService(NemoIntentService.class);
     }
 
     public void init() {
@@ -137,6 +139,41 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
         }
     }
 
+    private boolean executeNemoRpc(UserId userId, NemoRpc nemoRpc) throws InterruptedException, ExecutionException {
+
+        if (!nemoRpc.isInputValid()) {
+            LOG.info("NemoRpc {} input is invalid", nemoRpc.getClass().getSimpleName());
+            return false;
+        }
+
+        final Optional<User> userOpt = readUser(userId);
+        if (!userOpt.isPresent()) {
+            LOG.info("UserId {} not found", userId);
+            return false;
+        }
+
+        final User user = userOpt.get();
+
+        // run all three operations even if there were already failures
+
+        boolean r1 = beginTransaction(userId);
+
+        RpcResult<? extends CommonRpcResult> rpcResult = null;
+        try {
+            rpcResult = nemoRpc.apply(nemoEngine, user);
+        } catch (Exception e) {
+            LOG.warn("NemoRpc failed: ", e);
+        }
+        boolean r2 = isSuccessful(rpcResult);
+        if (!r2) {
+            LOG.warn("NemoRpc {} failed: {}", nemoRpc.getClass().getSimpleName(), rpcResult);
+        }
+
+        boolean r3 = endTransaction(userId);
+
+        return r1 && r2 && r3;
+    }
+
     /**
      *
      * @param intent
@@ -146,46 +183,7 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
      */
     @VisibleForTesting
     boolean createOrUpdateIntent(Intent intent) throws InterruptedException, ExecutionException {
-
-        final UserId userId = getUserId(intent.getKey());
-
-        StructureStyleNemoUpdateInputBuilder builder = null;
-        try {
-            BandwidthOnDemandParameters params = NEMOIntentParser.parseBandwidthOnDemand(intent);
-
-            // find existing NEMO nodes by name
-            Optional<User> userOpt = readUser(userId);
-            if (userOpt.isPresent()) {
-                builder = NemoUpdate.prepareInputBuilder(params, userOpt.get());
-            } else {
-                LOG.info("UserId {} not found", userId);
-            }
-
-        } catch (Exception e) {
-            LOG.error("Unable to process BoD Intent", e);
-        }
-
-        if (builder != null) {
-
-            // make call to NEMO via MD-SAL RPC
-            NemoIntentService nemoEngine = rpcProviderRegistry.getRpcService(NemoIntentService.class);
-
-            boolean result = beginTransaction(nemoEngine, userId);
-
-            RpcResult<? extends CommonRpcResult> r2 = nemoEngine.structureStyleNemoUpdate(
-                    builder.setUserId(userId).build()).get();
-            if (!r2.isSuccessful() || r2.getResult().getResultCode() != ResultCode.Ok) {
-                LOG.warn("NemoEngine structureStyleNemoUpdate failed: " + r2.getResult());
-                result = false;
-            }
-
-            // run endTransaction even if there were already failures
-            result = endTransaction(nemoEngine, userId) && result;
-
-            return result;
-        } else {
-            return false;
-        }
+        return executeNemoRpc(getUserId(intent.getKey()), new NemoUpdate(intent));
     }
 
     /**
@@ -197,64 +195,31 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
      */
     @VisibleForTesting
     private boolean deleteIntent(IntentKey intentKey) throws InterruptedException, ExecutionException {
-        LOG.info("Deleting Existing intent with UUID of {}", intentKey.getId());
-
-        final UserId userId = getUserId(intentKey);
-
-        StructureStyleNemoDeleteInputBuilder builder = null;
-
-        Optional<User> userOpt = readUser(userId);
-        if (userOpt.isPresent()) {
-            builder = NemoDelete.prepareInputBuilder(userOpt.get());
-        } else {
-            LOG.info("UserId {} not found", userId);
-        }
-
-        if (builder != null) {
-
-            // make call to NEMO via MD-SAL RPC
-            NemoIntentService nemoEngine = rpcProviderRegistry.getRpcService(NemoIntentService.class);
-
-            boolean result = beginTransaction(nemoEngine, userId);
-
-            RpcResult<? extends CommonRpcResult> r2 = nemoEngine.structureStyleNemoDelete(
-                    builder.setUserId(userId).build()).get();
-            if (!r2.isSuccessful() || r2.getResult().getResultCode() != ResultCode.Ok) {
-                LOG.warn("NemoEngine structureStyleNemoDelete failed: " + r2.getResult());
-                result = false;
-            }
-
-            // run endTransaction even if there were already failures
-            result = endTransaction(nemoEngine, userId) && result;
-
-            return result;
-        } else {
-            return false;
-        }
+        return executeNemoRpc(getUserId(intentKey), new NemoDelete());
     }
 
-    private boolean beginTransaction(NemoIntentService nemoEngine, UserId userId) throws InterruptedException,
-            ExecutionException {
-        RpcResult<BeginTransactionOutput> r1 = nemoEngine.beginTransaction(
-                new BeginTransactionInputBuilder().setUserId(userId).build()).get();
-        if (!r1.isSuccessful() || r1.getResult().getResultCode() != ResultCode.Ok) {
+    private static boolean isSuccessful(RpcResult<? extends CommonRpcResult> rpcResult) {
+        return rpcResult != null && rpcResult.isSuccessful() && rpcResult.getResult().getResultCode() == ResultCode.Ok;
+    }
+
+    private boolean beginTransaction(UserId userId) throws InterruptedException, ExecutionException {
+        BeginTransactionInput input = new BeginTransactionInputBuilder().setUserId(userId).build();
+        RpcResult<BeginTransactionOutput> r1 = nemoEngine.beginTransaction(input).get();
+        boolean success = isSuccessful(r1);
+        if (!success) {
             LOG.warn("NemoEngine beginTransaction failed: " + r1.getResult());
-            return false;
-        } else {
-            return true;
         }
+        return success;
     }
 
-    private boolean endTransaction(NemoIntentService nemoEngine, UserId userId) throws InterruptedException,
-            ExecutionException {
-        RpcResult<? extends CommonRpcResult> r3 = nemoEngine.endTransaction(
-                new EndTransactionInputBuilder().setUserId(userId).build()).get();
-        if (!r3.isSuccessful() || r3.getResult().getResultCode() != ResultCode.Ok) {
+    private boolean endTransaction(UserId userId) throws InterruptedException, ExecutionException {
+        EndTransactionInput input = new EndTransactionInputBuilder().setUserId(userId).build();
+        RpcResult<? extends CommonRpcResult> r3 = nemoEngine.endTransaction(input).get();
+        boolean success = isSuccessful(r3);
+        if (!success) {
             LOG.warn("NemoEngine endTransaction failed: " + r3.getResult());
-            return false;
-        } else {
-            return true;
         }
+        return success;
     }
 
     private Optional<User> readUser(UserId userId) throws InterruptedException, ExecutionException {
@@ -270,7 +235,7 @@ public class NEMORenderer implements AutoCloseable, DataChangeListener {
      * @param intentKey
      * @return the user that created this intent
      */
-    private UserId getUserId(IntentKey intentKey) {
+    private static UserId getUserId(IntentKey intentKey) {
         // for this release, assume userId to be the same as the NIC intent ID
         return new UserId(intentKey.getId().getValue());
     }

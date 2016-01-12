@@ -39,7 +39,7 @@ public class NemoInputBuildersTest {
         BandwidthOnDemandParameters params = new BandwidthOnDemandParameters(NEMOIntentParserTest.FROM,
                 NEMOIntentParserTest.TO, NEMOIntentParser.parseBandwidthString(NEMOIntentParserTest.BANDWIDTH),
                 startTime, duration);
-        StructureStyleNemoUpdateInput input = NemoUpdate.prepareInputBuilder(params, new UserBuilder().build()).build();
+        StructureStyleNemoUpdateInput input = NemoUpdate.buildInput(params, new UserBuilder().build());
         assertNotNull("Expected valid input", input);
 
         assertEquals(2, input.getObjects().getNode().size());
