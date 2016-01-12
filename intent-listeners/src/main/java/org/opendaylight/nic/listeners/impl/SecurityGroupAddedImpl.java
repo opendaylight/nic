@@ -13,7 +13,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712
 import java.sql.Timestamp;
 import java.util.Date;
 
-public class SecurityGroupAddedImpl extends NeutronSecurityGroup implements SecurityGroupAdded {
+public class SecurityGroupAddedImpl extends NeutronSecurityGroupImpl implements SecurityGroupAdded {
     private final Timestamp timeStamp;
 
     public SecurityGroupAddedImpl(SecurityGroup secGroup) {

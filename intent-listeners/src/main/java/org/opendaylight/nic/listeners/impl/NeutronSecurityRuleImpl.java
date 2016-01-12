@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import org.opendaylight.nic.listeners.api.NeutronSecurityRule;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.constants.rev150712.DirectionBase;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.constants.rev150712.EthertypeBase;
@@ -29,11 +30,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712
  * tenant_id         uuid-str Owner of security rule. Admin only outside tenant.
  */
 
-public class NeutronSecurityRule {
+public class NeutronSecurityRuleImpl implements NeutronSecurityRule {
 
     protected final SecurityRule secRule;
 
-    public NeutronSecurityRule(SecurityRule secRule) {
+    public NeutronSecurityRuleImpl(SecurityRule secRule) {
         this.secRule = secRule;
     }
 
@@ -46,7 +47,7 @@ public class NeutronSecurityRule {
     }
 
     public String getRemoteGroupID() {
-        return secRule.getSecurityGroupId().getValue();
+        return secRule.getRemoteGroupId().getValue();
     }
 
     public String getSecurityTenantID() {

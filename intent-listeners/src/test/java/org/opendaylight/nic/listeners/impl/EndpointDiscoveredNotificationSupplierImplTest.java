@@ -58,7 +58,6 @@ public class EndpointDiscoveredNotificationSupplierImplTest {
     @Before
     public void setup() {
         mockNotificationService = mock(NotificationService.class);
-        mockNotificationService = mock(NotificationService.class);
         mockRegistryService = mock(EventRegistryService.class);
         Bundle mockBundle = mock(Bundle.class);
         BundleContext mockBundleContext = mock(BundleContext.class);
