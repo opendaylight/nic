@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_2fbe0800",
+        "filename": "intent-api/src/main/yang/intent-qos.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-12T16:35:49Z",
+      "side": 1,
+      "message": "I\u0027m still not sure about that, What is its purpose?\n\nRight now the grouping is empty so I believe it\u0027s useless.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "3411aa71ae1e21d0a51e109cfff44ac4bfdf97b3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
