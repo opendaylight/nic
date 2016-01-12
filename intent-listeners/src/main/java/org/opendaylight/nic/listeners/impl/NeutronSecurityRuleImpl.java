@@ -47,7 +47,7 @@ public class NeutronSecurityRuleImpl implements NeutronSecurityRule {
     }
 
     public String getRemoteGroupID() {
-        return secRule.getSecurityGroupId().getValue();
+        return secRule.getRemoteGroupId().getValue();
     }
 
     public String getSecurityTenantID() {
