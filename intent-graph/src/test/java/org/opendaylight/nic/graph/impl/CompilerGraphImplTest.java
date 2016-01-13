@@ -60,7 +60,7 @@ public class CompilerGraphImplTest {
         Collection<InputGraph> compiledPolicies = intentCompiler.compile(input);
         assertNotNull(compiledPolicies);
         assertEquals(output.size(), compiledPolicies.size());
-        assertTrue(compiledPolicies.equals(output));
+        assertTrue(compiledPolicies.containsAll(output));
     }
 
     @Before
@@ -98,7 +98,7 @@ public class CompilerGraphImplTest {
                                 endpoints("app"), actions(block))));
 
     }
-   /*
+
     @Test
     public void testConflictCompile() throws Exception {
         testCompile(Arrays.asList(intentCompiler.createGraph(
@@ -108,6 +108,133 @@ public class CompilerGraphImplTest {
                 Arrays.asList(intentCompiler.createGraph(
                         endpoints("web"), endpoints("DB"),
                         actions(block))));
-    } */
-    // TODO add more tests
+    }
+
+    @Test
+    public void testConflictMergeCompile() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"),
+                actions(allow)), intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(block))),
+                Arrays.asList(intentCompiler.createGraph(
+                        endpoints("10.0.0.2"), endpoints("10.0.0.3"),
+                        actions(allow)), intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.3"),
+                        actions(block))));
+    }
+
+    @Test
+    public void testConflictThreeCompile() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"),
+                actions(allow)), intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(block)),
+                intentCompiler.createGraph(endpoints("10.0.0.2"),
+                        endpoints("10.0.0.3"), actions(block))), Arrays.asList(
+                intentCompiler.createGraph(endpoints("10.0.0.1"),
+                        endpoints("10.0.0.3"), actions(block)), intentCompiler
+                        .createGraph(endpoints("10.0.0.2"),
+                                endpoints("10.0.0.3"), actions(block))));
+    }
+
+    @Test
+    public void testConflictDestinationCompile() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.2", "10.0.0.3"),
+                actions(allow)), intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(block))),
+                Arrays.asList(intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.3"),
+                        actions(allow)), intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.2"),
+                        actions(block))));
+    }
+
+    @Test
+    public void testConflictDestination2Compile() throws Exception {
+        testCompile(Arrays.asList(
+                intentCompiler.createGraph(endpoints("10.0.0.1"),
+                        endpoints("10.0.0.2", "10.0.0.3"), actions(allow)),
+                intentCompiler.createGraph(endpoints("10.0.0.1"),
+                        endpoints("10.0.0.2", "10.0.0.5"), actions(block))),
+                Arrays.asList(intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.3"),
+                        actions(allow)), intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.2"),
+                        actions(block)), intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.5"),
+                        actions(block))));
+    }
+
+    @Test
+    public void testConflictMergeActionsCompile() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1", "10.0.0.2", "10.0.0.10"),
+                endpoints("10.0.0.3"), actions(allow)), intentCompiler
+                        .createGraph(endpoints("10.0.0.1"),
+                                endpoints("10.0.0.3", "10.0.0.20"), actions(block)),
+                intentCompiler.createGraph(endpoints("10.0.0.2"),
+                        endpoints("10.0.0.3"), actions(redirect)),
+                intentCompiler.createGraph(endpoints("10.0.0.1"),
+                        endpoints("10.0.0.20"), actions(monitor))),
+                Arrays.asList(intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.3"),
+                        actions(block)), intentCompiler.createGraph(
+                        endpoints("10.0.0.10"), endpoints("10.0.0.3"),
+                        actions(allow)), intentCompiler.createGraph(
+                        endpoints("10.0.0.2"), endpoints("10.0.0.3"),
+                        actions(allow, redirect)), intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.20"),
+                        actions(block, monitor))));
+    }
+
+    @Test
+    public void testClassifierNonConflicting() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(allow),
+                ClassifierHelper.vlan(10, 20)), intentCompiler.createGraph(
+                endpoints("10.0.0.3"), endpoints("10.0.0.4"), actions(block),
+                ClassifierHelper.vlan(10, 40))), Arrays.asList(intentCompiler
+                        .createGraph(endpoints("10.0.0.1"), endpoints("10.0.0.2"),
+                                actions(allow), ClassifierHelper.vlan(10, 20)),
+                intentCompiler.createGraph(endpoints("10.0.0.3"),
+                        endpoints("10.0.0.4"), actions(block),
+                        ClassifierHelper.vlan(10, 40))));
+
+    }
+
+    @Test
+    public void testClassifierConflictCompile() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(allow),
+                ClassifierHelper.vlan(10, 20)), intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.2"), actions(block),
+                ClassifierHelper.vlan(30, 40))), Arrays.asList(intentCompiler
+                        .createGraph(endpoints("10.0.0.1"), endpoints("10.0.0.2"),
+                                actions(allow), ClassifierHelper.vlan(10, 20)),
+                intentCompiler.createGraph(endpoints("10.0.0.1"),
+                        endpoints("10.0.0.2"), actions(block),
+                        ClassifierHelper.vlan(30, 40))));
+    }
+
+    @Test
+    public void testClassifier2Compile() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"),
+                actions(allow), ClassifierHelper.vlan(5, 20)), intentCompiler
+                        .createGraph(endpoints("10.0.0.1"), endpoints("10.0.0.3"),
+                                actions(block), ClassifierHelper.vlan(5, 10))),
+                Arrays.asList(intentCompiler.createGraph(
+                        endpoints("10.0.0.2"), endpoints("10.0.0.3"),
+                        actions(allow), ClassifierHelper.vlan(11, 20)),
+                        intentCompiler.createGraph(endpoints("10.0.0.1"),
+                                endpoints("10.0.0.3"), actions(block),
+                                ClassifierHelper.vlan(5, 10)), intentCompiler
+                                .createGraph(endpoints("10.0.0.1"),
+                                        endpoints("10.0.0.3"), actions(allow),
+                                        ClassifierHelper.vlan(11, 20)),
+                        intentCompiler.createGraph(endpoints("10.0.0.2"),
+                                endpoints("10.0.0.3"), actions(allow),
+                                ClassifierHelper.vlan(5, 10))));
+    }
 }

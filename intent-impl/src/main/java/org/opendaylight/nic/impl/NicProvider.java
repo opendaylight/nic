@@ -11,14 +11,16 @@ package org.opendaylight.nic.impl;
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.sun.org.apache.bcel.internal.classfile.Node;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.compiler.api.*;
-import org.opendaylight.nic.graph.api.*;
+import org.opendaylight.nic.graph.api.CompilerGraph;
+import org.opendaylight.nic.graph.api.CompilerGraphException;
+import org.opendaylight.nic.graph.api.CompilerGraphFactory;
+import org.opendaylight.nic.graph.api.InputGraph;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
@@ -32,10 +34,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.ActionTypes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.EdgeTypes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.EdgesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.NodesBuilder;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -198,7 +200,7 @@ public class NicProvider implements NicConsoleProvider {
             Optional<Intents> intents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION
                     : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet();
 
-            if(intents.isPresent()) {
+            if (intents.isPresent()) {
                 listOfIntents = intents.get().getIntent();
             }
             else {
@@ -380,8 +382,6 @@ public class NicProvider implements NicConsoleProvider {
         stringBuilder.append('\n');
         stringBuilder.append(">>> Compiled policies:\n");
         Collection<InputGraph> compiledPolicies;
-        // Create normalized graphs
-        // Compile the normalized graphs
         try {
             compiledPolicies = compiler.compile(policies);
         } catch (CompilerGraphException e) {
@@ -397,6 +397,9 @@ public class NicProvider implements NicConsoleProvider {
             builder.append('\n');
             return builder.toString();
         }
+        // Save the compiler graph as MD-SAL graph
+        Collection<Graph> composedGraph = compiler.storeComposedGraph(compiledPolicies);
+
         stringBuilder.append(formatPolicies(compiledPolicies, 1));
         // Return the string of compiledPolices
         return stringBuilder.toString();
@@ -405,8 +408,8 @@ public class NicProvider implements NicConsoleProvider {
     private Set<Endpoint> translateSubject(IntentCompiler compiler, String sourceSubject) throws UnknownHostException {
         StringBuilder csv = new StringBuilder();
         Map<String, String> innerMap = mappingSvc.get(sourceSubject);
-        for(String ipAddress : innerMap.values()){
-            if(csv.length() == 0) csv.append(ipAddress);
+        for (String ipAddress : innerMap.values()) {
+            if (csv.length() == 0) csv.append(ipAddress);
             else csv.append(",").append(ipAddress);
         }
 
@@ -416,8 +419,8 @@ public class NicProvider implements NicConsoleProvider {
     private Set<Nodes> translateSubject(CompilerGraph compiler, String sourceSubject) throws UnknownHostException {
         StringBuilder csv = new StringBuilder();
         Map<String, String> innerMap = mappingSvc.get(sourceSubject);
-        for(String ipAddress : innerMap.values()){
-            if(csv.length() == 0) csv.append(ipAddress);
+        for (String ipAddress : innerMap.values()) {
+            if (csv.length() == 0) csv.append(ipAddress);
             else csv.append(",").append(ipAddress);
         }
 
@@ -436,21 +439,17 @@ public class NicProvider implements NicConsoleProvider {
     private String formatPolicies(Collection<InputGraph> policies, int flag) {
         StringBuilder stringBuilder = new StringBuilder();
         for (InputGraph policy : policies) {
-            stringBuilder.append("From \t");
+            stringBuilder.append("From ");
             for (Nodes node : policy.src()) {
                 stringBuilder.append(node.getName());
-                stringBuilder.append(", ");
             }
-            stringBuilder.append("\t To \t");
+            stringBuilder.append(" To ");
             for (Nodes node : policy.dst()) {
                 stringBuilder.append(node.getName());
-                stringBuilder.append(", ");
             }
-            stringBuilder.append("\t apply \t");
+            stringBuilder.append(" apply ");
             for (Edges edge : policy.action()) {
                 stringBuilder.append(edge.getType());
-                stringBuilder.append(" with type ");
-                stringBuilder.append(edge.getActionType());
             }
             stringBuilder.append('\n');
         }
