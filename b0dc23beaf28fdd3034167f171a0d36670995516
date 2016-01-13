@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_402c0e4b",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-13T22:25:46Z",
+      "side": 1,
+      "message": "I don\u0027t see this used, might be useless",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 68
+      },
+      "revId": "b0dc23beaf28fdd3034167f171a0d36670995516",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_001a0617",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-13T22:25:46Z",
+      "side": 1,
+      "message": "you do want to call redirectFlowManager.close() in the #close() method",
+      "range": {
+        "startLine": 86,
+        "startChar": 13,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "b0dc23beaf28fdd3034167f171a0d36670995516",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_80261667",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-13T22:25:46Z",
+      "side": 1,
+      "message": "could you check and make sure this doesn\u0027t need to be close.\n\nIf so, please add the close to the #close() method",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 30
+      },
+      "revId": "b0dc23beaf28fdd3034167f171a0d36670995516",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
