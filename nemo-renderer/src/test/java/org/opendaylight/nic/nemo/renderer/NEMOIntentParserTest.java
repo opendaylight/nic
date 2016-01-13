@@ -37,7 +37,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.users.UserBuilder;
 
 /**
@@ -90,9 +90,8 @@ public class NEMOIntentParserTest {
 
         Intent intent = getBandwidthOnDemandIntent(intentKey);
         BandwidthOnDemandParameters params = NEMOIntentParser.parseBandwidthOnDemand(intent);
-        StructureStyleNemoUpdateInputBuilder inputBuilder = NemoUpdate.prepareInputBuilder(params,
-                new UserBuilder().build());
-        assertNotNull("Expected valid inputBuilder", inputBuilder);
+        StructureStyleNemoUpdateInput input = NemoUpdate.buildInput(params, new UserBuilder().build());
+        assertNotNull("Expected valid input", input);
     }
 
     public static final String FROM = "developers";

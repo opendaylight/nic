@@ -17,12 +17,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.opendaylight.nic.nemo.renderer.NEMOIntentParser;
 import org.opendaylight.nic.nemo.renderer.NEMOIntentParser.BandwidthOnDemandParameters;
 import org.opendaylight.nic.nemo.renderer.NEMORenderer;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ActionName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ConditionParameterName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.ConditionSegmentId;
@@ -34,6 +37,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.com
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.NodeType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.OperationId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.common.rev151010.OperationName;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.CommonRpcResult;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.NemoIntentService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.StructureStyleNemoUpdateInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.user.intent.Objects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.intent.rev151010.user.intent.ObjectsBuilder;
@@ -59,23 +65,35 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.ope
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.condition.instance.condition.segment.ConditionParameterTargetValueBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.operation.instance.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.nemo.operation.rev151010.operation.instance.ActionBuilder;
+import org.opendaylight.yangtools.yang.common.RpcResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author gwu
  *
  */
-public class NemoUpdate {
+public class NemoUpdate implements NemoRpc {
     private static final ActionName ACTION_QOS_BANDWIDTH = new ActionName("qos-bandwidth");
     private static final ConnectionType P2P = new ConnectionType("p2p");
     private static final NodeType L2_GROUP = new NodeType("l2-group");
     private static final ConditionParameterName CONDITION_TIME = new ConditionParameterName("time");
     private static final DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("HH:mm:ss");
 
-    private NemoUpdate() {
+    private static final Logger LOG = LoggerFactory.getLogger(NemoUpdate.class);
+    private final BandwidthOnDemandParameters params;
+
+    public NemoUpdate(Intent intent) {
+        BandwidthOnDemandParameters params0 = null;
+        try {
+            params0 = NEMOIntentParser.parseBandwidthOnDemand(intent);
+        } catch (Exception e) {
+            LOG.info("Unable to parse BoD intent", e);
+        }
+        params = params0;
     }
 
-    public static StructureStyleNemoUpdateInputBuilder prepareInputBuilder(final BandwidthOnDemandParameters params,
-            User user) {
+    public static StructureStyleNemoUpdateInput buildInput(final BandwidthOnDemandParameters params, final User user) {
 
         List<Node> existingNodes = new ArrayList<>();
         if (user.getObjects() != null && user.getObjects().getNode() != null) {
@@ -129,7 +147,8 @@ public class NemoUpdate {
         Operation op = operation(2L, connection.getConnectionId(), conditions, actions);
         Operations operations = new OperationsBuilder().setOperation(Arrays.asList(op)).build();
 
-        return new StructureStyleNemoUpdateInputBuilder().setObjects(objects).setOperations(operations);
+        return new StructureStyleNemoUpdateInputBuilder().setObjects(objects).setOperations(operations)
+                .setUserId(user.getUserId()).build();
     }
 
     private static Action action(long order, ActionName name, long value) {
@@ -186,4 +205,19 @@ public class NemoUpdate {
                 .setPriority(priority).setConditionSegment(conditions).setAction(actions).build();
     }
 
+    @Override
+    public RpcResult<? extends CommonRpcResult> apply(NemoIntentService nemoEngine, User user)
+            throws InterruptedException, ExecutionException {
+        if (params != null) {
+            StructureStyleNemoUpdateInput updateInput = buildInput(params, user);
+            return nemoEngine.structureStyleNemoUpdate(updateInput).get();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean isInputValid() {
+        return params != null;
+    }
 }
