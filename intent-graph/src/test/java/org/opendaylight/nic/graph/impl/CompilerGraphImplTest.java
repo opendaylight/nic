@@ -98,7 +98,7 @@ public class CompilerGraphImplTest {
                                 endpoints("app"), actions(block))));
 
     }
-   /*
+
     @Test
     public void testConflictCompile() throws Exception {
         testCompile(Arrays.asList(intentCompiler.createGraph(
@@ -108,6 +108,6 @@ public class CompilerGraphImplTest {
                 Arrays.asList(intentCompiler.createGraph(
                         endpoints("web"), endpoints("DB"),
                         actions(block))));
-    } */
+    }
     // TODO add more tests
 }

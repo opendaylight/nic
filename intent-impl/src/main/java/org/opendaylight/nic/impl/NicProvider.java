@@ -365,8 +365,6 @@ public class NicProvider implements NicConsoleProvider {
         stringBuilder.append('\n');
         stringBuilder.append(">>> Compiled policies:\n");
         Collection<InputGraph> compiledPolicies;
-        // Create normalized graphs
-        // Compile the normalized graphs
         try {
             compiledPolicies = compiler.compile(policies);
         } catch (CompilerGraphException e) {
@@ -421,21 +419,17 @@ public class NicProvider implements NicConsoleProvider {
     private String formatPolicies(Collection<InputGraph> policies, int flag) {
         StringBuilder stringBuilder = new StringBuilder();
         for (InputGraph policy : policies) {
-            stringBuilder.append("From \t");
+            stringBuilder.append("From ");
             for (Nodes node : policy.src()) {
                 stringBuilder.append(node.getName());
-                stringBuilder.append(", ");
             }
-            stringBuilder.append("\t To \t");
+            stringBuilder.append(" To ");
             for (Nodes node : policy.dst()) {
                 stringBuilder.append(node.getName());
-                stringBuilder.append(", ");
             }
-            stringBuilder.append("\t apply \t");
+            stringBuilder.append(" apply ");
             for (Edges edge : policy.action()) {
                 stringBuilder.append(edge.getType());
-                stringBuilder.append(" with type ");
-                stringBuilder.append(edge.getActionType());
             }
             stringBuilder.append('\n');
         }
