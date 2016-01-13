@@ -68,6 +68,23 @@
       "revId": "b0dc23beaf28fdd3034167f171a0d36670995516",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_8083b6cb",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/RedirectFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-01-13T23:40:28Z",
+      "side": 1,
+      "message": "Are there any cases where we have something on nodeConnectorId other than something:something_else ?",
+      "revId": "b0dc23beaf28fdd3034167f171a0d36670995516",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
