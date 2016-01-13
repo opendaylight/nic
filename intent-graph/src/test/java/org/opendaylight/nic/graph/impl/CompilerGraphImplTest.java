@@ -98,7 +98,7 @@ public class CompilerGraphImplTest {
                                 endpoints("app"), actions(block))));
 
     }
-   /*
+
     @Test
     public void testConflictCompile() throws Exception {
         testCompile(Arrays.asList(intentCompiler.createGraph(
@@ -108,6 +108,18 @@ public class CompilerGraphImplTest {
                 Arrays.asList(intentCompiler.createGraph(
                         endpoints("web"), endpoints("DB"),
                         actions(block))));
-    } */
-    // TODO add more tests
+    }
+
+    @Test
+    public void testConflictMergeCompile() throws Exception {
+        testCompile(Arrays.asList(intentCompiler.createGraph(
+                endpoints("10.0.0.1", "10.0.0.2"), endpoints("10.0.0.3"),
+                actions(allow)), intentCompiler.createGraph(
+                endpoints("10.0.0.1"), endpoints("10.0.0.3"), actions(block))),
+                Arrays.asList(intentCompiler.createGraph(
+                        endpoints("10.0.0.2"), endpoints("10.0.0.3"),
+                        actions(allow)), intentCompiler.createGraph(
+                        endpoints("10.0.0.1"), endpoints("10.0.0.3"),
+                        actions(block))));
+    }
 }

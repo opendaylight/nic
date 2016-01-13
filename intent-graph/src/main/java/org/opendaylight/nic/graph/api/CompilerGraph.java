@@ -65,4 +65,11 @@ public interface CompilerGraph extends AutoCloseable {
      *  @return       the InputGraph from the list of intents
      * */
     InputGraph createGraph(Set<Nodes> source, Set<Nodes> destination, Set<Edges> action, ClassifierImpl classifier);
+
+    /**
+     * Method to access the input graph, created from the list of intents and return a directed composed graph
+     * @param compiledPolicies the input graph created from the list of updated intents
+     * @return      the directed composed graph stored on MDSAL
+     */
+    Collection<Graph> storeComposedGraph (Collection<InputGraph> compiledPolicies);
 }

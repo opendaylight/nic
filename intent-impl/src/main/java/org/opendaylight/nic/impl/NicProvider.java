@@ -32,6 +32,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.ActionTypes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.EdgeTypes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.GraphBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.EdgesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
@@ -365,8 +367,6 @@ public class NicProvider implements NicConsoleProvider {
         stringBuilder.append('\n');
         stringBuilder.append(">>> Compiled policies:\n");
         Collection<InputGraph> compiledPolicies;
-        // Create normalized graphs
-        // Compile the normalized graphs
         try {
             compiledPolicies = compiler.compile(policies);
         } catch (CompilerGraphException e) {
@@ -382,6 +382,9 @@ public class NicProvider implements NicConsoleProvider {
             builder.append('\n');
             return builder.toString();
         }
+        // Save the compiler graph as MD-SAL graph
+        Collection<Graph> composedGraph = compiler.storeComposedGraph(compiledPolicies);
+
         stringBuilder.append(formatPolicies(compiledPolicies, 1));
         // Return the string of compiledPolices
         return stringBuilder.toString();
@@ -421,21 +424,17 @@ public class NicProvider implements NicConsoleProvider {
     private String formatPolicies(Collection<InputGraph> policies, int flag) {
         StringBuilder stringBuilder = new StringBuilder();
         for (InputGraph policy : policies) {
-            stringBuilder.append("From \t");
+            stringBuilder.append("From ");
             for (Nodes node : policy.src()) {
                 stringBuilder.append(node.getName());
-                stringBuilder.append(", ");
             }
-            stringBuilder.append("\t To \t");
+            stringBuilder.append(" To ");
             for (Nodes node : policy.dst()) {
                 stringBuilder.append(node.getName());
-                stringBuilder.append(", ");
             }
-            stringBuilder.append("\t apply \t");
+            stringBuilder.append(" apply ");
             for (Edges edge : policy.action()) {
                 stringBuilder.append(edge.getType());
-                stringBuilder.append(" with type ");
-                stringBuilder.append(edge.getActionType());
             }
             stringBuilder.append('\n');
         }
