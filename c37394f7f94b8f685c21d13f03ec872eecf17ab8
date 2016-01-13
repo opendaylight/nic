@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_3ef2b79a",
+        "filename": "nemo-renderer/src/main/java/org/opendaylight/nic/nemo/rpc/NemoRpc.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-13T17:13:29Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "c37394f7f94b8f685c21d13f03ec872eecf17ab8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
