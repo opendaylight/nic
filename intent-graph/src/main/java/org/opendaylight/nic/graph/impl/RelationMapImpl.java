@@ -10,6 +10,9 @@ package org.opendaylight.nic.graph.impl;
 
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class to implement Label tree Map
  */
@@ -26,13 +29,17 @@ public class RelationMapImpl {
      * @param valueLabel EPG Label name
      */
     public void addLabelRelation(String keyLabel, String valueLabel) {
-        labelRelationMap.add(keyLabel, valueLabel); //add key/object to map
+        Map<String, String> map = new HashMap<>();
+        map.put(valueLabel, valueLabel);
+        labelRelationMap.add(keyLabel, map); //add key/object to map
 
     }
     /* Method to check if a label has a relationship without another label and vice versa */
-    public boolean hasRelation(String keyLabel, String valueLabel) {
-        if (labelRelationMap.retrieve(keyLabel).equals(valueLabel) || labelRelationMap.retrieve(valueLabel).equals(keyLabel)) {
-            return true;
+    public boolean hasRelation(String keyLabel, String valueLabel) throws NullPointerException {
+        if (labelRelationMap != null) {
+            if (labelRelationMap.get(keyLabel).containsKey(valueLabel) || labelRelationMap.get(valueLabel).containsKey(keyLabel)) {
+                return true;
+            }
         }
         return false;
     }

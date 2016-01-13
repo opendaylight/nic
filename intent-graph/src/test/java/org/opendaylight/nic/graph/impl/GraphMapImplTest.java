@@ -32,7 +32,6 @@ public class GraphMapImplTest {
     }
 
     //create a simple tree and test that each one is initialized properly with the right parent/children pairs.
-    //TODO: complete this test case
     @Test
     public final void testCreateGraph() throws Exception {
         boolean actualResult, expectedResult;

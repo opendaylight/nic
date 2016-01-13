@@ -9,50 +9,77 @@
 package org.opendaylight.nic.graph.impl;
 
 import com.google.common.collect.Sets;
+import org.opendaylight.nic.graph.api.InputGraph;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Set;
+import java.util.*;
 
 public class NormalizedGraphImpl {
+    private static final Logger LOG = LoggerFactory
+            .getLogger(NormalizedGraphImpl.class);
     /*
      * Using AND and OR functions, create normalized EPG SRC & DST.
      * Normalized class will have a srcN = (CMP & MKT) and dstN = (web & DB)
      */
     protected IntentMappingService labelRelationMap;
 
+    public NormalizedGraphImpl (IntentMappingService mappingSvc){
+        this.labelRelationMap = mappingSvc;
+    }
+
     /* Method to normalize source and destination nodes
      * Normalization is done only if conditions match, else the list remains
      * For example: Src node 1 and Src node 2 has a relationship, then new src = (src node 1 & src node 2)
      */
-    public Set<InputGraphImpl> normalizeNode (Set<InputGraphImpl> graphs) {
+    public Collection<InputGraph> normalizedGraph (Collection<InputGraph> graphs) {
 
         RelationMapImpl relationMap = new RelationMapImpl(labelRelationMap);
-        Set<Nodes> srcN = null;
-        Set<Nodes> dstN = null;
-        Set<Edges> actionN = null;
-        Set<InputGraphImpl> graphsN = null;
+        Set<Nodes> srcN = new HashSet<>();
+        Set<Nodes> dstN = new HashSet<>();
+        Set<Edges> actionN = new HashSet<>();
+        ClassifierImpl classifierN = new ClassifierImpl();
+        Queue<InputGraph> graphsTemp = new LinkedList<>(graphs);
+        Collection<InputGraph> graphsN = new LinkedList<>();
 
-        for (InputGraphImpl graph1 : graphs ) {
-            for (InputGraphImpl graph2 : graphs ) {
+        while (!graphsTemp.isEmpty()) {
+            InputGraph graph1 = graphsTemp.remove();
+            for (InputGraph graph2 : graphsTemp) {
                 if (relationMap.hasRelation(graph1.src().toString(), graph2.src().toString())
-                        && graph1.action().contains(graph2.action())) {
+                        && graph1.action().equals(graph2.action())) {
                     srcN = Sets.union(graph1.src(), graph2.src());
                 }
                 if (relationMap.hasRelation(graph1.dst().toString(), graph2.dst().toString())
-                        && graph1.action().contains(graph2.action())) {
+                        && graph1.action().equals(graph2.action())) {
                     dstN = Sets.union(graph1.dst(), graph2.dst());
                 }
-                if (graph1.action().contains(graph2.action()) && graph2.action().contains(graph1.action())) {
-                    actionN = Sets.union(graph1.action(), graph2.action());
+                if (graph1.action().equals(graph2.action()) && graph2.action().equals(graph1.action())) {
+                    actionN = Sets.intersection(graph1.action(), graph2.action());
                 }
-                InputGraphImpl graphN = new InputGraphImpl(srcN, dstN, actionN);
-                if (graphN.src != null && graphN.dst != null && graphN.action != null) {
-                    graphsN.add(graphN);
+                if (graph1.classifier() != null && graph2.classifier() != null) {
+                    if (graph1.classifier().equals(graph2.classifier()) && graph2.classifier().equals(graph1.classifier())) {
+                        classifierN = graph1.classifier();
+                    }
+                }
+            }
+            InputGraph graphN = new InputGraphImpl(srcN, dstN, actionN);
+            if (!graphN.src().isEmpty() && !graphN.dst().isEmpty() && !graphN.action().isEmpty()) {
+                if (!graphN.classifier().isEmpty()) {
+                    graphN = new InputGraphImpl(srcN, dstN, actionN, classifierN);
+                }
+                graphsN.add(graphN);
+            } else {
+                if (graph1.classifier() != null) {
+                    graphsN.add(new InputGraphImpl(graph1.src(), graph1.dst(), graph1.action(), graph1.classifier()));
+                } else {
+                    graphsN.add(new InputGraphImpl(graph1.src(), graph1.dst(), graph1.action()));
                 }
             }
         }
+        LOG.info("Normalized input graph to remove any redundant edges.");
         /* @param graphsN will be used for the composed graph */
         return graphsN;
     }

@@ -37,6 +37,10 @@ public class ClassifierImpl implements Classifer{
         return new ClassifierImpl(expressioncollection);
     }
 
+    public ClassifierImpl () {
+        expressions = new HashSet<ExpressionImpl>();
+    }
+
     public ClassifierImpl(Collection<ExpressionImpl> co) {
         expressions = new HashSet<ExpressionImpl>();
         expressions.addAll(co);
