@@ -22,6 +22,30 @@
       "revId": "3411aa71ae1e21d0a51e109cfff44ac4bfdf97b3",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_1820ab48",
+        "filename": "intent-api/src/main/yang/intent-qos.yang",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4020
+      },
+      "writtenOn": "2016-01-13T10:25:28Z",
+      "side": 1,
+      "message": "DONE. Removed grouping.",
+      "parentUuid": "da33351e_2fbe0800",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "3411aa71ae1e21d0a51e109cfff44ac4bfdf97b3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
