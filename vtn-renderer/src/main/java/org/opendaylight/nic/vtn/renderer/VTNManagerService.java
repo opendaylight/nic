@@ -507,9 +507,6 @@ public final class VTNManagerService {
         VTNRpcResult<UpdateVbridgeOutput> result =
             getRpcResult(vbridgeService.updateVbridge(input));
         int code = result.getStatusCode();
-        if (code == HTTP_CONFLICT){
-            return true;
-        }
         if (code != HTTP_OK) {
             LOG.error("Failed to update vBridge: input={}, err={}",
                       input, result.getErrorMessage());
@@ -639,9 +636,14 @@ public final class VTNManagerService {
         VTNRpcResult<AddVlanMapOutput> result =
             getRpcResult(vlanMapService.addVlanMap(input));
         int code = result.getStatusCode();
-        if (code == HTTP_CONFLICT){
-            return true;
-        }
+
+        // The description of this method says that this method returns true only on succesful completion.
+        // So when HTTP_CONFLICT, should return false, I think.
+        // Or this method, first check the existence of the VLAN MAP before try to add.
+        // REF: https://jenkins.opendaylight.org/releng/view/vtn/job/vtn-merge-beryllium/lastSuccessfulBuild/artifact/manager/model/target/site/models/vtn-vlan-map.html#add-vlan-map
+        //if (code == HTTP_CONFLICT){
+        //    return true;
+        //}
         if (code != HTTP_OK) {
             LOG.error("Failed to set VlanMap: input={}, err={}",
                       input, result.getErrorMessage());

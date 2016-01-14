@@ -153,6 +153,9 @@ public class VTNIntentParser {
      * @return  {@code true} is returned if the default configuration is created in VTN Manager.
      */
     private boolean isCreateDefault() {
+        // I think the name of the method should be changed.
+        // From the name, I gussed that this method just judged the existence of the default something.
+        // But, actually this method change the configuration.
         boolean status = createTenant(TENANT_NAME);
         if (!status) {
             LOG.error("Tenant creation failed");
@@ -666,20 +669,28 @@ public class VTNIntentParser {
     /**
      * Create a virtual bridge which on true creates vlanmapping for
      * the vbridge created.
+     *
+     * [Hideyuki] I feel that there are something wrong in the above sentense..
+     *
      * @param tenantName  The VTN tenant name under which the VTN Bridge should be created.
      * @param bridgeName  Valid VTN bridge name to be created.
      * @return {@code true} only bridge is created in VTN Manager.
      */
     private boolean createBridge(String tenantName, String bridgeName) {
-        boolean status = false;
-        VlanId vlanId = new VlanId(0);
-        status = vtnManangerService.updateBridge(tenantName, bridgeName, bridgeName + " description",
+        // We should make the scope of variables shorter as much as possible.
+        //VlanId vlanId = new VlanId(0);
+        //
+        // If this method covers the case that the default bridge has already existed,
+        // the method shoud use VnodeUpdateMode.UPDATE instead of Vnodeupdatemode.CREATE
+        // If this method covers the case that the default bridge has already existed,
+        // I think the name of the method shold be changes, e.g. setupDefaultBridge,
+        boolean status = vtnManangerService.updateBridge(tenantName, bridgeName, bridgeName + " description",
                             VnodeUpdateMode.CREATE);
         if (status) {
             AddVlanMapInput input = new AddVlanMapInputBuilder()
                 .setBridgeName(bridgeName)
                 .setTenantName(tenantName)
-                .setVlanId(vlanId)
+                .setVlanId(VlanId(0)) // I think we should a constant valuable instead of 0.
                 .build();
             status = vtnManangerService.setVlanMap(input);
         }
