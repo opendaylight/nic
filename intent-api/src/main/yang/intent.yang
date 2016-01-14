@@ -114,6 +114,11 @@ module intent {
                         uses actions:redirect;
                     }
                 }
+                case mirror {
+                    container mirror {
+                        uses actions:mirror;
+                    }
+                }
                 case log {
                     container log {
                         uses actions:log;

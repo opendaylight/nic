@@ -36,6 +36,15 @@ module intent-actions {
         }
     }
 
+    grouping mirror {
+        uses action;
+        description "Indicates traffic is copied to other virtual port";
+        leaf destination {
+            type string;
+            description "Name of the recipient.";
+        }
+    }
+
     grouping log {
         uses action;
         description "Indicates log in the traffic";
