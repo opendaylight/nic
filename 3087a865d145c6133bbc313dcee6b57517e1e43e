@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_45125eb5",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-14T12:39:33Z",
+      "side": 1,
+      "message": "We miss understood your review comment in the last patch, so we have fixed it in the current patch.",
+      "parentUuid": "9a3d3df0_7f41ef0a",
+      "range": {
+        "startLine": 779,
+        "startChar": 12,
+        "endLine": 779,
+        "endChar": 73
+      },
+      "revId": "3087a865d145c6133bbc313dcee6b57517e1e43e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_31ebfeb1",
         "filename": "vtn-renderer/src/main/yang/vtn-renderer.yang",
         "patchSetId": 6
