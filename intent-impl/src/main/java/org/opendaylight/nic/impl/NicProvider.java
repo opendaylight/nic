@@ -28,6 +28,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Mirror;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
@@ -51,6 +52,7 @@ public class NicProvider implements NicConsoleProvider {
     public static final String ACTION_ALLOW = "ALLOW";
     public static final String ACTION_BLOCK = "BLOCK";
     public static final String ACTION_REDIRECT = "REDIRECT";
+    public static final String ACTION_MIRROR = "MIRROR";
     public static final String ACTION_LOG = "LOG";
     public static final String CONSTRAINT_QOS = "QOS";
 
@@ -213,7 +215,7 @@ public class NicProvider implements NicConsoleProvider {
         if (listOfIntents == null) {
             listOfIntents = new ArrayList<Intent>();
         }
-        LOG.info("ListIntentsConfiguration: list of intents retrieved sucessfully");
+        LOG.info("ListIntentsConfiguration: list of intents retrieved successfully");
         return listOfIntents;
     }
 
@@ -247,6 +249,7 @@ public class NicProvider implements NicConsoleProvider {
         BasicAction allow = new BasicAction(ACTION_ALLOW, ActionConflictType.COMPOSABLE);
         BasicAction block = new BasicAction(ACTION_BLOCK, ActionConflictType.EXCLUSIVE);
         BasicAction redirect = new BasicAction(ACTION_REDIRECT, ActionConflictType.COMPOSABLE);
+        BasicAction mirror = new BasicAction(ACTION_MIRROR, ActionConflictType.COMPOSABLE);
         BasicAction log = new BasicAction(ACTION_LOG, ActionConflictType.COMPOSABLE);
 
         Collection<Policy> policies = new LinkedList<>();
@@ -280,6 +283,8 @@ public class NicProvider implements NicConsoleProvider {
                 action = block;
             } else if (actionContainer instanceof Redirect) {
                 action = redirect;
+            } else if (actionContainer instanceof Mirror) {
+                action = mirror;
             } else if (actionContainer instanceof Log) {
                 action = log;
             } else {
@@ -326,6 +331,7 @@ public class NicProvider implements NicConsoleProvider {
         Edges allow = new EdgesBuilder().setType(EdgeTypes.MustAllow).setActionType(ActionTypes.Composable).build();
         Edges block = new EdgesBuilder().setType(EdgeTypes.MustDeny).setActionType(ActionTypes.Exclusive).build();
         Edges redirect = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable).build();
+        Edges mirror = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable).build();
         Edges log = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable).build();
 
         Collection<InputGraph> policies = new LinkedList<>();
@@ -362,6 +368,8 @@ public class NicProvider implements NicConsoleProvider {
                 action = block;
             } else if (actionContainer instanceof Redirect) {
                 action = redirect;
+            } else if (actionContainer instanceof Mirror) {
+                action = mirror;
             } else if (actionContainer instanceof Log) {
                 action = log;
             } else {
