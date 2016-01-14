@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_bee8877d",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2016-01-14T18:46:26Z",
+      "side": 1,
+      "message": "Can this be odl-nic-all ?",
+      "range": {
+        "startLine": 149,
+        "startChar": 19,
+        "endLine": 149,
+        "endChar": 43
+      },
+      "revId": "fec643fa14853bd30dc6e057bfbe0dad9ec5b001",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
