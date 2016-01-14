@@ -8,6 +8,7 @@
 package org.opendaylight.nic.neutron.integration.impl;
 
 import com.google.common.base.Optional;
+import com.google.gson.Gson;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
@@ -22,13 +23,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.PortConstraint;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.PortConstraintBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ClassificationConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ClassificationConstraintBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
+import org.opendaylight.nic.neutron.NeutronSecurityRule;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.constants.rev150712.DirectionEgress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.constants.rev150712.DirectionIngress;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
@@ -56,13 +58,15 @@ public class SecRuleNotificationSubscriberImpl implements IEventListener<NicNoti
     public void handleEvent(NicNotification event) {
         if (SecurityRuleAdded.class.isInstance(event)) {
             //Translate Security rules into intents
-            securityRule = (NeutronSecurityRule) event;
+            SecurityRuleAdded securityRuleAdded = (SecurityRuleAdded) event;
+            securityRule = securityRuleAdded.getSecurityRule();
             Intent intent = createIntent();
             ruleToIntentMap.put(securityRule.getSecurityRuleID(), intent.getId());
             addIntentToMDSAL(intent, FlowAction.ADD_FLOW);
         }
         else if (SecurityRuleDeleted.class.isInstance(event)) {
-            securityRule = (NeutronSecurityRule) event;
+            SecurityRuleDeleted securityRuleDeleted = (SecurityRuleDeleted) event;
+            securityRule = (NeutronSecurityRule) securityRuleDeleted.getSecurityRule();
             Uuid uuid = ruleToIntentMap.get(securityRule.getSecurityRuleID());
             removeIntent(uuid);
         }
@@ -72,10 +76,6 @@ public class SecRuleNotificationSubscriberImpl implements IEventListener<NicNoti
     }
 
     private void addIntentToMDSAL(Intent intent, FlowAction flowAction) {
-//        MdsalUtils mdsal = new MdsalUtils(dataBroker);
-//        InstanceIdentifier<Intent> iid = InstanceIdentifier.create(Intents.class)
-//            .child(Intent.class, new IntentKey(intent.getId()));
-//        mdsal.put(LogicalDatastoreType.CONFIGURATION, iid, intent, flowAction);
         Intents intents;
         List<Intent> listOfIntents = listIntents(true);
 
@@ -145,17 +145,17 @@ public class SecRuleNotificationSubscriberImpl implements IEventListener<NicNoti
 
         intentBuilder. setId(new Uuid(uuid.toString()));
 
-        if (securityRule.getSecurityRuleDirection().isAssignableFrom(DirectionEgress.class)) {
+        if (securityRule.getSecurityRuleDirection().compareTo("DirectionEgress") == 0) {
             if (securityRule.getSecurityRuleRemoteIpPrefix() != null) {
-                toString = String.valueOf(securityRule.getSecurityRuleRemoteIpPrefix().getValue());
+                toString = securityRule.getSecurityRuleRemoteIpPrefix();
                 if(toString.contains("0.0.0.0")) {
                     toString = "any";
                 }
             }
         }
-        else if (securityRule.getSecurityRuleDirection().isAssignableFrom(DirectionIngress.class)) {
+        else if (securityRule.getSecurityRuleDirection().compareTo("DirectionIngress") == 0) {
             if (securityRule.getSecurityRuleRemoteIpPrefix() != null) {
-                fromString = String.valueOf(securityRule.getSecurityRuleRemoteIpPrefix().getValue());
+                fromString = securityRule.getSecurityRuleRemoteIpPrefix();
                 if(fromString.contains("0.0.0.0")) {
                     fromString = "any";
                 }
@@ -170,7 +170,7 @@ public class SecRuleNotificationSubscriberImpl implements IEventListener<NicNoti
         Subjects from = subject((short) FIRST_SUBJECT, fromString);
         intentBuilder.setSubjects(Arrays.asList(from, to));
 
-        PortConstraint constraint = portConstraint();
+        ClassificationConstraint constraint = classificationConstraint();
         intentBuilder.setConstraints(Arrays.asList(new ConstraintsBuilder().setOrder((short) 1).setConstraints(constraint).build()));
 
         intentBuilder. setId(new Uuid(uuid.toString()));
@@ -187,20 +187,14 @@ public class SecRuleNotificationSubscriberImpl implements IEventListener<NicNoti
                             .setName(name).build()).build()).setOrder(order).build();
     }
 
-    private PortConstraint portConstraint() {
-        String portMin = (securityRule.getSecurityRulePortMin() != null) ?
-            securityRule.getSecurityRulePortMin().toString() : "NA";
-        String portMax = (securityRule.getSecurityRulePortMax() != null) ?
-            securityRule.getSecurityRulePortMax().toString() : "NA";
-        String etherType = (securityRule.getSecurityRuleEthertype() != null) ?
-            securityRule.getSecurityRuleEthertype().getSimpleName() : "NA";
-        String protocol = (securityRule.getSecurityRuleProtocol() != null) ?
-            securityRule.getSecurityRuleProtocol().getSimpleName() : "NA";
+    private ClassificationConstraint classificationConstraint() {
+        //use gson to convert Neutron Security object to json, then add to constraint
+        Gson gson = new Gson();
+        String portObject = gson.toJson(securityRule);
 
-
-        return new PortConstraintBuilder()
-            .setPortConstraint(new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.port.constraint.PortConstraintBuilder()
-                .setPortMin(portMin).setPortMax(portMax).setEtherType(etherType).setProtocol(protocol).build()).build();
+        return new ClassificationConstraintBuilder()
+            .setClassificationConstraint(new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.classification.constraint.ClassificationConstraintBuilder()
+                .setClassifier(portObject).build()).build();
     }
 
 }

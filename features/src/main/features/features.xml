@@ -111,10 +111,13 @@
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
         <feature version="${project.version}">odl-nic-pipeline-manager</feature>
+        <feature version="${neutron.version}">odl-neutron-service</feature>
+        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
         <feature version="${openflowplugin.version}">odl-openflowplugin-app-lldp-speaker-li</feature>
         <feature version="${sfc.version}">odl-sfc-provider</feature>
         <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
+        <bundle>mvn:com.google.code.gson/gson/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">
             mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config
@@ -138,6 +141,7 @@
              description='OpenDaylight :: Network Intent Composition :: Listeners'>
         <feature version="${project.version}">odl-nic-renderer-of</feature>
         <feature version="${neutron.version}">odl-neutron-service</feature>
+        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-intent-listeners.xml">
             mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config
@@ -148,9 +152,11 @@
     <feature name='odl-nic-neutron-integration' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Neutron :: Integration'>
         <feature version="${project.version}">odl-nic-listeners</feature>
+        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.neutron/dummyprovider/{{VERSION}}</bundle>
         <feature version='${odl.ovsdb.version}'>odl-ovsdb-southbound-impl</feature>
+        <bundle>mvn:com.google.code.gson/gson/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-neutron-integration.xml">
             mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}/xml/config
         </configfile>

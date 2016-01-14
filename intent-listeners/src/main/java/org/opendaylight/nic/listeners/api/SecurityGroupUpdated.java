@@ -7,9 +7,13 @@
  */
 package org.opendaylight.nic.listeners.api;
 
+import org.opendaylight.nic.neutron.NeutronSecurityGroup;
+
 /**
  * Interface to model the Neutron Security Group Updated Notification
  */
-//TODO: Add relevant fields
 public interface SecurityGroupUpdated extends NicNotification {
+
+    NeutronSecurityGroup getSecurityGroup();
+
 }
