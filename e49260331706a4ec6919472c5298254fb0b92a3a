@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_dfb59b32",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-14T06:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_727e38e6",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "e49260331706a4ec6919472c5298254fb0b92a3a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_92793cff",
         "filename": "vtn-renderer/pom.xml",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_3f82c752",
+        "filename": "vtn-renderer/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-14T06:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_92793cff",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "e49260331706a4ec6919472c5298254fb0b92a3a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_321dd0be",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2016-01-13T02:37:28Z",
       "side": 1,
       "message": "Why do you delete the check of the return value of the createBridge method?\nI\u0027m thinking the value should be checked.\n\nAnd if it does not need to be checked, then I think you should not store the return value into the status variable.",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 56
+      },
+      "revId": "e49260331706a4ec6919472c5298254fb0b92a3a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ffb85f2c",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 2680
+      },
+      "writtenOn": "2016-01-14T06:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da33351e_321dd0be",
       "range": {
         "startLine": 161,
         "startChar": 6,
