@@ -158,6 +158,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         } else {
             intentFlowManager.setEndPointGroups(endPointGroups);
             intentFlowManager.setAction(actionContainer);
+            intentFlowManager.setIntent(intent);
             //Get all node Id's
             Map<Node, List<NodeConnector>> nodeMap = getNodes();
             for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
@@ -318,6 +319,9 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Aut
         org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
                     = (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints)
                     intent.getConstraints().get(0).getConstraints();
+        if (!constraintContainer.getImplementedInterface().isAssignableFrom(QosConstraint.class)) {
+            return false;
+        }
         String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
         LOG.info("QosConstraint is set to: {}", qosName);
         if (qosName != null) {

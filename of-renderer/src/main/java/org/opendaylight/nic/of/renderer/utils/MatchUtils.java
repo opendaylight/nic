@@ -991,7 +991,7 @@ public class MatchUtils {
      * @param dstPrefix IPv4 destination prefix
      * @param matchBuilder will contain the metadata match values
      */
-    public static void createIPv4PrefixMatch(Ipv4Prefix srcPrefix,
+    public static MatchBuilder createIPv4PrefixMatch(Ipv4Prefix srcPrefix,
                                              Ipv4Prefix dstPrefix,
                                              MatchBuilder matchBuilder) {
         if (srcPrefix != null || dstPrefix != null) {
@@ -1010,6 +1010,7 @@ public class MatchUtils {
 
             matchBuilder.setLayer3Match(ipv4match.build());
         }
+        return matchBuilder;
     }
 
     /**
@@ -1017,7 +1018,7 @@ public class MatchUtils {
      * @param dstPrefix IPv6 destination prefix
      * @param matchBuilder will contain the metadata match values
      */
-    public static void createIPv6PrefixMatch(Ipv6Prefix srcPrefix,
+    public static MatchBuilder createIPv6PrefixMatch(Ipv6Prefix srcPrefix,
                                              Ipv6Prefix dstPrefix,
                                              MatchBuilder matchBuilder) {
         if (srcPrefix != null || dstPrefix != null) {
@@ -1036,5 +1037,6 @@ public class MatchUtils {
 
             matchBuilder.setLayer3Match(ipv4match.build());
         }
+        return matchBuilder;
     }
 }

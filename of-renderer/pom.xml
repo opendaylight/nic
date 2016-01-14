@@ -57,6 +57,11 @@
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>mapped-objects-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- controller dependencies -->
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
@@ -73,6 +78,11 @@
         <dependency>
            <groupId>org.opendaylight.mdsal.model</groupId>
            <artifactId>ietf-topology</artifactId>
+        </dependency>
+        <!-- External Dependencies -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
         <!-- Testing Dependencies -->
         <dependency>
