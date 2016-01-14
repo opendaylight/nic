@@ -94,6 +94,10 @@ public class MappingMdsalProvider implements IntentMappingService,
     public Collection<String> keys() {
         Collection<String> keys = new ArrayList<String>();
         Mappings mappings = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, MAPPINGS_IID);
+
+        if(mappings == null)
+            return keys;
+
         List<OuterMap> outerMap = mappings.getOuterMap();
         if (outerMap != null && !outerMap.isEmpty()) {
             for (OuterMap map: outerMap) {
@@ -102,7 +106,7 @@ public class MappingMdsalProvider implements IntentMappingService,
         }
         return keys;
     }
-    
+
     @Override
     public void add(String key, Map<String, String> objs) {
         OuterMapKey mapKey = new OuterMapKey(key);
