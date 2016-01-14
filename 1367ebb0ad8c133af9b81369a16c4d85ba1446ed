@@ -22,6 +22,30 @@
       "revId": "1367ebb0ad8c133af9b81369a16c4d85ba1446ed",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0e2073f6",
+        "filename": "intent-mapping-interface/src/main/java/org/opendaylight/nic/mapping/api/IntentMappingService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-01-14T17:40:19Z",
+      "side": 1,
+      "message": "true. done",
+      "parentUuid": "9a3d3df0_489b93c9",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "1367ebb0ad8c133af9b81369a16c4d85ba1446ed",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
