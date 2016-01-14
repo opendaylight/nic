@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
      (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
 
-     This program is made available under the terms of the 
+     This program is made available under the terms of the
      Eclipse Public License v1.0 which accompanies this distribution,
      and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
@@ -15,10 +15,7 @@
     <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
-    <!--
-         TODO: Add the following repository after the Bug 4426 is fixed.
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
-    -->
     <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
@@ -84,10 +81,9 @@
     <feature name='odl-nic-renderer-vtn' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
         <feature version="${project.version}">odl-nic-core</feature>
-        <!-- TODO: Add the following dependents after the wiring issue around sun.reflect is fixed -->
-        <!-- <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature> -->
-        <!-- <bundle>mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}</bundle> -->
-        <!-- <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}/xml/config</configfile> -->
+        <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
+        <bundle>mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}/xml/config</configfile>
     </feature>
     <!-- GBP Renderer -->
     <feature name='odl-nic-renderer-gbp' version='${project.version}'
