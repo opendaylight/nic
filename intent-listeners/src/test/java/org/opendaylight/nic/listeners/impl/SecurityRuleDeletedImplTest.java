@@ -12,12 +12,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.opendaylight.nic.listeners.api.SecurityRuleAdded;
 import org.opendaylight.nic.listeners.api.SecurityRuleDeleted;
 import org.opendaylight.nic.listeners.api.SecurityRuleUpdated;
+import org.opendaylight.nic.neutron.NeutronSecurityRule;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import utils.SecurityRuleUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -31,21 +34,32 @@ import static org.junit.Assert.assertTrue;
 public class SecurityRuleDeletedImplTest {
 
     private SecurityRuleDeletedImpl securityRuleDeleted;
-
-    @Mock
-    private SecurityRule securityRuleMock;
+    private NeutronSecurityRule neutronSecurityRule;
 
     @Before
     public void setUp() {
-        securityRuleDeleted = PowerMockito.spy(new SecurityRuleDeletedImpl(securityRuleMock));
+        SecurityRuleUtils.setUp();
+        securityRuleDeleted = PowerMockito.spy(new SecurityRuleDeletedImpl(SecurityRuleUtils.securityRuleMock));
+        neutronSecurityRule = securityRuleDeleted.getSecurityRule();
+    }
+
+    @Test
+    public void testParametersNotNull() {
+        assertNotNull(neutronSecurityRule.getSecurityGroupID());
+        assertNotNull(neutronSecurityRule.getSecurityRuleID());
+        assertNotNull(neutronSecurityRule.getSecurityTenantID());
+        assertNotNull(neutronSecurityRule.getSecurityRulePortMax());
+        assertNotNull(neutronSecurityRule.getSecurityRulePortMin());
+        assertNotNull(securityRuleDeleted.getTimeStamp());
     }
 
     @Test
     public void testVerifyParameters() {
-        assertNotNull(securityRuleDeleted.getTimeStamp());
-        assertEquals(securityRuleMock, securityRuleDeleted.secRule);
-
-        assertTrue(securityRuleDeleted instanceof NeutronSecurityRuleImpl);
+        assertEquals(neutronSecurityRule.getSecurityRuleID(), SecurityRuleUtils.RULE_ID.getValue());
+        assertEquals(neutronSecurityRule.getSecurityGroupID(), SecurityRuleUtils.GROUP_ID.getValue());
+        assertEquals(neutronSecurityRule.getSecurityTenantID(), SecurityRuleUtils.TENANT_ID.getValue());
+        assertEquals(neutronSecurityRule.getSecurityRulePortMin(), SecurityRuleUtils.PORT_MIN);
+        assertEquals(neutronSecurityRule.getSecurityRulePortMax(), SecurityRuleUtils.PORT_MAX);
         assertTrue(securityRuleDeleted instanceof SecurityRuleDeleted);
     }
 }

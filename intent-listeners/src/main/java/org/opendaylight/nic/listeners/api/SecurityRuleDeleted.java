@@ -7,10 +7,13 @@
  */
 package org.opendaylight.nic.listeners.api;
 
+import org.opendaylight.nic.neutron.NeutronSecurityRule;
+
 /**
  * Interface to model the Neutron Security Rule Deleted Notification.
  * Each Security Group is associated with a list of security rules.
  */
-//TODO: Add relevant fields
 public interface SecurityRuleDeleted extends NicNotification {
+
+    NeutronSecurityRule getSecurityRule();
 }

@@ -176,11 +176,6 @@ module intent {
                         uses constraints:classification-constraint;
                     }
                 }
-                case port-constraint {
-                    container port-constraint {
-                        uses constraints:port-constraint;
-                    }
-                }
                 case qos-constraint {
                     container qos-constraint {
                         uses constraints:qos-constraint;

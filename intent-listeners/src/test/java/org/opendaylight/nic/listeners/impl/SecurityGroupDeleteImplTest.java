@@ -11,7 +11,9 @@ package org.opendaylight.nic.listeners.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.opendaylight.nic.listeners.api.SecurityGroupAdded;
 import org.opendaylight.nic.listeners.api.SecurityGroupDeleted;
+import org.opendaylight.nic.neutron.NeutronSecurityGroup;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -29,33 +31,33 @@ import static org.junit.Assert.assertTrue;
 public class SecurityGroupDeleteImplTest {
 
     private SecurityGroupDeletedImpl securityGroupDeleted;
+    private NeutronSecurityGroup neutronSecurityGroup;
 
     @Before
     public void setUp() {
         SecurityGroupUtils.setUp();
         securityGroupDeleted = PowerMockito.spy(new SecurityGroupDeletedImpl(SecurityGroupUtils.securityGroupMock));
+        neutronSecurityGroup = securityGroupDeleted.getSecurityGroup();
     }
 
     @Test
     public void testParametersNotNull() {
-        assertNotNull(securityGroupDeleted.getSecurityGroupID());
-        assertNotNull(securityGroupDeleted.getSecurityGroupName());
-        assertNotNull(securityGroupDeleted.getSecurityGroupDescription());
-        assertNotNull(securityGroupDeleted.getSecurityTenantID());
-        assertNotNull(securityGroupDeleted.getSercurityRules());
+        assertNotNull(neutronSecurityGroup.getSecurityGroupID());
+        assertNotNull(neutronSecurityGroup.getSecurityGroupName());
+        assertNotNull(neutronSecurityGroup.getSecurityGroupDescription());
+        assertNotNull(neutronSecurityGroup.getSecurityTenantID());
+        assertNotNull(neutronSecurityGroup.getSecurityRules());
         assertNotNull(securityGroupDeleted.getTimeStamp());
     }
 
     @Test
     public void testVerifySecurityGroup() {
-        assertEquals(securityGroupDeleted.getSecurityGroupID(), SecurityGroupUtils.GROUP_ID.getValue());
-        assertEquals(securityGroupDeleted.getSecurityGroupName(), SecurityGroupUtils.GROUP_NAME);
-        assertEquals(securityGroupDeleted.getSecurityGroupDescription(), SecurityGroupUtils.GROUP_DESC);
-        assertEquals(securityGroupDeleted.getSecurityTenantID(), SecurityGroupUtils.TENANT_ID.getValue());
-        assertEquals(securityGroupDeleted.getSercurityRules().get(0), SecurityGroupUtils.FIRST_RULE);
-        assertEquals(securityGroupDeleted.getSercurityRules().get(1), SecurityGroupUtils.SECOND_RULE);
-
-        assertTrue(securityGroupDeleted instanceof NeutronSecurityGroupImpl);
+        assertEquals(neutronSecurityGroup.getSecurityGroupID(), SecurityGroupUtils.GROUP_ID.getValue());
+        assertEquals(neutronSecurityGroup.getSecurityGroupName(), SecurityGroupUtils.GROUP_NAME);
+        assertEquals(neutronSecurityGroup.getSecurityGroupDescription(), SecurityGroupUtils.GROUP_DESC);
+        assertEquals(neutronSecurityGroup.getSecurityTenantID(), SecurityGroupUtils.TENANT_ID.getValue());
+        assertEquals(neutronSecurityGroup.getSecurityRules().get(0), SecurityGroupUtils.FIRST_RULE);
+        assertEquals(neutronSecurityGroup.getSecurityRules().get(1), SecurityGroupUtils.SECOND_RULE);
         assertTrue(securityGroupDeleted instanceof SecurityGroupDeleted);
     }
 }

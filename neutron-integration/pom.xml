@@ -37,6 +37,11 @@
             <artifactId>intent-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>mapped-objects-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Neutron Dependency -->
         <dependency>
             <groupId>org.opendaylight.neutron</groupId>
@@ -65,6 +70,11 @@
             <artifactId>powermock-api-mockito</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
+        </dependency>
+        <!-- External Dependencies -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
 

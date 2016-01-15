@@ -88,7 +88,7 @@ public class MplsIntentFlowManagerTest {
         PowerMockito.whenNew(Ipv4Prefix.class).withAnyArguments().thenReturn(mock(Ipv4Prefix.class));
 
         PowerMockito.mockStatic(MatchUtils.class);
-        PowerMockito.doNothing().when(MatchUtils.class, "createIPv4PrefixMatch", any(Ipv4Prefix.class), any(Ipv4Prefix.class), any(MatchBuilder.class));
+        PowerMockito.doReturn(null).when(MatchUtils.class, "createIPv4PrefixMatch", any(Ipv4Prefix.class), any(Ipv4Prefix.class), any(MatchBuilder.class));
 
         Instructions buildedInstructions = mock(Instructions.class);
         MemberModifier.suppress(MemberMatcher.method(MplsIntentFlowManager.class, "createMPLSIntentInstructions", List.class, boolean.class, Short.class, String.class, boolean.class));
