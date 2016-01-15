@@ -319,7 +319,7 @@
     </dependency>
     <dependency>
       <groupId>org.opendaylight.sfc</groupId>
-      <artifactId>sfc-util</artifactId>
+      <artifactId>sfc-openflow-utils</artifactId>
       <version>${sfc.version}</version>
     </dependency>
     <dependency>
