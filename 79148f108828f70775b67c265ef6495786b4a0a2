@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_574fa792",
+        "filename": "intent-listeners/src/test/java/utils/SecurityRuleUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-15T13:24:16Z",
+      "side": 1,
+      "message": "Test",
+      "revId": "79148f108828f70775b67c265ef6495786b4a0a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_f75d1b4a",
+        "filename": "neutron-integration/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-15T13:24:16Z",
+      "side": 1,
+      "message": "duplicated dependency. Inherited from odlparent",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 21
+      },
+      "revId": "79148f108828f70775b67c265ef6495786b4a0a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d75a974f",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-15T13:24:16Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "79148f108828f70775b67c265ef6495786b4a0a2",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
