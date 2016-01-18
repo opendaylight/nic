@@ -24,8 +24,8 @@
 
  <properties>
   <powermock.version>1.5.5</powermock.version>
-  <openflowplugin.version>0.2.0-SNAPSHOT</openflowplugin.version>
-  <neutron.version>0.6.0-SNAPSHOT</neutron.version>
+  <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
+  <neutron.version>0.7.0-SNAPSHOT</neutron.version>
  </properties>
 
  <dependencies>
