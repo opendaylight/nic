@@ -1,0 +1,443 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_ee7c1875",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/OFRendererGraphService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "please add javadoc for the interface",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2eaf20e5",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/OFRendererGraphService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ce81544c",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Observer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "please add javadoc for the interface",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2e960095",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Observer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "remove useless modifier",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0e933ca4",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Observer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8e874c61",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Subject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "please add javadoc for the interface",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6e900896",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Subject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "remove useless modifier everywhere",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ae821050",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Subject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "CR to be removed",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_4e8d447b",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "I like those changes, although they shouldn\u0027t be in this patch.\n\nPlease add those changes in another patch",
+      "range": {
+        "startLine": 100,
+        "startChar": 14,
+        "endLine": 100,
+        "endChar": 15
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_aee9701c",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "final",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_eef37808",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "make those final",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 81
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_aed05054",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "final",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8ed58c45",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "final",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6ee76841",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "would it make sense to return null here?",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_eeca58a0",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "final",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_cecf94af",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "final",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2ec44091",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "please add curly brackets, same everywhere else.\n\nThis is to conform to ODL guideline",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 38
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_8e3c6c95",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "maybe add a method that check whether an MPLS is what we want, if yes, then generate the MPLS flows",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 29
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ee41b80c",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/SuurballeTarjanAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "6",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ce467423",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/SuurballeTarjanAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "make those final",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 81
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2e4ba02c",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/SuurballeTarjanAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 97
+      },
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0e485c2c",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/SuurballeTarjanAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "javadoc",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6e55a8c5",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/SuurballeTarjanAlgorithm.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-19T22:41:49Z",
+      "side": 1,
+      "message": "javadoc",
+      "revId": "ed83f017b83d5af19f8668750fcb8b2eb60d9d93",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
