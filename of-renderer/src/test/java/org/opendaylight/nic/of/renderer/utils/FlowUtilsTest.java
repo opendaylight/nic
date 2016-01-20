@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Dscp;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCase;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
@@ -35,6 +36,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.acti
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.push.mpls.action._case.PushMplsActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetField;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetFieldBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.SetNwTosActionCase;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.SetNwTosActionCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.nw.tos.action._case.SetNwTosAction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.nw.tos.action._case.SetNwTosActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionKey;
@@ -137,5 +142,41 @@ public class FlowUtilsTest {
         Action action = mock(Action.class);
         when(ab.build()).thenReturn(action);
         assertEquals("Failed to return correct Action object", action, FlowUtils.createOutputToPort(0, "2"));
+    }
+
+    /**
+     * Test case for {@link FlowUtils#createQosNormal(int, Dscp)}.
+     */
+    @Test
+    public void testCreateQosNormal() throws Exception {
+        ActionBuilder ab = mock(ActionBuilder.class);
+        PowerMockito.whenNew(ActionBuilder.class).withNoArguments().thenReturn(ab);
+        when(ab.setOrder(any(Integer.class))).thenReturn(ab);
+        PowerMockito.whenNew(ActionKey.class).withAnyArguments().thenReturn(mock(ActionKey.class));
+        when(ab.setKey(any(ActionKey.class))).thenReturn(ab);
+
+        SetNwTosActionCaseBuilder setNwTosActionCaseBuilder = mock(SetNwTosActionCaseBuilder.class);
+        when(setNwTosActionCaseBuilder.setSetNwTosAction(any(SetNwTosAction.class))).thenReturn(setNwTosActionCaseBuilder);
+        when(ab.setAction(any(SetNwTosActionCase.class))).thenReturn(ab);
+        SetNwTosActionBuilder setNwTosActionBuilder = mock(SetNwTosActionBuilder.class);
+        when(setNwTosActionBuilder.setTos(any(Integer.class))).thenReturn(setNwTosActionBuilder);
+        when(setNwTosActionBuilder.build()).thenReturn(mock(SetNwTosAction.class));
+        when(setNwTosActionCaseBuilder.build()).thenReturn(mock(SetNwTosActionCase.class));
+        Action action = mock(Action.class);
+        when(ab.build()).thenReturn(action);
+        Dscp dscp = new Dscp((short) 7);
+        assertEquals("Failed to return correct Action object", action, FlowUtils.createQosNormal(0, dscp));
+    }
+
+    /**
+     * Test case for {@link FlowUtils#dscpToTos(short)}.
+     */
+    @Test
+    public void testDscpToTos() {
+        for (short dscp = 0; dscp <= 63; dscp++) {
+            int tos = FlowUtils.dscpToTos(dscp);
+            assertEquals((int)dscp << 2, tos);
+        }
+        assertEquals(0xfc, FlowUtils.dscpToTos((short)0xffff));
     }
 }
