@@ -18,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -59,6 +60,16 @@ public class IntentAddShellCommandTest {
     @Test
     public final void testExecute() throws Exception {
         assertNotNull(nicAddShellCmd.execute(cmdSession));
+    }
+
+    /**
+     * Test case for {@link IntentAddShellCommand#createConstraints()}.
+     */
+    @Test
+    public final void testCreateConstraints() {
+        List<Constraints> constraints = nicAddShellCmd.createConstraints();
+        assertNotNull(constraints);
+        assertEquals("there are should be at least 1 constraints", true , constraints.size() > 0);
     }
 
 }
