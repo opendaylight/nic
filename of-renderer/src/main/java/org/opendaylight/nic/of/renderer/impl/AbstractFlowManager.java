@@ -165,7 +165,7 @@ public abstract class AbstractFlowManager {
      * @return A boolean representing the transaction result
      */
     protected boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder, FlowAction flowAction) {
-        boolean result;
+        boolean result = false;
         MdsalUtils mdsal = new MdsalUtils(dataBroker);
         if (!pipelineManager.setTableId(nodeId, flowBuilder)) {
             flowBuilder.setTableId(OFRendererConstants.FALLBACK_TABLE_ID);
@@ -180,7 +180,12 @@ public abstract class AbstractFlowManager {
                                                .child(Flow.class, flowBuilder.getKey())
                                                .build();
 
-        result = mdsal.put(LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build());
+        if (flowAction == FlowAction.ADD_FLOW) {
+            result = mdsal.put(LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build());
+        }
+        else if(flowAction == FlowAction.REMOVE_FLOW) {
+            result = mdsal.delete(LogicalDatastoreType.CONFIGURATION, flowIID);
+        }
 
         return result;
     }

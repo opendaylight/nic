@@ -129,7 +129,7 @@ public class IntentFlowManager extends AbstractFlowManager {
         // Flow object
         FlowBuilder flowBuilder;
         String portObject = "";
-        portObject = portConstraint.getClassificationConstraint().getClassifier();//portConstraint.getClassificationConstraint().getClassifier;
+        portObject = portConstraint.getClassificationConstraint().getClassifier();
         Gson gson = new Gson();
         NeutronSecurityRule securityRule = gson.fromJson(portObject, NeutronSecurityRule.class);
         Integer portMin = securityRule.getSecurityRulePortMin();
@@ -272,7 +272,6 @@ public class IntentFlowManager extends AbstractFlowManager {
         MacAddress srcMac = null;
         MacAddress dstMac = null;
 
-        LOG.info("Creating block intent for endpoints: source{} destination {}", endPointSrc, endPointDst);
         try {
             if (!endPointSrc.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
                 srcMac = new MacAddress(endPointSrc);
