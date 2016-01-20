@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_892bc681",
+        "filename": "intent-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-01-20T03:07:26Z",
+      "side": 1,
+      "message": "Please, fix the indentation.",
+      "range": {
+        "startLine": 287,
+        "startChar": 13,
+        "endLine": 287,
+        "endChar": 19
+      },
+      "revId": "5a349e1dc290957099e7a852d5a241623ab6159e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
