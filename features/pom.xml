@@ -28,7 +28,7 @@
     <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
     <mdsal.version>1.4.0-SNAPSHOT</mdsal.version>
     <restconf.version>1.4.0-SNAPSHOT</restconf.version>
-    <yangtools.version>0.9.0-SNAPSHOT</yangtools.version>
+    <yangtools.version>1.0.0-SNAPSHOT</yangtools.version>
     <karaf.cellar.version>3.0.3</karaf.cellar.version>
     <hazelcast.version>3.4.2</hazelcast.version>
     <neutron.version>0.7.0-SNAPSHOT</neutron.version>
