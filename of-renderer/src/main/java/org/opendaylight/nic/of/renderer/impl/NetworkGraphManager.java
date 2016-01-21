@@ -28,19 +28,17 @@ import edu.uci.ics.jung.graph.util.EdgeType;
 
 public class NetworkGraphManager implements OFRendererGraphService {
 
-    private final List<Observer> observers;
-    private Intent message;
+    private static final List<Observer> observers = new ArrayList<>();
+    private static Intent message;
     private boolean changed;
     private final Object MUTEX = new Object();
-    private final Graph<NodeId, Link> networkGraph;
+    private static final Graph<NodeId, Link> networkGraph = new DirectedSparseMultigraph<>();
     private final DijkstraShortestPath<NodeId, Link> shortestPath;
     public static final List<Link> CurrentLinks = new ArrayList<>();
     public static final Map<Intent, List<List<Link>>> ProtectedLinks = new HashMap<>();
 
     public NetworkGraphManager() {
-        networkGraph = new DirectedSparseMultigraph<>();
         shortestPath = new DijkstraShortestPath<>(networkGraph);
-        observers = new ArrayList<>();
     }
 
     /**
@@ -186,7 +184,8 @@ public class NetworkGraphManager implements OFRendererGraphService {
         // Get 2nd route for affected Intents
         for (final Intent intent : affectedIntents) {
             if (ProtectedLinks.containsKey(intent)) {
-                List<List<Link>> paths = ProtectedLinks.get(intent);
+                List<List<Link>> paths = new ArrayList<>();
+                paths.addAll(ProtectedLinks.get(intent));
 
                 // Identify removed paths that contain the links down
                 List<Link> removedPath = new ArrayList<>();
@@ -211,10 +210,10 @@ public class NetworkGraphManager implements OFRendererGraphService {
                 List<Link> newPath = getNewPath(paths, removedPath);
                 if (newPath != null) {
                     setLinks(newPath);
+                    this.changed = true;
                 }
 
                 this.message = intent;
-                this.changed = true;
                 notifyObservers();
             }
         }
