@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 - 2016 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
+ * Copyright (c) 2015 Hewlett-Packard Development Company, L.P. and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -74,17 +74,15 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private RedirectFlowManager redirectFlowManager;
     private Subject topic;
 
-
     public OFRendererFlowManagerProvider(DataBroker dataBroker,
-                                         PipelineManager pipelineManager,
-                                         IntentMappingService intentMappingService,
-                                         NotificationProviderService notificationProviderService) {
+ PipelineManager pipelineManager,
+            IntentMappingService intentMappingService, NotificationProviderService notificationProviderService) {
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
         this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
         this.intentMappingService = intentMappingService;
-        this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager);
-        this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
+//        this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager);
+//        this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
     }
 
     public void init() {
@@ -106,14 +104,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     public void pushIntentFlow(Intent intent, FlowAction flowAction) {
         // TODO: Extend to support other actions
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
-
-        // Creates QoS configuration and stores profile in the Data Store.
-        if (intent.getQosConfig() != null) {
-            return;
-        }
-
         Action actionContainer = intent.getActions().get(0).getAction();
-
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         // MPLS stuff
         String sourceIntent = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
@@ -134,20 +125,20 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
                     if (constraints.getConstraints() instanceof ProtectionConstraint) {
                         ProtectionConstraint protectionConstraint = (ProtectionConstraint) constraints.getConstraints();
                         isProtected = protectionConstraint.getProtectionConstraint().isIsProtected();
-                        LOG.trace("Protection is set to: {}", isProtected);
+                        LOG.info("Protection is set to: {}", isProtected);
                     } else if (constraints.getConstraints() instanceof FailoverConstraint) {
                         FailoverConstraint failoverConstraint = (FailoverConstraint) constraints.getConstraints();
                         failoverType = failoverConstraint.getFailoverConstraint().getFailoverSelector();
-                        LOG.trace("failoverType is set to: {}", failoverType);
+                        LOG.info("failoverType is set to: {}", failoverType);
                     }
                 }
             }
             generateMplsFlows(intent, sourceIntent, targetIntent, failoverType, flowAction, isProtected);
         } else if (checkQosConstraint(intent, actionContainer, endPointGroups)) {
-            //Get all node Id's
+            // Get all node Id's
             Map<Node, List<NodeConnector>> nodeMap = getNodes();
             for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
-                //Push flow to every node for now
+                // Push flow to every node for now
                 qosConstraintManager.pushFlow(entry.getKey().getId(), flowAction);
             }
         } else if (actionContainer instanceof Redirect) {
@@ -165,11 +156,17 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     }
 
     /**
-     * Calls the appropriate functions to generate a shortest path
-     * route between a source and a target.
-     * @param source The Source {@link Subjects}
-     * @param target The target {@link Subjects}
+     * Calls the appropriate functions to generate a shortest path route between
+     * a source and a target.
+     *
+     * @param intent
+     *            The Intent
+     * @param source
+     *            The Source {@link Subjects}
+     * @param target
+     *            The target {@link Subjects}
      * @param flowAction
+     *            Flow Action
      */
     private void generateMplsFlows(Intent intent, String source, String target, FailoverType failoverType,
             FlowAction flowAction, boolean isProtected) {
@@ -319,22 +316,23 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
     /**
      * Checks the Constraint name is present in the constraint container.
-     * @param intent  Intent
-     * @param actionContainer Action
-     * @param endPointGroups List of Endpoints
+     * 
+     * @param intent
+     *            Intent
+     * @param actionContainer
+     *            Action
+     * @param endPointGroups
+     *            List of Endpoints
      * @return boolean
      */
     private boolean checkQosConstraint(Intent intent, Action actionContainer, List<String> endPointGroups) {
-        //Check for constrain name in the intent.
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
-                    = intent.getConstraints().get(0).getConstraints();
-        if (!constraintContainer.getImplementedInterface().isAssignableFrom(QosConstraint.class)) {
-            return false;
-        }
-        String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
+        // Check for constrain name in the intent.
+        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer = intent
+                .getConstraints().get(0).getConstraints();
+        String qosName = ((QosConstraint) constraintContainer).getQosConstraint().getQosName();
         LOG.info("QosConstraint is set to: {}", qosName);
         if (qosName != null) {
-            //Set the values to QosConstraintManager
+            // Set the values to QosConstraintManager
             qosConstraintManager.setQosName(qosName);
             qosConstraintManager.setEndPointGroups(endPointGroups);
             qosConstraintManager.setAction(actionContainer);
@@ -345,7 +343,6 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
         return true;
     }
-
     @Override
     public void update() {
         Intent msg = (Intent) topic.getUpdate(this);

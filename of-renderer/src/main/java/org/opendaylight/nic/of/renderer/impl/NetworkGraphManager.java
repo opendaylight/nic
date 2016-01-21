@@ -28,14 +28,14 @@ import edu.uci.ics.jung.graph.util.EdgeType;
 
 public class NetworkGraphManager implements OFRendererGraphService {
 
-    private final List<Observer> observers;
+    private List<Observer> observers;
     private Intent message;
     private boolean changed;
     private final Object MUTEX = new Object();
-    private final Graph<NodeId, Link> networkGraph;
-    private final DijkstraShortestPath<NodeId, Link> shortestPath;
-    public static final List<Link> CurrentLinks = new ArrayList<>();
-    public static final Map<Intent, List<List<Link>>> ProtectedLinks = new HashMap<>();
+    private Graph<NodeId, Link> networkGraph;
+    private DijkstraShortestPath<NodeId, Link> shortestPath;
+    public static List<Link> CurrentLinks = new ArrayList<>();
+    public static Map<Intent, List<List<Link>>> ProtectedLinks = new HashMap<>();
 
     public NetworkGraphManager() {
         networkGraph = new DirectedSparseMultigraph<>();
@@ -64,7 +64,7 @@ public class NetworkGraphManager implements OFRendererGraphService {
      * @return links Dijkstra Shortest Path
      */
     @Override
-    public final List<Link> getShortestPath(NodeId source, NodeId target) {
+    public List<Link> getShortestPath(NodeId source, NodeId target) {
         return shortestPath.getPath(source, target);
     }
 
@@ -76,10 +76,8 @@ public class NetworkGraphManager implements OFRendererGraphService {
      */
     @Override
     public synchronized void setLinks(List<Link> newlinks) {
-        CurrentLinks.clear();
-        CurrentLinks.addAll(newlinks);
-
-        for (final Link link : newlinks) {
+        CurrentLinks = new ArrayList<>(newlinks);
+        for (Link link : newlinks) {
           NodeId sourceNodeId = link.getSource().getSourceNode();
           NodeId destinationNodeId = link.getDestination().getDestNode();
             if (networkGraph.findEdge(sourceNodeId, destinationNodeId) == null) {
@@ -105,8 +103,8 @@ public class NetworkGraphManager implements OFRendererGraphService {
         if (changedLink == null)
             return affectedIntents;
 
-        for (final Intent key : ProtectedLinks.keySet()) {
-            final List<List<Link>> linkss = ProtectedLinks.get(key);
+        for (Intent key : ProtectedLinks.keySet()) {
+            List<List<Link>> linkss = ProtectedLinks.get(key);
 
             for (List<Link> list : linkss) {
                 for (Link link : list) {
@@ -131,9 +129,9 @@ public class NetworkGraphManager implements OFRendererGraphService {
         List<Link> linksRemoved = new ArrayList<>();
 
         // Identify if a link is affected in some protected Intent
-        for (final Link link : currentLinks) {
+        for (Link link : currentLinks) {
             int value = 0;
-            for (final Link linkk : newLinks) {
+            for (Link linkk : newLinks) {
                 if (link.getLinkId().equals(linkk.getLinkId())) {
                     value++;
                     break;
@@ -176,7 +174,7 @@ public class NetworkGraphManager implements OFRendererGraphService {
         List<Link> changedLinks = identifyChangedLink(CurrentLinks, newLink);
         List<Intent> affectedIntents = new ArrayList<>();
 
-        for (final Link changedLink : changedLinks) {
+        for (Link changedLink : changedLinks) {
             List<Intent> value = getAffectedIntents(changedLink);
             if (!affectedIntents.contains(value)) {
                 affectedIntents.addAll(value);
@@ -184,23 +182,21 @@ public class NetworkGraphManager implements OFRendererGraphService {
         }
 
         // Get 2nd route for affected Intents
-        for (final Intent intent : affectedIntents) {
+        for (Intent intent : affectedIntents) {
             if (ProtectedLinks.containsKey(intent)) {
                 List<List<Link>> paths = ProtectedLinks.get(intent);
 
                 // Identify removed paths that contain the links down
                 List<Link> removedPath = new ArrayList<>();
-                for (final Link changedLink : changedLinks) {
-                    final List<Link> removedPathh = identifyRemovedPathByLink(changedLink, paths);
+                for (Link changedLink : changedLinks) {
+                    List<Link> removedPathh = identifyRemovedPathByLink(changedLink, paths);
 
-                    if (removedPathh != null && removedPathh.size() > 0) {
+                    if (removedPathh != null && removedPathh.size() > 0)
                         removedPath.addAll(removedPathh);
-                    }
 
                  // Remove path
-                    if (ProtectedLinks.get(intent).contains(removedPathh)) {
-                        ProtectedLinks.get(intent).clear();
-                    }
+                    if (ProtectedLinks.get(intent).contains(removedPathh))
+                        ProtectedLinks.get(intent).remove(removedPathh);
 
                     // Removing the vertex from the network graph
                     networkGraph.removeEdge(changedLink);
@@ -209,9 +205,8 @@ public class NetworkGraphManager implements OFRendererGraphService {
 
                 // Assign a new path different of the removed one
                 List<Link> newPath = getNewPath(paths, removedPath);
-                if (newPath != null) {
+                if (newPath != null)
                     setLinks(newPath);
-                }
 
                 this.message = intent;
                 this.changed = true;
@@ -226,7 +221,7 @@ public class NetworkGraphManager implements OFRendererGraphService {
      * @return List of other Links
      */
     private List<Link> getNewPath(List<List<Link>> allPaths, List<Link> removedPath) {
-        for (final List<Link> link : allPaths) {
+        for (List<Link> link : allPaths) {
             if (link.hashCode() != removedPath.hashCode())
                 return link;
         }
@@ -240,8 +235,8 @@ public class NetworkGraphManager implements OFRendererGraphService {
      * @return Path which contains the updated/removed links
      */
     private List<Link> identifyRemovedPathByLink(Link changedLink, List<List<Link>> paths) {
-        for (final List<Link> list : paths) {
-            for (final Link link : list) {
+        for (List<Link> list : paths) {
+            for (Link link : list) {
                 if (link.getDestination().getDestNode().getValue()
                         .equals(changedLink.getDestination().getDestNode().getValue())) {
                     return list;
