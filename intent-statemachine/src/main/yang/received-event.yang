@@ -21,7 +21,6 @@ module received-event {
             enum INTENTREMOVED;
         }
         config false;
-        mandatory true;
         description "Wrapper for Intent and Network events.";
     }
 }
