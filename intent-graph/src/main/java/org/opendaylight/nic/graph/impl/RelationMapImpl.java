@@ -28,16 +28,21 @@ public class RelationMapImpl {
      * @param keyLabel EPG Label name
      * @param valueLabel EPG Label name
      */
-    public void addLabelRelation(String keyLabel, String valueLabel) {
+    public boolean addLabelRelation(String keyLabel, String valueLabel) {
         Map<String, String> map = new HashMap<>();
-        map.put(valueLabel, valueLabel);
+        map.put(keyLabel, valueLabel);
         labelRelationMap.add(keyLabel, map); //add key/object to map
-
+        return true;
     }
     /* Method to check if a label has a relationship without another label and vice versa */
     public boolean hasRelation(String keyLabel, String valueLabel) throws NullPointerException {
+        Map<String, String> map = new HashMap<>();
+        map.put(keyLabel, valueLabel);
         if (labelRelationMap != null) {
             if (labelRelationMap.get(keyLabel).containsKey(valueLabel) || labelRelationMap.get(valueLabel).containsKey(keyLabel)) {
+                return true;
+            }
+            else if (labelRelationMap.get(keyLabel).containsValue(valueLabel)) {
                 return true;
             }
         }
