@@ -74,6 +74,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private RedirectFlowManager redirectFlowManager;
     private Subject topic;
 
+    private NotificationProviderService notificationProviderService;
 
     public OFRendererFlowManagerProvider(DataBroker dataBroker,
                                          PipelineManager pipelineManager,
@@ -83,8 +84,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         this.pipelineManager = pipelineManager;
         this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
         this.intentMappingService = intentMappingService;
-        this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager);
-        this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
+        this.notificationProviderService = notificationProviderService;
     }
 
     public void init() {
@@ -100,6 +100,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
         qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
+        this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager, graphService);
+        this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
     }
 
     @Override
