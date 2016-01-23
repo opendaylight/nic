@@ -50,10 +50,7 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class PipelineManagerProviderImpl implements DataChangeListener, PipelineManager {
@@ -64,10 +61,12 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     public PipelineManagerProviderImpl(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
-        final InstanceIdentifier<Nodes> nodesIdentifier = InstanceIdentifier.create(Nodes.class);
+        final InstanceIdentifier<Table> nodeIdentifier = InstanceIdentifier.create(Nodes.class)
+                .child(Node.class).augmentation(FlowCapableNode.class).child(Table.class);
+
         nodesListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.OPERATIONAL,
-                nodesIdentifier, this, AsyncDataBroker.DataChangeScope.SUBTREE); // FIXME: Try to listen to the Node changes only instead of subtree
+                nodeIdentifier, this, AsyncDataBroker.DataChangeScope.BASE); // FIXME: Try to listen to the Node changes only instead of subtree
         LOG.info("new Pipeline Manager created: {}", this);
     }
 
@@ -79,28 +78,28 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     @Override
     public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
+        LOG.info("NOTIFICATION: {}",change.hashCode());
         Map<InstanceIdentifier<?>, DataObject> createdData = change.getCreatedData();
         for (Map.Entry<InstanceIdentifier<?>, DataObject> entry : createdData.entrySet()) {
-            if (entry.getValue() instanceof Node) {
-                Node node = (Node) entry.getValue();
-                createPipeline(node);
+            if (entry.getValue() instanceof Table) {
+                NodeId parentNodeId = entry.getKey().firstKeyOf(Node.class).getId();
+                Table table = (Table) entry.getValue();
+                createPipeline(parentNodeId, table);
             }
         }
     }
 
-    private void createPipeline(Node node) {
-        List<Table> tableList = getTableList(node);
-        for (Table table : tableList) {
-            List<Short> nextIds = getNextTablesMiss(table);
-            if (nextIds.isEmpty())
-                break;
-            Short nextId = Collections.min(nextIds);
-            Short currentId = table.getId();
-            addFlowGoto(node, currentId, nextId);
+    private void createPipeline(NodeId nodeId, Table table) {
+        List<Short> nextIds = getNextTablesMiss(table);
+        if (nextIds.isEmpty()) {
+            return;
         }
+        Short nextId = Collections.min(nextIds);
+        Short currentId = table.getId();
+        addFlowGoto(nodeId, currentId, nextId);
     }
 
-    private void addFlowGoto(Node node, Short currentId, Short nextId) {
+    private void addFlowGoto(NodeId nodeId, Short currentId, Short nextId) {
         FlowBuilder flowBuilder = new FlowBuilder();
         flowBuilder.setTableId(currentId);
         flowBuilder.setHardTimeout(0);
@@ -120,7 +119,7 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
         flowBuilder.setKey(key);
 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
-                .child(Node.class, new NodeKey(node.getId())).augmentation(FlowCapableNode.class)
+                .child(Node.class, new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
                 .child(Table.class, new TableKey(flowBuilder.getTableId())).child(Flow.class, flowBuilder.getKey())
                 .build();
 
@@ -181,13 +180,19 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     private List<Table> getTableList(Node node) {
         FlowCapableNode flowCapableNode = node.getAugmentation(FlowCapableNode.class);
-        List<Table> tableList = flowCapableNode.getTable();
-        Collections.sort(tableList, new Comparator<Table>() {
-            @Override
-            public int compare(Table o1, Table o2) {
-                return o1.getId().compareTo(o2.getId());
+
+        List<Table> tableList = new ArrayList<>();
+        if(flowCapableNode != null) {
+            if( flowCapableNode.getTable() != null) {
+                tableList = flowCapableNode.getTable();
+                Collections.sort(tableList, new Comparator<Table>() {
+                    @Override
+                    public int compare(Table o1, Table o2) {
+                        return o1.getId().compareTo(o2.getId());
+                    }
+                });
             }
-        });
+        }
         return tableList;
     }
 

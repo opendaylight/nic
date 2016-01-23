@@ -14,7 +14,7 @@
     <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
     <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
@@ -99,8 +99,12 @@
     <!-- Pipeline Manager -->
     <feature name='odl-nic-pipeline-manager' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: OpenFlow Pipeline Manager'>
-        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound-li</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+        <bundle>mvn:org.opendaylight.openflowplugin.applications/forwardingrules-manager/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/30-forwardingrules-manager.xml">
+            mvn:org.opendaylight.openflowplugin.applications/forwardingrules-manager-config/{{VERSION}}/xml/config
+        </configfile>
         <configfile finalname="etc/opendaylight/karaf/91-pipeline-manager.xml">
             mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}/xml/config
         </configfile>
@@ -113,7 +117,7 @@
         <feature version="${project.version}">odl-nic-pipeline-manager</feature>
         <feature version="${neutron.version}">odl-neutron-service</feature>
         <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
-        <feature version="${openflowplugin.version}">odl-openflowplugin-app-lldp-speaker-li</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-app-lldp-speaker</feature>
         <feature version="${sfc.version}">odl-sfc-provider</feature>
         <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
