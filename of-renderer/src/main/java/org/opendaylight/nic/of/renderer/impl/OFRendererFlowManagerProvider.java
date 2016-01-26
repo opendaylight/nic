@@ -157,6 +157,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         } else {
             intentFlowManager.setEndPointGroups(endPointGroups);
             intentFlowManager.setAction(actionContainer);
+            intentFlowManager.setIntent(intent);
             //Get all node Id's
             Map<Node, List<NodeConnector>> nodeMap = getNodes();
             for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
