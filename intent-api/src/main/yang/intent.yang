@@ -15,6 +15,7 @@ module intent {
     import intent-conditions { prefix conditions; revision-date 2015-01-22; }
     import intent-constraints { prefix constraints; revision-date 2015-01-22; }
     import intent-qos { prefix qos-config; revision-date 2015-01-22; }
+    import intent-classifiers { prefix classifiers; revision-date 2016-01-29; }
 
     revision 2015-01-22 {
         description "Initial revision";
@@ -128,6 +129,17 @@ module intent {
 
             description "List of action references to apply to the connections between
                         the subjects.";
+        }
+
+        list classifiers {
+            key "order";
+            leaf order {
+                type uint8;
+            }
+            container classifiers {
+                uses classifiers:classifier;
+            }
+            description "List of classifiers that identify the application";
         }
 
         list qos-config {

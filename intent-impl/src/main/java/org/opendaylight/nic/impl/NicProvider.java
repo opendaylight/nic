@@ -345,6 +345,10 @@ public class NicProvider implements NicConsoleProvider {
                             intent.getActions().get(0).getAction();
             String sourceSubject = sourceContainer.getEndPointGroup().getName();
             String destinationSubject = destinationContainer.getEndPointGroup().getName();
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Classifiers classifier =
+                    (org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Classifiers)intent.getClassifiers();
+            String classifierName = classifier.getClassifiers().getName();
+            // TODO Convert to ClassiferImpl in Graph
             Set<Nodes> sources;
             // Creates nodes of the graph from sources
             try {

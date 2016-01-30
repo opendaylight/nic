@@ -7,33 +7,29 @@
  */
 package org.opendaylight.nic.cli;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.impl.NicProvider;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ConstraintsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.*;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.AllowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.BlockBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.log.LogBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.redirect.RedirectBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.qos.constraint.QosConstraintBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroupBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Classifiers;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 @Command(name = "add",
          scope = "intent",
@@ -77,6 +73,13 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             multiValued = false)
     String serviceName = "any";
 
+    @Option(name = "-c",
+            aliases = { "--classifiers" },
+            description = "Classifiers to identify application",
+            required = false,
+            multiValued = false)
+    String classifiers = "any";
+
     @Option(name = "-q",
             aliases = { "--constraints" },
             description = "Constraints to be performed.\n-q / --Constraints HIGH/LOW/MEDIUM",
@@ -103,12 +106,14 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         List<Subjects> subjects = createSubjects();
         List<Actions> intentActions = createActions();
         List<Constraints> intentConstraints = createConstraints();
+        List<Classifiers> classifiers = createClassifiers();
 
         Intent intent = new IntentBuilder().
                 setId(new Uuid(uuid.toString()))
                 .setSubjects(subjects)
                 .setActions(intentActions)
                 .setConstraints(intentConstraints)
+                .setClassifiers(classifiers)
                 .build();
         if (provider.addIntent(intent)) {
             return String.format("Intent created (id: %s)", uuid.toString());
@@ -189,5 +194,30 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         }
 
         return constraintsList;
+    }
+
+    /**
+     * Return the list of classifiers
+     */
+    protected List<Classifiers> createClassifiers() {
+        final List<Classifiers> classifiersList = new ArrayList<>();
+        if (this.classifiers.contains(",")) {
+            for (String intentClassifier : this.classifiers.split(",") ) {
+                org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.classifiers.Classifiers intentClassifiers =
+                        new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.classifiers.ClassifiersBuilder()
+                                .setName(intentClassifier).build();
+                org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Classifiers classifiers = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent
+                        .rev150122.intent.ClassifiersBuilder().setClassifiers(intentClassifiers).build();
+                classifiersList.add(classifiers);
+            }
+        } else {
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.classifiers.Classifiers intentClassifiers =
+                    new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.classifiers.ClassifiersBuilder()
+                            .setName(this.classifiers).build();
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Classifiers classifiers = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent
+                    .rev150122.intent.ClassifiersBuilder().setClassifiers(intentClassifiers).build();
+            classifiersList.add(classifiers);
+        }
+        return classifiersList;
     }
 }
