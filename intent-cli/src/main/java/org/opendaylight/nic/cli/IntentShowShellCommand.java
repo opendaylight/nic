@@ -13,15 +13,20 @@ import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.impl.NicProvider;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ClassificationConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+
+;
 
 @Command(name = "show", scope = "intent", description = "Shows detailed information about an intent.")
 public class IntentShowShellCommand extends OsgiCommandSupport {
@@ -68,6 +73,24 @@ public class IntentShowShellCommand extends OsgiCommandSupport {
                     sb.append(String.format(VALUE , NicProvider.ACTION_REDIRECT));
                 } else {
                     sb.append(String.format(VALUE , "UNKNOWN"));
+                }
+            }
+
+            //TODO provide support for bandwidth-constraint, fail-type etc.
+            if (intent.getConstraints() != null) {
+                sb.append(String.format("\nConstraints: \n"));
+                for (Constraints constraints : intent.getConstraints()) {
+                    org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = constraints.getConstraints();
+                    sb.append(String.format("   Order: %d\n", constraints.getOrder()));
+                    if (constraint instanceof QosConstraint) {
+                        sb.append(String.format(VALUE , ((QosConstraint) constraints.getConstraints()).getQosConstraint().getQosName()));
+                    } else if (constraint instanceof ClassificationConstraint) {
+                        sb.append(String.format(VALUE , ((ClassificationConstraint) constraints.getConstraints())
+                                .getClassificationConstraint().getClassifier()));
+                    } else {
+                        sb.append(String.format(VALUE , "UNKNOWN YET"));
+                    }
+                    sb.append("\n");
                 }
             }
 
