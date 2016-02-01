@@ -7,13 +7,7 @@
  */
 package org.opendaylight.nic.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
@@ -21,6 +15,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class IntentUtils {
 
@@ -30,6 +32,34 @@ public class IntentUtils {
     private static final int  NUM_OF_SUPPORTED_EPG = 2;
 
     private IntentUtils() {
+    }
+
+    public static boolean validateMAC(String mac) {
+        if (mac == null || mac.isEmpty()) {
+            return false;
+        }
+        Pattern macPattern = Pattern.compile("([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}");
+        Matcher macMatcher = macPattern.matcher(mac);
+        return macMatcher.matches();
+    }
+
+    public static boolean validateIP(String ip) {
+        if (ip == null || ip.isEmpty()) {
+            return false;
+        }
+        ip = ip.trim();
+        if ((ip.length() < 6) & (ip.length() > 15)) {
+            return false;
+        }
+
+        try {
+            Pattern pattern = Pattern.compile("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            Matcher matcher = pattern.matcher(ip);
+            return matcher.matches();
+        } catch (PatternSyntaxException ex) {
+            LOG.error("IP Pattern not matched");
+            return false;
+        }
     }
 
     public static boolean verifyIntent(Intent intent) {
