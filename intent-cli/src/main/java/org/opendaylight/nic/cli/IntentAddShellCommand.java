@@ -7,33 +7,31 @@
  */
 package org.opendaylight.nic.cli;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
+import org.opendaylight.nic.constraints.ClassifierConstraint;
+import org.opendaylight.nic.constraints.QualityOfServiceConstraint;
 import org.opendaylight.nic.impl.NicProvider;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ActionsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.ConstraintsBuilder;
+import org.opendaylight.nic.mapped.MappedObject;
+import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.*;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.allow.AllowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.BlockBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.log.LogBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.redirect.RedirectBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.classification.constraint.ClassificationConstraintBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.qos.constraint.QosConstraintBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroupBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.SubjectsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+
+import java.io.InvalidObjectException;
+import java.util.*;
 
 @Command(name = "add",
          scope = "intent",
@@ -46,22 +44,24 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
     private static final int FIRST_SUBJECT = 1;
     private static final int SECOND_SUBJECT = 2;
+    private static final String ANY = "any";
 
     protected NicConsoleProvider provider;
+    protected IntentMappingService mappingService;
 
     @Option(name = "-f",
             aliases = { "--from" },
             description = "First subject.\n-f / --from <subject>",
             required = false,
             multiValued = false)
-    String from = "any";
+    String from = ANY;
 
     @Option(name = "-t",
             aliases = { "--to" },
             description = "Second Subject.\n-t / --to <subject>",
             required = false,
             multiValued = false)
-    String to = "any";
+    String to = ANY;
 
     @Option(name = "-a",
             aliases = { "--actions" },
@@ -75,7 +75,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             description = "Service name to redirect the flow",
             required = false,
             multiValued = false)
-    String serviceName = "any";
+    String serviceName = ANY;
 
     @Option(name = "-q",
             aliases = { "--constraints" },
@@ -89,20 +89,29 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             description = "profile name for constraint",
             required = false,
             multiValued = false)
-    String profilename;
+    String profilename = "";
 
-    public IntentAddShellCommand(NicConsoleProvider provider) {
+    public IntentAddShellCommand(NicConsoleProvider provider, IntentMappingService mappingService) {
         this.provider = provider;
+        this.mappingService = mappingService;
     }
 
     @Override
     protected Object doExecute() throws Exception {
 
         UUID uuid = UUID.randomUUID();
+        List<Subjects> subjects = null;
+        List<Actions> intentActions = null;
+        List<Constraints> intentConstraints = null;
 
-        List<Subjects> subjects = createSubjects();
-        List<Actions> intentActions = createActions();
-        List<Constraints> intentConstraints = createConstraints();
+        try {
+            subjects = createSubjects();
+            intentActions = createActions();
+            intentConstraints = createConstraints();
+        }
+        catch(InvalidObjectException e) {
+            return e.getMessage();
+        }
 
         Intent intent = new IntentBuilder().
                 setId(new Uuid(uuid.toString()))
@@ -110,6 +119,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
                 .setActions(intentActions)
                 .setConstraints(intentConstraints)
                 .build();
+
         if (provider.addIntent(intent)) {
             return String.format("Intent created (id: %s)", uuid.toString());
         } else {
@@ -148,8 +158,30 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         return actionsList;
     }
 
-    protected List<Subjects> createSubjects() {
+    private String buildSubjectNotFoundMessage(String subject) {
+        if(subject == null || subject.isEmpty()) {
+            subject = "(empty)";
+        }
+
+        return "No subject found with value: " + subject + " in the mapping service. Try adding it using: intent:map' command";
+    }
+
+    private String buildConstraintNotFoundMessage(String constraint) {
+        if(constraint == null || constraint.isEmpty()) {
+            constraint = "(empty)";
+        }
+
+        return "No constraint found with value: " + constraint + " in the mapping service. Try adding it using: intent:map' command";
+    }
+
+    protected List<Subjects> createSubjects() throws InvalidObjectException {
         List<Subjects> subjectList = new ArrayList<Subjects>();
+
+        if(mappingService.get(this.from).isEmpty())
+            throw new InvalidObjectException(buildSubjectNotFoundMessage(this.from));
+
+        if(mappingService.get(this.to).isEmpty())
+            throw new InvalidObjectException(buildSubjectNotFoundMessage(this.to));
 
         EndPointGroup endpointGroupFrom = new EndPointGroupBuilder().setName(this.from).build();
         org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup fromEPG =
@@ -172,17 +204,36 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
     /**
      * Returns the list of Constraints.
      */
-    protected List<Constraints> createConstraints() {
+    protected List<Constraints> createConstraints() throws InvalidObjectException {
         final List<Constraints> constraintsList = new ArrayList<Constraints>();
         short order = 1;
         for (String intentConstraint : this.constraints) {
             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = null;
-            if (intentConstraint.equalsIgnoreCase(NicProvider.CONSTRAINT_QOS)) {
+
+            Map<String, String> mappedConstraint = mappingService.get(intentConstraint);
+
+            if(mappedConstraint.isEmpty())
+                throw new InvalidObjectException(buildConstraintNotFoundMessage(intentConstraint));
+
+            MappedObject mappedObject = null;
+            if((mappedObject = MappedObject.extractFirstMappedObject(mappedConstraint, MappedObject.class)) == null)
+                throw new InvalidObjectException(buildConstraintNotFoundMessage(intentConstraint));
+
+            if (mappedObject.type().equals(QualityOfServiceConstraint.TYPE)) {
+
+                QualityOfServiceConstraint qos = QualityOfServiceConstraint.fromMappedObject(mappedObject);
+                this.profilename = (this.profilename.isEmpty()) ? qos.getProfileName() : this.profilename;
+
                 constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints
                         .QosConstraintBuilder().setQosConstraint(new QosConstraintBuilder().setQosName(this.profilename).build()).build();
+            } else if (mappedObject.type().equals(ClassifierConstraint.TYPE)) {
+                ClassifierConstraint classifier = ClassifierConstraint.fromMappedObject(mappedObject);
+                constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints
+                        .ClassificationConstraintBuilder().setClassificationConstraint(new ClassificationConstraintBuilder().setClassifier(intentConstraint).build()).build();
             } else {
                 continue;
             }
+
             Constraints intentConstraints = new ConstraintsBuilder().setOrder(order).setConstraints(constraint).build();
             constraintsList.add(intentConstraints);
             order++;

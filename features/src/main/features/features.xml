@@ -62,6 +62,7 @@
     <feature name='odl-nic-console' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: CLI'>
         <feature version="${project.version}">odl-nic-core-mdsal</feature>
         <bundle>mvn:org.opendaylight.nic/intent-cli/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
     </feature>
 
     <!-- VTN Renderer -->
