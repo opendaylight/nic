@@ -55,6 +55,7 @@ public class NicProvider implements NicConsoleProvider {
     public static final String ACTION_MIRROR = "MIRROR";
     public static final String ACTION_LOG = "LOG";
     public static final String CONSTRAINT_QOS = "QOS";
+    public static final String CONSTRAINT_CLASSIFIER = "CLASSIFIER";
 
     protected DataBroker dataBroker;
     protected IntentMappingService mappingSvc;
