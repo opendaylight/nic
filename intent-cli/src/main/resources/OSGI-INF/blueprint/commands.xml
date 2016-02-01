@@ -12,6 +12,7 @@
         <command>
             <action class="org.opendaylight.nic.cli.IntentAddShellCommand">
                 <argument ref="nicConsoleProvider" />
+                <argument ref="intentMappingService" />
             </action>
             <completers>
                 <ref component-id="actionCompleter" />
@@ -20,6 +21,7 @@
         <command>
             <action class="org.opendaylight.nic.cli.IntentQoSConfigAddShellCommand">
                 <argument ref="nicConsoleProvider" />
+                <argument ref="intentMappingService" />
             </action>
         </command>
         <command>
