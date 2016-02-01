@@ -35,6 +35,11 @@
     <artifactId>intent-api</artifactId>
     <version>${project.version}</version>
    </dependency>
+   <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>intent-mapping-interface</artifactId>
+    <version>${project.version}</version>
+   </dependency>
   <!-- Neutron Dependencies -->
   <dependency>
    <groupId>org.opendaylight.neutron</groupId>
@@ -74,6 +79,10 @@
    <artifactId>powermock-api-mockito</artifactId>
    <version>${powermock.version}</version>
    <scope>test</scope>
+  </dependency>
+  <dependency>
+   <groupId>com.google.code.gson</groupId>
+   <artifactId>gson</artifactId>
   </dependency>
  </dependencies>
 </project>

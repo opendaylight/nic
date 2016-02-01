@@ -60,6 +60,24 @@ public class IntentUtilsTest {
     }
 
     @Test
+    public void testValidateIP() {
+        boolean result;
+        final String ip = "0.0.0.1";
+
+        result = IntentUtils.validateIP(ip);
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void testValidateMAC() {
+        boolean result;
+        final String mac = "00:00:00:00:00:01";
+
+        result = IntentUtils.validateMAC(mac);
+        Assert.assertTrue(result);
+    }
+
+    @Test
     public void testVerifyIntent() {
         boolean result;
         final Intent intentNull = null;
