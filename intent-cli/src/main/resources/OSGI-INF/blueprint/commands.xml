@@ -20,6 +20,7 @@
         <command>
             <action class="org.opendaylight.nic.cli.IntentQoSConfigAddShellCommand">
                 <argument ref="nicConsoleProvider" />
+                <argument ref="intentMappingService" />
             </action>
         </command>
         <command>
