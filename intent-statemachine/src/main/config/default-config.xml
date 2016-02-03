@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (c) 2015 Hewlett Packard Enterprise Development LP.  All rights reserved.
   ~
@@ -6,7 +7,6 @@
   ~ and is available at http://www.eclipse.org/legal/epl-v10.html
   -->
 
-<?xml version="1.0" encoding="UTF-8"?>
 <!-- Configuration for Intent State Machine module. -->
 <snapshot>
     <configuration>
