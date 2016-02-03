@@ -42,10 +42,18 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractFlowManager {
 
+    /**
+     * Logger instance.
+     */
+    private static final Logger  LOG = LoggerFactory.getLogger(AbstractFlowManager.class);
     protected final DataBroker dataBroker;
     private final PipelineManager pipelineManager;
+    private static final String L2_Rule_NAME = "L2_Rule_";
 
     AbstractFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         this.dataBroker = dataBroker;
@@ -218,6 +226,39 @@ public abstract class AbstractFlowManager {
         Instructions instructions = new InstructionsBuilder().setInstruction(ImmutableList.of(outputInstruction))
                 .build();
         return instructions;
+    }
+
+    /**
+     * Read the flow id from the data store.
+     * @param nodeId The {@link NodeId} of the OF Switch
+     * @param flowBuilder The {@link FlowBuilder} that is built and submitted
+     * @return flowId Flow Id.
+     */
+    protected String readDataTransaction(NodeId nodeId, FlowBuilder flowBuilder) {
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        InstanceIdentifier<Table> tableIID = InstanceIdentifier
+                    .builder(Nodes.class)
+                    .child(Node.class,
+                           new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
+                    .child(Table.class,
+                           new TableKey(OFRendererConstants.FALLBACK_TABLE_ID)).build();
+
+        Table table = mdsal.read(LogicalDatastoreType.CONFIGURATION, tableIID);
+        String destination = flowBuilder.getMatch().getEthernetMatch().getEthernetDestination().getAddress().getValue();
+        String source = flowBuilder.getMatch().getEthernetMatch().getEthernetSource().getAddress().getValue();
+        String logFlowId = L2_Rule_NAME + source + destination;
+        if (table != null) {
+            List<Flow> flows =  table.getFlow();
+            for (Flow flow : flows) {
+                String flowId = null;
+                flowId = flow.getId().getValue().toString();
+                if (flowId.contains(logFlowId)) {
+                    return flowId;
+                }
+            }
+        }
+        LOG.info("Flow ID doesn't match with source{} and destination{}", source, destination);
+        return null;
     }
 
 }
