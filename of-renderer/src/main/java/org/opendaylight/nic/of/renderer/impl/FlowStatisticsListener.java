@@ -76,12 +76,12 @@ public class FlowStatisticsListener implements AutoCloseable, DataChangeListener
      * @param nodeId Node Id.
      * @param flowId Flow Id.
      */
-    public void registerFlowStatisticsListener(DataBroker dataBroker, NodeId nodeId, FlowId flowId) {
+    public void registerFlowStatisticsListener(DataBroker dataBroker, NodeId nodeId, String flowId) {
         InstanceIdentifier<FlowStatistics> path = InstanceIdentifier.builder(Nodes.class).
                 child(Node.class, new NodeKey(nodeId)).
                 augmentation(FlowCapableNode.class).
                 child(Table.class, new TableKey(TABLE_ID)).
-                child(Flow.class, new FlowKey(flowId)).
+                child(Flow.class, new FlowKey(new FlowId(flowId))).
                 augmentation(FlowStatisticsData.class).
                 child(FlowStatistics.class).
                 build();
@@ -100,10 +100,12 @@ public class FlowStatisticsListener implements AutoCloseable, DataChangeListener
 
     /**
      * This method is called to listen the flow statistics changes.
+     * @param changes
      */
     @Override
     public void onDataChanged(
             AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
+
         createFlowStatistics(changes);
     }
 
@@ -113,6 +115,8 @@ public class FlowStatisticsListener implements AutoCloseable, DataChangeListener
      */
     private void createFlowStatistics(
             AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> changes) {
+
+        //Data Store documents duration, packet counts and byte counts between the hosts.
         for (Entry<InstanceIdentifier<?>, DataObject> newFlow : changes.getCreatedData().entrySet()) {
             if (newFlow.getValue() instanceof FlowStatistics) {
                 FlowStatistics flowStatistics = (FlowStatistics)newFlow.getValue();
