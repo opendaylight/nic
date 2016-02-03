@@ -112,8 +112,12 @@ public class IntentFlowManager extends AbstractFlowManager {
             // For Block Action the Instructions are not set
             // If block added for readability
         } else if (action instanceof Log) {
-            // Logs the statistics data.
-            flowStatisticsListener.registerFlowStatisticsListener(dataBroker, nodeId, flowBuilder.getId());
+            // Logs the statistics data and return.
+            String flowIdName = readDataTransaction(nodeId, flowBuilder);
+            if (flowIdName != null) {
+                flowStatisticsListener.registerFlowStatisticsListener(dataBroker, nodeId, flowIdName);
+            }
+            return;
         } else {
             String actionClass = action.getClass().getName();
             LOG.error("Invalid action: {}", actionClass);
