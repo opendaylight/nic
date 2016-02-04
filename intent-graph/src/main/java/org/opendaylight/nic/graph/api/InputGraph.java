@@ -10,6 +10,7 @@ package org.opendaylight.nic.graph.api;
 
 import org.opendaylight.nic.graph.impl.ClassifierImpl;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.IntentIds;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 
 import java.util.Set;
@@ -19,6 +20,12 @@ import java.util.Set;
  */
 public interface InputGraph {
 
+    /**
+     * The UUid string that identifies itself as a part of Intent
+     * Constructor
+     * @return Ids
+     */
+    Set <IntentIds> id();
     /**
      * The source node with a label string that identifies itself part of an End-point group
      * Constructor

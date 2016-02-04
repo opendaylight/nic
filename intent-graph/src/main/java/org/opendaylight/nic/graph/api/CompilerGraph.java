@@ -11,6 +11,7 @@ package org.opendaylight.nic.graph.api;
 import org.opendaylight.nic.graph.impl.ClassifierImpl;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.IntentIds;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 
 import java.util.Collection;
@@ -48,6 +49,15 @@ public interface CompilerGraph extends AutoCloseable {
      * @throws CompilerGraphException Graph Exception
      */
     Graph compile(Collection<Graph> graph, int flag) throws CompilerGraphException;
+
+    /** creates an input graph with MD-SAL binding
+     *  @param id intent uuid
+     *  @param source source node
+     *  @param destination destinate node
+     *  @param action the Edge attribute with its association to source and destination nodes
+     *  @return       the InputGraph from the list of intents
+     * */
+    public InputGraph createGraph(Set<IntentIds> id, Set<Nodes> source, Set<Nodes> destination, Set<Edges> action);
 
     /** creates an input graph with MD-SAL binding
      *  @param source source node

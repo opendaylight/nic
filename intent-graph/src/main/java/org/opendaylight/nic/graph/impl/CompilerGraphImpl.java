@@ -16,6 +16,7 @@ import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.GraphBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.IntentIds;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.NodesBuilder;
 import org.osgi.framework.BundleContext;
@@ -91,6 +92,7 @@ public class CompilerGraphImpl implements CompilerGraph {
     }
 
     // compile the input graph after normalization
+    // TODO store the UUIDs of all the compiled policies in the compiled policy Graph
     @Override
     public Collection<InputGraph> compile(Collection<InputGraph> policies) throws CompilerGraphException {
 
@@ -137,10 +139,11 @@ public class CompilerGraphImpl implements CompilerGraph {
         Collection<Graph> composedGraph = new LinkedList<>();
 
         for (InputGraph policy : compiledPolicies) {
+            List<IntentIds> id = new ArrayList<IntentIds>(policy.id());
             List<Nodes> src = new ArrayList<Nodes>(policy.src());
             List<Nodes> dst = new ArrayList<Nodes>(policy.dst());
-            List<Edges> edges = new ArrayList<>(policy.action());
-            Graph graph = new GraphBuilder().setNodes(src).setNodes(dst).setEdges(edges).build();
+            List<Edges> edges = new ArrayList<Edges>(policy.action());
+            Graph graph = new GraphBuilder().setIntentIds(id).setNodes(src).setNodes(dst).setEdges(edges).build();
             composedGraph.add(graph);
         }
 
@@ -450,6 +453,11 @@ public class CompilerGraphImpl implements CompilerGraph {
             }
         }
         return Sets.union(composeableActions, observableActions);
+    }
+
+    @Override
+    public InputGraph createGraph(Set<IntentIds> id, Set<Nodes> source, Set<Nodes> destination, Set<Edges> action) {
+        return new InputGraphImpl (id, source, destination, action);
     }
 
     @Override
