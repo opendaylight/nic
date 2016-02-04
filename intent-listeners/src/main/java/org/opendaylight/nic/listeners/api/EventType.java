@@ -48,5 +48,12 @@ public enum EventType {
     /** Incidates that a Network-Topology Link has been removed. See TOPOLOGY_LINK_DISCOVERED.*/
     TOPOLOGY_LINK_REMOVED,
     /** Indicates that a Network-Topology Link has been updated. See TOPOLOGY_LINK_DISCOVERED.*/
-    TOPOLOGY_LINK_UPDATED
+    TOPOLOGY_LINK_UPDATED,
+    /** Graph Edge Added*/
+    GRAPH_EDGE_ADDED,
+    /** Graph Edge Removed*/
+    GRAPH_EDGE_DELETED,
+    /** Graph Edge Updated*/
+    GRAPH_EDGE_UPDATED
+
 }
