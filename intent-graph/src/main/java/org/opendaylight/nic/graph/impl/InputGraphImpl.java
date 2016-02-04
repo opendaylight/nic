@@ -11,11 +11,13 @@ package org.opendaylight.nic.graph.impl;
 import org.opendaylight.nic.graph.api.InputGraph;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Uuids;
 
 import java.util.Set;
 
 public class InputGraphImpl implements InputGraph {
 
+    protected final Set<Uuids> id;
     protected final Set<Nodes> src;
     protected final Set<Nodes> dst;
     protected final Set<Edges> action;
@@ -23,7 +25,16 @@ public class InputGraphImpl implements InputGraph {
 
     /* based on the description of nodes and edges, the edge can describe a complete intent */
 
+    public InputGraphImpl(Set<Uuids> id, Set<Nodes> src, Set<Nodes> dst, Set<Edges> action) {
+        this.id = id;
+        this.src = src;
+        this.dst = dst;
+        this.action = action;
+        this.classifier = null;
+    }
+
     public InputGraphImpl(Set<Nodes> src, Set<Nodes> dst, Set<Edges> action) {
+        this.id = null;
         this.src = src;
         this.dst = dst;
         this.action = action;
@@ -31,10 +42,16 @@ public class InputGraphImpl implements InputGraph {
     }
 
     public InputGraphImpl(Set<Nodes> src, Set<Nodes> dst, Set<Edges> action, ClassifierImpl classifier) {
+        this.id = null;
         this.src = src;
         this.dst = dst;
         this.action = action;
         this.classifier = classifier;
+    }
+
+    @Override
+    public Set<Uuids> id() {
+        return id;
     }
 
     @Override

@@ -325,19 +325,20 @@ public class NicProvider implements NicConsoleProvider {
     @Override
     // Function Overloading Method to compile use PGA Graph Algorithm
     public String compile(int flag) {
+        // TODO Graph compiler should listen on Intent creation event
         List<Intent> intents = listIntents(true);
 
         CompilerGraph compiler = CompilerGraphFactory.createGraphCompiler();
-        Edges allow = new EdgesBuilder().setType(EdgeTypes.MustAllow).setActionType(ActionTypes.Composable).build();
-        Edges block = new EdgesBuilder().setType(EdgeTypes.MustDeny).setActionType(ActionTypes.Exclusive).build();
-        Edges redirect = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable).build();
-        Edges mirror = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable).build();
-        Edges log = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable).build();
 
         Collection<InputGraph> policies = new LinkedList<>();
         //Create a collection of input graphs
 
         for (Intent intent : intents) {
+            // Setting the uuid of the intent for the graph
+            Uuid id = (Uuid) intent.getId();
+            Set<Uuid> ids = new HashSet<>();
+            ids.add(id);
+            //Setting the source and destination nodes
             EndPointGroup sourceContainer = (EndPointGroup) intent.getSubjects().get(0).getSubject();
             EndPointGroup destinationContainer = (EndPointGroup) intent.getSubjects().get(1).getSubject();
             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action actionContainer =
@@ -362,15 +363,26 @@ public class NicProvider implements NicConsoleProvider {
                 return "[ERROR] Invalid subject: " + destinationSubject;
             }
             Edges action;
+            // Creation of an edge 
             if (actionContainer instanceof Allow) {
+                Edges allow = new EdgesBuilder().setType(EdgeTypes.MustAllow).setActionType(ActionTypes.Composable)
+                        .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = allow;
             } else if (actionContainer instanceof Block) {
+                Edges block = new EdgesBuilder().setType(EdgeTypes.MustDeny).setActionType(ActionTypes.Exclusive)
+                        .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = block;
             } else if (actionContainer instanceof Redirect) {
+                Edges redirect = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable)
+                        .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = redirect;
             } else if (actionContainer instanceof Mirror) {
+                Edges mirror = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable)
+                        .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = mirror;
             } else if (actionContainer instanceof Log) {
+                Edges log = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable)
+                        .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = log;
             } else {
                 String actionClass = actionContainer.getClass().getName();

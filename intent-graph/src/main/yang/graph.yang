@@ -88,6 +88,13 @@ module intent-graph {
        leaf id {
          type string;
        }
+       list uuids {
+         key "uuid";
+         leaf uuid {
+             type uint8;
+             description "identifying the uuid of original intent creation";
+         }
+       }
        list nodes {
          key "name";
          leaf name {
