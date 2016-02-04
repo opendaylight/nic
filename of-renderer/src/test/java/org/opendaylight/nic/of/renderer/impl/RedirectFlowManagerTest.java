@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
+import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
@@ -35,7 +36,10 @@ import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sff.rev1407
 import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.port.details.OfsPort;
 import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.SffDataPlaneLocator1;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.Table;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
@@ -101,6 +105,14 @@ public class RedirectFlowManagerTest {
      * Instance of RedirectFlowManager to perform unit testing.
      */
     private RedirectFlowManager spyRedirectFlowManager;
+    /**
+     * Mock instance of ReadOnlyTransaction to perform unit testing.
+     */
+    private ReadOnlyTransaction mockReadOnlyTransaction;
+    /**
+     * Mock instance of WriteTransaction to perform unit testing.
+     */
+    private WriteTransaction mockWriteTransaction;
     /**
      * String constants to perform unit testing.
      */
@@ -294,6 +306,7 @@ public class RedirectFlowManagerTest {
         final Redirect mockRedirect = PowerMockito.mock(Redirect.class);
         PowerMockito.when(mockRedirect.getRedirect()).thenReturn(mockInnerRedirect);
         final Actions mockActions = PowerMockito.mock(Actions.class);
+        PowerMockito.doNothing().when(spyRedirectFlowManager, "deleteArpFlow", Matchers.any(NodeId.class));
         PowerMockito.when(mockActions.getAction()).thenReturn(mockRedirect);
         mockList.add(mockActions);
         PowerMockito.when(mockIntent.getId()).thenReturn(new Uuid(uuid[0]));
@@ -796,5 +809,35 @@ public class RedirectFlowManagerTest {
         String output = (String) Whitebox.invokeMethod(spyRedirectFlowManager, "getSrcMacStr", payload);
         Assert.assertEquals("Should return expected mac address", expected, output);
     }
-}
 
+    /**
+     * Test case for {@link RedirectFlowManager#deleteArpFlow()}
+     */
+    @Test
+    public void testDeleteArpFlow() throws Exception {
+        mockReadOnlyTransaction = Mockito.mock(ReadOnlyTransaction.class);
+        mockWriteTransaction = Mockito.mock(WriteTransaction.class);
+        Mockito.when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadOnlyTransaction);
+        Mockito.when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
+        FlowId mockFlowId = new FlowId("arpReplyToController_EthernetType");
+        Flow mockFlow = Mockito.mock(Flow.class);
+        Mockito.when(mockFlow.getId()).thenReturn(mockFlowId);
+        List mockList = new ArrayList();
+        mockList.add(mockFlow);
+        Table mockTable = Mockito.mock(Table.class);
+        Mockito.when(mockTable.getFlow()).thenReturn(mockList);
+        Optional mockOptional = Mockito.mock(Optional.class);
+        CheckedFuture mockCheckedFuture = Mockito.mock(CheckedFuture.class);
+        Mockito.when(mockOptional.isPresent()).thenReturn(true);
+        Mockito.when(mockOptional.get()).thenReturn(mockTable);
+        Mockito.when(mockCheckedFuture.checkedGet()).thenReturn(mockOptional);
+        Mockito.when(mockReadOnlyTransaction.read(Matchers.eq(LogicalDatastoreType.CONFIGURATION),
+                Matchers.any(InstanceIdentifier.class))).thenReturn(mockCheckedFuture);
+        Mockito.when(mockWriteTransaction.submit()).thenReturn(mockCheckedFuture);
+        Mockito.when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
+        Whitebox.invokeMethod(spyRedirectFlowManager, "deleteArpFlow", Mockito.mock(NodeId.class));
+        Mockito.verify(mockReadOnlyTransaction, Mockito.times(1)).read(Matchers.eq(LogicalDatastoreType.CONFIGURATION),
+                Matchers.any(InstanceIdentifier.class));
+        Mockito.verify(mockWriteTransaction, Mockito.times(1)).submit();
+    }
+}
