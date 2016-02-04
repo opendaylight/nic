@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_2bf232d2",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/RedirectFlowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2016-02-04T19:08:19Z",
+      "side": 1,
+      "message": "The Pipeline manager might not have added the ARP flows to FALLBACK_TABLE_ID\u003d0",
+      "range": {
+        "startLine": 544,
+        "startChar": 8,
+        "endLine": 544,
+        "endChar": 70
+      },
+      "revId": "754147034048bd0e04f584d09866b53533bdd095",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
