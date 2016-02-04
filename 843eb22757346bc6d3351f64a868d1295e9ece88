@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_c83c6cc2",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/AbstractFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-04T14:22:34Z",
+      "side": 1,
+      "message": "could be defined in the for loop",
+      "range": {
+        "startLine": 237,
+        "startChar": 7,
+        "endLine": 237,
+        "endChar": 29
+      },
+      "revId": "843eb22757346bc6d3351f64a868d1295e9ece88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_284cf86f",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/AbstractFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-04T14:22:34Z",
+      "side": 1,
+      "message": "Could we have a constant to hold that if one doesn\u0027t exist yet?",
+      "range": {
+        "startLine": 249,
+        "startChar": 27,
+        "endLine": 249,
+        "endChar": 36
+      },
+      "revId": "843eb22757346bc6d3351f64a868d1295e9ece88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a8580833",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/AbstractFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-04T14:22:34Z",
+      "side": 1,
+      "message": "please add a null check to avoid NPE",
+      "range": {
+        "startLine": 250,
+        "startChar": 28,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "843eb22757346bc6d3351f64a868d1295e9ece88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_0847744c",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/AbstractFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-04T14:22:34Z",
+      "side": 1,
+      "message": "Maybe this could be raised at INFO level. What do you think?",
+      "range": {
+        "startLine": 257,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 17
+      },
+      "revId": "843eb22757346bc6d3351f64a868d1295e9ece88",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
