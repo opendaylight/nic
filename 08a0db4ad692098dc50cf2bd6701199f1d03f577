@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_2b07d21d",
+        "filename": "intent-graph/src/main/yang/graph.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-02-04T22:30:32Z",
+      "side": 1,
+      "message": "I would use something more meaningful like: intentIds or intents\nand the datatype has to be uuid as defined at:\n\nhttps://git.opendaylight.org/gerrit/gitweb?p\u003dnic.git;a\u003dblob;f\u003dintent-api/src/main/yang/intent-types.yang;h\u003d43367186d9d2930f615bc7678e7c9f9f51c660ac;hb\u003d08a0db4ad692098dc50cf2bd6701199f1d03f577",
+      "revId": "08a0db4ad692098dc50cf2bd6701199f1d03f577",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_46032d0d",
+        "filename": "intent-impl/src/main/java/org/opendaylight/nic/impl/NicProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-02-04T22:30:32Z",
+      "side": 1,
+      "message": "where are you storing the ids?",
+      "revId": "08a0db4ad692098dc50cf2bd6701199f1d03f577",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
