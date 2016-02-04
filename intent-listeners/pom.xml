@@ -41,6 +41,11 @@
             <artifactId>mapped-objects-model</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>intent-graph</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Neutron Dependencies -->
         <dependency>
             <groupId>org.opendaylight.neutron</groupId>
