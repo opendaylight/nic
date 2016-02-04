@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a3d3df0_46868d66",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/InputGraph.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2016-02-04T23:27:15Z",
+      "side": 1,
+      "message": "This seems like a repetition.Could you add the right comment here",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "08a0db4ad692098dc50cf2bd6701199f1d03f577",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_2b07d21d",
         "filename": "intent-graph/src/main/yang/graph.yang",
         "patchSetId": 1
@@ -30,6 +53,29 @@
       "writtenOn": "2016-02-04T22:30:32Z",
       "side": 1,
       "message": "where are you storing the ids?",
+      "revId": "08a0db4ad692098dc50cf2bd6701199f1d03f577",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_86809547",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/GraphAdded.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2016-02-04T23:27:15Z",
+      "side": 1,
+      "message": "It would be better to have an EdgeAdded notification instead of the whole graph",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 1
+      },
       "revId": "08a0db4ad692098dc50cf2bd6701199f1d03f577",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
