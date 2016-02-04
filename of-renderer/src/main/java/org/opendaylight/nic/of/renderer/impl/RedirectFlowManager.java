@@ -26,6 +26,7 @@ import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.sfc.provider.api.SfcProviderServiceForwarderAPI;
 import org.opendaylight.sfc.provider.api.SfcProviderServiceFunctionAPI;
 import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.common.rev151017.SfName;
@@ -36,7 +37,11 @@ import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sff.rev1407
 import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.SffDataPlaneLocator1;
 import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.port.details.OfsPort;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.Table;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.TableKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
@@ -46,8 +51,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnectorKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.PacketProcessingListener;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.PacketReceived;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NetworkTopology;
@@ -77,6 +85,7 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
     private Set<ServiceRegistration<?>> serviceRegistration;
     private FlowAction flowAction;
     private Map<String, RedirectNodeData> redirectNodeCache = new ConcurrentHashMap<String, RedirectNodeData>();
+    public static final String ARP_REPLY_TO_CONTROLLER_FLOW_NAME = "arpReplyToController";
 
     public RedirectFlowManager(DataBroker dataBroker, PipelineManager pipelineManager,
             OFRendererGraphService graphService) {
@@ -464,6 +473,8 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
         String[] redirectSfcDataList = readRedirectSfcData(serviceName);
         redirectNodeData.setIngressNodeId(redirectSfcDataList[0]);
         redirectNodeData.setEgressNodeId(redirectSfcDataList[1]);
+        deleteArpFlow(new NodeId(extractTopologyNodeId(redirectSfcDataList[0]).getValue()));
+        deleteArpFlow(new NodeId(extractTopologyNodeId(redirectSfcDataList[1]).getValue()));
     }
 
     /**
@@ -523,6 +534,39 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
         }
     }
 
+    /**
+     * To delete Arp flows in the given node.
+     * @param nodeId :nodeId
+     */
+    private void deleteArpFlow(NodeId nodeId) {
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        InstanceIdentifier<Table> readTableInstanceID = InstanceIdentifier
+                .builder(Nodes.class)
+                .child(Node.class,
+                       new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
+                .child(Table.class,
+                       new TableKey(OFRendererConstants.FALLBACK_TABLE_ID)).build();
+        Table readTableValues = mdsal.read(LogicalDatastoreType.CONFIGURATION,
+                readTableInstanceID);
+        if (readTableValues != null) {
+            List<Flow> flowList = readTableValues.getFlow();
+            for (Flow flow : flowList) {
+                String flowId = flow.getId().toString();
+                if (flowId.contains(ARP_REPLY_TO_CONTROLLER_FLOW_NAME)) {
+                    InstanceIdentifier<Flow> deleteFLow = InstanceIdentifier
+                            .builder(Nodes.class)
+                            .child(Node.class, new NodeKey(nodeId))
+                            .augmentation(FlowCapableNode.class)
+                            .child(Table.class,
+                                    new TableKey(OFRendererConstants.FALLBACK_TABLE_ID))
+                            .child(Flow.class, new FlowKey(flow.getId()))
+                            .build();
+                    mdsal.delete(LogicalDatastoreType.CONFIGURATION, deleteFLow);
+                }
+            }
+        }
+    }
+
     @Override
     public void close() throws Exception {
          for (ServiceRegistration<?> service: serviceRegistration) {
@@ -532,4 +576,3 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
         }
     }
 }
-
