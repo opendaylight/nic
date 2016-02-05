@@ -81,7 +81,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     final InstanceIdentifier<O> ii = createDataObj.getKey().firstIdentifierOf(clazz);
                     final C notif = createNotification((O) createDataObj.getValue(), ii);
                     if (notif != null) {
-                        LOG.info("NicNotification created");
+                        LOG.trace("NicNotification created");
                         if (getCreateImplClass().isInstance(notif)) {
                             Set<IEventListener<?>> eventListeners =
                                     serviceRegistry.getEventListeners(getCreateEventType());
@@ -104,7 +104,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     final InstanceIdentifier<O> ii = updatedObject.getKey().firstIdentifierOf(clazz);
                     final U notif = updateNotification((O) updatedObject.getValue(), ii);
                     if (notif != null) {
-                        LOG.info("NicNotification update");
+                        LOG.trace("NicNotification update");
                         if (getUpdateImplClass().isInstance(notif)) {
                             Set<IEventListener<?>> eventListeners =
                                     serviceRegistry.getEventListeners(getUpdateEventType());
@@ -128,7 +128,7 @@ abstract class AbstractNotificationSupplierItemRoot<O extends DataObject,
                     final D notif = deleteNotification( (O) original.get(deleteDataPath),
                             deleteDataPath.firstIdentifierOf(clazz));
                     if (notif != null) {
-                        LOG.info("NicNotification deleted");
+                        LOG.trace("NicNotification deleted");
                         if (getDeleteImplClass().isInstance(notif)) {
                             Set<IEventListener<?>> eventListeners =
                                     serviceRegistry.getEventListeners(getDeleteEventType());
