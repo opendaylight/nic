@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_f3931c4d",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/RedirectFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2016-02-05T19:31:31Z",
+      "side": 1,
+      "message": "Hi Karthikeyan. Not sure if this would address the issue if Pipeline manager pushes the ARP flow to a different table than table 0.Take a look at AbstractFlowManager line 167",
+      "range": {
+        "startLine": 548,
+        "startChar": 35,
+        "endLine": 548,
+        "endChar": 73
+      },
+      "revId": "2ad2beae2edff02333512c82d25893c3cf69cb6e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
