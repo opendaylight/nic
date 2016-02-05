@@ -78,7 +78,7 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     @Override
     public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
-        LOG.info("NOTIFICATION: {}",change.hashCode());
+        LOG.trace("NOTIFICATION: {}", change.hashCode());
         Map<InstanceIdentifier<?>, DataObject> createdData = change.getCreatedData();
         for (Map.Entry<InstanceIdentifier<?>, DataObject> entry : createdData.entrySet()) {
             if (entry.getValue() instanceof Table) {
