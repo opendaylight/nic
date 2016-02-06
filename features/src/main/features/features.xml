@@ -105,6 +105,7 @@
     <!-- Pipeline Manager -->
     <feature name='odl-nic-pipeline-manager' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Pipeline Manager'>
         <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+        <feature version="${openflowplugin.version}">odl-openflowplugin-nsf-services</feature>
         <bundle>mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-pipeline-manager.xml">mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}/xml/config</configfile>
     </feature>
