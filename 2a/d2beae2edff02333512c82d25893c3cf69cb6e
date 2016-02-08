@@ -1,0 +1,9 @@
+Verified+1: jenkins-releng <jenkins-releng@opendaylight.org>
+Code-Review+1: Pramod Raghavendra Jayathirth <pramod.raghavendra.jayathirth@intel.com>
+Code-Review+1: Saket Mahajani <saket.m.mahajani@hp.com>
+Code-Review+2: Alexis de Talhouët <adetalhouet@inocybe.com>
+Submitted-by: Alexis de Talhouët <adetalhouet@inocybe.com>
+Submitted-at: Mon, 08 Feb 2016 18:57:08 +0000
+Reviewed-on: https://git.opendaylight.org/gerrit/34092
+Project: nic
+Branch: refs/heads/stable/beryllium
