@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_b0b5fd32",
+        "filename": "intent-graph/src/main/java/org/opendaylight/nic/graph/api/CompilerGraph.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-09T23:30:30Z",
+      "side": 1,
+      "message": "useless modifier",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 10
+      },
+      "revId": "e47a64fd2397f3d5a518c556c9a27252e8a9c28d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_1084a95c",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/api/GraphEdgeAdded.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-09T23:30:30Z",
+      "side": 1,
+      "message": "please add javadoc",
+      "revId": "e47a64fd2397f3d5a518c556c9a27252e8a9c28d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
