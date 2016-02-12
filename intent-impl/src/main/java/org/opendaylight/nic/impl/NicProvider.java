@@ -31,6 +31,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Mirror;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.ActionTypes;
@@ -123,6 +124,12 @@ public class NicProvider implements NicConsoleProvider {
         // Perform the tx.submit synchronously
         tx.submit();
 
+        UUID uuid = UUID.randomUUID();
+        Intent intent = new IntentBuilder().
+            setId(new Uuid(uuid.toString()))
+            .build();
+        addIntent(intent);
+        removeIntent(intent.getId());
         LOG.info("initIntentsConfiguration: default config populated: {}", intents);
     }
 
@@ -145,8 +152,6 @@ public class NicProvider implements NicConsoleProvider {
             LOG.error("addIntent: failed: {}", e);
             return false;
         }
-
-        LOG.info("initIntentsConfiguration: config populated: {}", intents);
         return true;
     }
 
