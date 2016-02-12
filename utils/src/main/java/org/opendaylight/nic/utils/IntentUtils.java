@@ -8,6 +8,7 @@
 package org.opendaylight.nic.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
@@ -71,10 +72,11 @@ public class IntentUtils {
     public static List<String> extractEndPointGroup(Intent intent) {
         final Uuid uuid = intent.getId();
         final List<Subjects> listSubjects = intent.getSubjects();
-        final List<String> endPointGroups = new ArrayList<String>();
+        final String[] endPointGroups = new String[listSubjects.size()];
 
         for (Subjects subjects : listSubjects) {
             Subject subject = subjects.getSubject();
+            int order = subjects.getOrder();
             verifySubjectInstance(subject, uuid);
             EndPointGroup endPointGroup = (EndPointGroup) subject;
 
@@ -82,10 +84,10 @@ public class IntentUtils {
                 .EndPointGroup epg = endPointGroup.getEndPointGroup();
 
             if (epg != null) {
-                endPointGroups.add(epg.getName());
+                endPointGroups[order-1] = epg.getName();
             }
         }
-        return endPointGroups;
+        return Arrays.asList(endPointGroups);
     }
 
     public static void verifySubjectInstance(Subject subject, Uuid intentId) {

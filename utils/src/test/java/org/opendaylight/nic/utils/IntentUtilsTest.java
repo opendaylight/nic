@@ -140,6 +140,7 @@ public class IntentUtilsTest {
         Mockito.when(intentMock.getSubjects()).thenReturn(subjectMockList);
 
         EndPointGroup subjectMockOne = Mockito.mock(EndPointGroup.class);
+        Mockito.when(subjectsMockOne.getOrder()).thenReturn((short) 1);
         Mockito.when(subjectsMockOne.getSubject()).thenReturn(subjectMockOne);
         Mockito.when(subjectMockOne.getEndPointGroup()).thenReturn(epgMock);
         Mockito.when(epgMock.getName()).thenReturn(EPG_NAME_ONE);
