@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.Test;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.yangtools.yang.binding.KeyedInstanceIdentifier;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -179,11 +180,14 @@ public class NicProviderTest {
          * DataBroker, WriteTransaction to place default config data in data
          * store tree.
          */
-        verify(mockDataBroker, times(1)).newWriteOnlyTransaction();
-        verify(mockWriteTransaction, times(1)).put(
-                eq(LogicalDatastoreType.CONFIGURATION),
-                eq(NicProvider.INTENTS_IID), isA(Intents.class));
-        verify(mockWriteTransaction, times(1)).submit();
+        verify(mockDataBroker, times(3)).newWriteOnlyTransaction();
+        verify(mockWriteTransaction, times(2)).put(
+            eq(LogicalDatastoreType.CONFIGURATION),
+            eq(NicProvider.INTENTS_IID), isA(Intents.class));
+        verify(mockWriteTransaction, times(1)).delete(
+            eq(LogicalDatastoreType.CONFIGURATION),
+            isA(KeyedInstanceIdentifier.class));
+        verify(mockWriteTransaction, times(3)).submit();
     }
 
     /**
