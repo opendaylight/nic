@@ -22,6 +22,30 @@
       "revId": "53eff358b2d8475cb93be777ee16772e47cd00fa",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_02e1dffd",
+        "filename": "mapped-objects-model/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2016-02-18T00:16:58Z",
+      "side": 1,
+      "message": "Hi Alexis, Could not import the modules without this dependency.",
+      "parentUuid": "9a3d3df0_879a216c",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 15
+      },
+      "revId": "53eff358b2d8475cb93be777ee16772e47cd00fa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
