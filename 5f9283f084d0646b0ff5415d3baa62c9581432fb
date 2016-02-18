@@ -1,0 +1,308 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_01a43cb8",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "please LOG at error level the exception",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e1a8388f",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "increase this to WARN level would make more sense",
+      "range": {
+        "startLine": 143,
+        "startChar": 12,
+        "endLine": 143,
+        "endChar": 16
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_41aac485",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "don\u0027t throw an exception, maybe logging at ERROR level would be enough, then return null;",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 168,
+        "endChar": 91
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_61942843",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "I would call the function validateMAC, seems more accurate",
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a19ab06b",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "please format using curly brackets",
+      "range": {
+        "startLine": 197,
+        "startChar": 8,
+        "endLine": 197,
+        "endChar": 55
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c19d3468",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_018b9c1f",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "please format using curly brackets",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 206,
+        "endChar": 65
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e18f9828",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "log the exception at ERROR level so we know what\u0027s going on",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 25
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_418124fa",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "please format with curly bracket for all if/for/else/while statement",
+      "range": {
+        "startLine": 217,
+        "startChar": 29,
+        "endLine": 217,
+        "endChar": 43
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_2186a013",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "this could be assigned to a var to avoid asking for it again line 228",
+      "range": {
+        "startLine": 221,
+        "startChar": 15,
+        "endLine": 221,
+        "endChar": 44
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_817e8c17",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 224,
+        "startChar": 15,
+        "endLine": 224,
+        "endChar": 41
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_617b8828",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "please hold those IP and MAC in constant var",
+      "range": {
+        "startLine": 229,
+        "startChar": 44,
+        "endLine": 229,
+        "endChar": 46
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c1741438",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "constant",
+      "range": {
+        "startLine": 271,
+        "startChar": 27,
+        "endLine": 271,
+        "endChar": 34
+      },
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_61a2689a",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-18T13:45:40Z",
+      "side": 1,
+      "message": "add the exception",
+      "revId": "5f9283f084d0646b0ff5415d3baa62c9581432fb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
