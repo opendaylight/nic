@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_6325435b",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-19T20:53:44Z",
+      "side": 1,
+      "message": "curly brackets",
+      "range": {
+        "startLine": 270,
+        "startChar": 11,
+        "endLine": 271,
+        "endChar": 24
+      },
+      "revId": "749018291b3f4c974f942f84fbca02b7bdc6d9f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_432abf2c",
+        "filename": "intent-cli/src/main/java/org/opendaylight/nic/cli/IntentAddShellCommand.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-19T20:53:44Z",
+      "side": 1,
+      "message": "curly brackets",
+      "range": {
+        "startLine": 275,
+        "startChar": 14,
+        "endLine": 276,
+        "endChar": 27
+      },
+      "revId": "749018291b3f4c974f942f84fbca02b7bdc6d9f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_a322ab4f",
+        "filename": "mapped-objects-model/src/main/java/org/opendaylight/nic/constraints/ClassifierConstraint.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-19T20:53:44Z",
+      "side": 1,
+      "message": "curly brackets",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 24
+      },
+      "revId": "749018291b3f4c974f942f84fbca02b7bdc6d9f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_831fa707",
+        "filename": "mapped-objects-model/src/main/java/org/opendaylight/nic/constraints/ClassifierConstraint.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-19T20:53:44Z",
+      "side": 1,
+      "message": "expand",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 53
+      },
+      "revId": "749018291b3f4c974f942f84fbca02b7bdc6d9f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_e3183320",
+        "filename": "mapped-objects-model/src/main/java/org/opendaylight/nic/constraints/QualityOfServiceConstraint.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-19T20:53:44Z",
+      "side": 1,
+      "message": "expand",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "749018291b3f4c974f942f84fbca02b7bdc6d9f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_c3152fe6",
+        "filename": "mapped-objects-model/src/main/java/org/opendaylight/nic/mapped/MappedObject.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-02-19T20:53:44Z",
+      "side": 1,
+      "message": "expand",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 75
+      },
+      "revId": "749018291b3f4c974f942f84fbca02b7bdc6d9f6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
