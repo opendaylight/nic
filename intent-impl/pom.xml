@@ -23,7 +23,7 @@
  <packaging>bundle</packaging>
 
  <properties>
-  <powermock.version>1.5.5</powermock.version>
+  <powermock.version>1.6.4</powermock.version>
   <lombok.version>1.16.4</lombok.version>
  </properties>
 

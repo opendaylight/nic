@@ -23,7 +23,7 @@
 
  <properties>
   <groupbasedpolicy.version>0.4.0-SNAPSHOT</groupbasedpolicy.version>
-  <powermock.version>1.5.5</powermock.version>
+  <powermock.version>1.6.4</powermock.version>
  </properties>
 
  <dependencies>

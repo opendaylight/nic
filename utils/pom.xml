@@ -23,7 +23,7 @@
  <packaging>bundle</packaging>
 
  <properties>
-  <powermock.version>1.5.5</powermock.version>
+  <powermock.version>1.6.4</powermock.version>
   <liblldp.version>0.11.0-SNAPSHOT</liblldp.version>
   <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
  </properties>

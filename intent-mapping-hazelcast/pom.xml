@@ -23,7 +23,7 @@
  <packaging>bundle</packaging>
 
  <properties>
-  <powermock.version>1.5.5</powermock.version>
+  <powermock.version>1.6.4</powermock.version>
   <karaf.cellar.version>3.0.3</karaf.cellar.version>
  </properties>
 
