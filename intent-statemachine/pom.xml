@@ -18,7 +18,7 @@
     </parent>
 
     <properties>
-        <powermock.version>1.5.5</powermock.version>
+        <powermock.version>1.6.4</powermock.version>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>

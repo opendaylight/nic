@@ -20,7 +20,7 @@
   <packaging>bundle</packaging>
   <properties>
     <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
-    <powermock.version>1.5.5</powermock.version>
+    <powermock.version>1.6.4</powermock.version>
     <nemo.version>1.1.0-SNAPSHOT</nemo.version>
   </properties>
   <dependencies>

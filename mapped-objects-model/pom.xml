@@ -23,7 +23,7 @@
  <packaging>bundle</packaging>
 
  <properties>
-  <powermock.version>1.5.5</powermock.version>
+  <powermock.version>1.6.4</powermock.version>
   <openflowplugin.version>0.3.0-SNAPSHOT</openflowplugin.version>
   <neutron.version>0.7.0-SNAPSHOT</neutron.version>
  </properties>
