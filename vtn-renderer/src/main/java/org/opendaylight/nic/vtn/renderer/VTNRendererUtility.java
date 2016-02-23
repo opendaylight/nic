@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
@@ -159,5 +160,20 @@ public class VTNRendererUtility {
             .build();
         Intent operationalIntent = new IntentBuilder(intent).setStatus(status).build();
         return mdsal.put(LogicalDatastoreType.OPERATIONAL, identifier, operationalIntent);
+    }
+
+    /**
+     * Delete an intent information into the OPERATIONAL data store.
+     *
+     * @param intent  The intent instance.
+     */
+    public boolean deleteNode(Intent intent) {
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        InstanceIdentifier<Intent> identifier = InstanceIdentifier.builder(Intents.class).
+                child(Intent.class, new IntentKey(intent.getId())).
+                build();
+        WriteTransaction writeTransactionNodes = dataBroker.newWriteOnlyTransaction();
+        writeTransactionNodes.delete(LogicalDatastoreType.OPERATIONAL, identifier);
+        return mdsal.delete(LogicalDatastoreType.OPERATIONAL, identifier);
     }
 }

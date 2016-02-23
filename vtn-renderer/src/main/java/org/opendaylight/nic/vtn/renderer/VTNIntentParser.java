@@ -305,7 +305,7 @@ public class VTNIntentParser {
                     }
                     if (((!(inSrcIP == null) && (!inSrcIP.equals(outSrcIP))) || (!(inDstIP == null) && (!inDstIP
                                .equals(outDscIP))) || !(isMACIP))) {
-                        delete(encodeUUID);
+                        delete(encodeUUID, intent);
                         boolean status = isCreateDefault();
                         if (status) {
                             createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
@@ -317,7 +317,7 @@ public class VTNIntentParser {
                         }
                     } else if (((!(inSrcMAC == null) && (!inSrcMAC.equals(outSrcMAC))) || (!(inDscMAC == null)
                         && (!inDscMAC.equals(outDscMAC))) || !(isIPMAC))) {
-                        delete(encodeUUID);
+                        delete(encodeUUID, intent);
                         boolean status = isCreateDefault();
                         if (status) {
                             createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
@@ -331,6 +331,9 @@ public class VTNIntentParser {
                         createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondRevIndex);
                     }
                 }
+                org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status isStatus = org.opendaylight
+                        .yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status.CompletedSuccess;
+                vtnRendererUtility.addIntent(intent, isStatus);
             } else {
                 LOG.warn("Invalid address is specified in Intent configuration: {}",
                          intentID);
@@ -348,7 +351,7 @@ public class VTNIntentParser {
      *
      * @param intentID  ID of the Deleting intent.
      */
-    public void delete(String intentID) {
+    public void delete(String intentID, Intent intent) {
         try {
             for (VtnFlowCondition flowCondition : readFlowConditions()) {
                 String lclfc = flowCondition.getName().getValue();
@@ -360,6 +363,7 @@ public class VTNIntentParser {
                     deleteFlowFilter(delflowfilterindex);
                 }
             }
+            vtnRendererUtility.deleteNode(intent);
             LOG.trace("Removed VTN configuration associated with the deleted Intent: {}", intentID);
             List<VtnFlowCondition> flowConditionList = readFlowConditions();
             if (flowConditionList.size() == 1) {
