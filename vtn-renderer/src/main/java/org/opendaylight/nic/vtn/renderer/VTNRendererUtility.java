@@ -19,12 +19,14 @@ import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,58 +154,34 @@ public class VTNRendererUtility {
     }
 
     /**
-     * Executes put as a blocking transaction.
+     * Add an intent information into the OPERATIONAL data store.
      *
-     * @param intent the intent instance
-     * @param isStatus the intent status.
-     * @return {@code = true} the intent is added successfully.
+     * @param intent  The intent instance.
+     * @param status  The intent status.
+     *
+     * @return {@code true} if the intent is added successfully.
      */
-    public boolean addIntent(Intent intent, Status isStatus) {
-        Intents intents;
-        List<Intent> listOfIntents = listIntents();
-        try {
-            InstanceIdentifier<Intents> identifier = InstanceIdentifier.builder(Intents.class).build();
-            Intent intentData = new IntentBuilder().setId(intent.getId()).setStatus(isStatus).build();
-
-            listOfIntents.add(intentData);
-            intents = new IntentsBuilder().setIntent(listOfIntents).build();
-            WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
-            tx.put(LogicalDatastoreType.CONFIGURATION, identifier, intents);
-            tx.submit();
-        } catch (Exception e) {
-            log.error("Add Intents: failed: {}", e);
-            return false;
-        }
-        log.info("The intent status is inserted successfully");
-        return true;
+    public boolean addIntent(Intent intent, Status status) {
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        InstanceIdentifier<Intent> identifier = InstanceIdentifier.builder(Intents.class).
+            child(Intent.class, new IntentKey(intent.getId())).
+            build();
+        Intent operationalIntent = new IntentBuilder(intent).setStatus(status).build();
+        return mdsal.put(LogicalDatastoreType.OPERATIONAL, identifier, operationalIntent);
     }
 
     /**
-     * Executes read as a blocking transaction.
-     * @return the result as the data object requested
+     * Delete an intent information into the OPERATIONAL data store.
+     *
+     * @param intent  The intent instance.
      */
-    private List<Intent> listIntents() {
-        Optional<Intents> optionalDataObject;
-        try {
-            InstanceIdentifier<Intents> identifier = InstanceIdentifier
-                    .builder(Intents.class).build();
-            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
-            CheckedFuture<Optional<Intents>, ReadFailedException> future = tx
-                    .read(LogicalDatastoreType.CONFIGURATION, identifier);
-            try {
-                optionalDataObject = future.checkedGet();
-                if (optionalDataObject.isPresent()) {
-                    listOfIntents = optionalDataObject.get().getIntent();
-                }
-            } catch (ReadFailedException ex) {
-                log.error("List Intents: inner catch failed: {}", ex);
-                return null;
-            }
-        } catch (Exception e) {
-            log.error("List of Intents: failed: {}", e);
-            return null;
-        }
-        log.info("List of Intents retrieved successfully");
-        return listOfIntents;
+    public boolean deleteNode(Intent intent) {
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        InstanceIdentifier<Intent> identifier = InstanceIdentifier.builder(Intents.class).
+                child(Intent.class, new IntentKey(intent.getId())).
+                build();
+        WriteTransaction writeTransactionNodes = dataBroker.newWriteOnlyTransaction();
+        writeTransactionNodes.delete(LogicalDatastoreType.OPERATIONAL, identifier);
+        return mdsal.delete(LogicalDatastoreType.OPERATIONAL, identifier);
     }
 }

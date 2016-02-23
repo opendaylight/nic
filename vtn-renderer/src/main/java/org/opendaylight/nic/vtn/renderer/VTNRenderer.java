@@ -142,7 +142,7 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
                     Uuid uuid = (Uuid) lclIntentKey.getId();
                     LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
                     String encodeUUID = vtnRendererUtility.encodeUUID(uuid.getValue());
-                    vtnIntentParser.delete(encodeUUID);
+                    vtnIntentParser.delete(encodeUUID, lclIntent);
                 }
             } catch (Exception e) {
                 LOG.error("Could not delete VTN Renderer :{} ", e);
