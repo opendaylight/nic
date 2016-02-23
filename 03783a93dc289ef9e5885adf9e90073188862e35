@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_0ae43adf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-02-23T18:53:36Z",
+      "side": 1,
+      "message": "I think it should be bug 5394.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "03783a93dc289ef9e5885adf9e90073188862e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_aacb8e51",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-02-23T18:53:36Z",
+      "side": 1,
+      "message": "I think we need to update the OPERATIONAL data store even in this \"else\" case.\n\nThough, first of all, I think we should NOT update OPERATIONAL data store in this method, since updateRendering method is a method for to update VTN elements.\nI think we update OPERATIONAL data store after this method is executed.\nBy the way, the updateRendering method is too complex. It would contains many bugs, I guess.",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 13
+      },
+      "revId": "03783a93dc289ef9e5885adf9e90073188862e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_cabed2ad",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-02-23T18:53:36Z",
+      "side": 1,
+      "message": "First of all, I think the explanation of this method is wrong. In my understanding, this method does not delete intents from the CONFIGURATION data store. So I think we should not update OPERATIONAL data store as well.",
+      "range": {
+        "startLine": 366,
+        "startChar": 12,
+        "endLine": 366,
+        "endChar": 50
+      },
+      "revId": "03783a93dc289ef9e5885adf9e90073188862e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_6a8066f7",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-02-23T18:53:36Z",
+      "side": 1,
+      "message": "Maybe \"from\" is better here.",
+      "range": {
+        "startLine": 174,
+        "startChar": 36,
+        "endLine": 174,
+        "endChar": 40
+      },
+      "revId": "03783a93dc289ef9e5885adf9e90073188862e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_aa7d4e1e",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-02-23T18:53:36Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this lines, since MdsalUtils.delete() does.",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 83
+      },
+      "revId": "03783a93dc289ef9e5885adf9e90073188862e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_ea9c766c",
+        "filename": "vtn-renderer/src/test/java/org/opendaylight/nic/vtn/renderer/VTNIntentParserTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-02-23T18:53:36Z",
+      "side": 1,
+      "message": "Mocking here doesn\u0027t make sense.\n\nI think we can purely use a object of the Intent.class here.\n\nIf you really mock that class here, you need to store the mock object into a local variable. Otherwise, you could not control the behavior of the mock object.\n\nThat being said, anyway I think we need to dramatically change this test case, since it doesn\u0027t make sense to me that mocking the target test class, that is, mocking VTN IntentParser class in this unit test. I mean anyway, this unit test doesn\u0027t test the VTNIntentParaser class properly.",
+      "range": {
+        "startLine": 315,
+        "startChar": 48,
+        "endLine": 315,
+        "endChar": 66
+      },
+      "revId": "03783a93dc289ef9e5885adf9e90073188862e35",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
