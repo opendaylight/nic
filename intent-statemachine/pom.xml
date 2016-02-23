@@ -17,10 +17,6 @@
         <relativePath />
     </parent>
 
-    <properties>
-        <powermock.version>1.5.5</powermock.version>
-    </properties>
-
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>intent-statemachine</artifactId>
@@ -55,13 +51,11 @@
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
-            <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
