@@ -8,15 +8,7 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.anyObject;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-
-import com.google.common.util.concurrent.CheckedFuture;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -35,8 +27,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInput;
@@ -68,6 +58,10 @@ public class VTNIntentParserTest extends TestBase {
      */
     private VTNManagerService mockVtnManagerService;
     /**
+     * Mock instance of Intent to perform unit testing.
+     */
+    private Intent mockIntent;
+    /**
      * It creates the required objects for every unit test cases.
      *
      * @throws Exception
@@ -75,6 +69,7 @@ public class VTNIntentParserTest extends TestBase {
     @Before
     public void setUp() throws Exception {
         dataBroker = Mockito.mock(DataBroker.class);
+        mockIntent = mock(Intent.class);
         mockVtnManagerService = PowerMockito.mock(VTNManagerService.class);
         spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
     }
@@ -167,7 +162,7 @@ public class VTNIntentParserTest extends TestBase {
          * in VTN Manager. Here testing invalid scenario by passing invalid
          * addresses.
          */
-        spyVTNIntentParser.rendering(INVALID_SRC_ADDRESS[0], INVALID_DST_ADDRESS[0], ACTIONS[0], ENCODED_UUID, mock(Intent.class));
+        spyVTNIntentParser.rendering(INVALID_SRC_ADDRESS[0], INVALID_DST_ADDRESS[0], ACTIONS[0], ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
@@ -178,7 +173,7 @@ public class VTNIntentParserTest extends TestBase {
          * configuration creation failed.
          */
         PowerMockito.doReturn(false).when(spyVTNIntentParser, "isCreateDefault");
-        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0], ENCODED_UUID, mock(Intent.class));
+        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0], ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
@@ -189,7 +184,7 @@ public class VTNIntentParserTest extends TestBase {
          * action.
          */
         PowerMockito.doReturn(true).when(spyVTNIntentParser, "isCreateDefault");
-        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[2], ENCODED_UUID, mock(Intent.class));
+        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[2], ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
@@ -202,19 +197,13 @@ public class VTNIntentParserTest extends TestBase {
         PowerMockito.doNothing().when(spyVTNIntentParser, "createFlowFilter",
                 Matchers.any(String.class), Matchers.any(String.class),
                 Matchers.any(String.class), Matchers.any(String.class));
-        WriteTransaction transaction = mock(WriteTransaction.class);
-        when(dataBroker.newWriteOnlyTransaction()).thenReturn(transaction);
-        CheckedFuture future = mock(CheckedFuture.class);
-        when(transaction.submit()).thenReturn(future);
         spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0],
-                VALID_DST_ADDRESS[0], ACTIONS[1], ENCODED_UUID, mock(Intent.class));
-        verify(transaction).put(eq(LogicalDatastoreType.OPERATIONAL),
-                any(InstanceIdentifier.class), any(Intent.class), anyBoolean());
+                VALID_DST_ADDRESS[0], ACTIONS[1], ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
                         Matchers.any(String.class));
-        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0], ENCODED_UUID, mock(Intent.class));
+        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0], ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(6))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
@@ -238,7 +227,7 @@ public class VTNIntentParserTest extends TestBase {
          * actions.
          */
         spyVTNIntentParser.updateRendering(INVALID_SRC_ADDRESS[0], INVALID_DST_ADDRESS[0], ACTIONS[0],
-                INTENT_ID, ENCODED_UUID, mock(Intent.class));
+                INTENT_ID, ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("constructCondName", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ENCODED_UUID, BOOLEAN_TRUE);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
@@ -250,7 +239,7 @@ public class VTNIntentParserTest extends TestBase {
          */
         PowerMockito.doReturn(mockFlowMatchList).when(spyVTNIntentParser, "listOfFlowMatch", Matchers.any(String.class));
         spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[0],
-                VALID_DST_ADDRESS[0], ACTIONS[0], INTENT_ID, ENCODED_UUID, mock(Intent.class));
+                VALID_DST_ADDRESS[0], ACTIONS[0], INTENT_ID, ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
                 .invoke("constructCondName", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ENCODED_UUID, BOOLEAN_TRUE);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
@@ -268,7 +257,7 @@ public class VTNIntentParserTest extends TestBase {
         PowerMockito.doReturn(mockMacAddress).when(mockEthernetMatch, "getDestinationAddress");
         PowerMockito.doReturn(true).when(spyVTNIntentParser, "isCreateDefault");
         spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[2],
-                VALID_DST_ADDRESS[2], ACTIONS[0], INTENT_ID, ENCODED_UUID, mock(Intent.class));
+                VALID_DST_ADDRESS[2], ACTIONS[0], INTENT_ID, ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
@@ -284,12 +273,12 @@ public class VTNIntentParserTest extends TestBase {
         PowerMockito.doReturn(mockEthernetMatch).when(mockFlowMatch, "getVtnEtherMatch");
         PowerMockito.doReturn(null).when(mockEthernetMatch, "getSourceAddress");
         spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[2],
-                VALID_DST_ADDRESS[2], ACTIONS[0], INTENT_ID, ENCODED_UUID, mock(Intent.class));
+                VALID_DST_ADDRESS[2], ACTIONS[0], INTENT_ID, ENCODED_UUID, mockIntent);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("delete", Matchers.any(String.class));
 
         spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[0],
-                VALID_DST_ADDRESS[0], ACTIONS[2], INTENT_ID, ENCODED_UUID, mock(Intent.class));
+                VALID_DST_ADDRESS[0], ACTIONS[2], INTENT_ID, ENCODED_UUID, mockIntent);
     }
 
     /**

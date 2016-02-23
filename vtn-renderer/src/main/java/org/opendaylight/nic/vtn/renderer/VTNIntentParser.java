@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 NEC Corporation and others.  All rights reserved.
+ * Copyright (c) 2015, 2016 NEC Corporation and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.naming.ServiceUnavailableException;
-
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
@@ -32,7 +30,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.Rem
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.RemoveFlowConditionInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.conditions.VtnFlowCondition;
@@ -58,6 +55,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeUpdateMode;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,11 +74,6 @@ public class VTNIntentParser {
      * Setting the virtual Bridge name created during first intent request.
      */
     private static final String BRIDGE_NAME = "default";
-
-    /**
-     * The default Container name used in VTN Manager.
-     */
-    private static final String CONTAINER_NAME = "default";
 
     private static final String MATCH_ANY = "match_any";
 
@@ -194,8 +187,9 @@ public class VTNIntentParser {
      * @param action  Valid Actions.
      * @param encodeUUID the encodeUUID value of intent ID.
      * @param intent the intent instance.
+     * @return CompletedSuccess is returned if VTN elements are successfully created.
      */
-    public void rendering(final String adressSrc, final String adressDst,
+    public Status rendering(final String adressSrc, final String adressDst,
             String action, String encodeUUID, Intent intent) {
         try {
             if ((vtnRendererUtility.validateIP(adressSrc))
@@ -206,7 +200,7 @@ public class VTNIntentParser {
                 boolean status = isCreateDefault();
                 if (!status) {
                     LOG.error("Default VTN configuration creation failed");
-                    return;
+                    return Status.CompletedError;
                 }
                 String condNameSrcDst = constructCondName(adressSrc, adressDst, encodeUUID, true);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc, encodeUUID, false);
@@ -214,7 +208,7 @@ public class VTNIntentParser {
                           .equalsIgnoreCase(action) ? "DROP" : "NA";
                 if (whichAction.equalsIgnoreCase("NA")) {
                     LOG.error("Unsupported Action {}", whichAction);
-                    return;
+                    return Status.CompletedError;
                 }
                 createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
                 createFlowCond(adressDst, adressSrc, condNameDstSrc, REVERSE_FLOWCOND);
@@ -223,18 +217,16 @@ public class VTNIntentParser {
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondRevIndex);
 
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, "DROP", MATCH_ANY);
-                org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status isStatus = org.opendaylight
-                        .yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status.CompletedSuccess;
-                vtnRendererUtility.addIntent(intent, isStatus);
                 LOG.trace("VTN configuration is successfully updated for user Intents.");
+                return Status.CompletedSuccess;
             } else {
-                LOG.error("Invalid Address");
+                LOG.warn("Invalid address is specified in Intent configuration: {}",
+                         intent.getId());
+                return Status.CompletedError;
             }
         } catch (Exception e) {
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status isStatus = org.opendaylight
-                    .yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status.CompletedError;
-            vtnRendererUtility.addIntent(intent, isStatus);
             LOG.error("Unable to create VTN Objects {}", e);
+            return Status.CompletedError;
         }
     }
 
@@ -247,8 +239,9 @@ public class VTNIntentParser {
      * @param intentID  ID of the updating intent.
      * @param encodeUUID ID of the encode UUID.
      * @param intent The intent instance.
+     * @return CompletedSuccess is returned if VTN elements are successfully updated.
      */
-    public void updateRendering(final String adressSrc, final String adressDst,
+    public Status updateRendering(final String adressSrc, final String adressDst,
         String action, String intentID, String encodeUUID, Intent intent) {
         String inSrcIP = null;
         String outSrcIP  = null;
@@ -274,7 +267,7 @@ public class VTNIntentParser {
                         .equalsIgnoreCase(action) ? "DROP" : "NA";
                 if (whichAction.equalsIgnoreCase("NA")) {
                     LOG.error("Unsupported Action {}", whichAction);
-                    return;
+                    return Status.CompletedError;
                 }
                 List<VtnFlowMatch> flowMatch = listOfFlowMatch(encodeUUID);
                 for (VtnFlowMatch fm : flowMatch) {
@@ -331,20 +324,20 @@ public class VTNIntentParser {
                         createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondRevIndex);
                     }
                 }
+                return Status.CompletedSuccess;
             } else {
                 LOG.warn("Invalid address is specified in Intent configuration: {}",
                          intentID);
+                return Status.CompletedError;
             }
         } catch (Exception e) {
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status isStatus = org.opendaylight
-                    .yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status.CompletedError;
-            vtnRendererUtility.addIntent(intent, isStatus);
             LOG.error("Unable to update VTN Objects {}", e);
+            return Status.CompletedError;
         }
     }
 
     /**
-     * Delete a particular intent
+     * Delete the flow condition and flow filter associated with a particular intent.
      *
      * @param intentID  ID of the Deleting intent.
      */
@@ -595,7 +588,6 @@ public class VTNIntentParser {
      */
     private void createFlowFilter(String tenantName, String bridgeName,
             String type, String condName) {
-        boolean in = false;
         int index = 0;
         if (condName.equalsIgnoreCase(MATCH_ANY)) {
             index = LOW_PRIORITY;
@@ -735,13 +727,11 @@ public class VTNIntentParser {
     /**
      * Read all the flow conditions from the MD-SAL datastore.
      *
-     * @param rtx  A {@link ReadTransaction} instance.
      * @return  A list of {@link VtnFlowCondition} instances.
      */
     private  List<VtnFlowCondition> readFlowConditions() {
         List<VtnFlowCondition> vlist = new ArrayList<>();;
         try {
-            ReadTransaction rtx = dataProvider.newReadOnlyTransaction();
             InstanceIdentifier<VtnFlowConditions> path =
                 InstanceIdentifier.create(VtnFlowConditions.class);
             LogicalDatastoreType oper = LogicalDatastoreType.OPERATIONAL;
