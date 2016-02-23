@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 NEC Corporation and others.  All rights reserved.
+ * Copyright (c) 2015, 2016 NEC Corporation and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -26,6 +26,7 @@ import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
@@ -143,6 +144,11 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
                     LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
                     String encodeUUID = vtnRendererUtility.encodeUUID(uuid.getValue());
                     vtnIntentParser.delete(encodeUUID);
+                    if (!vtnRendererUtility.deleteIntent(lclIntent)) {
+                        LOG.error("Intent data's are not deleted from operational data store", uuid.getValue());
+                        return;
+                    }
+                    LOG.trace("Intent data's are successfully deleted from operational data store", uuid.getValue());
                 }
             } catch (Exception e) {
                 LOG.error("Could not delete VTN Renderer :{} ", e);
@@ -213,20 +219,16 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
         }
         // get the encode UUID value
         String encodeUUID = vtnRendererUtility.encodeUUID(intentID);
+        Status intentStatus = Status.CompletedError;
         // Convert the intent to VTN configuration.
-        if (hasRendered(encodeUUID)) {
-            vtnIntentParser.updateRendering(endPointSrc, endPointDst, actionType, intentID, encodeUUID, intent);
+        if (vtnIntentParser.containsIntentID(encodeUUID)) {
+            intentStatus = vtnIntentParser.updateRendering(endPointSrc, endPointDst, actionType,
+                intentID, encodeUUID, intent);
         } else {
-            vtnIntentParser.rendering(endPointSrc, endPointDst, actionType, encodeUUID, intent);
+            intentStatus = vtnIntentParser.rendering(endPointSrc, endPointDst, actionType, encodeUUID, intent);
         }
+        LOG.trace("intent status: intentID={}, intentStatus={}", intentID, intentStatus);
+        vtnRendererUtility.addIntent(intent, intentStatus);
     }
 
-    /**
-     * Return {@code true} if it has already rendered the specified intent.
-     *
-     * @param intentId  the intent ID.
-     */
-    private boolean hasRendered(String intentId) {
-        return vtnIntentParser.containsIntentID(intentId);
-    }
 }

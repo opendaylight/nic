@@ -160,4 +160,19 @@ public class VTNRendererUtility {
         Intent operationalIntent = new IntentBuilder(intent).setStatus(status).build();
         return mdsal.put(LogicalDatastoreType.OPERATIONAL, identifier, operationalIntent);
     }
+
+    /**
+     * Delete an intent information from the OPERATIONAL data store.
+     *
+     * @param intent  The intent to be deleted from the OPERATIONAL data store.
+     *
+     * @return {@code true} if the intent is deleted successfully.
+     */
+    public boolean deleteIntent(Intent intent) {
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        InstanceIdentifier<Intent> identifier = InstanceIdentifier.builder(Intents.class)
+            .child(Intent.class, new IntentKey(intent.getId()))
+            .build();
+        return mdsal.delete(LogicalDatastoreType.OPERATIONAL, identifier);
+    }
 }
