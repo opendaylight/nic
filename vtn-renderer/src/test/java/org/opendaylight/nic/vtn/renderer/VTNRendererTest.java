@@ -332,7 +332,6 @@ public class VTNRendererTest {
         asyncDataChangeEvent = mock(AsyncDataChangeEvent.class);
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        PowerMockito.doReturn(true).when(vtnRendererObj, "hasRendered", anyString());
         verify(mockVTNIntentParser, times(0)).updateRendering(anyString(),
                 anyString(), anyString(), anyString(),
                 anyString(), Matchers.any(Intent.class));
@@ -376,7 +375,6 @@ public class VTNRendererTest {
         when(actions.getAction()).thenReturn(mock(Allow.class), mock(Block.class), null);
         listActions.add(actions);
         when(intent.getActions()).thenReturn(null, emptyList, listActions);
-        PowerMockito.doReturn(true).when(vtnRendererObj, "hasRendered", anyString());
         /**
          * Verifying vtnRenderer object invoking updateRendering method
          * when getActions() returns null, empty list and list contains actions object.
