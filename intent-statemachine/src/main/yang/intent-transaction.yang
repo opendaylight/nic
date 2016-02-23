@@ -1,5 +1,5 @@
 module intent-transaction {
-    namespace "urn:opendaylight:nic:intent:statemachine";
+    namespace "urn:opendaylight:nic:intent:transaction";
     prefix "intent-transaction";
 
     import intent-types { prefix types; revision-date 2015-01-22; }
