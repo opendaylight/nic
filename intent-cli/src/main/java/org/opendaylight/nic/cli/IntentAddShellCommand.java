@@ -246,11 +246,9 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
     }
 
     /**
-     * Returns the list of Constraints.
+     * Method to input default entry to QoS
      */
-    protected List<Constraints> createConstraints() throws InvalidObjectException {
-        final List<Constraints> constraintsList = new ArrayList<Constraints>();
-        short order = 1;
+    void defaultQoSEntry () {
         // Default entry to constraints for QOS
         Gson gson = new Gson();
         MappedObject defaultQoS = new QualityOfServiceConstraint(DEFAULT);
@@ -260,43 +258,56 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
         Map<String, String> defaultMap = new HashMap<>();
         defaultMap.put(NicProvider.CONSTRAINT_QOS, object);
         mappingService.add(NicProvider.CONSTRAINT_QOS, defaultMap);
+    }
+
+    /**
+     * Returns the list of Constraints.
+     */
+    protected List<Constraints> createConstraints() throws InvalidObjectException {
+        final List<Constraints> constraintsList = new ArrayList<Constraints>();
+        short order = 1;
 
         //Check the list for new constraints
         for (String intentConstraint : this.constraints) {
             org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = null;
-
-            Map<String, String> mappedConstraint = mappingService.get(intentConstraint);
-
-            if(mappedConstraint.isEmpty()) {
-                throw new InvalidObjectException(buildConstraintNotFoundMessage(intentConstraint));
-            }
-
             MappedObject mappedObject = null;
-            try {
-                if ((mappedObject = MappedObject.extractFirstMappedObject(mappedConstraint, MappedObject.class)) == null) {
+
+            if (this.profilename.isEmpty()) {
+                this.profilename = null;
+            } else {
+                Map<String, String> mappedConstraint = mappingService.get(intentConstraint);
+
+                if(mappedConstraint.isEmpty()) {
                     throw new InvalidObjectException(buildConstraintNotFoundMessage(intentConstraint));
                 }
-            } catch (JsonSyntaxException exception) {
-                LOG.error("JSON format unknown, unable to parse");
-                throw new InvalidObjectException("Unknown JSON format!");
+
+                try {
+                    if ((mappedObject = MappedObject.extractFirstMappedObject(mappedConstraint, MappedObject.class)) == null) {
+                        throw new InvalidObjectException(buildConstraintNotFoundMessage(intentConstraint));
+                    }
+                } catch (JsonSyntaxException exception) {
+                    LOG.error("JSON format unknown, unable to parse");
+                    throw new InvalidObjectException("Unknown JSON format!");
+                }
+                // FIXME Mapped Object for QoS is not pushing flows
+                QualityOfServiceConstraint qos = QualityOfServiceConstraint.fromMappedObject(mappedObject);
+                this.profilename = qos.getProfileName();
             }
 
-            //FIXME check for mappedObject type
             if (intentConstraint.equalsIgnoreCase(NicProvider.CONSTRAINT_QOS)) {
                 LOG.info("QoS Constraint match");
 
-                // FIXME Mapped Object for QoS is not pushing flows
-                //QualityOfServiceConstraint qos = QualityOfServiceConstraint.fromMappedObject(mappedObject);
-                //this.profilename = (this.profilename.isEmpty()) ? qos.getProfileName() : this.profilename;
-
                 constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints
                         .QosConstraintBuilder().setQosConstraint(new QosConstraintBuilder().setQosName(this.profilename).build()).build();
-            } else if (mappedObject.type().equals(ClassifierConstraint.TYPE)) {
+            }  else if (intentConstraint.equalsIgnoreCase(NicProvider.CONSTRAINT_CLASSIFIER)) {
                 LOG.info("Classifier Constraint match");
-                ClassifierConstraint classifier = ClassifierConstraint.fromMappedObject(mappedObject);
+                if (mappedObject.type().equals(ClassifierConstraint.TYPE)) {
+                    ClassifierConstraint classifier = ClassifierConstraint.fromMappedObject(mappedObject);
+                }
                 constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints
                         .ClassificationConstraintBuilder().setClassificationConstraint(new ClassificationConstraintBuilder().setClassifier(intentConstraint).build()).build();
-            } else {
+            }
+            else {
                 LOG.info("No Constraint match");
                 continue;
                 //throw new InvalidObjectException(buildConstraintNotFoundMessage(intentConstraint));
