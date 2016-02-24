@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 NEC Corporation and others.  All rights reserved.
+ * Copyright (c) 2015, 2016 NEC Corporation and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -8,28 +8,23 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.base.Optional;
-import com.google.common.util.concurrent.CheckedFuture;
 
 /**
  * The VTNRendererUtility consists of common methods to perform general functions.
@@ -40,12 +35,10 @@ public class VTNRendererUtility {
 
     private DataBroker dataBroker;
 
-    private List<Intent> listOfIntents;
-
     public VTNRendererUtility(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
-        this.listOfIntents = new ArrayList<Intent>();
     }
+
     /**
      * Validates the received IP address
      *
@@ -152,58 +145,19 @@ public class VTNRendererUtility {
     }
 
     /**
-     * Executes put as a blocking transaction.
+     * Put an operational information of an intent into the OPERATIONAL data store.
      *
-     * @param intent the intent instance
-     * @param isStatus the intent status.
-     * @return {@code = true} the intent is added successfully.
+     * @param intent  The intent to be added into the OPERATIONAL data store.
+     * @param status  The intent status.
+     *
+     * @return {@code true} if the intent is added successfully.
      */
-    public boolean addIntent(Intent intent, Status isStatus) {
-        Intents intents;
-        List<Intent> listOfIntents = listIntents();
-        try {
-            InstanceIdentifier<Intents> identifier = InstanceIdentifier.builder(Intents.class).build();
-            Intent intentData = new IntentBuilder().setId(intent.getId()).setStatus(isStatus).build();
-
-            listOfIntents.add(intentData);
-            intents = new IntentsBuilder().setIntent(listOfIntents).build();
-            WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
-            tx.put(LogicalDatastoreType.CONFIGURATION, identifier, intents);
-            tx.submit();
-        } catch (Exception e) {
-            log.error("Add Intents: failed: {}", e);
-            return false;
-        }
-        log.info("The intent status is inserted successfully");
-        return true;
-    }
-
-    /**
-     * Executes read as a blocking transaction.
-     * @return the result as the data object requested
-     */
-    private List<Intent> listIntents() {
-        Optional<Intents> optionalDataObject;
-        try {
-            InstanceIdentifier<Intents> identifier = InstanceIdentifier
-                    .builder(Intents.class).build();
-            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
-            CheckedFuture<Optional<Intents>, ReadFailedException> future = tx
-                    .read(LogicalDatastoreType.CONFIGURATION, identifier);
-            try {
-                optionalDataObject = future.checkedGet();
-                if (optionalDataObject.isPresent()) {
-                    listOfIntents = optionalDataObject.get().getIntent();
-                }
-            } catch (ReadFailedException ex) {
-                log.error("List Intents: inner catch failed: {}", ex);
-                return null;
-            }
-        } catch (Exception e) {
-            log.error("List of Intents: failed: {}", e);
-            return null;
-        }
-        log.info("List of Intents retrieved successfully");
-        return listOfIntents;
+    public boolean addIntent(Intent intent, Status status) {
+        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        InstanceIdentifier<Intent> identifier = InstanceIdentifier.builder(Intents.class)
+            .child(Intent.class, new IntentKey(intent.getId()))
+            .build();
+        Intent operationalIntent = new IntentBuilder(intent).setStatus(status).build();
+        return mdsal.put(LogicalDatastoreType.OPERATIONAL, identifier, operationalIntent);
     }
 }

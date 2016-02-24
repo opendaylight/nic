@@ -8,7 +8,15 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+
+import com.google.common.util.concurrent.CheckedFuture;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -27,6 +35,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInput;
@@ -37,6 +47,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.R
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeUpdateMode;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
 /**
  * JUnit test for {@link VTNIntentParser}.
@@ -191,8 +202,14 @@ public class VTNIntentParserTest extends TestBase {
         PowerMockito.doNothing().when(spyVTNIntentParser, "createFlowFilter",
                 Matchers.any(String.class), Matchers.any(String.class),
                 Matchers.any(String.class), Matchers.any(String.class));
+        WriteTransaction transaction = mock(WriteTransaction.class);
+        when(dataBroker.newWriteOnlyTransaction()).thenReturn(transaction);
+        CheckedFuture future = mock(CheckedFuture.class);
+        when(transaction.submit()).thenReturn(future);
         spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0],
                 VALID_DST_ADDRESS[0], ACTIONS[1], ENCODED_UUID, mock(Intent.class));
+        verify(transaction).put(eq(LogicalDatastoreType.OPERATIONAL),
+                any(InstanceIdentifier.class), any(Intent.class), anyBoolean());
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
