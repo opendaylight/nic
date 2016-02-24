@@ -20,7 +20,6 @@ module received-event {
             enum INTENTUPDATED;
             enum INTENTREMOVED;
         }
-        config false;
         description "Wrapper for Intent and Network events.";
     }
 }
