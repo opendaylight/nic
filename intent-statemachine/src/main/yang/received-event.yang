@@ -1,5 +1,5 @@
 module received-event {
-    namespace "urn:opendaylight:nic:intent:statemachine";
+    namespace "urn:opendaylight:nic:received:event";
     prefix "received-event";
 
     description
