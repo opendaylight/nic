@@ -274,7 +274,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
             if (this.profilename.isEmpty()) {
                 this.profilename = null;
-            } else {
+            } else if(!mappingService.get(intentConstraint).isEmpty()) {
                 Map<String, String> mappedConstraint = mappingService.get(intentConstraint);
 
                 if(mappedConstraint.isEmpty()) {
