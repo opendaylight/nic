@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
@@ -41,9 +44,18 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.GetDisjointPathInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.GetDisjointPathOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.GetDisjointPathOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.GetShortestPathInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.GetShortestPathOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.GetShortestPathOutputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.OfRendererService;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yangtools.yang.common.RpcResult;
+import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -52,11 +64,16 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
+import com.google.gson.Gson;
 
 /**
  * Created by saket on 8/19/15.
  */
-public class OFRendererFlowManagerProvider implements OFRendererFlowService, Observer, AutoCloseable {
+public class OFRendererFlowManagerProvider implements OfRendererService, OFRendererFlowService, Observer, AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(OFRendererFlowManagerProvider.class);
 
@@ -73,6 +90,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private Registration pktInRegistration;
     private RedirectFlowManager redirectFlowManager;
     private Subject topic;
+    private final ListeningExecutorService executor =
+            MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
 
     private NotificationProviderService notificationProviderService;
 
@@ -361,4 +380,75 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     public void setSubject(Subject sub) {
         this.topic = sub;
     }
+
+	@Override
+	public String getShortestPath(String srcIP, String dstIP) {
+		String sourceNodeConnectorId = intentMappingService.get(srcIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+		String targetNodeConnectorId = intentMappingService.get(dstIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId sourceNodeId = extractTopologyNodeId(sourceNodeConnectorId);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId destinationNodeId = extractTopologyNodeId(targetNodeConnectorId);
+
+		List<Link> paths = graphService.getShortestPath(sourceNodeId, destinationNodeId);
+
+		if (paths == null || paths.size() == 0)
+			return "No data found.";
+
+		return new Gson().toJson(paths);
+	}
+
+	@Override
+	public String getDisjointPaths(String srcIP, String dstIP) {
+		String sourceNodeConnectorId = intentMappingService.get(srcIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+		String targetNodeConnectorId = intentMappingService.get(dstIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId sourceNodeId = extractTopologyNodeId(sourceNodeConnectorId);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId destinationNodeId = extractTopologyNodeId(targetNodeConnectorId);
+
+		List<List<Link>> paths = graphService.getDisjointPaths(sourceNodeId, destinationNodeId);
+
+		if (paths == null || paths.size() == 0)
+			return "No data found.";
+
+		return new Gson().toJson(paths);
+	}
+
+	@Override
+	public Future<RpcResult<GetDisjointPathOutput>> getDisjointPath(GetDisjointPathInput input) {
+		String json = getDisjointPaths(input.getSourceIp(), input.getDestinationIp());
+		GetDisjointPathOutput output = new GetDisjointPathOutputBuilder().setPath(json).build();
+		return executor.submit(new Callable<RpcResult<GetDisjointPathOutput>>(){
+            @Override
+            public RpcResult<GetDisjointPathOutput> call() throws Exception {
+                return RpcResultBuilder.<GetDisjointPathOutput> success(output).build();
+            }
+        });
+	}
+
+    @Override
+	public Future<RpcResult<GetShortestPathOutput>> getShortestPath(GetShortestPathInput input) {
+		String json = getDisjointPaths(input.getSourceIp(), input.getDestinationIp());
+		GetShortestPathOutput output = new GetShortestPathOutputBuilder().setPath(json).build();
+
+		return executor.submit(new Callable<RpcResult<GetShortestPathOutput>>(){
+            @Override
+            public RpcResult<GetShortestPathOutput> call() throws Exception {
+                return RpcResultBuilder.<GetShortestPathOutput> success(output).build();
+            }
+        });
+	}
 }
