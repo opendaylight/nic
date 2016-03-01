@@ -54,7 +54,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
     }
 
     @Override
-    void pushFlow(NodeId nodeId, FlowAction flowAction) {
+    public void pushFlow(NodeId nodeId, FlowAction flowAction) {
         // TODO Auto-generated method stub
     }
 
@@ -64,7 +64,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
      * @param flowAction :Add flow action
      * @param outputPort :Port to which packet should be sent to after pushing label
      */
-    void pushMplsFlow(NodeId nodeId, FlowAction flowAction, String outputPort) {
+    public void pushMplsFlow(NodeId nodeId, FlowAction flowAction, String outputPort) {
         if (endPointGroups == null || action == null) {
             LOG.error("Endpoints and action cannot be null");
             return;
@@ -120,7 +120,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
      * @param flowAction :Add flow action
      * @param outputPort :Port to which packet should be sent to after popping label
      */
-    void popMplsFlow(NodeId nodeId, FlowAction flowAction, String outputPort) {
+    public void popMplsFlow(NodeId nodeId, FlowAction flowAction, String outputPort) {
         if (endPointGroups == null || action == null) {
             LOG.error("Endpoints and action cannot be null");
             return;
@@ -167,7 +167,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
      * @param flowAction :Add flow action
      * @param outputPort :Port to which packet should be forwarded
      */
-    void forwardMplsFlow(NodeId nodeId, FlowAction flowAction, String outputPort) {
+    public void forwardMplsFlow(NodeId nodeId, FlowAction flowAction, String outputPort) {
         if (endPointGroups == null || action == null) {
             LOG.error("Endpoints and action cannot be null");
             return;

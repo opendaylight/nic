@@ -119,7 +119,7 @@ public class QosConstraintManager extends AbstractFlowManager {
      * Set the flow for action and constraints.
      */
     @Override
-    void pushFlow(NodeId nodeId, FlowAction flowAction) {
+    public  void pushFlow(NodeId nodeId, FlowAction flowAction) {
         if (endPointGroups == null || action == null) {
             LOG.error("Endpoints and action cannot be null");
             return;
