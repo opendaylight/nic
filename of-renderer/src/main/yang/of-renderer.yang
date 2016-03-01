@@ -17,6 +17,38 @@ module of-renderer {
         description "Initial revision.";
     }
 
+    rpc get-shortest-path{
+        input {
+            leaf source-ip {
+                type string;
+            }
+            leaf destination-ip {
+                type string;
+            }
+        }
+        output {
+            leaf path {
+                type string;
+            }
+        }
+    }
+
+    rpc get-disjoint-path{
+        input {
+            leaf source-ip {
+                type string;
+            }
+            leaf destination-ip {
+                type string;
+            }
+        }
+        output {
+            leaf path {
+                type string;
+            }
+        }
+    }
+
         // This is the definition of the service implementation as a module identity
         identity of-renderer {
                 base config:module-type;

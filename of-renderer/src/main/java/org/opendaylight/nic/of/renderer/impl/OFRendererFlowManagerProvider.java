@@ -52,6 +52,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
+import com.google.gson.Gson;
 
 /**
  * Created by saket on 8/19/15.
@@ -361,4 +362,50 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     public void setSubject(Subject sub) {
         this.topic = sub;
     }
+
+	@Override
+	public String getShortestPath(String srcIP, String dstIP) {
+		String sourceNodeConnectorId = intentMappingService.get(srcIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+		String targetNodeConnectorId = intentMappingService.get(dstIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId sourceNodeId = extractTopologyNodeId(sourceNodeConnectorId);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId destinationNodeId = extractTopologyNodeId(targetNodeConnectorId);
+
+		List<Link> paths = graphService.getShortestPath(sourceNodeId, destinationNodeId);
+
+		if (paths == null || paths.size() == 0)
+			return "No data found.";
+
+		return new Gson().toJson(paths);
+	}
+
+	@Override
+	public String getDisjointPaths(String srcIP, String dstIP) {
+		String sourceNodeConnectorId = intentMappingService.get(srcIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+		String targetNodeConnectorId = intentMappingService.get(dstIP)
+                .get(OFRendererConstants.SWITCH_PORT_KEY);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId sourceNodeId = extractTopologyNodeId(sourceNodeConnectorId);
+
+		org.opendaylight.yang.gen.v1.urn
+        .tbd.params.xml.ns.yang.network
+        .topology.rev131021.NodeId destinationNodeId = extractTopologyNodeId(targetNodeConnectorId);
+
+		List<List<Link>> paths = graphService.getDisjointPaths(sourceNodeId, destinationNodeId);
+
+		if (paths == null || paths.size() == 0)
+			return "No data found.";
+
+		return new Gson().toJson(paths);
+	}
 }
