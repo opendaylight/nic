@@ -1,5 +1,6 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819;
 
+import org.opendaylight.controller.sal.binding.api.BindingAwareBroker;
 import org.opendaylight.nic.of.renderer.impl.OFRendererFlowManagerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,21 @@ public class OFRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.o
                                                   getPipelineManagerDependency(),
                                                   getIntentMappingInterfaceDependency(),
                                                   getNotificationServiceDependency());
+
+        final BindingAwareBroker.RpcRegistration<OfRendererService> rpcRegistration = getRpcRegistryDependency()
+                .addRpcImplementation(OfRendererService.class, provider);
+
         provider.init();
-        return provider;
+
+        final class AutoCloseableToaster implements AutoCloseable {
+
+            @Override
+            public void close() throws Exception {
+                provider.close();
+                rpcRegistration.close();
+            }
+        }
+        return new AutoCloseableToaster();
     }
 
 }

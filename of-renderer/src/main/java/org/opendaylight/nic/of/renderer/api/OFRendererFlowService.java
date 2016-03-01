@@ -34,7 +34,7 @@ public interface OFRendererFlowService {
      */
     void pushLLDPFlow(NodeId nodeId, FlowAction flowAction);
 
-    String getShortestPath(String srcIP, String dstIP);
+    String getShortestPath(String sourceNodeConnectorId, String targetNodeConnectorId);
 
-    String getDisjointPaths(String srcIP, String dstIP);
+    String getDisjointPaths(String sourceNodeConnectorId, String targetNodeConnectorId);
 }

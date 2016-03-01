@@ -64,8 +64,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.gson.Gson;
@@ -382,13 +380,8 @@ public class OFRendererFlowManagerProvider implements OfRendererService, OFRende
     }
 
 	@Override
-	public String getShortestPath(String srcIP, String dstIP) {
-		String sourceNodeConnectorId = intentMappingService.get(srcIP)
-                .get(OFRendererConstants.SWITCH_PORT_KEY);
-		String targetNodeConnectorId = intentMappingService.get(dstIP)
-                .get(OFRendererConstants.SWITCH_PORT_KEY);
-
-		org.opendaylight.yang.gen.v1.urn
+	public String getShortestPath(String sourceNodeConnectorId, String targetNodeConnectorId) {
+        org.opendaylight.yang.gen.v1.urn
         .tbd.params.xml.ns.yang.network
         .topology.rev131021.NodeId sourceNodeId = extractTopologyNodeId(sourceNodeConnectorId);
 
@@ -405,12 +398,7 @@ public class OFRendererFlowManagerProvider implements OfRendererService, OFRende
 	}
 
 	@Override
-	public String getDisjointPaths(String srcIP, String dstIP) {
-		String sourceNodeConnectorId = intentMappingService.get(srcIP)
-                .get(OFRendererConstants.SWITCH_PORT_KEY);
-		String targetNodeConnectorId = intentMappingService.get(dstIP)
-                .get(OFRendererConstants.SWITCH_PORT_KEY);
-
+	public String getDisjointPaths(String sourceNodeConnectorId, String targetNodeConnectorId) {
 		org.opendaylight.yang.gen.v1.urn
         .tbd.params.xml.ns.yang.network
         .topology.rev131021.NodeId sourceNodeId = extractTopologyNodeId(sourceNodeConnectorId);
@@ -429,8 +417,9 @@ public class OFRendererFlowManagerProvider implements OfRendererService, OFRende
 
 	@Override
 	public Future<RpcResult<GetDisjointPathOutput>> getDisjointPath(GetDisjointPathInput input) {
-		String json = getDisjointPaths(input.getSourceIp(), input.getDestinationIp());
+		String json = getDisjointPaths(input.getSourceNode(), input.getDestinationNode());
 		GetDisjointPathOutput output = new GetDisjointPathOutputBuilder().setPath(json).build();
+
 		return executor.submit(new Callable<RpcResult<GetDisjointPathOutput>>(){
             @Override
             public RpcResult<GetDisjointPathOutput> call() throws Exception {
@@ -441,7 +430,7 @@ public class OFRendererFlowManagerProvider implements OfRendererService, OFRende
 
     @Override
 	public Future<RpcResult<GetShortestPathOutput>> getShortestPath(GetShortestPathInput input) {
-		String json = getDisjointPaths(input.getSourceIp(), input.getDestinationIp());
+		String json = getShortestPath(input.getSourceNode(), input.getDestinationNode());
 		GetShortestPathOutput output = new GetShortestPathOutputBuilder().setPath(json).build();
 
 		return executor.submit(new Callable<RpcResult<GetShortestPathOutput>>(){

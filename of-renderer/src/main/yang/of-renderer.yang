@@ -19,10 +19,10 @@ module of-renderer {
 
     rpc get-shortest-path{
         input {
-            leaf source-ip {
+            leaf source-node {
                 type string;
             }
-            leaf destination-ip {
+            leaf destination-node {
                 type string;
             }
         }
@@ -35,10 +35,10 @@ module of-renderer {
 
     rpc get-disjoint-path{
         input {
-            leaf source-ip {
+            leaf source-node {
                 type string;
             }
-            leaf destination-ip {
+            leaf destination-node {
                 type string;
             }
         }
