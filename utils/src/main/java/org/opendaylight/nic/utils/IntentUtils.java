@@ -7,9 +7,12 @@
  */
 package org.opendaylight.nic.utils;
 
+import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
+import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupSelector;
@@ -18,6 +21,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -30,6 +34,14 @@ public class IntentUtils {
 
     private static final int NUM_OF_SUPPORTED_ACTION = 1;
     private static final int  NUM_OF_SUPPORTED_EPG = 2;
+
+    //TODO: Remove duplicated constants
+    public static final Integer SRC_END_POINT_GROUP_INDEX = 0;
+    public static final Integer DST_END_POINT_GROUP_INDEX = 1;
+
+    private static final String NO_ACTION_FOUND_MESSAGE = "No action found for Intent ID: ";
+    private static final String INVALID_SUBJECT_MESSAGE = "Subject is not specified for Intent ID: ";
+    private static final String NO_END_POINT_FOUND_MESSAGE = "No EndPoint found for Intent ID: ";
 
     private IntentUtils() {
     }
@@ -120,11 +132,72 @@ public class IntentUtils {
         return Arrays.asList(endPointGroups);
     }
 
-    public static void verifySubjectInstance(Subject subject, Uuid intentId) {
+    public static List<EndPointGroup> extractEndPointGroups(Intent intent) throws IntentElementNotFoundException {
+        final Uuid intentId = intent.getId();
+        final List<Subjects> subjects = intent.getSubjects();
+        final List<EndPointGroup> endPointGroups = new ArrayList<>();
+
+        for(Subjects subj : subjects) {
+            try {
+                final Subject subject = subj.getSubject();
+                verifySubjectInstance(subject, intentId);
+                final EndPointGroup endPointGroup = (EndPointGroup) subject;
+                endPointGroups.add(endPointGroup);
+            } catch (IntentElementNotFoundException ie) {
+                throw ie;
+            }
+        }
+        return endPointGroups;
+    }
+
+    public static EndPointGroup extractSrcEndPointGroup(final Intent intent)
+            throws IntentInvalidException {
+        EndPointGroup srcEndPointGroup;
+        try {
+            final List<EndPointGroup> endPointGroups = extractEndPointGroups(intent);
+            srcEndPointGroup = extractEndPointGroup(endPointGroups, SRC_END_POINT_GROUP_INDEX);
+        } catch (IntentElementNotFoundException ie) {
+            throw new IntentInvalidException(ie.getMessage());
+        }
+        return srcEndPointGroup;
+    }
+
+    public static EndPointGroup extractDstEndPointGroup(final Intent intent)
+            throws IntentInvalidException {
+        EndPointGroup dstEndPointGroup;
+        try {
+            final List<EndPointGroup> endPointGroups = extractEndPointGroups(intent);
+            dstEndPointGroup = extractEndPointGroup(endPointGroups, DST_END_POINT_GROUP_INDEX);
+        } catch (IntentElementNotFoundException ie) {
+            throw new IntentInvalidException(ie.getMessage());
+        }
+        return dstEndPointGroup;
+    }
+
+    private static EndPointGroup extractEndPointGroup(List<EndPointGroup> endPointGroups, int targetIndex)
+            throws IntentElementNotFoundException {
+        EndPointGroup endPointGroup;
+        endPointGroup = endPointGroups.get(targetIndex);
+        if (endPointGroup == null) {
+            throw new IntentElementNotFoundException(NO_END_POINT_FOUND_MESSAGE);
+        }
+        return endPointGroup;
+    }
+
+    public static void verifySubjectInstance(Subject subject, Uuid intentId) throws IntentElementNotFoundException {
         if (!(subject instanceof EndPointGroup)
                 && !(subject instanceof EndPointSelector)
                 && !(subject instanceof EndPointGroupSelector)) {
             LOG.info("Subject is not specified: {}", intentId);
+            throw new IntentElementNotFoundException(INVALID_SUBJECT_MESSAGE + intentId.getValue());
         }
+    }
+
+    public static Action getAction(Intent intent) {
+        Action result = intent.getActions().get(0).getAction();
+        if(result == null) {
+            throw new IntentElementNotFoundException(NO_ACTION_FOUND_MESSAGE + intent.getId());
+        }
+        return result;
     }
 }
