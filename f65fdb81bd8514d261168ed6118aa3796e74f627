@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_50f09ffd",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2016-03-01T14:45:39Z",
+      "side": 1,
+      "message": "We can move all the retrieve mapping service content to a another util file, cause this will be used multiple times. Even used in intentAddShellCommand",
+      "range": {
+        "startLine": 249,
+        "startChar": 32,
+        "endLine": 249,
+        "endChar": 56
+      },
+      "revId": "f65fdb81bd8514d261168ed6118aa3796e74f627",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b0f12b03",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/strategy/MPLSExecutor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2016-03-01T14:45:39Z",
+      "side": 1,
+      "message": "Similar function as before",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 66
+      },
+      "revId": "f65fdb81bd8514d261168ed6118aa3796e74f627",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_d0db0f7a",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentElementNotFoundException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2016-03-01T14:45:39Z",
+      "side": 1,
+      "message": "Maybe create a separate folder for all exceptions under utils?",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "f65fdb81bd8514d261168ed6118aa3796e74f627",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
