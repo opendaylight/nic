@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a3d3df0_24cb1320",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-03-04T23:57:12Z",
+      "side": 1,
+      "message": "I agree that we need support it, but this patch is just a refactoring. I put this \"TODO\" to be implemented in another moment using Command Pattern. Do you agree?",
+      "parentUuid": "9a3d3df0_1bebd378",
+      "revId": "f65fdb81bd8514d261168ed6118aa3796e74f627",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3d3df0_50f09ffd",
         "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
         "patchSetId": 1
