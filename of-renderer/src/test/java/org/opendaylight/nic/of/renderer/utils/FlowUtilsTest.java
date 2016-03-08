@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Dscp;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCase;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PopMplsActionCase;
@@ -43,6 +44,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.acti
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetDestination;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetDestinationBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFields;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFieldsBuilder;
 import org.powermock.api.mockito.PowerMockito;
@@ -178,5 +183,35 @@ public class FlowUtilsTest {
             assertEquals((int)dscp << 2, tos);
         }
         assertEquals(0xfc, FlowUtils.dscpToTos((short)0xffff));
+    }
+
+    @Test
+    public void testCreateSetFieldDestinationMacAddressAction() throws Exception {
+        ActionBuilder ab = mock(ActionBuilder.class);
+        PowerMockito.whenNew(ActionBuilder.class).withNoArguments().thenReturn(ab);
+
+        EthernetMatchBuilder ethernetMatchBuilder = mock(EthernetMatchBuilder.class);
+        PowerMockito.whenNew(EthernetMatchBuilder.class).withNoArguments().thenReturn(ethernetMatchBuilder);
+
+        when(ethernetMatchBuilder.setEthernetDestination(any(EthernetDestination.class))).thenReturn(ethernetMatchBuilder);
+
+        when(ab.setOrder(any(Integer.class))).thenReturn(ab);
+        PowerMockito.whenNew(ActionKey.class).withAnyArguments().thenReturn(mock(ActionKey.class));
+        when(ab.setKey(any(ActionKey.class))).thenReturn(ab);
+
+        SetFieldCaseBuilder setFieldCaseBuilder = mock(SetFieldCaseBuilder.class);
+        PowerMockito.whenNew(SetFieldCaseBuilder.class).withNoArguments().thenReturn(setFieldCaseBuilder);
+        when(setFieldCaseBuilder.setSetField(any(SetField.class))).thenReturn(setFieldCaseBuilder);
+        when(ab.setAction(any(SetFieldCase.class))).thenReturn(ab);
+        SetFieldBuilder setFieldBuilder = mock(SetFieldBuilder.class);
+        PowerMockito.whenNew(SetFieldBuilder.class).withNoArguments().thenReturn(setFieldBuilder);
+        when(setFieldBuilder.setProtocolMatchFields(any(ProtocolMatchFields.class))).thenReturn(setFieldBuilder);
+        when(ethernetMatchBuilder.build()).thenReturn(mock(EthernetMatch.class));
+        when(setFieldBuilder.build()).thenReturn(mock(SetField.class));
+        when(setFieldCaseBuilder.build()).thenReturn(mock(SetFieldCase.class));
+
+        Action action = mock(Action.class);
+        when(ab.build()).thenReturn(action);
+        assertEquals("Failed to return correct Action object", action, FlowUtils.createSetFieldDestinationMacAddress(0, "d2:00:1f:e5:8b:e4"));
     }
 }
