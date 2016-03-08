@@ -48,4 +48,6 @@ public class OFRendererConstants {
 
     public static final String INTENT_MPLS_FLOW_NAME = "MPLS_Rule_";
 
+    public static final String SERVER_DESTINATION_MAC_ADDRESS = "server_mac_address";
+
 }
