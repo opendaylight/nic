@@ -11,6 +11,7 @@ package org.opendaylight.nic.of.renderer.utils;
 import org.opendaylight.controller.liblldp.EtherTypes;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Dscp;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.OutputActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PopMplsActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.PushMplsActionCaseBuilder;
@@ -18,6 +19,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.acti
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.output.action._case.OutputActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.pop.mpls.action._case.PopMplsActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.push.mpls.action._case.PushMplsActionBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetField;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.field._case.SetFieldBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.SetNwTosActionCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.action.set.nw.tos.action._case.SetNwTosAction;
@@ -26,7 +28,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.acti
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.ActionKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.OutputPortValues;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.EthernetMatchFields;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetDestination;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetDestinationBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetTypeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatchBuilder;
@@ -116,7 +122,7 @@ public class FlowUtils {
         if (popLabel) {
             PopMplsActionBuilder popMplsActionBuilder = new PopMplsActionBuilder();
             // EthernetType will change based on the packet resulting after the topmost MPLS header has been removed
-            popMplsActionBuilder.setEthernetType(EtherTypes.MPLSUCAST.intValue());
+            popMplsActionBuilder.setEthernetType(EtherTypes.IPv4.intValue());
             ab.setOrder(order).setKey(new ActionKey(order)).setAction(new PopMplsActionCaseBuilder().setPopMplsAction(popMplsActionBuilder.build()).build());
             action = ab.build();
         } else {
@@ -194,5 +200,33 @@ public class FlowUtils {
      */
     public static int dscpToTos(short dscpValue) {
         return ((dscpValue & MASK_IP_DSCP) << NBITS_IP_ECN);
+    }
+
+    /**
+     *
+     * @param order An integer representing the order of the Action
+     * within the table.
+     * @param macAddress Destination MAC address
+     * @return Action with an order
+     */
+    public static Action createSetFieldDestinationMacAddress(int order, String macAddress) {
+        Action action;
+        ActionBuilder ab = new ActionBuilder();
+
+        MacAddress address = MacAddress.getDefaultInstance(macAddress);
+        EthernetDestination destination = new EthernetDestinationBuilder().setAddress(address).build();
+
+        EthernetMatchBuilder builder = new EthernetMatchBuilder();
+        builder.setEthernetDestination(destination);
+
+        EthernetMatch ethernetMatch = builder.build();
+        SetFieldBuilder setFieldBuilder = new SetFieldBuilder();
+        setFieldBuilder.setEthernetMatch(ethernetMatch);
+        SetField setField = setFieldBuilder.build();
+        org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.Action acction = new SetFieldCaseBuilder().
+                setSetField(setField).build();
+        ab.setOrder(order).setKey(new ActionKey(order)).setAction(acction);
+        action = ab.build();
+        return action;
     }
 }

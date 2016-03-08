@@ -134,6 +134,28 @@ public abstract class AbstractFlowManager {
                                                         Short bos,
                                                         String outputPort,
                                                         boolean forward) {
+        return createMPLSIntentInstructions(labels, popLabel, bos, outputPort, forward, null);
+    }
+
+    /**
+     * To create MPLS VPN intents three actions are pushed for a match made
+     * 1. push_mpls or pop_mpls action
+     * 2. set_field to mpls label
+     * 3. output to a switch port
+     * @param labels List of MPLS labels
+     * @param popLabel Boolean for pop action
+     * @param bos Bottom of Stack value
+     * @param outputPort OVS port to output the packet to
+     * @param forward Boolean for forward MPLS packet action
+     * @param macAddress Server destination MAC Address
+     * @return A set of OpenFlow {@link Instructions} that have been construction
+     */
+    protected Instructions createMPLSIntentInstructions(List<Long> labels,
+                                                        boolean popLabel,
+                                                        Short bos,
+                                                        String outputPort,
+                                                        boolean forward,
+                                                        String macAddress) {
         int order = 0;
         List<Action> actionList = new ArrayList<>();
         if(!forward) {
@@ -141,6 +163,8 @@ public abstract class AbstractFlowManager {
                 actionList.add(FlowUtils.createMPLSAction(order++, popLabel));
                 if (!popLabel) {
                     actionList.add(FlowUtils.createSetFieldMPLSLabelAction(order++, labelValue, bos));
+                } else if (macAddress != null){
+                    actionList.add(FlowUtils.createSetFieldDestinationMacAddress(order++, macAddress));
                 }
             }
         }
