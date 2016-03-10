@@ -115,13 +115,17 @@ public class MappingMdsalProvider implements IntentMappingService,
                                                        .child(OuterMap.class, mapKey)
                                                        .build();
         List<InnerMap> innerMap = new ArrayList<>();
-        for (String keyy : objs.keySet()) {
-            String valuee = objs.get(keyy);
-            InnerMap innerElement = new InnerMapBuilder().setInnerKey(keyy).setValue(valuee).build();
-            innerMap.add(innerElement);
+
+        if (objs != null && objs.size() > 0){
+            for (String keyy : objs.keySet()) {
+                String valuee = objs.get(keyy);
+                InnerMap innerElement = new InnerMapBuilder().setInnerKey(keyy).setValue(valuee).build();
+                innerMap.add(innerElement);
+            }
         }
+
         OuterMap outerMap = new OuterMapBuilder().setId(key).setKey(mapKey).setInnerMap(innerMap).build();
-        // FIXME Copy data from config to oper on the datachange
+
         mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, outerMapIid, outerMap);
     }
 
@@ -133,8 +137,7 @@ public class MappingMdsalProvider implements IntentMappingService,
                                                        .child(OuterMap.class,
                                                               new OuterMapKey(key))
                                                        .build();
-        // We want the Operational data
-        //FIXME use datachange to sync config datachange to oper
+
         OuterMap outerMap = mdsalUtils.read(LogicalDatastoreType.CONFIGURATION, outerMapIid);
 
         if (outerMap != null && outerMap.getInnerMap() != null && !outerMap.getInnerMap().isEmpty()) {
