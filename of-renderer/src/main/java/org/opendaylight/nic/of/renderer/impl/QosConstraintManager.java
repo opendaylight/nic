@@ -7,7 +7,6 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.google.common.base.Optional;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -25,8 +24,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.M
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.Qos;
@@ -64,11 +61,6 @@ public class QosConstraintManager extends AbstractFlowManager {
      * The Constraint profile name.
      */
     private String qosName = null;
-
-    /**
-     * The instance for FlowStatisticsListener.
-     */
-    private FlowStatisticsListener flowStatisticsListener;
 
     /**
      * Set the EndPointGroups.
@@ -112,7 +104,6 @@ public class QosConstraintManager extends AbstractFlowManager {
      */
     public QosConstraintManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
-        flowStatisticsListener = new FlowStatisticsListener(dataBroker);
     }
 
     /**
@@ -139,12 +130,13 @@ public class QosConstraintManager extends AbstractFlowManager {
             List<Intent> intentList = listIntents();
             for (Intent intentValue : intentList) {
                 if (intentValue.getQosConfig() != null) {
-                    Qos qosContainerDscp = (Qos) intentValue.getQosConfig().get(0).getQos();
-                    Qos qosContainerName = (Qos) intentValue.getQosConfig().get(1).getQos();
-                    if (((DscpType) qosContainerName).getDscpType().getName() != null) {
-                        String profileNames = ((DscpType) qosContainerName).getDscpType().getName();
-                        Dscp dscpValues = ((DscpType) qosContainerDscp).getDscpType().getDscp();
+                    Qos qosContainer = (Qos) intentValue.getQosConfig().get(0).getQos();
+                    if (((DscpType) qosContainer).getDscpType().getName() != null) {
+                        String profileNames = ((DscpType) qosContainer).getDscpType().getName();
+                        Dscp dscpValues = ((DscpType) qosContainer).getDscpType().getDscp();
+                        LOG.debug("Profile Name: {} and DSCP Value: {}", profileNames, dscpValues);
                         if (profileNames.equalsIgnoreCase(qosName)) {
+                            LOG.trace("Profile name: {} and QoS Constraint Name: {} is a match", profileNames, qosName);
                             Instructions buildedInstructions = createQoSInstructions(dscpValues, OutputPortValues.NORMAL);
                             flowBuilder.setInstructions(buildedInstructions);
                             writeDataTransaction(nodeId, flowBuilder, flowAction);
@@ -186,7 +178,7 @@ public class QosConstraintManager extends AbstractFlowManager {
         MacAddress srcMac = null;
         MacAddress dstMac = null;
 
-        LOG.info("Creating block intent for endpoints: source{} destination {}", endPointSrc, endPointDst);
+        LOG.info("Creating intent for endpoints: source{} destination {}", endPointSrc, endPointDst);
         try {
             if (!endPointSrc.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
                 srcMac = new MacAddress(endPointSrc);
