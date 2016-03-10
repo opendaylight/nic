@@ -33,8 +33,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
 public class IntentQoSConfigAddShellCommand extends OsgiCommandSupport {
 
     protected NicConsoleProvider provider;
-    private static final int FIRST_QOS_PROFILE_NAME = 1;
-    private static final int SECOND_DSCP_VALUE = 2;
+    private static final int FIRST_QOS = 1;
 
     @Option(name = "-p",
             aliases = { "--name" },
@@ -81,18 +80,14 @@ public class IntentQoSConfigAddShellCommand extends OsgiCommandSupport {
         int dscpToInt = Integer.parseInt(this.dscp);
         Dscp dscpValue = new Dscp((short) dscpToInt);
         final List<QosConfig> qosConfigList = new ArrayList<QosConfig>();
-        DscpType nameType = new DscpTypeBuilder().setName(this.name).build();
+        DscpType dscpType = new DscpTypeBuilder().setName(this.name).setDscp(dscpValue).build();
         org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos.DscpType qosName =
                 new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos
-                .DscpTypeBuilder().setDscpType(nameType).build();
-        QosConfig qosConfigName = new QosConfigBuilder().setOrder((short) FIRST_QOS_PROFILE_NAME).setQos(qosName).build();
-        DscpType dscpType = new DscpTypeBuilder().setDscp(dscpValue).build();
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos.DscpType qosDscpValue =
-                new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos
                 .DscpTypeBuilder().setDscpType(dscpType).build();
-        QosConfig qosConfigDscp = new QosConfigBuilder().setOrder((short) SECOND_DSCP_VALUE).setQos(qosDscpValue).build();
-        qosConfigList.add(qosConfigName);
-        qosConfigList.add(qosConfigDscp);
+
+        QosConfig qosConfig = new QosConfigBuilder().setOrder((short) FIRST_QOS).setQos(qosName).build();
+        qosConfigList.add(qosConfig);
+
         return qosConfigList;
     }
 }
