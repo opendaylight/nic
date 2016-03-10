@@ -9,32 +9,23 @@
 package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.nic.listeners.api.GraphEdgeAdded;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class GraphEdgeAddedImpl implements GraphEdgeAdded {
-    private Set<Edges> edges;
+    private Edges edge;
     private final Timestamp timeStamp;
 
-    public GraphEdgeAddedImpl(Graph graph) {
-        this.edges = new HashSet<Edges>(graph.getEdges());
-        Date date= new Date();
-        timeStamp = new Timestamp(date.getTime());
-    }
-
-    public GraphEdgeAddedImpl(Set<Edges> edges) {
-        this.edges = edges;
+    public GraphEdgeAddedImpl(Edges edge) {
+        this.edge = edge;
         Date date= new Date();
         timeStamp = new Timestamp(date.getTime());
     }
 
     @Override
-    public Set<Edges> getEdge() { return edges; }
+    public Edges getEdge() { return edge; }
 
     @Override
     public Timestamp getTimeStamp() {

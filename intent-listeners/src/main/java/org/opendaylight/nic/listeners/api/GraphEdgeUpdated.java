@@ -10,14 +10,12 @@ package org.opendaylight.nic.listeners.api;
 
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 
-import java.util.Set;
-
 /** Interface for edge listener
  */
 public interface GraphEdgeUpdated extends NicNotification {
 
     /** Method to get edges
-     * @return Collection of edges
+     * @return Updated edge
      */
-    Set<Edges> getEdge();
+    Edges getEdge();
 }

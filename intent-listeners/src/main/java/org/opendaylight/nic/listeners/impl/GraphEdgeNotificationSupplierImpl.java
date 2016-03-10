@@ -13,6 +13,7 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,10 @@ import org.slf4j.LoggerFactory;
  * and {@link GraphEdgeAdded} notifications.
  */
 public class GraphEdgeNotificationSupplierImpl extends
-        AbstractNotificationSupplierItemRoot<Graph, GraphEdgeAdded, GraphEdgeDeleted, GraphEdgeUpdated> implements IEventService {
+        AbstractNotificationSupplierItemRoot<Edges, GraphEdgeAdded, GraphEdgeDeleted, GraphEdgeUpdated> implements IEventService {
 
-    private static final InstanceIdentifier<Graph> GRAPH_IID =
-            InstanceIdentifier.create(Graph.class);
+    private static final InstanceIdentifier<Edges> EDGE_IID =
+            InstanceIdentifier.create(Graph.class).child(Edges.class);
 
     private static final Logger LOG = LoggerFactory.getLogger(GraphEdgeNotificationSupplierImpl.class);
     /**
@@ -34,17 +35,17 @@ public class GraphEdgeNotificationSupplierImpl extends
      * @param db                   - {@link DataBroker}
      */
     public GraphEdgeNotificationSupplierImpl(final DataBroker db) {
-        super(db, Graph.class, LogicalDatastoreType.CONFIGURATION);
+        super(db, Edges.class, LogicalDatastoreType.CONFIGURATION);
         serviceRegistry.setEventTypeService(this, EventType.GRAPH_EDGE_ADDED, EventType.GRAPH_EDGE_DELETED, EventType.GRAPH_EDGE_UPDATED);
     }
 
     @Override
-    public InstanceIdentifier<Graph> getWildCardPath() {
-        return GRAPH_IID;
+    public InstanceIdentifier<Edges> getWildCardPath() {
+        return EDGE_IID;
     }
 
     @Override
-    public GraphEdgeAdded createNotification(final Graph object, final InstanceIdentifier<Graph> ii) {
+    public GraphEdgeAdded createNotification(final Edges object, final InstanceIdentifier<Edges> ii) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(ii != null);
         return new GraphEdgeAddedImpl(object);
@@ -52,16 +53,16 @@ public class GraphEdgeNotificationSupplierImpl extends
     }
 
     @Override
-    public GraphEdgeDeleted deleteNotification(final Graph object,
-                                          final InstanceIdentifier<Graph> ii) {
+    public GraphEdgeDeleted deleteNotification(final Edges object,
+                                          final InstanceIdentifier<Edges> ii) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(ii != null);
         return new GraphEdgeDeletedImpl(object);
     }
 
     @Override
-    public GraphEdgeUpdated updateNotification(final Graph object,
-                                              InstanceIdentifier<Graph> ii) {
+    public GraphEdgeUpdated updateNotification(final Edges object,
+                                              InstanceIdentifier<Edges> ii) {
         Preconditions.checkArgument(object != null);
         Preconditions.checkArgument(ii != null);
         return new GraphEdgeUpdatedImpl(object);
