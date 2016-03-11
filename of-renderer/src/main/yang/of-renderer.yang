@@ -27,7 +27,7 @@ module of-renderer {
             }
         }
         output {
-            leaf path {
+            leaf route {
                 type string;
             }
         }
@@ -43,7 +43,7 @@ module of-renderer {
             }
         }
         output {
-            leaf path {
+            leaf route {
                 type string;
             }
         }

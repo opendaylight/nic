@@ -418,7 +418,7 @@ public class OFRendererFlowManagerProvider implements OfRendererService, OFRende
 	@Override
 	public Future<RpcResult<GetDisjointPathOutput>> getDisjointPath(GetDisjointPathInput input) {
 		String json = getDisjointPaths(input.getSourceNode(), input.getDestinationNode());
-		GetDisjointPathOutput output = new GetDisjointPathOutputBuilder().setPath(json).build();
+		GetDisjointPathOutput output = new GetDisjointPathOutputBuilder().setRoute(json).build();
 
 		return executor.submit(new Callable<RpcResult<GetDisjointPathOutput>>(){
             @Override
@@ -431,7 +431,7 @@ public class OFRendererFlowManagerProvider implements OfRendererService, OFRende
     @Override
 	public Future<RpcResult<GetShortestPathOutput>> getShortestPath(GetShortestPathInput input) {
 		String json = getShortestPath(input.getSourceNode(), input.getDestinationNode());
-		GetShortestPathOutput output = new GetShortestPathOutputBuilder().setPath(json).build();
+		GetShortestPathOutput output = new GetShortestPathOutputBuilder().setRoute(json).build();
 
 		return executor.submit(new Callable<RpcResult<GetShortestPathOutput>>(){
             @Override
