@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_ecad809c",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/QosConstraintManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-03-11T15:48:49Z",
+      "side": 1,
+      "message": "I believe this is a debug log?",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 32
+      },
+      "revId": "27b319b974268e21fba7ef008e8786e3283e7a23",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
