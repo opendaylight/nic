@@ -143,7 +143,7 @@ public class IntentFlowManager extends AbstractFlowManager {
         String direction = securityRule.getSecurityRuleDirection();
 
         if (portMin != null && portMax != null) {
-            if (protocol.compareTo("ProtocolIcmp") == 0) {
+            if ( (protocol.compareTo("ProtocolIcmp") == 0) || (protocol.compareTo("1") == 0) ) {
                 matchBuilder = new MatchBuilder();
                 //For ICMP portMin is the type and portMax is the code
                 matchBuilder = MatchUtils.createICMPv4Match(matchBuilder, portMin.shortValue(), portMax.shortValue());
@@ -192,18 +192,18 @@ public class IntentFlowManager extends AbstractFlowManager {
                                          String protocol, String direction) {
         PortNumber portNumber = new PortNumber(port);
         if (direction.compareTo("DirectionIngress") == 0) {
-            if (protocol.compareTo("ProtocolTcp") == 0) {
+            if ( (protocol.compareTo("ProtocolTcp") == 0) || (protocol.compareTo("6") == 0) ) {
                 matchBuilder = MatchUtils.createSetSrcTcpMatch(matchBuilder, portNumber);
             }
-            else if (protocol.compareTo("ProtocolUdp") == 0) {
+            else if ( (protocol.compareTo("ProtocolUdp")) == 0 || (protocol.compareTo("17") == 0) ) {
                 matchBuilder = MatchUtils.createSetSrcUdpMatch(matchBuilder, portNumber);
             }
         }
         else if (direction.compareTo("DirectionEgress") == 0) {
-            if (protocol.compareTo("ProtocolTcp") == 0) {
+            if ( (protocol.compareTo("ProtocolTcp") == 0) || (protocol.compareTo("6") == 0) ) {
                 matchBuilder = MatchUtils.createSetDstTcpMatch(matchBuilder, portNumber);
             }
-            else if (protocol.compareTo("ProtocolUdp") == 0) {
+            else if ( (protocol.compareTo("ProtocolUdp")) == 0 || (protocol.compareTo("17") == 0) ) {
                 matchBuilder = MatchUtils.createSetDstUdpMatch(matchBuilder, portNumber);
             }
         }
