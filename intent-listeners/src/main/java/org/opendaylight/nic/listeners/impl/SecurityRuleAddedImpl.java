@@ -29,7 +29,7 @@ public class SecurityRuleAddedImpl implements SecurityRuleAdded {
             securityRule.setSecurityRuleDirection(secRule.getDirection().getSimpleName());
         }
         if (secRule.getProtocol() != null) {
-            securityRule.setSecurityRuleProtocol(secRule.getProtocol().getSimpleName());
+            securityRule.setSecurityRuleProtocol(String.valueOf(secRule.getProtocol().getValue()));
         }
         if (secRule.getEthertype() != null) {
             securityRule.setSecurityRuleEthertype(secRule.getEthertype().getSimpleName());

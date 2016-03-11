@@ -41,6 +41,24 @@ import org.slf4j.LoggerFactory;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
+    /**
+     * Standard assigned protocol number for TCP
+     * Refer to http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
+     */
+    private static final String TCP_INTEGER = "6";
+
+    /**
+     * Standard assigned protocol number for UDP
+     * Refer to http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
+     */
+    private static final String UDP_INTEGER = "17";
+
+    /**
+     * Standard assigned protocol number for ICMP
+     * Refer to http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
+     */
+    private static final String ICMP_INTEGER = "1";
+
     private List<String> endPointGroups = null;
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(IntentFlowManager.class);
@@ -143,7 +161,7 @@ public class IntentFlowManager extends AbstractFlowManager {
         String direction = securityRule.getSecurityRuleDirection();
 
         if (portMin != null && portMax != null) {
-            if (protocol.compareTo("ProtocolIcmp") == 0) {
+            if ( (protocol.compareTo("ProtocolIcmp") == 0) || (protocol.compareTo(ICMP_INTEGER) == 0) ) {
                 matchBuilder = new MatchBuilder();
                 //For ICMP portMin is the type and portMax is the code
                 matchBuilder = MatchUtils.createICMPv4Match(matchBuilder, portMin.shortValue(), portMax.shortValue());
@@ -192,18 +210,18 @@ public class IntentFlowManager extends AbstractFlowManager {
                                          String protocol, String direction) {
         PortNumber portNumber = new PortNumber(port);
         if (direction.compareTo("DirectionIngress") == 0) {
-            if (protocol.compareTo("ProtocolTcp") == 0) {
+            if ( (protocol.compareTo("ProtocolTcp") == 0) || (protocol.compareTo(TCP_INTEGER) == 0) ) {
                 matchBuilder = MatchUtils.createSetSrcTcpMatch(matchBuilder, portNumber);
             }
-            else if (protocol.compareTo("ProtocolUdp") == 0) {
+            else if ( (protocol.compareTo("ProtocolUdp")) == 0 || (protocol.compareTo(UDP_INTEGER) == 0) ) {
                 matchBuilder = MatchUtils.createSetSrcUdpMatch(matchBuilder, portNumber);
             }
         }
         else if (direction.compareTo("DirectionEgress") == 0) {
-            if (protocol.compareTo("ProtocolTcp") == 0) {
+            if ( (protocol.compareTo("ProtocolTcp") == 0) || (protocol.compareTo(TCP_INTEGER) == 0) ) {
                 matchBuilder = MatchUtils.createSetDstTcpMatch(matchBuilder, portNumber);
             }
-            else if (protocol.compareTo("ProtocolUdp") == 0) {
+            else if ( (protocol.compareTo("ProtocolUdp")) == 0 || (protocol.compareTo(UDP_INTEGER) == 0) ) {
                 matchBuilder = MatchUtils.createSetDstUdpMatch(matchBuilder, portNumber);
             }
         }
