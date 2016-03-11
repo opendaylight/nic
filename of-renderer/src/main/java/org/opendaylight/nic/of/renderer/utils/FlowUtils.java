@@ -116,7 +116,7 @@ public class FlowUtils {
         if (popLabel) {
             PopMplsActionBuilder popMplsActionBuilder = new PopMplsActionBuilder();
             // EthernetType will change based on the packet resulting after the topmost MPLS header has been removed
-            popMplsActionBuilder.setEthernetType(EtherTypes.MPLSUCAST.intValue());
+            popMplsActionBuilder.setEthernetType(EtherTypes.IPv4.intValue());
             ab.setOrder(order).setKey(new ActionKey(order)).setAction(new PopMplsActionCaseBuilder().setPopMplsAction(popMplsActionBuilder.build()).build());
             action = ab.build();
         } else {
