@@ -101,6 +101,8 @@ public class ListenerProviderImplTest {
                 mock(EndpointDiscoveredNotificationSupplierImpl.class);
         TopologyLinkNotificationSupplierImpl mockLinkSupp =
                 mock(TopologyLinkNotificationSupplierImpl.class);
+        GraphEdgeNotificationSupplierImpl mockEdgeSupp =
+                mock(GraphEdgeNotificationSupplierImpl.class);
 
         PowerMockito.whenNew(NodeNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockNodeSupp);
@@ -116,6 +118,8 @@ public class ListenerProviderImplTest {
                 withAnyArguments().thenReturn(mockEndpointResolver);
         PowerMockito.whenNew(TopologyLinkNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockLinkSupp);
+        PowerMockito.whenNew(GraphEdgeNotificationSupplierImpl.class).
+                withAnyArguments().thenReturn(mockEdgeSupp);
 
         provider.start();
 
@@ -130,7 +134,9 @@ public class ListenerProviderImplTest {
                 eq(mockEndpointResolver), Mockito.any(EndpointDiscoveryNotificationSubscriberImpl.class));
         verify(mockRegistryServiceImpl).registerEventListener(
                 eq(mockLinkSupp), Mockito.any(TopologyLinkNotificationSubscriberImpl.class));
-        verify(mockSupplierList,times(6)).add(Mockito.any(NotificationSupplierDefinition.class));
+        verify(mockRegistryServiceImpl).registerEventListener(
+                eq(mockEdgeSupp), Mockito.any(GraphEdgeNotificationSubscriberImpl.class));
+        verify(mockSupplierList, times(7)).add(Mockito.any(NotificationSupplierDefinition.class));
 
     }
 }

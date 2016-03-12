@@ -26,10 +26,12 @@ public class IntentNotificationSubscriberImpl implements IEventListener<NicNotif
     public void handleEvent(NicNotification event) {
         if (IntentAdded.class.isInstance(event)) {
             IntentAdded addedEvent = (IntentAdded) event;
+            //TODO: Recompile graph on intent addition
             flowService.pushIntentFlow(addedEvent.getIntent(), FlowAction.ADD_FLOW);
         }
         if (IntentRemoved.class.isInstance(event)) {
             IntentRemoved deleteEvent = (IntentRemoved) event;
+            //TODO: Recompile graph on intent deletion
             flowService.pushIntentFlow(deleteEvent.getIntent(), FlowAction.REMOVE_FLOW);
         }
     }

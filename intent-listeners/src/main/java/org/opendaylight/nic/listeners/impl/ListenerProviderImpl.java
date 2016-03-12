@@ -20,6 +20,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.Fl
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +81,14 @@ public class ListenerProviderImpl implements AutoCloseable {
         NotificationSupplierForItemRoot<Link, TopologyLinkUp, TopologyLinkDeleted, NicNotification> linkSupp =
                 new TopologyLinkNotificationSupplierImpl(db);
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
+        NotificationSupplierForItemRoot<Edges, GraphEdgeAdded, GraphEdgeDeleted, GraphEdgeUpdated> edgeNotificationSupplier =
+            new GraphEdgeNotificationSupplierImpl(db);
 
         // Event listeners
         IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
+        GraphEdgeNotificationSubscriberImpl edgeNotificationListener = new GraphEdgeNotificationSubscriberImpl(flowService);
+        serviceRegistry.registerEventListener( (IEventService) edgeNotificationSupplier, edgeNotificationListener);
         NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
         EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =
@@ -99,6 +105,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(secGroupSupp);
         supplierList.add(secRulesSupp);
         supplierList.add(linkSupp);
+        supplierList.add(edgeNotificationSupplier);
     }
 
     @Override
