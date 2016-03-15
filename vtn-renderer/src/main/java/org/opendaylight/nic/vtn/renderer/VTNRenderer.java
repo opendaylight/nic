@@ -13,9 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
@@ -24,30 +21,29 @@ import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.nic.utils.MdsalUtils;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The VTNRenderer class parse the intents received.
  */
 public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataChangeListener {
-  private static final Logger LOG = LoggerFactory
+    private static final Logger LOG = LoggerFactory
             .getLogger(VTNRenderer.class);
 
     private VTNIntentParser vtnIntentParser;
@@ -74,11 +70,11 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
      */
     private static final int  INDEX_OF_DST_END_POINT_GROUP = 1;
 
-    private DataBroker dataProvider;
-
     private ListenerRegistration<DataChangeListener> vtnRendererListener = null;
 
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
+
+    private Intent intent;
 
     /**
      * {@inheritDoc}
@@ -92,19 +88,19 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
     }
 
     /**
-     * Method invoked by Factory class.
+     * Gets called on start of a bundle.
      * @param session the session object
      */
     @Override
-    public void onSessionInitiated(ProviderContext session) {
+    public void onSessionInitiated(final ProviderContext session) {
 
-        this.dataProvider = session.getSALService(DataBroker.class);
-        MdsalUtils md = new MdsalUtils(this.dataProvider);
-        VTNManagerService vtn = new VTNManagerService(md, session);
-        this.vtnIntentParser = new VTNIntentParser(dataProvider , vtn);
+        final DataBroker dataBroker = session.getSALService(DataBroker.class);
+        final MdsalUtils md = new MdsalUtils(dataBroker);
+        final VTNManagerService vtn = new VTNManagerService(md, session);
+        this.vtnIntentParser = new VTNIntentParser(dataBroker , vtn);
 
-        this.vtnRendererUtility = new VTNRendererUtility(dataProvider);
-        vtnRendererListener = dataProvider.registerDataChangeListener(
+        this.vtnRendererUtility = new VTNRendererUtility(dataBroker);
+        vtnRendererListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.CONFIGURATION,
                 INTENTS_IID, this, DataChangeScope.SUBTREE);
     }
@@ -120,17 +116,17 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
         for (DataObject dao: ev.getCreatedData().values()) {
             LOG.trace("A new data object is created: {}", dao);
             if (dao instanceof Intent) {
-                Intent intent = (Intent) dao;
+                intent = (Intent) dao;
                 LOG.trace("A new intent is created: {}", intent.getId());
-                intentParser(intent);
+                intentParser();
             }
         }
         for (DataObject dao: ev.getUpdatedData().values()) {
             LOG.trace("A data object is updated: {}", dao);
             if (dao instanceof Intent) {
-                Intent intent = (Intent) dao;
+                intent = (Intent) dao;
                 LOG.trace("An intent is updated: {}", intent.getId());
-                intentParser(intent);
+                intentParser();
             }
         }
         Map<InstanceIdentifier<?>, DataObject> originalDataObject = ev.getOriginalData();
@@ -139,11 +135,11 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
             try {
                 if (originalDataObject.get(instanceIdentifier) instanceof Intent) {
                     Intent lclIntent = (Intent) originalDataObject.get(instanceIdentifier);
-                    IntentKey lclIntentKey = (IntentKey) lclIntent.getKey();
-                    Uuid uuid = (Uuid) lclIntentKey.getId();
-                    LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
+                    IntentKey lclIntentKey = lclIntent.getKey();
+                    Uuid uuid = lclIntentKey.getId();
+                    LOG.trace(" Intent Deleted :{} ", uuid.getValue());
                     String encodeUUID = vtnRendererUtility.encodeUUID(uuid.getValue());
-                    vtnIntentParser.delete(encodeUUID);
+                    vtnIntentParser.delFlowCondFilter(encodeUUID);
                     if (!vtnRendererUtility.deleteIntent(lclIntent)) {
                         LOG.error("Intent data's are not deleted from operational data store", uuid.getValue());
                         return;
@@ -151,7 +147,7 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
                     LOG.trace("Intent data's are successfully deleted from operational data store", uuid.getValue());
                 }
             } catch (Exception e) {
-                LOG.error("Could not delete VTN Renderer :{} ", e);
+                LOG.error("Could not delete VTN Renderer :{}", e);
             }
         }
     }
@@ -159,64 +155,19 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
     /**
      * This method parse the intent and calls the VTN renderer
      *
-     * @param intent the intent instance.
      */
-    private void intentParser(Intent intent) {
-        // Retrieve the ID.
-        Uuid uuid = intent.getId();
-        if (uuid == null) {
-            LOG.error("Intent ID is not specified: {}", intent);
+    private void intentParser() {
+        if (!verifyIntent()) {
             return;
         }
-        String intentID = uuid.getValue();
+        // Retrieve the Intent ID.
+        String intentID = intent.getId().getValue();
         // Retrieve the end points.
-        final List<Subjects> listSubjects = intent.getSubjects();
-        if (listSubjects == null) {
-            LOG.warn("Subjects are not specified: {}", intentID);
-            return;
-        } else if (listSubjects.size() != NUM_OF_SUPPORTED_EPG) {
-            LOG.warn("VTN Renderer supports only two end point groups per Intent: {}", intentID);
-            return;
-        }
-        List<String> endPointGroups = new ArrayList<String>();
-        for (Subjects subjects: listSubjects) {
-            Subject subject = subjects.getSubject();
-            if (!(subject instanceof EndPointGroup)) {
-                LOG.trace("Subject is not specified: {}", intentID);
-                return;
-            }
-            EndPointGroup endPointGroup = (EndPointGroup)subject;
-
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
-                .EndPointGroup epg = endPointGroup.getEndPointGroup();
-            if (epg == null) {
-                LOG.trace("End Point Group is not specified: {}", intentID);
-                return;
-            }
-            endPointGroups.add(epg.getName());
-        }
+        final List<String> endPointGroups = getEPGs();
         String endPointSrc = endPointGroups.get(INDEX_OF_SRC_END_POINT_GROUP);
         String endPointDst = endPointGroups.get(INDEX_OF_DST_END_POINT_GROUP);
-        // Retrieve the action.
-        final List<Actions> listActions = intent.getActions();
-        if (listActions == null) {
-            LOG.trace("Actions are not specified: {}", intentID);
-            return;
-        } else if (listActions.size() != NUM_OF_SUPPORTED_ACTIONS) {
-            LOG.warn("VTN Renderer supports only one action per Intent: {}", intentID);
-            return;
-        }
-        Action action = listActions.get(0).getAction();
         // Get the type of the action.
-        String actionType;
-        if (action instanceof Allow) {
-            actionType = "allow";
-        } else if (action instanceof Block) {
-            actionType = "block";
-        } else {
-            LOG.warn("VTN Renderer supports only allow or block: {}", intentID);
-            return;
-        }
+        String actionType = getAction();
         // get the encode UUID value
         String encodeUUID = vtnRendererUtility.encodeUUID(intentID);
         Status intentStatus = Status.CompletedError;
@@ -231,4 +182,72 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
         vtnRendererUtility.addIntent(intent, intentStatus);
     }
 
+    /**
+     * Validates the intent data's
+     *
+     * @return {@code = true} on valid intent.
+     */
+    private boolean verifyIntent() {
+        if (intent.getId() == null) {
+            LOG.warn("Intent ID is not specified {}", intent);
+            return false;
+        }
+        if (intent.getActions() == null || intent.getActions().size() > NUM_OF_SUPPORTED_ACTIONS) {
+            LOG.warn("Intent's action is either null or there is more than {} action {}", NUM_OF_SUPPORTED_ACTIONS,
+                    intent);
+            return false;
+        }
+        if (intent.getSubjects() == null || intent.getSubjects().size() > NUM_OF_SUPPORTED_EPG) {
+            LOG.warn("Intent's subjects is either null or there is more than {} subjects {}", NUM_OF_SUPPORTED_EPG,
+                    intent);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * To get the end point groups from the intent.
+     *
+     * @return list of end point group's.
+     */
+    private List<String> getEPGs() {
+        final List<Subjects> listSubjects = intent.getSubjects();
+        final List<String> endPointGroups = new ArrayList<String>();
+        for (Subjects subjects: listSubjects) {
+            Subject subject = subjects.getSubject();
+            if (!(subject instanceof EndPointGroup)) {
+                LOG.trace("Subject is not specified: {}", intent.getId().getValue());
+                return null;
+            }
+            EndPointGroup endPointGroup = (EndPointGroup)subject;
+            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
+                .EndPointGroup epg = endPointGroup.getEndPointGroup();
+            if (epg == null) {
+                LOG.trace("End Point Group is not specified: {}", intent.getId().getValue());
+                return null;
+            }
+            endPointGroups.add(epg.getName());
+        }
+        return endPointGroups;
+    }
+
+    /**
+     * To get the action from the intent.
+     *
+     * @return action type.
+     */
+    private String getAction() {
+        final List<Actions> listActions = intent.getActions();
+        Action action = listActions.get(0).getAction();
+        String actionType = null;
+        if (action instanceof Allow) {
+            actionType = "allow";
+        } else if (action instanceof Block) {
+            actionType = "block";
+        } else {
+            LOG.warn("VTN Renderer supports only allow or block: {}", intent.getId().getValue());
+            return null;
+        }
+        return actionType;
+    }
 }

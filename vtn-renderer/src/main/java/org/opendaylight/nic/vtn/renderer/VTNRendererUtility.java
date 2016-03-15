@@ -13,16 +13,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.utils.MdsalUtils;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +33,8 @@ public class VTNRendererUtility {
 
     private DataBroker dataBroker;
 
+    private static final Integer IP_DOTS = 3;
+
     public VTNRendererUtility(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
     }
@@ -45,10 +45,9 @@ public class VTNRendererUtility {
      * @param  ip the IP Address.
      * @return  {@code = true} on valid IP address.
      */
-    public boolean validateIP(final String ip) {
+    private boolean validateIP(final String ip) {
         if (ip == null) {
-            log.error("IP address is null");
-            throw new NullPointerException();
+            throw new IllegalArgumentException("IP address is null.");
         }
         String ipAddressPattern = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
                 + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
@@ -65,10 +64,9 @@ public class VTNRendererUtility {
      * @param  macAddress The MAC Address
      * @return  {@code = true} on valid MAC address
      */
-    public boolean validateMacAddress(final String macAddress) {
+    private boolean validateMacAddress(final String macAddress) {
         if (macAddress == null) {
-            log.error("MAC address is null");
-            throw new NullPointerException();
+            throw new IllegalArgumentException("MAC address is null.");
         }
         String macAdrressPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
         Pattern pattern = Pattern.compile(macAdrressPattern);
@@ -83,15 +81,14 @@ public class VTNRendererUtility {
      * @param  dstIp The destination IP Address.
      * @return  {@code = false} the given IP addresses are not in same subnet.
      */
-    public boolean validateSubnet(String srcIp, String dstIp) {
+    private boolean validateSubnet(String srcIp, String dstIp) {
         if (srcIp == null || dstIp == null) {
-            log.error("Source or Destination IP address is null");
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Source or Destination IP address is null.");
         }
         if (!srcIp.equalsIgnoreCase(dstIp)) {
             String[] srcIpDigits = srcIp.split("\\.");
             String[] dstIpDigits = dstIp.split("\\.");
-            for (int index = 0; index < 3; index++) {
+            for (int index = 0; index < IP_DOTS; index++) {
                 if (!(Byte.parseByte(srcIpDigits[index]) == Byte
                         .parseByte(dstIpDigits[index]))) {
                     log.trace(
@@ -174,5 +171,87 @@ public class VTNRendererUtility {
             .child(Intent.class, new IntentKey(intent.getId()))
             .build();
         return mdsal.delete(LogicalDatastoreType.OPERATIONAL, identifier);
+    }
+
+    /**
+     * Validate Source and destination IP Address.
+     *
+     * @param adressSrc  Source IP Address.
+     * @param adressDst  Destination IP Address.
+     *
+     * @return {@code true} if Source and destination IP address are valid.
+     */
+    public boolean validateSrcDstIP(String adressSrc, String adressDst) {
+        if (validateIP(adressSrc) && validateIP(adressDst)) {
+            return validateSubnet(adressSrc, adressDst);
+        }
+        return false;
+    }
+
+    /**
+     * Validate Source and destination MAC Address.
+     *
+     * @param adressSrc  Source MAC Address.
+     * @param adressDst  Destination MAC Address.
+     *
+     * @return {@code true} if Source and destination MAC address are valid.
+     */
+    public boolean validateSrcDstMac(String adressSrc, String adressDst) {
+        return (validateMacAddress(adressSrc) && validateMacAddress(adressDst));
+    }
+
+    /**
+     * Validate Source and destination IP Address should not same.
+     *
+     * @param inSrc  Source IP Address.
+     * @param outSrc  Destination IP Address.
+     *
+     * @return {@code true} if Source and destination IP address are not same.
+     */
+    public boolean validateInSrcOutSrc(String inSrc, String outSrc) {
+        if ( inSrc == null || outSrc == null ) {
+            return false;
+        }
+        if (inSrc.equals(outSrc)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * ActionTypeEnum is a enum which is supported for mapping an action type
+     * between the NIC and VTN Manager.
+     */
+    public enum ActionTypeEnum {
+        ALLOW("allow", "PASS"),
+        BLOCK("block", "DROP");
+        private String actionType;
+        private String label;
+
+        private ActionTypeEnum(String actionType, String label) {
+            this.actionType = actionType;
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        /**
+         * ActionTypeEnum is a enum for action types supported by the VTN Manager.
+         *
+         * @param actionType  allow or block.
+         *
+         * @return action type pass or drop based on requested action type.
+         */
+        public static ActionTypeEnum fromActionType(String actionType) {
+            for (ActionTypeEnum en: ActionTypeEnum.values()) {
+                if (en.actionType.equalsIgnoreCase(actionType)) {
+                    return en;
+                }
+            }
+            throw new IllegalArgumentException(String.format("Invalid Action type [%s]", actionType));
+        }
+
     }
 }
