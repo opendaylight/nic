@@ -25,21 +25,9 @@ import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.collect.ImmutableMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.opendaylight.controller.sal.binding.api.RpcConsumerRegistry;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.sal.binding.api.RpcConsumerRegistry;
 import org.opendaylight.nic.utils.MdsalUtils;
-
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.opendaylight.yangtools.yang.common.RpcError;
-import org.opendaylight.yangtools.yang.common.RpcResult;
-
-import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.VlanId;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.ClearFlowConditionOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.RemoveFlowConditionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionOutput;
@@ -49,26 +37,21 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.R
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.SetFlowFilterInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.SetFlowFilterOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.VtnFlowFilterService;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.port.rev150907.RemovePortMapInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.port.rev150907.RemovePortMapOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.port.rev150907.SetPortMapInput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.port.rev150907.SetPortMapOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.port.rev150907.VtnPortMapService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.RemoveVlanMapInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.RemoveVlanMapOutput;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.RemoveVlanMapOutputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.VtnVlanMapService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.RemoveVtnInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.RemoveVtnInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.UpdateVtnInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.UpdateVtnInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.UpdateVtnOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.VtnService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.Vtns;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.vtns.Vtn;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.vtns.VtnKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.Vtns;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.rev150328.VtnService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeUpdateMode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VtnErrorTag;
@@ -79,14 +62,21 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.Remov
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.UpdateVbridgeInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.UpdateVbridgeInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.UpdateVbridgeOutput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.VtnVbridgeService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.vtn.vbridge.info.VbridgeConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.vtn.vbridge.list.Vbridge;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.vtn.vbridge.list.VbridgeKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vbridge.rev150907.VtnVbridgeService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vinterface.rev150907.RemoveVinterfaceInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vinterface.rev150907.UpdateVinterfaceInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vinterface.rev150907.UpdateVinterfaceOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.vinterface.rev150907.VtnVinterfaceService;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yangtools.yang.common.RpcError;
+import org.opendaylight.yangtools.yang.common.RpcResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.ImmutableMap;
 
 /**
  * {@code VTNManagerService} provides interfaces to control VTN Manager.
@@ -153,17 +143,17 @@ public final class VTNManagerService {
      * Initialize statis field.
      */
     static {
-        VTN_ERROR_CODES = ImmutableMap.<String, Integer>builder().
-            put(VtnErrorTag.BADREQUEST.toString(), HTTP_BAD_REQUEST).
-            put(VtnErrorTag.UNAUTHORIZED.toString(), HTTP_UNAUTHORIZED).
-            put(VtnErrorTag.NOTFOUND.toString(), HTTP_NOT_FOUND).
-            put(VtnErrorTag.NOTACCEPTABLE.toString(), HTTP_NOT_ACCEPTABLE).
-            put(VtnErrorTag.TIMEOUT.toString(), HTTP_CLIENT_TIMEOUT).
-            put(VtnErrorTag.CONFLICT.toString(), HTTP_CONFLICT).
-            put(VtnErrorTag.GONE.toString(), HTTP_GONE).
-            put(VtnErrorTag.NOSERVICE.toString(), HTTP_UNAVAILABLE).
-            put(VtnErrorTag.INTERNALERROR.toString(), HTTP_INTERNAL_ERROR).
-            build();
+        VTN_ERROR_CODES = ImmutableMap.<String, Integer>builder()
+            .put(VtnErrorTag.BADREQUEST.toString(), HTTP_BAD_REQUEST)
+            .put(VtnErrorTag.UNAUTHORIZED.toString(), HTTP_UNAUTHORIZED)
+            .put(VtnErrorTag.NOTFOUND.toString(), HTTP_NOT_FOUND)
+            .put(VtnErrorTag.NOTACCEPTABLE.toString(), HTTP_NOT_ACCEPTABLE)
+            .put(VtnErrorTag.TIMEOUT.toString(), HTTP_CLIENT_TIMEOUT)
+            .put(VtnErrorTag.CONFLICT.toString(), HTTP_CONFLICT)
+            .put(VtnErrorTag.GONE.toString(), HTTP_GONE)
+            .put(VtnErrorTag.NOSERVICE.toString(), HTTP_UNAVAILABLE)
+            .put(VtnErrorTag.INTERNALERROR.toString(), HTTP_INTERNAL_ERROR)
+            .build();
     }
 
     /**
@@ -260,9 +250,9 @@ public final class VTNManagerService {
      */
     public static InstanceIdentifier<Vtn> getTenantPath(String tname) {
         VtnKey vtnKey = new VtnKey(new VnodeName(tname));
-        return InstanceIdentifier.builder(Vtns.class).
-            child(Vtn.class, vtnKey).
-            build();
+        return InstanceIdentifier.builder(Vtns.class)
+            .child(Vtn.class, vtnKey)
+            .build();
     }
 
     /**
@@ -276,11 +266,11 @@ public final class VTNManagerService {
         String tname, String bname) {
         VtnKey vtnKey = new VtnKey(new VnodeName(tname));
         VbridgeKey vbrKey = new VbridgeKey(new VnodeName(bname));
-        return InstanceIdentifier.builder(Vtns.class).
-            child(Vtn.class, vtnKey).
-            child(Vbridge.class, vbrKey).
-            child(VbridgeConfig.class).
-            build();
+        return InstanceIdentifier.builder(Vtns.class)
+            .child(Vtn.class, vtnKey)
+            .child(Vbridge.class, vbrKey)
+            .child(VbridgeConfig.class)
+            .build();
     }
 
     /**
@@ -408,11 +398,11 @@ public final class VTNManagerService {
                     else false is returned.
      */
     public boolean updateTenant(String name, VnodeUpdateMode mode) {
-        UpdateVtnInput input = new UpdateVtnInputBuilder().
-            setTenantName(name).
-            setUpdateMode(mode).
-            setOperation(VtnUpdateOperationType.SET).
-            build();
+        UpdateVtnInput input = new UpdateVtnInputBuilder()
+            .setTenantName(name)
+            .setUpdateMode(mode)
+            .setOperation(VtnUpdateOperationType.SET)
+            .build();
         VTNRpcResult<UpdateVtnOutput> result =
             getRpcResult(vtnService.updateVtn(input));
         int code = result.getStatusCode();
@@ -445,8 +435,8 @@ public final class VTNManagerService {
                     else false is returned.
      */
     public boolean removeTenant(String name) {
-        RemoveVtnInput input = new RemoveVtnInputBuilder().
-            setTenantName(name).build();
+        RemoveVtnInput input = new RemoveVtnInputBuilder()
+            .setTenantName(name).build();
         VTNRpcResult<?> result =
             getRpcResult(vtnService.removeVtn(input), true);
         int code = result.getStatusCode();
@@ -470,7 +460,6 @@ public final class VTNManagerService {
                     else false is returned.
      */
     public boolean hasBridge(String tname) {
-        LogicalDatastoreType oper = LogicalDatastoreType.OPERATIONAL;
         Vtn opt = mdSal.read(LogicalDatastoreType.OPERATIONAL, getTenantPath(tname));
         boolean ret;
         if (opt != null) {
@@ -497,17 +486,17 @@ public final class VTNManagerService {
      */
     public boolean updateBridge(String tname, String bname, String desc,
                             VnodeUpdateMode mode) {
-        UpdateVbridgeInput input = new UpdateVbridgeInputBuilder().
-            setTenantName(tname).
-            setBridgeName(bname).
-            setDescription(desc).
-            setUpdateMode(mode).
-            setOperation(VtnUpdateOperationType.SET).
-            build();
+        UpdateVbridgeInput input = new UpdateVbridgeInputBuilder()
+            .setTenantName(tname)
+            .setBridgeName(bname)
+            .setDescription(desc)
+            .setUpdateMode(mode)
+            .setOperation(VtnUpdateOperationType.SET)
+            .build();
         VTNRpcResult<UpdateVbridgeOutput> result =
             getRpcResult(vbridgeService.updateVbridge(input));
         int code = result.getStatusCode();
-        if (code == HTTP_CONFLICT){
+        if (code == HTTP_CONFLICT) {
             return true;
         }
         if (code != HTTP_OK) {
@@ -529,7 +518,7 @@ public final class VTNManagerService {
             LOG.debug("{}: path={}/{}, desc={}", msg, tname, bname, desc);
             return true;
         }
-   }
+    }
 
     /**
      * Remove the specified vBridge.
@@ -541,10 +530,10 @@ public final class VTNManagerService {
      *          successful completion.
      */
     public int removeBridge(String tname, String bname) {
-        RemoveVbridgeInput input = new RemoveVbridgeInputBuilder().
-            setTenantName(tname).
-            setBridgeName(bname).
-            build();
+        RemoveVbridgeInput input = new RemoveVbridgeInputBuilder()
+            .setTenantName(tname)
+            .setBridgeName(bname)
+            .build();
         VTNRpcResult<?> result =
             getRpcResult(vbridgeService.removeVbridge(input), true);
         int code = result.getStatusCode();
@@ -639,7 +628,7 @@ public final class VTNManagerService {
         VTNRpcResult<AddVlanMapOutput> result =
             getRpcResult(vlanMapService.addVlanMap(input));
         int code = result.getStatusCode();
-        if (code == HTTP_CONFLICT){
+        if (code == HTTP_CONFLICT) {
             return true;
         }
         if (code != HTTP_OK) {
@@ -748,7 +737,7 @@ public final class VTNManagerService {
      * @return      True is returned on successful completion,
                     else false is returned.
      */
-     public boolean unSetFlowFilter(RemoveFlowFilterInput input) {
+    public boolean unSetFlowFilter(RemoveFlowFilterInput input) {
         VTNRpcResult<RemoveFlowFilterOutput> result =
             getRpcResult(flowFilterService.removeFlowFilter(input), true);
         int code = result.getStatusCode();

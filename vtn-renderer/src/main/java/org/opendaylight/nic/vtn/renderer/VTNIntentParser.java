@@ -8,8 +8,6 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
-import static java.net.HttpURLConnection.HTTP_OK;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -17,12 +15,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.utils.MdsalUtils;
+import org.opendaylight.nic.vtn.renderer.VTNRendererUtility.ActionTypeEnum;
 import org.opendaylight.vtn.manager.util.IpNetwork;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpPrefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.VlanId;
@@ -30,6 +29,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.Rem
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.RemoveFlowConditionInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.VtnFlowConditions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.conditions.VtnFlowCondition;
@@ -37,26 +37,23 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnEtherMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnInetMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnInetMatchBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.VtnFlowConditions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.RemoveFlowFilterInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.RemoveFlowFilterInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.SetFlowFilterInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.SetFlowFilterInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.list.VtnFlowFilter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.list.VtnFlowFilterBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.drop.filter._case.VtnDropFilterBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.pass.filter._case.VtnPassFilterBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnDropFilterCase;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnDropFilterCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnPassFilterCase;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnPassFilterCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.drop.filter._case.VtnDropFilterBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.pass.filter._case.VtnPassFilterBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeUpdateMode;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,6 +113,11 @@ public class VTNIntentParser {
     private String flowCondName;
 
     /**
+     * Setting the flow filter condition name.
+     */
+    private String flowFilterCondName;
+
+    /**
      * Setting the index of flow condition.
      */
     private int flowCondIndex = 1;
@@ -135,6 +137,8 @@ public class VTNIntentParser {
      */
     private VTNRendererUtility vtnRendererUtility;
 
+    private static final String ERROR_MESSAGE = "Unable to get flow condition name {}";
+
     public VTNIntentParser(DataBroker dataBroker, VTNManagerService vtn) {
         this.dataProvider = dataBroker;
         this.vtnRendererUtility = new VTNRendererUtility(dataProvider);
@@ -145,13 +149,13 @@ public class VTNIntentParser {
      *
      * @return  {@code true} is returned if the default configuration is created in VTN Manager.
      */
-    private boolean isCreateDefault() {
+    private boolean isVTNCreated(boolean isIp, boolean isMac) {
         boolean status = createTenant(TENANT_NAME);
         if (!status) {
             LOG.error("Tenant creation failed");
             return false;
         }
-        status = createBridge(TENANT_NAME, BRIDGE_NAME);
+        status = setupDefaultBridge(TENANT_NAME, BRIDGE_NAME);
         if (!status) {
             LOG.error("Vbridge creation failed");
             return false;
@@ -159,7 +163,7 @@ public class VTNIntentParser {
         /**
          * Creates a default flow condition
          */
-        status = createFlowCond("0.0", "0.0", MATCH_ANY, "M");
+        status = createFlowCond("0.0", "0.0", MATCH_ANY, "M", isIp, isMac);
         if (!status) {
             LOG.error("Flow condition creation failed");
             return false;
@@ -192,26 +196,21 @@ public class VTNIntentParser {
     public Status rendering(final String adressSrc, final String adressDst,
             String action, String encodeUUID, Intent intent) {
         try {
-            if ((vtnRendererUtility.validateIP(adressSrc))
-                    && (vtnRendererUtility.validateIP(adressDst))
-                    && (vtnRendererUtility.validateSubnet(adressSrc, adressDst))
-                    || ((vtnRendererUtility.validateMacAddress(adressSrc)) && (vtnRendererUtility
-                            .validateMacAddress(adressDst)))) {
-                boolean status = isCreateDefault();
-                if (!status) {
+            boolean isValidIp = vtnRendererUtility.validateSrcDstIP(adressSrc,adressDst);
+            boolean isValidMac = false;
+            if (!isValidIp) {
+                isValidMac = vtnRendererUtility.validateSrcDstMac(adressSrc, adressDst);
+            }
+            if (isValidIp || isValidMac) {
+                if (!isVTNCreated(isValidIp, isValidMac)) {
                     LOG.error("Default VTN configuration creation failed");
                     return Status.CompletedError;
                 }
                 String condNameSrcDst = constructCondName(adressSrc, adressDst, encodeUUID, true);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc, encodeUUID, false);
-                String whichAction = "allow".equalsIgnoreCase(action) ? "PASS" : "block"
-                          .equalsIgnoreCase(action) ? "DROP" : "NA";
-                if (whichAction.equalsIgnoreCase("NA")) {
-                    LOG.error("Unsupported Action {}", whichAction);
-                    return Status.CompletedError;
-                }
-                createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
-                createFlowCond(adressDst, adressSrc, condNameDstSrc, REVERSE_FLOWCOND);
+                String whichAction = ActionTypeEnum.fromActionType(action).getLabel();
+                createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND, isValidIp, isValidMac);
+                createFlowCond(adressDst, adressSrc, condNameDstSrc, REVERSE_FLOWCOND, isValidIp, isValidMac);
 
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondFrdIndex);
                 createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondRevIndex);
@@ -252,29 +251,23 @@ public class VTNIntentParser {
         String inDscMAC  = null;
         String outDscMAC = null;
         try {
-            if ((vtnRendererUtility.validateIP(adressSrc))
-                    && (vtnRendererUtility.validateIP(adressDst))
-                    && (vtnRendererUtility.validateSubnet(adressSrc, adressDst))
-                    || ((vtnRendererUtility.validateMacAddress(adressSrc)) && (vtnRendererUtility
-                            .validateMacAddress(adressDst)))) {
-                boolean isvalidIP = vtnRendererUtility.validateIP(adressSrc);
-                boolean isvalidMAC = vtnRendererUtility.validateMacAddress(adressSrc);
-                boolean isIPMAC = false;
-                boolean isMACIP = false;
+            boolean isValidIp = vtnRendererUtility.validateSrcDstIP(adressSrc,adressDst);
+            boolean isValidMac = false;
+            if (!isValidIp) {
+                isValidMac = vtnRendererUtility.validateSrcDstMac(adressSrc, adressDst);
+            }
+            if (isValidIp || isValidMac) {
+                boolean isLclIP = false;
+                boolean isLclMAC = false;
                 String condNameSrcDst = constructCondName(adressSrc, adressDst, encodeUUID, true);
                 String condNameDstSrc = constructCondName(adressDst, adressSrc, encodeUUID, false);
-                String whichAction = "allow".equalsIgnoreCase(action) ? "PASS" : "block"
-                        .equalsIgnoreCase(action) ? "DROP" : "NA";
-                if (whichAction.equalsIgnoreCase("NA")) {
-                    LOG.error("Unsupported Action {}", whichAction);
-                    return Status.CompletedError;
-                }
+                String whichAction = ActionTypeEnum.fromActionType(action).getLabel();
                 List<VtnFlowMatch> flowMatch = listOfFlowMatch(encodeUUID);
                 for (VtnFlowMatch fm : flowMatch) {
-                    if (isvalidIP) {
+                    if (isValidIp) {
                         VtnInetMatch inet = fm.getVtnInetMatch();
                         if (inet == null) {
-                            isMACIP = true;
+                            isLclMAC = true;
                         } else {
                             IpPrefix src = inet.getSourceNetwork();
                             inSrcIP = src.toString();
@@ -283,11 +276,11 @@ public class VTNIntentParser {
                             outSrcIP = adressSrc.replace(".", "");
                             outDscIP = adressDst.replace(".", "");
                         }
-                    } else if (isvalidMAC) {
+                    } else if (isValidMac) {
                         VtnEtherMatch eth = fm.getVtnEtherMatch();
                         MacAddress esrc = eth.getSourceAddress();
                         if (esrc == null) {
-                            isIPMAC = true;
+                            isLclIP = true;
                         } else {
                             inSrcMAC = esrc.toString();
                             MacAddress edst = eth.getDestinationAddress();
@@ -296,33 +289,20 @@ public class VTNIntentParser {
                             outDscMAC = adressDst.replace(":", "");
                         }
                     }
-                    if (((!(inSrcIP == null) && (!inSrcIP.equals(outSrcIP))) || (!(inDstIP == null) && (!inDstIP
-                               .equals(outDscIP))) || !(isMACIP))) {
-                        delete(encodeUUID);
-                        boolean status = isCreateDefault();
-                        if (status) {
-                            createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
-                            createFlowCond(adressDst, adressSrc, condNameDstSrc, REVERSE_FLOWCOND);
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
-                                 flowCondFrdIndex);
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction,
-                                 flowCondRevIndex);
-                        }
-                    } else if (((!(inSrcMAC == null) && (!inSrcMAC.equals(outSrcMAC))) || (!(inDscMAC == null)
-                        && (!inDscMAC.equals(outDscMAC))) || !(isIPMAC))) {
-                        delete(encodeUUID);
-                        boolean status = isCreateDefault();
-                        if (status) {
-                            createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
-                            createFlowCond(adressDst, adressSrc, condNameDstSrc, REVERSE_FLOWCOND);
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondFrdIndex);
-                            createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondRevIndex);
+                    if (!isLclMAC || !isLclIP) {
+                        if (validateSrcDstInputs(inSrcIP,outSrcIP,inDstIP,outDscIP)
+                            || validateSrcDstInputs(inSrcMAC,outSrcMAC,inDscMAC,outDscMAC)) {
+                            delFlowCondFilter(encodeUUID);
+                            if (isVTNCreated(isValidIp,isValidMac)) {
+                                createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND, isValidIp, isValidMac);
+                                createFlowCond(adressDst, adressSrc, condNameDstSrc, REVERSE_FLOWCOND, isValidIp, isValidMac);
+                            }
                         }
                     } else {
-                        deleteAction(encodeUUID);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondFrdIndex);
-                        createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondRevIndex);
+                        delFlowFilterIndex(encodeUUID);
                     }
+                    createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondFrdIndex);
+                    createFlowFilter(TENANT_NAME, BRIDGE_NAME, whichAction, flowCondRevIndex);
                 }
                 return Status.CompletedSuccess;
             } else {
@@ -341,7 +321,7 @@ public class VTNIntentParser {
      *
      * @param intentID  ID of the Deleting intent.
      */
-    public void delete(String intentID) {
+    public void delFlowCondFilter(String intentID) {
         try {
             for (VtnFlowCondition flowCondition : readFlowConditions()) {
                 String lclfc = flowCondition.getName().getValue();
@@ -367,11 +347,11 @@ public class VTNIntentParser {
     }
 
     /**
-     * Delete a particular flow filter
+     * To get and delete the flow filter index associated with a particular intent.
      *
      * @param intentID  ID of the Deleting intent.
      */
-    private void deleteAction(String intentID) {
+    private void delFlowFilterIndex(String intentID) {
         try {
             for (VtnFlowCondition flowCondition : readFlowConditions()) {
                 String lclfc = flowCondition.getName().getValue();
@@ -399,19 +379,10 @@ public class VTNIntentParser {
     private String constructCondName(final String adressSrc,
             final String addressDst, final String encodeUUID, boolean isSrcCond) {
         String condName = null;
-        if (vtnRendererUtility.validateIP(adressSrc) && (vtnRendererUtility.validateIP(addressDst))) {
-            if (isSrcCond) {
-                condName = encodeUUID + "_" + FORWARD_FLOWCOND;
-            } else {
-                condName = encodeUUID + "_" + REVERSE_FLOWCOND;
-            }
-        } else if (vtnRendererUtility.validateMacAddress(adressSrc)
-                && (vtnRendererUtility.validateMacAddress(addressDst))) {
-            if (isSrcCond) {
-                condName = encodeUUID + "_" + FORWARD_FLOWCOND;
-            } else {
-                condName = encodeUUID + "_" + REVERSE_FLOWCOND;
-            }
+        if (isSrcCond) {
+            condName = encodeUUID + "_" + FORWARD_FLOWCOND;
+        } else {
+            condName = encodeUUID + "_" + REVERSE_FLOWCOND;
         }
         return condName;
     }
@@ -447,10 +418,10 @@ public class VTNIntentParser {
      * @return  {@code true} is returned if only flow condition is created in VTN Manager.
      */
     private boolean createFlowCond(final String addressSrc,
-            final String addressDst, String condName, String flowDirection) {
+            final String addressDst, String condName, String flowDirection, boolean isValidIp, boolean isValidMac) {
         int index = 0;
-        if(isFlowCondExist(condName)) {
-           return true ;
+        if (isFlowCondExist(condName)) {
+            return true ;
         }
         if (condName.equalsIgnoreCase(MATCH_ANY)) {
             index = LOW_PRIORITY;
@@ -469,9 +440,9 @@ public class VTNIntentParser {
         try {
             if (!isFlowCondExist(flowCondName)) {
                 List<VtnFlowMatch> matchList = new ArrayList<VtnFlowMatch>();
+                VlanId vlanId = new VlanId(0);
                 if (addressSrc.equalsIgnoreCase("0.0")) {
                     MacAddress macAddress = null;
-                    VlanId vlanId = new VlanId(0);
                     VtnEtherMatch ethernetMatch = new VtnEtherMatchBuilder()
                         .setDestinationAddress(macAddress)
                         .setSourceAddress(macAddress)
@@ -480,19 +451,15 @@ public class VTNIntentParser {
                         .setEtherType(new EtherType(Long.valueOf(ETHER_TYPE)))
                         .build();
                     VtnFlowMatch flowMatch = new VtnFlowMatchBuilder()
-                       .setIndex(flowCondIndex++)
-                       .setVtnEtherMatch(ethernetMatch)
-                       .build();
+                        .setIndex(flowCondIndex++)
+                        .setVtnEtherMatch(ethernetMatch)
+                        .build();
                     matchList.add(flowMatch);
-                } else if ((vtnRendererUtility.validateIP(addressSrc))
-                        && (vtnRendererUtility.validateIP(addressDst))
-                        || ((vtnRendererUtility.validateMacAddress(addressSrc)) && (vtnRendererUtility
-                                .validateMacAddress(addressDst)))) {
-                    if (vtnRendererUtility.validateIP(addressSrc)) {
+                } else if (isValidIp || isValidMac) {
+                    if (isValidIp) {
                         IpNetwork ipaddrSrc = IpNetwork.create(InetAddress.getByName(addressSrc));
                         IpNetwork ipaddrDst = IpNetwork.create(InetAddress.getByName(addressDst));
                         MacAddress macAddress = null;
-                        VlanId vlanId = new VlanId(0);
                         VtnInetMatch match = new VtnInetMatchBuilder()
                             .setDestinationNetwork(ipaddrDst.getIpPrefix())
                             .setSourceNetwork(ipaddrSrc.getIpPrefix())
@@ -507,26 +474,25 @@ public class VTNIntentParser {
                             .setEtherType(new EtherType(Long.valueOf(ETHER_TYPE)))
                              .build();
                         VtnFlowMatch flowMatch = new VtnFlowMatchBuilder()
-                           .setIndex(flowCondIndex++)
-                           .setVtnEtherMatch(ethernetMatch)
-                           .setVtnInetMatch(match)
-                           .build();
+                            .setIndex(flowCondIndex++)
+                            .setVtnEtherMatch(ethernetMatch)
+                            .setVtnInetMatch(match)
+                            .build();
                         matchList.add(flowMatch);
                     } else {
                         MacAddress macAddressSrc = new MacAddress(addressSrc);
                         MacAddress macAddressDst = new MacAddress(addressDst);
-                        VlanId vlanId = new VlanId(0);
                         VtnEtherMatch ethernetMatch = new VtnEtherMatchBuilder()
                             .setDestinationAddress(macAddressDst)
                             .setSourceAddress(macAddressSrc)
                             .setVlanId(vlanId)
                             .setVlanPcp(null)
                             .setEtherType(null)
-                             .build();
+                            .build();
                         VtnFlowMatch flowMatch = new VtnFlowMatchBuilder()
-                           .setIndex(flowCondIndex++)
-                           .setVtnEtherMatch(ethernetMatch)
-                           .build();
+                            .setIndex(flowCondIndex++)
+                            .setVtnEtherMatch(ethernetMatch)
+                            .build();
                         matchList.add(flowMatch);
                     }
                 } else {
@@ -537,8 +503,7 @@ public class VTNIntentParser {
                     .setName(vnodeName)
                     .setVtnFlowMatch(matchList)
                     .build();
-                boolean result = vtnManangerService.setFlowCond(fcond);
-                return result;
+                return vtnManangerService.setFlowCond(fcond);
             }
         } catch (UnknownHostException e) {
             LOG.error("Unable to create Flow Condition {}", e);
@@ -555,10 +520,9 @@ public class VTNIntentParser {
      */
     private boolean deleteFlowCond(String condName) {
         RemoveFlowConditionInput input = new RemoveFlowConditionInputBuilder()
-           .setName(condName)
-           .build();
-        boolean status = vtnManangerService.unsetFlowCond(input);
-        return status;
+            .setName(condName)
+            .build();
+        return vtnManangerService.unsetFlowCond(input);
     }
 
     /**
@@ -591,17 +555,18 @@ public class VTNIntentParser {
         int index = 0;
         if (condName.equalsIgnoreCase(MATCH_ANY)) {
             index = LOW_PRIORITY;
-            condName = condName + "_" + index;
+            flowFilterCondName = condName + "_" + index;
         } else {
-            String flowfilterindex = condName.split("_")[2];
+            flowFilterCondName = condName;
+            String flowfilterindex = flowFilterCondName.split("_")[2];
             index = Integer.valueOf(flowfilterindex);
         }
-        if (type.equalsIgnoreCase("PASS")) {
-            VtnPassFilterCase pass = new VtnPassFilterCaseBuilder().
-                setVtnPassFilter(new VtnPassFilterBuilder().build()).
-                build();
+        if ("PASS".equalsIgnoreCase(type)) {
+            VtnPassFilterCase pass = new VtnPassFilterCaseBuilder()
+                .setVtnPassFilter(new VtnPassFilterBuilder().build())
+                .build();
             List<VtnFlowFilter> vtnFlowFilterList = new ArrayList<VtnFlowFilter>();
-            VnodeName vnodeName = new VnodeName(condName);
+            VnodeName vnodeName = new VnodeName(flowFilterCondName);
             VtnFlowFilter filter = new VtnFlowFilterBuilder()
                 .setIndex(index)
                 .setCondition(vnodeName)
@@ -614,12 +579,12 @@ public class VTNIntentParser {
                 .setVtnFlowFilter(vtnFlowFilterList)
                 .build();
             vtnManangerService.setFlowFilter(input);
-        } else if (type.equalsIgnoreCase("DROP")) {
-            VtnDropFilterCase drop = new VtnDropFilterCaseBuilder().
-                setVtnDropFilter(new VtnDropFilterBuilder().build()).
-                build();
+        } else if ("DROP".equalsIgnoreCase(type)) {
+            VtnDropFilterCase drop = new VtnDropFilterCaseBuilder()
+                .setVtnDropFilter(new VtnDropFilterBuilder().build())
+                .build();
             List<VtnFlowFilter> vtnFlowFilterList = new ArrayList<VtnFlowFilter>();
-            VnodeName vnodeName = new VnodeName(condName);
+            VnodeName vnodeName = new VnodeName(flowFilterCondName);
             VtnFlowFilter filter = new VtnFlowFilterBuilder()
                 .setIndex(index)
                 .setCondition(vnodeName)
@@ -645,7 +610,7 @@ public class VTNIntentParser {
      * @return  {@code true} flow filter is deleted in VTN Manager.
      */
     private boolean deleteFlowFilter(int index) {
-        List indexList = new ArrayList<Integer>();
+        final List<Integer> indexList = new ArrayList<Integer>();
         indexList.add(index);
         RemoveFlowFilterInput input = new RemoveFlowFilterInputBuilder()
             .setTenantName(TENANT_NAME)
@@ -658,15 +623,15 @@ public class VTNIntentParser {
     /**
      * Create a virtual bridge which on true creates vlanmapping for
      * the vbridge created.
+     *
      * @param tenantName  The VTN tenant name under which the VTN Bridge should be created.
      * @param bridgeName  Valid VTN bridge name to be created.
      * @return {@code true} only bridge is created in VTN Manager.
      */
-    private boolean createBridge(String tenantName, String bridgeName) {
-        boolean status = false;
+    private boolean setupDefaultBridge(String tenantName, String bridgeName) {
         VlanId vlanId = new VlanId(0);
-        status = vtnManangerService.updateBridge(tenantName, bridgeName, bridgeName + " description",
-                            VnodeUpdateMode.CREATE);
+        boolean status = vtnManangerService.updateBridge(tenantName, bridgeName, bridgeName + " description",
+                            VnodeUpdateMode.UPDATE);
         if (status) {
             AddVlanMapInput input = new AddVlanMapInputBuilder()
                 .setBridgeName(bridgeName)
@@ -695,7 +660,7 @@ public class VTNIntentParser {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Unable to get flow condition name {}", e);
+            LOG.error(ERROR_MESSAGE, e);
         }
         return false;
     }
@@ -719,7 +684,7 @@ public class VTNIntentParser {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Unable to get flow condition name {}", e);
+            LOG.error(ERROR_MESSAGE, e);
         }
         return flow;
     }
@@ -730,7 +695,7 @@ public class VTNIntentParser {
      * @return  A list of {@link VtnFlowCondition} instances.
      */
     private  List<VtnFlowCondition> readFlowConditions() {
-        List<VtnFlowCondition> vlist = new ArrayList<>();;
+        List<VtnFlowCondition> vlist = new ArrayList<>();
         try {
             InstanceIdentifier<VtnFlowConditions> path =
                 InstanceIdentifier.create(VtnFlowConditions.class);
@@ -744,8 +709,23 @@ public class VTNIntentParser {
                 return Collections.<VtnFlowCondition>emptyList();
             }
         } catch (Exception e) {
-            LOG.error("Unable to get flow condition name {}", e);
+            LOG.error(ERROR_MESSAGE, e);
         }
         return vlist;
+    }
+
+    /**
+     * Validate new Source and exist Source IP Address should not same
+     * for before updating the intent.
+     *
+     * @param inSrc  Exist Source Address.
+     * @param outSrc  New Source Address.
+     * @param inDst  Exist Destination Address.
+     * @param outDsc  New Destination Address.
+     * @return {@code true} if new Source and exist Source IP address are not same.
+     */
+    private boolean validateSrcDstInputs(String inSrc, String outSrc,String inDst,String outDsc ) {
+        return (vtnRendererUtility.validateInSrcOutSrc(inSrc,outSrc)
+            || vtnRendererUtility.validateInSrcOutSrc(inDst,outDsc));
     }
 }
