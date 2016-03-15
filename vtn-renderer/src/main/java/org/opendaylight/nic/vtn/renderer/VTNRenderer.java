@@ -13,9 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
@@ -24,24 +21,23 @@ import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
 import org.opendaylight.nic.utils.MdsalUtils;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The VTNRenderer class parse the intents received.
@@ -74,8 +70,6 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
      */
     private static final int  INDEX_OF_DST_END_POINT_GROUP = 1;
 
-    private DataBroker dataProvider;
-
     private ListenerRegistration<DataChangeListener> vtnRendererListener = null;
 
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
@@ -92,19 +86,19 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
     }
 
     /**
-     * Method invoked by Factory class.
+     * Gets called on start of a bundle.
      * @param session the session object
      */
     @Override
-    public void onSessionInitiated(ProviderContext session) {
+    public void onSessionInitiated(final ProviderContext session) {
 
-        this.dataProvider = session.getSALService(DataBroker.class);
-        MdsalUtils md = new MdsalUtils(this.dataProvider);
-        VTNManagerService vtn = new VTNManagerService(md, session);
-        this.vtnIntentParser = new VTNIntentParser(dataProvider , vtn);
+        final DataBroker dataBroker = session.getSALService(DataBroker.class);
+        final MdsalUtils md = new MdsalUtils(dataBroker);
+        final VTNManagerService vtn = new VTNManagerService(md, session);
+        this.vtnIntentParser = new VTNIntentParser(dataBroker , vtn);
 
-        this.vtnRendererUtility = new VTNRendererUtility(dataProvider);
-        vtnRendererListener = dataProvider.registerDataChangeListener(
+        this.vtnRendererUtility = new VTNRendererUtility(dataBroker);
+        vtnRendererListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.CONFIGURATION,
                 INTENTS_IID, this, DataChangeScope.SUBTREE);
     }
@@ -151,7 +145,7 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
                     LOG.trace("Intent data's are successfully deleted from operational data store", uuid.getValue());
                 }
             } catch (Exception e) {
-                LOG.error("Could not delete VTN Renderer :{} ", e);
+                LOG.error("Could not delete VTN Renderer :{}", e);
             }
         }
     }

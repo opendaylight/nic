@@ -13,16 +13,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.utils.MdsalUtils;
-import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +32,8 @@ public class VTNRendererUtility {
     private final Logger log = LoggerFactory.getLogger(VTNRendererUtility.class);
 
     private DataBroker dataBroker;
+
+    private static final int IP_DOTS = 3;
 
     public VTNRendererUtility(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
@@ -47,8 +47,7 @@ public class VTNRendererUtility {
      */
     public boolean validateIP(final String ip) {
         if (ip == null) {
-            log.error("IP address is null");
-            throw new NullPointerException();
+            throw new IllegalArgumentException("IP address is null.");
         }
         String ipAddressPattern = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
                 + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
@@ -67,8 +66,7 @@ public class VTNRendererUtility {
      */
     public boolean validateMacAddress(final String macAddress) {
         if (macAddress == null) {
-            log.error("MAC address is null");
-            throw new NullPointerException();
+            throw new IllegalArgumentException("MAC address is null.");
         }
         String macAdrressPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
         Pattern pattern = Pattern.compile(macAdrressPattern);
@@ -85,13 +83,12 @@ public class VTNRendererUtility {
      */
     public boolean validateSubnet(String srcIp, String dstIp) {
         if (srcIp == null || dstIp == null) {
-            log.error("Source or Destination IP address is null");
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Source or Destination IP address is null.");
         }
         if (!srcIp.equalsIgnoreCase(dstIp)) {
             String[] srcIpDigits = srcIp.split("\\.");
             String[] dstIpDigits = dstIp.split("\\.");
-            for (int index = 0; index < 3; index++) {
+            for (int index = 0; index < IP_DOTS; index++) {
                 if (!(Byte.parseByte(srcIpDigits[index]) == Byte
                         .parseByte(dstIpDigits[index]))) {
                     log.trace(
