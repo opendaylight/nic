@@ -16,7 +16,7 @@
     <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin-li/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
-    <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
@@ -35,7 +35,7 @@
         <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
-         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-hazelcast.xml"> mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}/xml/config</configfile>
         <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config</configfile>
