@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_323cb693",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-03-23T17:35:05Z",
+      "side": 1,
+      "message": "I think the name of the variable \"ERROR_MESSAGE\" is too generic, considering the error message just targets on a specific error related to flow condition.",
+      "range": {
+        "startLine": 140,
+        "startChar": 32,
+        "endLine": 140,
+        "endChar": 45
+      },
+      "revId": "30895c830d1a0d16aa039bc065a8fac7f4f27b0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_b26e0695",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-03-23T17:35:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this as a private member field of that class.\nConsidering it is used only in the onDataChanged method and private methods called by only onDataChanged method, I think it should be a local variable in these methods to narrow the scope.",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 25
+      },
+      "revId": "30895c830d1a0d16aa039bc065a8fac7f4f27b0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_b2f566cd",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-03-23T17:35:05Z",
+      "side": 1,
+      "message": "I think we should use the verifyIntent method of the IntentUtils class of the org.opendaylight.nic.utils package instead of creating new one.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 5
+      },
+      "revId": "30895c830d1a0d16aa039bc065a8fac7f4f27b0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_f2724e48",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-03-23T17:35:05Z",
+      "side": 1,
+      "message": "I guess we can use the extractSrcEndPointGroup method and extractDstEndPointGroup of the IntentUtils class of the org.opendaylight.nic.utils package instead of creating new one.\nThough I\u0027m not sure.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 5
+      },
+      "revId": "30895c830d1a0d16aa039bc065a8fac7f4f27b0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_f21c0ec4",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-03-23T17:35:05Z",
+      "side": 1,
+      "message": "Are there any reasons you chose \"Integer\" instead of \"int\"?\nIt seems to me that this variable are only used as \"int\" in this class.",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "30895c830d1a0d16aa039bc065a8fac7f4f27b0e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
