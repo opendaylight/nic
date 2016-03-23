@@ -12,14 +12,14 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.4.1-Beryllium-SR1</version>
+  <version>0.4.2-SNAPSHOT</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>intent-compiler</artifactId>
- <version>1.1.1-Beryllium-SR1</version>
+ <version>1.1.2-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
  <dependencies>
