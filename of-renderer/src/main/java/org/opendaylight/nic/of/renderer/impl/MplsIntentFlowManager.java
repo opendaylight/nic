@@ -129,8 +129,11 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
 
         String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
         String label = null;
+        String serverMACAddress = null;
         try {
-            label = subjectsMapping.get(endPointDst).get(OFRendererConstants.MPLS_LABEL_KEY);
+            Map<String, String> value = subjectsMapping.get(endPointDst);
+            label = value.get(OFRendererConstants.MPLS_LABEL_KEY);
+            serverMACAddress = value.get(OFRendererConstants.SERVER_DESTINATION_MAC_ADDRESS);
         } catch (Exception e) {
             LOG.error("Subject does not have mapping information for popping MPLS label", e);
         }
@@ -145,7 +148,7 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
             Short bos = 1;
             Instructions builtInstructions = null;
             if(flowAction.equals(FlowAction.ADD_FLOW)) {
-                builtInstructions = createMPLSIntentInstructions(labels, true, bos, outputPort, false);
+                builtInstructions = createMPLSIntentInstructions(labels, true, bos, outputPort, false, serverMACAddress);
                 LOG.info("Pop MPLS label at switch: {}", nodeId.getValue());
             } else if (flowAction.equals(FlowAction.REMOVE_FLOW)) {
                 builtInstructions = createClearFlowsInstructions();
