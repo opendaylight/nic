@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_90177d51",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/RedirectFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-03-25T12:08:21Z",
+      "side": 1,
+      "message": "this could be at debug level?",
+      "range": {
+        "startLine": 544,
+        "startChar": 24,
+        "endLine": 544,
+        "endChar": 28
+      },
+      "revId": "d4b4b760cdab28e1bd242a5f8d3112cb7b838bd0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
