@@ -244,7 +244,7 @@ public class VTNIntentParserTest extends TestBase {
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
                 .invoke("constructCondName", VALID_DST_ADDRESS[0], VALID_SRC_ADDRESS[0], ENCODED_UUID, BOOLEAN_FALSE);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
-                .invoke("delete", Matchers.any(String.class));
+                .invoke("delFlowCondFilter", Matchers.any(String.class));
         /**
          * Verifying that whether VTN elements updated based on the intent
          * action Here testing valid scenario, passing valid addresses, action
@@ -266,7 +266,7 @@ public class VTNIntentParserTest extends TestBase {
                         Matchers.any(String.class), Matchers.any(String.class),
                         Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
-                .invoke("delete", Matchers.any(String.class));
+                .invoke("delFlowCondFilter", Matchers.any(String.class));
 
         PowerMockito.doReturn(mockFlowMatchList).when(spyVTNIntentParser, "listOfFlowMatch", Matchers.any(String.class));
         PowerMockito.doReturn(mockEthernetMatch).when(mockFlowMatch, "getVtnEtherMatch");
@@ -274,17 +274,17 @@ public class VTNIntentParserTest extends TestBase {
         spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[2],
                 VALID_DST_ADDRESS[2], ACTIONS[0], INTENT_ID, ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
-                .invoke("delete", Matchers.any(String.class));
+                .invoke("delFlowCondFilter", Matchers.any(String.class));
 
         spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[0],
                 VALID_DST_ADDRESS[0], ACTIONS[2], INTENT_ID, ENCODED_UUID, mock(Intent.class));
     }
 
     /**
-     * Test case for {@link VTNIntentParser#delete()}
+     * Test case for {@link VTNIntentParser#delFlowCondFilter()}
      */
     @Test
-    public void testDelete() throws Exception {
+    public void testdelFlowCondFilter() throws Exception {
         spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         VtnFlowCondition mockFlowcondition = PowerMockito.mock(VtnFlowCondition.class);
         VnodeName vnode = PowerMockito.mock(VnodeName.class);
@@ -301,7 +301,7 @@ public class VTNIntentParserTest extends TestBase {
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * valid scenario by passing valid Intent ID.
          */
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
@@ -311,7 +311,7 @@ public class VTNIntentParserTest extends TestBase {
          * invalid scenario if any exception raised during this deletion
          * process.
          */
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
@@ -320,13 +320,13 @@ public class VTNIntentParserTest extends TestBase {
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * invalid scenario by passing invalid Intent Id.
          */
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowFilter", Matchers.any(Integer.class));
 
-        spyVTNIntentParser.delete(ENCODED_UUID_FAILURE);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID_FAILURE);
         /**
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * valid scenario by passing valid Intent Id and if all intents deleted
@@ -335,14 +335,14 @@ public class VTNIntentParserTest extends TestBase {
         List<VtnFlowCondition> mockFlowConditionListEmpty = new ArrayList<VtnFlowCondition>();
         PowerMockito.doReturn(mockFlowConditionListEmpty).when(spyVTNIntentParser, "readFlowConditions");
         PowerMockito.doReturn(false).when(spyVTNIntentParser, "isDeleteDefault");
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowFilter", Matchers.any(Integer.class));
 
         PowerMockito.doReturn(true).when(spyVTNIntentParser, "isDeleteDefault");
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))

@@ -296,7 +296,7 @@ public class VTNIntentParser {
                     }
                     if (((!(inSrcIP == null) && (!inSrcIP.equals(outSrcIP))) || (!(inDstIP == null) && (!inDstIP
                                .equals(outDscIP))) || !(isMACIP))) {
-                        delete(encodeUUID);
+                        delFlowCondFilter(encodeUUID);
                         boolean status = isCreateDefault();
                         if (status) {
                             createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
@@ -308,7 +308,7 @@ public class VTNIntentParser {
                         }
                     } else if (((!(inSrcMAC == null) && (!inSrcMAC.equals(outSrcMAC))) || (!(inDscMAC == null)
                         && (!inDscMAC.equals(outDscMAC))) || !(isIPMAC))) {
-                        delete(encodeUUID);
+                        delFlowCondFilter(encodeUUID);
                         boolean status = isCreateDefault();
                         if (status) {
                             createFlowCond(adressSrc, adressDst, condNameSrcDst, FORWARD_FLOWCOND);
@@ -339,7 +339,7 @@ public class VTNIntentParser {
      *
      * @param intentID  ID of the Deleting intent.
      */
-    public void delete(String intentID) {
+    public void delFlowCondFilter(String intentID) {
         try {
             for (VtnFlowCondition flowCondition : readFlowConditions()) {
                 String lclfc = flowCondition.getName().getValue();
