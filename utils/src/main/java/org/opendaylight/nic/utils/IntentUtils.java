@@ -89,8 +89,8 @@ public class IntentUtils {
     public static boolean verifyIntentActions(Intent intent) {
         boolean result = true;
         List<Actions> actions = intent.getActions();
-        if (actions == null || actions.size() > NUM_OF_SUPPORTED_ACTION) {
-            LOG.warn("Intent's action is either null or there is more than {} action {}", NUM_OF_SUPPORTED_ACTION,
+        if (actions == null || actions.size() != NUM_OF_SUPPORTED_ACTION) {
+            LOG.warn("Intent's action is either null or not equal to {} action {}", NUM_OF_SUPPORTED_ACTION,
                     intent);
             result = false;
         }
@@ -100,8 +100,8 @@ public class IntentUtils {
     public static boolean verifyIntentSubjects(Intent intent) {
         boolean result = true;
         List<Subjects> subjects = intent.getSubjects();
-        if (subjects == null || subjects.size() > NUM_OF_SUPPORTED_EPG) {
-            LOG.warn("Intent's subjects is either null or there is more than {} subjects {}", NUM_OF_SUPPORTED_EPG,
+        if (subjects == null || subjects.size() != NUM_OF_SUPPORTED_EPG) {
+            LOG.warn("Intent's subjects is either null or not equal to {} subjects {}", NUM_OF_SUPPORTED_EPG,
                     intent);
             result = false;
         }
