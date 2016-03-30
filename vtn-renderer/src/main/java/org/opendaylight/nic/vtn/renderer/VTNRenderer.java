@@ -8,7 +8,6 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,15 +22,14 @@ import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
 import org.opendaylight.controller.sal.binding.api.BindingAwareProvider;
+import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
+import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
@@ -47,22 +45,12 @@ import org.osgi.framework.ServiceRegistration;
  * The VTNRenderer class parse the intents received.
  */
 public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataChangeListener {
-  private static final Logger LOG = LoggerFactory
+    private static final Logger LOG = LoggerFactory
             .getLogger(VTNRenderer.class);
 
     private VTNIntentParser vtnIntentParser;
 
     private VTNRendererUtility vtnRendererUtility;
-
-    /**
-     * The number of supported actions by VTN Renderer.
-     */
-    private static final int  NUM_OF_SUPPORTED_ACTIONS = 1;
-
-    /**
-     * The number of supported end point groups by VTN Renderer.
-     */
-    private static final int  NUM_OF_SUPPORTED_EPG = 2;
 
     /**
      * The index of the source end point group in an intent.
@@ -139,11 +127,11 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
             try {
                 if (originalDataObject.get(instanceIdentifier) instanceof Intent) {
                     Intent lclIntent = (Intent) originalDataObject.get(instanceIdentifier);
-                    IntentKey lclIntentKey = (IntentKey) lclIntent.getKey();
-                    Uuid uuid = (Uuid) lclIntentKey.getId();
-                    LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
+                    IntentKey lclIntentKey = lclIntent.getKey();
+                    Uuid uuid = lclIntentKey.getId();
+                    LOG.trace(" Intent Deleted :{} ", uuid.getValue());
                     String encodeUUID = vtnRendererUtility.encodeUUID(uuid.getValue());
-                    vtnIntentParser.delete(encodeUUID);
+                    vtnIntentParser.delFlowCondFilter(encodeUUID);
                     if (!vtnRendererUtility.deleteIntent(lclIntent)) {
                         LOG.error("Intent data's are not deleted from operational data store", uuid.getValue());
                         return;
@@ -159,64 +147,19 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
     /**
      * This method parse the intent and calls the VTN renderer
      *
-     * @param intent the intent instance.
      */
     private void intentParser(Intent intent) {
-        // Retrieve the ID.
-        Uuid uuid = intent.getId();
-        if (uuid == null) {
-            LOG.error("Intent ID is not specified: {}", intent);
+        if (!IntentUtils.verifyIntent(intent)) {
             return;
         }
-        String intentID = uuid.getValue();
+        // Retrieve the Intent ID.
+        String intentID = intent.getId().getValue();
         // Retrieve the end points.
-        final List<Subjects> listSubjects = intent.getSubjects();
-        if (listSubjects == null) {
-            LOG.warn("Subjects are not specified: {}", intentID);
-            return;
-        } else if (listSubjects.size() != NUM_OF_SUPPORTED_EPG) {
-            LOG.warn("VTN Renderer supports only two end point groups per Intent: {}", intentID);
-            return;
-        }
-        List<String> endPointGroups = new ArrayList<String>();
-        for (Subjects subjects: listSubjects) {
-            Subject subject = subjects.getSubject();
-            if (!(subject instanceof EndPointGroup)) {
-                LOG.trace("Subject is not specified: {}", intentID);
-                return;
-            }
-            EndPointGroup endPointGroup = (EndPointGroup)subject;
-
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
-                .EndPointGroup epg = endPointGroup.getEndPointGroup();
-            if (epg == null) {
-                LOG.trace("End Point Group is not specified: {}", intentID);
-                return;
-            }
-            endPointGroups.add(epg.getName());
-        }
+        final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         String endPointSrc = endPointGroups.get(INDEX_OF_SRC_END_POINT_GROUP);
         String endPointDst = endPointGroups.get(INDEX_OF_DST_END_POINT_GROUP);
-        // Retrieve the action.
-        final List<Actions> listActions = intent.getActions();
-        if (listActions == null) {
-            LOG.trace("Actions are not specified: {}", intentID);
-            return;
-        } else if (listActions.size() != NUM_OF_SUPPORTED_ACTIONS) {
-            LOG.warn("VTN Renderer supports only one action per Intent: {}", intentID);
-            return;
-        }
-        Action action = listActions.get(0).getAction();
         // Get the type of the action.
-        String actionType;
-        if (action instanceof Allow) {
-            actionType = "allow";
-        } else if (action instanceof Block) {
-            actionType = "block";
-        } else {
-            LOG.warn("VTN Renderer supports only allow or block: {}", intentID);
-            return;
-        }
+        String actionType = getAction(intent);
         // get the encode UUID value
         String encodeUUID = vtnRendererUtility.encodeUUID(intentID);
         Status intentStatus = Status.CompletedError;
@@ -231,4 +174,21 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
         vtnRendererUtility.addIntent(intent, intentStatus);
     }
 
+    /**
+     * To get the action from the intent.
+     *
+     * @return action type.
+     */
+    private String getAction(Intent intent) {
+        Action action = intent.getActions().get(0).getAction();
+        String actionType = null;
+        if (action instanceof Allow) {
+            actionType = "allow";
+        } else if (action instanceof Block) {
+            actionType = "block";
+        } else {
+            throw new IntentElementNotFoundException("VTN Renderer supports only allow or block: {}" + intent.getId());
+        }
+        return actionType;
+    }
 }

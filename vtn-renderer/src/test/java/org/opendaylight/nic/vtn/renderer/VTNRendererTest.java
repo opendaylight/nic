@@ -8,20 +8,13 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.isA;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.mockito.Matchers;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,46 +23,52 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
+import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker.DataChangeScope;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.controller.sal.binding.api.BindingAwareBroker.ProviderContext;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
+import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.Subject;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
+import com.google.common.util.concurrent.CheckedFuture;
 /**
  * Unit test class for {@link VTNRenderer}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({VTNRenderer.class, VTNManagerService.class, VTNIntentParser.class,})
+@PrepareForTest({VTNRenderer.class, VTNManagerService.class, VTNIntentParser.class, IntentUtils.class})
 public class VTNRendererTest {
     /**
      * Valid Intent IDs used for testing different scenarios.
      */
     private static final String UUID_VALUE = "b9a13232-525e-4d8c-be21-cd65e3436034";
     /**
-     * Valid IP address used for testing different scenarios.
-     */
-    private static final String IP_ADDRESS = "10.0.0.1";
-    /**
      * Collection of InstanceIdentifier and Intent.
      */
-    private Map<InstanceIdentifier, Intent> dataMap;
+    private Map<InstanceIdentifier<?>, DataObject> dataMap;
     /**
      * IntentKey object reference for unit testing.
      */
@@ -85,15 +84,11 @@ public class VTNRendererTest {
     /**
      * InstanceIdentifier object reference for unit testing.
      */
-    private InstanceIdentifier instanceIdentifier;
+    private InstanceIdentifier<?> instanceIdentifier;
     /**
      * AsyncDataChangeEvent object reference for unit testing.
      */
-    private AsyncDataChangeEvent asyncDataChangeEvent;
-    /**
-     * VTNIntentParser object reference for unit testing.
-     */
-    private VTNIntentParser mockVTNIntentParser;
+    private AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> asyncDataChangeEvent;
     /**
      * DataBroker object reference for unit testing.
      */
@@ -103,44 +98,106 @@ public class VTNRendererTest {
      */
     private ListenerRegistration<DataChangeListener> vtnRendererListenerMockObj = null;
     /**
-     * VTNIntentParser object reference for unit testing.
+     * ProviderContext object reference for unit testing.
      */
-    private VTNManagerService vtnManagerServiceMockObj;
+    private ProviderContext providerContextMockObj;
     /**
      * VTNIntentParser object reference for unit testing.
      */
-    private ProviderContext providerContextMockObj;
+    private VTNIntentParser vtnIntentParser;
+    /**
+     * Allow object reference.
+     */
+    private Allow allow;
+    /**
+     * Block object reference.
+     */
+    private Block block;
+    /**
+     * Subjects object reference.
+     */
+    private Subjects subjects;
+    /**
+     * Actions object reference.
+     */
+    private Actions actions;
+    /**
+     * Uuid object reference.
+     */
+    private Uuid mockuuid;
+    /**
+     * List of Subjects.
+     */
+    private List<Subjects> subjectsList = null;
+    /**
+     * List of Actions.
+     */
+    private List<Actions> listActions = null;
+    /**
+     * EndPointGroup Source String.
+     */
+    private static final String EPG_SRC = "00:00:00:00:00:01";
+    /**
+     * EndPointGroup Destination String.
+     */
+    private static final String EPG_DST = "00:00:00:00:00:02";
+    /**
+     * Instance of WriteTransaction to perform unit testing.
+     */
+    private WriteTransaction transaction;
+    /**
+     * Instance of CheckedFuture to perform unit testing.
+     */
+    private CheckedFuture<Void, TransactionCommitFailedException> value = null;
 
     /**
      * This method creates the required objects to perform unit testing.
+     * @throws Exception
      */
     @Before
     public void setUp() throws Exception {
-        dataBrokerMockObj = PowerMockito.mock(DataBroker.class);
-        vtnRendererListenerMockObj = PowerMockito.mock(ListenerRegistration.class);
-        when(dataBrokerMockObj.registerDataChangeListener(
+        allow = mock(Allow.class);
+        block = mock(Block.class);
+        subjects = mock(Subjects.class);
+        actions = mock(Actions.class);
+        dataBrokerMockObj = mock(DataBroker.class);
+        vtnRendererListenerMockObj = mock(ListenerRegistration.class);
+        providerContextMockObj = mock(ProviderContext.class);
+        instanceIdentifier = mock(InstanceIdentifier.class);
+        asyncDataChangeEvent = mock(AsyncDataChangeEvent.class);
+        intentKey = mock(IntentKey.class);
+        mockuuid = mock(Uuid.class);
+        intent = mock(Intent.class);
+        transaction = mock(WriteTransaction.class);
+        value = mock(CheckedFuture.class);
+
+        subjectsList = new ArrayList<Subjects>();
+        listActions = new ArrayList<Actions>();
+        dataMap = new HashMap<InstanceIdentifier<?>, DataObject>();
+
+        subjectsList.add(subjects);
+        subjectsList.add(subjects);
+        listActions.add(actions);
+        dataMap.put(instanceIdentifier, intent);
+
+        when(providerContextMockObj.getSALService(DataBroker.class)).thenReturn(dataBrokerMockObj);
+        when(
+                dataBrokerMockObj.registerDataChangeListener(
                         eq(LogicalDatastoreType.CONFIGURATION),
-                        eq(InstanceIdentifier.builder(Intents.class)
-                            .build()),
-                        isA(VTNRenderer.class),
+                        any(InstanceIdentifier.class), any(VTNRenderer.class),
                         eq(DataChangeScope.SUBTREE))).thenReturn(
                 vtnRendererListenerMockObj);
-        vtnRendererObj = PowerMockito.spy(new VTNRenderer());
-        vtnManagerServiceMockObj = PowerMockito.mock(VTNManagerService.class);
-        mockVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBrokerMockObj, vtnManagerServiceMockObj));
-        Whitebox.setInternalState(vtnRendererObj, "vtnIntentParser", mockVTNIntentParser);
-        asyncDataChangeEvent = mock(AsyncDataChangeEvent.class);
-        dataMap = new HashMap<InstanceIdentifier, Intent>();
+
         when(asyncDataChangeEvent.getCreatedData()).thenReturn(dataMap);
         when(asyncDataChangeEvent.getUpdatedData()).thenReturn(dataMap);
-        intentKey = mock(IntentKey.class);
-        Uuid mockuuid = mock(Uuid.class);
+
         when(mockuuid.getValue()).thenReturn(UUID_VALUE);
         when(intentKey.getId()).thenReturn(mockuuid);
-        intent = mock(Intent.class);
         when(intent.getKey()).thenReturn(intentKey);
-        instanceIdentifier = mock(InstanceIdentifier.class);
-        dataMap.put(instanceIdentifier, intent);
+        when(intent.getActions()).thenReturn(listActions);
+        when(intent.getSubjects()).thenReturn(subjectsList);
+
+        vtnRendererObj = PowerMockito.spy(new VTNRenderer());
     }
 
     /**
@@ -149,24 +206,7 @@ public class VTNRendererTest {
      */
     @Test
     public void onSessionInitiatedTest() throws Exception {
-        dataBrokerMockObj = PowerMockito.mock(DataBroker.class);
-        providerContextMockObj = PowerMockito.mock(ProviderContext.class);
-        instanceIdentifier = PowerMockito.mock(InstanceIdentifier.class);
-        vtnRendererObj = PowerMockito.mock(VTNRenderer.class);
-        vtnRendererListenerMockObj = PowerMockito.mock(ListenerRegistration.class);
-        PowerMockito.doReturn(vtnRendererListenerMockObj).when(
-                dataBrokerMockObj, "registerDataChangeListener",
-                LogicalDatastoreType.CONFIGURATION,
-                instanceIdentifier, vtnRendererObj,
-                DataChangeScope.SUBTREE);
-        when(
-                dataBrokerMockObj.registerDataChangeListener(
-                        eq(LogicalDatastoreType.CONFIGURATION),
-                        any(InstanceIdentifier.class), any(VTNRenderer.class),
-                        eq(DataChangeScope.SUBTREE))).thenReturn(
-                vtnRendererListenerMockObj);
         vtnRendererObj.onSessionInitiated(providerContextMockObj);
-        verify(vtnRendererObj);
     }
 
     /**
@@ -175,6 +215,7 @@ public class VTNRendererTest {
      */
     @Test
     public void testOnDataChangedForCreated() throws Exception {
+
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
         /**
          * Verifying asyncDataChangeEvent object invoking getCreatedData method.
@@ -204,201 +245,144 @@ public class VTNRendererTest {
      */
     @Test
     public void testOnDataChangedForDeleted() throws Exception {
-        dataBrokerMockObj = PowerMockito.mock(DataBroker.class);
-        vtnManagerServiceMockObj = PowerMockito.mock(VTNManagerService.class);
-        mockVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBrokerMockObj, vtnManagerServiceMockObj));
         final Set<InstanceIdentifier<?>> dataSet = new HashSet<>();
         dataSet.add(instanceIdentifier);
         dataSet.add(null);
         when(asyncDataChangeEvent.getOriginalData()).thenReturn(dataMap);
         when(asyncDataChangeEvent.getRemovedPaths()).thenReturn(dataSet);
+
         vtnRendererObj.onDataChanged(asyncDataChangeEvent);
+        /**
+         * Verifies deletion of specified data store and delete() must return true.
+         */
+        when(transaction.submit()).thenReturn(value);
+        when(dataBrokerMockObj.newWriteOnlyTransaction()).thenReturn(transaction);
+
+        vtnRendererObj.onSessionInitiated(providerContextMockObj);
+        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
+
+        /**
+         * Verifies deletion of specified data store. Here testing invalid
+         * scenario if any exception occurred in the deletion of particular data
+         * store then delete() must return false only.
+         */
+        when(transaction.submit()).thenReturn(value);
+        when(dataBrokerMockObj.newWriteOnlyTransaction()).thenReturn(transaction);
+        when(value.checkedGet()).thenThrow(TransactionCommitFailedException.class);
+
+        vtnRendererObj.onSessionInitiated(providerContextMockObj);
+        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
+
         /**
          * Verifying asyncDataChangeEvent object invoking getCreatedData, getUpdatedData, getOriginalData and
          * getRemovedPaths methods and finally checks the invocation of delete method.
          */
-        verify(asyncDataChangeEvent).getCreatedData();
-        verify(asyncDataChangeEvent).getUpdatedData();
-        verify(asyncDataChangeEvent).getOriginalData();
-        verify(asyncDataChangeEvent).getRemovedPaths();
+        verify(asyncDataChangeEvent, times(3)).getCreatedData();
+        verify(asyncDataChangeEvent, times(3)).getUpdatedData();
+        verify(asyncDataChangeEvent, times(3)).getOriginalData();
+        verify(asyncDataChangeEvent, times(3)).getRemovedPaths();
     }
 
     /**
-     * Test that checks if @{VTNRenderer#onDataChanged} is called
-     * and then checks the behavior of Subjects.
-     */
-    @Test
-    public void testIntentParserForSubjects() throws Exception {
-        final Uuid uuid = mock(Uuid.class);
-        final Subjects subjects = mock(Subjects.class);
-        final List<Subjects> subjectsList = new ArrayList<Subjects>();
-        when(uuid.getValue()).thenReturn(UUID_VALUE);
-        when(intent.getId()).thenReturn(uuid);
-        subjectsList.add(subjects);
-        when(intent.getSubjects()).thenReturn(null,subjectsList);
-        /**
-         * Verifying Intent object invoking getSubjects method when getSubjects return null and
-         * verifying Subjects object invoking getSubject method.
-         */
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(intent, times(2)).getSubjects();
-        verify(subjects, times(0)).getSubject();
-        /**
-         * Verifying Intent object invoking getSubjects method when getSubjects return list
-         * contains single subject object and verifying Subjects object invoking getSubject method.
-         */
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(intent, times(4)).getSubjects();
-        verify(subjects, times(0)).getSubject();
-        /**
-         * Verifying Intent object invoking getSubjects method when getSubjects return list
-         * contains two subject objects and verifying Subjects object invoking getSubject method.
-         */
-        subjectsList.add(subjects);
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(intent, times(6)).getSubjects();
-        verify(subjects, times(2)).getSubject();
-    }
-
-    /**
-     * Test that checks if @{VTNRenderer#onDataChanged} is called
-     * and then checks the behavior of endpoints.
-     */
-    @Test
-    public void testIntentParserForEndPointGroups() throws Exception {
-        final List<Subjects> subjectsList = new ArrayList<Subjects>();
-        final Uuid  uuid  = mock(Uuid.class);
-        final EndPointGroup endPointGroup = mock(EndPointGroup.class);
-        when(uuid.getValue()).thenReturn(UUID_VALUE);
-        when(intent.getId()).thenReturn(uuid);
-        Subjects subjects = mock(Subjects.class);
-        subjectsList.add(subjects);
-        subjectsList.add(subjects);
-        when(endPointGroup.getEndPointGroup()).thenReturn(null,
-                mock(org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.
-                intent.subjects.subject.end.point.group.EndPointGroup.class));
-        when(subjects.getSubject()).thenReturn(null, mock(Subject.class), endPointGroup);
-        when(intent.getSubjects()).thenReturn(subjectsList);
-        /**
-         * Verifying endPointGroup object not invoking getEndPointGroup when getSubject() return null.
-         */
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(endPointGroup, times(0)).getEndPointGroup();
-        /**
-         * Verifying endPointGroup object invoking getEndPointGroup when getSubject() return Subject object.
-         */
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(endPointGroup, times(3)).getEndPointGroup();
-        /**
-         * Verifying endPointGroup object invoking getEndPointGroup when getSubject() return EndPointGroup object.
-         */
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(endPointGroup, times(7)).getEndPointGroup();
-    }
-
-    /**
-     * Test that checks if @{VTNRenderer#onDataChanged} is called
-     * and then checks the behavior of actions.
-     */
-    @Test
-    public void testIntentParserForActions() throws Exception {
-        vtnManagerServiceMockObj = PowerMockito.mock(VTNManagerService.class);
-        mockVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBrokerMockObj, vtnManagerServiceMockObj));
-        final Uuid  uuid  = mock(Uuid.class);
-        final EndPointGroup endPointGroup = mock(EndPointGroup.class);
-        final Subjects subjects = mock(Subjects.class);
-        final List<Subjects> subjectsList = new ArrayList<Subjects>();
-        final List<Actions> emptyList = new ArrayList<Actions>();
-        final List<Actions> listActions = new ArrayList<Actions>();
-        final Actions actions = mock(Actions.class);
-        when(uuid.getValue()).thenReturn(UUID_VALUE);
-        when(intent.getId()).thenReturn(uuid);
-        subjectsList.add(subjects);
-        subjectsList.add(subjects);
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.
-                end.point.group.EndPointGroup epg = mock(org.opendaylight.yang.gen.v1.urn.opendaylight
-                .intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup.class);
-        when(epg.getName()).thenReturn(IP_ADDRESS);
-        when(endPointGroup.getEndPointGroup()).thenReturn(epg);
-        when(subjects.getSubject()).thenReturn(endPointGroup);
-        when(intent.getSubjects()).thenReturn(subjectsList);
-        when(actions.getAction()).thenReturn(mock(Allow.class), mock(Block.class), null);
-        listActions.add(actions);
-        when(intent.getActions()).thenReturn(null, emptyList, listActions);
-        /**
-         * Verifying vtnRenderer object invoking rendering and updateRendering methods
-         * when getActions() returns null, empty list and list contains actions object.
-         */
-        asyncDataChangeEvent = mock(AsyncDataChangeEvent.class);
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(mockVTNIntentParser, times(0)).updateRendering(anyString(),
-                anyString(), anyString(), anyString(),
-                anyString(), Matchers.any(Intent.class));
-        verify(mockVTNIntentParser, times(0)).rendering(anyString(),
-                anyString(), anyString(), anyString(), Matchers.any(Intent.class));
-        /**
-         * Verifying vtnRenderer object invoking rendering method
-         * when getAction() returns null, Allow and Block object.
-         */
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(mockVTNIntentParser, times(0)).rendering(anyString(),
-                anyString(), anyString(), anyString(), Matchers.any(Intent.class));
-    }
-
-    /**
-     * Test that checks if @{VTNRenderer#onDataChanged} is called
-     * and then checks the behavior of rendering.
-     */
-    @Test
-    public void testIntentParserForRendering() throws Exception {
-        final Uuid  uuid  = mock(Uuid.class);
-        final EndPointGroup endPointGroup = mock(EndPointGroup.class);
-        final Subjects subjects = mock(Subjects.class);
-        final List<Subjects> subjectsList = new ArrayList<Subjects>();
-        final List<Actions> emptyList = new ArrayList<Actions>();
-        final List<Actions> listActions = new ArrayList<Actions>();
-        final Actions actions = mock(Actions.class);
-        when(uuid.getValue()).thenReturn(UUID_VALUE);
-        when(intent.getId()).thenReturn(uuid);
-        subjectsList.add(subjects);
-        subjectsList.add(subjects);
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.
-                end.point.group.EndPointGroup epg = mock(org.opendaylight.yang.gen.v1.urn.opendaylight
-                .intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup.class);
-        when(epg.getName()).thenReturn(IP_ADDRESS);
-        when(endPointGroup.getEndPointGroup()).thenReturn(epg);
-        when(subjects.getSubject()).thenReturn(endPointGroup);
-        when(intent.getSubjects()).thenReturn(subjectsList);
-        when(actions.getAction()).thenReturn(mock(Allow.class), mock(Block.class), null);
-        listActions.add(actions);
-        when(intent.getActions()).thenReturn(null, emptyList, listActions);
-        /**
-         * Verifying vtnRenderer object invoking updateRendering method
-         * when getActions() returns null, empty list and list contains actions object.
-         */
-         asyncDataChangeEvent = mock(AsyncDataChangeEvent.class);
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
-        verify(mockVTNIntentParser, times(0)).updateRendering(anyString(),
-                anyString(), anyString(), anyString(),
-                anyString(), Matchers.any(Intent.class));
-    }
-
-    /**
-     * Test that checks if @{VTNRenderer#Close} is called for
+     * Test that checks if @{VTNRenderer#close} is called for
      * each close event.
      */
     @Test
     public void testClose() throws Exception {
+
+        //Negative case - vtnRendererListener is null.
         vtnRendererObj.close();
+
+        //Positive case - vtnRendererListener is not null.
+        vtnRendererObj.onSessionInitiated(providerContextMockObj);
+        vtnRendererObj.close();
+
+    }
+
+    /**
+     * Test that checks if @{VTNRenderer#intentParser} is called
+     * and verifying the Intents.
+     */
+    @Test
+    public void testIntentParser() throws Exception {
+        final List<String> listEPGs = mock(List.class);
+        vtnIntentParser = mock(VTNIntentParser.class);
+        PowerMockito.mockStatic(IntentUtils.class);
+
+        //Negative case -verifyIntent
+        PowerMockito.when(IntentUtils.verifyIntent(intent)).thenReturn(false);
+        Whitebox.invokeMethod(vtnRendererObj, "intentParser", intent);
+
+        //Positive case - verifyIntent
+        PowerMockito.when(IntentUtils.verifyIntent(intent)).thenReturn(true);
+        when(mockuuid.getValue()).thenReturn(UUID_VALUE);
+        when(intent.getId()).thenReturn(mockuuid);
+        PowerMockito.when(IntentUtils.extractEndPointGroup(intent)).thenReturn(listEPGs);
+        listEPGs.add(EPG_DST);
+        listEPGs.add(EPG_SRC);
+        PowerMockito.doReturn("allow").when(vtnRendererObj, "getAction", intent);
         /**
-         * Verifying if close method is invoked.
+         * Verifying vtnRenderer object invoking updateRendering method.
          */
-        vtnRendererListenerMockObj = PowerMockito.mock(ListenerRegistration.class);
-        vtnRendererListenerMockObj.close();
-        verify(vtnRendererListenerMockObj).close();
+        vtnRendererObj.onSessionInitiated(providerContextMockObj);
+        when(transaction.submit()).thenReturn(value);
+        when(dataBrokerMockObj.newWriteOnlyTransaction()).thenReturn(transaction);
+        Whitebox.invokeMethod(vtnRendererObj, "intentParser", intent);
+
+        verify(vtnIntentParser, times(0)).updateRendering(anyString(),
+                anyString(), anyString(), anyString(),
+                anyString(), Matchers.any(Intent.class));
+        verify(vtnIntentParser, times(0)).rendering(anyString(),
+                anyString(), anyString(), anyString(), Matchers.any(Intent.class));
+        PowerMockito.verifyPrivate(vtnRendererObj, times(2)).invoke("intentParser", intent);
+
+    }
+
+    /**
+     * Test that checks if @{VTNRenderer#getAction} is called
+     * and verifying the Actions.
+     */
+    @Test
+    public void testGetAction() throws Exception {
+        String expected, actual;
+        final List<Actions> listActions = mock(List.class);
+        final Redirect redirect = mock(Redirect.class);
+
+        vtnRendererObj.onDataChanged(asyncDataChangeEvent);
+        /**
+         * Verifying vtnRenderer object invoking rendering method
+         * when getAction() returns Action object, Allow and Block object.
+         */
+        when(intent.getId()).thenReturn(mockuuid);
+        when(actions.getAction()).thenReturn(block);
+        when(listActions.get(0)).thenReturn(actions);
+        when(intent.getActions()).thenReturn(listActions);
+        verify(asyncDataChangeEvent).getCreatedData();
+        verify(asyncDataChangeEvent).getUpdatedData();
+
+        //Positive case - Action is block.
+        actual = Whitebox.invokeMethod(vtnRendererObj, "getAction", intent);
+        expected = "block";
+        Assert.assertEquals("Should return  true for valid action(allow/block).", expected, actual);
+        PowerMockito.verifyPrivate(vtnRendererObj, times(1)).invoke("getAction", intent);
+
+        //Positive case - Action is allow.
+        when(actions.getAction()).thenReturn(allow);
+        actual = Whitebox.invokeMethod(vtnRendererObj, "getAction", intent);
+        expected = "allow";
+        Assert.assertEquals("Should return true for valid action(allow/block).", expected, actual);
+        PowerMockito.verifyPrivate(vtnRendererObj, times(2)).invoke("getAction", intent);
+
+        //Negative case - Invalid Action.
+        when(actions.getAction()).thenReturn(redirect);
+        PowerMockito.doThrow(new IntentElementNotFoundException ("Raised for UT"))
+                .when(vtnRendererObj, "getAction", intent);
+        PowerMockito.verifyPrivate(vtnRendererObj, times(2)).invoke("getAction", intent);
+
+        //Negative case - No action.
+        when(actions.getAction()).thenReturn(null);
+        PowerMockito.doThrow(new IntentElementNotFoundException ("Raised for UT"))
+                .when(vtnRendererObj, "getAction", intent);
+        PowerMockito.verifyPrivate(vtnRendererObj, times(2)).invoke("getAction", intent);
     }
 }

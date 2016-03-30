@@ -55,8 +55,13 @@ public class IntentUtilsTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        
         Mockito.when(intentMock.getId()).thenReturn(uuidMock);
         Mockito.when(uuidMock.getValue()).thenReturn(DEFAULT_STR_UUID);
+        Mockito.when(intentMock.getActions()).thenReturn(actionsMock);
+        Mockito.when(actionsMock.size()).thenReturn(1);
+        Mockito.when(intentMock.getSubjects()).thenReturn(subjectsMock);
+        Mockito.when(subjectsMock.size()).thenReturn(2);
     }
 
     @Test
@@ -97,7 +102,7 @@ public class IntentUtilsTest {
         Mockito.when(actionsMock.size()).thenReturn(0);
 
         result = IntentUtils.verifyIntentActions(intentMock);
-        Assert.assertTrue(result);
+        Assert.assertFalse(result);
 
         Mockito.when(actionsMock.size()).thenReturn(1);
 
@@ -123,11 +128,11 @@ public class IntentUtilsTest {
 
         Mockito.when(subjectsMock.size()).thenReturn(0);
         result = IntentUtils.verifyIntentSubjects(intentMock);
-        Assert.assertTrue(result);
+        Assert.assertFalse(result);
 
         Mockito.when(subjectsMock.size()).thenReturn(1);
         result = IntentUtils.verifyIntentSubjects(intentMock);
-        Assert.assertTrue(result);
+        Assert.assertFalse(result);
 
         Mockito.when(subjectsMock.size()).thenReturn(2);
         result = IntentUtils.verifyIntentSubjects(intentMock);
