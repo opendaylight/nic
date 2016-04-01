@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_8ebc7d6e",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5797
+      },
+      "writtenOn": "2016-04-01T14:37:15Z",
+      "side": 1,
+      "message": "IntentUtils.verifyIntent() -logs a warning msg if \nIntentID \u003d\u003d NULL\nBut, previous existing code logs that as Error msg.\nI think we should log this as error msg to align with existing behavior",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 47
+      },
+      "revId": "d121413c01d58cfd1931b457bac41a30dcf10640",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_0e5ead45",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 5797
+      },
+      "writtenOn": "2016-04-01T14:37:15Z",
+      "side": 1,
+      "message": "in previous existing code line#171, listSubjects.size() !\u003d NUM_OF_SUPPORTED_EPG , whereas, with the current code,\nverifyIntent()--\u003everifyIntentSubjects() checks for \"subjects.size() \u003e NUM_OF_SUPPORTED_EPG\". \nPlease ensure subjects.size() will not be less than  NUM_OF_SUPPORTED_EPG, else this will fail",
+      "range": {
+        "startLine": 151,
+        "startChar": 44,
+        "endLine": 151,
+        "endChar": 75
+      },
+      "revId": "d121413c01d58cfd1931b457bac41a30dcf10640",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_4e2f15a2",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 5797
+      },
+      "writtenOn": "2016-04-01T14:37:15Z",
+      "side": 1,
+      "message": "Please perform validations on \"listActions\" similar to previous existing code @ line#196",
+      "range": {
+        "startLine": 177,
+        "startChar": 24,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "d121413c01d58cfd1931b457bac41a30dcf10640",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
