@@ -24,6 +24,7 @@ import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.sfc.provider.api.SfcProviderServiceForwarderAPI;
 import org.opendaylight.sfc.provider.api.SfcProviderServiceFunctionAPI;
 import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.common.rev151017.SffDataPlaneLocatorName;
@@ -106,6 +107,10 @@ public class RedirectFlowManagerTest {
      */
     private RedirectFlowManager spyRedirectFlowManager;
     /**
+     * Instance of MdsalUtils to perform unit testing.
+     */
+    private MdsalUtils mockMdsal;
+    /**
      * Mock instance of ReadOnlyTransaction to perform unit testing.
      */
     private ReadOnlyTransaction mockReadOnlyTransaction;
@@ -141,6 +146,7 @@ public class RedirectFlowManagerTest {
         mockDataBroker = PowerMockito.mock(DataBroker.class);
         mockPipelineManager = PowerMockito.mock(PipelineManager.class);
         mockGraphService = PowerMockito.mock(OFRendererGraphService.class);
+        mockMdsal = PowerMockito.mock(MdsalUtils.class);
         spyRedirectFlowManager = PowerMockito.spy(new RedirectFlowManager(mockDataBroker, mockPipelineManager, mockGraphService));
     }
 
@@ -383,7 +389,7 @@ public class RedirectFlowManagerTest {
         final Intent mockIntent = PowerMockito.mock(Intent.class);
         PowerMockito.when(mockIntent.getId()).thenReturn(new Uuid(uuid[0]));
         final FlowAction addFlow = FlowAction.ADD_FLOW;
-        final FlowAction removeFlow = FlowAction.REMOVE_FLOW;
+        final FlowAction removeFlowAction = FlowAction.REMOVE_FLOW;
         /*
          * Here checking invalid scenarios by passing intent, flow action
          * objects as null. If either intent or flow action is null, it should
@@ -416,7 +422,33 @@ public class RedirectFlowManagerTest {
         final int beforeSize = spyRedirectFlowManager.getredirectNodeCache().size();
         Assert.assertEquals("Record should exist", beforeSize, 1);
         Assert.assertNotNull("Record should exist", spyRedirectFlowManager.getredirectNodeCache().get(uuid[0]));
-        spyRedirectFlowManager.redirectFlowConstruction(mockIntent, removeFlow);
+        PowerMockito.doReturn(null).when(spyRedirectFlowManager, "createClearFlowsInstructions");
+        org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Node mockNode = PowerMockito.mock(org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network
+                    .topology.rev131021.network.topology.topology.Node.class);
+        org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId mockNodeId = PowerMockito.mock(org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId.class);
+        Mockito.when(mockNodeId.getValue()).thenReturn("mockNode");
+        Mockito.when(mockNode.getNodeId()).thenReturn(mockNodeId);
+        Topology mockTopology = PowerMockito.mock(Topology.class);
+        List mockList = new ArrayList();
+        mockList.add(mockNode);
+        List mockTopologyList = new ArrayList();
+        mockTopologyList.add(mockTopology);
+        PowerMockito.doReturn(mockList).when(mockTopology, "getNode");
+        NetworkTopology mockNetworkTopology = PowerMockito.mock(NetworkTopology.class);
+        PowerMockito.doReturn(mockTopologyList).when(mockNetworkTopology, "getTopology");
+        MdsalUtils mockMdsalUtils = PowerMockito.mock(MdsalUtils.class);
+        mockReadOnlyTransaction = Mockito.mock(ReadOnlyTransaction.class);
+        Optional mockOptional = Mockito.mock(Optional.class);
+        CheckedFuture mockCheckedFuture = Mockito.mock(CheckedFuture.class);
+        Mockito.when(mockOptional.isPresent()).thenReturn(true);
+        Mockito.when(mockOptional.get()).thenReturn(mockNetworkTopology);
+        Mockito.when(mockCheckedFuture.checkedGet()).thenReturn(mockOptional);
+        Mockito.when(mockReadOnlyTransaction.read(Matchers.eq(LogicalDatastoreType.OPERATIONAL),
+                Matchers.any(InstanceIdentifier.class))).thenReturn(mockCheckedFuture);
+        Mockito.when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadOnlyTransaction);
+        spyRedirectFlowManager = PowerMockito.spy(new RedirectFlowManager(mockDataBroker, mockPipelineManager, mockGraphService));
+        PowerMockito.doNothing().when(spyRedirectFlowManager, "removeRedirectFlow", Matchers.any(NodeId.class), Matchers.any(Intent.class));
+        spyRedirectFlowManager.redirectFlowConstruction(mockIntent, removeFlowAction);
         final int afterSize = spyRedirectFlowManager.getredirectNodeCache().size();
         Assert.assertEquals("Record should be deleted", afterSize, 0);
         Assert.assertNull("Record should not exist.", spyRedirectFlowManager.getredirectNodeCache().get(uuid[0]));
@@ -836,6 +868,44 @@ public class RedirectFlowManagerTest {
         Mockito.when(mockWriteTransaction.submit()).thenReturn(mockCheckedFuture);
         Mockito.when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
         Whitebox.invokeMethod(spyRedirectFlowManager, "deleteArpFlow", Mockito.mock(NodeId.class));
+        Mockito.verify(mockReadOnlyTransaction, Mockito.times(1)).read(Matchers.eq(LogicalDatastoreType.CONFIGURATION),
+                Matchers.any(InstanceIdentifier.class));
+        Mockito.verify(mockWriteTransaction, Mockito.times(1)).submit();
+    }
+
+    /**
+     * Test case for {@link RedirectFlowManager#removeRedirectFlow()}
+     */
+    @Test
+    public void testRemoveRedirectFlow() throws Exception {
+        mockReadOnlyTransaction = Mockito.mock(ReadOnlyTransaction.class);
+        mockWriteTransaction = Mockito.mock(WriteTransaction.class);
+        Mockito.when(mockDataBroker.newReadOnlyTransaction()).thenReturn(mockReadOnlyTransaction);
+        Mockito.when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
+        final Intent mockIntent = PowerMockito.mock(Intent.class);
+        PowerMockito.mockStatic(IntentUtils.class);
+        final List<String> epgList = new ArrayList<String>();
+        epgList.add(macAddress[0]);
+        epgList.add(macAddress[1]);
+        PowerMockito.when(IntentUtils.extractEndPointGroup(mockIntent)).thenReturn(epgList);
+        FlowId mockFlowId = new FlowId("L2_Rule_00:00:00:00:00:0100:00:00:00:00:05");
+        Flow mockFlow = Mockito.mock(Flow.class);
+        Mockito.when(mockFlow.getId()).thenReturn(mockFlowId);
+        List mockList = new ArrayList();
+        mockList.add(mockFlow);
+        Table mockTable = Mockito.mock(Table.class);
+        Mockito.when(mockTable.getFlow()).thenReturn(mockList);
+        Optional mockOptional = Mockito.mock(Optional.class);
+        CheckedFuture mockCheckedFuture = Mockito.mock(CheckedFuture.class);
+        Mockito.when(mockOptional.isPresent()).thenReturn(true);
+        Mockito.when(mockOptional.get()).thenReturn(mockTable);
+        Mockito.when(mockCheckedFuture.checkedGet()).thenReturn(mockOptional);
+        Mockito.when(mockReadOnlyTransaction.read(Matchers.eq(LogicalDatastoreType.CONFIGURATION),
+                Matchers.any(InstanceIdentifier.class))).thenReturn(mockCheckedFuture);
+        Mockito.when(mockWriteTransaction.submit()).thenReturn(mockCheckedFuture);
+        Mockito.when(mockDataBroker.newWriteOnlyTransaction()).thenReturn(mockWriteTransaction);
+        PowerMockito.doReturn("L2_Rule_00:00:00:00:00:0100:00:00:00:00:05").when(spyRedirectFlowManager, "createRedirectFlowName", Matchers.any(List.class));
+        Whitebox.invokeMethod(spyRedirectFlowManager, "removeRedirectFlow", Mockito.mock(NodeId.class), Mockito.mock(Intent.class));
         Mockito.verify(mockReadOnlyTransaction, Mockito.times(1)).read(Matchers.eq(LogicalDatastoreType.CONFIGURATION),
                 Matchers.any(InstanceIdentifier.class));
         Mockito.verify(mockWriteTransaction, Mockito.times(1)).submit();

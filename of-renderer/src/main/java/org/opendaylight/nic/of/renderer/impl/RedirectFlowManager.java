@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,6 +37,7 @@ import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sf.rev14070
 import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sff.rev140701.service.function.forwarders.service.function.forwarder.SffDataPlaneLocator;
 import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.SffDataPlaneLocator1;
 import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.port.details.OfsPort;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Uri;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
@@ -59,8 +61,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.PacketProcessingListener;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.packet.service.rev130709.PacketReceived;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NetworkTopology;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.TopologyId;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.TpId;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.Topology;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.TopologyKey;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.BundleContext;
@@ -84,6 +88,7 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
     private OFRendererGraphService graphService;
     private Set<ServiceRegistration<?>> serviceRegistration;
     private FlowAction flowAction;
+    private MdsalUtils mdsal;
     private Map<String, RedirectNodeData> redirectNodeCache = new ConcurrentHashMap<String, RedirectNodeData>();
     public static final String ARP_REPLY_TO_CONTROLLER_FLOW_NAME = "arpReplyToController";
 
@@ -92,6 +97,7 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
         super(dataBroker, pipelineManager);
         this.dataBroker = dataBroker;
         this.graphService = graphService;
+        mdsal = new MdsalUtils(dataBroker);
         this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         serviceRegistration.add(context.registerService(OFRendererGraphService.class, graphService, null));
@@ -358,7 +364,7 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
             } catch (IllegalArgumentException e) {
                 LOG.error("Can only accept valid MAC addresses as subjects", e);
             }
-        }
+    }
 
     private FlowBuilder createFlowBuilder(List<String> endPointGroups, MatchBuilder matchBuilder) {
         final Match match = matchBuilder.build();
@@ -528,18 +534,61 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
             addSfcNodeInfoToCache(intent);
             addIntentToCache(intent);
         } else if (flowAction.equals(FlowAction.REMOVE_FLOW)) {
+            InstanceIdentifier<NetworkTopology> path =
+                    InstanceIdentifier.builder(NetworkTopology.class).build();
+            NetworkTopology networkTopology = mdsal.read(LogicalDatastoreType.OPERATIONAL, path);
+            for (Topology topology : networkTopology.getTopology()) {
+                for (org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network
+                        .topology.rev131021.network.topology.topology.Node node : topology.getNode()) {
+                    removeRedirectFlow(new NodeId(node.getNodeId().getValue()), intent);
+                    LOG.info("Remove Redirect flow from switch: {}", node.getNodeId().getValue());
+                }
+            }
             LOG.trace("Removed redirect intent data from cache {}", intent.getId().getValue());
             redirectNodeCache.remove(intent.getId().getValue());
-            // TODO To clear the redirect flow instructions
         }
     }
 
     /**
      * To delete Arp flows in the given node.
-     * @param nodeId :nodeId
+     * @param nodeId : nodeId
      */
     private void deleteArpFlow(NodeId nodeId) {
-        MdsalUtils mdsal = new MdsalUtils(dataBroker);
+        List<Flow> flowList = getFlowList(nodeId);
+        for (Flow flow : flowList) {
+            String flowId = flow.getId().toString();
+            if (flowId.contains(ARP_REPLY_TO_CONTROLLER_FLOW_NAME)) {
+                deleteFlow(nodeId, flow);
+            }
+        }
+    }
+
+    /**
+     * To remove redirect flows in the given nodes.
+     * @param nodeId : nodeId
+     * @param intent : intent
+     */
+    private void removeRedirectFlow(NodeId nodeId, Intent intent) {
+        List<Flow> flowList = getFlowList(nodeId);
+        List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
+        String endPointGroupsFroward = createRedirectFlowName(endPointGroups);
+        Collections.reverse(endPointGroups);
+        String endPointGroupsReverse = createRedirectFlowName(endPointGroups);
+        for (Flow flow : flowList) {
+            String flowId = flow.getId().toString();
+            if (flowId.contains(endPointGroupsFroward) || flowId.contains(endPointGroupsReverse)) {
+                deleteFlow(nodeId, flow);
+            }
+        }
+    }
+
+    /**
+     * To get the list of flows from configuration DS
+     * @param nodeId : nodeId
+     * @return list of flow
+     */
+    private List<Flow> getFlowList(NodeId nodeId) {
+        List<Flow> flowList = new ArrayList<Flow>();
         InstanceIdentifier<Table> readTableInstanceID = InstanceIdentifier
                 .builder(Nodes.class)
                 .child(Node.class,
@@ -549,22 +598,26 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
         Table readTableValues = mdsal.read(LogicalDatastoreType.CONFIGURATION,
                 readTableInstanceID);
         if (readTableValues != null) {
-            List<Flow> flowList = readTableValues.getFlow();
-            for (Flow flow : flowList) {
-                String flowId = flow.getId().toString();
-                if (flowId.contains(ARP_REPLY_TO_CONTROLLER_FLOW_NAME)) {
-                    InstanceIdentifier<Flow> deleteFLow = InstanceIdentifier
-                            .builder(Nodes.class)
-                            .child(Node.class, new NodeKey(nodeId))
-                            .augmentation(FlowCapableNode.class)
-                            .child(Table.class,
-                                    new TableKey(OFRendererConstants.FALLBACK_TABLE_ID))
-                            .child(Flow.class, new FlowKey(flow.getId()))
-                            .build();
-                    mdsal.delete(LogicalDatastoreType.CONFIGURATION, deleteFLow);
-                }
-            }
+            flowList = readTableValues.getFlow();
         }
+        return flowList;
+    }
+
+    /**
+     * To delete the flows in the configuration DS
+     * @param nodeId : nodeId
+     * @param flow : flow
+     */
+    private void deleteFlow(NodeId nodeId, Flow flow) {
+        InstanceIdentifier<Flow> deleteFLow = InstanceIdentifier
+                 .builder(Nodes.class)
+                 .child(Node.class, new NodeKey(nodeId))
+                 .augmentation(FlowCapableNode.class)
+                 .child(Table.class,
+                         new TableKey(OFRendererConstants.FALLBACK_TABLE_ID))
+                 .child(Flow.class, new FlowKey(flow.getId()))
+                 .build();
+        mdsal.delete(LogicalDatastoreType.CONFIGURATION, deleteFLow);
     }
 
     @Override
