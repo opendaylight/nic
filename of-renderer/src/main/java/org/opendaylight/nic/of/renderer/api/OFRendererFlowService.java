@@ -7,9 +7,15 @@
  */
 package org.opendaylight.nic.of.renderer.api;
 
+import common.RendererFlowModel;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
+
+import java.util.List;
+import java.util.Set;
 
 public interface OFRendererFlowService {
 
@@ -33,4 +39,10 @@ public interface OFRendererFlowService {
      * @param flowAction The {@link FlowAction}
      */
     void pushLLDPFlow(NodeId nodeId, FlowAction flowAction);
+
+    /**
+     * Push OF rules for a compiled Intent
+     * @param flowModel
+     */
+    void pushGraphFlow(RendererFlowModel flowModel);
 }

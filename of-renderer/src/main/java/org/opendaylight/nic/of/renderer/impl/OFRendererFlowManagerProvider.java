@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import common.RendererFlowModel;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
@@ -28,6 +29,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -50,6 +53,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private IntentFlowManager intentFlowManager;
     private ArpFlowManager arpFlowManager;
     private LldpFlowManager lldpFlowManager;
+    private GraphFlowManager graphFlowManager;
     private IntentMappingService intentMappingService;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
@@ -85,6 +89,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
+        graphFlowManager = new GraphFlowManager(dataBroker, pipelineManager);
         qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
         this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager, graphService);
         this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
@@ -166,6 +171,11 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     @Override
     public void pushLLDPFlow(NodeId nodeId, FlowAction flowAction) {
         lldpFlowManager.pushFlow(nodeId, flowAction);
+    }
+
+    @Override
+    public void pushGraphFlow(RendererFlowModel flowModel) {
+        graphFlowManager.pushFlow(flowModel);
     }
 
     /**
