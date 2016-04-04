@@ -34,6 +34,8 @@ public class OFRendererConstants {
 
     public static final String MPLS_LABEL_KEY = "mpls_label";
 
+    public static final String GRAPH_FLOW_NAME = "graphFlow";
+
     public static final String LLDP_REPLY_TO_CONTROLLER_FLOW_NAME = "lldpReplyToController";
 
     public static final int LLDP_REPLY_TO_CONTROLLER_FLOW_PRIORITY = 9500;
