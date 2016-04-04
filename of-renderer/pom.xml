@@ -115,6 +115,16 @@
             <artifactId>sfc-provider</artifactId>
             <version>${sfc.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>intent-graph</artifactId>
+            <version>${version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>renderer-common</artifactId>
+            <version>${version}</version>
+        </dependency>
     </dependencies>
 
     <build>
