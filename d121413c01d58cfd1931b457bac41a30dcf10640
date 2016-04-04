@@ -68,6 +68,29 @@
       "revId": "d121413c01d58cfd1931b457bac41a30dcf10640",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_c3a5b605",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-04-04T22:06:39Z",
+      "side": 1,
+      "message": "Please, throws a NoSuchElementException to avoid NullPointerException",
+      "range": {
+        "startLine": 185,
+        "startChar": 12,
+        "endLine": 185,
+        "endChar": 23
+      },
+      "revId": "d121413c01d58cfd1931b457bac41a30dcf10640",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
