@@ -143,17 +143,17 @@ public final class VTNManagerService {
      * Initialize statis field.
      */
     static {
-        VTN_ERROR_CODES = ImmutableMap.<String, Integer>builder().
-            put(VtnErrorTag.BADREQUEST.toString(), HTTP_BAD_REQUEST).
-            put(VtnErrorTag.UNAUTHORIZED.toString(), HTTP_UNAUTHORIZED).
-            put(VtnErrorTag.NOTFOUND.toString(), HTTP_NOT_FOUND).
-            put(VtnErrorTag.NOTACCEPTABLE.toString(), HTTP_NOT_ACCEPTABLE).
-            put(VtnErrorTag.TIMEOUT.toString(), HTTP_CLIENT_TIMEOUT).
-            put(VtnErrorTag.CONFLICT.toString(), HTTP_CONFLICT).
-            put(VtnErrorTag.GONE.toString(), HTTP_GONE).
-            put(VtnErrorTag.NOSERVICE.toString(), HTTP_UNAVAILABLE).
-            put(VtnErrorTag.INTERNALERROR.toString(), HTTP_INTERNAL_ERROR).
-            build();
+        VTN_ERROR_CODES = ImmutableMap.<String, Integer>builder()
+            .put(VtnErrorTag.BADREQUEST.toString(), HTTP_BAD_REQUEST)
+            .put(VtnErrorTag.UNAUTHORIZED.toString(), HTTP_UNAUTHORIZED)
+            .put(VtnErrorTag.NOTFOUND.toString(), HTTP_NOT_FOUND)
+            .put(VtnErrorTag.NOTACCEPTABLE.toString(), HTTP_NOT_ACCEPTABLE)
+            .put(VtnErrorTag.TIMEOUT.toString(), HTTP_CLIENT_TIMEOUT)
+            .put(VtnErrorTag.CONFLICT.toString(), HTTP_CONFLICT)
+            .put(VtnErrorTag.GONE.toString(), HTTP_GONE)
+            .put(VtnErrorTag.NOSERVICE.toString(), HTTP_UNAVAILABLE)
+            .put(VtnErrorTag.INTERNALERROR.toString(), HTTP_INTERNAL_ERROR)
+            .build();
     }
 
     /**
@@ -250,9 +250,9 @@ public final class VTNManagerService {
      */
     public static InstanceIdentifier<Vtn> getTenantPath(String tname) {
         VtnKey vtnKey = new VtnKey(new VnodeName(tname));
-        return InstanceIdentifier.builder(Vtns.class).
-            child(Vtn.class, vtnKey).
-            build();
+        return InstanceIdentifier.builder(Vtns.class)
+            .child(Vtn.class, vtnKey)
+            .build();
     }
 
     /**
@@ -266,11 +266,11 @@ public final class VTNManagerService {
         String tname, String bname) {
         VtnKey vtnKey = new VtnKey(new VnodeName(tname));
         VbridgeKey vbrKey = new VbridgeKey(new VnodeName(bname));
-        return InstanceIdentifier.builder(Vtns.class).
-            child(Vtn.class, vtnKey).
-            child(Vbridge.class, vbrKey).
-            child(VbridgeConfig.class).
-            build();
+        return InstanceIdentifier.builder(Vtns.class)
+            .child(Vtn.class, vtnKey)
+            .child(Vbridge.class, vbrKey)
+            .child(VbridgeConfig.class)
+            .build();
     }
 
     /**
@@ -398,11 +398,11 @@ public final class VTNManagerService {
                     else false is returned.
      */
     public boolean updateTenant(String name, VnodeUpdateMode mode) {
-        UpdateVtnInput input = new UpdateVtnInputBuilder().
-            setTenantName(name).
-            setUpdateMode(mode).
-            setOperation(VtnUpdateOperationType.SET).
-            build();
+        UpdateVtnInput input = new UpdateVtnInputBuilder()
+            .setTenantName(name)
+            .setUpdateMode(mode)
+            .setOperation(VtnUpdateOperationType.SET)
+            .build();
         VTNRpcResult<UpdateVtnOutput> result =
             getRpcResult(vtnService.updateVtn(input));
         int code = result.getStatusCode();
@@ -435,8 +435,8 @@ public final class VTNManagerService {
                     else false is returned.
      */
     public boolean removeTenant(String name) {
-        RemoveVtnInput input = new RemoveVtnInputBuilder().
-            setTenantName(name).build();
+        RemoveVtnInput input = new RemoveVtnInputBuilder()
+            .setTenantName(name).build();
         VTNRpcResult<?> result =
             getRpcResult(vtnService.removeVtn(input), true);
         int code = result.getStatusCode();
@@ -486,17 +486,17 @@ public final class VTNManagerService {
      */
     public boolean updateBridge(String tname, String bname, String desc,
                             VnodeUpdateMode mode) {
-        UpdateVbridgeInput input = new UpdateVbridgeInputBuilder().
-            setTenantName(tname).
-            setBridgeName(bname).
-            setDescription(desc).
-            setUpdateMode(mode).
-            setOperation(VtnUpdateOperationType.SET).
-            build();
+        UpdateVbridgeInput input = new UpdateVbridgeInputBuilder()
+            .setTenantName(tname)
+            .setBridgeName(bname)
+            .setDescription(desc)
+            .setUpdateMode(mode)
+            .setOperation(VtnUpdateOperationType.SET)
+            .build();
         VTNRpcResult<UpdateVbridgeOutput> result =
             getRpcResult(vbridgeService.updateVbridge(input));
         int code = result.getStatusCode();
-        if (code == HTTP_CONFLICT){
+        if (code == HTTP_CONFLICT) {
             return true;
         }
         if (code != HTTP_OK) {
@@ -518,7 +518,7 @@ public final class VTNManagerService {
             LOG.debug("{}: path={}/{}, desc={}", msg, tname, bname, desc);
             return true;
         }
-   }
+    }
 
     /**
      * Remove the specified vBridge.
@@ -530,10 +530,10 @@ public final class VTNManagerService {
      *          successful completion.
      */
     public int removeBridge(String tname, String bname) {
-        RemoveVbridgeInput input = new RemoveVbridgeInputBuilder().
-            setTenantName(tname).
-            setBridgeName(bname).
-            build();
+        RemoveVbridgeInput input = new RemoveVbridgeInputBuilder()
+            .setTenantName(tname)
+            .setBridgeName(bname)
+            .build();
         VTNRpcResult<?> result =
             getRpcResult(vbridgeService.removeVbridge(input), true);
         int code = result.getStatusCode();
@@ -628,7 +628,7 @@ public final class VTNManagerService {
         VTNRpcResult<AddVlanMapOutput> result =
             getRpcResult(vlanMapService.addVlanMap(input));
         int code = result.getStatusCode();
-        if (code == HTTP_CONFLICT){
+        if (code == HTTP_CONFLICT) {
             return true;
         }
         if (code != HTTP_OK) {
