@@ -137,7 +137,7 @@ public class VTNRenderer implements BindingAwareProvider, AutoCloseable ,DataCha
                     Uuid uuid = (Uuid) lclIntentKey.getId();
                     LOG.trace(" Intent Deleted :{} " ,uuid.getValue());
                     String encodeUUID = vtnRendererUtility.encodeUUID(uuid.getValue());
-                    vtnIntentParser.delete(encodeUUID);
+                    vtnIntentParser.delFlowCondFilter(encodeUUID);
                     if (!vtnRendererUtility.deleteIntent(lclIntent)) {
                         LOG.error("Intent data's are not deleted from operational data store", uuid.getValue());
                         return;

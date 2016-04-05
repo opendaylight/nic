@@ -9,11 +9,10 @@
 package org.opendaylight.nic.vtn.renderer;
 
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
@@ -33,45 +32,8 @@ public class VTNRendererUtility {
 
     private DataBroker dataBroker;
 
-    private static final int IP_DOTS = 3;
-
     public VTNRendererUtility(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
-    }
-
-    /**
-     * Validates the received IP address
-     *
-     * @param  ip the IP Address.
-     * @return  {@code = true} on valid IP address.
-     */
-    public boolean validateIP(final String ip) {
-        if (ip == null) {
-            throw new IllegalArgumentException("IP address is null.");
-        }
-        String ipAddressPattern = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-                + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-                + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
-                + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-        Pattern pattern = Pattern.compile(ipAddressPattern);
-        Matcher matcher = pattern.matcher(ip);
-        return matcher.matches();
-    }
-
-    /**
-     * Validate the given MAC address
-     *
-     * @param  macAddress The MAC Address
-     * @return  {@code = true} on valid MAC address
-     */
-    public boolean validateMacAddress(final String macAddress) {
-        if (macAddress == null) {
-            throw new IllegalArgumentException("MAC address is null.");
-        }
-        String macAdrressPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
-        Pattern pattern = Pattern.compile(macAdrressPattern);
-        Matcher matcher = pattern.matcher(macAddress);
-        return matcher.matches();
     }
 
     /**
@@ -81,7 +43,8 @@ public class VTNRendererUtility {
      * @param  dstIp The destination IP Address.
      * @return  {@code = false} the given IP addresses are not in same subnet.
      */
-    public boolean validateSubnet(String srcIp, String dstIp) {
+    private boolean validateSubnet(String srcIp, String dstIp) {
+        int IP_DOTS = 3;
         if (srcIp == null || dstIp == null) {
             throw new IllegalArgumentException("Source or Destination IP address is null.");
         }
@@ -171,5 +134,84 @@ public class VTNRendererUtility {
             .child(Intent.class, new IntentKey(intent.getId()))
             .build();
         return mdsal.delete(LogicalDatastoreType.OPERATIONAL, identifier);
+    }
+
+    /**
+     * Validate Source and destination IP Address.
+     *
+     * @param adressSrc  Source IP Address.
+     * @param adressDst  Destination IP Address.
+     *
+     * @return {@code true} if Source and destination IP address are valid.
+     */
+    public boolean validateSrcDstIP(String adressSrc, String adressDst) {
+        if (IntentUtils.validateIP(adressSrc) && IntentUtils.validateIP(adressDst)) {
+            return validateSubnet(adressSrc, adressDst);
+        }
+        return false;
+    }
+
+    /**
+     * Validate Source and destination MAC Address.
+     *
+     * @param adressSrc  Source MAC Address.
+     * @param adressDst  Destination MAC Address.
+     *
+     * @return {@code true} if Source and destination MAC address are valid.
+     */
+    public boolean validateSrcDstMac(String adressSrc, String adressDst) {
+        return (IntentUtils.validateMAC(adressSrc) && IntentUtils.validateMAC(adressDst));
+    }
+
+    /**
+     * Validate Source and destination IP Address should not same.
+     *
+     * @param inSrc  Source IP Address.
+     * @param outSrc  Destination IP Address.
+     *
+     * @return {@code true} if Source and destination IP address are not same.
+     */
+    public boolean validateInSrcOutSrc(String inSrc, String outSrc) {
+        if ( inSrc == null || outSrc == null ) {
+            return false;
+        }
+        if (inSrc.equals(outSrc)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * ActionTypeEnum is a enum which is supported for mapping an action type
+     * between the NIC and VTN Manager.
+     */
+    public enum ActionTypeEnum {
+        ALLOW("PASS"),
+        BLOCK("DROP");
+        private String label;
+
+        private ActionTypeEnum(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        /**
+         * ActionTypeEnum is a enum for action types supported by the VTN Manager.
+         *
+         * @param actionType  allow or block.
+         *
+         * @return action type pass or drop based on requested action type.
+         */
+        public static ActionTypeEnum fromActionType(String actionType) {
+            try {
+                return ActionTypeEnum.valueOf(actionType.toUpperCase());
+            } catch (Exception e) {
+                throw new IllegalArgumentException(String.format("Invalid Action type [%s]", actionType));
+            }
+        }
+
     }
 }
