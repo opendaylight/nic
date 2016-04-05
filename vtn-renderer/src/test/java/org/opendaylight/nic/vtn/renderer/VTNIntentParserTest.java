@@ -12,49 +12,60 @@ import static org.mockito.Mockito.mock;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.Matchers;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
-
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.vtn.manager.util.IpNetwork;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpPrefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInput;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.VtnFlowConditions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.conditions.VtnFlowCondition;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnEtherMatch;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnInetMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.RemoveFlowFilterInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeUpdateMode;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
+
+import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
+
 
 /**
  * JUnit test for {@link VTNIntentParser}.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ VTNIntentParser.class, InetAddress.class, MacAddress.class, VtnEtherMatch.class, VTNManagerService.class, VtnFlowMatch.class})
+@PrepareForTest({ VTNIntentParser.class, InetAddress.class, MacAddress.class, VtnEtherMatch.class, VTNManagerService.class, VtnFlowMatch.class, IpNetwork.class})
 public class VTNIntentParserTest extends TestBase {
     /**
      * Mock instance of VTNIntentParser to perform unit testing.
      */
     private VTNIntentParser spyVTNIntentParser;
     /**
-     * create a mock object for DataBroker class.
+     * Create a mock object for DataBroker class.
      */
     private DataBroker dataBroker;
     /**
-     * create a mock object for VTNRendererUtility class.
+     * Create a mock object for VTNManagerService class.
      */
     private VTNManagerService mockVtnManagerService;
     /**
@@ -70,52 +81,52 @@ public class VTNIntentParserTest extends TestBase {
     }
 
     /**
-     * Test case for {@link VTNIntentParser#isCreateDefault()}
+     * Test case for {@link VTNIntentParser#isVTNCreated()}
      */
     @Test
-    public void testIsCreateDefault() throws Exception {
+    public void testIsVTNCreated() throws Exception {
         boolean actualResult, expectedResult;
         /**
          * Here checking invalid scenario, if unable to create Tenant in the
-         * default configuration of VTN Manager, this isCreateDefault() should
+         * default configuration of VTN Manager, this isVTNCreated() should
          * return false only.
          */
         PowerMockito.doReturn(false).when(spyVTNIntentParser, "createTenant", TENANT[0]);
         expectedResult = false;
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isCreateDefault");
+        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isVTNCreated", true, false);
         Assert.assertEquals("Should return false, when unable to create Tenant.", expectedResult, actualResult);
         /**
          * Here checking invalid scenario, if unable to create Bridge in the
-         * default configuration of VTN Manager, this isCreateDefault() should
+         * default configuration of VTN Manager, this isVTNCreated() should
          * return false only.
          */
         PowerMockito.doReturn(true).when(spyVTNIntentParser, "createTenant", TENANT[0]);
-        PowerMockito.doReturn(false).when(spyVTNIntentParser, "createBridge", TENANT[0], BRIDGE[0]);
+        PowerMockito.doReturn(false).when(spyVTNIntentParser, "setupDefaultBridge", TENANT[0], BRIDGE[0]);
         expectedResult = false;
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isCreateDefault");
+        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isVTNCreated", true, false);
         Assert.assertEquals("Should return false, when unable to create Bridge.", expectedResult, actualResult);
         /**
          * Here checking invalid scenario, if unable to create FlowCondition in
-         * the default configuration of VTN Manager, this isCreateDefault()
+         * the default configuration of VTN Manager, this isVTNCreated()
          * should return false only.
          */
-        PowerMockito.doReturn(true).when(spyVTNIntentParser, "createBridge", TENANT[0], BRIDGE[0]);
+        PowerMockito.doReturn(true).when(spyVTNIntentParser, "setupDefaultBridge", TENANT[0], BRIDGE[0]);
         PowerMockito.doReturn(false).when(spyVTNIntentParser, "createFlowCond",
-                VALID_SRC_ADDRESS[5], VALID_DST_ADDRESS[3], FLOW_CONDITION_NAME[4],FLOW_DIRECTION[0]);
+                Matchers.eq(VALID_SRC_ADDRESS[5]), Matchers.eq(VALID_DST_ADDRESS[3]), Matchers.eq(FLOW_CONDITION_NAME[4]),Matchers.eq(FLOW_DIRECTION[0]), Matchers.anyBoolean(), Matchers.anyBoolean());
         expectedResult = false;
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isCreateDefault");
+        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isVTNCreated", true, false);
         Assert.assertEquals("Should return false, when unable to create Flow Condition.", expectedResult, actualResult);
         /**
          * Here checking valid scenario, if the default configuration is created
-         * in VTN Manager successfully, this isCreateDefault() should return
+         * in VTN Manager successfully, this isVTNCreated() should return
          * true only.
          */
         PowerMockito.doReturn(true).when(spyVTNIntentParser, "createTenant", Matchers.any(String.class));
-        PowerMockito.doReturn(true).when(spyVTNIntentParser, "createBridge", Matchers.any(String.class), Matchers.any(String.class));
+        PowerMockito.doReturn(true).when(spyVTNIntentParser, "setupDefaultBridge", Matchers.any(String.class), Matchers.any(String.class));
         PowerMockito.doReturn(true).when(spyVTNIntentParser, "createFlowCond",
-                Matchers.any(String.class), Matchers.any(String.class), Matchers.any(String.class), Matchers.any(String.class));
+                Matchers.any(String.class), Matchers.any(String.class), Matchers.any(String.class), Matchers.any(String.class), Matchers.anyBoolean(), Matchers.anyBoolean());
         expectedResult = true;
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isCreateDefault");
+        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "isVTNCreated", true, false);
         Assert.assertEquals("Should return true, when created Tenant, Bridge and Flow Condition.", expectedResult, actualResult);
     }
 
@@ -151,62 +162,89 @@ public class VTNIntentParserTest extends TestBase {
      */
     @Test
     public void testRendering() throws Exception {
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
+        Status actualOutput, expectedOutput;
         /**
          * Verifying based on Intent action that specified VTN elements created
          * in VTN Manager. Here testing invalid scenario by passing invalid
          * addresses.
          */
-        spyVTNIntentParser.rendering(INVALID_SRC_ADDRESS[0], INVALID_DST_ADDRESS[0], ACTIONS[0],
+        expectedOutput = Status.CompletedError;
+        actualOutput = spyVTNIntentParser.rendering(INVALID_SRC_ADDRESS[0], INVALID_DST_ADDRESS[0], ACTIONS[0],
                 ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
                         Matchers.any(String.class));
+        Assert.assertEquals("Should be same", expectedOutput, actualOutput);
         /**
          * Verifying based on Intent action that specified VTN elements created
          * in VTN Manager. Here testing invalid scenario if default VTN
          * configuration creation failed.
          */
-        PowerMockito.doReturn(false).when(spyVTNIntentParser, "isCreateDefault");
-        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0],
+        PowerMockito.doReturn(false).when(spyVTNIntentParser, "isVTNCreated", Matchers.anyBoolean(), Matchers.anyBoolean());
+        expectedOutput = Status.CompletedError;
+        actualOutput = spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0],
                 ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
                         Matchers.any(String.class));
+        Assert.assertEquals("Should be same", expectedOutput, actualOutput);
         /**
          * Verifying based on Intent action that specified VTN elements created
          * in VTN Manager. Here testing invalid scenario by passing invalid
          * action.
          */
-        PowerMockito.doReturn(true).when(spyVTNIntentParser, "isCreateDefault");
-        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[2],
+        PowerMockito.doReturn(true).when(spyVTNIntentParser, "isVTNCreated", Matchers.anyBoolean(), Matchers.anyBoolean());
+        expectedOutput = Status.CompletedError;
+        actualOutput = spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[2],
                 ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
                         Matchers.any(String.class));
+        Assert.assertEquals("Should be same", expectedOutput, actualOutput);
         /**
          * Verifying based on Intent action that specified VTN elements created
          * in VTN Manager. Here testing valid scenario by passing valid
          * addresses, actions.
          */
+        PowerMockito.doReturn("").when(spyVTNIntentParser, "constructCondName",
+                Matchers.any(String.class), Matchers.any(String.class),
+                Matchers.any(String.class), Matchers.anyBoolean());
+        PowerMockito.doReturn(true).when(spyVTNIntentParser, "createFlowCond",
+                Matchers.any(String.class), Matchers.any(String.class),
+                Matchers.any(String.class), Matchers.any(String.class), Matchers.anyBoolean(), Matchers.anyBoolean());
         PowerMockito.doNothing().when(spyVTNIntentParser, "createFlowFilter",
                 Matchers.any(String.class), Matchers.any(String.class),
                 Matchers.any(String.class), Matchers.any(String.class));
-        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0],
+        expectedOutput = Status.CompletedSuccess;
+        actualOutput = spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0],
                 VALID_DST_ADDRESS[0], ACTIONS[1], ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
                         Matchers.any(String.class));
-        spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0],
+        Assert.assertEquals("Should be same", expectedOutput, actualOutput);
+        expectedOutput = Status.CompletedSuccess;
+        actualOutput = spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ACTIONS[0],
                 ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(6))
                 .invoke("createFlowFilter", Matchers.any(String.class),
                         Matchers.any(String.class), Matchers.any(String.class),
                         Matchers.any(String.class));
+        Assert.assertEquals("Should be same", expectedOutput, actualOutput);
+        /**
+         * Verifying based on Intent action that specified VTN elements created
+         * in VTN Manager. Here testing invalid scenario if any exception occured in VTN
+         * configuration creation, it should return status as CompletedError.
+         */
+        PowerMockito.doThrow(new NullPointerException ("Raised for UT"))
+                .when(spyVTNIntentParser, "isVTNCreated", Matchers.anyBoolean(), Matchers.anyBoolean());
+        expectedOutput = Status.CompletedError;
+        actualOutput = spyVTNIntentParser.rendering(VALID_SRC_ADDRESS[0],
+                VALID_DST_ADDRESS[0], ACTIONS[1], ENCODED_UUID, mock(Intent.class));
+        Assert.assertEquals("Should be same", expectedOutput, actualOutput);
     }
 
     /**
@@ -214,78 +252,73 @@ public class VTNIntentParserTest extends TestBase {
      */
     @Test
     public void testUpdateRendering() throws Exception {
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         MacAddress mockMacAddress = PowerMockito.mock(MacAddress.class);
         VtnEtherMatch mockEthernetMatch = PowerMockito.mock(VtnEtherMatch.class);
+        VtnInetMatch mockVtnInetMatch = PowerMockito.mock(VtnInetMatch.class);
         VtnFlowMatch mockFlowMatch = PowerMockito.mock(VtnFlowMatch.class);
+        IpPrefix mockIpPrefix = PowerMockito.mock(IpPrefix.class);
+        PowerMockito.when(mockIpPrefix.toString()).thenReturn(VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0]);
+        PowerMockito.when(mockVtnInetMatch.getSourceNetwork()).thenReturn(mockIpPrefix);
+        PowerMockito.when(mockVtnInetMatch.getDestinationNetwork()).thenReturn(mockIpPrefix);
+        PowerMockito.when(mockFlowMatch.getVtnInetMatch()).thenReturn(mockVtnInetMatch);
         List<VtnFlowMatch> mockFlowMatchList = new ArrayList<VtnFlowMatch>();
         mockFlowMatchList.add(mockFlowMatch);
         /**
          * Verifying that whether VTN elements updated based on the intent
          * action Here testing invalid scenario, passing invalid addresses,
-         * actions.
+         * actions, it should return sataus coda as CompletedError
          */
-        spyVTNIntentParser.updateRendering(INVALID_SRC_ADDRESS[0], INVALID_DST_ADDRESS[0], ACTIONS[0],
+        Status expected, actual;
+        expected = Status.CompletedError;
+        actual = (Status)spyVTNIntentParser.updateRendering(INVALID_SRC_ADDRESS[0], INVALID_DST_ADDRESS[0], ACTIONS[0],
                 INTENT_ID, ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("constructCondName", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ENCODED_UUID, BOOLEAN_TRUE);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(0))
                 .invoke("constructCondName", VALID_DST_ADDRESS[0], VALID_SRC_ADDRESS[0], ENCODED_UUID, BOOLEAN_FALSE);
+        Assert.assertEquals("Should return Status.CompletedError ", expected, actual);
+
         /**
          * Verifying that whether VTN elements updated based on the intent
-         * action Here testing invalid scenario, passing invalid addresses,
-         * actions.
+         * action Here testing invalid scenario, if unable to create flow filter,
+         * it should return sataus coda as CompletedError
          */
+        expected = Status.CompletedError;
         PowerMockito.doReturn(mockFlowMatchList).when(spyVTNIntentParser, "listOfFlowMatch", Matchers.any(String.class));
-        spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[0],
+        actual = (Status)spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[0],
                 VALID_DST_ADDRESS[0], ACTIONS[0], INTENT_ID, ENCODED_UUID, mock(Intent.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
                 .invoke("constructCondName", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ENCODED_UUID, BOOLEAN_TRUE);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
                 .invoke("constructCondName", VALID_DST_ADDRESS[0], VALID_SRC_ADDRESS[0], ENCODED_UUID, BOOLEAN_FALSE);
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
-                .invoke("delete", Matchers.any(String.class));
+        Assert.assertEquals("Should return Status.CompletedError ", expected, actual);
         /**
          * Verifying that whether VTN elements updated based on the intent
          * action Here testing valid scenario, passing valid addresses, action
-         * and if flow condition already exist.
+         * and it should return status code as Status.CompletedSuccess.
          */
+        expected = Status.CompletedSuccess;
         PowerMockito.doReturn(mockFlowMatchList).when(spyVTNIntentParser, "listOfFlowMatch", Matchers.any(String.class));
         PowerMockito.doReturn(mockEthernetMatch).when(mockFlowMatch, "getVtnEtherMatch");
         PowerMockito.doReturn(mockMacAddress).when(mockEthernetMatch, "getSourceAddress");
         PowerMockito.doReturn(mockMacAddress).when(mockEthernetMatch, "getDestinationAddress");
-        PowerMockito.doReturn(true).when(spyVTNIntentParser, "isCreateDefault");
-        spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[2],
+        PowerMockito.doReturn(true).when(spyVTNIntentParser, "isVTNCreated", Matchers.anyBoolean(), Matchers.anyBoolean());
+        actual = (Status) spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[2],
                 VALID_DST_ADDRESS[2], ACTIONS[0], INTENT_ID, ENCODED_UUID, mock(Intent.class));
+        Assert.assertEquals("Should return Status.CompletedSuccess ", expected, actual);
+        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
+                .invoke("constructCondName", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], ENCODED_UUID, BOOLEAN_TRUE);
+        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
+                .invoke("constructCondName", VALID_DST_ADDRESS[0], VALID_SRC_ADDRESS[0], ENCODED_UUID, BOOLEAN_FALSE);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
-                .invoke("createFlowFilter", Matchers.any(String.class),
-                        Matchers.any(String.class), Matchers.any(String.class),
-                        Matchers.any(String.class));
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
-                .invoke("createFlowCond", Matchers.any(String.class),
-                        Matchers.any(String.class), Matchers.any(String.class),
-                        Matchers.any(String.class));
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
-                .invoke("delete", Matchers.any(String.class));
-
-        PowerMockito.doReturn(mockFlowMatchList).when(spyVTNIntentParser, "listOfFlowMatch", Matchers.any(String.class));
-        PowerMockito.doReturn(mockEthernetMatch).when(mockFlowMatch, "getVtnEtherMatch");
-        PowerMockito.doReturn(null).when(mockEthernetMatch, "getSourceAddress");
-        spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[2],
-                VALID_DST_ADDRESS[2], ACTIONS[0], INTENT_ID, ENCODED_UUID, mock(Intent.class));
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
-                .invoke("delete", Matchers.any(String.class));
-
-        spyVTNIntentParser.updateRendering(VALID_SRC_ADDRESS[0],
-                VALID_DST_ADDRESS[0], ACTIONS[2], INTENT_ID, ENCODED_UUID, mock(Intent.class));
+                .invoke("delFlowCondFilter",ENCODED_UUID);
     }
 
     /**
-     * Test case for {@link VTNIntentParser#delete()}
+     * Test case for {@link VTNIntentParser#delFlowCondFilter()}
      */
     @Test
-    public void testDelete() throws Exception {
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
+    public void testDelFlowCondFilter() throws Exception {
         VtnFlowCondition mockFlowcondition = PowerMockito.mock(VtnFlowCondition.class);
         VnodeName vnode = PowerMockito.mock(VnodeName.class);
         PowerMockito.doReturn(FLOW_CONDITION_NAME[0]).when(vnode,
@@ -301,7 +334,7 @@ public class VTNIntentParserTest extends TestBase {
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * valid scenario by passing valid Intent ID.
          */
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
@@ -311,7 +344,7 @@ public class VTNIntentParserTest extends TestBase {
          * invalid scenario if any exception raised during this deletion
          * process.
          */
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
@@ -320,41 +353,51 @@ public class VTNIntentParserTest extends TestBase {
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * invalid scenario by passing invalid Intent Id.
          */
-        spyVTNIntentParser.delete(ENCODED_UUID);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowFilter", Matchers.any(Integer.class));
 
-        spyVTNIntentParser.delete(ENCODED_UUID_FAILURE);
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID_FAILURE);
         /**
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * valid scenario by passing valid Intent Id and if all intents deleted
          * from list then default configurations also must delete.
          */
+
+        PowerMockito.doReturn(true).when(spyVTNIntentParser, "isDeleteDefault");
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
+        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(4))
+                .invoke("deleteFlowCond", Matchers.any(String.class));
+        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(4))
+                .invoke("deleteFlowFilter", Matchers.any(Integer.class));
+
+
         List<VtnFlowCondition> mockFlowConditionListEmpty = new ArrayList<VtnFlowCondition>();
         PowerMockito.doReturn(mockFlowConditionListEmpty).when(spyVTNIntentParser, "readFlowConditions");
         PowerMockito.doReturn(false).when(spyVTNIntentParser, "isDeleteDefault");
-        spyVTNIntentParser.delete(ENCODED_UUID);
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
+        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(4))
                 .invoke("deleteFlowCond", Matchers.any(String.class));
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
+        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(4))
                 .invoke("deleteFlowFilter", Matchers.any(Integer.class));
+        /**
+         * Verifying that particular intent deleted in VTN Manager. Here testing
+         * invalid scenario if any exception raise, it should log those details
+         */
+        PowerMockito.doThrow(new RuntimeException("Exception raised for UT")).when(spyVTNIntentParser, "readFlowConditions");
+        spyVTNIntentParser.delFlowCondFilter(ENCODED_UUID);
+        PowerMockito.verifyPrivate(ENCODED_UUID, Mockito.times(1))
+                .invoke("toString");
 
-        PowerMockito.doReturn(true).when(spyVTNIntentParser, "isDeleteDefault");
-        spyVTNIntentParser.delete(ENCODED_UUID);
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
-                .invoke("deleteFlowCond", Matchers.any(String.class));
-        PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
-                .invoke("deleteFlowFilter", Matchers.any(Integer.class));
     }
 
     /**
-     * Test case for {@link VTNIntentParser#deleteAction()}
+     * Test case for {@link VTNIntentParser#delFlowFilterIndex()}
      */
     @Test
-    public void testDeleteAction() throws Exception {
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
+    public void testGetDelFlowFilterIndex() throws Exception {
         VtnFlowCondition mockFlowcondition = PowerMockito.mock(VtnFlowCondition.class);
         VnodeName vnode = PowerMockito.mock(VnodeName.class);
         PowerMockito.doReturn(FLOW_CONDITION_NAME[0]).when(vnode,
@@ -370,7 +413,7 @@ public class VTNIntentParserTest extends TestBase {
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * valid scenario by passing valid Intent ID.
          */
-        Whitebox.invokeMethod(spyVTNIntentParser, "deleteAction", ENCODED_UUID);
+        Whitebox.invokeMethod(spyVTNIntentParser, "delFlowFilterIndex", ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(1))
                 .invoke("deleteFlowFilter", Matchers.any(Integer.class));
         /**
@@ -378,17 +421,27 @@ public class VTNIntentParserTest extends TestBase {
          * invalid scenario if any exception raised during this deletion
          * process.
          */
-        Whitebox.invokeMethod(spyVTNIntentParser, "deleteAction", ENCODED_UUID);
+        Whitebox.invokeMethod(spyVTNIntentParser, "delFlowFilterIndex", ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(2))
                 .invoke("deleteFlowFilter", Matchers.any(Integer.class));
         /**
          * Verifying that particular intent deleted in VTN Manager. Here testing
          * invalid scenario by passing invalid Intent Id.
          */
-        Whitebox.invokeMethod(spyVTNIntentParser, "deleteAction", ENCODED_UUID);
+        Whitebox.invokeMethod(spyVTNIntentParser, "delFlowFilterIndex", ENCODED_UUID);
         PowerMockito.verifyPrivate(spyVTNIntentParser, Mockito.times(3))
                 .invoke("deleteFlowFilter", Matchers.any(Integer.class));
-        Whitebox.invokeMethod(spyVTNIntentParser, "deleteAction", ENCODED_UUID_FAILURE);
+        Whitebox.invokeMethod(spyVTNIntentParser, "delFlowFilterIndex", ENCODED_UUID_FAILURE);
+
+        /**
+         * Verifying that if any exception raised at the time of intent deleted,
+         * it should log those error messages.
+         */
+        PowerMockito.doThrow(new NullPointerException ("Raised for UT"))
+                .when(spyVTNIntentParser, "readFlowConditions");
+        Whitebox.invokeMethod(spyVTNIntentParser, "delFlowFilterIndex", ENCODED_UUID);
+        PowerMockito.verifyPrivate(ENCODED_UUID, Mockito.times(1))
+                .invoke("toString");
     }
 
     /**
@@ -398,12 +451,10 @@ public class VTNIntentParserTest extends TestBase {
     public void testConstructCondName() throws Exception {
         String actualResult, expectedResult;
         /**
-         * Verifying that creation of a FlowCondition name if we pass valid IP
-         * or MAC addresses. Here testing valid scenario by passing valid IP,
-         * MAC addresses and that constructCondName must return specific format
+         * Verifying that creation of a FlowCondition name if we pass IP
+         * or MAC addresses, constructCondName must return specific format
          * String object.
          */
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "constructCondName",
                         VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0],ENCODED_UUID, BOOLEAN_TRUE );
         expectedResult = CONST_CONDITION_NAME[0];
@@ -416,31 +467,6 @@ public class VTNIntentParserTest extends TestBase {
                         VALID_SRC_ADDRESS[2], VALID_DST_ADDRESS[2], ENCODED_UUID, BOOLEAN_TRUE );
         expectedResult = CONST_CONDITION_NAME[0];
         Assert.assertEquals("Should return specified condition only.",expectedResult, actualResult);
-        /**
-         * Verifying that creates a FlowCondition name if we pass valid IP or
-         * MAC addresses Here testing invalid scenario by passing invalid IP,
-         * MAC addresses and that constructCondName must return null.
-         */
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "constructCondName", VALID_SRC_ADDRESS[2], INVALID_DST_ADDRESS[4], ENCODED_UUID, BOOLEAN_FALSE );
-        expectedResult = null;
-        Assert.assertEquals("Should return null only, if addresses are invalid.",expectedResult, actualResult);
-
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "constructCondName", VALID_SRC_ADDRESS[0],
-                INVALID_DST_ADDRESS[2], ENCODED_UUID, BOOLEAN_FALSE );
-        expectedResult = null;
-        Assert.assertEquals("Should return null only, if addresses are invalid.", expectedResult, actualResult);
-
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "constructCondName", INVALID_SRC_ADDRESS[3],
-                INVALID_DST_ADDRESS[3], ENCODED_UUID, BOOLEAN_FALSE );
-        expectedResult = null;
-        Assert.assertEquals("Should return null only, if addresses are invalid.", expectedResult, actualResult);
-
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "constructCondName", INVALID_SRC_ADDRESS[1],
-                INVALID_DST_ADDRESS[2], ENCODED_UUID, BOOLEAN_FALSE );
-        expectedResult = null;
-        Assert.assertEquals("Should return null only, if addresses are invalid.", expectedResult, actualResult);
     }
 
     /**
@@ -449,7 +475,6 @@ public class VTNIntentParserTest extends TestBase {
     @Test
     public void testCreateTenant() throws Exception {
         boolean actualResult, expectedResult;
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         PowerMockito.doReturn(true).when(mockVtnManagerService, "updateTenant",
                 Matchers.any(String.class),
                  Matchers.any(VnodeUpdateMode.class));
@@ -482,8 +507,7 @@ public class VTNIntentParserTest extends TestBase {
     @Test
     public void testDeleteTenant() throws Exception {
         boolean actual, expected;
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
-        /*
+        /**
          * Verifying that deletion of specified TENANT in VTN Manager. Here
          * testing invalid scenarios if Tenant not deleted then deleteTenant()
          * must return false.
@@ -494,7 +518,7 @@ public class VTNIntentParserTest extends TestBase {
         Assert.assertEquals("Should return false, when Tenant not deleted.", expected, actual);
         PowerMockito.doReturn(true).when(mockVtnManagerService, "removeTenant",
                 Matchers.any(String.class));
-        /*
+        /**
          * Verifying that deletion of specified Tenant in VTN Manager. Here
          * testing valid scenario if Tenant deleted then deleteTenant() must
          * return true.
@@ -520,7 +544,6 @@ public class VTNIntentParserTest extends TestBase {
     @Test
     public void testCreateFlowCond() throws Exception {
         boolean actualResult, expectedResult;
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         /**
          * Verifying that specified FlowCondition created in VTN Manager. Here
          * testing valid scenario by passing valid addresses, FlowCondition
@@ -530,7 +553,7 @@ public class VTNIntentParserTest extends TestBase {
         PowerMockito.doReturn(true).when(spyVTNIntentParser, "isFlowCondExist",
                 Matchers.any(String.class));
         actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[0], FLOW_DIRECTION[0]);
+                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[0], FLOW_DIRECTION[0], true, false);
         Assert.assertEquals("Should return true, when Flow Condition created.", expectedResult, actualResult);
         /**
          * Verifying that specified FlowCondition created in VTN Manager. Here
@@ -541,7 +564,7 @@ public class VTNIntentParserTest extends TestBase {
         PowerMockito.doReturn(true).when(spyVTNIntentParser,
                 "isFlowCondExist", Matchers.any(String.class));
         actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[1], FLOW_DIRECTION[0]);
+                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[1], FLOW_DIRECTION[0], true, false);
         Assert.assertEquals("Should return true, when Flow Condition created.", expectedResult, actualResult);
         /**
          * Verifying that specified FlowCondition created in VTN Manager. Here
@@ -550,7 +573,7 @@ public class VTNIntentParserTest extends TestBase {
          */
         expectedResult = true;
         actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "createFlowCond", VALID_SRC_ADDRESS[2], VALID_DST_ADDRESS[2], FLOW_CONDITION_NAME[2], FLOW_DIRECTION[0]);
+                "createFlowCond", VALID_SRC_ADDRESS[2], VALID_DST_ADDRESS[2], FLOW_CONDITION_NAME[2], FLOW_DIRECTION[0], true, false);
         Assert.assertEquals("Should return true, when Flow Condition created.", expectedResult, actualResult);
         /**
          * Verifying that specified FlowCondition created in VTN Manager. Here
@@ -559,29 +582,20 @@ public class VTNIntentParserTest extends TestBase {
          */
         expectedResult = true;
         actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "createFlowCond", VALID_SRC_ADDRESS[5], VALID_DST_ADDRESS[3], FLOW_CONDITION_NAME[3], FLOW_DIRECTION[0]);
+                "createFlowCond", VALID_SRC_ADDRESS[5], VALID_DST_ADDRESS[3], FLOW_CONDITION_NAME[3], FLOW_DIRECTION[0], true, false);
         Assert.assertEquals("Should return true, when Flow Condition created.", expectedResult, actualResult);
         /**
          * Verifying that specified FlowCondition created in VTN Manager. Here
-         * testing invalid scenario by passing invalid addresses, FlowCondition
-         * names and createFlowCond() must return false.
+         * testing valid scenario by passing valid addresses, FlowCondition
+         * names and createFlowCond() must return true.
          */
-        expectedResult = false;
         PowerMockito.doReturn(false).when(spyVTNIntentParser,
                 "isFlowCondExist", Matchers.any(String.class));
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "createFlowCond", INVALID_SRC_ADDRESS[0],
-                INVALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[4], FLOW_DIRECTION[0]);
-        Assert.assertEquals("Should return false, when Flow Condition not created.", expectedResult, actualResult);
-        /**
-         * Verifying that specified FlowCondition created in VTN Manager. Here
-         * testing valid scenario by passing valid addresses, FlowCondition
-         * names and createFlowCond() must return true.
-         */
         PowerMockito.doReturn(true).when(mockVtnManagerService,
                 "setFlowCond", Matchers.any(SetFlowConditionInput.class));
         expectedResult = true;
         actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[0], FLOW_DIRECTION[0]);
+                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[0], FLOW_DIRECTION[0], true, false);
         Assert.assertEquals("Should return true, when Flow Condition created.", expectedResult, actualResult);
         /**
          * Verifying that specified FlowCondition created in VTN Manager. Here
@@ -592,8 +606,9 @@ public class VTNIntentParserTest extends TestBase {
                 "setFlowCond",  Matchers.any(SetFlowConditionInput.class));
         expectedResult = false;
         actualResult = Whitebox.invokeMethod(spyVTNIntentParser,
-                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[0], FLOW_DIRECTION[0]);
+                "createFlowCond", VALID_SRC_ADDRESS[0], VALID_DST_ADDRESS[0], FLOW_CONDITION_NAME[0], FLOW_DIRECTION[0], false, false);
         Assert.assertEquals("Should return false, when Flow Condition not created.", expectedResult, actualResult);
+
     }
 
     /**
@@ -602,8 +617,7 @@ public class VTNIntentParserTest extends TestBase {
     @Test
     public void testDeleteFlowCond() throws Exception {
         boolean actual, expected;
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
-        /*
+        /**
          * Verifying that deletion of the specified FlowCondition in VTN
          * Manager. Here testing invalid scenario if any exception is raised
          * during deletion process then deleteFlowCond() must return false.
@@ -628,7 +642,6 @@ public class VTNIntentParserTest extends TestBase {
      */
     @Test
     public void testIsFlowCondExist() throws Exception {
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         VtnFlowCondition mockFlowCondition = PowerMockito.mock(VtnFlowCondition.class);
         VnodeName vnode = PowerMockito.mock(VnodeName.class);
         PowerMockito.doReturn(FLOW_CONDITION_NAME[0]).when(vnode,
@@ -663,7 +676,6 @@ public class VTNIntentParserTest extends TestBase {
      */
     @Test
     public void testCreateFlowFilter() throws Exception {
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         /**
          * Verifying that specified FlowFilter created in VTN Manager. Here
          * testing creation of flow filter for the given flow condition and if
@@ -685,7 +697,6 @@ public class VTNIntentParserTest extends TestBase {
     @Test
     public void testDeleteFlowFilter() throws Exception{
         boolean actualResult, expectedResult;
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         PowerMockito.doReturn(true).when(mockVtnManagerService, "unSetFlowFilter", Matchers.any(RemoveFlowFilterInput.class));
         /**
          * Verifying that deletion of specified FlowFilter in VTN Manager. Here
@@ -708,33 +719,32 @@ public class VTNIntentParserTest extends TestBase {
     }
 
     /**
-     * Test case for {@link VTNIntentParser#createBridge()}
+     * Test case for {@link VTNIntentParser#setupDefaultBridge()}
      */
     @Test
-    public void testCreateBridge() throws Exception {
+    public void testSetupDefaultBridge() throws Exception {
         boolean actualResult, expectedResult;
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         /**
          * Verifying that specified Bridge created in VTN Manager. Here testing
          * invalid scenario by passing  Tenant, Bridge name and
-         * createBridge() must return false.
+         * setupDefaultBridge() must return false.
          */
         expectedResult = false;
         PowerMockito.doReturn(false).when(mockVtnManagerService, "updateBridge",
                 Matchers.any(String.class), Matchers.any(String.class),Matchers.any(String.class), Matchers.any(VnodeUpdateMode.class));
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "createBridge", TENANT[0], BRIDGE[0]);
+        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "setupDefaultBridge", TENANT[0], BRIDGE[0]);
         Assert.assertEquals("Should return true, when Bridge created.", expectedResult, actualResult);
 
         /**
          * Verifying that specified Bridge created in VTN Manager. Here testing
          * valid scenario by passing valid Tenant, Bridge name and
-         * createBridge() must return true.
+         * setupDefaultBridge() must return true.
          */
         expectedResult = true;
         PowerMockito.doReturn(true).when(mockVtnManagerService, "updateBridge",
                 Matchers.any(String.class), Matchers.any(String.class),Matchers.any(String.class),Matchers.any(VnodeUpdateMode.class));
         PowerMockito.doReturn(true).when(mockVtnManagerService, "setVlanMap",Matchers.any(AddVlanMapInput.class) );
-        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "createBridge", TENANT[0], BRIDGE[0]);
+        actualResult = Whitebox.invokeMethod(spyVTNIntentParser, "setupDefaultBridge", TENANT[0], BRIDGE[0]);
         Assert.assertEquals("Should return true, when Bridge created.", expectedResult, actualResult);
 
     }
@@ -745,7 +755,6 @@ public class VTNIntentParserTest extends TestBase {
     @Test
     public void testContainsIntentID() throws Exception {
         boolean actualResult, expectedResult;
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         VtnFlowCondition mockFlowcondition = PowerMockito.mock(VtnFlowCondition.class);
         VnodeName vnode = PowerMockito.mock(VnodeName.class);
         PowerMockito.doReturn(FLOW_CONDITION_NAME[0]).when(vnode,
@@ -772,18 +781,53 @@ public class VTNIntentParserTest extends TestBase {
      */
     @Test
     public void testListofFlowMatch() throws Exception {
-        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
         VtnFlowCondition mockFlowcondition = PowerMockito.mock(VtnFlowCondition.class);
         VnodeName vnode = PowerMockito.mock(VnodeName.class);
         PowerMockito.doReturn(FLOW_CONDITION_NAME[0]).when(vnode,
                 "getValue");
         PowerMockito.doReturn(vnode).when(mockFlowcondition,
                 "getName");
+        List mockVtnFlowMatch = new ArrayList();
+        mockVtnFlowMatch.add(Mockito.mock(VtnFlowMatch.class));
+        PowerMockito.doReturn(mockVtnFlowMatch).when(mockFlowcondition,
+                "getVtnFlowMatch");
         List<VtnFlowCondition> mockFlowConditionList = new ArrayList<VtnFlowCondition>();
         mockFlowConditionList.add(mockFlowcondition);
         PowerMockito.doReturn(mockFlowConditionList).when(spyVTNIntentParser, "readFlowConditions");
+        List<VtnFlowMatch> list = (List<VtnFlowMatch>)Whitebox.invokeMethod(spyVTNIntentParser, "listOfFlowMatch", ENCODED_UUID);
 
-        Whitebox.invokeMethod(spyVTNIntentParser, "listOfFlowMatch", ENCODED_UUID);
-        Whitebox.invokeMethod(spyVTNIntentParser, "listOfFlowMatch", ENCODED_UUID_FAILURE);
+        Assert.assertEquals("Should be return specified list", mockVtnFlowMatch, list);
+        list = (List<VtnFlowMatch>)Whitebox.invokeMethod(spyVTNIntentParser, "listOfFlowMatch", ENCODED_UUID_FAILURE);
+        Assert.assertNull(list);
+
+        PowerMockito.doThrow(new NullPointerException ("Raised for UT"))
+                .when(spyVTNIntentParser, "readFlowConditions");
+        list = (List<VtnFlowMatch>)Whitebox.invokeMethod(spyVTNIntentParser, "listOfFlowMatch", ENCODED_UUID);
+        Assert.assertNull(list);
+    }
+
+    /**
+     * Test case for {@link VTNIntentParser#readFlowConditions()}
+     */
+    @Test
+    public void testReadFlowConditions() throws Exception {
+        dataBroker = PowerMockito.mock(DataBroker.class);
+        CheckedFuture<Optional, ReadFailedException> mockCheckedFuture = PowerMockito.mock(CheckedFuture.class);
+        ReadOnlyTransaction mockReadOnlyTransaction = PowerMockito.mock(ReadOnlyTransaction.class);
+        PowerMockito.doReturn(mockCheckedFuture).when(mockReadOnlyTransaction, "read", LogicalDatastoreType.OPERATIONAL, InstanceIdentifier.create(VtnFlowConditions.class));
+        PowerMockito.doReturn(mockReadOnlyTransaction).when(dataBroker, "newReadOnlyTransaction");
+        VtnFlowConditions  mockVtnFlowConditions  = PowerMockito.mock(VtnFlowConditions.class);
+        Optional mockOptional = PowerMockito.mock(Optional.class);
+        PowerMockito.doReturn(true).when(mockOptional, "isPresent");
+        PowerMockito.doReturn(mockOptional).when(mockCheckedFuture, "checkedGet");
+        //Scenario - if VtnFlowConditions object is null and vlist is null or empty
+        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
+        List<VtnFlowCondition> actualResult = (List<VtnFlowCondition>)Whitebox.invokeMethod(spyVTNIntentParser, "readFlowConditions");
+        Assert.assertEquals("Should return empty list", Collections.<VtnFlowCondition>emptyList(), actualResult);
+        //Scenario - if VtnFlowConditions object is not null
+        PowerMockito.doReturn(mockVtnFlowConditions).when(mockOptional, "get");
+        spyVTNIntentParser = PowerMockito.spy(new VTNIntentParser(dataBroker, mockVtnManagerService));
+        actualResult = (List<VtnFlowCondition>)Whitebox.invokeMethod(spyVTNIntentParser, "readFlowConditions");
+        Assert.assertEquals("Should be same", mockVtnFlowConditions.getVtnFlowCondition(), actualResult);
     }
 }
