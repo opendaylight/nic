@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_3ae2b49f",
+        "filename": "renderer-common/src/main/java/common/RendererFlowModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2016-04-06T23:13:12Z",
+      "side": 1,
+      "message": "I am not sure but can\u0027t we access these details from the intent or graph edge directly?",
+      "revId": "b05bea96385904ca9a55ecc47d04ea2b70dd2ff9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_5ae500a7",
+        "filename": "renderer-facade/src/main/java/manager/OFRendererFacadeServiceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 5080
+      },
+      "writtenOn": "2016-04-06T23:13:12Z",
+      "side": 1,
+      "message": "can we also have a default case?",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 16
+      },
+      "revId": "b05bea96385904ca9a55ecc47d04ea2b70dd2ff9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
