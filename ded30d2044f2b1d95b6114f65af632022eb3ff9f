@@ -183,6 +183,52 @@
       "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_2f21d19f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5797
+      },
+      "writtenOn": "2016-04-08T06:56:36Z",
+      "side": 1,
+      "message": "IP_DOTS is used only inside validateSubnet(), please move the same as local to the method instead of property to the class",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_0f2695b7",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 5797
+      },
+      "writtenOn": "2016-04-08T06:56:36Z",
+      "side": 1,
+      "message": "I think simply we can rewrite this as ,\nreturn (IntentUtils.validateIP(adressSrc) \u0026\u0026 IntentUtils.validateIP(adressDst) \u0026\u0026 \n\t\t\t\t\t\t\t\t\t\t validateSubnet(adressSrc, adressDst));",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 21
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
