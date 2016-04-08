@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_4f237d05",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-04-08T10:53:22Z",
+      "side": 1,
+      "message": "This code is already simple to me.\nBut, I suggest slice this method, we have a lot of responsibilities here.",
+      "parentUuid": "3a4c51b2_e30548c3",
+      "range": {
+        "startLine": 194,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 13
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_630c9843",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 3
