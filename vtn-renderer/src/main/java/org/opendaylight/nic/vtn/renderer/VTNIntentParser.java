@@ -8,8 +8,6 @@
 
 package org.opendaylight.nic.vtn.renderer;
 
-import static java.net.HttpURLConnection.HTTP_OK;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -17,12 +15,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.vtn.manager.util.IpNetwork;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpPrefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.VlanId;
@@ -30,6 +28,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.Rem
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.RemoveFlowConditionInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.SetFlowConditionInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.VtnFlowConditions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.cond.config.VtnFlowMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.flow.conditions.VtnFlowCondition;
@@ -37,26 +36,23 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnEtherMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnInetMatch;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.vtn.match.fields.VtnInetMatchBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.cond.rev150313.VtnFlowConditions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.RemoveFlowFilterInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.RemoveFlowFilterInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.SetFlowFilterInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.SetFlowFilterInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.list.VtnFlowFilter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.list.VtnFlowFilterBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.drop.filter._case.VtnDropFilterBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.pass.filter._case.VtnPassFilterBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnDropFilterCase;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnDropFilterCaseBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnPassFilterCase;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.VtnPassFilterCaseBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.drop.filter._case.VtnDropFilterBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.flow.filter.rev150907.vtn.flow.filter.type.fields.vtn.flow.filter.type.vtn.pass.filter._case.VtnPassFilterBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapInput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.mapping.vlan.rev150907.AddVlanMapInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeName;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.vtn.types.rev150209.VnodeUpdateMode;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.Status;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,6 +130,8 @@ public class VTNIntentParser {
      * Instance created for VTNRendererUtility
      */
     private VTNRendererUtility vtnRendererUtility;
+
+    private static final String FLOW_COND_ER_MESSAGE = "Unable to get flow condition name {}";
 
     public VTNIntentParser(DataBroker dataBroker, VTNManagerService vtn) {
         this.dataProvider = dataBroker;
@@ -537,8 +535,7 @@ public class VTNIntentParser {
                     .setName(vnodeName)
                     .setVtnFlowMatch(matchList)
                     .build();
-                boolean result = vtnManangerService.setFlowCond(fcond);
-                return result;
+                return vtnManangerService.setFlowCond(fcond);
             }
         } catch (UnknownHostException e) {
             LOG.error("Unable to create Flow Condition {}", e);
@@ -557,8 +554,7 @@ public class VTNIntentParser {
         RemoveFlowConditionInput input = new RemoveFlowConditionInputBuilder()
            .setName(condName)
            .build();
-        boolean status = vtnManangerService.unsetFlowCond(input);
-        return status;
+        return vtnManangerService.unsetFlowCond(input);
     }
 
     /**
@@ -588,12 +584,14 @@ public class VTNIntentParser {
      */
     private void createFlowFilter(String tenantName, String bridgeName,
             String type, String condName) {
+        String flowFilterCondName;
         int index = 0;
         if (condName.equalsIgnoreCase(MATCH_ANY)) {
             index = LOW_PRIORITY;
-            condName = condName + "_" + index;
+            flowFilterCondName = condName + "_" + index;
         } else {
-            String flowfilterindex = condName.split("_")[2];
+            flowFilterCondName=condName;
+            String flowfilterindex = flowFilterCondName.split("_")[2];
             index = Integer.valueOf(flowfilterindex);
         }
         if (type.equalsIgnoreCase("PASS")) {
@@ -601,7 +599,7 @@ public class VTNIntentParser {
                 setVtnPassFilter(new VtnPassFilterBuilder().build()).
                 build();
             List<VtnFlowFilter> vtnFlowFilterList = new ArrayList<VtnFlowFilter>();
-            VnodeName vnodeName = new VnodeName(condName);
+            VnodeName vnodeName = new VnodeName(flowFilterCondName);
             VtnFlowFilter filter = new VtnFlowFilterBuilder()
                 .setIndex(index)
                 .setCondition(vnodeName)
@@ -619,7 +617,7 @@ public class VTNIntentParser {
                 setVtnDropFilter(new VtnDropFilterBuilder().build()).
                 build();
             List<VtnFlowFilter> vtnFlowFilterList = new ArrayList<VtnFlowFilter>();
-            VnodeName vnodeName = new VnodeName(condName);
+            VnodeName vnodeName = new VnodeName(flowFilterCondName);
             VtnFlowFilter filter = new VtnFlowFilterBuilder()
                 .setIndex(index)
                 .setCondition(vnodeName)
@@ -645,7 +643,7 @@ public class VTNIntentParser {
      * @return  {@code true} flow filter is deleted in VTN Manager.
      */
     private boolean deleteFlowFilter(int index) {
-        List indexList = new ArrayList<Integer>();
+        final List<Integer> indexList = new ArrayList<Integer>();
         indexList.add(index);
         RemoveFlowFilterInput input = new RemoveFlowFilterInputBuilder()
             .setTenantName(TENANT_NAME)
@@ -663,9 +661,8 @@ public class VTNIntentParser {
      * @return {@code true} only bridge is created in VTN Manager.
      */
     private boolean createBridge(String tenantName, String bridgeName) {
-        boolean status = false;
         VlanId vlanId = new VlanId(0);
-        status = vtnManangerService.updateBridge(tenantName, bridgeName, bridgeName + " description",
+        boolean status = vtnManangerService.updateBridge(tenantName, bridgeName, bridgeName + " description",
                             VnodeUpdateMode.CREATE);
         if (status) {
             AddVlanMapInput input = new AddVlanMapInputBuilder()
@@ -695,7 +692,7 @@ public class VTNIntentParser {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Unable to get flow condition name {}", e);
+            LOG.error(FLOW_COND_ER_MESSAGE, e);
         }
         return false;
     }
@@ -719,7 +716,7 @@ public class VTNIntentParser {
                 }
             }
         } catch (Exception e) {
-            LOG.error("Unable to get flow condition name {}", e);
+            LOG.error(FLOW_COND_ER_MESSAGE, e);
         }
         return flow;
     }
@@ -730,7 +727,7 @@ public class VTNIntentParser {
      * @return  A list of {@link VtnFlowCondition} instances.
      */
     private  List<VtnFlowCondition> readFlowConditions() {
-        List<VtnFlowCondition> vlist = new ArrayList<>();;
+        List<VtnFlowCondition> vlist = new ArrayList<>();
         try {
             InstanceIdentifier<VtnFlowConditions> path =
                 InstanceIdentifier.create(VtnFlowConditions.class);
@@ -744,7 +741,7 @@ public class VTNIntentParser {
                 return Collections.<VtnFlowCondition>emptyList();
             }
         } catch (Exception e) {
-            LOG.error("Unable to get flow condition name {}", e);
+            LOG.error(FLOW_COND_ER_MESSAGE, e);
         }
         return vlist;
     }
