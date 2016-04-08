@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_d7c61b49",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-08T09:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_39093896",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 38
+      },
+      "revId": "a97bf8b3a6d1ece46be280a7f9385530abbb916d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_d9d014fa",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2016-03-30T21:44:24Z",
       "side": 1,
       "message": "We should insert an space here.",
+      "range": {
+        "startLine": 139,
+        "startChar": 53,
+        "endLine": 139,
+        "endChar": 55
+      },
+      "revId": "a97bf8b3a6d1ece46be280a7f9385530abbb916d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_37c49f3f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-08T09:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_d9d014fa",
       "range": {
         "startLine": 139,
         "startChar": 53,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3a4c51b2_17c1a32e",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-08T09:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_99fe8c6a",
+      "range": {
+        "startLine": 595,
+        "startChar": 12,
+        "endLine": 595,
+        "endChar": 30
+      },
+      "revId": "a97bf8b3a6d1ece46be280a7f9385530abbb916d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_79ec60c8",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2016-03-30T21:44:24Z",
       "side": 1,
       "message": "It seems to me that the return statement is equal to \"return (code \u003d\u003d HTTP_OK);\". If so, I think we should take the simpler one.",
+      "range": {
+        "startLine": 725,
+        "startChar": 8,
+        "endLine": 725,
+        "endChar": 48
+      },
+      "revId": "a97bf8b3a6d1ece46be280a7f9385530abbb916d",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_77dd8714",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-08T09:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_79ec60c8",
       "range": {
         "startLine": 725,
         "startChar": 8,
