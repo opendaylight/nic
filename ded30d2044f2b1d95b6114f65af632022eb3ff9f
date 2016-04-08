@@ -253,6 +253,29 @@
       "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_efbc096f",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-04-08T11:40:32Z",
+      "side": 1,
+      "message": "I suggest change it to ActionTypeEnum.valueOf(actionType)... and then, handle the IllegalArgumentException.",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 216,
+        "endChar": 13
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
