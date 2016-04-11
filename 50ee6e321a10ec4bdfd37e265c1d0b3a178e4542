@@ -46,6 +46,30 @@
       "revId": "50ee6e321a10ec4bdfd37e265c1d0b3a178e4542",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_81357e48",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-04-11T12:39:23Z",
+      "side": 1,
+      "message": "I see... I just read the message in the exception. Make sense",
+      "parentUuid": "1a494da4_fe197d23",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 5
+      },
+      "revId": "50ee6e321a10ec4bdfd37e265c1d0b3a178e4542",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
