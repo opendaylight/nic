@@ -22,6 +22,30 @@
       "revId": "50ee6e321a10ec4bdfd37e265c1d0b3a178e4542",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_fe197d23",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRenderer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 4020
+      },
+      "writtenOn": "2016-04-11T07:16:30Z",
+      "side": 1,
+      "message": "Hi Alexis,\nThe method getAction() is specific for VTN Renderer actions.",
+      "parentUuid": "3a4c51b2_3558fe31",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 5
+      },
+      "revId": "50ee6e321a10ec4bdfd37e265c1d0b3a178e4542",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
