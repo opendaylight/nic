@@ -1,6 +1,12 @@
-package org.opendaylight.nic.of.renderer.utils;
+/*
+ * Copyright © 2016 Inocybe Technologies and others.  All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ */
 
-import java.math.BigInteger;
+package org.opendaylight.nic.of.renderer.utils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,12 +15,19 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv6Prefix;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.PortNumber;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv4Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv6Match;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
+
+import static org.junit.Assert.assertNotNull;
 
 public class MatchUtilsTest {
 
@@ -42,6 +55,18 @@ public class MatchUtilsTest {
     }
 
     @Test
+    public void callPrivateConstructorsForCodeCoverage() throws SecurityException, NoSuchMethodException,
+            IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        Class<?>[] classesToConstruct = {MatchUtils.class};
+        for(Class<?> clazz : classesToConstruct)
+        {
+            Constructor<?> constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            assertNotNull(constructor.newInstance());
+        }
+    }
+
+    @Test
     public void testCreateInPortMatch() {
         MatchBuilder result = null;
 
@@ -55,6 +80,54 @@ public class MatchUtilsTest {
         Assert.assertNotNull(result);
 
         result = MatchUtils.createInPortMatch(matchBuilderMock, -1L, -2L);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateInPortMatch2() {
+        MatchBuilder result = null;
+
+        result = MatchUtils.createInPortMatch(matchBuilderMock, nodeConnectorId);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateArpDstIpv4Match() {
+        result = MatchUtils.createArpDstIpv4Match(matchBuilderMock, ipv4PrefixMock);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateSrcL3IPv4Match() {
+        result = MatchUtils.createSrcL3IPv4Match(matchBuilderMock, ipv4PrefixMock);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateSetSrcTcpMatch(){
+        PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
+        result = MatchUtils.createSetSrcTcpMatch(matchBuilderMock, tcpPort);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateSetDstTcpMatch(){
+        PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
+        result = MatchUtils.createSetDstTcpMatch(matchBuilderMock, tcpPort);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateSetSrcUdpMatch(){
+        PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
+        result = MatchUtils.createSetSrcUdpMatch(matchBuilderMock, tcpPort);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testCreateSetDstUdpMatch(){
+        PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
+        result = MatchUtils.createSetDstUdpMatch(matchBuilderMock, tcpPort);
         Assert.assertNotNull(result);
     }
 
