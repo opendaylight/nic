@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a494da4_47d54142",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2759
+      },
+      "writtenOn": "2016-04-12T20:59:36Z",
+      "side": 1,
+      "message": "Should have a blank space after your commit summary line otherwise git parsers won\u0027t properly parse your summary line.\n\nThis blog post does a pretty good explanation of why http://chris.beams.io/posts/git-commit/",
+      "revId": "7270736ba1c0a255d18d05c6dd3d3d7a2fff25d6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
