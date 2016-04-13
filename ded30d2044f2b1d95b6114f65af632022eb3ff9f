@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1a494da4_7de28a04",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-13T13:59:23Z",
+      "side": 1,
+      "message": "Done.Both variables are removed now.",
+      "parentUuid": "3a4c51b2_2313b067",
+      "range": {
+        "startLine": 287,
+        "startChar": 20,
+        "endLine": 287,
+        "endChar": 46
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_43099c30",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 3
@@ -187,6 +211,30 @@
     },
     {
       "key": {
+        "uuid": "1a494da4_dde63e16",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-13T13:59:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3a4c51b2_26429e10",
+      "range": {
+        "startLine": 453,
+        "startChar": 18,
+        "endLine": 453,
+        "endChar": 51
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4c51b2_0647a220",
         "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
         "patchSetId": 3
@@ -198,6 +246,30 @@
       "writtenOn": "2016-04-07T14:26:30Z",
       "side": 1,
       "message": "instead of else if(isValidMac)",
+      "range": {
+        "startLine": 477,
+        "startChar": 21,
+        "endLine": 477,
+        "endChar": 28
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_bde37204",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNIntentParser.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-13T13:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4c51b2_0647a220",
       "range": {
         "startLine": 477,
         "startChar": 21,
@@ -267,6 +339,30 @@
       "writtenOn": "2016-04-08T11:40:32Z",
       "side": 1,
       "message": "I suggest change it to ActionTypeEnum.valueOf(actionType)... and then, handle the IllegalArgumentException.",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 216,
+        "endChar": 13
+      },
+      "revId": "ded30d2044f2b1d95b6114f65af632022eb3ff9f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_3dbf62d2",
+        "filename": "vtn-renderer/src/main/java/org/opendaylight/nic/vtn/renderer/VTNRendererUtility.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 5805
+      },
+      "writtenOn": "2016-04-13T13:59:23Z",
+      "side": 1,
+      "message": "As per your suggestion, modified the code accordingly.",
+      "parentUuid": "3a4c51b2_efbc096f",
       "range": {
         "startLine": 212,
         "startChar": 13,
