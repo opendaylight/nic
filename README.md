@@ -15,3 +15,6 @@ As a side effect of the intent model a simple request model was included as well
 model of how a request based capability might be added on top of MD-SAL allowing ODL to support an interaction model
 where a client submits an asynchronous request and is able to asynchronous monitor is status until completion.
 
+## New features
+---
+ShortestPaths/DisjointPaths api methods
