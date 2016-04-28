@@ -17,6 +17,38 @@ module of-renderer {
         description "Initial revision.";
     }
 
+    rpc get-shortest-path{
+        input {
+            leaf source-node {
+                type string;
+            }
+            leaf destination-node {
+                type string;
+            }
+        }
+        output {
+            leaf route {
+                type string;
+            }
+        }
+    }
+
+    rpc get-disjoint-path{
+        input {
+            leaf source-node {
+                type string;
+            }
+            leaf destination-node {
+                type string;
+            }
+        }
+        output {
+            leaf route {
+                type string;
+            }
+        }
+    }
+
         // This is the definition of the service implementation as a module identity
         identity of-renderer {
                 base config:module-type;
@@ -65,6 +97,15 @@ module of-renderer {
                         }
                    }
                 }
+               //Wires dependent services into this class - in this case the RPC registry service
+                 container rpc-registry {
+                     uses config:service-ref {
+                         refine type {
+                             mandatory true;
+                             config:required-identity mdsal:binding-rpc-registry;
+                         }
+                     }
+                 }
             }
         }
 }

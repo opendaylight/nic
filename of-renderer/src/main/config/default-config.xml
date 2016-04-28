@@ -15,6 +15,10 @@
                         </type>
                         <name>binding-data-broker</name>
                     </data-broker>
+                    <rpc-registry>
+                        <type xmlns:binding="urn:opendaylight:params:xml:ns:yang:controller:md:sal:binding">binding:binding-rpc-registry</type>
+                        <name>binding-rpc-broker</name>
+                    </rpc-registry>
                     <pipeline-manager>
                         <type xmlns:prefix="urn:opendaylight:params:xml:ns:yang:nic:pipeline-manager">
                             prefix:pipeline-manager
