@@ -5,24 +5,24 @@
     <parent>
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>config-parent</artifactId>
-        <version>0.4.2-Beryllium-SR2</version>
+        <version>0.4.3-SNAPSHOT</version>
         <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>of-renderer</artifactId>
-    <version>1.1.2-Beryllium-SR2</version>
+    <version>1.1.3-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <properties>
         <jung2.version>2.0.1</jung2.version>
-        <openflowplugin.version>0.2.2-Beryllium-SR2</openflowplugin.version>
-        <mdsal.version>1.3.2-Beryllium-SR2</mdsal.version>
+        <openflowplugin.version>0.2.3-SNAPSHOT</openflowplugin.version>
+        <mdsal.version>1.3.3-SNAPSHOT</mdsal.version>
         <powermock.version>1.5.5</powermock.version>
         <pitest.version>1.1.4</pitest.version>
-        <liblldp.version>0.10.2-Beryllium-SR2</liblldp.version>
-        <sfc.version>0.2.2-Beryllium-SR2</sfc.version>
+        <liblldp.version>0.10.3-SNAPSHOT</liblldp.version>
+        <sfc.version>0.2.3-SNAPSHOT</sfc.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->
