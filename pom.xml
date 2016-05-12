@@ -14,12 +14,12 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>1.6.2-SNAPSHOT</version>
+    <version>1.6.2-Beryllium-SR2</version>
     <relativePath/>
   </parent>
 
     <groupId>org.opendaylight.nic</groupId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>1.1.2-Beryllium-SR2</version>
     <artifactId>nic-aggregator</artifactId>
     <name>nic</name>
     <packaging>pom</packaging>

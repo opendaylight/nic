@@ -12,19 +12,19 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.4.2-SNAPSHOT</version>
+  <version>0.4.2-Beryllium-SR2</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>vtn-renderer</artifactId>
- <version>1.1.2-SNAPSHOT</version>
+ <version>1.1.2-Beryllium-SR2</version>
  <packaging>bundle</packaging>
 
  <properties>
   <powermock.version>1.5.5</powermock.version>
-   <vtn.version>0.4.2-SNAPSHOT</vtn.version>
+   <vtn.version>0.4.2-Beryllium-SR2</vtn.version>
  </properties>
 
  <dependencies>
