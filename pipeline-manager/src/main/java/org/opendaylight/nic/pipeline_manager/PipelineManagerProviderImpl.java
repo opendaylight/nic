@@ -91,7 +91,7 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
     private void createPipeline(Node node) {
         List<Table> tableList = getTableList(node);
         for (Table table : tableList) {
-            List<Short> nextIds = getNextTablesMiss(table);
+            List<Short> nextIds = getNextTablesMiss(node.getId(), table.getId());
             if (nextIds.isEmpty())
                 break;
             Short nextId = Collections.min(nextIds);
@@ -129,15 +129,22 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
         transaction.submit();
     }
 
-    private List<TableFeatureProperties> getTableFeatureProperties(Table table) {
-        if (table.getTableFeatures() == null || table.getTableFeatures().isEmpty())
+    private List<TableFeatureProperties> getTableFeatureProperties(final NodeId nodeId, final Short tableId) {
+        Node node = getDataObject(dataBroker.newReadOnlyTransaction(),
+                InstanceIdentifier.create(Nodes.class).child(Node.class, new NodeKey(nodeId)));
+        if (node == null) {
             return Collections.emptyList();
-        TableFeatures tableFeatures = table.getTableFeatures().get(0);
-        return tableFeatures.getTableProperties().getTableFeatureProperties();
+        }
+        FlowCapableNode flowCapableNode = node.getAugmentation(FlowCapableNode.class);
+        List<TableFeatures> features = flowCapableNode.getTableFeatures();
+        if (features == null || features.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return features.get(tableId).getTableProperties().getTableFeatureProperties();
     }
 
-    private List<Short> getNextTablesMiss(Table table) {
-        for (TableFeatureProperties tableFeatureProperties : getTableFeatureProperties(table)) {
+    private List<Short> getNextTablesMiss(final NodeId nodeId, final Short tableId) {
+        for (TableFeatureProperties tableFeatureProperties : getTableFeatureProperties(nodeId, tableId)) {
             if (tableFeatureProperties.getTableFeaturePropType() instanceof NextTableMiss) {
                 NextTableMiss nextTableMiss = (NextTableMiss) tableFeatureProperties.getTableFeaturePropType();
                 return nextTableMiss.getTablesMiss().getTableIds();
@@ -150,7 +157,7 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
     public boolean setTableId(NodeId nodeId, FlowBuilder flowBuilder) {
         List<Table> tableList = getTableList(nodeId);
         for (Table table : tableList) {
-            List<TableFeatureProperties> tableFeaturePropertiesList = getTableFeatureProperties(table);
+            List<TableFeatureProperties> tableFeaturePropertiesList = getTableFeatureProperties(nodeId, table.getId());
             if (isFlowSupported(tableFeaturePropertiesList, flowBuilder)) {
                 flowBuilder.setTableId(table.getId());
                 return true;
