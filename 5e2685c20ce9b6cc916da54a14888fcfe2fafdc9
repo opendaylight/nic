@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_538bbe67",
+        "filename": "pipeline-manager/src/main/java/org/opendaylight/nic/pipeline_manager/PipelineManagerProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-05-26T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_7349a25f",
+      "revId": "5e2685c20ce9b6cc916da54a14888fcfe2fafdc9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_b3769aa2",
         "filename": "pipeline-manager/src/main/java/org/opendaylight/nic/pipeline_manager/PipelineManagerProviderImpl.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_b3eb3a12",
+        "filename": "pipeline-manager/src/main/java/org/opendaylight/nic/pipeline_manager/PipelineManagerProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-05-26T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_b3769aa2",
+      "revId": "5e2685c20ce9b6cc916da54a14888fcfe2fafdc9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_53461e50",
         "filename": "pipeline-manager/src/main/java/org/opendaylight/nic/pipeline_manager/PipelineManagerProviderImpl.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2016-05-26T16:09:19Z",
       "side": 1,
       "message": "Please, make parameters immutable (final).",
+      "revId": "5e2685c20ce9b6cc916da54a14888fcfe2fafdc9",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_f3f13202",
+        "filename": "pipeline-manager/src/main/java/org/opendaylight/nic/pipeline_manager/PipelineManagerProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 396
+      },
+      "writtenOn": "2016-05-26T17:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_53461e50",
       "revId": "5e2685c20ce9b6cc916da54a14888fcfe2fafdc9",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
