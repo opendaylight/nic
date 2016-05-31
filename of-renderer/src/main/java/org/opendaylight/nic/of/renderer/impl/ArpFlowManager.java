@@ -42,7 +42,7 @@ public class ArpFlowManager extends AbstractFlowManager {
         writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
-    private FlowBuilder createArpReplyToControllerFlow() {
+    protected FlowBuilder createArpReplyToControllerFlow() {
         FlowBuilder arpFlow = new FlowBuilder()
                 .setPriority(OFRendererConstants.ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY)
                 .setIdleTimeout(0)

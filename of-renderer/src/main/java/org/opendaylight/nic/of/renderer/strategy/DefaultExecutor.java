@@ -13,6 +13,7 @@ import org.opendaylight.nic.of.renderer.impl.IntentFlowManager;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
@@ -20,6 +21,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Created by yrineu on 01/03/16.
@@ -37,7 +39,12 @@ public class DefaultExecutor implements ActionStrategy {
     @Override
     public void execute(Intent intent, FlowAction flowAction) {
         final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
-        final Action actionContainer = IntentUtils.getAction(intent);
+        Action actionContainer = null;
+        try {
+            actionContainer = IntentUtils.getAction(intent);
+        } catch (IntentInvalidException e) {
+            throw new NoSuchElementException(e.getMessage());
+        }
 
         intentFlowManager.setEndPointGroups(endPointGroups);
         intentFlowManager.setAction(actionContainer);
