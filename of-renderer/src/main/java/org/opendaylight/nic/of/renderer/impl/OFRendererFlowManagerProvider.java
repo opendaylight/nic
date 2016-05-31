@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
-
 /**
  * Created by saket on 8/19/15.
  */
@@ -62,10 +62,10 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
     private NotificationProviderService notificationProviderService;
 
-    public OFRendererFlowManagerProvider(DataBroker dataBroker,
-                                         PipelineManager pipelineManager,
-                                         IntentMappingService intentMappingService,
-                                         NotificationProviderService notificationProviderService) {
+    public OFRendererFlowManagerProvider(final DataBroker dataBroker,
+                                         final PipelineManager pipelineManager,
+                                         final IntentMappingService intentMappingService,
+                                         final NotificationProviderService notificationProviderService) {
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
         this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
@@ -76,7 +76,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     public void init() {
         LOG.info("OF Renderer Provider Session Initiated");
         // Register this service with karaf
-        BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         graphService = new NetworkGraphManager();
         graphService.register(this);
         mplsIntentFlowManager = new MplsIntentFlowManager(dataBroker, pipelineManager);
@@ -91,7 +91,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     }
 
     @Override
-    public void pushIntentFlow(Intent intent, FlowAction flowAction) {
+    public void pushIntentFlow(final Intent intent, final FlowAction flowAction) {
         // TODO: Extend to support other actions
         LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
 
@@ -115,29 +115,41 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
     }
 
-    private boolean isRedirect(Intent intent) {
-        Action actionContainer = IntentUtils.getAction(intent);
+    protected boolean isRedirect(final Intent intent) {
+        Action actionContainer = null;
+        try {
+            actionContainer = IntentUtils.getAction(intent);
+        } catch (IntentInvalidException e) {
+            LOG.error(e.getMessage());
+            throw new NoSuchElementException(e.getMessage());
+        }
         return (Redirect.class.isInstance(actionContainer));
     }
 
-    private boolean isMPLS(Intent intent) throws IntentInvalidException {
-        EndPointGroup source = IntentUtils.extractSrcEndPointGroup(intent);
-        EndPointGroup target = IntentUtils.extractDstEndPointGroup(intent);
-        Map<String, String> sourceContent = getMappingServiceContent(source);
-        Map<String, String> targetContent = getMappingServiceContent(target);
+    protected boolean isMPLS(final Intent intent) throws IntentInvalidException {
+        final EndPointGroup source = IntentUtils.extractSrcEndPointGroup(intent);
+        final EndPointGroup target = IntentUtils.extractDstEndPointGroup(intent);
+        final Map<String, String> sourceContent = getMappingServiceContent(source);
+        final Map<String, String> targetContent = getMappingServiceContent(target);
         return (sourceContent.containsKey(OFRendererConstants.MPLS_LABEL_KEY)
                 && targetContent.containsKey(OFRendererConstants.MPLS_LABEL_KEY));
     }
 
-    private boolean isQoS(Intent intent) {
-        final Action actionContainer = IntentUtils.getAction(intent);
+    private boolean isQoS(final Intent intent) {
+        Action actionContainer = null;
+        try {
+            actionContainer = IntentUtils.getAction(intent);
+        } catch (IntentInvalidException e) {
+            LOG.error(e.getMessage());
+            throw new NoSuchElementException(e.getMessage());
+        }
         final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         return (checkQosConstraint(intent, actionContainer, endPointGroups));
     }
 
     //FIXME move to a utility class
     @Override
-    public void pushARPFlow(NodeId nodeId, FlowAction flowAction) {
+    public void pushARPFlow(final NodeId nodeId, final FlowAction flowAction) {
         arpFlowManager.pushFlow(nodeId, flowAction);
     }
 
@@ -164,7 +176,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
      * @param flowAction The {@link FlowAction} to push
      */
     @Override
-    public void pushLLDPFlow(NodeId nodeId, FlowAction flowAction) {
+    public void pushLLDPFlow(final NodeId nodeId, final FlowAction flowAction) {
         lldpFlowManager.pushFlow(nodeId, flowAction);
     }
 
@@ -175,14 +187,16 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
      * @param endPointGroups List of Endpoints
      * @return boolean
      */
-    private boolean checkQosConstraint(Intent intent, Action actionContainer, List<String> endPointGroups) {
+    private boolean checkQosConstraint(final Intent intent,
+                                       final Action actionContainer,
+                                       final List<String> endPointGroups) {
         //Check for constrain name in the intent.
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
+        final org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
                     = intent.getConstraints().get(0).getConstraints();
         if (!constraintContainer.getImplementedInterface().isAssignableFrom(QosConstraint.class)) {
             return false;
         }
-        String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
+        final String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
         LOG.info("QosConstraint is set to: {}", qosName);
         if (qosName != null) {
             //Set the values to QosConstraintManager
@@ -199,20 +213,20 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
     @Override
     public void update() {
-        Intent msg = (Intent) topic.getUpdate(this);
+        final Intent msg = (Intent) topic.getUpdate(this);
         if (msg != null) {
             pushIntentFlow(msg, FlowAction.ADD_FLOW);
         }
     }
 
     @Override
-    public void setSubject(Subject sub) {
+    public void setSubject(final Subject sub) {
         this.topic = sub;
     }
 
-    private Map<String, String> getMappingServiceContent(EndPointGroup endPointGroup)
+    private Map<String, String> getMappingServiceContent(final EndPointGroup endPointGroup)
             throws IntentElementNotFoundException {
-        String endPointGroupName = endPointGroup.getEndPointGroup().getName();
+        final String endPointGroupName = endPointGroup.getEndPointGroup().getName();
         final String CONTENT_NOT_FOUND_MESSAGE = "Content not found for EndPointGroup: " + endPointGroupName;
         final Map<String, String> contentMap = intentMappingService.get(endPointGroupName);
         if(contentMap.isEmpty()) {

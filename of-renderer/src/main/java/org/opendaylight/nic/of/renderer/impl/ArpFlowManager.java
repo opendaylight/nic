@@ -35,34 +35,34 @@ public class ArpFlowManager extends AbstractFlowManager {
     }
 
     @Override
-    public void pushFlow(NodeId nodeId, FlowAction flowAction) {
+    public void pushFlow(final NodeId nodeId, final FlowAction flowAction) {
         // Creating Flow object
-        FlowBuilder flowBuilder = createArpReplyToControllerFlow();
+        final FlowBuilder flowBuilder = createArpReplyToControllerFlow();
         // Write to MD-SAL
         writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
-    private FlowBuilder createArpReplyToControllerFlow() {
-        FlowBuilder arpFlow = new FlowBuilder()
+    protected FlowBuilder createArpReplyToControllerFlow() {
+        final FlowBuilder arpFlow = new FlowBuilder()
                 .setPriority(OFRendererConstants.ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY)
                 .setIdleTimeout(0)
                 .setHardTimeout(0)
                 .setCookie(new FlowCookie(BigInteger.valueOf(flowCookie.incrementAndGet())))
                 .setFlags(new FlowModFlags(false, false, false, false, false));
-        EthernetMatch ethernetMatch = FlowUtils.createEthernetMatch();
+        final EthernetMatch ethernetMatch = FlowUtils.createEthernetMatch();
         /** NOTE:
          * Setting layer 3 match seems to be messing with the flow ID
          * check for possible bug on openflow plugin side.
          * Use following code for specific ARP REQUEST or REPLY packet capture
          * ArpMatch arpMatch = FlowUtils.createArpMatch();
          */
-        Match match = new MatchBuilder().setEthernetMatch(ethernetMatch).build();//.setLayer3Match(arpMatch).build();
+        final Match match = new MatchBuilder().setEthernetMatch(ethernetMatch).build();//.setLayer3Match(arpMatch).build();
         arpFlow.setMatch(match);
-        Instructions instructions = createOutputInstructions(OutputPortValues.CONTROLLER, OutputPortValues.NORMAL);
+        final Instructions instructions = createOutputInstructions(OutputPortValues.CONTROLLER, OutputPortValues.NORMAL);
         arpFlow.setInstructions(instructions);
-        String flowName = createFlowName();
+        final String flowName = createFlowName();
         arpFlow.setFlowName(flowName);
-        FlowId flowId = new FlowId(flowName);
+        final FlowId flowId = new FlowId(flowName);
         arpFlow.setId(flowId);
         arpFlow.setKey(new FlowKey(flowId));
         return arpFlow;

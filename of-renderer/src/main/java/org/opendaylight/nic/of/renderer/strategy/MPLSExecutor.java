@@ -58,12 +58,12 @@ public class MPLSExecutor implements ActionStrategy {
     }
 
     @Override
-    public void execute(Intent intent, FlowAction flowAction) {
+    public void execute(final Intent intent, final FlowAction flowAction) {
         try {
             final Action actionContainer = IntentUtils.getAction(intent);
             final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
 
-            Map<String, Map<String, String>> subjectDetails = MappingServiceUtils.extractSubjectDetails(intent,
+            final Map<String, Map<String, String>> subjectDetails = MappingServiceUtils.extractSubjectDetails(intent,
                     intentMappingService);
             mplsIntentFlowManager.setEndPointGroups(endPointGroups);
             mplsIntentFlowManager.setAction(actionContainer);
@@ -74,8 +74,9 @@ public class MPLSExecutor implements ActionStrategy {
                     generateMplsFlows(intent, flowAction, constraints);
                 }
             }
-        } catch (IntentElementNotFoundException ie) {
+        } catch (IntentElementNotFoundException | IntentInvalidException ie) {
             //TODO: Perform fail over
+            LOG.error(ie.getMessage());
         }
     }
 
@@ -86,7 +87,9 @@ public class MPLSExecutor implements ActionStrategy {
      * @param flowAction
      * @param constraints
      */
-    private void generateMplsFlows(Intent intent, FlowAction flowAction, Constraints constraints) {
+    private void generateMplsFlows(final Intent intent,
+                                   final FlowAction flowAction,
+                                   final Constraints constraints) {
         final List<Link> paths;
         try {
             paths = extractPathByFlowAction(intent, flowAction, constraints);
@@ -99,11 +102,11 @@ public class MPLSExecutor implements ActionStrategy {
         }
     }
 
-    private String extractEndPointName(EndPointGroup endPointGroup) {
+    private String extractEndPointName(final EndPointGroup endPointGroup) {
         return endPointGroup.getEndPointGroup().getName();
     }
 
-    private void executeMplsIntentFlowManager(Intent intent, Link link, FlowAction flowAction)
+    private void executeMplsIntentFlowManager(final Intent intent, final Link link, final FlowAction flowAction)
             throws IntentInvalidException {
 
         final NodeId linkSourceNodeId = new NodeId(link.getSource().getSourceNode().getValue());
@@ -123,17 +126,19 @@ public class MPLSExecutor implements ActionStrategy {
         }
     }
 
-    private boolean containsLinkNodeId(EndPointGroup endPointGroup, NodeId linkNodeId) {
-        String nodeIdValue = extractNodeId(endPointGroup).getValue();
+    private boolean containsLinkNodeId(final EndPointGroup endPointGroup, final NodeId linkNodeId) {
+        final String nodeIdValue = extractNodeId(endPointGroup).getValue();
         return linkNodeId.equals(nodeIdValue);
     }
 
-    private List<Link> extractPathByFlowAction(Intent intent, FlowAction flowAction, Constraints constraints)
+    private List<Link> extractPathByFlowAction(final Intent intent,
+                                               final FlowAction flowAction,
+                                               final Constraints constraints)
             throws IntentInvalidException {
         List<Link> result = new ArrayList<>();
         if (isProtectedOrSlowRoute(constraints)) {
-            EndPointGroup source = IntentUtils.extractSrcEndPointGroup(intent);
-            EndPointGroup target = IntentUtils.extractDstEndPointGroup(intent);
+            final EndPointGroup source = IntentUtils.extractSrcEndPointGroup(intent);
+            final EndPointGroup target = IntentUtils.extractDstEndPointGroup(intent);
             switch (flowAction) {
                 case ADD_FLOW:
                     NetworkGraphManager.ProtectedLinks.put(intent,
@@ -159,14 +164,14 @@ public class MPLSExecutor implements ActionStrategy {
             .tbd.params.xml.ns.yang.network
             .topology.rev131021.NodeId extractNodeId(final EndPointGroup endPointGroup)
             throws IntentElementNotFoundException {
-        String connectorId = intentMappingService.get(extractConnectorId(endPointGroup))
+        final String connectorId = intentMappingService.get(extractConnectorId(endPointGroup))
                 .get(OFRendererConstants.SWITCH_PORT_KEY);
         return TopologyUtils.extractTopologyNodeId(connectorId);
     }
 
-    private String extractConnectorId(EndPointGroup endPointGroup) throws IntentElementNotFoundException {
-        String endPointName = extractEndPointName(endPointGroup);
-        String result = intentMappingService.get(endPointName)
+    private String extractConnectorId(final EndPointGroup endPointGroup) throws IntentElementNotFoundException {
+        final String endPointName = extractEndPointName(endPointGroup);
+        final String result = intentMappingService.get(endPointName)
                 .get(OFRendererConstants.SWITCH_PORT_KEY);
         if(result == null || result.isEmpty()) {
             throw new IntentElementNotFoundException(NO_CONNECTOR_ID_FOUND_MSG + endPointName);
@@ -177,11 +182,11 @@ public class MPLSExecutor implements ActionStrategy {
     private boolean isProtectedOrSlowRoute(Constraints constraints) {
         boolean result = false;
         if (FailoverConstraint.class.isAssignableFrom(constraints.getClass())) {
-            FailoverConstraint failoverConstraint = (FailoverConstraint) constraints.getConstraints();
-            FailoverType failoverType = failoverConstraint.getFailoverConstraint().getFailoverSelector();
+            final FailoverConstraint failoverConstraint = (FailoverConstraint) constraints.getConstraints();
+            final FailoverType failoverType = failoverConstraint.getFailoverConstraint().getFailoverSelector();
             result = failoverType != null ? equals(FailoverType.SlowReroute) : false;
         } else if (ProtectionConstraint.class.isAssignableFrom(constraints.getClass())) {
-            ProtectionConstraint protectionConstraint = (ProtectionConstraint) constraints.getConstraints();
+            final ProtectionConstraint protectionConstraint = (ProtectionConstraint) constraints.getConstraints();
             result = protectionConstraint.getProtectionConstraint().isIsProtected();
         }
         return result;

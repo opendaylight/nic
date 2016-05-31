@@ -40,18 +40,20 @@ public class IntentUtils {
     public static final Integer DST_END_POINT_GROUP_INDEX = 1;
 
     private static final String NO_ACTION_FOUND_MESSAGE = "No action found for Intent ID: ";
+    private static final String ACTION_NULL_MESSAGE = "Action does not exist for Intent with ID: ";
     private static final String INVALID_SUBJECT_MESSAGE = "Subject is not specified for Intent ID: ";
     private static final String NO_END_POINT_FOUND_MESSAGE = "No EndPoint found for Intent ID: ";
+    private static final String END_POINT_NULL_MESSAGE = "EndPoint does not exist in EndPointGroups.";
 
     private IntentUtils() {
     }
 
-    public static boolean validateMAC(String mac) {
+    public static boolean validateMAC(final String mac) {
         if (mac == null || mac.isEmpty()) {
             return false;
         }
-        Pattern macPattern = Pattern.compile("([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}");
-        Matcher macMatcher = macPattern.matcher(mac);
+        final Pattern macPattern = Pattern.compile("([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}");
+        final Matcher macMatcher = macPattern.matcher(mac);
         return macMatcher.matches();
     }
 
@@ -74,7 +76,7 @@ public class IntentUtils {
         }
     }
 
-    public static boolean verifyIntent(Intent intent) {
+    public static boolean verifyIntent(final Intent intent) {
         boolean result = false;
         if (intent != null && intent.getId() != null) {
             if (verifyIntentActions(intent)) {
@@ -86,9 +88,9 @@ public class IntentUtils {
         return result;
     }
 
-    public static boolean verifyIntentActions(Intent intent) {
+    public static boolean verifyIntentActions(final Intent intent) {
         boolean result = true;
-        List<Actions> actions = intent.getActions();
+        final List<Actions> actions = intent.getActions();
         if (actions == null || actions.size() != NUM_OF_SUPPORTED_ACTION) {
             LOG.warn("Intent's action is either null or not equal to {} action {}", NUM_OF_SUPPORTED_ACTION,
                     intent);
@@ -97,9 +99,9 @@ public class IntentUtils {
         return result;
     }
 
-    public static boolean verifyIntentSubjects(Intent intent) {
+    public static boolean verifyIntentSubjects(final Intent intent) {
         boolean result = true;
-        List<Subjects> subjects = intent.getSubjects();
+        final List<Subjects> subjects = intent.getSubjects();
         if (subjects == null || subjects.size() != NUM_OF_SUPPORTED_EPG) {
             LOG.warn("Intent's subjects is either null or not equal to {} subjects {}", NUM_OF_SUPPORTED_EPG,
                     intent);
@@ -110,18 +112,18 @@ public class IntentUtils {
     }
 
     // Retrieve the end points
-    public static List<String> extractEndPointGroup(Intent intent) {
+    public static List<String> extractEndPointGroup(final Intent intent) {
         final Uuid uuid = intent.getId();
         final List<Subjects> listSubjects = intent.getSubjects();
         final String[] endPointGroups = new String[listSubjects.size()];
 
         for (Subjects subjects : listSubjects) {
-            Subject subject = subjects.getSubject();
+            final Subject subject = subjects.getSubject();
             int order = subjects.getOrder();
             verifySubjectInstance(subject, uuid);
-            EndPointGroup endPointGroup = (EndPointGroup) subject;
+            final EndPointGroup endPointGroup = (EndPointGroup) subject;
 
-            org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
+            final org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
                 .EndPointGroup epg = endPointGroup.getEndPointGroup();
 
             if (epg != null) {
@@ -131,7 +133,8 @@ public class IntentUtils {
         return Arrays.asList(endPointGroups);
     }
 
-    public static List<EndPointGroup> extractEndPointGroups(Intent intent) throws IntentElementNotFoundException {
+    public static List<EndPointGroup> extractEndPointGroups(final Intent intent)
+            throws IntentElementNotFoundException {
         final Uuid intentId = intent.getId();
         final List<Subjects> subjects = intent.getSubjects();
         final List<EndPointGroup> endPointGroups = new ArrayList<>();
@@ -151,11 +154,11 @@ public class IntentUtils {
 
     public static EndPointGroup extractSrcEndPointGroup(final Intent intent)
             throws IntentInvalidException {
-        EndPointGroup srcEndPointGroup;
+        final EndPointGroup srcEndPointGroup;
         try {
             final List<EndPointGroup> endPointGroups = extractEndPointGroups(intent);
             srcEndPointGroup = extractEndPointGroup(endPointGroups, SRC_END_POINT_GROUP_INDEX);
-        } catch (IntentElementNotFoundException ie) {
+        } catch (IntentElementNotFoundException | IntentInvalidException ie) {
             throw new IntentInvalidException(ie.getMessage());
         }
         return srcEndPointGroup;
@@ -167,23 +170,28 @@ public class IntentUtils {
         try {
             final List<EndPointGroup> endPointGroups = extractEndPointGroups(intent);
             dstEndPointGroup = extractEndPointGroup(endPointGroups, DST_END_POINT_GROUP_INDEX);
-        } catch (IntentElementNotFoundException ie) {
+        } catch (IntentElementNotFoundException | IntentInvalidException ie) {
             throw new IntentInvalidException(ie.getMessage());
         }
         return dstEndPointGroup;
     }
 
-    private static EndPointGroup extractEndPointGroup(List<EndPointGroup> endPointGroups, int targetIndex)
-            throws IntentElementNotFoundException {
+    private static EndPointGroup extractEndPointGroup(final List<EndPointGroup> endPointGroups, int targetIndex)
+            throws IntentElementNotFoundException, IntentInvalidException {
         EndPointGroup endPointGroup;
-        endPointGroup = endPointGroups.get(targetIndex);
-        if (endPointGroup == null) {
+        try {
+            endPointGroup = endPointGroups.get(targetIndex);
+        } catch (IndexOutOfBoundsException ie) {
             throw new IntentElementNotFoundException(NO_END_POINT_FOUND_MESSAGE);
+        }
+        if(endPointGroup == null) {
+            throw new IntentInvalidException(END_POINT_NULL_MESSAGE);
         }
         return endPointGroup;
     }
 
-    public static void verifySubjectInstance(Subject subject, Uuid intentId) throws IntentElementNotFoundException {
+    public static void verifySubjectInstance(final Subject subject, final Uuid intentId)
+            throws IntentElementNotFoundException {
         if (!(subject instanceof EndPointGroup)
                 && !(subject instanceof EndPointSelector)
                 && !(subject instanceof EndPointGroupSelector)) {
@@ -192,10 +200,16 @@ public class IntentUtils {
         }
     }
 
-    public static Action getAction(Intent intent) {
-        Action result = intent.getActions().get(0).getAction();
-        if(result == null) {
+    public static Action getAction(final Intent intent) throws IntentInvalidException {
+        final Action result;
+        try {
+            result = intent.getActions().get(0).getAction();
+        } catch (IndexOutOfBoundsException ie) {
             throw new IntentElementNotFoundException(NO_ACTION_FOUND_MESSAGE + intent.getId());
+        }
+
+        if(result == null) {
+            throw new IntentInvalidException(ACTION_NULL_MESSAGE + intent.getId());
         }
         return result;
     }
