@@ -40,8 +40,10 @@ public class IntentUtils {
     public static final Integer DST_END_POINT_GROUP_INDEX = 1;
 
     private static final String NO_ACTION_FOUND_MESSAGE = "No action found for Intent ID: ";
+    private static final String ACTION_NULL_MESSAGE = "Action does not exist for Intent with ID: ";
     private static final String INVALID_SUBJECT_MESSAGE = "Subject is not specified for Intent ID: ";
     private static final String NO_END_POINT_FOUND_MESSAGE = "No EndPoint found for Intent ID: ";
+    private static final String END_POINT_NULL_MESSAGE = "EndPoint does not exist in EndPointGroups.";
 
     private IntentUtils() {
     }
@@ -156,7 +158,7 @@ public class IntentUtils {
         try {
             final List<EndPointGroup> endPointGroups = extractEndPointGroups(intent);
             srcEndPointGroup = extractEndPointGroup(endPointGroups, SRC_END_POINT_GROUP_INDEX);
-        } catch (IntentElementNotFoundException ie) {
+        } catch (IntentElementNotFoundException | IntentInvalidException ie) {
             throw new IntentInvalidException(ie.getMessage());
         }
         return srcEndPointGroup;
@@ -168,18 +170,22 @@ public class IntentUtils {
         try {
             final List<EndPointGroup> endPointGroups = extractEndPointGroups(intent);
             dstEndPointGroup = extractEndPointGroup(endPointGroups, DST_END_POINT_GROUP_INDEX);
-        } catch (IntentElementNotFoundException ie) {
+        } catch (IntentElementNotFoundException | IntentInvalidException ie) {
             throw new IntentInvalidException(ie.getMessage());
         }
         return dstEndPointGroup;
     }
 
     private static EndPointGroup extractEndPointGroup(List<EndPointGroup> endPointGroups, int targetIndex)
-            throws IntentElementNotFoundException {
+            throws IntentElementNotFoundException, IntentInvalidException {
         EndPointGroup endPointGroup;
-        endPointGroup = endPointGroups.get(targetIndex);
-        if (endPointGroup == null) {
+        try {
+            endPointGroup = endPointGroups.get(targetIndex);
+        } catch (IndexOutOfBoundsException ie) {
             throw new IntentElementNotFoundException(NO_END_POINT_FOUND_MESSAGE);
+        }
+        if(endPointGroup == null) {
+            throw new IntentInvalidException(END_POINT_NULL_MESSAGE);
         }
         return endPointGroup;
     }
@@ -193,10 +199,16 @@ public class IntentUtils {
         }
     }
 
-    public static Action getAction(Intent intent) {
-        Action result = intent.getActions().get(0).getAction();
-        if(result == null) {
+    public static Action getAction(Intent intent) throws IntentInvalidException {
+        final Action result;
+        try {
+            result = intent.getActions().get(0).getAction();
+        } catch (IndexOutOfBoundsException ie) {
             throw new IntentElementNotFoundException(NO_ACTION_FOUND_MESSAGE + intent.getId());
+        }
+
+        if(result == null) {
+            throw new IntentInvalidException(ACTION_NULL_MESSAGE + intent.getId());
         }
         return result;
     }

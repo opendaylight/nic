@@ -74,8 +74,9 @@ public class MPLSExecutor implements ActionStrategy {
                     generateMplsFlows(intent, flowAction, constraints);
                 }
             }
-        } catch (IntentElementNotFoundException ie) {
+        } catch (IntentElementNotFoundException | IntentInvalidException ie) {
             //TODO: Perform fail over
+            LOG.error(ie.getMessage());
         }
     }
 
