@@ -35,10 +35,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by saket on 8/19/15.
@@ -115,12 +112,18 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
     }
 
-    private boolean isRedirect(Intent intent) {
-        Action actionContainer = IntentUtils.getAction(intent);
+    protected boolean isRedirect(Intent intent) {
+        Action actionContainer = null;
+        try {
+            actionContainer = IntentUtils.getAction(intent);
+        } catch (IntentInvalidException e) {
+            LOG.error(e.getMessage());
+            throw new NoSuchElementException(e.getMessage());
+        }
         return (Redirect.class.isInstance(actionContainer));
     }
 
-    private boolean isMPLS(Intent intent) throws IntentInvalidException {
+    protected boolean isMPLS(Intent intent) throws IntentInvalidException {
         EndPointGroup source = IntentUtils.extractSrcEndPointGroup(intent);
         EndPointGroup target = IntentUtils.extractDstEndPointGroup(intent);
         Map<String, String> sourceContent = getMappingServiceContent(source);
@@ -130,7 +133,13 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     }
 
     private boolean isQoS(Intent intent) {
-        final Action actionContainer = IntentUtils.getAction(intent);
+        Action actionContainer = null;
+        try {
+            actionContainer = IntentUtils.getAction(intent);
+        } catch (IntentInvalidException e) {
+            LOG.error(e.getMessage());
+            throw new NoSuchElementException(e.getMessage());
+        }
         final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         return (checkQosConstraint(intent, actionContainer, endPointGroups));
     }
