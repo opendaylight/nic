@@ -115,12 +115,12 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
     }
 
-    private boolean isRedirect(Intent intent) {
+    protected boolean isRedirect(Intent intent) {
         Action actionContainer = IntentUtils.getAction(intent);
         return (Redirect.class.isInstance(actionContainer));
     }
 
-    private boolean isMPLS(Intent intent) throws IntentInvalidException {
+    protected boolean isMPLS(Intent intent) throws IntentInvalidException {
         EndPointGroup source = IntentUtils.extractSrcEndPointGroup(intent);
         EndPointGroup target = IntentUtils.extractDstEndPointGroup(intent);
         Map<String, String> sourceContent = getMappingServiceContent(source);

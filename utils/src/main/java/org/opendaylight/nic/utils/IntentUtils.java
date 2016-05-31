@@ -177,8 +177,9 @@ public class IntentUtils {
     private static EndPointGroup extractEndPointGroup(List<EndPointGroup> endPointGroups, int targetIndex)
             throws IntentElementNotFoundException {
         EndPointGroup endPointGroup;
-        endPointGroup = endPointGroups.get(targetIndex);
-        if (endPointGroup == null) {
+        try {
+            endPointGroup = endPointGroups.get(targetIndex);
+        } catch (IndexOutOfBoundsException ie) {
             throw new IntentElementNotFoundException(NO_END_POINT_FOUND_MESSAGE);
         }
         return endPointGroup;
@@ -194,8 +195,10 @@ public class IntentUtils {
     }
 
     public static Action getAction(Intent intent) {
-        Action result = intent.getActions().get(0).getAction();
-        if(result == null) {
+        final Action result;
+        try {
+            result = intent.getActions().get(0).getAction();
+        } catch (IndexOutOfBoundsException ie) {
             throw new IntentElementNotFoundException(NO_ACTION_FOUND_MESSAGE + intent.getId());
         }
         return result;
