@@ -162,7 +162,6 @@ public class MatchUtils {
      * @return matchBuilder Map MatchBuilder Object with a match
      */
     public static MatchBuilder createEthMatch(MatchBuilder matchBuilder, MacAddress srcMac, MacAddress dstMac) {
-        Preconditions.checkNotNull(matchBuilder, "Match Builder cannot be null");
         EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
         if (srcMac != null) {
             EthernetSourceBuilder ethSourceBuilder = new EthernetSourceBuilder();
