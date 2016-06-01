@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +49,9 @@ public class IntentFlowManager extends AbstractFlowManager {
     private Intent intent;
     private String flowName = "";
 
+    private static final String ENDPOINTGROUP_NOT_FOUND_EXCEPTION = "EndPoint not found! ";
+    private static final String CONSTRAINTS_NOT_FOUND_EXCEPTION = "Constraints not found! ";
+
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
     }
@@ -75,9 +79,14 @@ public class IntentFlowManager extends AbstractFlowManager {
         MatchBuilder matchBuilder = new MatchBuilder();
         // Flow object
         FlowBuilder flowBuilder;
-
-        String endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
-        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
+        final String endPointSrc;
+        final String endPointDst;
+        try {
+            endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
+            endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
+        } catch (IndexOutOfBoundsException ie) {
+            throw new IllegalArgumentException(ENDPOINTGROUP_NOT_FOUND_EXCEPTION + ie.getMessage());
+        }
         // Regex for MAC address validation
         Pattern macPattern = Pattern.compile("([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}");
         Matcher macMatcherSrc = macPattern.matcher(endPointSrc);
@@ -128,12 +137,16 @@ public class IntentFlowManager extends AbstractFlowManager {
     }
 
     private void pushPortFlows(ClassificationConstraint portConstraint, NodeId nodeId, FlowAction flowAction) {
+        String portObject = "";
+        try {
+            portObject = portConstraint.getClassificationConstraint().getClassifier();
+        } catch (NullPointerException npe) {
+            throw new InvalidParameterException(CONSTRAINTS_NOT_FOUND_EXCEPTION + npe.getMessage());
+        }
         // Creating match object
         MatchBuilder matchBuilder;
         // Flow object
         FlowBuilder flowBuilder;
-        String portObject = "";
-        portObject = portConstraint.getClassificationConstraint().getClassifier();
         Gson gson = new Gson();
         NeutronSecurityRule securityRule = gson.fromJson(portObject, NeutronSecurityRule.class);
         Integer portMin = securityRule.getSecurityRulePortMin();
