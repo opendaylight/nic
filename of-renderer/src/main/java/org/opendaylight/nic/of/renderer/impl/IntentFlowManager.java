@@ -7,13 +7,12 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.google.gson.Gson;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.neutron.NeutronSecurityRule;
+import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
+import org.opendaylight.nic.of.renderer.model.PortFlow;
+import org.opendaylight.nic.of.renderer.utils.IntentFlowUtils;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -26,18 +25,19 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.Output
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ClassificationConstraint;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Block;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ClassificationConstraint;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv4Prefix;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.Ipv6Prefix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.InvalidParameterException;
+import java.util.List;
+import java.util.Set;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
@@ -47,6 +47,8 @@ public class IntentFlowManager extends AbstractFlowManager {
     private FlowStatisticsListener flowStatisticsListener;
     private Intent intent;
     private String flowName = "";
+
+    private static final String CONSTRAINTS_NOT_FOUND_EXCEPTION = "Constraints not found! ";
 
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
@@ -67,189 +69,84 @@ public class IntentFlowManager extends AbstractFlowManager {
 
     @Override
     public void pushFlow(NodeId nodeId, FlowAction flowAction) {
-        if (endPointGroups == null || action == null) {
-            LOG.error("Endpoints and action cannot be null");
-            return;
-        }
-        // Creating match object
-        MatchBuilder matchBuilder = new MatchBuilder();
-        // Flow object
-        FlowBuilder flowBuilder;
+        IntentFlowUtils.validate(endPointGroups);
+        IntentFlowUtils.validate(flowAction);
 
-        String endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
-        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
-        // Regex for MAC address validation
-        Pattern macPattern = Pattern.compile("([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}");
-        Matcher macMatcherSrc = macPattern.matcher(endPointSrc);
-        Matcher macMatcherDst = macPattern.matcher(endPointDst);
-        if (macMatcherSrc.matches() && macMatcherDst.matches()) {
-            // Create L2 match
-            matchBuilder = createEthMatch(endPointGroups, matchBuilder);
+        final IntentEndPointType endPointType = IntentFlowUtils.extractEndPointType(endPointGroups);
+        switch (endPointType) {
+            case MAC_ADDRESS_BASED:
+                final MacAddress srcMacAddress = IntentFlowUtils.extractSrcMacAddress(endPointGroups);
+                final MacAddress dstMacAddress = IntentFlowUtils.extractDstMacAddress(endPointGroups);
+
+                pushFlowsByMacAddress(srcMacAddress, dstMacAddress, nodeId, flowAction);
+                break;
+            case PORT_BASED:
+                pushFlowsByPortNumber(nodeId, flowAction);
+                break;
+            case UNKNOWN:
+                String actionClass = action.getClass().getName();
+                LOG.error("Invalid action: {}", actionClass);
+                break;
+
         }
-        else {
-            for (Constraints cons : intent.getConstraints()) {
-                /**
-                 * Code block for security rules flow matches
-                 */
-                if(cons.getConstraints() instanceof ClassificationConstraint) {
-                    ClassificationConstraint portConstraint = (ClassificationConstraint) cons.getConstraints();
-                    pushPortFlows(portConstraint, nodeId, flowAction);
-                }
-            }
-            return;
-        }
-        // Create Flow
-        // Flow named for convenience and uniqueness
-        flowName = createFlowName();
-        flowBuilder = createFlowBuilder(matchBuilder);
+    }
+
+    private void pushFlowsByMacAddress(MacAddress srcMacAddress, MacAddress dstMacAddress,
+                                       NodeId nodeId, FlowAction flowAction) {
+        final MatchBuilder matchBuilder = MatchUtils.createEthMatch(new MatchBuilder(), srcMacAddress, dstMacAddress);
+        final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
+
         // TODO: Extend for other actions
         if (action instanceof Allow) {
             // Set allow action
             Instructions buildedInstructions = createOutputInstructions(OutputPortValues.NORMAL);
             flowBuilder.setInstructions(buildedInstructions);
 
-        } else if (action instanceof Block) {
-            // For Block Action the Instructions are not set
-            // If block added for readability
         } else if (action instanceof Log) {
             // Logs the statistics data and return.
             String flowIdName = readDataTransaction(nodeId, flowBuilder);
             if (flowIdName != null) {
                 flowStatisticsListener.registerFlowStatisticsListener(dataBroker, nodeId, flowIdName);
             }
-            return;
         } else {
             String actionClass = action.getClass().getName();
             LOG.error("Invalid action: {}", actionClass);
-            return;
         }
+            writeDataTransaction(nodeId, flowBuilder, flowAction);
+    }
 
-        writeDataTransaction(nodeId, flowBuilder, flowAction);
+    private void pushFlowsByPortNumber(NodeId nodeId, FlowAction flowAction) {
+        for (Constraints cons : intent.getConstraints()) {
+            /**
+             * Code block for security rules flow matches
+             */
+            if(cons.getConstraints() instanceof ClassificationConstraint) {
+                ClassificationConstraint portConstraint = (ClassificationConstraint) cons.getConstraints();
+                pushPortFlows(portConstraint, nodeId, flowAction);
+            }
+        }
     }
 
     private void pushPortFlows(ClassificationConstraint portConstraint, NodeId nodeId, FlowAction flowAction) {
-        // Creating match object
-        MatchBuilder matchBuilder;
-        // Flow object
-        FlowBuilder flowBuilder;
         String portObject = "";
-        portObject = portConstraint.getClassificationConstraint().getClassifier();
+        try {
+            portObject = portConstraint.getClassificationConstraint().getClassifier();
+        } catch (NullPointerException npe) {
+            throw new InvalidParameterException(CONSTRAINTS_NOT_FOUND_EXCEPTION + npe.getMessage());
+        }
+
         Gson gson = new Gson();
-        NeutronSecurityRule securityRule = gson.fromJson(portObject, NeutronSecurityRule.class);
-        Integer portMin = securityRule.getSecurityRulePortMin();
-        Integer portMax = securityRule.getSecurityRulePortMax();
-        String etherType = securityRule.getSecurityRuleEthertype();
-        String protocol = securityRule.getSecurityRuleProtocol();
-        String direction = securityRule.getSecurityRuleDirection();
+        final NeutronSecurityRule securityRule = gson.fromJson(portObject, NeutronSecurityRule.class);
+        final PortFlow portFlow = IntentFlowUtils.extractPortFlow(securityRule, endPointGroups);
+        final Set<MatchBuilder> matchBuilders = portFlow.createPortRangeMatchBuilder();
 
-        if (portMin != null && portMax != null) {
-            if (protocol.compareTo("ProtocolIcmp") == 0) {
-                matchBuilder = new MatchBuilder();
-                //For ICMP portMin is the type and portMax is the code
-                matchBuilder = MatchUtils.createICMPv4Match(matchBuilder, portMin.shortValue(), portMax.shortValue());
-                if (etherType.compareTo("EthertypeV4") == 0) {
-                    matchBuilder = createIpv4PrefixMatch(matchBuilder);
-                }
-                else if (etherType.compareTo("EthertypeV6") == 0) {
-                    matchBuilder = createIpv6PrefixMatch(matchBuilder);
-                }
-                // Create Flow
-                flowName= createFlowName();
-                flowName += "icmp" + String.valueOf(portMin) + "_" + String.valueOf(portMax);
-                flowBuilder = createFlowBuilder(matchBuilder);
-                //Create Allow action
-                Instructions builtInstructions = createOutputInstructions(OutputPortValues.NORMAL);
-                flowBuilder.setInstructions(builtInstructions);
-                writeDataTransaction(nodeId, flowBuilder, flowAction);
-            }
-            if (portMin <= portMax) {
-                for (int i = portMin; i <= portMax ; i++) {
-                    matchBuilder = new MatchBuilder();
-                    //TODO: Instead of pushing one flow per port match use port range matchers
-                    //TODO: once the following patch is merged to master on openflow plugin
-                    //TODO: https://git.opendaylight.org/gerrit/#/c/31388/
-                    matchBuilder = createPortMatch(matchBuilder, i, protocol, direction);
-                    if (etherType.compareTo("EthertypeV4") == 0) {
-                        matchBuilder = createIpv4PrefixMatch(matchBuilder);
-                    }
-                    else if (etherType.compareTo("EthertypeV6") == 0) {
-                        matchBuilder = createIpv6PrefixMatch(matchBuilder);
-                    }
-                    // Create Flow
-                    flowName= createFlowName();
-                    flowName += "port" + String.valueOf(i);
-                    flowBuilder = createFlowBuilder(matchBuilder);
-                    //Create Allow action
-                    Instructions builtInstructions = createOutputInstructions(OutputPortValues.NORMAL);
-                    flowBuilder.setInstructions(builtInstructions);
-                    writeDataTransaction(nodeId, flowBuilder, flowAction);
-                }
-            }
+        for(MatchBuilder matchBuilder : matchBuilders) {
+            final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
+            final Instructions builtInstructions = createOutputInstructions(OutputPortValues.NORMAL);
+            flowBuilder.setInstructions(builtInstructions);
+            flowName = portFlow.getFlowName(intent.getId().getValue());
+            writeDataTransaction(nodeId, flowBuilder, flowAction);
         }
-    }
-
-    private MatchBuilder createPortMatch(MatchBuilder matchBuilder, Integer port,
-                                         String protocol, String direction) {
-        PortNumber portNumber = new PortNumber(port);
-        if (direction.compareTo("DirectionIngress") == 0) {
-            if (protocol.compareTo("ProtocolTcp") == 0) {
-                matchBuilder = MatchUtils.createSetSrcTcpMatch(matchBuilder, portNumber);
-            }
-            else if (protocol.compareTo("ProtocolUdp") == 0) {
-                matchBuilder = MatchUtils.createSetSrcUdpMatch(matchBuilder, portNumber);
-            }
-        }
-        else if (direction.compareTo("DirectionEgress") == 0) {
-            if (protocol.compareTo("ProtocolTcp") == 0) {
-                matchBuilder = MatchUtils.createSetDstTcpMatch(matchBuilder, portNumber);
-            }
-            else if (protocol.compareTo("ProtocolUdp") == 0) {
-                matchBuilder = MatchUtils.createSetDstUdpMatch(matchBuilder, portNumber);
-            }
-        }
-        return matchBuilder;
-    }
-
-    private MatchBuilder createIpv4PrefixMatch(MatchBuilder matchBuilder) {
-        String endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
-        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
-        Ipv4Prefix srcIpPrefix = null;
-        Ipv4Prefix dstIpPrefix = null;
-
-        try {
-            if (!endPointSrc.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
-                srcIpPrefix = new Ipv4Prefix(endPointSrc);
-            }
-            if (!endPointDst.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
-                dstIpPrefix = new Ipv4Prefix(endPointDst);
-            }
-            matchBuilder = MatchUtils.createIPv4PrefixMatch(srcIpPrefix, dstIpPrefix, matchBuilder);
-        } catch (IllegalArgumentException e) {
-            LOG.error("Can only accept valid IP prefix addresses as subjects", e);
-            return null;
-        }
-        return matchBuilder;
-    }
-
-    private MatchBuilder createIpv6PrefixMatch(MatchBuilder matchBuilder) {
-        String endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
-        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
-        Ipv6Prefix srcIpPrefix = null;
-        Ipv6Prefix dstIpPrefix = null;
-
-        try {
-            if (!endPointSrc.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
-                srcIpPrefix = new Ipv6Prefix(endPointSrc);
-            }
-            if (!endPointDst.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
-                dstIpPrefix = new Ipv6Prefix(endPointDst);
-            }
-            matchBuilder = MatchUtils.createIPv6PrefixMatch(srcIpPrefix, dstIpPrefix, matchBuilder);
-        } catch (IllegalArgumentException e) {
-            LOG.error("Can only accept valid IP prefix addresses as subjects", e);
-            return null;
-        }
-        return matchBuilder;
     }
 
     private FlowBuilder createFlowBuilder(MatchBuilder matchBuilder) {
@@ -270,27 +167,7 @@ public class IntentFlowManager extends AbstractFlowManager {
         return flowBuilder;
     }
 
-    private MatchBuilder createEthMatch(List<String> endPointGroups, MatchBuilder matchBuilder) {
-        String endPointSrc = endPointGroups.get(OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
-        String endPointDst = endPointGroups.get(OFRendererConstants.DST_END_POINT_GROUP_INDEX);
-        MacAddress srcMac = null;
-        MacAddress dstMac = null;
-
-        try {
-            if (!endPointSrc.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
-                srcMac = new MacAddress(endPointSrc);
-            }
-            if (!endPointDst.equalsIgnoreCase(OFRendererConstants.ANY_MATCH)) {
-                dstMac = new MacAddress(endPointDst);
-            }
-            matchBuilder = MatchUtils.createEthMatch(matchBuilder, srcMac, dstMac);
-        } catch (IllegalArgumentException e) {
-            LOG.error("Can only accept valid MAC addresses as subjects", e);
-            return null;
-        }
-        return matchBuilder;
-    }
-
+    @Deprecated
     @Override
     protected String createFlowName() {
         StringBuilder sb = new StringBuilder();

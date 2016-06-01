@@ -125,14 +125,10 @@
                 <version>${pitest.version}</version>
                 <configuration>
                     <targetClasses>
-                        <param>nic.of.renderer.flow*</param>
-                        <param>nic.of.renderer*</param>
-                        <param>nic.of.renderer.utils*</param>
+                        <param>org.opendaylight.nic.of.renderer.impl.IntentFlowManager</param>
                     </targetClasses>
                     <targetTests>
-                        <param>nic.of.renderer.flow*</param>
-                        <param>nic.of.renderer*</param>
-                        <param>nic.of.renderer.utils*</param>
+                        <param>org.opendaylight.nic.of.renderer.impl.IntentFlowManagerTest</param>
                     </targetTests>
                 </configuration>
             </plugin>
