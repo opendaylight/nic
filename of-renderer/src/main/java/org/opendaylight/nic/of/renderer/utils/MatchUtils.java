@@ -52,6 +52,7 @@ public class MatchUtils {
     public static final long LLDP_LONG = 0x88CC;
     public static final long VLANTAGGED_LONG = 0x8100;
     public static final long MPLSUCAST_LONG = 0x8847;
+    private static final long IPV6_LONG = 0x86DD;
 
     private MatchUtils() {
     }
@@ -992,10 +993,9 @@ public class MatchUtils {
      * @param matchBuilder will contain the metadata match values
      */
     public static MatchBuilder createIPv4PrefixMatch(Ipv4Prefix srcPrefix,
-                                             Ipv4Prefix dstPrefix,
-                                             MatchBuilder matchBuilder) {
+                                                     Ipv4Prefix dstPrefix,
+                                                     MatchBuilder matchBuilder) {
         if (srcPrefix != null || dstPrefix != null) {
-            long IPV4_LONG = 0x800;
             EthernetMatchBuilder eth = new EthernetMatchBuilder();
             EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
             ethTypeBuilder.setType(new EtherType(IPV4_LONG));
@@ -1003,11 +1003,12 @@ public class MatchUtils {
             matchBuilder.setEthernetMatch(eth.build());
 
             Ipv4MatchBuilder ipv4match = new Ipv4MatchBuilder();
-            if (srcPrefix != null)
+            if (srcPrefix != null) {
                 ipv4match.setIpv4Source(srcPrefix);
-            if (dstPrefix != null)
+            }
+            if (dstPrefix != null) {
                 ipv4match.setIpv4Destination(dstPrefix);
-
+            }
             matchBuilder.setLayer3Match(ipv4match.build());
         }
         return matchBuilder;
@@ -1019,10 +1020,9 @@ public class MatchUtils {
      * @param matchBuilder will contain the metadata match values
      */
     public static MatchBuilder createIPv6PrefixMatch(Ipv6Prefix srcPrefix,
-                                             Ipv6Prefix dstPrefix,
-                                             MatchBuilder matchBuilder) {
+                                                     Ipv6Prefix dstPrefix,
+                                                     MatchBuilder matchBuilder) {
         if (srcPrefix != null || dstPrefix != null) {
-            long IPV6_LONG = 0x86DD;
             EthernetMatchBuilder eth = new EthernetMatchBuilder();
             EthernetTypeBuilder ethTypeBuilder = new EthernetTypeBuilder();
             ethTypeBuilder.setType(new EtherType(IPV6_LONG));
@@ -1030,11 +1030,12 @@ public class MatchUtils {
             matchBuilder.setEthernetMatch(eth.build());
 
             Ipv6MatchBuilder ipv4match = new Ipv6MatchBuilder();
-            if (srcPrefix != null)
+            if (srcPrefix != null) {
                 ipv4match.setIpv6Source(srcPrefix);
-            if (dstPrefix != null)
+            }
+            if (dstPrefix != null) {
                 ipv4match.setIpv6Destination(dstPrefix);
-
+            }
             matchBuilder.setLayer3Match(ipv4match.build());
         }
         return matchBuilder;
