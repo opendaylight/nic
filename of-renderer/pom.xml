@@ -22,6 +22,7 @@
         <pitest.version>1.1.4</pitest.version>
         <liblldp.version>0.11.0-SNAPSHOT</liblldp.version>
         <sfc.version>0.3.0-SNAPSHOT</sfc.version>
+        <topoprocessing.version>0.2.0-SNAPSHOT</topoprocessing.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->
@@ -114,6 +115,11 @@
             <groupId>org.opendaylight.sfc</groupId>
             <artifactId>sfc-provider</artifactId>
             <version>${sfc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.topoprocessing</groupId>
+            <artifactId>topoprocessing-common</artifactId>
+            <version>${topoprocessing.version}</version>
         </dependency>
     </dependencies>
 
