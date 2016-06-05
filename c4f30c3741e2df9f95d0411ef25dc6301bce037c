@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_497ed6af",
+        "filename": "of-renderer/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-05T20:05:49Z",
+      "side": 1,
+      "message": "Please, create a property for it.",
+      "range": {
+        "startLine": 121,
+        "startChar": 21,
+        "endLine": 121,
+        "endChar": 35
+      },
+      "revId": "c4f30c3741e2df9f95d0411ef25dc6301bce037c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
