@@ -109,7 +109,6 @@ public class IntentUtils {
         return result;
     }
 
-    // TODO: Use Mapping service to resolve the subjects
     // Retrieve the end points
     public static List<String> extractEndPointGroup(Intent intent) {
         final Uuid uuid = intent.getId();
