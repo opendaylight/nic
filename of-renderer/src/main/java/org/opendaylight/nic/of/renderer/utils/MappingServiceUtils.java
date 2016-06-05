@@ -33,10 +33,10 @@ public class MappingServiceUtils {
      * @return nested hashmap with mapping details of subjects
      */
     public static Map<String, Map<String, String>> extractSubjectDetails(final Intent intent,
-                                                                         IntentMappingService intentMappingService)
+                                                                         final IntentMappingService intentMappingService)
     throws IntentElementNotFoundException {
         List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
-        Map<String, Map<String, String>> subjectsMapping = new HashMap<String, Map<String, String>>();
+        Map<String, Map<String, String>> subjectsMapping = new HashMap<>();
         for (String id : endPointGroups) {
             Map<String, String> values = intentMappingService.get(id);
             if( values != null && values.size() >0 ) {
