@@ -13,10 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections15.Transformer;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.Observer;
-import org.opendaylight.nic.of.renderer.utils.SuurballeTarjanAlgorithm;
+import org.opendaylight.topoprocessing.algorithms.SuurballeAlgorithm;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
@@ -158,17 +157,9 @@ public class NetworkGraphManager implements OFRendererGraphService {
      */
     @Override
     public List<List<Link>> getDisjointPaths(NodeId startVertex, NodeId endVertex) {
-        Transformer<Link, Double> customTransformer = new Transformer<Link, Double>() {
 
-            @Override
-            public Double transform(Link arg0) {
-                return new Double(1);
-            }
-        };
-        SuurballeTarjanAlgorithm<NodeId, Link> suurballe = new SuurballeTarjanAlgorithm<>(
-                getGraph(), customTransformer,
-                true);
-        return suurballe.getDisjointPaths(startVertex, endVertex);
+        SuurballeAlgorithm<NodeId, Link> suurballe = new SuurballeAlgorithm<>(getGraph());
+        return suurballe.findShortestPath(startVertex, endVertex);
     }
 
     @Override

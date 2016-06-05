@@ -37,6 +37,8 @@ public class TopologyUtils {
 
     private static final String NODE_ID_NOT_FOUND_MSG = "NodeId not found for node connector ID: ";
 
+    private TopologyUtils() {}
+
     /**
      * Derivate a {@link org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId}
      * from a {@link NodeConnector}.
