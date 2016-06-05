@@ -115,6 +115,11 @@
             <artifactId>sfc-provider</artifactId>
             <version>${sfc.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.topoprocessing</groupId>
+            <artifactId>topoprocessing-common</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
