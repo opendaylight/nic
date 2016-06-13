@@ -47,8 +47,6 @@ public class SecurityGroupUtils {
 
         when(securityGroupMock.getUuid()).thenReturn(GROUP_ID);
         when(securityGroupMock.getName()).thenReturn(GROUP_NAME);
-        when(securityGroupMock.getDescription()).thenReturn(GROUP_DESC);
         when(securityGroupMock.getTenantId()).thenReturn(TENANT_ID);
-        when(securityGroupMock.getSecurityRules()).thenReturn(RULES);
     }
 }
