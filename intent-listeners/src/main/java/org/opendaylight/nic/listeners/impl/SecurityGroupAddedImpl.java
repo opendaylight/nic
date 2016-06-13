@@ -24,9 +24,6 @@ public class SecurityGroupAddedImpl implements SecurityGroupAdded {
         securityGroup = new NeutronSecurityGroup();
         securityGroup.setSecurityGroupID(secGroup.getUuid().getValue());
         securityGroup.setSecurityGroupName(secGroup.getName());
-        securityGroup.setSecurityGroupDescription(secGroup.getDescription());
-        securityGroup.setSecurityTenantID(secGroup.getTenantId().getValue());
-        securityGroup.setSecurityRules(secGroup.getSecurityRules());
     }
 
     @Override

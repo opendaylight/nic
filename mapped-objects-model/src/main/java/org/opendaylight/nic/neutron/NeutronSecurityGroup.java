@@ -19,7 +19,6 @@ import java.util.List;
  * name                 String name of the security group.
  * description          String name of the security group.
  * tenant_id            uuid-str Owner of security rule..
- * security_group_rules List&lt;UUID&gt; nested in the sec group.
  */
 
 public class NeutronSecurityGroup {
@@ -28,7 +27,6 @@ public class NeutronSecurityGroup {
     private String securityGroupName;
     private String securityGroupDescription;
     private String securityTenantID;
-    private List<Uuid> uuidList;
 
     /**
      * Get the security_group_id
@@ -92,21 +90,5 @@ public class NeutronSecurityGroup {
      */
     public void setSecurityTenantID(String securityTenantID) {
         this.securityTenantID = securityTenantID;
-    }
-
-    /**
-     * Get the nested security_group_rules UUID's
-     * @return List&lt;UUID&gt; nested in the sec group
-     */
-    public List<Uuid> getSecurityRules() {
-        return uuidList;
-    }
-
-    /**
-     * Set the nested security_group_rules UUID's
-     * @param uuidList
-     */
-    public void setSecurityRules(List<Uuid> uuidList) {
-        this.uuidList = uuidList;
     }
 }

@@ -22,14 +22,14 @@ public class SecurityRuleUpdatedImpl implements SecurityRuleUpdated {
         Date date= new Date();
         timeStamp = new Timestamp(date.getTime());
         securityRule = new NeutronSecurityRule();
-        securityRule.setSecurityRuleID(secRule.getId().getValue());
+        securityRule.setSecurityRuleID(secRule.getUuid().getValue());
         securityRule.setSecurityGroupID(secRule.getSecurityGroupId().getValue());
         securityRule.setSecurityTenantID(secRule.getTenantId().getValue());
         if (secRule.getDirection() != null) {
             securityRule.setSecurityRuleDirection(secRule.getDirection().getSimpleName());
         }
         if (secRule.getProtocol() != null) {
-            securityRule.setSecurityRuleProtocol(secRule.getProtocol().getSimpleName());
+            securityRule.setSecurityRuleProtocol(String.valueOf(secRule.getProtocol().getValue()));
         }
         if (secRule.getEthertype() != null) {
             securityRule.setSecurityRuleEthertype(secRule.getEthertype().getSimpleName());

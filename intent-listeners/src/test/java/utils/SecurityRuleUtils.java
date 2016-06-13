@@ -32,7 +32,7 @@ public class SecurityRuleUtils {
     public static void setUp() {
         securityRuleMock = mock(SecurityRule.class);
 
-        when(securityRuleMock.getId()).thenReturn(RULE_ID);
+        when(securityRuleMock.getUuid()).thenReturn(RULE_ID);
         when(securityRuleMock.getSecurityGroupId()).thenReturn(GROUP_ID);
         when(securityRuleMock.getTenantId()).thenReturn(TENANT_ID);
         when(securityRuleMock.getPortRangeMin()).thenReturn(PORT_MIN);
