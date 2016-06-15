@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51214e_7e3717b1",
+        "filename": "of-renderer/src/test/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProviderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-06-15T17:38:27Z",
+      "side": 1,
+      "message": "no need for commenting code",
+      "range": {
+        "startLine": 88,
+        "startChar": 10,
+        "endLine": 88,
+        "endChar": 14
+      },
+      "revId": "29f784026adbb16d22a8ea9edcaac956fc7c69fa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_5ebb33c4",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-06-15T17:38:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a proper verification",
+      "revId": "29f784026adbb16d22a8ea9edcaac956fc7c69fa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_7eb6f7dd",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2016-06-15T17:38:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a proper verification",
+      "revId": "29f784026adbb16d22a8ea9edcaac956fc7c69fa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
