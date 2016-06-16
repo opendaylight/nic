@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "ba51214e_c4cad4a0",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-16T03:39:04Z",
+      "side": 1,
+      "message": "In this case, do you recommends validate if it\u0027s null? Or remove this try/catch?",
+      "parentUuid": "ba51214e_5ebb33c4",
+      "revId": "29f784026adbb16d22a8ea9edcaac956fc7c69fa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba51214e_7eb6f7dd",
         "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
         "patchSetId": 1
@@ -53,6 +71,24 @@
       "writtenOn": "2016-06-15T17:38:27Z",
       "side": 1,
       "message": "I don\u0027t think this is a proper verification",
+      "revId": "29f784026adbb16d22a8ea9edcaac956fc7c69fa",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_a4cfe0af",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-16T03:39:04Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "ba51214e_7eb6f7dd",
       "revId": "29f784026adbb16d22a8ea9edcaac956fc7c69fa",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
