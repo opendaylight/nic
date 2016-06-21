@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba51214e_e94a4182",
+        "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupAddedImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3316
+      },
+      "writtenOn": "2016-06-21T02:46:12Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with how this test is implemented.\nCan you please take care of those?",
+      "parentUuid": "ba51214e_69b0f18b",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 78
+      },
+      "revId": "d66beb0318a1c894488a87e01dfbaf3d08e1e372",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba51214e_49ad2d31",
         "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupAddedImplTest.java",
         "patchSetId": 2
