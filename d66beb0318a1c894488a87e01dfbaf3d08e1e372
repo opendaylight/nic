@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51214e_69b0f18b",
+        "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupAddedImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-21T01:58:37Z",
+      "side": 1,
+      "message": "Now it\u0027s possible to create a SecurityGroup with TenantID as null?",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 78
+      },
+      "revId": "d66beb0318a1c894488a87e01dfbaf3d08e1e372",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_49ad2d31",
+        "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupAddedImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-21T01:58:37Z",
+      "side": 1,
+      "message": "Same for it",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 108
+      },
+      "revId": "d66beb0318a1c894488a87e01dfbaf3d08e1e372",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_a9aa0917",
+        "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupDeleteImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-21T01:58:37Z",
+      "side": 1,
+      "message": "Here too",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 69
+      },
+      "revId": "d66beb0318a1c894488a87e01dfbaf3d08e1e372",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_89a7454f",
+        "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupDeleteImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-21T01:58:37Z",
+      "side": 1,
+      "message": "Here too",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 109
+      },
+      "revId": "d66beb0318a1c894488a87e01dfbaf3d08e1e372",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
