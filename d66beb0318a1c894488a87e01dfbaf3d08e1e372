@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ba51214e_29455970",
+        "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupAddedImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-06-21T02:54:47Z",
+      "side": 1,
+      "message": "Sure, I can look that. Thanks",
+      "parentUuid": "ba51214e_e94a4182",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 78
+      },
+      "revId": "d66beb0318a1c894488a87e01dfbaf3d08e1e372",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba51214e_49ad2d31",
         "filename": "intent-listeners/src/test/java/org/opendaylight/nic/listeners/impl/SecurityGroupAddedImplTest.java",
         "patchSetId": 2
