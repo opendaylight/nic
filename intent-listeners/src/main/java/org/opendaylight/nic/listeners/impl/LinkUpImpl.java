@@ -8,7 +8,7 @@
 package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.nic.listeners.api.LinkUp;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev100924.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 
 import java.sql.Timestamp;
