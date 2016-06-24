@@ -19,7 +19,7 @@ import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NodeDeleted;
 import org.opendaylight.nic.listeners.api.NodeUp;
 import org.opendaylight.nic.listeners.api.NodeUpdated;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
