@@ -3,6 +3,8 @@ package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819;
 import org.opendaylight.nic.of.renderer.impl.OFRendererFlowManagerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import transaction.impl.IntentTransactionNotifierImpl;
+import transaction.impl.IntentTransactionRegisterImpl;
 
 public class OFRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.of.renderer.rev150819.AbstractOFRendererProviderModule {
     private static final Logger LOG = LoggerFactory.getLogger(OFRendererProviderModule.class);

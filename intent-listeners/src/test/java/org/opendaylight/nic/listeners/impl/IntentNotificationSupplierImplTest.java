@@ -22,6 +22,7 @@ import org.osgi.framework.ServiceReference;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import transaction.api.EventType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

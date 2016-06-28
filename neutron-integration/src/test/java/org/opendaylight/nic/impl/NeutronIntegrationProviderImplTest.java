@@ -13,14 +13,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
-import org.opendaylight.nic.listeners.api.EventType;
-import org.opendaylight.nic.listeners.impl.EventRegistryServiceImpl;
 import org.opendaylight.nic.neutron.integration.impl.NeutronIntegrationProviderImpl;
 import org.opendaylight.nic.neutron.integration.impl.SecGroupNotificationSubscriberImpl;
 import org.opendaylight.nic.neutron.integration.impl.SecRuleNotificationSubscriberImpl;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import transaction.api.EventType;
 
 import static org.mockito.Mockito.*;
 

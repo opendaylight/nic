@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.listeners.api;
 
+import transaction.api.EventType;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 

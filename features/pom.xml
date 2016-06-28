@@ -168,6 +168,18 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
+      <dependency>
+          <groupId>org.opendaylight.nic</groupId>
+          <artifactId>intent-common</artifactId>
+          <version>${project.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.opendaylight.nic</groupId>
+          <artifactId>intent-common</artifactId>
+          <version>${project.version}</version>
+          <classifier>config</classifier>
+          <type>xml</type>
+      </dependency>
     <!-- controller dependencies -->
     <dependency>
       <groupId>org.opendaylight.controller.thirdparty</groupId>
@@ -276,6 +288,11 @@
       <version>${project.version}</version>
       <classifier>config</classifier>
       <type>xml</type>
+     </dependency>
+     <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>utils</artifactId>
+      <version>${project.version}</version>
      </dependency>
 <!-- external dependencies -->
     <dependency>
