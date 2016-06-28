@@ -12,20 +12,25 @@ import org.opendaylight.nic.engine.service.DeployService;
 import org.opendaylight.nic.engine.service.StateMachineRendererService;
 import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.transaction.api.IntentTransactionNotifier;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 public class DeployServiceImpl implements DeployService {
 
     private interface DeployExecutor {
         void execute ();
     }
+
+    private IntentTransactionNotifier transactionNotifier = null;
 
     private static final Logger LOG = LoggerFactory.getLogger(DeployServiceImpl.class);
     private Map<Intent.State, DeployExecutor> executorMap;
@@ -38,13 +43,27 @@ public class DeployServiceImpl implements DeployService {
         populateExecutorMap();
         this.engineService = engineService;
         this.rendererService = new StateMachineRendererExecutor(this);
+
+        BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+        ServiceReference<?> serviceReference = bundleContext
+                .getServiceReference(IntentTransactionNotifier.class);
+        this.transactionNotifier = (IntentTransactionNotifier) bundleContext.getService(serviceReference);
     }
 
     private void populateExecutorMap() {
         executorMap.put(Intent.State.DEPLOYING, new DeployExecutor() {
             @Override
             public void execute() {
-                rendererService.deploy();
+                final Uuid intentId = engineService.getIntentId();
+                transactionNotifier.notifyExecutors(intentId);
+                engineService.updateTransaction(Intent.State.DEPLOYING);
+            }
+        });
+
+        executorMap.put(Intent.State.DEPLOYED, new DeployExecutor() {
+            @Override
+            public void execute() {
+                engineService.updateTransaction(Intent.State.DEPLOYED);
             }
         });
 
@@ -53,6 +72,13 @@ public class DeployServiceImpl implements DeployService {
             public void execute() {
                 rendererService.undeploy();
                 cancel();
+            }
+        });
+
+        executorMap.put(Intent.State.DEPLOYFAILED, new DeployExecutor() {
+            @Override
+            public void execute() {
+                engineService.changeState(Intent.State.DEPLOYFAILED);
             }
         });
     }
@@ -67,7 +93,11 @@ public class DeployServiceImpl implements DeployService {
     @Override
     public void execute(final EventType eventType) {
         DeployExecutor deployExecutor = executorMap.get(getNextState(eventType));
-        deployExecutor.execute();
+        if(deployExecutor != null) {
+            deployExecutor.execute();
+        } else {
+            engineService.changeState(getNextState(eventType));
+        }
     }
 
     @Override
@@ -90,10 +120,17 @@ public class DeployServiceImpl implements DeployService {
         Intent.State result;
         switch (eventType) {
             case NODE_ADDED:
+            case INTENT_ADDED:
                 result = Intent.State.DEPLOYING;
                 break;
             case NODE_REMOVED:
                 result = Intent.State.UNDEPLOYED;
+                break;
+            case INTENT_DEPLOY_SUCCESS:
+                result = Intent.State.DEPLOYED;
+                break;
+            case INTENT_DEPLOY_FAILURE:
+                result = Intent.State.DEPLOYFAILED;
                 break;
             default:
                 result = Intent.State.DEPLOYING;

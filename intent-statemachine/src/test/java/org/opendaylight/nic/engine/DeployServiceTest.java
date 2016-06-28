@@ -52,33 +52,5 @@ public class DeployServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
-    public void testExecuteDeployingWithNodeRemovedEvent() {
-        engineService.execute(Intent.State.DEPLOYING, EventType.NODE_REMOVED);
-        verify(engineService, times(1)).changeState(Intent.State.DEPLOYING);
-    }
-
-    @Test
-    public void testExecuteDeployingWithNodeUpEvent() {
-        engineService.execute(Intent.State.DEPLOYING, EventType.NODE_ADDED);
-        verify(engineService, times(1)).changeState(Intent.State.DEPLOYING);
-    }
-
-    @Test
-    public void testExecuteUndeployingWithNodeDownEvent() {
-        engineService.execute(Intent.State.UNDEPLOYING, EventType.NODE_REMOVED);
-        verify(engineService, times(1)).changeState(Intent.State.UNDEPLOYING);
-    }
-
-    @Test
-    public void testExecuteDeployFailedWithNodeUpEvent() {
-        engineService.execute(Intent.State.DEPLOYFAILED, EventType.NODE_ADDED);
-        verify(engineService, times(1)).changeState(Intent.State.DEPLOYFAILED);
-    }
-
-    @Test
-    public void testExecuteDisablingWithAnyEvent() {
-        engineService.execute(Intent.State.DISABLING, EventType.INTENT_REMOVED);
-        verify(engineService, times(1)).changeState(Intent.State.DISABLING);
-    }
+    //TODO: [WIP] Provide valid tests
 }

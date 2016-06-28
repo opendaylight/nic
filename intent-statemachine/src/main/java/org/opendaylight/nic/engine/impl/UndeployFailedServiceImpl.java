@@ -8,9 +8,7 @@
 package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
-import org.opendaylight.nic.engine.service.StateMachineRendererService;
 import org.opendaylight.nic.engine.service.UndeployFailedService;
-import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 

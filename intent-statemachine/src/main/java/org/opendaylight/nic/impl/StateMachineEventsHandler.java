@@ -81,7 +81,7 @@ public class StateMachineEventsHandler implements IEventListener {
         return new EventExecutor<IntentAdded>() {
             @Override
             public void execute(IntentAdded event) {
-                stateMachineExecutorService.createTransaction(event.getIntent(), EventType.INTENT_UPDATE);
+                stateMachineExecutorService.createTransaction(event.getIntent().getId(), EventType.INTENT_UPDATE);
             }
         };
     }
@@ -92,7 +92,7 @@ public class StateMachineEventsHandler implements IEventListener {
             public void execute(IntentUpdated event) {
                 final Intent intent = event.getIntent();
                 stateMachineExecutorService.removeTransactions(intent.getId(), EventType.INTENT_UPDATE);
-                stateMachineExecutorService.createTransaction(intent, EventType.INTENT_UPDATE);
+                stateMachineExecutorService.createTransaction(intent.getId(), EventType.INTENT_UPDATE);
             }
         };
     }
@@ -127,7 +127,7 @@ public class StateMachineEventsHandler implements IEventListener {
     private void executeNodeEvent(IpAddress ipAddress, EventType eventType) {
         List<Intent> intents = stateMachineExecutorService.getUndeployedIntents(ipAddress);
         for(Intent intent : intents) {
-            stateMachineExecutorService.createTransaction(intent, eventType);
+            stateMachineExecutorService.createTransaction(intent.getId(), eventType);
         }
     }
 }

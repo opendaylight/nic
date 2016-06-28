@@ -26,11 +26,12 @@ public class IntentNotificationSubscriberImpl implements IEventListener<NicNotif
     public void handleEvent(NicNotification event) {
         if (IntentAdded.class.isInstance(event)) {
             IntentAdded addedEvent = (IntentAdded) event;
-            flowService.pushIntentFlow(addedEvent.getIntent(), FlowAction.ADD_FLOW);
+            //TODO: Change to use ISM
+            //flowService.pushIntentFlow(addedEvent.getIntent(), FlowAction.ADD_FLOW);
         }
         if (IntentRemoved.class.isInstance(event)) {
             IntentRemoved deleteEvent = (IntentRemoved) event;
-            flowService.pushIntentFlow(deleteEvent.getIntent(), FlowAction.REMOVE_FLOW);
+            //flowService.pushIntentFlow(deleteEvent.getIntent(), FlowAction.REMOVE_FLOW);
         }
     }
 }

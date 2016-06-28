@@ -54,6 +54,10 @@ public enum EventType {
     /** Graph Edge Removed*/
     GRAPH_EDGE_DELETED,
     /** Graph Edge Updated*/
-    GRAPH_EDGE_UPDATED
+    GRAPH_EDGE_UPDATED,
+    /** Intent deployed with success*/
+    INTENT_DEPLOY_SUCCESS,
+    /** Intent deploy ends with error*/
+    INTENT_DEPLOY_FAILURE
 
 }
