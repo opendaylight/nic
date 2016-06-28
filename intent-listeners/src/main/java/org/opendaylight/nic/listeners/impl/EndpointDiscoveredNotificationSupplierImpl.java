@@ -23,6 +23,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import transaction.api.EventType;
 
 import java.util.Set;
 

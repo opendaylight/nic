@@ -7,7 +7,7 @@
  */
 package org.opendaylight.nic.engine.service;
 
-import org.opendaylight.nic.listeners.api.EventType;
+import transaction.api.EventType;
 
 /**
  * Service to handle State Machine behaviors and events

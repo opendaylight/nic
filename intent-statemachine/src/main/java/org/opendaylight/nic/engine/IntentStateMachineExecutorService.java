@@ -7,7 +7,7 @@
  */
 package org.opendaylight.nic.engine;
 
-import org.opendaylight.nic.listeners.api.EventType;
+import transaction.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev100924.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -26,10 +26,10 @@ public interface IntentStateMachineExecutorService extends AutoCloseable {
 
     /**
      * Create a new transaction for a given Intent based in a given event
-     * @param intent
+     * @param intentId Intent Id
      * @param receivedEvent Event received by event-listener
      */
-    void createTransaction(Intent intent, EventType receivedEvent);
+    void createTransaction(Uuid intentId, EventType receivedEvent);
 
     /**
      * Remove a transaction for a given Intent

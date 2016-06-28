@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.listeners.api;
+package transaction.api;
 
 public enum EventType {
     /** Indicates a new link is discovered. */
@@ -54,6 +54,10 @@ public enum EventType {
     /** Graph Edge Removed*/
     GRAPH_EDGE_DELETED,
     /** Graph Edge Updated*/
-    GRAPH_EDGE_UPDATED
+    GRAPH_EDGE_UPDATED,
+    /** Intent deployed with success*/
+    INTENT_DEPLOY_SUCCESS,
+    /** Intent deploy ends with error*/
+    INTENT_DEPLOY_FAILURE
 
 }

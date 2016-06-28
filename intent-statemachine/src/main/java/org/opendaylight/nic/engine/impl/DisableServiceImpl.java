@@ -12,7 +12,7 @@ import org.opendaylight.nic.engine.service.DisableService;
 import org.opendaylight.nic.engine.service.StateMachineRendererService;
 import org.opendaylight.nic.impl.StateMachineException;
 import org.opendaylight.nic.impl.StateMachineRendererExecutor;
-import org.opendaylight.nic.listeners.api.EventType;
+import transaction.api.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

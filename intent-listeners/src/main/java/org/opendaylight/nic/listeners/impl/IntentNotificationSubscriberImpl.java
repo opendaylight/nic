@@ -7,30 +7,33 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
-import org.opendaylight.nic.listeners.api.IEventListener;
-import org.opendaylight.nic.listeners.api.IntentAdded;
-import org.opendaylight.nic.listeners.api.IntentRemoved;
-import org.opendaylight.nic.listeners.api.NicNotification;
+import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
-import org.opendaylight.nic.utils.FlowAction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import transaction.api.EventType;
 
 public class IntentNotificationSubscriberImpl implements IEventListener<NicNotification> {
 
     private OFRendererFlowService flowService;
+    private IntentStateMachineExecutorService stateMachineExecutorService;
 
-    public IntentNotificationSubscriberImpl(OFRendererFlowService flowService) {
-        this.flowService = flowService;
+    public IntentNotificationSubscriberImpl(IntentStateMachineExecutorService stateMachineExecutorService) {
+        this.stateMachineExecutorService = stateMachineExecutorService;
     }
 
     @Override
     public void handleEvent(NicNotification event) {
         if (IntentAdded.class.isInstance(event)) {
-            IntentAdded addedEvent = (IntentAdded) event;
-            flowService.pushIntentFlow(addedEvent.getIntent(), FlowAction.ADD_FLOW);
+            final IntentAdded addedEvent = (IntentAdded) event;
+            final Uuid intentId = addedEvent.getIntent().getId();
+            stateMachineExecutorService.createTransaction(intentId, EventType.INTENT_ADDED);
+            //TODO: Change to use ISM
+            //flowService.pushIntentFlow(addedEvent.getIntent(), FlowAction.ADD_FLOW);
         }
         if (IntentRemoved.class.isInstance(event)) {
             IntentRemoved deleteEvent = (IntentRemoved) event;
-            flowService.pushIntentFlow(deleteEvent.getIntent(), FlowAction.REMOVE_FLOW);
+            //flowService.pushIntentFlow(deleteEvent.getIntent(), FlowAction.REMOVE_FLOW);
         }
     }
 }

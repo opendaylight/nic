@@ -11,7 +11,6 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.LinkDeleted;
 import org.opendaylight.nic.listeners.api.LinkUp;
 import org.opendaylight.nic.listeners.api.NicNotification;
@@ -20,6 +19,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.Fl
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
+import transaction.api.EventType;
 
 /**
  * Implementation define a contract between {@link FlowCapableNodeConnector} data object

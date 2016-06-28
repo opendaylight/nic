@@ -1,13 +1,15 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.listeners.rev150916;
 
+import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.impl.ListenerProviderImpl;
-import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import transaction.impl.IntentTransactionNotifierImpl;
+import transaction.impl.IntentTransactionRegisterImpl;
 
 public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.listeners.rev150916.AbstractListenerProviderModule {
     private static final Logger LOG = LoggerFactory.getLogger(ListenerProviderModule.class);
@@ -29,18 +31,23 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
     public java.lang.AutoCloseable createInstance() {
         // Retrieve reference for OFRenderer service
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        ServiceReference<?> ofServiceReference = context.
-                getServiceReference(OFRendererFlowService.class);
-        OFRendererFlowService flowService = (OFRendererFlowService) context.
-                getService(ofServiceReference);
+        //Graph reference
         ServiceReference<?> graphServiceReference = context.
                 getServiceReference(OFRendererGraphService.class);
         OFRendererGraphService graphService = (OFRendererGraphService) context
                 .getService(graphServiceReference);
 
+        //State Machine reference
+        ServiceReference<?> stateMachineServiceReference = context.
+                getServiceReference(IntentStateMachineExecutorService.class);
+        IntentStateMachineExecutorService stateMachineExecutorService =
+                (IntentStateMachineExecutorService) context
+                .getService(stateMachineServiceReference);
+
+
         final ListenerProviderImpl provider = new ListenerProviderImpl(getDataBrokerDependency(),
                                                                        getNotificationAdapterDependency(),
-                                                                       flowService,
+                                                                       stateMachineExecutorService,
                                                                        graphService);
         provider.start();
         LOG.info("NIC Listeners started successfully.");

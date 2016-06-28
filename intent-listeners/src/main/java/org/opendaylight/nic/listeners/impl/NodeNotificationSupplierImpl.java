@@ -22,6 +22,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeUpd
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import transaction.api.EventType;
 
 /**
  * Implementation define a contract between {@link FlowCapableNode} data object

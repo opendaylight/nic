@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.listeners.api.NodeDeleted;
@@ -16,18 +17,18 @@ import org.opendaylight.nic.utils.FlowAction;
 
 class NodeNotificationSubscriberImpl implements IEventListener<NicNotification> {
 
-    private  OFRendererFlowService flowService;
+    private IntentStateMachineExecutorService stateMachineExecutorService;
 
-    public NodeNotificationSubscriberImpl(OFRendererFlowService flowService) {
-        this.flowService = flowService;
+    public NodeNotificationSubscriberImpl(IntentStateMachineExecutorService stateMachineExecutorService) {
+        this.stateMachineExecutorService = stateMachineExecutorService;
     }
 
     @Override
     public void handleEvent(NicNotification event) {
         if (NodeUp.class.isInstance(event)) {
             NodeUp nodeUp = (NodeUp) event;
-            flowService.pushARPFlow(nodeUp.getNodeId(), FlowAction.ADD_FLOW);
-            flowService.pushLLDPFlow(nodeUp.getNodeId(), FlowAction.ADD_FLOW);
+            //flowService.pushARPFlow(nodeUp.getNodeId(), FlowAction.ADD_FLOW);
+            //flowService.pushLLDPFlow(nodeUp.getNodeId(), FlowAction.ADD_FLOW);
         }
         if (NodeDeleted.class.isInstance(event)) {
             //TODO: Since node is deleted flow no longer exists on switch as there is no switch
