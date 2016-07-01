@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_5c0332b8",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2016-07-01T02:01:03Z",
+      "side": 1,
+      "message": "Could you please make parameters immutable (final)?",
+      "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_3c00fea9",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2016-07-01T02:01:03Z",
+      "side": 1,
+      "message": "Could you please make parameters immutable (final)?",
+      "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_1cf9bac8",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2016-07-01T02:01:03Z",
+      "side": 1,
+      "message": "Why deprecated?",
+      "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_7c31d6a1",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/model/PortFlow.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2016-07-01T02:01:03Z",
+      "side": 1,
+      "message": "Could you please make all method\u0027s variables immutable (final)?",
+      "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
