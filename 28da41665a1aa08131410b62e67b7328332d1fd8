@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_bc87ee0e",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-07-01T03:25:48Z",
+      "side": 1,
+      "message": "Sure, thanks. I\u0027ll send it in a new patch.",
+      "parentUuid": "9a561d44_5c0332b8",
+      "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_3c00fea9",
         "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2016-07-01T02:01:03Z",
       "side": 1,
       "message": "Could you please make parameters immutable (final)?",
+      "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_1c7c1a20",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-07-01T03:25:48Z",
+      "side": 1,
+      "message": "Same here",
+      "parentUuid": "9a561d44_3c00fea9",
       "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -64,6 +100,24 @@
       "writtenOn": "2016-07-01T02:01:03Z",
       "side": 1,
       "message": "Could you please make all method\u0027s variables immutable (final)?",
+      "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_fc78462d",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/model/PortFlow.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-07-01T03:25:48Z",
+      "side": 1,
+      "message": "Sure. I\u0027ll send a new patch",
+      "parentUuid": "9a561d44_7c31d6a1",
       "revId": "28da41665a1aa08131410b62e67b7328332d1fd8",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
