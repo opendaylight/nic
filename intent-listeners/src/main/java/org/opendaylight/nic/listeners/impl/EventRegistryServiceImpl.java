@@ -9,7 +9,6 @@
 package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.nic.listeners.api.EventRegistryService;
-import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.osgi.framework.BundleContext;
@@ -17,6 +16,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.opendaylight.nic.transaction.api.EventType;
 
 import java.util.HashMap;
 import java.util.HashSet;

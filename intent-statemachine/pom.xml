@@ -26,12 +26,12 @@
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
-            <artifactId>intent-listeners</artifactId>
+            <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>utils</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>intent-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 

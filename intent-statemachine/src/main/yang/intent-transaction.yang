@@ -12,6 +12,81 @@ module intent-transaction {
         description "Initial revision.";
     }
 
+    container ism-transactions {
+        list intent-transaction {
+            key "intent-id";
+            leaf intent-id {
+               type types:uuid;
+               mandatory true;
+               }
+            leaf network-event {
+                type string;
+            }
+            leaf current-state {
+                type string;
+                mandatory true;
+                description "Defines the ISM current state.";
+            }
+            leaf deploy-attempts {
+                type uint32;
+                mandatory false;
+                description "Define all attempts to deploy this Intent with failure.";
+            }
+        }
+    }
+
+    leaf network-event {
+            type enumeration {
+                /** Indicates a new link is discovered. */
+                enum "LINK_DISCOVERED";
+                /** Indicates an existing link is overutilized. */
+                enum "LINKOVER_UTILIZED";
+                /** Indicates an existing link is removed. */
+                enum "LINK_REMOVED";
+                /** Indicates normal link utilization. */
+                enum "LINK_UTILIZATION_NORMAL";
+                /** Indicates new node is up. */
+                enum "NODE_ADDED";
+                /** Indicates new node is updated. */
+                enum "NODE_UPDATED";
+                /** Indicates existing node is removed. */
+                enum "NODE_REMOVED";
+                /** Indicates a new intent is added */
+                enum "INTENT_ADDED";
+                /** Indicates a intent is update */
+                enum "INTENT_UPDATE";
+                /** Indicates existing intent is removed */
+                enum "INTENT_REMOVED";
+                /** Indicates that a new endpoint is discovered but it doesn't mean that the just came up*/
+                enum "ENDPOINT_DISCOVERED";
+                /** Indicates that a new security group is added by neutron*/
+                enum "SECURITY_GROUP_ADDED";
+                /** Indicates that an existing security group is deleted by neutron*/
+                enum "SECURITY_GROUP_DELETED";
+                /** Indicates that an existing security group is modified by neutron*/
+                enum "SECURITY_GROUP_UPDATED";
+                /** Indicates that a new security rule is added by neutron*/
+                enum "SECURITY_RULE_ADDED";
+                /** Indicates that an existing security rule is deleted by neutron*/
+                enum "SECURITY_RULE_DELETED";
+                /** Indicates that an existing security rule is modified by neutron*/
+                enum "SECURITY_RULE_UPDATED";
+                /** Indicates that a Network-Topology Link has been discovered. The OpenFlowPlugin
+                 * project is taking care of keeping an up to date Network-Topology.*/
+                enum "TOPOLOGY_LINK_DISCOVERED";
+                /** Incidates that a Network-Topology Link has been removed. See TOPOLOGY_LINK_DISCOVERED.*/
+                enum "TOPOLOGY_LINK_REMOVED";
+                /** Indicates that a Network-Topology Link has been updated. See TOPOLOGY_LINK_DISCOVERED.*/
+                enum "TOPOLOGY_LINK_UPDATED";
+                /** Graph Edge Added*/
+                enum "GRAPH_EDGE_ADDED";
+                /** Graph Edge Removed*/
+                enum "GRAPH_EDGE_DELETED";
+                /** Graph Edge Updated*/
+                enum "GRAPH_EDGE_UPDATED";
+                }
+    }
+
     grouping intent-transaction {
 
         leaf intent-id {

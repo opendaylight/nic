@@ -1,7 +1,7 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.statemachine.rev150507;
 
-import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
-import org.opendaylight.nic.impl.IntentStateMachineExecutor;
+import org.opendaylight.nic.statemachine.api.IntentStateMachineExecutorService;
+import org.opendaylight.nic.statemachine.impl.IntentStateMachineExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,10 +22,9 @@ public class IntentStateMachineProviderModule extends org.opendaylight.yang.gen.
 
     @Override
     public java.lang.AutoCloseable createInstance() {
-        LOG.info("Creating Intent State Machine");
+        LOG.info("Starting Intent State Machine Service");
         final IntentStateMachineExecutorService executorService = new IntentStateMachineExecutor(getDataBrokerDependency());
         executorService.init();
         return executorService;
     }
-
 }
