@@ -8,12 +8,6 @@
 
 package org.opendaylight.nic.mapping.mdsal.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
 import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
@@ -34,6 +28,8 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 
 public class MappingMdsalProvider implements IntentMappingService,

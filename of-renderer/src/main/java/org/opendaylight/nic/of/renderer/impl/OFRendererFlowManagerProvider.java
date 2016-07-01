@@ -8,6 +8,7 @@
 package org.opendaylight.nic.of.renderer.impl;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
@@ -18,22 +19,31 @@ import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
 import org.opendaylight.nic.of.renderer.strategy.MPLSExecutor;
 import org.opendaylight.nic.of.renderer.strategy.QoSExecutor;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
+import org.opendaylight.nic.transaction.api.IntentCommonProviderService;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yangtools.concepts.Registration;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.opendaylight.nic.transaction.TransactionResult;
+import org.opendaylight.nic.transaction.api.IntentTransactionListener;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +53,7 @@ import java.util.Set;
 /**
  * Created by saket on 8/19/15.
  */
-public class OFRendererFlowManagerProvider implements OFRendererFlowService, Observer, AutoCloseable {
+public class OFRendererFlowManagerProvider implements OFRendererFlowService, Observer, AutoCloseable , IntentTransactionListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(OFRendererFlowManagerProvider.class);
     private Set<ServiceRegistration<?>> serviceRegistration;
@@ -59,7 +69,9 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private Registration pktInRegistration;
     private RedirectFlowManager redirectFlowManager;
     private Subject topic;
+    private MdsalUtils mdsalUtils;
 
+    private IntentCommonProviderService commonProviderService;
     private NotificationProviderService notificationProviderService;
 
     public OFRendererFlowManagerProvider(final DataBroker dataBroker,
@@ -71,6 +83,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
         this.intentMappingService = intentMappingService;
         this.notificationProviderService = notificationProviderService;
+        this.mdsalUtils = new MdsalUtils(dataBroker);
     }
 
     public void init() {
@@ -88,6 +101,11 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
         this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager, graphService);
         this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
+
+        ServiceReference<?> intentCommonService = context
+                .getServiceReference(IntentCommonProviderService.class);
+        commonProviderService = (IntentCommonProviderService) context
+                .getService(intentCommonService);
     }
 
     @Override
@@ -110,7 +128,9 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
             } else {
                 new DefaultExecutor(intentFlowManager, dataBroker).execute(intent, flowAction);
             }
+            commonProviderService.notifyResults(intent.getId(), TransactionResult.SUCCESS);
         } catch (IntentInvalidException ie) {
+            commonProviderService.notifyResults(intent.getId(), TransactionResult.FAILURE);
             //TODO: Implement an action for Exception cases
         }
     }
@@ -233,5 +253,19 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
             throw new IntentElementNotFoundException(CONTENT_NOT_FOUND_MESSAGE);
         }
         return contentMap;
+    }
+
+    @Override
+    public void executeDeploy(final Uuid intentId) {
+        final InstanceIdentifier<Intent> identifier = getInstanceIdentifier(intentId);
+        final Intent intent = mdsalUtils.read(LogicalDatastoreType.OPERATIONAL, identifier);
+        if(intent != null) {
+            pushIntentFlow(intent, FlowAction.ADD_FLOW);
+        }
+    }
+
+    private InstanceIdentifier<Intent> getInstanceIdentifier(Uuid intentId) {
+        return InstanceIdentifier.create(Intents.class)
+                .child(Intent.class, new IntentKey(intentId));
     }
 }
