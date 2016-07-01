@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.listeners.api;
 
+import org.opendaylight.nic.transaction.api.EventType;
 import java.util.Set;
 
 /**
