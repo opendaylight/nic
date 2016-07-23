@@ -1,10 +1,9 @@
 /*
- * Copyright (c) 2015 NEC Corporation
- * All rights reserved.
+ * Copyright (c) 2015 NEC Corporation. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this
- * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
 package org.opendaylight.nic.compiler;
@@ -61,7 +60,7 @@ public class EndpointImplTest {
         endPointImpl4 = new EndpointImpl(null);
         assertTrue("EndPointImpl instances should be True, if both are having same content",
                 endPointImpl.equals(endPointImpl));
-        assertFalse("EndPointImpl instance should be False, if comparing with null", 
+        assertFalse("EndPointImpl instance should be False, if comparing with null",
                 endPointImpl.equals(null));
         assertEquals("EndPointImpl instances should be equal, if both are having same content",
                 true, endPointImpl.equals(endPointImpl));
