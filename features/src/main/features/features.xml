@@ -88,7 +88,7 @@
         <feature version="${neutron.version}">odl-neutron-service</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-app-topology</feature>
         <feature version="${sfc.version}">odl-sfc-provider</feature>
-        <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/2.0.1</bundle>
         <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config</configfile>
@@ -128,8 +128,7 @@
     <!-- Intent State Machine -->
     <feature name='odl-nic-intent-statemachine' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Intent State Machine'>
-        <feature version="${project.version}">odl-nic-listeners</feature>
-        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-intent-statemachine.xml">mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config</configfile>
     </feature>
 
@@ -138,5 +137,12 @@
         <feature version="${project.version}">odl-nic-core-mdsal</feature>
         <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-intent-graph.xml">mvn:org.opendaylight.nic/intent-graph/{{VERSION}}/xml/config</configfile>
+    </feature>
+
+    <!-- Intent Common feature -->
+    <feature name='odl-nic-intent-common' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Common'>
+        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-common/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/92-intent-common.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
     </feature>
 </features>
