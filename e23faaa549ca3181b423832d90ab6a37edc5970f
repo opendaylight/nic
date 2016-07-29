@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_40061b87",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-07-29T22:18:53Z",
+      "side": 1,
+      "message": "Great! I\u0027ll change it and send a new patch.\nThanks!",
+      "parentUuid": "9a561d44_20e4c7df",
+      "range": {
+        "startLine": 92,
+        "startChar": 72,
+        "endLine": 92,
+        "endChar": 83
+      },
+      "revId": "e23faaa549ca3181b423832d90ab6a37edc5970f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_808033f8",
         "filename": "features/src/main/features/features.xml",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_e0d5afe5",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-07-29T22:18:53Z",
+      "side": 1,
+      "message": "Well observed Saket, I suggest that in a future, the Intent Listeners wont have of-renderer as dependency.\nThank you, let me fix it",
+      "parentUuid": "9a561d44_808033f8",
+      "range": {
+        "startLine": 116,
+        "startChar": 54,
+        "endLine": 116,
+        "endChar": 67
+      },
+      "revId": "e23faaa549ca3181b423832d90ab6a37edc5970f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_c07d0b1e",
         "filename": "features/src/main/features/features.xml",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2016-07-29T21:58:08Z",
       "side": 1,
       "message": "Can you remove the commented line",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 154
+      },
+      "revId": "e23faaa549ca3181b423832d90ab6a37edc5970f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_200b278f",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-07-29T22:18:53Z",
+      "side": 1,
+      "message": "Sorry my mistake, I\u0027ll remove this commented line.",
+      "parentUuid": "9a561d44_c07d0b1e",
       "range": {
         "startLine": 148,
         "startChar": 8,
