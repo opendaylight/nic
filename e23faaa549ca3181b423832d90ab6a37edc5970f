@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a561d44_20e4c7df",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2016-07-29T22:05:38Z",
+      "side": 1,
+      "message": "This seems to be the cause of the build error. Since we\u0027re on version 3 and the library getting imported for jung is 2.x. Replacing {{VERSION}} with the right jung library version should get the build right.",
+      "range": {
+        "startLine": 92,
+        "startChar": 72,
+        "endLine": 92,
+        "endChar": 83
+      },
+      "revId": "e23faaa549ca3181b423832d90ab6a37edc5970f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_808033f8",
         "filename": "features/src/main/features/features.xml",
         "patchSetId": 3
