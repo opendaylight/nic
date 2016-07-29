@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_808033f8",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2016-07-29T21:58:08Z",
+      "side": 1,
+      "message": "I\u0027m unable to understand why the reference to of-renderer is replaced with intent-common here. Can you shed some light for me? Might create problems for neutron service since there are some listeners for sec-groups and sec-rules",
+      "range": {
+        "startLine": 116,
+        "startChar": 54,
+        "endLine": 116,
+        "endChar": 67
+      },
+      "revId": "e23faaa549ca3181b423832d90ab6a37edc5970f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_c07d0b1e",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2016-07-29T21:58:08Z",
+      "side": 1,
+      "message": "Can you remove the commented line",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 154
+      },
+      "revId": "e23faaa549ca3181b423832d90ab6a37edc5970f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
