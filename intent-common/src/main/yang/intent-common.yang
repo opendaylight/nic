@@ -1,0 +1,36 @@
+module intent-common {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:intent:common";
+    prefix "intent-common";
+
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
+    import opendaylight-sal-binding-broker-impl { prefix sal-broker; revision-date 2013-10-28;}
+
+    description
+        "Service definition for Intent Common.";
+
+    revision "2016-05-30" {
+        description "Initial revision.";
+    }
+
+    identity intent-common {
+        base config:module-type;
+
+        config:java-name-prefix IntentCommonProvider;
+    }
+
+    augment "/config:modules/config:module/config:configuration" {
+            case intent-common {
+                when "/config:modules/config:module/config:type = 'intent-common'";
+                container data-broker {
+                    uses config:service-ref {
+                        refine type {
+                            mandatory true;
+                            config:required-identity mdsal:binding-async-data-broker;
+                        }
+                    }
+                }
+            }
+        }
+}

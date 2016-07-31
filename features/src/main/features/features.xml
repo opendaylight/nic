@@ -130,13 +130,20 @@
              description='OpenDaylight :: Network Intent Composition :: Intent State Machine'>
         <feature version="${project.version}">odl-nic-listeners</feature>
         <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/92-intent-statemachine.xml">mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/karaf/93-intent-statemachine.xml">mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config</configfile>
     </feature>
 
     <!-- Graph feature -->
     <feature name='odl-nic-graph' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Graph'>
         <feature version="${project.version}">odl-nic-core-mdsal</feature>
         <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/92-intent-graph.xml">mvn:org.opendaylight.nic/intent-graph/{{VERSION}}/xml/config</configfile>
+        <configfile finalname="etc/opendaylight/karaf/94-intent-graph.xml">mvn:org.opendaylight.nic/intent-graph/{{VERSION}}/xml/config</configfile>
+    </feature>
+
+    <!-- Intent Common feature -->
+    <feature name='odl-nic-intent-common' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Common'>
+        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-common/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/95-intent-common.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
     </feature>
 </features>
