@@ -26,7 +26,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.IpMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.MetadataBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.ProtocolMatchFieldsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TcpFlagMatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TcpFlagsMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.TunnelBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.VlanMatchBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.ArpMatchBuilder;
@@ -368,9 +368,9 @@ public class MatchUtils {
         tcpMatch.setTcpDestinationPort(dstPort);
         matchBuilder.setLayer4Match(tcpMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(tcpFlag);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(tcpFlag);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
         return matchBuilder;
     }
 
@@ -496,9 +496,9 @@ public class MatchUtils {
         ipMatch.setIpProtocol((short) 6);
         matchBuilder.setIpMatch(ipMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(TCP_SYN);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
         return matchBuilder;
     }
 
@@ -516,9 +516,9 @@ public class MatchUtils {
         ipMatch.setIpProtocol((short) 6);
         matchBuilder.setIpMatch(ipMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(TCP_SYN);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
         return matchBuilder;
     }
 
@@ -552,9 +552,9 @@ public class MatchUtils {
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(tcpFlag);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(tcpFlag);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         TunnelBuilder tunnelBuilder = new TunnelBuilder();
         tunnelBuilder.setTunnelId(new BigInteger(tunnelID));
@@ -601,9 +601,9 @@ public class MatchUtils {
         tcpMatch.setTcpDestinationPort(dstPort);
         matchBuilder.setLayer4Match(tcpMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(tcpFlag);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(tcpFlag);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         TunnelBuilder tunnelBuilder = new TunnelBuilder();
         tunnelBuilder.setTunnelId(new BigInteger(tunnelID));
@@ -657,9 +657,9 @@ public class MatchUtils {
         tcpMatch.setTcpDestinationPort(dstPort);
         matchBuilder.setLayer4Match(tcpMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(tcpFlag);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(tcpFlag);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         TunnelBuilder tunnelBuilder = new TunnelBuilder();
         tunnelBuilder.setTunnelId(new BigInteger(segmentationId));
@@ -707,9 +707,9 @@ public class MatchUtils {
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
         // TCP Flag Match
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(TCP_SYN);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         return matchBuilder;
     }
@@ -759,9 +759,9 @@ public class MatchUtils {
         tcpMatch.setTcpDestinationPort(dstPort);
         matchBuilder.setLayer4Match(tcpMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(tcpFlag);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(tcpFlag);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         TunnelBuilder tunnelBuilder = new TunnelBuilder();
         tunnelBuilder.setTunnelId(new BigInteger(segmentationId));
@@ -800,9 +800,9 @@ public class MatchUtils {
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(tcpFlag);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(tcpFlag);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         TunnelBuilder tunnelBuilder = new TunnelBuilder();
         tunnelBuilder.setTunnelId(new BigInteger(tunnelID));
@@ -850,9 +850,9 @@ public class MatchUtils {
         ipMatch.setIpProtocol(TCP_SHORT);
         matchBuilder.setIpMatch(ipMatch.build());
         // TCP Flag Match
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(TCP_SYN);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         return matchBuilder;
     }
@@ -896,9 +896,9 @@ public class MatchUtils {
         matchBuilder.setLayer4Match(tcpMatch.build());
 
 
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(tcpFlag);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(tcpFlag);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         TunnelBuilder tunnelBuilder = new TunnelBuilder();
         tunnelBuilder.setTunnelId(new BigInteger(tunnelID));
@@ -949,9 +949,9 @@ public class MatchUtils {
         matchBuilder.setIpMatch(ipMatch.build());
 
         // TCP Flag Match
-        TcpFlagMatchBuilder tcpFlagMatch = new TcpFlagMatchBuilder();
-        tcpFlagMatch.setTcpFlag(TCP_SYN);
-        matchBuilder.setTcpFlagMatch(tcpFlagMatch.build());
+        TcpFlagsMatchBuilder tcpFlagsMatch = new TcpFlagsMatchBuilder();
+        tcpFlagsMatch.setTcpFlags(TCP_SYN);
+        matchBuilder.setTcpFlagsMatch(tcpFlagsMatch.build());
 
         return matchBuilder;
     }
