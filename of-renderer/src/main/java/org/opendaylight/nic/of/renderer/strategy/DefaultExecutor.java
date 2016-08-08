@@ -21,7 +21,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 /**
  * Created by yrineu on 01/03/16.
@@ -30,6 +29,7 @@ public class DefaultExecutor implements ActionStrategy {
 
     private final IntentFlowManager intentFlowManager;
     private final DataBroker dataBroker;
+    private static final String INTENT_NULL_MESSAGE = "Intent could not be null";
 
     public DefaultExecutor(final IntentFlowManager intentFlowManager, final DataBroker dataBroker) {
         this.intentFlowManager = intentFlowManager;
@@ -37,14 +37,13 @@ public class DefaultExecutor implements ActionStrategy {
     }
 
     @Override
-    public void execute(final Intent intent, final FlowAction flowAction) {
+    public void execute(final Intent intent, final FlowAction flowAction) throws IntentInvalidException {
+        if(intent == null) {
+            throw new IntentInvalidException(INTENT_NULL_MESSAGE);
+        }
         final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
         Action actionContainer = null;
-        try {
-            actionContainer = IntentUtils.getAction(intent);
-        } catch (IntentInvalidException e) {
-            throw new NoSuchElementException(e.getMessage());
-        }
+        actionContainer = IntentUtils.getAction(intent);
 
         intentFlowManager.setEndPointGroups(endPointGroups);
         intentFlowManager.setAction(actionContainer);
