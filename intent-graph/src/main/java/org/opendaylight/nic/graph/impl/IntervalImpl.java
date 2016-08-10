@@ -19,6 +19,9 @@ public class IntervalImpl implements Interval, Comparable<IntervalImpl> {
     private final int start;
     private final int end;
 
+    public static final IntervalImpl INTERVAL_NULL = new IntervalImpl(
+            Integer.MIN_VALUE, Integer.MIN_VALUE);
+
     @Override
     public int start() {
         return start;
@@ -57,9 +60,6 @@ public class IntervalImpl implements Interval, Comparable<IntervalImpl> {
         this.start = start;
         this.end = end;
     }
-
-    public static final IntervalImpl INTERVAL_NULL = new IntervalImpl(
-            Integer.MIN_VALUE, Integer.MIN_VALUE);
 
     /**
      * is Null
