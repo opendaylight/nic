@@ -142,7 +142,7 @@ public class MPLSExecutor implements ActionStrategy {
             switch (flowAction) {
                 case ADD_FLOW:
                     NetworkGraphManager.ProtectedLinks.put(intent,
-                            graphService.getDisjointPaths(extractNodeId(source), extractNodeId(target)));
+                            getDisjointPaths(source, target));
                     result = NetworkGraphManager.ProtectedLinks.get(intent).get(0);
                     break;
                 case REMOVE_FLOW:
@@ -150,7 +150,7 @@ public class MPLSExecutor implements ActionStrategy {
                     NetworkGraphManager.ProtectedLinks.remove(intent);
                     break;
                 default:
-                    graphService.getShortestPath(extractNodeId(source), extractNodeId(target));
+                    result = getDisjointPaths(source, target).get(0);
             }
 
         }
@@ -158,6 +158,10 @@ public class MPLSExecutor implements ActionStrategy {
             throw new IntentInvalidException(NO_PATH_FOUND_MSG + intent.getId());
         }
         return result;
+    }
+
+    private List<List<Link>> getDisjointPaths(EndPointGroup srcEndPointGroup, EndPointGroup dstEndPointGroup) {
+        return graphService.getDisjointPaths(extractNodeId(srcEndPointGroup), extractNodeId(dstEndPointGroup));
     }
 
     private org.opendaylight.yang.gen.v1.urn

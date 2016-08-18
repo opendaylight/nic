@@ -185,6 +185,7 @@ public class PortFlow {
                         break;
                     case EthertypeV6:
                         matchBuilders.add(getIpv6MatchBuilder());
+                        break;
                 }
 
                 return matchBuilders;
