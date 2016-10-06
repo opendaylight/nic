@@ -1,0 +1,56 @@
+module intent-nbi {
+     namespace "urn:opendaylight:intent-nbi";
+     prefix "intent-nbi";
+
+     revision 2016-10-05 {
+         description "Initial revision";
+     }
+
+     grouping object-group {
+       leaf object-group-id {
+         type string;
+       }
+        leaf group-name {
+          type string;
+        }
+     }
+
+     grouping object {
+       leaf object-id {
+         type string;
+       }
+       leaf object-name {
+         type string;
+       }
+     }
+
+     grouping intent {
+       list objects {
+          key "object-id";
+          uses object;
+       }
+       list object-groups {
+          key "object-group-id";
+          uses object-group;
+       }
+
+       leaf id {
+         type uint32;
+       }
+       leaf modifier {
+          type enumeration {
+              enum "HIGH_QUALITY";
+              enum "BAD_QUALITY";
+          }
+          config false;
+          mandatory true;
+        }
+     }
+
+     container intents-nbi {
+        list intent {
+            key "id";
+            uses intent;
+        }
+    }
+}
