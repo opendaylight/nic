@@ -168,20 +168,34 @@
       <classifier>config</classifier>
       <type>xml</type>
     </dependency>
-      <dependency>
-          <groupId>org.opendaylight.nic</groupId>
-          <artifactId>intent-common</artifactId>
-          <scope>compile</scope>
-          <version>${project.version}</version>
-      </dependency>
-      <dependency>
-          <groupId>org.opendaylight.nic</groupId>
-          <artifactId>intent-common</artifactId>
-          <version>${project.version}</version>
-          <scope>compile</scope>
-          <classifier>config</classifier>
-          <type>xml</type>
-      </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intent-common</artifactId>
+      <scope>compile</scope>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intent-common</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intent-engine</artifactId>
+      <scope>compile</scope>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.opendaylight.nic</groupId>
+      <artifactId>intent-engine</artifactId>
+      <version>${project.version}</version>
+      <scope>compile</scope>
+      <classifier>config</classifier>
+      <type>xml</type>
+    </dependency>
     <!-- controller dependencies -->
     <dependency>
       <groupId>org.opendaylight.controller.thirdparty</groupId>
