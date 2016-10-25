@@ -21,7 +21,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -140,19 +139,21 @@ public class IntentUtils {
             throws IntentElementNotFoundException {
         final Uuid intentId = intent.getId();
         final List<Subjects> subjects = intent.getSubjects();
-        final List<EndPointGroup> endPointGroups = new ArrayList<>();
+        final EndPointGroup[] endPointGroups = new EndPointGroup[subjects
+                .size()];
 
-        for(Subjects subj : subjects) {
+        for (Subjects subj : subjects) {
             try {
                 final Subject subject = subj.getSubject();
+                int order = subj.getOrder();
                 verifySubjectInstance(subject, intentId);
                 final EndPointGroup endPointGroup = (EndPointGroup) subject;
-                endPointGroups.add(endPointGroup);
+                endPointGroups[order - 1] = endPointGroup;
             } catch (IntentElementNotFoundException ie) {
                 throw ie;
             }
         }
-        return endPointGroups;
+        return Arrays.asList(endPointGroups);
     }
 
     public static EndPointGroup extractSrcEndPointGroup(final Intent intent)
