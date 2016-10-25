@@ -226,12 +226,6 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
     private Map<String, String> getMappingServiceContent(final EndPointGroup endPointGroup)
             throws IntentElementNotFoundException {
-        final String endPointGroupName = endPointGroup.getEndPointGroup().getName();
-        final String CONTENT_NOT_FOUND_MESSAGE = "Content not found for EndPointGroup: " + endPointGroupName;
-        final Map<String, String> contentMap = intentMappingService.get(endPointGroupName);
-        if(contentMap.isEmpty()) {
-            throw new IntentElementNotFoundException(CONTENT_NOT_FOUND_MESSAGE);
-        }
-        return contentMap;
+    	return intentMappingService.get(endPointGroup.getEndPointGroup().getName());
     }
 }

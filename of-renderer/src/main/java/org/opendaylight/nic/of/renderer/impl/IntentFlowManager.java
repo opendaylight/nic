@@ -154,6 +154,7 @@ public class IntentFlowManager extends AbstractFlowManager {
     }
 
     private FlowBuilder createFlowBuilder(final MatchBuilder matchBuilder) {
+    	this.flowName = createFlowName();
         final Match match = matchBuilder.build();
         final FlowId flowId = new FlowId(flowName);
         final FlowKey key = new FlowKey(flowId);
@@ -171,7 +172,6 @@ public class IntentFlowManager extends AbstractFlowManager {
         return flowBuilder;
     }
 
-    @Deprecated
     @Override
     protected String createFlowName() {
         StringBuilder sb = new StringBuilder();
