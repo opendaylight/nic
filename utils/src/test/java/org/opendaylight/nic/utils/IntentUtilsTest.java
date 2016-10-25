@@ -417,6 +417,8 @@ public class IntentUtilsTest {
                 Mockito.withSettings().extraInterfaces(EndPointGroup.class));
 
         Subjects subjectsSource = mock(Subjects.class);
+        short order = 1;
+        when(subjectsSource.getOrder()).thenReturn(order);
 
         when(subjectsSource.getSubject()).thenReturn(endPointGroupSource);
 
@@ -461,8 +463,13 @@ public class IntentUtilsTest {
                 Mockito.withSettings().extraInterfaces(EndPointGroup.class));
 
         Subjects subjectsSource = mock(Subjects.class);
-        Subjects subjectsDestination = mock(Subjects.class);
+        short orderSource = 1;
+        when(subjectsSource.getOrder()).thenReturn(orderSource);
         when(subjectsSource.getSubject()).thenReturn(endPointGroupSource);
+
+        Subjects subjectsDestination = mock(Subjects.class);
+        short orderDestination = 2;
+        when(subjectsDestination.getOrder()).thenReturn(orderDestination);
         when(subjectsDestination.getSubject())
                 .thenReturn(endPointGroupDestination);
 
