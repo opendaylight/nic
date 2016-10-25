@@ -96,6 +96,7 @@ public class IntentFlowManager extends AbstractFlowManager {
     private void pushFlowsByMacAddress(final MacAddress srcMacAddress, final MacAddress dstMacAddress,
                                        final NodeId nodeId, final FlowAction flowAction) {
         final MatchBuilder matchBuilder = MatchUtils.createEthMatch(new MatchBuilder(), srcMacAddress, dstMacAddress);
+        this.flowName = createFlowName();
         final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
 
         // TODO: Extend for other actions
@@ -171,7 +172,6 @@ public class IntentFlowManager extends AbstractFlowManager {
         return flowBuilder;
     }
 
-    @Deprecated
     @Override
     protected String createFlowName() {
         StringBuilder sb = new StringBuilder();
