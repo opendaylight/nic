@@ -7,15 +7,14 @@
  */
 package org.opendaylight.nic.transaction.impl;
 
+import org.opendaylight.nic.listeners.api.EventRegistryService;
+import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.transaction.TransactionResult;
-import org.opendaylight.nic.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.transaction.api.IntentTransactionListener;
-import org.opendaylight.nic.transaction.api.IntentTransactionNotifier;
-import org.opendaylight.nic.transaction.api.IntentTransactionRegistryService;
-import org.opendaylight.nic.transaction.api.IntentTransactionResultListener;
+import org.opendaylight.nic.transaction.api.*;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+
 
 /**
  * Created by yrineu on 30/06/16.
@@ -24,17 +23,22 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
 
     final IntentTransactionRegistryService registryService;
     final IntentTransactionNotifier notifierService;
+    private EventRegistryService serviceRegistry;
+    private NotificationSubscriber notificationSubscriber;
     protected BundleContext context;
 
-    public IntentCommonProviderServiceImpl() {
+    public IntentCommonProviderServiceImpl(final EventRegistryService serviceRegistry) {
+        this.serviceRegistry = serviceRegistry;
         registryService = new IntentTransactionRegisterImpl();
         notifierService = new IntentTransactionNotifierImpl(registryService);
+        notificationSubscriber = new NotificationSubscriberImpl();
     }
 
     @Override
     public void start() {
         context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         context.registerService(IntentCommonProviderService.class, this, null);
+        serviceRegistry.registerEventListener(EventType.GRAPH_EDGE_ADDED, notificationSubscriber);
     }
 
     @Override
