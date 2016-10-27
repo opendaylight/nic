@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_1b2f1ca3",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-10-27T17:32:27Z",
+      "side": 1,
+      "message": "Please use spaces over tabs and remove trailing spaces",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_5b187484",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-10-27T17:32:27Z",
+      "side": 1,
+      "message": "I don\u0027t see the point removing this validation, since the mapping service is used to translate items declared in the Intent command. If there\u0027s no data then an exception should be raised.",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_9b3b2ceb",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-10-27T17:32:27Z",
+      "side": 1,
+      "message": "Please use spaces over tabs and remove trailing spaces",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_7b173052",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-10-27T17:32:27Z",
+      "side": 1,
+      "message": "Why using plain arrays over Java Arraylist?",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_fb02200a",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-10-27T17:32:27Z",
+      "side": 1,
+      "message": "Why do you need order here?",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
