@@ -34,10 +34,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.IntentKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.ActionTypes;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.EdgeTypes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.Graph;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges.ActionType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges.Type;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.EdgesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.IntentIds;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
@@ -372,23 +372,23 @@ public class NicProvider implements NicConsoleProvider {
             Edges action;
             // Creation of an edge 
             if (actionContainer instanceof Allow) {
-                Edges allow = new EdgesBuilder().setType(EdgeTypes.MustAllow).setActionType(ActionTypes.Composable)
+                Edges allow = new EdgesBuilder().setType(Type.MustAllow).setActionType(ActionType.Composable)
                         .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = allow;
             } else if (actionContainer instanceof Block) {
-                Edges block = new EdgesBuilder().setType(EdgeTypes.MustDeny).setActionType(ActionTypes.Exclusive)
+                Edges block = new EdgesBuilder().setType(Type.MustDeny).setActionType(ActionType.Exclusive)
                         .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = block;
             } else if (actionContainer instanceof Redirect) {
-                Edges redirect = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable)
+                Edges redirect = new EdgesBuilder().setType(Type.CanAllow).setActionType(ActionType.Composable)
                         .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = redirect;
             } else if (actionContainer instanceof Mirror) {
-                Edges mirror = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable)
+                Edges mirror = new EdgesBuilder().setType(Type.CanAllow).setActionType(ActionType.Composable)
                         .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = mirror;
             } else if (actionContainer instanceof Log) {
-                Edges log = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable)
+                Edges log = new EdgesBuilder().setType(Type.CanAllow).setActionType(ActionType.Composable)
                         .setSrcNode(sourceSubject).setDstNode(destinationSubject).build();
                 action = log;
             } else {

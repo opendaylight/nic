@@ -14,9 +14,9 @@ import org.opendaylight.nic.graph.api.CompilerGraph;
 import org.opendaylight.nic.graph.api.CompilerGraphFactory;
 import org.opendaylight.nic.graph.api.InputGraph;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.ActionTypes;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.EdgeTypes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges.ActionType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Edges.Type;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.EdgesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.graph.rev150911.graph.NodesBuilder;
@@ -67,10 +67,10 @@ public class CompilerGraphImplTest {
     public void setUp() throws Exception {
         this.intentMappingService = mock(IntentMappingService.class);
         intentCompiler = CompilerGraphFactory.createGraphCompiler();
-        allow = new EdgesBuilder().setType(EdgeTypes.MustAllow).build();
-        block = new EdgesBuilder().setType(EdgeTypes.MustDeny).setActionType(ActionTypes.Exclusive).build();
-        redirect = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Composable).build();
-        monitor = new EdgesBuilder().setType(EdgeTypes.CanAllow).setActionType(ActionTypes.Observer).build();
+        allow = new EdgesBuilder().setType(Type.MustAllow).build();
+        block = new EdgesBuilder().setType(Type.MustDeny).setActionType(ActionType.Exclusive).build();
+        redirect = new EdgesBuilder().setType(Type.CanAllow).setActionType(ActionType.Composable).build();
+        monitor = new EdgesBuilder().setType(Type.CanAllow).setActionType(ActionType.Observer).build();
     }
 
     @Test

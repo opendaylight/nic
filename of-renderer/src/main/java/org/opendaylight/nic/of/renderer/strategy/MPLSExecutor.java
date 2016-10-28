@@ -19,7 +19,7 @@ import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.nic.utils.IntentUtils;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.constraints.rev150122.FailoverType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.constraints.rev150122.FailoverConstraint.FailoverSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.FailoverConstraint;
@@ -187,8 +187,8 @@ public class MPLSExecutor implements ActionStrategy {
         boolean result = false;
         if (FailoverConstraint.class.isAssignableFrom(constraints.getClass())) {
             final FailoverConstraint failoverConstraint = (FailoverConstraint) constraints.getConstraints();
-            final FailoverType failoverType = failoverConstraint.getFailoverConstraint().getFailoverSelector();
-            result = failoverType != null ? equals(FailoverType.SlowReroute) : false;
+            final FailoverSelector failoverSelector = failoverConstraint.getFailoverConstraint().getFailoverSelector();
+            result = failoverSelector != null ? equals(FailoverSelector.SlowReroute) : false;
         } else if (ProtectionConstraint.class.isAssignableFrom(constraints.getClass())) {
             final ProtectionConstraint protectionConstraint = (ProtectionConstraint) constraints.getConstraints();
             result = protectionConstraint.getProtectionConstraint().isIsProtected();
