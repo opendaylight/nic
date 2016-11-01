@@ -15,6 +15,7 @@ import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.intent.definitions.IntentDefinition;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -72,6 +73,8 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new NodeConnectorNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<Intent, IntentAdded, IntentRemoved, IntentUpdated> intentSupp =
                 new IntentNotificationSupplierImpl(db);
+        NotificationSupplierForItemRoot<IntentDefinition, IntentNBIAdded, IntentNBIRemoved, IntentNBIUpdated> intentNBISupp =
+                new IntentNBINotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<SecurityGroup, SecurityGroupAdded, SecurityGroupDeleted, SecurityGroupUpdated> secGroupSupp =
                 new NeutronSecGroupNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<SecurityRule, SecurityRuleAdded, SecurityRuleDeleted, SecurityRuleUpdated> secRulesSupp =
@@ -82,7 +85,9 @@ public class ListenerProviderImpl implements AutoCloseable {
 
         // Event listeners
         IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(flowService);
+        IntentNBINotificationSubscriberImpl intentNBIListener = new IntentNBINotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
+        serviceRegistry.registerEventListener((IEventService) intentNBISupp, intentNBIListener);
         NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
         EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =

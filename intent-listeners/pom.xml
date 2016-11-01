@@ -32,6 +32,11 @@
         </dependency>
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
+            <artifactId>intent-engine</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
             <artifactId>of-renderer</artifactId>
             <version>${project.version}</version>
         </dependency>
