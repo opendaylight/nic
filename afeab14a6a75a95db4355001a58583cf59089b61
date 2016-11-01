@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_4c06f521",
+        "filename": "intent-engine/src/main/config/default-config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "I would advice using blueprint instead of config system. This wiki page gives insight on the why and the how: https://wiki.opendaylight.org/view/Using_Blueprint\nNo more automagic dependency injection from the config system is a great plus.",
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_8f263fb9",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "OpenDaylight best practices advice to kill the space here, and to order the import in alphabetical order: https://wiki.opendaylight.org/view/GettingStarted:_Eclipse_Setup#Import_ordering",
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_af0e9b32",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "Why do you register this as a service in the OSGi registry?\n\nIf it is indeed required, then you should create an interface holding the APIs that this class will implement (e.g. List\u003cIntentDefinitions\u003e listIntents(final boolean isConfigurationDatastore), so you register the Service and not the implementation.\n\nAlso, if using blueprint, you can register the service using the \u003cservice\u003e tag, but you need an interface.",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 101
+      },
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_0f134f5d",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "LOG the exception.",
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_6f2be382",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "can\u0027t this be imported?",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 73
+      },
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_cf20379e",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "I would have a different level here, at least WARM, and I would log the throwable.",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_af25fbac",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "Well this is true only if the above async transaction succeeded. This should go under the onSuccess callback",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 80
+      },
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_0f3a2fcd",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "This is still async, just with no callback. To make it sync you have to call checkedGet() or/and get() in the future returned by tx.submit()",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_4f3427de",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "it seems that whatever the scenario is, you will initialize the list, hence you can do it here immediately and remove line 121/123",
+      "range": {
+        "startLine": 104,
+        "startChar": 48,
+        "endLine": 104,
+        "endChar": 52
+      },
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_ef36d3e6",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-01T11:51:51Z",
+      "side": 1,
+      "message": "this will end in a redundant message, and logging the whole exception will log the message as well.",
+      "range": {
+        "startLine": 118,
+        "startChar": 53,
+        "endLine": 118,
+        "endChar": 71
+      },
+      "revId": "afeab14a6a75a95db4355001a58583cf59089b61",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
