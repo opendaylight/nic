@@ -93,6 +93,8 @@ public class ListenerProviderImplTest {
                 mock(NodeConnectorNotificationSupplierImpl.class);
         IntentNotificationSupplierImpl mockIntentSupp =
                 mock(IntentNotificationSupplierImpl.class);
+        IntentNBINotificationSupplierImpl mockIntentNBISupp =
+                mock(IntentNBINotificationSupplierImpl.class);
         NeutronSecGroupNotificationSupplierImpl mockSecGroupsSupp =
                 mock(NeutronSecGroupNotificationSupplierImpl.class);
         NeutronSecRuleNotificationSupplierImpl mockSecRulesSupp =
@@ -108,6 +110,8 @@ public class ListenerProviderImplTest {
                 withAnyArguments().thenReturn(mockConnectorSupp);
         PowerMockito.whenNew(IntentNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockIntentSupp);
+        PowerMockito.whenNew(IntentNBINotificationSupplierImpl.class).
+                withAnyArguments().thenReturn(mockIntentNBISupp);
         PowerMockito.whenNew(NeutronSecGroupNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockSecGroupsSupp);
         PowerMockito.whenNew(NeutronSecRuleNotificationSupplierImpl.class).

@@ -113,6 +113,7 @@
     <!-- Intent Listeners -->
     <feature name='odl-nic-listeners' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Listeners'>
         <feature version="${project.version}">odl-nic-renderer-of</feature>
+        <feature version="${project.version}">odl-nic-intent-engine</feature>
         <bundle>mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/92-intent-listeners.xml">mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config</configfile>
     </feature>
@@ -121,6 +122,7 @@
     <feature name='odl-nic-neutron-integration' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Neutron Integration'>
         <feature version="${project.version}">odl-nic-listeners</feature>
         <bundle>mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}</bundle>
+        <feature version="${project.version}">odl-nic-intent-engine</feature>
         <feature version='${odl.ovsdb.version}'>odl-ovsdb-southbound-impl</feature>
         <configfile finalname="etc/opendaylight/karaf/92-neutron-integration.xml">mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}/xml/config</configfile>
     </feature>
@@ -129,6 +131,7 @@
     <feature name='odl-nic-intent-statemachine' version='${project.version}'
              description='OpenDaylight :: Network Intent Composition :: Intent State Machine'>
         <feature version="${project.version}">odl-nic-listeners</feature>
+        <feature version="${project.version}">odl-nic-intent-engine</feature>
         <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/93-intent-statemachine.xml">mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config</configfile>
     </feature>
