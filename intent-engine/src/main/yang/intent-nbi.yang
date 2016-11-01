@@ -26,6 +26,12 @@ module intent-nbi {
     }
 
     grouping intent-definition {
+        leaf id {
+            type yang:uuid;
+            mandatory true;
+            description "Uniquely identifies the intent";
+        }
+
         // All objects and object-groups have names.
         typedef name {
             type string {
@@ -164,6 +170,9 @@ module intent-nbi {
     }
 
     container intent-definitions {
-        uses intent-definition;
+        list intent-definition {
+            key "id";
+            uses intent-definition;
+        }
     }
 }
