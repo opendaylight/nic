@@ -1,6 +1,7 @@
 package org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.opendaylight.nic.impl.IntentEngineProviderImpl;
@@ -26,7 +27,11 @@ public class IntentEngineProviderModule extends org.opendaylight.yang.gen.v1.urn
         LOG.info("Starting Intent-Engine module.");
         final DataBroker dataBroker = getDataBrokerDependency();
         final IntentEngineProviderImpl commonProvider = new IntentEngineProviderImpl(dataBroker);
-        commonProvider.init();
+        try {
+            commonProvider.init();
+        } catch (TransactionCommitFailedException e) {
+            e.printStackTrace();
+        }
         return commonProvider;
     }
 
