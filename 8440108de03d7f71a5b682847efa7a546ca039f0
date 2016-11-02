@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_15523cdd",
+        "filename": "intent-engine/src/main/config/default-config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-11-02T00:01:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure about th",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 11
+      },
+      "revId": "8440108de03d7f71a5b682847efa7a546ca039f0",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
