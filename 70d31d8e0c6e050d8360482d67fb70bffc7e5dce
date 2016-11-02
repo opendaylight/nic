@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_9b5cbd27",
+        "filename": "intent-engine/pom.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-02T12:29:34Z",
+      "side": 1,
+      "message": "this should be binding-parent",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "70d31d8e0c6e050d8360482d67fb70bffc7e5dce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_fb405137",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-02T12:29:34Z",
+      "side": 1,
+      "message": "kill extra space",
+      "revId": "70d31d8e0c6e050d8360482d67fb70bffc7e5dce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_db3d95bd",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-02T12:29:34Z",
+      "side": 1,
+      "message": "kill extra space",
+      "revId": "70d31d8e0c6e050d8360482d67fb70bffc7e5dce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_1b48ad5a",
+        "filename": "intent-engine/src/main/java/org/opendaylight/nic/impl/IntentEngineProviderImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-02T12:29:34Z",
+      "side": 1,
+      "message": "I think ReadOnlyTrnasaction has to be closed",
+      "range": {
+        "startLine": 102,
+        "startChar": 18,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "70d31d8e0c6e050d8360482d67fb70bffc7e5dce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_bb6ed9c7",
+        "filename": "intent-engine/src/main/resources/OSGI-INF.blueprint/intent-engine.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-11-02T12:29:34Z",
+      "side": 1,
+      "message": "this should be located under src/main/resources/org/opendaylight/blueprint",
+      "revId": "70d31d8e0c6e050d8360482d67fb70bffc7e5dce",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
