@@ -21,7 +21,7 @@
         <mdsal.version>1.5.0-SNAPSHOT</mdsal.version>
         <pitest.version>1.1.4</pitest.version>
         <liblldp.version>0.12.0-SNAPSHOT</liblldp.version>
-        <sfc.version>0.4.0-SNAPSHOT</sfc.version>
+        <sfc.version>0.5.0-SNAPSHOT</sfc.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->
