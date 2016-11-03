@@ -33,7 +33,7 @@
     <hazelcast.version>3.4.2</hazelcast.version>
     <neutron.version>0.8.0-SNAPSHOT</neutron.version>
     <odl.ovsdb.version>1.4.0-SNAPSHOT</odl.ovsdb.version>
-    <sfc.version>0.4.0-SNAPSHOT</sfc.version>
+    <sfc.version>0.5.0-SNAPSHOT</sfc.version>
   </properties>
 
   <dependencies>
