@@ -16,6 +16,24 @@
       "revId": "9d53a5086d2b09ce0574937af9986ad7ea4176dd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_929bf7c8",
+        "filename": "intent-engine/src/main/yang/intent-nbi.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-04T03:59:50Z",
+      "side": 1,
+      "message": "Please ignore my comment. Given the exception message the problem seems to be caused by Jenkins. Let\u0027s re-check later.",
+      "parentUuid": "3a65312a_126887b9",
+      "revId": "9d53a5086d2b09ce0574937af9986ad7ea4176dd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
