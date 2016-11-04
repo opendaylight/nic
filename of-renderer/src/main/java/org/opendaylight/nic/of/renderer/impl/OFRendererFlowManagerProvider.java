@@ -135,7 +135,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
                 && targetContent.containsKey(OFRendererConstants.MPLS_LABEL_KEY));
     }
 
-    private boolean isQoS(final Intent intent) {
+    public boolean isQoS(final Intent intent) {
         Action actionContainer = null;
         try {
             actionContainer = IntentUtils.getAction(intent);
