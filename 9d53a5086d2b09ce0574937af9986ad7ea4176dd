@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_126887b9",
+        "filename": "intent-engine/src/main/yang/intent-nbi.yang",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-04T03:55:14Z",
+      "side": 1,
+      "message": "These changes affect and break the auto-generated code. Please update with the new auto-generated objects.",
+      "revId": "9d53a5086d2b09ce0574937af9986ad7ea4176dd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
