@@ -14,9 +14,11 @@ import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.Observer;
 import org.opendaylight.nic.of.renderer.api.Subject;
+import org.opendaylight.nic.of.renderer.strategy.ActionStrategy;
 import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
 import org.opendaylight.nic.of.renderer.strategy.MPLSExecutor;
 import org.opendaylight.nic.of.renderer.strategy.QoSExecutor;
+import org.opendaylight.nic.of.renderer.strategy.RedirectExecutor;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
@@ -101,15 +103,22 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
         //TODO: Change to use Command Pattern
         try {
+            ActionStrategy actionStrategy = null;
+
             if (isMPLS(intent)) {
-                new MPLSExecutor(mplsIntentFlowManager, intentMappingService, graphService).execute(intent, flowAction);
+                actionStrategy = new MPLSExecutor(mplsIntentFlowManager,
+                        intentMappingService, graphService);
             } else if (isQoS(intent)) {
-                new QoSExecutor(qosConstraintManager, dataBroker).execute(intent, flowAction);
+                actionStrategy = new QoSExecutor(qosConstraintManager,
+                        dataBroker);
             } else if (isRedirect(intent)) {
-                redirectFlowManager.redirectFlowConstruction(intent, flowAction);
+                actionStrategy = new RedirectExecutor(redirectFlowManager);
             } else {
-                new DefaultExecutor(intentFlowManager, dataBroker).execute(intent, flowAction);
+                actionStrategy = new DefaultExecutor(intentFlowManager,
+                        dataBroker);
             }
+
+            actionStrategy.execute(intent, flowAction);
         } catch (IntentInvalidException ie) {
             //TODO: Implement an action for Exception cases
         }
@@ -135,7 +144,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
                 && targetContent.containsKey(OFRendererConstants.MPLS_LABEL_KEY));
     }
 
-    private boolean isQoS(final Intent intent) {
+    public boolean isQoS(final Intent intent) {
         Action actionContainer = null;
         try {
             actionContainer = IntentUtils.getAction(intent);
