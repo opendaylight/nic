@@ -30,6 +30,8 @@ import java.util.regex.PatternSyntaxException;
 
 public class IntentUtils {
 
+    private static final String IP_PATTERN = "^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+
     private static final Logger LOG = LoggerFactory.getLogger(IntentUtils.class);
 
     private static final int NUM_OF_SUPPORTED_ACTION = 1;
@@ -61,13 +63,15 @@ public class IntentUtils {
         if (ip == null || ip.isEmpty()) {
             return false;
         }
+
         ip = ip.trim();
-        if ((ip.length() < 6) & (ip.length() > 15)) {
+
+        if ((ip.length() < 7) || (ip.length() > 15)) {
             return false;
         }
 
         try {
-            Pattern pattern = Pattern.compile("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            Pattern pattern = Pattern.compile(IP_PATTERN);
             Matcher matcher = pattern.matcher(ip);
             return matcher.matches();
         } catch (PatternSyntaxException ex) {
@@ -78,10 +82,9 @@ public class IntentUtils {
 
     public static boolean verifyIntent(final Intent intent) {
         boolean result = false;
-        if (intent != null && intent.getId() != null) {
-            if (verifyIntentActions(intent)) {
-                result = verifyIntentSubjects(intent);
-            }
+        if (intent != null && intent.getId() != null
+                && verifyIntentActions(intent)) {
+            result = verifyIntentSubjects(intent);
         } else {
             LOG.warn("Intent ID is not specified {}", intent);
         }
