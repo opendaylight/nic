@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_a75510c8",
+        "filename": "of-renderer/src/test/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-05T03:33:08Z",
+      "side": 1,
+      "message": "Please pass a valid label as in a real scenario",
+      "revId": "a51bb45c9722325bc4e7cf70e234cd91013b9a5c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_875294db",
+        "filename": "of-renderer/src/test/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-05T03:33:08Z",
+      "side": 1,
+      "message": "Likewise",
+      "revId": "a51bb45c9722325bc4e7cf70e234cd91013b9a5c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
