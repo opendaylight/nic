@@ -33,6 +33,24 @@
       "revId": "2cfa2e27c88fe5dc996c53a04ebdf5b9006c29c4",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_c73c8c96",
+        "filename": "utils/src/test/java/org/opendaylight/nic/utils/IntentUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-05T03:25:06Z",
+      "side": 1,
+      "message": "Please ignore my previous comment. I haven\u0027t realized that you\u0027re validating an invalid IP.",
+      "parentUuid": "3a65312a_47c19c7f",
+      "revId": "2cfa2e27c88fe5dc996c53a04ebdf5b9006c29c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
