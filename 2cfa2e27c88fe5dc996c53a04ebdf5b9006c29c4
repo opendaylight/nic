@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_67c49892",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-05T03:18:03Z",
+      "side": 1,
+      "message": "What was wrong with this line? I\u0027m not sure why you changed it.",
+      "revId": "2cfa2e27c88fe5dc996c53a04ebdf5b9006c29c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_47c19c7f",
+        "filename": "utils/src/test/java/org/opendaylight/nic/utils/IntentUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-05T03:18:03Z",
+      "side": 1,
+      "message": "This is an invalid IP address.",
+      "revId": "2cfa2e27c88fe5dc996c53a04ebdf5b9006c29c4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
