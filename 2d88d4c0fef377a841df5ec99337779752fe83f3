@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_8a68c6bb",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNotificationSubscriberImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-11-11T00:19:29Z",
+      "side": 1,
+      "message": "Avoid multiple imports. TIP: configure your IDE to avoid it.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "2d88d4c0fef377a841df5ec99337779752fe83f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_6a656ae0",
+        "filename": "neutron-integration/pom.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-11-11T00:19:29Z",
+      "side": 1,
+      "message": "Why \u0027neutron-integration\u0027 should have \u0027intent-engine\u0027 as a dependency?",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "2d88d4c0fef377a841df5ec99337779752fe83f3",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
