@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_275900ff",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNBINotificationSubscriberImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-11T02:11:34Z",
+      "side": 1,
+      "message": "This will be done in the next patch",
+      "revId": "4edd156ba98abfe9497e75a45f2a153998a7193c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
