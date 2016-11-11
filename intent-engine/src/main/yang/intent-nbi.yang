@@ -15,164 +15,200 @@
  */
 
 module intent-nbi {
-    namespace "urn:onf:intent:intent:nbi";
-    prefix intent-nbi;
+  namespace "urn:onf:intent:intent-nbi";
+  prefix intent-nbi;
 
-    import ietf-yang-types { prefix "yang"; }
-    import ietf-inet-types { prefix "inet"; }
+  import ietf-yang-types { prefix "yang"; }
+  import ietf-inet-types { prefix "inet"; }
 
-    revision 2016-09-20 {
-        description "Initial revision";
+  organization "Open Networking Foundation (ONF)";
+  contact "info@opennetworking.org";
+  description "Intent North-Bound Interface (NBI) definitions";
+
+  revision "2016-09-20" {
+    description "Initial revision";
+    reference "https://github.com/onfsdn/atrium-enterprise";
+  }
+
+  grouping intent-definition {
+    description "All intent definitions";
+
+    // Intent-definition UUID.
+    leaf id {
+        type yang:uuid;
+        mandatory true;
+        description "Uniquely identifies the intent";
     }
 
-    grouping intent-definition {
-        leaf id {
-            type yang:uuid;
+    // All objects and object-groups have names.
+    typedef name {
+      type string {
+        length "1..60";
+        pattern "[a-zA-Z][-_0-9a-zA-Z]*";
+      }
+      description "Format definitions for object and object-group names";
+    }
+
+    // Objects.
+    grouping object {
+      description "Object template";
+      leaf object-name {
+        type name;
+        mandatory true;
+        description "The name of the given object";
+      }
+    }
+
+    // Object-groups.
+    grouping object-group {
+      description "Object-group template";
+      leaf object-group-name {
+        type name;
+        mandatory true;
+        description "The name of the given object-group";
+      }
+    }
+
+    // Modifiers.
+    grouping modifier {
+      description "Modifier template";
+      leaf modifier-name {
+        type enumeration {
+          enum "Time-Sensitive" {
+            description "Indicates real-time, Unified Communications (UC) traffic";
+          }
+        }
+        mandatory true;
+        description "All supported modifiers";
+      }
+    }
+
+    // Objects are identified by object name (the key) and the mapping repository holds the object definition,
+    // which is a augmentable choice of types (object-type) - initially only a "media-flow" (a 5-tuple).
+    list objects {
+      uses object;
+      key "object-name";
+      description "All object definitions";
+      container mapping {
+        description "An object is either unmapped or mapped to an object definition";
+        choice object-type {
+          description "All supported formats for object definitions";
+          case media-flow {
+            container media-flow {
+              description "Information to identify and mark a particular mediaflow";
+              leaf source-ip-address {
+                type inet:ip-address;
+                mandatory true;
+                description "The source address in the Internet Protocol header";
+              }
+              leaf source-port {
+                type inet:port-number;
+                mandatory true;
+                description "The source port in the Transport header";
+              }
+              leaf destination-ip-address {
+                type inet:ip-address;
+                mandatory true;
+                description "The destination address in the Internet Protocol header";
+              }
+              leaf destination-port {
+                type inet:port-number;
+                mandatory true;
+                description "The destination port in the Transport header";
+              }
+              leaf protocol {
+                type uint8;
+                mandatory true;
+                description "The Protocol field in the Internet Protocol header";
+              }
+              leaf dscp-marking {
+                type inet:dscp;
+                mandatory true;
+                description "The DSCP marking to be applied to this media-flow";
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Object-groups are identified by object-group name (key) and the intent repository holds the object-group
+    // definitions which is a limited choice of objects and/or object-groups (no circular references).
+    list object-groups {
+      uses object-group;
+      key "object-group-name";
+      description "All object-group definitions";
+      list member-objects {
+        uses object;
+        key "object-name";
+        description "Any contained objects";
+      }
+      list member-object-groups {
+        uses object-group;
+        key "object-group-name";
+        description "Any contained object-groups";
+      }
+    }
+
+    // A modifier can be associated with a limited choice (forms) of objects and/or object-groups.
+    grouping association {
+      description "An association bind one modifier to limited combinations of objects and object-groups";
+      uses modifier;
+      choice forms {
+        mandatory true;
+        description "The associated object and/or object-groups";
+        // One or two objects.
+        case obj {
+          leaf-list objects {
+            type name;
+            min-elements 1;
+            max-elements 2;
+            description "All object(s) in this association";
+          }
+        }
+        // One or two object groups.
+        case obj-grp {
+          leaf-list object-groups {
+            type name;
+            min-elements 1;
+            max-elements 2;
+            description "All object group(s) in this association";
+          }
+        }
+        // One object and one object-group.
+        case mixed {
+          leaf object {
+            type name;
             mandatory true;
-            description "Uniquely identifies the intent";
+            description "The single object in this association";
+          }
+          leaf object-group {
+            type name;
+            mandatory true;
+            description "The single object-group in this association";
+          }
         }
-
-        // All objects and object-groups have names.
-        typedef name {
-            type string {
-                pattern "[a-fA-F][-_0-9a-fA-F]*";
-                length "1..60";
-            }
-        }
-
-        // Objects.
-        grouping object {
-            description "Object template";
-            leaf object-name {
-                type name;
-                mandatory true;
-            }
-        }
-
-        // Object groups.
-        grouping object-group {
-            description "Object-group template";
-            leaf object-group-name {
-                type name;
-                mandatory true;
-            }
-        }
-
-        // Modifiers.
-        grouping modifier {
-            description "Standard, pre-defined modifiers";
-            leaf modifier-name {
-                type enumeration {
-                    enum "Time-Sensitive";
-                }
-            }
-        }
-
-        // Objects are identified by object name (the key) and the mapping repository holds the object definition,
-        // which is a augmentable choice of types (object-type) - initially only a "media-flow" (a 5-tuple).
-        list objects {
-            description "All object definitions";
-            key "object-name";
-            uses object;
-            container mapping {
-                choice object-type {
-                    case media-flow {
-                        container media-flow {
-                            leaf source-ip-address {
-                                type inet:ip-address;
-                            }
-                            leaf source-port {
-                                type inet:port-number;
-                            }
-                            leaf destination-ip-address {
-                                type inet:ip-address;
-                            }
-                            leaf destination-port {
-                                type inet:port-number;
-                            }
-                            leaf protocol {
-                                type uint8;
-                            }
-                            leaf dscp-marking {
-                                type inet:dscp;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // Object-groups are identified by object-group name (key) and the intent repository holds the object-group
-        // definitions which is a limited choice of objects and/or object-groups (no circular references).
-        list object-groups {
-            description "All object-group definitions";
-            key "object-group-name";
-            uses object-group;
-            list member-objects {
-                description "Any contained objects";
-                key "object-name";
-                uses object;
-            }
-            list member-object-groups {
-                description "Any contained object groups";
-                key "object-group-name";
-                uses object-group;
-            }
-        }
-
-        // A modifier can be associated with a limited choice (forms) of objects and/or object-groups.
-        grouping association {
-            uses modifier;
-            choice forms {
-                description "The associated object and/or object-groups";
-                mandatory true;
-                // One or two objects.
-                case obj {
-                    leaf-list objects {
-                        type name;
-                        min-elements 1;
-                        max-elements 2;
-                    }
-                }
-                // One or two object groups.
-                case obj-grp {
-                    leaf-list object-groups {
-                        type name;
-                        min-elements 1;
-                        max-elements 2;
-                    }
-                }
-                // One object and one object-group.
-                case mixed {
-                    leaf object {
-                        type name;
-                        mandatory true;
-                    }
-                    leaf object-group {
-                        type name;
-                        mandatory true;
-                    }
-                }
-            }
-        }
-
-        // Associations are defined in the intent repository, which holds all currently-known
-        // combinations of modifiers, objects and object groups. We do not give associations
-        // a name, only IDs, as they represent ad-hoc intent expressions.
-        list associations {
-            description "All associations of modifiers, objects and object-groups";
-            key "association-id";
-            leaf association-id {
-                type yang:uuid;
-            }
-            uses association;
-        }
+      }
     }
 
-    container intent-definitions {
-        list intent-definition {
-            key "id";
-            uses intent-definition;
-        }
+    // Associations are defined in the intent repository, which holds all currently-known
+    // combinations of modifiers, objects and object groups. We do not give associations
+    // a name, only UUIDs, as they represent ad-hoc intent expressions.
+    list associations {
+      key "association-id";
+      description "All associations of modifiers, objects and object-groups";
+      leaf association-id {
+        type yang:uuid;
+        description "All associations are labeled with a UUID as a unique key";
+      }
+      uses association;
     }
+  }
+
+  container intent-definitions {
+      list intent-definition {
+          key "id";
+          uses intent-definition;
+      }
+  }
 }
