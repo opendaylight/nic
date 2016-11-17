@@ -24,6 +24,7 @@ import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
+import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
@@ -264,10 +265,10 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
                  String targetNodeConnectorId, FlowAction flowAction) {
         org.opendaylight.yang.gen.v1.urn
             .tbd.params.xml.ns.yang.network
-            .topology.rev131021.NodeId sourceNodeId = extractTopologyNodeId(sourceNodeConnectorId);
+            .topology.rev131021.NodeId sourceNodeId = TopologyUtils.extractTopologyNodeId(sourceNodeConnectorId);
         org.opendaylight.yang.gen.v1.urn
             .tbd.params.xml.ns.yang.network
-            .topology.rev131021.NodeId targetNodeId = extractTopologyNodeId(targetNodeConnectorId);
+            .topology.rev131021.NodeId targetNodeId = TopologyUtils.extractTopologyNodeId(targetNodeConnectorId);
         List<Link> shortestPath = graphService.getShortestPath(sourceNodeId, targetNodeId);
         LOG.trace("Redirect Source NodeId {}", sourceNodeId.getValue());
         LOG.trace("Redirect sourceNodeConnectorId {}", sourceNodeConnectorId);
@@ -384,23 +385,6 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
         return flowBuilder;
     }
 
-    /**
-     * Derivate a {@link org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId}
-     * from a {@link NodeConnector}.
-     * @param nodeConnectorId The Inventory NodeConnectorId
-     * @return NodeId contained in Network-Topology
-     */
-    private org.opendaylight.yang.gen.v1.urn
-                .tbd.params.xml.ns.yang.network
-                .topology.rev131021.NodeId extractTopologyNodeId(String nodeConnectorId) {
-        List<String> split = Arrays.asList(nodeConnectorId.split(":"));
-        return new org.opendaylight.yang.gen.v1.urn
-                       .tbd.params.xml.ns.yang.network
-                       .topology.rev131021.NodeId(split.get(0) +
-                               ":" +
-                               split.get(1));
-    }
-
     @Override
     protected String createFlowName() {
         // TODO Auto-generated method stub
@@ -479,8 +463,8 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
         String[] redirectSfcDataList = readRedirectSfcData(serviceName);
         redirectNodeData.setIngressNodeId(redirectSfcDataList[0]);
         redirectNodeData.setEgressNodeId(redirectSfcDataList[1]);
-        deleteArpFlow(new NodeId(extractTopologyNodeId(redirectSfcDataList[0]).getValue()));
-        deleteArpFlow(new NodeId(extractTopologyNodeId(redirectSfcDataList[1]).getValue()));
+        deleteArpFlow(new NodeId(TopologyUtils.extractTopologyNodeId(redirectSfcDataList[0]).getValue()));
+        deleteArpFlow(new NodeId(TopologyUtils.extractTopologyNodeId(redirectSfcDataList[1]).getValue()));
     }
 
     /**
