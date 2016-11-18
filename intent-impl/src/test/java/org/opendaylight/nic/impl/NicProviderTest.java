@@ -23,6 +23,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.Test;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.yangtools.yang.binding.KeyedInstanceIdentifier;
 import org.powermock.api.mockito.PowerMockito;
@@ -115,7 +116,7 @@ public class NicProviderTest {
      * Test case for {@link NicProvider#init()}
      */
     @Test
-    public void testInit() {
+    public void testInit() throws TransactionCommitFailedException {
         /**
          * Here creates required mock objects and defines mocking functionality
          * for mock objects.

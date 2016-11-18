@@ -146,10 +146,4 @@
         <bundle>mvn:org.opendaylight.nic/intent-common/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/95-intent-common.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
     </feature>
-
-    <!-- Intent Engine feature -->
-    <feature name='odl-nic-intent-engine' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Engine'>
-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
-        <bundle>mvn:org.opendaylight.nic/intent-engine/{{VERSION}}</bundle>
-    </feature>
 </features>

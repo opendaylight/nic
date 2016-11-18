@@ -1,5 +1,6 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.impl.rev150507;
 
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.impl.NicProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,11 @@ public class NicProviderModule extends org.opendaylight.yang.gen.v1.urn.opendayl
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating a new NicProvider instance");
         final NicProvider provider = new NicProvider(getDataBrokerDependency(), getIntentMappingInterfaceDependency());
-        provider.init();
+        try {
+            provider.init();
+        } catch (TransactionCommitFailedException e) {
+            LOG.error(e.getMessage());
+        }
         return provider;
     }
 
