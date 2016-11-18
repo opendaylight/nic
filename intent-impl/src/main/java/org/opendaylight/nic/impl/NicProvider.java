@@ -9,12 +9,14 @@
 package org.opendaylight.nic.impl;
 
 import com.google.common.base.Optional;
+import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.compiler.api.*;
 import org.opendaylight.nic.graph.api.CompilerGraph;
@@ -22,6 +24,8 @@ import org.opendaylight.nic.graph.api.CompilerGraphException;
 import org.opendaylight.nic.graph.api.CompilerGraphFactory;
 import org.opendaylight.nic.graph.api.InputGraph;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.IntentDefinitions;
+import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.IntentDefinitionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
@@ -68,6 +72,7 @@ public class NicProvider implements NicConsoleProvider {
     }
 
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
+    public static final InstanceIdentifier<IntentDefinitions> INTENTS_NBI_IID = InstanceIdentifier.builder(IntentDefinitions.class).build();
 
     @Override
     public void close() throws Exception {
@@ -75,10 +80,59 @@ public class NicProvider implements NicConsoleProvider {
         LOG.info("IntentengineImpl: registrations closed");
     }
 
-    public void init() {
+    public void init() throws TransactionCommitFailedException {
         initIntentsOperational();
         initIntentsConfiguration();
+        initIntentNBIOperational();
+        initIntentNBIConfiguration();
         LOG.info("Initialization done");
+    }
+
+    /**
+     * Populates Intents' initial operational data into the MD-SAL operational
+     * data store.
+     */
+    protected void initIntentNBIOperational() {
+        // Build the initial intents operational data
+        final IntentDefinitions intents = new IntentDefinitionsBuilder().build();
+
+        // Put the Intents operational data into the MD-SAL data store
+        WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
+        tx.put(LogicalDatastoreType.OPERATIONAL, INTENTS_NBI_IID, intents);
+
+        // Perform the tx.submit asynchronously
+        Futures.addCallback(tx.submit(), new FutureCallback<Void>() {
+
+            @Override
+            public void onSuccess(final Void result) {
+                LOG.info("Init Intents-NBI Operational: transaction succeeded");
+                LOG.info("Init Intents-NBI Operational: status populated: {}", intents);
+            }
+
+            @Override
+            public void onFailure(final Throwable throwable) {
+                LOG.error("Init Intents-NBI Operational: transaction failed: " + throwable);
+            }
+        });
+    }
+
+    /**
+     * Populates Intents' default config data into the MD-SAL configuration data
+     * store. Note the database write to the tree are done in a synchronous
+     * fashion
+     */
+    protected void initIntentNBIConfiguration() throws TransactionCommitFailedException {
+        // Build the default Intents config data
+        final IntentDefinitions intents = new IntentDefinitionsBuilder().build();
+
+        // Place default config data in data store tree
+        final WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
+        tx.put(LogicalDatastoreType.CONFIGURATION, INTENTS_NBI_IID, intents);
+        // Perform the tx.submit synchronously
+        CheckedFuture<Void, TransactionCommitFailedException> result = tx.submit();
+        result.checkedGet();
+
+        LOG.info("Init Intents-NBI Configuration: default config populated: {}", intents);
     }
 
     /**
@@ -127,8 +181,8 @@ public class NicProvider implements NicConsoleProvider {
 
         UUID uuid = UUID.randomUUID();
         Intent intent = new IntentBuilder().
-            setId(new Uuid(uuid.toString()))
-            .build();
+                setId(new Uuid(uuid.toString()))
+                .build();
         addIntent(intent);
         removeIntent(intent.getId());
         LOG.info("initIntentsConfiguration: default config populated: {}", intents);
@@ -291,7 +345,7 @@ public class NicProvider implements NicConsoleProvider {
             } else if (actionContainer instanceof Redirect) {
                 action = redirect;
             } else if (actionContainer instanceof Mirror) {
-                    action = mirror;
+                action = mirror;
             } else if (actionContainer instanceof Log) {
                 action = log;
             } else {
