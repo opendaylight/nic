@@ -300,18 +300,6 @@ public class OFRendererFlowManagerProviderTest {
         Assert.assertFalse(ofRendererFlowManagerProvider.isQoS(intent));
     }
 
-    @Test(expected = IntentElementNotFoundException.class)
-    public void testIsMPLSWithEmptyResultOnIntentMappingService()
-            throws Exception {
-        initIntentWithSourceAndDestination();
-
-        Map<String, String> map = new HashMap<>();
-        when(intentMappingService.get(Mockito.any(String.class)))
-                .thenReturn(map);
-
-        ofRendererFlowManagerProvider.isMPLS(intent);
-    }
-
     @Test
     public void testIsMPLSWithNoMappingForDestination()
             throws IntentInvalidException {

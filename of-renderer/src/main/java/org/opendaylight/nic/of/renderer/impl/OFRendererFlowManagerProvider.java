@@ -22,7 +22,6 @@ import org.opendaylight.nic.of.renderer.strategy.RedirectExecutor;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
-import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
@@ -37,11 +36,13 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 /**
  * Created by saket on 8/19/15.
  */
@@ -233,14 +234,14 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         this.topic = sub;
     }
 
-    private Map<String, String> getMappingServiceContent(final EndPointGroup endPointGroup)
-            throws IntentElementNotFoundException {
-        final String endPointGroupName = endPointGroup.getEndPointGroup().getName();
-        final String CONTENT_NOT_FOUND_MESSAGE = "Content not found for EndPointGroup: " + endPointGroupName;
-        final Map<String, String> contentMap = intentMappingService.get(endPointGroupName);
-        if(contentMap.isEmpty()) {
-            throw new IntentElementNotFoundException(CONTENT_NOT_FOUND_MESSAGE);
+    private Map<String, String> getMappingServiceContent(final EndPointGroup endPointGroup) {
+        Map<String, String> contentMap = null;
+
+        if (endPointGroup != null && endPointGroup.getEndPointGroup() != null){
+            final String endPointGroupName = endPointGroup.getEndPointGroup().getName();
+            contentMap = intentMappingService.get(endPointGroupName);
         }
-        return contentMap;
+
+        return contentMap == null ? new HashMap<>() : contentMap;
     }
 }
