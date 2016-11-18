@@ -24,10 +24,16 @@ public enum EventType {
     NODE_REMOVED,
     /** Indicates a new intent is added */
     INTENT_ADDED,
+    /** Indicates a new intent-NBI is added */
+    INTENT_NBI_ADDED,
     /** Indicates a intent is update */
     INTENT_UPDATE,
+    /** Indicates a intent-NBI is update */
+    INTENT_NBI_UPDATE,
     /** Indicates existing intent is removed */
     INTENT_REMOVED,
+    /** Indicates existing intent-NBI is removed */
+    INTENT_NBI_REMOVED,
     /** Indicates that a new endpoint is discovered but it doesn't mean that the just came up*/
     ENDPOINT_DISCOVERED,
     /** Indicates that a new security group is added by neutron*/
