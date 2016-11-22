@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a65312a_0e5e6a12",
+        "filename": "intent-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/impl/rev150507/NicProviderModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-11-22T03:13:31Z",
+      "side": 1,
+      "message": "Please, can you remove this \u0027prontStackTrace()\u0027 call?\nMaybe should be replaced by a \u0027LOG.error(..)\u0027\nthanks,",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "fad842d4c4bfddf358649ad6f7702c318567ff21",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
