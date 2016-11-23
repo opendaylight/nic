@@ -22,6 +22,30 @@
       "revId": "fad842d4c4bfddf358649ad6f7702c318567ff21",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_3f2f0ef8",
+        "filename": "intent-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/nic/intent/impl/rev150507/NicProviderModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-11-23T00:13:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a65312a_0e5e6a12",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "fad842d4c4bfddf358649ad6f7702c318567ff21",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
