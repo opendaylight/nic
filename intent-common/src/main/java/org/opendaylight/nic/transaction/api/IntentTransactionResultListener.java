@@ -7,14 +7,12 @@
  */
 package org.opendaylight.nic.transaction.api;
 
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
-
 /**
  * Created by yrineu on 25/06/16.
  */
 public interface IntentTransactionResultListener {
 
-    void deployFailure(Uuid intentId);
+    void deployFailure(String intentId);
 
-    void deploySuccess(Uuid intentId);
+    void deploySuccess(String intentId);
 }

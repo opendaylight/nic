@@ -8,15 +8,13 @@
 package org.opendaylight.nic.transaction.api;
 
 import org.opendaylight.nic.transaction.TransactionResult;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
-import org.osgi.framework.BundleContext;
 
 /**
  * Created by yrineu on 26/06/16.
  */
 public interface IntentTransactionNotifier {
 
-    void notifyResults(Uuid intentId, TransactionResult result);
+    void notifyResults(String intentId, TransactionResult result);
 
-    void notifyExecutors(Uuid intentId);
+    void notifyExecutors(String intentId);
 }

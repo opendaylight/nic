@@ -8,12 +8,7 @@
 package org.opendaylight.nic.transaction.impl;
 
 import org.opendaylight.nic.transaction.TransactionResult;
-import org.opendaylight.nic.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.transaction.api.IntentTransactionListener;
-import org.opendaylight.nic.transaction.api.IntentTransactionNotifier;
-import org.opendaylight.nic.transaction.api.IntentTransactionRegistryService;
-import org.opendaylight.nic.transaction.api.IntentTransactionResultListener;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.nic.transaction.api.*;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
@@ -48,12 +43,12 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
     }
 
     @Override
-    public void notifyResults(Uuid intentId, TransactionResult result) {
+    public void notifyResults(String intentId, TransactionResult result) {
         notifierService.notifyResults(intentId, result);
     }
 
     @Override
-    public void notifyExecutors(Uuid intentId) {
+    public void notifyExecutors(String intentId) {
         notifierService.notifyExecutors(intentId);
     }
 
