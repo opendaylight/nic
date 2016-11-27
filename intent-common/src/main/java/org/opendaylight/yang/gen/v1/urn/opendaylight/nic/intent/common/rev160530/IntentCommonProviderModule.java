@@ -1,7 +1,7 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.common.rev160530;
 
-import org.opendaylight.nic.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.transaction.impl.IntentCommonProviderServiceImpl;
+import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
+import org.opendaylight.nic.common.transaction.impl.IntentCommonProviderServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
