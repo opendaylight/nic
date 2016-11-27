@@ -7,16 +7,11 @@
  */
 package org.opendaylight.nic.transaction.impl;
 
+import org.opendaylight.nic.transaction.TransactionResult;
 import org.opendaylight.nic.transaction.api.IntentTransactionListener;
 import org.opendaylight.nic.transaction.api.IntentTransactionNotifier;
-import org.opendaylight.nic.transaction.TransactionResult;
 import org.opendaylight.nic.transaction.api.IntentTransactionRegistryService;
 import org.opendaylight.nic.transaction.api.IntentTransactionResultListener;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +28,7 @@ public class IntentTransactionNotifierImpl implements IntentTransactionNotifier 
     }
 
     @Override
-    public void notifyResults(final Uuid intentId, final TransactionResult result) {
+    public void notifyResults(final String intentId, final TransactionResult result) {
         for (IntentTransactionResultListener listener : registryService.getResulListeners()) {
             switch (result) {
                 case SUCCESS:
@@ -49,7 +44,7 @@ public class IntentTransactionNotifierImpl implements IntentTransactionNotifier 
     }
 
     @Override
-    public void notifyExecutors(final Uuid intentId) {
+    public void notifyExecutors(final String intentId) {
         for (IntentTransactionListener listener : registryService.getExecutorListeners()) {
             listener.executeDeploy(intentId);
         }
