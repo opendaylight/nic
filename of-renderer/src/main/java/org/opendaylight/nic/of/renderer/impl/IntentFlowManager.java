@@ -9,6 +9,7 @@ package org.opendaylight.nic.of.renderer.impl;
 
 import com.google.gson.Gson;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.neutron.NeutronSecurityRule;
 import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
 import org.opendaylight.nic.of.renderer.model.PortFlow;
@@ -71,6 +72,11 @@ public class IntentFlowManager extends AbstractFlowManager {
     IntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
         flowStatisticsListener = new FlowStatisticsListener(dataBroker);
+    }
+
+    @Override
+    void pushFlow(FlowData renderer) {
+        //TODO: get information from renderer
     }
 
     @Override

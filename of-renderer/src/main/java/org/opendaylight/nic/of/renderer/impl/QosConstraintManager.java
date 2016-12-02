@@ -10,6 +10,7 @@ package org.opendaylight.nic.of.renderer.impl;
 import java.util.List;
 import com.google.common.base.Optional;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -104,6 +105,11 @@ public class QosConstraintManager extends AbstractFlowManager {
      */
     public QosConstraintManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
+    }
+
+    @Override
+    void pushFlow(FlowData renderer) {
+        //TODO: get information from renderer
     }
 
     /**
