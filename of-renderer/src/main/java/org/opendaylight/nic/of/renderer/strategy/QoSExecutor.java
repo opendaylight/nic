@@ -8,6 +8,8 @@
 
 package org.opendaylight.nic.of.renderer.strategy;
 
+import org.opendaylight.nic.common.model.FlowData;
+import org.opendaylight.nic.of.renderer.impl.FlowManager;
 import org.opendaylight.nic.of.renderer.impl.QosConstraintManager;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.utils.FlowAction;
@@ -24,11 +26,17 @@ import java.util.Map;
  */
 public class QoSExecutor implements ActionStrategy {
 
+    private FlowManager flowManager;
     private QosConstraintManager qosConstraintManager;
     private DataBroker dataBroker;
 
     public QoSExecutor(QosConstraintManager qosConstraintManager, DataBroker dataBroker) {
         this.qosConstraintManager = qosConstraintManager;
+        this.dataBroker = dataBroker;
+    }
+
+    public QoSExecutor(FlowManager flowManager, DataBroker dataBroker) {
+        this.flowManager = flowManager;
         this.dataBroker = dataBroker;
     }
 
@@ -39,6 +47,15 @@ public class QoSExecutor implements ActionStrategy {
         for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
             //Push flow to every node for now
             qosConstraintManager.pushFlow(entry.getKey().getId(), flowAction);
+        }
+    }
+
+    @Override
+    public void execute(final FlowData flowData, FlowAction action){
+        Map<Node, List<NodeConnector>> nodeMap = TopologyUtils.getNodes(dataBroker);
+        for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
+            //Push flow to every node for now
+            flowManager.pushFlow(entry.getKey().getId(), flowData, action);
         }
     }
 }

@@ -109,7 +109,7 @@ public class DefaultExecutorTest {
 
     @Test (expected = IntentInvalidException.class)
     public void testShouldThrowsNoSuchElementExceptionWhenExecuteIntent() throws IntentInvalidException {
-        defaultExecutorMock.execute(null, FlowAction.ADD_FLOW);
+        defaultExecutorMock.execute((Intent) null, FlowAction.ADD_FLOW);
     }
 
     @Test

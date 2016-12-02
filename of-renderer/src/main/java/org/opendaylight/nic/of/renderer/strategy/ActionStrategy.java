@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.of.renderer.strategy;
 
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -19,4 +20,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 public interface ActionStrategy {
 
     void execute(Intent intent, FlowAction flowAction) throws IntentInvalidException;
+
+    void execute(final FlowData flowData, FlowAction action);
 }

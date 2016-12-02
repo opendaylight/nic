@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -74,6 +75,8 @@ public abstract class AbstractFlowManager {
      * @param flowAction The {@link FlowAction}
      */
     abstract void pushFlow(NodeId nodeId, FlowAction flowAction);
+
+    public abstract void pushFlow(NodeId nodeId, FlowData renderer, FlowAction action);
 
     /**
      * Creates a set of Instruction based on the port values

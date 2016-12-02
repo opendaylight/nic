@@ -8,31 +8,34 @@
 
 package org.opendaylight.nic.common.model;
 
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddress;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Dscp;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpPrefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.PortNumber;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 
 import java.util.UUID;
 
+//TODO: convert this into a builder to avoid those ugly constructors
 public abstract class FlowData {
 
     private UUID id;
 
-    protected IpAddress srcIpAddress;
-    protected IpAddress dstIpAddress;
+    protected IpPrefix srcIpPrefix;
+    protected IpPrefix dstIpPrefix;
     protected MacAddress srcMacAddress;
     protected MacAddress dstMacAddress;
     protected PortNumber srcPortNumber;
     protected PortNumber dstPortNumber;
+    protected Dscp dscp;
     protected FlowAction flowAction;
     protected IntentModifier intentModifier;
 
-    public FlowData(final IpAddress srcIpAddress,
-                    final IpAddress dstIpAddress,
+    public FlowData(final IpPrefix srcIpPrefix,
+                    final IpPrefix dstIpPrefix,
                     final FlowAction flowAction) {
         this.id = UUID.randomUUID();
-        this.srcIpAddress = srcIpAddress;
-        this.dstIpAddress = dstIpAddress;
+        this.srcIpPrefix = srcIpPrefix;
+        this.dstIpPrefix = dstIpPrefix;
         this.flowAction = flowAction;
     }
 
@@ -45,20 +48,22 @@ public abstract class FlowData {
         this.flowAction = flowAction;
     }
 
-    public FlowData(final IpAddress srcIpAddress,
-                    final IpAddress dstIpAddress,
+    public FlowData(final IpPrefix srcIpPrefix,
+                    final IpPrefix dstIpPrefix,
                     final MacAddress srcMacAddress,
                     final MacAddress dstMacAddress,
                     final PortNumber srcPortNumber,
                     final PortNumber dstPortNumber,
+                    final Dscp dscp,
                     final FlowAction flowAction) {
         this.id = UUID.randomUUID();
-        this.srcIpAddress = srcIpAddress;
-        this.dstIpAddress = dstIpAddress;
+        this.srcIpPrefix = srcIpPrefix;
+        this.dstIpPrefix = dstIpPrefix;
         this.srcMacAddress = srcMacAddress;
         this.dstMacAddress = dstMacAddress;
         this.srcPortNumber = srcPortNumber;
         this.dstPortNumber = dstPortNumber;
+        this.dscp = dscp;
         this.flowAction = flowAction;
     }
 
@@ -66,6 +71,38 @@ public abstract class FlowData {
 
     public UUID getId() {
         return id;
+    }
+
+    public IpPrefix getSrcIpPrefix() {
+        return srcIpPrefix;
+    }
+
+    public IpPrefix getDstIpPrefix() {
+        return dstIpPrefix;
+    }
+
+    public MacAddress getSrcMacAddress() {
+        return srcMacAddress;
+    }
+
+    public MacAddress getDstMacAddress() {
+        return dstMacAddress;
+    }
+
+    public PortNumber getSrcPortNumber() {
+        return srcPortNumber;
+    }
+
+    public PortNumber getDstPortNumber() {
+        return dstPortNumber;
+    }
+
+    public FlowAction getFlowAction() {
+        return flowAction;
+    }
+
+    public Dscp getDscp() {
+        return dscp;
     }
 
     public void setIntentModifier(final IntentModifier intentModifier) {
