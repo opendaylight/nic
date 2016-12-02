@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -40,6 +41,11 @@ public class ArpFlowManager extends AbstractFlowManager {
         final FlowBuilder flowBuilder = createArpReplyToControllerFlow();
         // Write to MD-SAL
         writeDataTransaction(nodeId, flowBuilder, flowAction);
+    }
+
+    @Override
+    void pushFlow(FlowData flowData) {
+        //TODO: get information from renderer
     }
 
     protected FlowBuilder createArpReplyToControllerFlow() {

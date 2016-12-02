@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
@@ -42,6 +43,11 @@ public class LldpFlowManager extends AbstractFlowManager {
         sb.append(OFRendererConstants.LLDP_REPLY_TO_CONTROLLER_FLOW_NAME);
         sb.append(OFRendererConstants.ETHERNET_TYPE).append(flowCookie.get());
         return sb.toString();
+    }
+
+    @Override
+    void pushFlow(FlowData renderer) {
+        //TODO: get information from renderer
     }
 
     @Override
