@@ -35,7 +35,7 @@ public class IntentNBINotificationSupplierImpl  extends
      */
     public IntentNBINotificationSupplierImpl(final DataBroker db) {
         super(db, IntentDefinition.class, LogicalDatastoreType.CONFIGURATION);
-        serviceRegistry.setEventTypeService(this, EventType.INTENT_ADDED, EventType.INTENT_REMOVED, EventType.INTENT_UPDATE);
+        serviceRegistry.setEventTypeService(this, EventType.INTENT_NBI_ADDED, EventType.INTENT_NBI_REMOVED, EventType.INTENT_NBI_UPDATE);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class IntentNBINotificationSupplierImpl  extends
 
     @Override
     public Class<?> getCreateImplClass() {
-        return IntentAddedImpl.class;
+        return IntentNBIAdded.class;
     }
 
     @Override

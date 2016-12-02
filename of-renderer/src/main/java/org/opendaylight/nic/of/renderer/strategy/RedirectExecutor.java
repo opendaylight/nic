@@ -7,10 +7,13 @@
  */
 package org.opendaylight.nic.of.renderer.strategy;
 
+import org.apache.commons.lang3.NotImplementedException;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.impl.RedirectFlowManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId;
 
 /**
  * @author victor. Created on 11/09/16.
@@ -29,4 +32,8 @@ public class RedirectExecutor implements ActionStrategy {
         redirectFlowManager.redirectFlowConstruction(intent, flowAction);
     }
 
+    @Override
+    public void execute(final FlowData flowData){
+        throw new NotImplementedException("");
+    }
 }
