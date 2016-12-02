@@ -77,14 +77,14 @@ module intent-nbi {
                 choice object-type {
                     case media-flow {
                         container media-flow {
-                            leaf source-ip-address {
-                                type inet:ip-address;
+                            leaf source-ip-prefix{
+                                type inet:ip-prefix;
                             }
                             leaf source-port {
                                 type inet:port-number;
                             }
-                            leaf destination-ip-address {
-                                type inet:ip-address;
+                            leaf destination-ip-prefix{
+                                type inet:ip-prefix;
                             }
                             leaf destination-port {
                                 type inet:port-number;
