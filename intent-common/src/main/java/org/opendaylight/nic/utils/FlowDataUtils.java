@@ -10,7 +10,7 @@ package org.opendaylight.nic.utils;
 import org.opendaylight.nic.common.model.FlowAction;
 import org.opendaylight.nic.common.model.FlowDataL2;
 import org.opendaylight.nic.common.model.FlowDataL3;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddressBuilder;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpPrefixBuilder;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 
 public class FlowDataUtils {
@@ -20,8 +20,11 @@ public class FlowDataUtils {
             final String dst,
             final String flowAction) {
         return new FlowDataL3(
-                IpAddressBuilder.getDefaultInstance(src),
-                IpAddressBuilder.getDefaultInstance(dst),
+                IpPrefixBuilder.getDefaultInstance(src),
+                IpPrefixBuilder.getDefaultInstance(dst),
+                null,
+                null,
+                null,
                 FlowAction.valueOf(flowAction));
     }
 

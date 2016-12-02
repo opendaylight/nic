@@ -7,22 +7,27 @@
  */
 package org.opendaylight.nic.common.model;
 
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddress;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Dscp;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpPrefix;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.PortNumber;
 
 public class FlowDataL3 extends FlowData {
 
     public FlowDataL3(
-            final IpAddress srcIpAddress,
-            final IpAddress dstIpAddress,
+            final IpPrefix srcIpPrefix,
+            final IpPrefix dstIpPrefix,
+            final PortNumber srcPortNumber,
+            final PortNumber dstPortNumber,
+            final Dscp dscp,
             final FlowAction flowAction) {
-        super(srcIpAddress, dstIpAddress, flowAction);
+        super(srcIpPrefix, dstIpPrefix, null, null, srcPortNumber, dstPortNumber, dscp, flowAction);
     }
 
-    public IpAddress getSrcIpAddress() {
-        return super.srcIpAddress;
+    public IpPrefix getSrcIpPrefix() {
+        return super.srcIpPrefix;
     }
 
-    public IpAddress getDstIpAddress() {
-        return super.dstIpAddress;
+    public IpPrefix getDstIpPrefix() {
+        return super.dstIpPrefix;
     }
 }
