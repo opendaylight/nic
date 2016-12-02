@@ -22,6 +22,7 @@ import org.opendaylight.controller.liblldp.HexEncode;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
@@ -418,6 +419,11 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
     @Override
     void pushFlow(NodeId nodeId, FlowAction flowAction) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void pushFlow(FlowData renderer) {
+        //TODO: get information from renderer
     }
 
     /**

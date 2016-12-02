@@ -7,13 +7,17 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import java.util.List;
 import com.google.common.base.Optional;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Dscp;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
@@ -22,6 +26,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.Output
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints;
@@ -29,15 +34,16 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.Qos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos.DscpType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
-
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetDestinationBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetSourceBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv4MatchBuilder;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class QosConstraintManager extends AbstractFlowManager {
 
@@ -106,6 +112,63 @@ public class QosConstraintManager extends AbstractFlowManager {
         super(dataBroker, pipelineManager);
     }
 
+    @Override
+    public void pushFlow(FlowData renderer) {
+        if (action == null) {
+            LOG.error("action cannot be null");
+            return;
+        }
+
+        // Creating match object
+        MatchBuilder matchBuilder = new MatchBuilder();
+        // Creating Flow object
+        FlowBuilder flowBuilder = new FlowBuilder();
+
+        Ipv4Prefix srcIpPrefix = renderer.getSrcIpPrefix().getIpv4Prefix();
+        Ipv4Prefix dstIpPrefix = renderer.getDstIpPrefix().getIpv4Prefix();
+
+        LOG.info("Creating intent for endpoints: source{} destination {}", srcIpPrefix, dstIpPrefix);
+
+        MacAddress srcMac = renderer.getSrcMacAddress();
+        MacAddress dstMac = renderer.getDstMacAddress();
+
+        EthernetMatchBuilder ethernetMatch = new EthernetMatchBuilder();
+        if (srcMac != null) {
+            EthernetSourceBuilder ethSourceBuilder = new EthernetSourceBuilder();
+            ethSourceBuilder.setAddress(srcMac);
+            ethernetMatch.setEthernetSource(ethSourceBuilder.build());
+        }
+        if (dstMac != null) {
+            EthernetDestinationBuilder ethDestinationBuilder = new EthernetDestinationBuilder();
+            ethDestinationBuilder.setAddress(dstMac);
+            ethernetMatch.setEthernetDestination(ethDestinationBuilder.build());
+        }
+        matchBuilder.setEthernetMatch(ethernetMatch.build());
+
+        Ipv4MatchBuilder ipv4match = new Ipv4MatchBuilder();
+        if (srcIpPrefix != null) {
+            ipv4match.setIpv4Source(srcIpPrefix);
+        }
+        if (dstIpPrefix != null) {
+            ipv4match.setIpv4Destination(dstIpPrefix);
+        }
+        matchBuilder.setLayer3Match(ipv4match.build());
+        MatchUtils.createIPv4PrefixMatch(srcIpPrefix, dstIpPrefix, matchBuilder);
+
+        // Create Flow
+        flowBuilder = createFlowBuilder(matchBuilder);
+        // extrair os dados do flowdata
+        // construir o matchbuilder
+        // criar o flowbuilder
+        // instruction com as actions (allow para o flow)
+        // setar contraints
+        // marcar o dscp com o valor 46Dscp dscpValues = ((DscpType) qosContainer).getDscpType().getDscp();
+        Dscp dscpValues = new Dscp((short) 46);
+        Instructions buildedInstructions = createQoSInstructions(dscpValues, OutputPortValues.NORMAL);
+        flowBuilder.setInstructions(buildedInstructions);
+//        writeDataTransaction(renderer.get, flowBuilder, renderer.getFlowAction());
+    }
+
     /**
      * Set the flow for action and constraints.
      */
@@ -118,13 +181,12 @@ public class QosConstraintManager extends AbstractFlowManager {
 
         // Creating match object
         MatchBuilder matchBuilder = new MatchBuilder();
-        // Creating Flow object
-        FlowBuilder flowBuilder = new FlowBuilder();
 
         // Create L2 match
         createEthMatch(endPointGroups, matchBuilder);
+
         // Create Flow
-        flowBuilder = createFlowBuilder(matchBuilder);
+        FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
 
         if (action instanceof Allow && constraint instanceof QosConstraint) {
             List<Intent> intentList = listIntents();

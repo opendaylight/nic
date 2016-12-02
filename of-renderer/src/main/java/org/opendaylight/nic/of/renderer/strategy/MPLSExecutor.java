@@ -8,7 +8,9 @@
 
 package org.opendaylight.nic.of.renderer.strategy;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.impl.MplsIntentFlowManager;
 import org.opendaylight.nic.of.renderer.impl.NetworkGraphManager;
@@ -194,5 +196,10 @@ public class MPLSExecutor implements ActionStrategy {
             result = protectionConstraint.getProtectionConstraint().isIsProtected();
         }
         return result;
+    }
+
+    @Override
+    public void execute(final FlowData flowData){
+        throw new NotImplementedException("");
     }
 }
