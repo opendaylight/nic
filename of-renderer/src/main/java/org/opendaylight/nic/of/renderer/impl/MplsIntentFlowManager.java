@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.model.RendererCommon;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -51,6 +52,11 @@ public class MplsIntentFlowManager extends AbstractFlowManager {
 
     public void setSubjectsMapping(Map<String, Map<String, String>> subjectsMapping) {
         this.subjectsMapping = subjectsMapping;
+    }
+
+    @Override
+    void pushFlow(RendererCommon renderer) {
+        //TODO: get information from renderer
     }
 
     @Override

@@ -7,6 +7,8 @@
  */
 package org.opendaylight.nic.of.renderer.strategy;
 
+import org.apache.commons.lang3.NotImplementedException;
+import org.opendaylight.nic.model.RendererCommon;
 import org.opendaylight.nic.of.renderer.impl.RedirectFlowManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
@@ -29,4 +31,8 @@ public class RedirectExecutor implements ActionStrategy {
         redirectFlowManager.redirectFlowConstruction(intent, flowAction);
     }
 
+    @Override
+    public void execute(final RendererCommon rendererCommon){
+        throw new NotImplementedException("");
+    }
 }

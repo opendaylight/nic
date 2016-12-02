@@ -10,6 +10,7 @@ package org.opendaylight.nic.of.renderer.impl;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.model.RendererCommon;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.Observer;
@@ -50,6 +51,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
     private static final Logger LOG = LoggerFactory.getLogger(OFRendererFlowManagerProvider.class);
     private Set<ServiceRegistration<?>> serviceRegistration;
+    private FlowManager flowManager;
     private IntentFlowManager intentFlowManager;
     private ArpFlowManager arpFlowManager;
     private LldpFlowManager lldpFlowManager;
@@ -86,6 +88,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         serviceRegistration.add(context.registerService(OFRendererFlowService.class, this, null));
         serviceRegistration.add(context.registerService(OFRendererGraphService.class, graphService, null));
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
+        flowManager = new FlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
         qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
@@ -243,5 +246,11 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
 
         return contentMap == null ? new HashMap<>() : contentMap;
+    }
+
+    @Override
+    public void pushIntentFlow(final RendererCommon rendererCommon){
+        final ActionStrategy actionStrategy = new QoSExecutor(flowManager, dataBroker);
+        actionStrategy.execute(rendererCommon);
     }
 }
