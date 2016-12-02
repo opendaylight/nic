@@ -8,7 +8,9 @@
 
 package org.opendaylight.nic.of.renderer.strategy;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.model.RendererCommon;
 import org.opendaylight.nic.of.renderer.impl.IntentFlowManager;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.utils.FlowAction;
@@ -54,5 +56,10 @@ public class DefaultExecutor implements ActionStrategy {
             //Push flow to every node for now
             intentFlowManager.pushFlow(entry.getKey().getId(), flowAction);
         }
+    }
+
+    @Override
+    public void execute(final RendererCommon rendererCommon){
+        throw new NotImplementedException("");
     }
 }
