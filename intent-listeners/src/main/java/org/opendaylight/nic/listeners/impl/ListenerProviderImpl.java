@@ -101,6 +101,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(nodeSupp);
         supplierList.add(connectorSupp);
         supplierList.add(intentSupp);
+        supplierList.add(intentNBISupp);
         supplierList.add(secGroupSupp);
         supplierList.add(secRulesSupp);
         supplierList.add(linkSupp);

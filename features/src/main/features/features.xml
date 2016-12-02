@@ -86,6 +86,7 @@
     <!-- OF Renderer -->
     <feature name='odl-nic-renderer-of' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
         <feature version="${project.version}">odl-nic-core-mdsal</feature>
+        <feature version="${project.version}">odl-nic-intent-common</feature>
         <feature version="${project.version}">odl-nic-pipeline-manager</feature>
         <feature version="${neutron.version}">odl-neutron-service</feature>
         <feature version="${openflowplugin.version}">odl-openflowplugin-app-topology</feature>

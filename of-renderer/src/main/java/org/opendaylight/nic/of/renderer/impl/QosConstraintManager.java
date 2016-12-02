@@ -7,9 +7,11 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import java.util.List;
 import com.google.common.base.Optional;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -22,6 +24,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.Output
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints;
@@ -29,15 +32,12 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.Qos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.qos.config.qos.DscpType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
-
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class QosConstraintManager extends AbstractFlowManager {
 
@@ -106,6 +106,10 @@ public class QosConstraintManager extends AbstractFlowManager {
         super(dataBroker, pipelineManager);
     }
 
+    @Override
+    public void pushFlow(NodeId nodeId, FlowData renderer) {
+    }
+
     /**
      * Set the flow for action and constraints.
      */
@@ -118,13 +122,12 @@ public class QosConstraintManager extends AbstractFlowManager {
 
         // Creating match object
         MatchBuilder matchBuilder = new MatchBuilder();
-        // Creating Flow object
-        FlowBuilder flowBuilder = new FlowBuilder();
 
         // Create L2 match
         createEthMatch(endPointGroups, matchBuilder);
+
         // Create Flow
-        flowBuilder = createFlowBuilder(matchBuilder);
+        FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
 
         if (action instanceof Allow && constraint instanceof QosConstraint) {
             List<Intent> intentList = listIntents();
