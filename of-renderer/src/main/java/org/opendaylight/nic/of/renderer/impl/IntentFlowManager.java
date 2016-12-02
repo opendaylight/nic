@@ -16,11 +16,12 @@ import org.opendaylight.nic.of.renderer.utils.IntentFlowUtils;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.PortNumber;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.FlowCookie;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.FlowModFlags;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.OutputPortValues;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
@@ -32,14 +33,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ClassificationConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv6Prefix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
@@ -49,6 +50,9 @@ public class IntentFlowManager extends AbstractFlowManager {
     private FlowStatisticsListener flowStatisticsListener;
     private Intent intent;
     private String flowName = "";
+    private static AtomicInteger PRIORITY = new AtomicInteger(1);
+    private static AtomicInteger FLOW_ID_INC = new AtomicInteger();
+    private static final int RADIX = 10;
 
     private static final String CONSTRAINTS_NOT_FOUND_EXCEPTION = "Constraints not found! ";
 
@@ -96,7 +100,8 @@ public class IntentFlowManager extends AbstractFlowManager {
     private void pushFlowsByMacAddress(final MacAddress srcMacAddress, final MacAddress dstMacAddress,
                                        final NodeId nodeId, final FlowAction flowAction) {
         final MatchBuilder matchBuilder = MatchUtils.createEthMatch(new MatchBuilder(), srcMacAddress, dstMacAddress);
-        final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
+        final String flowIdStr = srcMacAddress.getValue() + "_" + dstMacAddress.getValue();
+        final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder, new FlowId(flowIdStr));
 
         // TODO: Extend for other actions
         if (action instanceof Allow) {
@@ -145,7 +150,8 @@ public class IntentFlowManager extends AbstractFlowManager {
         final Set<MatchBuilder> matchBuilders = portFlow.createPortRangeMatchBuilder();
 
         for(MatchBuilder matchBuilder : matchBuilders) {
-            final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder);
+            final String flowIdStr = intent.getId().toString();
+            final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder, new FlowId(flowIdStr));
             final Instructions builtInstructions = createOutputInstructions(OutputPortValues.NORMAL);
             flowBuilder.setInstructions(builtInstructions);
             flowName = portFlow.getFlowName(intent.getId().getValue());
@@ -153,18 +159,23 @@ public class IntentFlowManager extends AbstractFlowManager {
         }
     }
 
-    private FlowBuilder createFlowBuilder(final MatchBuilder matchBuilder) {
+    private FlowBuilder createFlowBuilder(final MatchBuilder matchBuilder, final FlowId flowId) {
         final Match match = matchBuilder.build();
-        final FlowId flowId = new FlowId(flowName);
         final FlowKey key = new FlowKey(flowId);
         final FlowBuilder flowBuilder = new FlowBuilder();
+        final BigInteger cookieId = new BigInteger("20", RADIX);
 
-        flowBuilder.setMatch(match);
         flowBuilder.setId(flowId);
         flowBuilder.setKey(key);
+        flowBuilder.setFlowName(flowName);
+        flowBuilder.setCookie(new FlowCookie(cookieId));
+        flowBuilder.setCookieMask(new FlowCookie(cookieId));
+        flowBuilder.setContainerName(null);
+        flowBuilder.setStrict(false);
+        flowBuilder.setMatch(match);
+        flowBuilder.setFlags(new FlowModFlags(false, false, false, false, false));
         flowBuilder.setBarrier(true);
         flowBuilder.setPriority(OFRendererConstants.DEFAULT_PRIORITY);
-        flowBuilder.setFlowName(flowName);
         flowBuilder.setHardTimeout(OFRendererConstants.DEFAULT_HARD_TIMEOUT);
         flowBuilder.setIdleTimeout(OFRendererConstants.DEFAULT_IDLE_TIMEOUT);
 

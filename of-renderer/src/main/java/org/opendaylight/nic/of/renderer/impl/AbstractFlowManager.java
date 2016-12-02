@@ -23,6 +23,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.ta
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.TableKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.OutputPortValues;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.InstructionsBuilder;
@@ -36,6 +37,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instru
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
@@ -198,19 +200,23 @@ public abstract class AbstractFlowManager {
      */
     protected boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder, FlowAction flowAction) {
         boolean result = false;
+        final NodeBuilder nodeBuilder = new NodeBuilder();
+        final FlowKey flowKey = new FlowKey(flowBuilder.getKey());
+        nodeBuilder.setId(nodeId);
+        nodeBuilder.setKey(new NodeKey(nodeBuilder.getId()));
+
         MdsalUtils mdsal = new MdsalUtils(dataBroker);
         if (!pipelineManager.setTableId(nodeId, flowBuilder)) {
             flowBuilder.setTableId(OFRendererConstants.FALLBACK_TABLE_ID);
         }
+        final TableKey tableKey = new TableKey(flowBuilder.getTableId());
 
-        InstanceIdentifier<Flow> flowIID = InstanceIdentifier
-                                               .builder(Nodes.class)
-                                               .child(Node.class,
-                                                      new NodeKey(nodeId)).augmentation(FlowCapableNode.class)
-                                               .child(Table.class,
-                                                      new TableKey(flowBuilder.getTableId()))
-                                               .child(Flow.class, flowBuilder.getKey())
-                                               .build();
+        InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
+                .child(Node.class, nodeBuilder.getKey())
+                .augmentation(FlowCapableNode.class)
+                .child(Table.class, tableKey)
+                .child(Flow.class, flowKey)
+                .build();
 
         if (flowAction == FlowAction.ADD_FLOW) {
             result = mdsal.put(LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build());
