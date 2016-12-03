@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_ab5ccf26",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/model/RendererCommon.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-12-03T02:01:13Z",
+      "side": 1,
+      "message": "Namespace not following the pattern",
+      "revId": "1bd7913a986db1c0facf5d69d77452b8b8c9dff5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_eb36c7e6",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/model/RendererCommon.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-12-03T02:01:13Z",
+      "side": 1,
+      "message": "Should it be an interface with methods to extract data so we could use polymorphism or even an abstract class?",
+      "revId": "1bd7913a986db1c0facf5d69d77452b8b8c9dff5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_0b418339",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/model/RendererCommon.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-12-03T02:01:13Z",
+      "side": 1,
+      "message": "It\u0027s not a meaningful name. Maybe \"IntentDTO\", \"IntentData\", \"FlowData\"?",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "1bd7913a986db1c0facf5d69d77452b8b8c9dff5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_2b31dfec",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/model/RendererCommon.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-12-03T02:01:13Z",
+      "side": 1,
+      "message": "Isn\u0027t it supposed to have the action that needs to be rendered?",
+      "revId": "1bd7913a986db1c0facf5d69d77452b8b8c9dff5",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
