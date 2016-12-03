@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_9faae9d2",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/model/FlowData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-12-03T03:35:41Z",
+      "side": 1,
+      "message": "Missing Dscp value (short)",
+      "revId": "7cc0df8ca5f79f17de38e6390bfe35cca8cd0290",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_bfa52506",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/model/FlowDataL3.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-12-03T03:35:41Z",
+      "side": 1,
+      "message": "Missing constructor with all parameter containing ports.",
+      "revId": "7cc0df8ca5f79f17de38e6390bfe35cca8cd0290",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
