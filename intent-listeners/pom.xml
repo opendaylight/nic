@@ -5,19 +5,19 @@
     <parent>
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>config-parent</artifactId>
-        <version>0.5.2-SNAPSHOT</version>
+        <version>0.5.2-Boron-SR2</version>
         <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>intent-listeners</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.2-Boron-SR2</version>
     <packaging>bundle</packaging>
 
     <properties>
-        <openflowplugin.version>0.3.2-SNAPSHOT</openflowplugin.version>
-        <neutron.version>0.7.2-SNAPSHOT</neutron.version>
+        <openflowplugin.version>0.3.2-Boron-SR2</openflowplugin.version>
+        <neutron.version>0.7.2-Boron-SR2</neutron.version>
     </properties>
     <dependencies>
         <dependency>

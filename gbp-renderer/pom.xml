@@ -11,18 +11,18 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.5.2-SNAPSHOT</version>
+  <version>0.5.2-Boron-SR2</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>gbp-renderer</artifactId>
- <version>1.2.2-SNAPSHOT</version>
+ <version>1.2.2-Boron-SR2</version>
  <packaging>bundle</packaging>
 
  <properties>
-  <groupbasedpolicy.version>0.4.2-SNAPSHOT</groupbasedpolicy.version>
+  <groupbasedpolicy.version>0.4.2-Boron-SR2</groupbasedpolicy.version>
  </properties>
 
  <dependencies>
