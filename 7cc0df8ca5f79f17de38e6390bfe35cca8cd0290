@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a622d24_faaad8d0",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/model/FlowData.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-12-16T03:39:43Z",
+      "side": 1,
+      "message": "I think that should be better if we put the DSCP field hardcoded on OFRenderer, that should be defined by the IntentModifier",
+      "parentUuid": "1a622d24_9faae9d2",
+      "revId": "7cc0df8ca5f79f17de38e6390bfe35cca8cd0290",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a622d24_bfa52506",
         "filename": "intent-common/src/main/java/org/opendaylight/nic/common/model/FlowDataL3.java",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-03T03:35:41Z",
       "side": 1,
       "message": "Missing constructor with all parameter containing ports.",
+      "revId": "7cc0df8ca5f79f17de38e6390bfe35cca8cd0290",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a622d24_1ab07442",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/model/FlowDataL3.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2016-12-16T03:39:43Z",
+      "side": 1,
+      "message": "Thanks for your comment!\n\nI\u0027ll send a new patch",
+      "parentUuid": "1a622d24_bfa52506",
       "revId": "7cc0df8ca5f79f17de38e6390bfe35cca8cd0290",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
