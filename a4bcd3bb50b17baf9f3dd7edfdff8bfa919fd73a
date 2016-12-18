@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a622d24_6d71efdf",
+        "filename": "intent-listeners/src/main/java/org/opendaylight/nic/listeners/impl/IntentNBINotificationSubscriberImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2016-12-18T18:54:00Z",
+      "side": 1,
+      "message": "Can you import the MediaFlow class?",
+      "revId": "a4bcd3bb50b17baf9f3dd7edfdff8bfa919fd73a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
