@@ -12,8 +12,8 @@ import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.listeners.api.*;
-import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.intent.definitions.IntentDefinition;
-import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.IntentDefinitions;
+import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.IntentDefinitions;
+import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.intent.definitions.IntentDefinition;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
 /**
@@ -35,7 +35,7 @@ public class IntentNBINotificationSupplierImpl  extends
      */
     public IntentNBINotificationSupplierImpl(final DataBroker db) {
         super(db, IntentDefinition.class, LogicalDatastoreType.CONFIGURATION);
-        serviceRegistry.setEventTypeService(this, EventType.INTENT_ADDED, EventType.INTENT_REMOVED, EventType.INTENT_UPDATE);
+        serviceRegistry.setEventTypeService(this, EventType.INTENT_NBI_ADDED, EventType.INTENT_NBI_REMOVED, EventType.INTENT_NBI_UPDATE);
     }
 
     @Override

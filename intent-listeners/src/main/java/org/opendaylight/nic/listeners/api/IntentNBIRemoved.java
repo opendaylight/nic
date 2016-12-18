@@ -8,7 +8,7 @@
 
 package org.opendaylight.nic.listeners.api;
 
-import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.IntentDefinition;
+import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.IntentDefinition;
 
 public interface IntentNBIRemoved extends NicNotification {
     IntentDefinition getIntent();
