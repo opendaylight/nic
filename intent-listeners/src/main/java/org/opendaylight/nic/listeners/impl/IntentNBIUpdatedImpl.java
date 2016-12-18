@@ -11,7 +11,7 @@ package org.opendaylight.nic.listeners.impl;
 import java.sql.Timestamp;
 import java.util.Date;
 import org.opendaylight.nic.listeners.api.IntentNBIUpdated;
-import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.IntentDefinition;
+import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.IntentDefinition;
 
 public class IntentNBIUpdatedImpl implements IntentNBIUpdated {
     private IntentDefinition intent;

@@ -134,7 +134,7 @@ public class ListenerProviderImplTest {
                 eq(mockEndpointResolver), Mockito.any(EndpointDiscoveryNotificationSubscriberImpl.class));
         verify(mockRegistryServiceImpl).registerEventListener(
                 eq(mockLinkSupp), Mockito.any(TopologyLinkNotificationSubscriberImpl.class));
-        verify(mockSupplierList,times(6)).add(Mockito.any(NotificationSupplierDefinition.class));
+        verify(mockSupplierList,times(7)).add(Mockito.any(NotificationSupplierDefinition.class));
 
     }
 }

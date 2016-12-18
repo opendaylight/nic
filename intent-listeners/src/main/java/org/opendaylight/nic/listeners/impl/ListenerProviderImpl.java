@@ -15,7 +15,8 @@ import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
-import org.opendaylight.yang.gen.v1.urn.onf.intent.intent.nbi.rev160920.intent.definitions.IntentDefinition;
+
+import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.intent.definitions.IntentDefinition;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -101,6 +102,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(nodeSupp);
         supplierList.add(connectorSupp);
         supplierList.add(intentSupp);
+        supplierList.add(intentNBISupp);
         supplierList.add(secGroupSupp);
         supplierList.add(secRulesSupp);
         supplierList.add(linkSupp);
