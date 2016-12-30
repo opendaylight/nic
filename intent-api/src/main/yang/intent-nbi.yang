@@ -29,13 +29,13 @@ module intent-nbi {
         // All objects and object-groups have names.
         typedef name {
             type string {
-                pattern "[a-zA-Z][-_0-9a-zA-Z]*";
+                pattern "[a-zA-Z][-_#0-9a-zA-Z]*";
                 length "1..60";
             }
         }
 
         // The owner associated with this intent (could be an application or workload).
-        leaf owner {
+        leaf bundle {
             type name;
             mandatory true;
             description "Bundles the intent for a given owner";
@@ -172,7 +172,7 @@ module intent-nbi {
 
     container intent-definitions {
         list intent-definition {
-            key "owner";
+            key "bundle";
             uses intent-definition;
         }
     }
