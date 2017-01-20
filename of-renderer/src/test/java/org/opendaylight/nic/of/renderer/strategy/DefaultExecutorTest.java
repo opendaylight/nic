@@ -48,7 +48,7 @@ import java.util.UUID;
 /**
  * Created by yrineu on 07/08/16.
  */
-@PrepareForTest({DefaultExecutor.class, IntentUtils.class, TopologyUtils.class, InstanceIdentifier.class})
+@PrepareForTest({IntentUtils.class, TopologyUtils.class, InstanceIdentifier.class})
 @RunWith(PowerMockRunner.class)
 public class DefaultExecutorTest {
 
