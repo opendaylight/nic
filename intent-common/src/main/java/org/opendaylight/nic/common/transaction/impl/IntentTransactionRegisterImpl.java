@@ -5,16 +5,13 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.transaction.impl;
+package org.opendaylight.nic.common.transaction.impl;
 
-import org.opendaylight.nic.transaction.api.IntentTransactionListener;
-import org.opendaylight.nic.transaction.api.IntentTransactionResultListener;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
+import org.opendaylight.nic.common.transaction.api.IntentTransactionListener;
+import org.opendaylight.nic.common.transaction.api.IntentTransactionResultListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.opendaylight.nic.transaction.api.IntentTransactionRegistryService;
+import org.opendaylight.nic.common.transaction.api.IntentTransactionRegistryService;
 
 import java.util.HashSet;
 import java.util.Set;
