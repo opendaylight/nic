@@ -8,30 +8,34 @@
 
 package org.opendaylight.nic.listeners.impl;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.NotificationSupplierDefinition;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
-import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
 @PrepareForTest({ OFRendererFlowService.class, DataBroker.class,
-                    NotificationService.class, ListenerProviderImpl.class})
+        NotificationService.class, FrameworkUtil.class })
 @RunWith(PowerMockRunner.class)
 /**
  * JUnit test for {@link NeutronIntegrationProviderImpl}.
@@ -40,101 +44,150 @@ public class ListenerProviderImplTest {
     /**
      * Mock instance of DataBroker to perform unit testing.
      */
+    @Mock
     private DataBroker mockDataBroker;
+
     /**
      * Mock instance of NotificationService to perform unit testing.
      */
+    @Mock
     private NotificationService mockNotificationService;
+
     /**
      * Mock instance of OFRendererFlowService to perform unit testing.
      */
+    @Mock
     private OFRendererFlowService mockFlowService;
+
     /**
      * Mock instance of OFRendererGraphService to perform unit testing.
      */
+    @Mock
     private OFRendererGraphService mockGraphService;
+
     /**
      * Stubbed instance of ListenerProviderImpl to perform unit testing.
      */
     private ListenerProviderImpl provider;
 
+    /**
+     * create a mock object for the class Bundle.
+     */
+    @Mock
+    private Bundle bundle;
+
+    /**
+     * create a mock Object for the class BundleContext.
+     */
+    @Mock
+    private BundleContext context;
+
+    @Mock
+    private EventRegistryServiceImpl eventRegistryServiceImpl;
+
+    @Mock
+    private EventRegistryService eventRegistryService;
+
+    /**
+     * create a mock Object for the class ServiceRegistration.
+     */
+    @Mock
+    private ServiceRegistration<EventRegistryService> nicEventServiceRegistration;
+
+    @Mock
+    private ServiceReference serviceReference;
+
+    @Mock
+    private EndpointDiscoveredNotificationSupplierImpl endpointDiscoveredNotificationSupplierImpl;
+
+    @Mock
+    private ListenerRegistration<EndpointDiscoveredNotificationSupplierImpl> notificationListenerRegistration;
 
     @Before
     public void setup() throws Exception {
+        PowerMockito.mockStatic(FrameworkUtil.class);
+        when(FrameworkUtil.getBundle(EventRegistryServiceImpl.class))
+                .thenReturn(bundle);
+        when(bundle.getBundleContext()).thenReturn(context);
+        when(context.registerService(EventRegistryService.class,
+                eventRegistryServiceImpl, null))
+                        .thenReturn(nicEventServiceRegistration);
+
+        when(mockNotificationService.registerNotificationListener(
+                endpointDiscoveredNotificationSupplierImpl))
+                        .thenReturn(notificationListenerRegistration);
         /**
-         * Create required mock objects and define mocking functionality
-         * for mock objects.
+         * Create required mock objects and define mocking functionality for
+         * mock objects.
          */
-        mockDataBroker = mock(DataBroker.class);
-        mockNotificationService = mock(NotificationService.class);
-        mockFlowService = mock(OFRendererFlowService.class);
-        mockGraphService = mock(OFRendererGraphService.class);
-        provider = PowerMockito.spy(new ListenerProviderImpl(mockDataBroker,
-                                                             mockNotificationService,
-                                                             mockFlowService,
-                                                             mockGraphService));
+        provider = Mockito.spy(new ListenerProviderImpl(mockDataBroker,
+                mockNotificationService, mockFlowService, mockGraphService));
     }
-
-
 
     /**
      * Test case for {@link ListenerProviderImpl#start()}
      */
     @Test
     public void testStart() throws Exception {
-        EventRegistryServiceImpl mockRegistryServiceImpl = mock(EventRegistryServiceImpl.class);
-        PowerMockito.whenNew(EventRegistryServiceImpl.class).withNoArguments().thenReturn(mockRegistryServiceImpl);
-        ArrayList<NotificationSupplierDefinition<?>> mockSupplierList = mock(ArrayList.class);
-        PowerMockito.whenNew(ArrayList.class).withAnyArguments().thenReturn(mockSupplierList);
+        when(FrameworkUtil.getBundle(NodeNotificationSupplierImpl.class))
+                .thenReturn(bundle);
+        when(FrameworkUtil
+                .getBundle(NodeConnectorNotificationSupplierImpl.class))
+                        .thenReturn(bundle);
+        when(FrameworkUtil.getBundle(IntentNotificationSupplierImpl.class))
+                .thenReturn(bundle);
+        when(FrameworkUtil.getBundle(IntentNBINotificationSupplierImpl.class))
+                .thenReturn(bundle);
+        when(FrameworkUtil
+                .getBundle(NeutronSecGroupNotificationSupplierImpl.class))
+                        .thenReturn(bundle);
+        when(FrameworkUtil
+                .getBundle(NeutronSecRuleNotificationSupplierImpl.class))
+                        .thenReturn(bundle);
+        when(FrameworkUtil
+                .getBundle(TopologyLinkNotificationSupplierImpl.class))
+                        .thenReturn(bundle);
+        when(FrameworkUtil
+                .getBundle(EndpointDiscoveredNotificationSupplierImpl.class))
+                        .thenReturn(bundle);
 
-        NodeNotificationSupplierImpl mockNodeSupp =
-                mock(NodeNotificationSupplierImpl.class);
-        NodeConnectorNotificationSupplierImpl mockConnectorSupp =
-                mock(NodeConnectorNotificationSupplierImpl.class);
-        IntentNotificationSupplierImpl mockIntentSupp =
-                mock(IntentNotificationSupplierImpl.class);
-        IntentNBINotificationSupplierImpl mockIntentNBISupp =
-                mock(IntentNBINotificationSupplierImpl.class);
-        NeutronSecGroupNotificationSupplierImpl mockSecGroupsSupp =
-                mock(NeutronSecGroupNotificationSupplierImpl.class);
-        NeutronSecRuleNotificationSupplierImpl mockSecRulesSupp =
-                mock(NeutronSecRuleNotificationSupplierImpl.class);
-        EndpointDiscoveredNotificationSupplierImpl mockEndpointResolver =
-                mock(EndpointDiscoveredNotificationSupplierImpl.class);
-        TopologyLinkNotificationSupplierImpl mockLinkSupp =
-                mock(TopologyLinkNotificationSupplierImpl.class);
-
-        PowerMockito.whenNew(NodeNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockNodeSupp);
-        PowerMockito.whenNew(NodeConnectorNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockConnectorSupp);
-        PowerMockito.whenNew(IntentNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockIntentSupp);
-        PowerMockito.whenNew(IntentNBINotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockIntentNBISupp);
-        PowerMockito.whenNew(NeutronSecGroupNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockSecGroupsSupp);
-        PowerMockito.whenNew(NeutronSecRuleNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockSecRulesSupp);
-        PowerMockito.whenNew(EndpointDiscoveredNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockEndpointResolver);
-        PowerMockito.whenNew(TopologyLinkNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockLinkSupp);
-
+        when(context.getServiceReference(EventRegistryService.class))
+                .thenReturn(serviceReference);
+        when((EventRegistryService) context.getService(serviceReference))
+                .thenReturn(eventRegistryService);
         provider.start();
 
-        /**
-         * Verify that the listeners are registered with the EventRegistryService
-         */
-        verify(mockRegistryServiceImpl).registerEventListener(
-                eq(mockNodeSupp), Mockito.any(NodeNotificationSubscriberImpl.class));
-        verify(mockRegistryServiceImpl).registerEventListener(
-                eq(mockIntentSupp), Mockito.any(IntentNotificationSubscriberImpl.class));
-        verify(mockRegistryServiceImpl).registerEventListener(
-                eq(mockEndpointResolver), Mockito.any(EndpointDiscoveryNotificationSubscriberImpl.class));
-        verify(mockRegistryServiceImpl).registerEventListener(
-                eq(mockLinkSupp), Mockito.any(TopologyLinkNotificationSubscriberImpl.class));
-        verify(mockSupplierList,times(7)).add(Mockito.any(NotificationSupplierDefinition.class));
+        List<NotificationSupplierDefinition<?>> mockSupplierList = provider
+                .getSupplierList();
 
+        /**
+         * Verify that the listeners are registered with the
+         * EventRegistryService Need improvement here.
+         */
+        boolean result = false;
+
+        for (NotificationSupplierDefinition<?> notificationSupplierDefinition : mockSupplierList) {
+            result = false;
+
+            if (notificationSupplierDefinition instanceof NodeNotificationSupplierImpl) {
+                result = true;
+            } else if (notificationSupplierDefinition instanceof NodeConnectorNotificationSupplierImpl) {
+                result = true;
+            } else if (notificationSupplierDefinition instanceof IntentNotificationSupplierImpl) {
+                result = true;
+            } else if (notificationSupplierDefinition instanceof IntentNBINotificationSupplierImpl) {
+                result = true;
+            } else if (notificationSupplierDefinition instanceof NeutronSecGroupNotificationSupplierImpl) {
+                result = true;
+            } else if (notificationSupplierDefinition instanceof NeutronSecRuleNotificationSupplierImpl) {
+                result = true;
+            } else if (notificationSupplierDefinition instanceof TopologyLinkNotificationSupplierImpl) {
+                result = true;
+            } else {
+                break;
+            }
+        }
+
+        Assert.assertTrue(result);
     }
 }
