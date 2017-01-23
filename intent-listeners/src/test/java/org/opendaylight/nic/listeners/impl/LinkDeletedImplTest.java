@@ -10,15 +10,10 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertNotNull;
 
-@PrepareForTest({LinkDeletedImpl.class})
-@RunWith(PowerMockRunner.class)
 /**
  * Created by yrineu on 12/01/16.
  */
@@ -35,6 +30,4 @@ public class LinkDeletedImplTest {
     public void testTimestampNotNull() {
         assertNotNull(linkDeletedMock.getTimeStamp());
     }
-
-
 }
