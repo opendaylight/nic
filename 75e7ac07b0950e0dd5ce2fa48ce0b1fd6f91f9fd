@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_f9c0682c",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/transaction/api/EventType.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6806
+      },
+      "writtenOn": "2017-01-23T21:02:34Z",
+      "side": 1,
+      "message": "Maybe LINK_UTILIZED_OVER or LINK_OVER_UTILIZED get better",
+      "revId": "75e7ac07b0950e0dd5ce2fa48ce0b1fd6f91f9fd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
