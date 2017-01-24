@@ -10,21 +10,15 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.opendaylight.nic.listeners.api.SecurityGroupAdded;
+import org.mockito.Mockito;
 import org.opendaylight.nic.listeners.api.SecurityGroupDeleted;
 import org.opendaylight.nic.neutron.NeutronSecurityGroup;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import utils.SecurityGroupUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@PrepareForTest({ SecurityGroupDeletedImpl.class})
-@RunWith(PowerMockRunner.class)
 /**
  * Created by yrineu on 12/01/16.
  */
@@ -36,7 +30,7 @@ public class SecurityGroupDeleteImplTest {
     @Before
     public void setUp() {
         SecurityGroupUtils.setUp();
-        securityGroupDeleted = PowerMockito.spy(new SecurityGroupDeletedImpl(SecurityGroupUtils.securityGroupMock));
+        securityGroupDeleted = Mockito.spy(new SecurityGroupDeletedImpl(SecurityGroupUtils.securityGroupMock));
         neutronSecurityGroup = securityGroupDeleted.getSecurityGroup();
     }
 
