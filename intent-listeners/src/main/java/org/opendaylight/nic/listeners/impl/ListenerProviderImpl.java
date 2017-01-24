@@ -11,6 +11,9 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
+import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
+import org.opendaylight.nic.common.transaction.api.IntentCommonService;
+import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.utils.MdsalUtils;
@@ -38,6 +41,8 @@ public class ListenerProviderImpl implements AutoCloseable {
     private EventRegistryServiceImpl serviceRegistry = null;
     private NotificationService notificationService;
     private OFRendererFlowService flowService;
+    private IntentCommonService intentCommonService;
+    private IntentStateMachineExecutorService stateMachineExecutorService;
     private OFRendererGraphService graphService;
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
     private MdsalUtils mdsalUtils;
@@ -48,20 +53,26 @@ public class ListenerProviderImpl implements AutoCloseable {
      * @param notificationService The {@link NotificationService} used with pub-sub pattern
      * @param flowService The {@link OFRendererFlowService} used to render and push OF Rules
      * @param graphService The {@link OFRendererGraphService} used to represent and solve a
+     * @param intentCommonService The {@link IntentCommonService} used to translate Intents into FlowData for renders
      *                     Network-Topology.
      */
     public ListenerProviderImpl(final DataBroker db,
                                 NotificationService notificationService,
                                 OFRendererFlowService flowService,
-                                OFRendererGraphService graphService) {
+                                OFRendererGraphService graphService,
+                                IntentCommonService intentCommonService,
+                                IntentStateMachineExecutorService stateMachineExecutorService) {
         Preconditions.checkNotNull(db);
         Preconditions.checkNotNull(notificationService);
         Preconditions.checkNotNull(flowService);
+        Preconditions.checkNotNull(intentCommonService);
         this.db = db;
         this.notificationService = notificationService;
         this.flowService = flowService;
         this.graphService = graphService;
         this.mdsalUtils = new MdsalUtils(db);
+        this.intentCommonService = intentCommonService;
+        this.stateMachineExecutorService = stateMachineExecutorService;
     }
 
     public void start() {
@@ -85,7 +96,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
-        IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(flowService);
+        IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(intentCommonService, stateMachineExecutorService);
         IntentNBINotificationSubscriberImpl intentNBIListener = new IntentNBINotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
         serviceRegistry.registerEventListener((IEventService) intentNBISupp, intentNBIListener);

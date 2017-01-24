@@ -21,27 +21,32 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>intent-statemachine</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>intent-mapping-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>intent-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>of-renderer</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>mapped-objects-model</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -50,6 +55,14 @@
             <artifactId>intent-graph</artifactId>
             <version>${project.version}</version>
         </dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>intent-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+>>>>>>> 51255e3... [WIP] Integrate Intent-listeners with Renderer-common
         <!-- Neutron Dependencies -->
         <dependency>
             <groupId>org.opendaylight.neutron</groupId>
