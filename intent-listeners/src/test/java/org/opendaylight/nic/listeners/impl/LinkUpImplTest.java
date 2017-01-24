@@ -10,20 +10,15 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeConnectorId;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@PrepareForTest({LinkUpImpl.class})
-@RunWith(PowerMockRunner.class)
 /**
  * Created by yrineu on 12/01/16.
  */
@@ -43,7 +38,7 @@ public class LinkUpImplTest {
     public void setUp() {
         MacAddress macAddress = MacAddress.getDefaultInstance(MAC_ADDRESS_STR);
         nodeConnectorId = NodeConnectorId.getDefaultInstance(NODE_CONNECTOR_ID_STR);
-        linkUpImplMock = PowerMockito.spy(new LinkUpImpl(macAddress, PORT_NAME, nodeConnectorId));
+        linkUpImplMock = Mockito.spy(new LinkUpImpl(macAddress, PORT_NAME, nodeConnectorId));
     }
 
     @Test
