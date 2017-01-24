@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+
+     This program is made available under the terms of the
+     Eclipse Public License v1.0 which accompanies this distribution,
+     and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<features name="odl-nic-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+
+    <feature name='odl-nic-renderer-nemo' version='${project.version}'>
+        <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">
+            mvn:org.opendaylight.nic/nemo-renderer/${project.version}/xml/config
+        </configfile>
+    </feature>
+</features>
