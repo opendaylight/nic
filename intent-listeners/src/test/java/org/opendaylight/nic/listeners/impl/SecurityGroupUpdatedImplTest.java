@@ -10,20 +10,15 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.opendaylight.nic.listeners.api.SecurityGroupUpdated;
 import org.opendaylight.nic.neutron.NeutronSecurityGroup;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import utils.SecurityGroupUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@PrepareForTest({SecurityGroupUpdatedImpl.class})
-@RunWith(PowerMockRunner.class)
 /**
  * Created by yrineu on 12/01/16.
  */
@@ -35,7 +30,7 @@ public class SecurityGroupUpdatedImplTest {
     @Before
     public void setUp() {
         SecurityGroupUtils.setUp();
-        securityGroupUpdated = PowerMockito.spy(new SecurityGroupUpdatedImpl(SecurityGroupUtils.securityGroupMock));
+        securityGroupUpdated = Mockito.spy(new SecurityGroupUpdatedImpl(SecurityGroupUtils.securityGroupMock));
         neutronSecurityGroup = securityGroupUpdated.getSecurityGroup();
     }
 
