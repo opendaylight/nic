@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_2858d455",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2017-01-24T15:21:52Z",
+      "side": 1,
+      "message": "Why are you using an Array instead ArrayList?",
+      "range": {
+        "startLine": 142,
+        "startChar": 14,
+        "endLine": 142,
+        "endChar": 29
+      },
+      "revId": "a34fc9ff9573d4d1a09514ee7e72ba69f363162c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_28061421",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2017-01-24T15:21:52Z",
+      "side": 1,
+      "message": "It should be inserted in a FINAL parameter",
+      "range": {
+        "startLine": 151,
+        "startChar": 30,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "a34fc9ff9573d4d1a09514ee7e72ba69f363162c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
