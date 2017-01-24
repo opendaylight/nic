@@ -7,31 +7,72 @@
  */
 package org.opendaylight.nic.utils;
 
+import org.opendaylight.nic.common.model.*;
 import org.opendaylight.nic.common.model.FlowAction;
-import org.opendaylight.nic.common.model.FlowDataL2;
-import org.opendaylight.nic.common.model.FlowDataL3;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddressBuilder;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 
 public class FlowDataUtils {
 
-    public static FlowDataL3 buildRendererCommonL3(
-            final String src,
-            final String dst,
-            final String flowAction) {
+    private static FlowDataL3 buildRendererCommonL3(
+            final EndPointGroup src,
+            final EndPointGroup dst,
+            final FlowAction flowAction) {
         return new FlowDataL3(
-                IpAddressBuilder.getDefaultInstance(src),
-                IpAddressBuilder.getDefaultInstance(dst),
-                FlowAction.valueOf(flowAction));
+                IpAddressBuilder.getDefaultInstance(src.getEndPointGroup().getName()),
+                IpAddressBuilder.getDefaultInstance(dst.getEndPointGroup().getName()),
+                flowAction);
     }
 
-    public static FlowDataL2 buildRendererCommonL2(
-            final String src,
-            final String dst,
-            final String flowAction) {
+    private static FlowDataL2 buildRendererCommonL2(
+            final EndPointGroup src,
+            final EndPointGroup dst,
+            final FlowAction flowAction) {
         return new FlowDataL2(
-                MacAddress.getDefaultInstance(src),
-                MacAddress.getDefaultInstance(dst),
-                FlowAction.valueOf(flowAction));
+                MacAddress.getDefaultInstance(src.getEndPointGroup().getName()),
+                MacAddress.getDefaultInstance(dst.getEndPointGroup().getName()),
+                flowAction);
+    }
+
+    private static FlowType getFlowType(final EndPointGroup srcEndpoint,
+                                       final EndPointGroup dstEndpoint) {
+        FlowType result = FlowType.L2;
+        boolean isL2;
+        boolean isL3;
+        final String src = srcEndpoint.getEndPointGroup().getName();
+        final String dst = dstEndpoint.getEndPointGroup().getName();
+
+        final boolean srcIsMac = IntentUtils.validateMAC(src);
+        final boolean dstIsMac = IntentUtils.validateMAC(dst);
+
+        final boolean srcIsIp = IntentUtils.validateIP(src);
+        final boolean dstIsIp = IntentUtils.validateIP(dst);
+
+        isL2 = (srcIsMac && dstIsMac);
+        isL3 = (srcIsIp && dstIsIp);
+
+        if (isL2) {
+            result = FlowType.L2;
+        } else if (isL3) {
+            result = FlowType.L3;
+        }
+        return result;
+    }
+
+    public static FlowData generateFlowData(final EndPointGroup srcEndPoint,
+                                            final EndPointGroup dstEndPoint,
+                                            final FlowAction flowAction) {
+        FlowData result = null;
+        final FlowType flowType = getFlowType(srcEndPoint, dstEndPoint);
+        switch (flowType) {
+            case L2:
+                result = buildRendererCommonL2(srcEndPoint, dstEndPoint, flowAction);
+                break;
+            case L3:
+                result = buildRendererCommonL3(srcEndPoint, dstEndPoint, flowAction);
+                break;
+        }
+        return result;
     }
 }

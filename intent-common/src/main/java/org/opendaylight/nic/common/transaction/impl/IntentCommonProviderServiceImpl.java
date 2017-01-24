@@ -9,11 +9,7 @@
 package org.opendaylight.nic.common.transaction.impl;
 
 import org.opendaylight.nic.common.transaction.TransactionResult;
-import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.common.transaction.api.IntentTransactionListener;
-import org.opendaylight.nic.common.transaction.api.IntentTransactionNotifier;
-import org.opendaylight.nic.common.transaction.api.IntentTransactionRegistryService;
-import org.opendaylight.nic.common.transaction.api.IntentTransactionResultListener;
+import org.opendaylight.nic.common.transaction.api.*;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
@@ -62,6 +58,11 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
     @Override
     public void unregisterForResults(IntentTransactionResultListener resultListener) {
         registryService.unregisterForResults(resultListener);
+    }
+
+    @Override
+    public IntentCommonService retrieveCommonServiceInstance() {
+        return new IntentCommonServiceImpl();
     }
 
     @Override

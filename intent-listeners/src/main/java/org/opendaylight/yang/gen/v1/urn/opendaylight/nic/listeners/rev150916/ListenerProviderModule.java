@@ -1,5 +1,7 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.listeners.rev150916;
 
+import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
+import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.listeners.impl.ListenerProviderImpl;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
@@ -35,15 +37,20 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
                 getService(ofServiceReference);
         ServiceReference<?> graphServiceReference = context.
                 getServiceReference(OFRendererGraphService.class);
+        ServiceReference<?> intentCommonReference = context.
+                getServiceReference(IntentCommonProviderService.class);
         OFRendererGraphService graphService = (OFRendererGraphService) context
                 .getService(graphServiceReference);
+        IntentCommonProviderService intentCommonProviderService = (IntentCommonProviderService) context
+                .getService(intentCommonReference);
 
         final ListenerProviderImpl provider = new ListenerProviderImpl(getDataBrokerDependency(),
-                                                                       getNotificationAdapterDependency(),
-                                                                       flowService,
-                                                                       graphService);
+                getNotificationAdapterDependency(),
+                flowService,
+                graphService,
+                intentCommonProviderService.retrieveCommonServiceInstance());
         provider.start();
-        LOG.info("NIC Listeners started successfully.");
+        LOG.info("\nNIC Listeners started successfully.");
 
         return provider;
     }

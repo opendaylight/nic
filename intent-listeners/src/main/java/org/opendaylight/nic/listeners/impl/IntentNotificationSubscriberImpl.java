@@ -7,30 +7,41 @@
  */
 package org.opendaylight.nic.listeners.impl;
 
+import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IntentAdded;
 import org.opendaylight.nic.listeners.api.IntentRemoved;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.utils.FlowAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IntentNotificationSubscriberImpl implements IEventListener<NicNotification> {
 
+    private static final Logger LOG = LoggerFactory.getLogger(IntentNotificationSubscriberImpl.class);
     private OFRendererFlowService flowService;
+    private IntentCommonService intentCommonService;
 
     public IntentNotificationSubscriberImpl(OFRendererFlowService flowService) {
         this.flowService = flowService;
+    }
+
+    public IntentNotificationSubscriberImpl(final IntentCommonService intentCommonService) {
+        this.intentCommonService = intentCommonService;
     }
 
     @Override
     public void handleEvent(NicNotification event) {
         if (IntentAdded.class.isInstance(event)) {
             IntentAdded addedEvent = (IntentAdded) event;
-            flowService.pushIntentFlow(addedEvent.getIntent(), FlowAction.ADD_FLOW);
+            intentCommonService.resolveAndApply(addedEvent.getIntent());
+//            flowService.pushIntentFlow(addedEvent.getIntent(), FlowAction.ADD_FLOW);
         }
         if (IntentRemoved.class.isInstance(event)) {
             IntentRemoved deleteEvent = (IntentRemoved) event;
-            flowService.pushIntentFlow(deleteEvent.getIntent(), FlowAction.REMOVE_FLOW);
+            intentCommonService.resolveAndRemove(deleteEvent.getIntent());
+//            flowService.pushIntentFlow(deleteEvent.getIntent(), FlowAction.REMOVE_FLOW);
         }
     }
 }
