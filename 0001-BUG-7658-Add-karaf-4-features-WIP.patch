@@ -1,0 +1,2180 @@
+From 692b0cd9abe28ac8e7bf97b1aafdcf485ce79bfc Mon Sep 17 00:00:00 2001
+From: Yrineu Rodrigues <yrineu.rodrigues@serro.com>
+Date: Tue, 24 Jan 2017 10:50:02 -0300
+Subject: [PATCH] BUG - 7658: Add karaf 4 features [WIP]
+
+Signed-off-by: Yrineu Rodrigues <yrineu.rodrigues@serro.com>
+---
+ features/features-nic/pom.xml                      | 315 +++++++++++++++++++++
+ .../features-nic/src/main/features/features.xml    | 151 ++++++++++
+ features/features4-nic/pom.xml                     | 118 ++++++++
+ features/odl-nic-console/pom.xml                   |  41 +++
+ features/odl-nic-core-hazelcast/pom.xml            |  65 +++++
+ features/odl-nic-core-mdsal/pom.xml                |  60 ++++
+ features/odl-nic-graph/pom.xml                     |  69 +++++
+ features/odl-nic-intent-common/pom.xml             |  48 ++++
+ features/odl-nic-intent-statemachine/pom.xml       |  62 ++++
+ features/odl-nic-listeners/pom.xml                 |  94 ++++++
+ features/odl-nic-neutron-integration/pom.xml       |  80 ++++++
+ features/odl-nic-pipeline-manager/pom.xml          |  92 ++++++
+ features/odl-nic-renderer-gbp/pom.xml              |  74 +++++
+ features/odl-nic-renderer-nemo/pom.xml             |  73 +++++
+ features/odl-nic-renderer-of/pom.xml               | 139 +++++++++
+ features/odl-nic-renderer-vtn/pom.xml              |  72 +++++
+ features/pom.xml                                   | 303 ++------------------
+ features/src/main/features/features.xml            | 151 ----------
+ 18 files changed, 1582 insertions(+), 425 deletions(-)
+ create mode 100644 features/features-nic/pom.xml
+ create mode 100644 features/features-nic/src/main/features/features.xml
+ create mode 100644 features/features4-nic/pom.xml
+ create mode 100644 features/odl-nic-console/pom.xml
+ create mode 100644 features/odl-nic-core-hazelcast/pom.xml
+ create mode 100644 features/odl-nic-core-mdsal/pom.xml
+ create mode 100644 features/odl-nic-graph/pom.xml
+ create mode 100644 features/odl-nic-intent-common/pom.xml
+ create mode 100644 features/odl-nic-intent-statemachine/pom.xml
+ create mode 100644 features/odl-nic-listeners/pom.xml
+ create mode 100644 features/odl-nic-neutron-integration/pom.xml
+ create mode 100644 features/odl-nic-pipeline-manager/pom.xml
+ create mode 100644 features/odl-nic-renderer-gbp/pom.xml
+ create mode 100644 features/odl-nic-renderer-nemo/pom.xml
+ create mode 100644 features/odl-nic-renderer-of/pom.xml
+ create mode 100644 features/odl-nic-renderer-vtn/pom.xml
+ delete mode 100644 features/src/main/features/features.xml
+
+diff --git a/features/features-nic/pom.xml b/features/features-nic/pom.xml
+new file mode 100644
+index 0000000..8195439
+--- /dev/null
++++ b/features/features-nic/pom.xml
+@@ -0,0 +1,315 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
++
++     This program is made available under the terms of the
++     Eclipse Public License v1.0 which accompanies this distribution,
++     and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++  <modelVersion>4.0.0</modelVersion>
++  <parent>
++    <groupId>org.opendaylight.odlparent</groupId>
++    <artifactId>features-parent</artifactId>
++    <version>1.8.0-SNAPSHOT</version>
++    <relativePath/>
++  </parent>
++
++  <groupId>org.opendaylight.nic</groupId>
++  <artifactId>features-nic</artifactId>
++  <name>${project.artifactId}</name>
++  <version>1.3.0-SNAPSHOT</version>
++  <packaging>jar</packaging>
++
++  <properties>
++    <features.file>features.xml</features.file>
++    <jung2.version>2.0.1</jung2.version>
++    <feature.vtn-manager.version>0.6.0-SNAPSHOT</feature.vtn-manager.version>
++    <nemo.version>1.2.0-SNAPSHOT</nemo.version>
++    <groupbasedpolicy.version>0.5.0-SNAPSHOT</groupbasedpolicy.version>
++    <openflowplugin.version>0.4.0-SNAPSHOT</openflowplugin.version>
++    <mdsal.version>1.5.0-SNAPSHOT</mdsal.version>
++    <restconf.version>1.5.0-SNAPSHOT</restconf.version>
++    <yangtools.version>1.1.0-SNAPSHOT</yangtools.version>
++    <karaf.cellar.version>3.0.3</karaf.cellar.version>
++    <hazelcast.version>3.4.2</hazelcast.version>
++    <neutron.version>0.8.0-SNAPSHOT</neutron.version>
++    <odl.ovsdb.version>1.4.0-SNAPSHOT</odl.ovsdb.version>
++    <sfc.version>0.5.0-SNAPSHOT</sfc.version>
++  </properties>
++
++  <dependencies>
++<!-- external projects feature repository -->
++    <dependency>
++      <groupId>org.opendaylight.neutron</groupId>
++      <artifactId>features-neutron</artifactId>
++      <version>${neutron.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.yangtools</groupId>
++      <artifactId>features-yangtools</artifactId>
++      <version>${yangtools.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.controller</groupId>
++      <artifactId>features-mdsal</artifactId>
++      <version>${mdsal.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.netconf</groupId>
++      <artifactId>features-restconf</artifactId>
++      <classifier>features</classifier>
++      <version>${restconf.version}</version>
++      <type>xml</type>
++      <scope>runtime</scope>
++    </dependency>
++
++    <dependency>
++      <groupId>org.opendaylight.vtn</groupId>
++      <artifactId>features-vtn-manager</artifactId>
++      <version>${feature.vtn-manager.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nemo</groupId>
++      <artifactId>nemo-features</artifactId>
++      <version>${nemo.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.groupbasedpolicy</groupId>
++      <artifactId>features-groupbasedpolicy</artifactId>
++      <version>${groupbasedpolicy.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.openflowplugin</groupId>
++      <artifactId>features-openflowplugin</artifactId>
++      <version>${openflowplugin.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++
++    <!-- OpenDaylight ovsdb -->
++    <dependency>
++      <groupId>org.opendaylight.ovsdb</groupId>
++      <artifactId>southbound-features</artifactId>
++      <classifier>features</classifier>
++      <type>xml</type>
++      <version>${odl.ovsdb.version}</version>
++    </dependency>
++
++<!-- project specific dependencies -->
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-api</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-mapping-interface</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-impl</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-impl</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-cli</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-compiler</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>vtn-renderer</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>of-renderer</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>of-renderer</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>pipeline-manager</artifactId>
++      <version>${project.version}</version>
++      </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>pipeline-manager</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-common</artifactId>
++      <scope>compile</scope>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-common</artifactId>
++      <version>${project.version}</version>
++      <scope>compile</scope>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <!-- controller dependencies -->
++    <dependency>
++      <groupId>org.opendaylight.controller.thirdparty</groupId>
++      <artifactId>net.sf.jung2</artifactId>
++      <version>${jung2.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-graph</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-graph</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-mapping-hazelcast</artifactId>
++      <version>${project.version}</version>
++      </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-mapping-hazelcast</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++      </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-mapping-mdsal</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-mapping-mdsal</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>vtn-renderer</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>nemo-renderer</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>nemo-renderer</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>gbp-renderer</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>gbp-renderer</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-listeners</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-listeners</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>neutron-integration</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>neutron-integration</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++    </dependency>
++    <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-statemachine</artifactId>
++      <version>${project.version}</version>
++     </dependency>
++     <dependency>
++      <groupId>org.opendaylight.nic</groupId>
++      <artifactId>intent-statemachine</artifactId>
++      <version>${project.version}</version>
++      <classifier>config</classifier>
++      <type>xml</type>
++     </dependency>
++<!-- external dependencies -->
++    <dependency>
++      <groupId>org.apache.karaf.cellar</groupId>
++      <artifactId>apache-karaf-cellar</artifactId>
++      <version>${karaf.cellar.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++    </dependency>
++    <!-- SFC Dependencies -->
++    <dependency>
++      <groupId>org.opendaylight.sfc</groupId>
++      <artifactId>features-sfc</artifactId>
++      <version>${sfc.version}</version>
++      <classifier>features</classifier>
++      <type>xml</type>
++      <scope>runtime</scope>
++    </dependency>
++  </dependencies>
++
++</project>
+diff --git a/features/features-nic/src/main/features/features.xml b/features/features-nic/src/main/features/features.xml
+new file mode 100644
+index 0000000..56b54d3
+--- /dev/null
++++ b/features/features-nic/src/main/features/features.xml
+@@ -0,0 +1,151 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
++
++     This program is made available under the terms of the
++     Eclipse Public License v1.0 which accompanies this distribution,
++     and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++<features name="odl-nic-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
++          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
++
++    <!-- https://wiki.opendaylight.org/view/Runtime:Karaf_Features_Guidelines#Feature_Best_Practices -->
++    <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
++    <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.ovsdb/southbound-features/{{VERSION}}/xml/features</repository>
++    <repository>mvn:org.opendaylight.sfc/features-sfc/{{VERSION}}/xml/features</repository>
++
++    <!-- Core feature using Hazelcast backend engine -->
++    <feature name='odl-nic-core-hazelcast' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core using Hazelcast mapping service'>
++        <feature version="${mdsal.version}">odl-restconf</feature>
++        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
++        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
++        <feature version="${hazelcast.version}">hazelcast</feature>
++        <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
++         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-hazelcast.xml"> mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}/xml/config</configfile>
++        <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- Core feature using MD-SAL backend engine -->
++    <feature name='odl-nic-core-mdsal' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core using MD-SAL mapping service'>
++        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
++        <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
++        <feature version="${mdsal.version}">odl-restconf</feature>
++        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
++        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
++        <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-mdsal.xml">mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}/xml/config</configfile>
++        <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- CLI feature -->
++    <feature name='odl-nic-console' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: CLI'>
++        <feature version="${project.version}">odl-nic-core-mdsal</feature>
++        <bundle>mvn:org.opendaylight.nic/intent-cli/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
++    </feature>
++
++    <!-- VTN Renderer -->
++    <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
++        <feature version="${project.version}">odl-nic-core-mdsal</feature>
++        <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
++        <bundle>mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- GBP Renderer -->
++    <feature name='odl-nic-renderer-gbp' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
++        <feature version="${project.version}">odl-nic-core-mdsal</feature>
++        <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-base</feature>
++        <bundle>mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- OF Renderer -->
++    <feature name='odl-nic-renderer-of' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
++        <feature version="${project.version}">odl-nic-core-mdsal</feature>
++        <feature version="${project.version}">odl-nic-pipeline-manager</feature>
++        <feature version="${neutron.version}">odl-neutron-service</feature>
++        <feature version="${openflowplugin.version}">odl-openflowplugin-app-topology</feature>
++        <feature version="${sfc.version}">odl-sfc-provider</feature>
++        <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- NEMO Renderer -->
++    <feature name='odl-nic-renderer-nemo' version='${project.version}'  description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>
++        <feature version="${project.version}">odl-nic-core-mdsal</feature>
++        <feature version="${nemo.version}">odl-nemo-engine</feature>
++        <bundle>mvn:joda-time/joda-time/{{VERSION}}</bundle>
++        <bundle>mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- Pipeline Manager -->
++    <feature name='odl-nic-pipeline-manager' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Pipeline Manager'>
++        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
++        <bundle>mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/91-pipeline-manager.xml">mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- Intent Listeners -->
++    <feature name='odl-nic-listeners' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Listeners'>
++        <feature version="${project.version}">odl-nic-renderer-of</feature>
++        <bundle>mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/92-intent-listeners.xml">mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- Neutron Integration -->
++    <feature name='odl-nic-neutron-integration' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Neutron Integration'>
++        <feature version="${project.version}">odl-nic-listeners</feature>
++        <bundle>mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}</bundle>
++        <feature version='${odl.ovsdb.version}'>odl-ovsdb-southbound-impl</feature>
++        <configfile finalname="etc/opendaylight/karaf/92-neutron-integration.xml">mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- Intent State Machine -->
++    <feature name='odl-nic-intent-statemachine' version='${project.version}'
++             description='OpenDaylight :: Network Intent Composition :: Intent State Machine'>
++        <feature version="${project.version}">odl-nic-listeners</feature>
++        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/93-intent-statemachine.xml">mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- Graph feature -->
++    <feature name='odl-nic-graph' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Graph'>
++        <feature version="${project.version}">odl-nic-core-mdsal</feature>
++        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/94-intent-graph.xml">mvn:org.opendaylight.nic/intent-graph/{{VERSION}}/xml/config</configfile>
++    </feature>
++
++    <!-- Intent Common feature -->
++    <feature name='odl-nic-intent-common' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Common'>
++        <feature version="${project.version}">odl-nic-core-mdsal</feature>
++        <bundle>mvn:org.opendaylight.nic/intent-common/{{VERSION}}</bundle>
++        <configfile finalname="etc/opendaylight/karaf/95-intent-common.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
++    </feature>
++</features>
+diff --git a/features/features4-nic/pom.xml b/features/features4-nic/pom.xml
+new file mode 100644
+index 0000000..c22818d
+--- /dev/null
++++ b/features/features4-nic/pom.xml
+@@ -0,0 +1,118 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++ Copyright © 2016 Red Hat, Inc. and others.  All rights reserved.
++
++ This program and the accompanying materials are made available under the
++ terms of the Eclipse Public License v1.0 which accompanies this distribution,
++ and is available at http://www.eclipse.org/legal/epl-v10.html
++ -->
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++
++    <parent>
++      <groupId>org.opendaylight.odlparent</groupId>
++       <artifactId>feature-repo-parent</artifactId>
++       <version>1.8.0-SNAPSHOT</version>
++   </parent>
++
++  <groupId>org.opendaylight.nic</groupId>
++  <artifactId>features4-nic</artifactId>
++  <version>0.4.0-SNAPSHOT</version>
++  <packaging>feature</packaging>
++
++  <dependencies>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-console</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-core-hazelcast</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-core-mdsal</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-graph</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-intent-common</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-intent-statemachine</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-listeners</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-neutron-integration</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-pipeline-manager</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-renderer-gbp</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-renderer-nemo</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-renderer-of</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++    <dependency>
++        <groupId>${project.groupId}</groupId>
++        <artifactId>odl-nic-renderer-vtn</artifactId>
++        <version>${project.version}</version>
++        <type>xml</type>
++        <classifier>features</classifier>
++    </dependency>
++  </dependencies>
++</project>
+diff --git a/features/odl-nic-console/pom.xml b/features/odl-nic-console/pom.xml
+new file mode 100644
+index 0000000..07a4325
+--- /dev/null
++++ b/features/odl-nic-console/pom.xml
+@@ -0,0 +1,41 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <parent>
++        <groupId>org.opendaylight.controller</groupId>
++        <artifactId>single-feature-parent</artifactId>
++        <version>0.6.0-SNAPSHOT</version>
++        <relativePath />
++    </parent>
++
++    <modelVersion>4.0.0</modelVersion>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>intent-common</artifactId>
++    <version>1.3.0-SNAPSHOT</version>
++    <packaging>feature</packaging>
++
++    <name>OpendayLight :: NIC :: Console</name>
++
++    <dependencies>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>odl-nic-core-mdsal</artifactId>
++            <version>${project.version}</version>
++            <type>xml</type>
++            <classifier>features</classifier>
++        </dependency>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>odl-nic-mapped-models</artifactId>
++            <version>${project.version}</version>
++            <type>xml</type>
++            <classifier>features</classifier>
++        </dependency>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>odl-nic-intent-cli</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++    </dependencies>
++</project>
+diff --git a/features/odl-nic-core-hazelcast/pom.xml b/features/odl-nic-core-hazelcast/pom.xml
+new file mode 100644
+index 0000000..9090afd
+--- /dev/null
++++ b/features/odl-nic-core-hazelcast/pom.xml
+@@ -0,0 +1,65 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++  Copyright (c) 2015 Cisco Systems, Inc. and others.  All rights reserved.
++
++  This program and the accompanying materials are made available under the
++  terms of the Eclipse Public License v1.0 which accompanies this distribution,
++  and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
++ <parent>
++  <groupId>org.opendaylight.controller</groupId>
++  <artifactId>single-feature-parent</artifactId>
++  <version>0.6.0-SNAPSHOT</version>
++  <relativePath />
++ </parent>
++
++ <modelVersion>4.0.0</modelVersion>
++ <groupId>org.opendaylight.nic</groupId>
++ <restconfGroupId>org.opendaylight.netconf</restconfGroupId>
++ <artifactId>intent-mapping-hazelcast</artifactId>
++ <version>1.3.0-SNAPSHOT</version>
++ <mdsalVersion>1.5.0-SNAPSHOT</mdsalVersion>
++ <restconfVersion>1.5.0-SNAPSHOT</restconfVersion>
++ <hazelcastVersion>3.4.2</hazelcastVersion>
++ <packaging>feature</packaging>
++
++ <name>OpendayLight :: NIC :: Core :: Hazelcast</name>
++
++ <properties>
++  <karaf.cellar.version>3.0.3</karaf.cellar.version>
++ </properties>
++
++ <dependencies>
++   <dependency>
++       <groupId>${project.groupId}</groupId>
++       <artifactId>odl-restconf</artifactId>
++       <version>${project.version}</version>
++       <type>xml</type>
++       <classifier>features</classifier>
++   </dependency>
++   <dependency>
++       <groupId>${project.restconfGroupId}</groupId>
++       <artifactId>odl-mdsal-apidocs</artifactId>
++       <version>${project.mdsalVersion}</version>
++       <type>xml</type>
++       <classifier>features</classifier>
++   </dependency>
++   <dependency>
++       <groupId>${project.restconfGroupId}</groupId>
++       <artifactId>odl-msal-broker</artifactId>
++       <version>${project.restconfVersion}</version>
++       <type>xml</type>
++       <classifier>features</classifier>
++   </dependency>
++   <dependency>
++       <groupId>${project.restconfGroupId}</groupId>
++       <artifactId>odl-msal-broker</artifactId>
++       <version>${project.hazelcastVersion}</version>
++       <type>xml</type>
++       <classifier>features</classifier>
++   </dependency>
++ </dependencies>
++</project>
+diff --git a/features/odl-nic-core-mdsal/pom.xml b/features/odl-nic-core-mdsal/pom.xml
+new file mode 100644
+index 0000000..69a8a62
+--- /dev/null
++++ b/features/odl-nic-core-mdsal/pom.xml
+@@ -0,0 +1,60 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++  Copyright (c) 2015 Inocybe Technologies and others.  All rights reserved.
++
++  This program and the accompanying materials are made available under the
++  terms of the Eclipse Public License v1.0 which accompanies this distribution,
++  and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
++ <parent>
++  <groupId>org.opendaylight.controller</groupId>
++  <artifactId>single-feature-parent</artifactId>
++  <version>0.6.0-SNAPSHOT</version>
++  <relativePath />
++ </parent>
++
++ <modelVersion>4.0.0</modelVersion>
++ <groupId>org.opendaylight.nic</groupId>
++ <artifactId>intent-mapping-mdsal</artifactId>
++ <version>1.3.0-SNAPSHOT</version>
++ <packaging>feature</packaging>
++
++ <name>OpendayLight :: NIC :: Core :: MDSAL</name>
++
++  <dependencies>
++   <dependency>
++   <groupId>org.opendaylight.nic</groupId>
++   <artifactId>intent-mapping-interface</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <dependency>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>utils</artifactId>
++    <version>${project.version}</version>
++  </dependency>
++  <!-- Testing Dependencies -->
++  <dependency>
++   <groupId>junit</groupId>
++   <artifactId>junit</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.mockito</groupId>
++   <artifactId>mockito-all</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-module-junit4</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-api-mockito</artifactId>
++   <scope>test</scope>
++  </dependency>
++ </dependencies>
++</project>
+diff --git a/features/odl-nic-graph/pom.xml b/features/odl-nic-graph/pom.xml
+new file mode 100644
+index 0000000..e6f7e0a
+--- /dev/null
++++ b/features/odl-nic-graph/pom.xml
+@@ -0,0 +1,69 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
++ <parent>
++  <groupId>org.opendaylight.controller</groupId>
++  <artifactId>single-feature-parent</artifactId>
++  <version>0.6.0-SNAPSHOT</version>
++  <relativePath />
++ </parent>
++
++ <modelVersion>4.0.0</modelVersion>
++ <groupId>org.opendaylight.nic</groupId>
++ <artifactId>intent-graph</artifactId>
++ <version>1.3.0-SNAPSHOT</version>
++ <packaging>feature</packaging>
++
++ <name>OpendayLight :: NIC :: Graph</name>
++
++ <dependencies>
++  <!-- project specific dependency -->
++  <dependency>
++   <groupId>org.opendaylight.nic</groupId>
++   <artifactId>intent-api</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <dependency>
++   <groupId>${project.groupId}</groupId>
++   <artifactId>intent-compiler</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <dependency>
++   <groupId>${project.groupId}</groupId>
++   <artifactId>intent-mapping-interface</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <dependency>
++   <groupId>${project.groupId}</groupId>
++   <artifactId>intent-mapping-mdsal</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <!-- Testing Dependencies -->
++  <dependency>
++   <groupId>junit</groupId>
++   <artifactId>junit</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.mockito</groupId>
++   <artifactId>mockito-all</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-module-junit4</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-api-mockito</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>com.google.code.gson</groupId>
++   <artifactId>gson</artifactId>
++  </dependency>
++ </dependencies>
++
++</project>
+diff --git a/features/odl-nic-intent-common/pom.xml b/features/odl-nic-intent-common/pom.xml
+new file mode 100644
+index 0000000..4320422
+--- /dev/null
++++ b/features/odl-nic-intent-common/pom.xml
+@@ -0,0 +1,48 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <parent>
++        <groupId>org.opendaylight.controller</groupId>
++        <artifactId>single-feature-parent</artifactId>
++        <version>0.6.0-SNAPSHOT</version>
++        <relativePath />
++    </parent>
++
++    <modelVersion>4.0.0</modelVersion>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>intent-common</artifactId>
++    <version>1.3.0-SNAPSHOT</version>
++    <packaging>feature</packaging>
++
++    <name>OpendayLight :: NIC :: Intent :: Common</name>
++
++    <dependencies>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>intent-api</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <!-- Testing Dependencies -->
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.mockito</groupId>
++            <artifactId>mockito-all</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-module-junit4</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-api-mockito</artifactId>
++            <scope>test</scope>
++        </dependency>
++    </dependencies>
++</project>
+diff --git a/features/odl-nic-intent-statemachine/pom.xml b/features/odl-nic-intent-statemachine/pom.xml
+new file mode 100644
+index 0000000..15527fe
+--- /dev/null
++++ b/features/odl-nic-intent-statemachine/pom.xml
+@@ -0,0 +1,62 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++  ~ Copyright (c) 2017 Serro LCC.  All rights reserved.
++  ~
++  ~ This program and the accompanying materials are made available under the
++  ~ terms of the Eclipse Public License v1.0 which accompanies this distribution,
++  ~ and is available at http://www.eclipse.org/legal/epl-v10.html
++  -->
++
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <parent>
++        <groupId>org.opendaylight.controller</groupId>
++        <artifactId>single-feature-parent</artifactId>
++        <version>0.6.0-SNAPSHOT</version>
++        <relativePath />
++    </parent>
++
++    <modelVersion>4.0.0</modelVersion>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>intent-statemachine</artifactId>
++    <version>1.3.0-SNAPSHOT</version>
++    <packaging>features</packaging>
++
++    <name>OpendayLight :: NIC :: Intent :: StateMachine</name>
++
++    <dependencies>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>intent-listeners</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>utils</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++
++        <!-- Testing Dependencies -->
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.mockito</groupId>
++            <artifactId>mockito-all</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-module-junit4</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-api-mockito</artifactId>
++            <scope>test</scope>
++        </dependency>
++    </dependencies>
++</project>
+diff --git a/features/odl-nic-listeners/pom.xml b/features/odl-nic-listeners/pom.xml
+new file mode 100644
+index 0000000..a677937
+--- /dev/null
++++ b/features/odl-nic-listeners/pom.xml
+@@ -0,0 +1,94 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
++    <parent>
++        <groupId>org.opendaylight.controller</groupId>
++        <artifactId>single-feature-parent</artifactId>
++        <version>0.6.0-SNAPSHOT</version>
++        <relativePath />
++    </parent>
++
++    <modelVersion>4.0.0</modelVersion>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>intent-listeners</artifactId>
++    <version>1.3.0-SNAPSHOT</version>
++    <packaging>feature</packaging>
++
++    <name>OpendayLight :: NIC :: Intent :: Listeners</name>
++
++    <properties>
++        <openflowplugin.version>0.4.0-SNAPSHOT</openflowplugin.version>
++        <neutron.version>0.8.0-SNAPSHOT</neutron.version>
++    </properties>
++    <dependencies>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>intent-mapping-interface</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>intent-api</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>of-renderer</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>mapped-objects-model</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>${project.groupId}</groupId>
++            <artifactId>intent-graph</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <!-- Neutron Dependencies -->
++        <dependency>
++            <groupId>org.opendaylight.neutron</groupId>
++            <artifactId>model</artifactId>
++            <version>${neutron.version}</version>
++        </dependency>
++        <!-- openflowplugin Dependencies -->
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin.model</groupId>
++            <artifactId>model-flow-service</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin.model</groupId>
++            <artifactId>model-flow-base</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin</groupId>
++            <artifactId>openflowplugin-api</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <!-- Testing Dependencies -->
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.mockito</groupId>
++            <artifactId>mockito-all</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-module-junit4</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-api-mockito</artifactId>
++            <scope>test</scope>
++        </dependency>
++    </dependencies>
++</project>
+diff --git a/features/odl-nic-neutron-integration/pom.xml b/features/odl-nic-neutron-integration/pom.xml
+new file mode 100644
+index 0000000..f1a163a
+--- /dev/null
++++ b/features/odl-nic-neutron-integration/pom.xml
+@@ -0,0 +1,80 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
++    <parent>
++        <groupId>org.opendaylight.controller</groupId>
++        <artifactId>single-feature-parent</artifactId>
++        <version>0.6.0-SNAPSHOT</version>
++        <relativePath />
++    </parent>
++
++    <modelVersion>4.0.0</modelVersion>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>neutron-integration</artifactId>
++    <version>1.3.0-SNAPSHOT</version>
++    <packaging>feature</packaging>
++
++    <name>OpendayLight :: NIC :: Neutron :: Integration</name>
++
++    <properties>
++        <mdsal.version>1.5.0-SNAPSHOT</mdsal.version>
++        <neutron.version>0.8.0-SNAPSHOT</neutron.version>
++    </properties>
++    <dependencies>
++        <!-- project specific dependency -->
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>intent-listeners</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>utils</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>intent-impl</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>mapped-objects-model</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <!-- Neutron Dependency -->
++        <dependency>
++            <groupId>org.opendaylight.neutron</groupId>
++            <artifactId>model</artifactId>
++            <version>${neutron.version}</version>
++        </dependency>
++        <!-- Testing Dependencies -->
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.mockito</groupId>
++            <artifactId>mockito-all</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-module-junit4</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-api-mockito</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <!-- External Dependencies -->
++        <dependency>
++            <groupId>com.google.code.gson</groupId>
++            <artifactId>gson</artifactId>
++        </dependency>
++    </dependencies>
++
++</project>
+diff --git a/features/odl-nic-pipeline-manager/pom.xml b/features/odl-nic-pipeline-manager/pom.xml
+new file mode 100644
+index 0000000..a4c4fe1
+--- /dev/null
++++ b/features/odl-nic-pipeline-manager/pom.xml
+@@ -0,0 +1,92 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++Copyright (c) 2015 Hewlett Packard Enterprise Development LP and others.  All rights reserved.
++
++This program and the accompanying materials are made available under the
++terms of the Eclipse Public License v1.0 which accompanies this distribution,
++and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++    <parent>
++        <groupId>org.opendaylight.controller</groupId>
++        <artifactId>single-feature-parent</artifactId>
++        <version>0.6.0-SNAPSHOT</version>
++        <relativePath/>
++    </parent>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>pipeline-manager</artifactId>
++    <version>1.3.0-SNAPSHOT</version>
++    <packaging>feature</packaging>
++
++    <name>OpendayLight :: NIC :: Pipeline :: Manager</name>
++
++    <properties>
++        <openflowplugin.version>0.4.0-SNAPSHOT</openflowplugin.version>
++        <openflowjava.version>0.9.0-SNAPSHOT</openflowjava.version>
++    </properties>
++
++    <dependencies>
++        <dependency>
++            <groupId>org.opendaylight.controller.model</groupId>
++            <artifactId>model-inventory</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>org.osgi</groupId>
++            <artifactId>org.osgi.core</artifactId>
++            <scope>provided</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin.model</groupId>
++            <artifactId>model-flow-base</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin.model</groupId>
++            <artifactId>model-flow-service</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin</groupId>
++            <artifactId>openflowplugin</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.openflowjava</groupId>
++            <artifactId>openflow-protocol-api</artifactId>
++            <version>${openflowjava.version}</version>
++        </dependency>
++    </dependencies>
++
++    <build>
++     <plugins>
++         <plugin>
++             <groupId>org.opendaylight.yangtools</groupId>
++             <artifactId>yang-maven-plugin</artifactId>
++         </plugin>
++
++         <plugin>
++          <groupId>org.codehaus.mojo</groupId>
++          <artifactId>build-helper-maven-plugin</artifactId>
++          <executions>
++            <execution>
++              <id>attach-artifacts</id>
++              <goals>
++                <goal>attach-artifact</goal>
++              </goals>
++              <phase>package</phase>
++              <configuration>
++                <artifacts>
++                  <artifact>
++                    <file>${project.build.directory}/classes/initial/99-pipeline-manager.xml</file>
++                    <type>xml</type>
++                    <classifier>config</classifier>
++                  </artifact>
++                </artifacts>
++              </configuration>
++            </execution>
++          </executions>
++        </plugin>
++     </plugins>
++    </build>
++</project>
+diff --git a/features/odl-nic-renderer-gbp/pom.xml b/features/odl-nic-renderer-gbp/pom.xml
+new file mode 100644
+index 0000000..018f7c3
+--- /dev/null
++++ b/features/odl-nic-renderer-gbp/pom.xml
+@@ -0,0 +1,74 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++  Copyright (c) 2015 Inocybe Technologies Inc. and others.  All rights reserved.
++
++  This program and the accompanying materials are made available under the
++  terms of the Eclipse Public License v1.0 which accompanies this distribution,
++  and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++ <parent>
++  <groupId>org.opendaylight.controller</groupId>
++  <artifactId>single-feature-parent</artifactId>
++  <version>0.6.0-SNAPSHOT</version>
++  <relativePath />
++ </parent>
++
++ <modelVersion>4.0.0</modelVersion>
++ <groupId>org.opendaylight.nic</groupId>
++ <artifactId>gbp-renderer</artifactId>
++ <version>1.3.0-SNAPSHOT</version>
++ <packaging>feature</packaging>
++
++ <name>OpendayLight :: NIC :: Renderer :: GBP</name>
++
++ <properties>
++  <groupbasedpolicy.version>0.5.0-SNAPSHOT</groupbasedpolicy.version>
++ </properties>
++
++ <dependencies>
++  <dependency>
++   <groupId>${project.groupId}</groupId>
++   <artifactId>intent-api</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <!-- OpenDaylight GBP Manager -->
++  <dependency>
++   <groupId>org.opendaylight.groupbasedpolicy</groupId>
++   <artifactId>groupbasedpolicy</artifactId>
++   <version>${groupbasedpolicy.version}</version>
++  </dependency>
++  <dependency>
++   <groupId>org.opendaylight.groupbasedpolicy</groupId>
++   <artifactId>ofoverlay-renderer</artifactId>
++   <version>${groupbasedpolicy.version}</version>
++  </dependency>
++  <!-- NIC Dependency -->
++  <dependency>
++   <groupId>org.opendaylight.nic</groupId>
++   <artifactId>utils</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <!-- testing Dependency -->
++  <dependency>
++   <groupId>org.mockito</groupId>
++   <artifactId>mockito-all</artifactId>
++  </dependency>
++  <dependency>
++   <groupId>junit</groupId>
++   <artifactId>junit</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-module-junit4</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-api-mockito</artifactId>
++   <scope>test</scope>
++  </dependency>
++ </dependencies>
++</project>
+diff --git a/features/odl-nic-renderer-nemo/pom.xml b/features/odl-nic-renderer-nemo/pom.xml
+new file mode 100644
+index 0000000..178c4e1
+--- /dev/null
++++ b/features/odl-nic-renderer-nemo/pom.xml
+@@ -0,0 +1,73 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++  Copyright (c) 2015 Huawei, Inc and others. All rights reserved.
++  This program and the accompanying materials are made available under the
++  terms of the Eclipse Public License v1.0 which accompanies this distribution,
++  and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++  <parent>
++    <groupId>org.opendaylight.controller</groupId>
++    <artifactId>single-feature-parent</artifactId>
++    <version>0.6.0-SNAPSHOT</version>
++    <relativePath />
++  </parent>
++  <modelVersion>4.0.0</modelVersion>
++  <groupId>org.opendaylight.nic</groupId>
++  <artifactId>nemo-renderer</artifactId>
++  <version>1.3.0-SNAPSHOT</version>
++  <packaging>feature</packaging>
++
++  <name>OpendayLight :: NIC :: Renderer :: Nemo</name>
++
++  <properties>
++    <openflowplugin.version>0.4.0-SNAPSHOT</openflowplugin.version>
++    <nemo.version>1.2.0-SNAPSHOT</nemo.version>
++  </properties>
++  <dependencies>
++    <!-- project specific dependencies -->
++    <dependency>
++      <groupId>${project.groupId}</groupId>
++      <artifactId>intent-api</artifactId>
++      <version>${project.version}</version>
++    </dependency>
++    <!-- openflowplugin dependency -->
++    <dependency>
++      <groupId>org.opendaylight.openflowplugin.model</groupId>
++      <artifactId>model-flow-service</artifactId>
++      <version>${openflowplugin.version}</version>
++    </dependency>
++    <!-- NEMO -->
++    <dependency>
++      <groupId>org.opendaylight.nemo</groupId>
++      <artifactId>nemo-impl</artifactId>
++      <version>${nemo.version}</version>
++    </dependency>
++    <dependency>
++      <groupId>joda-time</groupId>
++      <artifactId>joda-time</artifactId>
++      <version>2.9.1</version>
++    </dependency>
++    <!-- Testing -->
++    <dependency>
++      <groupId>junit</groupId>
++      <artifactId>junit</artifactId>
++      <scope>test</scope>
++    </dependency>
++    <dependency>
++      <groupId>org.mockito</groupId>
++      <artifactId>mockito-all</artifactId>
++    </dependency>
++    <dependency>
++      <groupId>org.powermock</groupId>
++      <artifactId>powermock-module-junit4</artifactId>
++      <scope>test</scope>
++    </dependency>
++    <dependency>
++      <groupId>org.powermock</groupId>
++      <artifactId>powermock-api-mockito</artifactId>
++      <scope>test</scope>
++    </dependency>
++  </dependencies>
++</project>
+diff --git a/features/odl-nic-renderer-of/pom.xml b/features/odl-nic-renderer-of/pom.xml
+new file mode 100644
+index 0000000..5d63bb2
+--- /dev/null
++++ b/features/odl-nic-renderer-of/pom.xml
+@@ -0,0 +1,139 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
++    <parent>
++        <groupId>org.opendaylight.controller</groupId>
++        <artifactId>single-feature-parent</artifactId>
++        <version>0.6.0-SNAPSHOT</version>
++        <relativePath />
++    </parent>
++
++    <modelVersion>4.0.0</modelVersion>
++    <groupId>org.opendaylight.nic</groupId>
++    <artifactId>of-renderer</artifactId>
++    <version>1.3.0-SNAPSHOT</version>
++    <packaging>feature</packaging>
++
++    <name>OpendayLight :: NIC :: Renderer :: Openflow</name>
++
++    <properties>
++        <jung2.version>2.0.1</jung2.version>
++        <openflowplugin.version>0.4.0-SNAPSHOT</openflowplugin.version>
++        <mdsal.version>1.5.0-SNAPSHOT</mdsal.version>
++        <pitest.version>1.1.4</pitest.version>
++        <liblldp.version>0.12.0-SNAPSHOT</liblldp.version>
++        <sfc.version>0.5.0-SNAPSHOT</sfc.version>
++    </properties>
++    <dependencies>
++        <!-- project specific dependency -->
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>intent-api</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>intent-mapping-interface</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <!-- openflowplugin dependency -->
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin.model</groupId>
++            <artifactId>model-flow-service</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.openflowplugin.model</groupId>
++            <artifactId>model-flow-statistics</artifactId>
++            <version>${openflowplugin.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>pipeline-manager</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>utils</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.nic</groupId>
++            <artifactId>mapped-objects-model</artifactId>
++            <version>${project.version}</version>
++        </dependency>
++        <!-- controller dependencies -->
++        <dependency>
++            <groupId>org.opendaylight.controller</groupId>
++            <artifactId>liblldp</artifactId>
++            <version>${liblldp.version}</version>
++        </dependency>
++        <!-- Controller Third party Graph library -->
++        <dependency>
++            <groupId>org.opendaylight.controller.thirdparty</groupId>
++            <artifactId>net.sf.jung2</artifactId>
++            <version>${jung2.version}</version>
++        </dependency>
++        <!-- MDSAL Dependencies -->
++        <dependency>
++           <groupId>org.opendaylight.mdsal.model</groupId>
++           <artifactId>ietf-topology</artifactId>
++        </dependency>
++        <!-- External Dependencies -->
++        <dependency>
++            <groupId>com.google.code.gson</groupId>
++            <artifactId>gson</artifactId>
++        </dependency>
++        <!-- Testing Dependencies -->
++        <dependency>
++            <groupId>junit</groupId>
++            <artifactId>junit</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.mockito</groupId>
++            <artifactId>mockito-all</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-module-junit4</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <dependency>
++            <groupId>org.powermock</groupId>
++            <artifactId>powermock-api-mockito</artifactId>
++            <scope>test</scope>
++        </dependency>
++        <!-- SFC Dependencies -->
++        <dependency>
++            <groupId>org.opendaylight.sfc</groupId>
++            <artifactId>sfc-model</artifactId>
++            <version>${sfc.version}</version>
++        </dependency>
++        <dependency>
++            <groupId>org.opendaylight.sfc</groupId>
++            <artifactId>sfc-provider</artifactId>
++            <version>${sfc.version}</version>
++        </dependency>
++    </dependencies>
++
++    <build>
++        <plugins>
++            <plugin>
++                <groupId>org.pitest</groupId>
++                <artifactId>pitest-maven</artifactId>
++                <version>${pitest.version}</version>
++                <configuration>
++                    <targetClasses>
++                        <param>org.opendaylight.nic.of.renderer.impl.IntentFlowManager</param>
++                    </targetClasses>
++                    <targetTests>
++                        <param>org.opendaylight.nic.of.renderer.impl.IntentFlowManagerTest</param>
++                    </targetTests>
++                </configuration>
++            </plugin>
++        </plugins>
++    </build>
++</project>
+diff --git a/features/odl-nic-renderer-vtn/pom.xml b/features/odl-nic-renderer-vtn/pom.xml
+new file mode 100644
+index 0000000..07dbafd
+--- /dev/null
++++ b/features/odl-nic-renderer-vtn/pom.xml
+@@ -0,0 +1,72 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++  Copyright (c) 2015 NEC Corporation. All rights reserved.
++
++  This program and the accompanying materials are made available under the
++  terms of the Eclipse Public License v1.0 which accompanies this distribution,
++  and is available at http://www.eclipse.org/legal/epl-v10.html
++-->
++
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++ <parent>
++  <groupId>org.opendaylight.controller</groupId>
++  <artifactId>single-feature-parent</artifactId>
++  <version>0.6.0-SNAPSHOT</version>
++  <relativePath />
++ </parent>
++
++ <modelVersion>4.0.0</modelVersion>
++ <groupId>org.opendaylight.nic</groupId>
++ <artifactId>vtn-renderer</artifactId>
++ <version>1.3.0-SNAPSHOT</version>
++ <packaging>feature</packaging>
++
++ <name>OpendayLight :: NIC :: Renderer :: VTN</name>
++
++ <properties>
++   <vtn.version>0.6.0-SNAPSHOT</vtn.version>
++ </properties>
++
++ <dependencies>
++  <!-- NIC Dependency -->
++  <dependency>
++   <groupId>${project.groupId}</groupId>
++   <artifactId>intent-api</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++  <dependency>
++   <groupId>${project.groupId}</groupId>
++   <artifactId>utils</artifactId>
++   <version>${project.version}</version>
++  </dependency>
++
++  <!-- OpenDaylight VTN Manager -->
++  <dependency>
++   <groupId>org.opendaylight.vtn</groupId>
++   <artifactId>manager</artifactId>
++   <version>${vtn.version}</version>
++  </dependency>
++
++  <!-- Junit Dependency -->
++  <dependency>
++   <groupId>org.mockito</groupId>
++   <artifactId>mockito-all</artifactId>
++  </dependency>
++  <dependency>
++   <groupId>junit</groupId>
++   <artifactId>junit</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-module-junit4</artifactId>
++   <scope>test</scope>
++  </dependency>
++  <dependency>
++   <groupId>org.powermock</groupId>
++   <artifactId>powermock-api-mockito</artifactId>
++   <scope>test</scope>
++  </dependency>
++ </dependencies>
++</project>
+diff --git a/features/pom.xml b/features/pom.xml
+index e8dd9d5..c5c5488 100644
+--- a/features/pom.xml
++++ b/features/pom.xml
+@@ -10,7 +10,7 @@
+   <modelVersion>4.0.0</modelVersion>
+   <parent>
+     <groupId>org.opendaylight.odlparent</groupId>
+-    <artifactId>features-parent</artifactId>
++    <artifactId>odlparent-lite</artifactId>
+     <version>1.8.0-SNAPSHOT</version>
+     <relativePath/>
+   </parent>
+@@ -19,6 +19,7 @@
+   <artifactId>features-nic</artifactId>
+   <name>${project.artifactId}</name>
+   <version>1.3.0-SNAPSHOT</version>
++  <packaging>pom</packaging>
+ 
+   <properties>
+     <jung2.version>2.0.1</jung2.version>
+@@ -36,278 +37,32 @@
+     <sfc.version>0.5.0-SNAPSHOT</sfc.version>
+   </properties>
+ 
+-  <dependencies>
+-<!-- external projects feature repository -->
+-    <dependency>
+-      <groupId>org.opendaylight.neutron</groupId>
+-      <artifactId>features-neutron</artifactId>
+-      <version>${neutron.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.yangtools</groupId>
+-      <artifactId>features-yangtools</artifactId>
+-      <version>${yangtools.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.controller</groupId>
+-      <artifactId>features-mdsal</artifactId>
+-      <version>${mdsal.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.netconf</groupId>
+-      <artifactId>features-restconf</artifactId>
+-      <classifier>features</classifier>
+-      <version>${restconf.version}</version>
+-      <type>xml</type>
+-      <scope>runtime</scope>
+-    </dependency>
+-
+-    <dependency>
+-      <groupId>org.opendaylight.vtn</groupId>
+-      <artifactId>features-vtn-manager</artifactId>
+-      <version>${feature.vtn-manager.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nemo</groupId>
+-      <artifactId>nemo-features</artifactId>
+-      <version>${nemo.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.groupbasedpolicy</groupId>
+-      <artifactId>features-groupbasedpolicy</artifactId>
+-      <version>${groupbasedpolicy.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.openflowplugin</groupId>
+-      <artifactId>features-openflowplugin</artifactId>
+-      <version>${openflowplugin.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-
+-    <!-- OpenDaylight ovsdb -->
+-    <dependency>
+-      <groupId>org.opendaylight.ovsdb</groupId>
+-      <artifactId>southbound-features</artifactId>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-      <version>${odl.ovsdb.version}</version>
+-    </dependency>
+-
+-<!-- project specific dependencies -->
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-api</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-mapping-interface</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-impl</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-impl</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-cli</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-compiler</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>vtn-renderer</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>of-renderer</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>of-renderer</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>pipeline-manager</artifactId>
+-      <version>${project.version}</version>
+-      </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>pipeline-manager</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-common</artifactId>
+-      <scope>compile</scope>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-common</artifactId>
+-      <version>${project.version}</version>
+-      <scope>compile</scope>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <!-- controller dependencies -->
+-    <dependency>
+-      <groupId>org.opendaylight.controller.thirdparty</groupId>
+-      <artifactId>net.sf.jung2</artifactId>
+-      <version>${jung2.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-graph</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-graph</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-mapping-hazelcast</artifactId>
+-      <version>${project.version}</version>
+-      </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-mapping-hazelcast</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-      </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-mapping-mdsal</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-mapping-mdsal</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>vtn-renderer</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>nemo-renderer</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>nemo-renderer</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>gbp-renderer</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>gbp-renderer</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-listeners</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-listeners</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>neutron-integration</artifactId>
+-      <version>${project.version}</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>neutron-integration</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-statemachine</artifactId>
+-      <version>${project.version}</version>
+-     </dependency>
+-     <dependency>
+-      <groupId>org.opendaylight.nic</groupId>
+-      <artifactId>intent-statemachine</artifactId>
+-      <version>${project.version}</version>
+-      <classifier>config</classifier>
+-      <type>xml</type>
+-     </dependency>
+-<!-- external dependencies -->
+-    <dependency>
+-      <groupId>org.apache.karaf.cellar</groupId>
+-      <artifactId>apache-karaf-cellar</artifactId>
+-      <version>${karaf.cellar.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-    </dependency>
+-    <!-- SFC Dependencies -->
+-    <dependency>
+-      <groupId>org.opendaylight.sfc</groupId>
+-      <artifactId>features-sfc</artifactId>
+-      <version>${sfc.version}</version>
+-      <classifier>features</classifier>
+-      <type>xml</type>
+-      <scope>runtime</scope>
+-    </dependency>
+-  </dependencies>
++  <modules>
++      <!-- Well-known -->
++      <module>features-nic</module>
++      <module>features4-nic</module>
++      <module>intent-api</module>
++      <module>intent-graph</module>
++      <module>intent-mapping-interface</module>
++      <module>intent-impl</module>
++      <module>utils</module>
++      <module>intent-common</module>
++      <module>intent-cli</module>
++      <module>intent-compiler</module>
++      <module>intent-mapping-hazelcast</module>
++      <module>intent-mapping-mdsal</module>
++      <module>gbp-renderer</module>
++      <module>vtn-renderer</module>
++      <module>nemo-renderer</module>
++      <module>of-renderer</module>
++      <module>intent-listeners</module>
++      <module>neutron-integration</module>
++      <module>intent-statemachine</module>
++      <module>features</module>
++      <module>artifacts</module>
++      <module>distribution</module>
++      <module>pipeline-manager</module>
++      <module>mapped-objects-model</module>
++  </modules>
+ 
+ </project>
+diff --git a/features/src/main/features/features.xml b/features/src/main/features/features.xml
+deleted file mode 100644
+index 56b54d3..0000000
+--- a/features/src/main/features/features.xml
++++ /dev/null
+@@ -1,151 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!--
+-     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+-
+-     This program is made available under the terms of the
+-     Eclipse Public License v1.0 which accompanies this distribution,
+-     and is available at http://www.eclipse.org/legal/epl-v10.html
+--->
+-<features name="odl-nic-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
+-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+-          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+-
+-    <!-- https://wiki.opendaylight.org/view/Runtime:Karaf_Features_Guidelines#Feature_Best_Practices -->
+-    <repository>mvn:org.opendaylight.yangtools/features-yangtools/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.controller/features-mdsal/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.netconf/features-restconf/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
+-    <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.ovsdb/southbound-features/{{VERSION}}/xml/features</repository>
+-    <repository>mvn:org.opendaylight.sfc/features-sfc/{{VERSION}}/xml/features</repository>
+-
+-    <!-- Core feature using Hazelcast backend engine -->
+-    <feature name='odl-nic-core-hazelcast' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core using Hazelcast mapping service'>
+-        <feature version="${mdsal.version}">odl-restconf</feature>
+-        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
+-        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+-        <feature version="${hazelcast.version}">hazelcast</feature>
+-        <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
+-         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-hazelcast.xml"> mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}/xml/config</configfile>
+-        <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- Core feature using MD-SAL backend engine -->
+-    <feature name='odl-nic-core-mdsal' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core using MD-SAL mapping service'>
+-        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+-        <feature version="${openflowplugin.version}">odl-openflowplugin-flow-services</feature>
+-        <feature version="${mdsal.version}">odl-restconf</feature>
+-        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
+-        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
+-        <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-mdsal.xml">mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}/xml/config</configfile>
+-        <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- CLI feature -->
+-    <feature name='odl-nic-console' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: CLI'>
+-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+-        <bundle>mvn:org.opendaylight.nic/intent-cli/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
+-    </feature>
+-
+-    <!-- VTN Renderer -->
+-    <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
+-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+-        <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
+-        <bundle>mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/89-vtn-renderer.xml">mvn:org.opendaylight.nic/vtn-renderer/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- GBP Renderer -->
+-    <feature name='odl-nic-renderer-gbp' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
+-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+-        <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-base</feature>
+-        <bundle>mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- OF Renderer -->
+-    <feature name='odl-nic-renderer-of' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
+-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+-        <feature version="${project.version}">odl-nic-pipeline-manager</feature>
+-        <feature version="${neutron.version}">odl-neutron-service</feature>
+-        <feature version="${openflowplugin.version}">odl-openflowplugin-app-topology</feature>
+-        <feature version="${sfc.version}">odl-sfc-provider</feature>
+-        <bundle>mvn:org.opendaylight.controller.thirdparty/net.sf.jung2/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/of-renderer/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- NEMO Renderer -->
+-    <feature name='odl-nic-renderer-nemo' version='${project.version}'  description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>
+-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+-        <feature version="${nemo.version}">odl-nemo-engine</feature>
+-        <bundle>mvn:joda-time/joda-time/{{VERSION}}</bundle>
+-        <bundle>mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- Pipeline Manager -->
+-    <feature name='odl-nic-pipeline-manager' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Pipeline Manager'>
+-        <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
+-        <bundle>mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/91-pipeline-manager.xml">mvn:org.opendaylight.nic/pipeline-manager/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- Intent Listeners -->
+-    <feature name='odl-nic-listeners' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Listeners'>
+-        <feature version="${project.version}">odl-nic-renderer-of</feature>
+-        <bundle>mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/92-intent-listeners.xml">mvn:org.opendaylight.nic/intent-listeners/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- Neutron Integration -->
+-    <feature name='odl-nic-neutron-integration' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Neutron Integration'>
+-        <feature version="${project.version}">odl-nic-listeners</feature>
+-        <bundle>mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}</bundle>
+-        <feature version='${odl.ovsdb.version}'>odl-ovsdb-southbound-impl</feature>
+-        <configfile finalname="etc/opendaylight/karaf/92-neutron-integration.xml">mvn:org.opendaylight.nic/neutron-integration/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- Intent State Machine -->
+-    <feature name='odl-nic-intent-statemachine' version='${project.version}'
+-             description='OpenDaylight :: Network Intent Composition :: Intent State Machine'>
+-        <feature version="${project.version}">odl-nic-listeners</feature>
+-        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/93-intent-statemachine.xml">mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- Graph feature -->
+-    <feature name='odl-nic-graph' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Graph'>
+-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+-        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/94-intent-graph.xml">mvn:org.opendaylight.nic/intent-graph/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-
+-    <!-- Intent Common feature -->
+-    <feature name='odl-nic-intent-common' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Common'>
+-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+-        <bundle>mvn:org.opendaylight.nic/intent-common/{{VERSION}}</bundle>
+-        <configfile finalname="etc/opendaylight/karaf/95-intent-common.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
+-    </feature>
+-</features>
+-- 
+2.7.4
+
