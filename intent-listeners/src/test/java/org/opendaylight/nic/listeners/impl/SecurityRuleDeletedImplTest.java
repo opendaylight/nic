@@ -10,24 +10,15 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.opendaylight.nic.listeners.api.SecurityRuleAdded;
+import org.mockito.Mockito;
 import org.opendaylight.nic.listeners.api.SecurityRuleDeleted;
-import org.opendaylight.nic.listeners.api.SecurityRuleUpdated;
 import org.opendaylight.nic.neutron.NeutronSecurityRule;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import utils.SecurityRuleUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@PrepareForTest({SecurityRuleDeletedImpl.class})
-@RunWith(PowerMockRunner.class)
 /**
  * Created by yrineu on 12/01/16.
  */
@@ -39,7 +30,7 @@ public class SecurityRuleDeletedImplTest {
     @Before
     public void setUp() {
         SecurityRuleUtils.setUp();
-        securityRuleDeleted = PowerMockito.spy(new SecurityRuleDeletedImpl(SecurityRuleUtils.securityRuleMock));
+        securityRuleDeleted = Mockito.spy(new SecurityRuleDeletedImpl(SecurityRuleUtils.securityRuleMock));
         neutronSecurityRule = securityRuleDeleted.getSecurityRule();
     }
 
