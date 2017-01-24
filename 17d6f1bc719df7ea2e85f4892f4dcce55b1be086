@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc7978_0deec2ec",
+        "filename": "intent-api/src/main/yang/intent-nbi.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6761
+      },
+      "writtenOn": "2017-01-24T12:41:14Z",
+      "side": 1,
+      "message": "A good idea is to review the comment in order to correspond the leaf idea.",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "17d6f1bc719df7ea2e85f4892f4dcce55b1be086",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
