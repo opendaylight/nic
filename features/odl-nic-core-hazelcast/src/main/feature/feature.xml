@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     (c) Copyright 2015 Hewlett-Packard Development Company, L.P. and others. All rights reserved.
+
+     This program is made available under the terms of the
+     Eclipse Public License v1.0 which accompanies this distribution,
+     and is available at http://www.eclipse.org/legal/epl-v10.html
+-->
+<features name="odl-nic-${project.version}" xmlns="http://karaf.apache.org/xmlns/features/v1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.2.0 http://karaf.apache.org/xmlns/features/v1.2.0">
+
+    <feature name='odl-nic-core-hazelcast' version='${project.version}'>
+        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-hazelcast.xml">
+            mvn:org.opendaylight.nic/intent-mapping-hazelcast/${project.version}/xml/config
+        </configfile>
+
+        <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">
+            mvn:org.opendaylight.nic/intent-impl/${project.version}/xml/config
+        </configfile>
+    </feature>
+</features>
