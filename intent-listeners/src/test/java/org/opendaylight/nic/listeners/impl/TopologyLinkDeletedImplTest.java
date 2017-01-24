@@ -10,20 +10,15 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.opendaylight.nic.listeners.api.TopologyLinkDeleted;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@PrepareForTest({TopologyLinkDeletedImplTest.class})
-@RunWith(PowerMockRunner.class)
 /**
  * Created by yrineu on 12/01/16.
  */
@@ -36,7 +31,7 @@ public class TopologyLinkDeletedImplTest {
 
     @Before
     public void setUp() {
-        topologyLinkDeleted = PowerMockito.spy(new TopologyLinkDeletedImpl(linkMock));
+        topologyLinkDeleted = Mockito.spy(new TopologyLinkDeletedImpl(linkMock));
     }
 
     @Test
