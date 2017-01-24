@@ -10,20 +10,15 @@ package org.opendaylight.nic.listeners.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.LinkId;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@PrepareForTest({TopologyLinkUpdatedImpl.class})
-@RunWith(PowerMockRunner.class)
 /**
  * Created by yrineu on 12/01/16.
  */
@@ -39,7 +34,7 @@ public class TopologyLinkUpdateImplTest {
 
     @Before
     public void setUp() {
-        topologyLinkUpdated = PowerMockito.spy(new TopologyLinkUpdatedImpl(linkMock, linkIdMock));
+        topologyLinkUpdated = Mockito.spy(new TopologyLinkUpdatedImpl(linkMock, linkIdMock));
     }
 
     @Test
