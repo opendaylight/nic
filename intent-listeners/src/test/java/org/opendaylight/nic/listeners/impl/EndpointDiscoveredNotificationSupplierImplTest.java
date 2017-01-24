@@ -11,7 +11,10 @@ package org.opendaylight.nic.listeners.impl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.opendaylight.controller.liblldp.PacketException;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
+import org.opendaylight.nic.listeners.api.EndpointDiscovered;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
@@ -36,7 +39,7 @@ import java.util.Set;
 import static org.mockito.Mockito.*;
 
 @PrepareForTest({ FrameworkUtil.class, ArpUtils.class, BundleContext.class,
-        ArpResolverUtils.class, EndpointDiscoveredNotificationSupplierImpl.class})
+        ArpResolverUtils.class})
 @RunWith(PowerMockRunner.class)
 /**
  * JUnit test for {@link EndpointDiscoveredNotificationSupplierImpl}.
@@ -72,10 +75,34 @@ public class EndpointDiscoveredNotificationSupplierImplTest {
 
     /**
      * Test case for {@link EndpointDiscoveredNotificationSupplierImpl#onPacketReceived(PacketReceived)}
+     * Verify if Arp packet returns a PacketException.
+     */
+    @Test
+    public void onPacketReceivedArpExceptionTest() throws Exception {
+        PacketReceived mockPacket = mock(PacketReceived.class);
+        PowerMockito.mockStatic(ArpResolverUtils.class);
+
+        when(ArpResolverUtils.getArpFrom(mockPacket)).thenThrow(new PacketException("Packet is not ARP: "));
+
+        IEventListener mockListener =
+                mock(EndpointDiscoveryNotificationSubscriberImpl.class);
+        Set<IEventListener<?>> eventListenerSet = new HashSet<>();
+        eventListenerSet.add(mockListener);
+        when(mockRegistryService.getEventListeners(EventType.ENDPOINT_DISCOVERED));
+
+        /**
+         * Verify that the appropriate listener handlers are called
+         */
+        mockSupplier.onPacketReceived(mockPacket);
+        verify(mockListener, Mockito.times(0)).handleEvent(Mockito.any(EndpointDiscovered.class));
+    }
+
+    /**
+     * Test case for {@link EndpointDiscoveredNotificationSupplierImpl#onPacketReceived(PacketReceived)}
      * Verify if Arp packet gets processed to retrieve the right fields and calls the right listeners
      */
     @Test
-    public void onPacketReceivedTest() throws Exception {
+    public void onPacketReceivedRequestTest() throws Exception {
         PacketReceived mockPacket = mock(PacketReceived.class);
         PowerMockito.mockStatic(ArpResolverUtils.class);
         PowerMockito.mockStatic(ArpUtils.class);
@@ -107,9 +134,6 @@ public class EndpointDiscoveredNotificationSupplierImplTest {
         mockArp.setOperation(ArpOperation.REQUEST.intValue());
         when(ArpResolverUtils.getArpFrom(mockPacket)).thenReturn(mockArp);
 
-        EndpointDiscoveredImpl mockEndpointDiscovered = mock(EndpointDiscoveredImpl.class);
-        PowerMockito.whenNew(EndpointDiscoveredImpl.class)
-                .withArguments(any(Ipv4Address.class), any(MacAddress.class)).thenReturn(mockEndpointDiscovered);
         IEventListener mockListener =
                 mock(EndpointDiscoveryNotificationSubscriberImpl.class);
         Set<IEventListener<?>> eventListenerSet = new HashSet<>();
@@ -121,7 +145,73 @@ public class EndpointDiscoveredNotificationSupplierImplTest {
          * Verify that the appropriate listener handlers are called
          */
         mockSupplier.onPacketReceived(mockPacket);
-        verify(mockListener).handleEvent(mockEndpointDiscovered);
+        verify(mockListener).handleEvent(Mockito.any(EndpointDiscovered.class));
+    }
+
+    /**
+     * Test case for {@link EndpointDiscoveredNotificationSupplierImpl#onPacketReceived(PacketReceived)}
+     * Verify if Arp packet gets processed to retrieve the right fields and calls the right listeners
+     */
+    @Test
+    public void onPacketReceivedReplyTest() throws Exception {
+        PacketReceived mockPacket = mock(PacketReceived.class);
+        PowerMockito.mockStatic(ArpResolverUtils.class);
+        PowerMockito.mockStatic(ArpUtils.class);
+
+        // Create Arp object with test fields
+        String macAddressSender = "AA:BB:CC:DD:EE:FF";
+        String[] macAddressPartsSender = macAddressSender.split(":");
+
+        // Create Arp object with test fields
+        String macAddressTarget = "AA:BB:CC:DD:EE:FE";
+        String[] macAddressPartsTarget = macAddressTarget.split(":");
+
+        // Convert hex string to byte values
+        byte[] macAddressBytesSender = new byte[6];
+        byte[] macAddressBytesTarget = new byte[6];
+        for(int i=0; i<6; i++){
+            Integer hex = Integer.parseInt(macAddressPartsSender[i], 16);
+            macAddressBytesSender[i] = hex.byteValue();
+            hex = Integer.parseInt(macAddressPartsTarget[i], 16);
+            macAddressBytesTarget[i] = hex.byteValue();
+        }
+
+        String ipAddressSender = "192.168.1.1";
+        String[] ipAddressPartsSender = ipAddressSender.split("\\.");
+
+        String ipAddressTarget = "192.168.1.2";
+        String[] ipAddressPartsTarget = ipAddressTarget.split("\\.");
+
+        // Convert int string to byte values
+        byte[] ipAddressBytesSender = new byte[4];
+        byte[] ipAddressBytesTarget = new byte[4];
+        for(int i=0; i<4; i++){
+            Integer integer = Integer.parseInt(ipAddressPartsSender[i]);
+            ipAddressBytesSender[i] = integer.byteValue();
+            integer = Integer.parseInt(ipAddressPartsTarget[i]);
+            ipAddressBytesTarget[i] = integer.byteValue();
+        }
+
+        Arp mockArp = new Arp();
+        mockArp.setTargetHardwareAddress(macAddressBytesTarget);
+        mockArp.setTargetProtocolAddress(ipAddressBytesTarget);
+        mockArp.setSenderHardwareAddress(macAddressBytesSender);
+        mockArp.setSenderProtocolAddress(ipAddressBytesSender);
+        mockArp.setOperation(ArpOperation.REPLY.intValue());
+        when(ArpResolverUtils.getArpFrom(mockPacket)).thenReturn(mockArp);
+
+        IEventListener mockListener =
+                mock(EndpointDiscoveryNotificationSubscriberImpl.class);
+        Set<IEventListener<?>> eventListenerSet = new HashSet<>();
+        eventListenerSet.add(mockListener);
+        when(mockRegistryService.getEventListeners(EventType.ENDPOINT_DISCOVERED))
+                .thenReturn(eventListenerSet);
+
+        /**
+         * Verify that the appropriate listener handlers are called
+         */
+        mockSupplier.onPacketReceived(mockPacket);
+        verify(mockListener, Mockito.times(2)).handleEvent(Mockito.any(EndpointDiscovered.class));
     }
 
     /**
@@ -142,5 +232,13 @@ public class EndpointDiscoveredNotificationSupplierImplTest {
         IEventListener<?> mockListener = mock(IEventListener.class);
         mockSupplier.removeEventListener(mockListener);
         verify(mockRegistryService).unregisterEventListener(mockSupplier, mockListener);
+    }
+
+    /**
+     * Test case for {@link IntentNotificationSupplierImpl#close()}
+     */
+    @Test
+    public void closeTest() {
+        mockSupplier.close();
     }
 }
