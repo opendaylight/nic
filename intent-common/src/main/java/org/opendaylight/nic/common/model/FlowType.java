@@ -5,9 +5,9 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
+
 package org.opendaylight.nic.common.model;
 
-public enum FlowAction {
-    //TODO: Add some other action capabilities
-    ALLOW, BLOCK,
+public enum FlowType {
+    L2, L3
 }

@@ -18,4 +18,3 @@ public interface EngineService extends StateMachineRendererListener{
      * Starts State Machine execution
      */
     void execute(EventType eventType);
-}

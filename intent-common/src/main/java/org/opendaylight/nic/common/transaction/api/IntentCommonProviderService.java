@@ -25,4 +25,6 @@ public interface IntentCommonProviderService extends AutoCloseable {
     void unregisterForExecutor(IntentTransactionResultListener listener);
 
     void unregisterForResults(IntentTransactionResultListener resultListener);
+
+    IntentCommonService retrieveCommonServiceInstance();
 }

@@ -46,5 +46,16 @@
             <artifactId>powermock-api-mockito</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Intent dependencies -->
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>intent-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
