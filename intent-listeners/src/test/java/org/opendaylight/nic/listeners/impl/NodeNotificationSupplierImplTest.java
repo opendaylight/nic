@@ -31,10 +31,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
-import static org.powermock.api.mockito.PowerMockito.when;
 
-@PrepareForTest({ Bundle.class, DataBroker.class, NodeNotificationSupplierImpl.class,
-        FrameworkUtil.class, BundleContext.class})
+@PrepareForTest({ Bundle.class, DataBroker.class, FrameworkUtil.class,
+        BundleContext.class })
 @RunWith(PowerMockRunner.class)
 /**
  * JUnit test for {@link NodeNotificationSupplierImpl}.
