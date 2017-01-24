@@ -5,15 +5,11 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.transaction.impl;
 
-import org.opendaylight.nic.transaction.TransactionResult;
-import org.opendaylight.nic.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.transaction.api.IntentTransactionListener;
-import org.opendaylight.nic.transaction.api.IntentTransactionNotifier;
-import org.opendaylight.nic.transaction.api.IntentTransactionRegistryService;
-import org.opendaylight.nic.transaction.api.IntentTransactionResultListener;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+package org.opendaylight.nic.common.transaction.impl;
+
+import org.opendaylight.nic.common.transaction.TransactionResult;
+import org.opendaylight.nic.common.transaction.api.*;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
@@ -65,6 +61,11 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
     @Override
     public void unregisterForResults(IntentTransactionResultListener resultListener) {
         registryService.unregisterForResults(resultListener);
+    }
+
+    @Override
+    public IntentCommonService retrieveCommonServiceInstance() {
+        return new IntentCommonServiceImpl();
     }
 
     @Override

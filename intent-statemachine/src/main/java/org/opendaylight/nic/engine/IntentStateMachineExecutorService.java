@@ -26,17 +26,17 @@ public interface IntentStateMachineExecutorService extends AutoCloseable {
 
     /**
      * Create a new transaction for a given Intent based in a given event
-     * @param intent
+     * @param intentId
      * @param receivedEvent Event received by event-listener
      */
-    void createTransaction(Intent intent, EventType receivedEvent);
+    void createTransaction(String intentId, EventType receivedEvent);
 
     /**
      * Remove a transaction for a given Intent
      * @param intentId
      * @param receivedEvent
      */
-    void removeTransactions(Uuid intentId, EventType receivedEvent);
+    void removeTransactions(String intentId, EventType receivedEvent);
 
     /**
      * Retrieve all undeployed Intents for a given IpAddress

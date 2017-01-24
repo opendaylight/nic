@@ -9,8 +9,6 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DeployService;
-import org.opendaylight.nic.engine.service.StateMachineRendererService;
-import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.slf4j.Logger;
@@ -29,29 +27,19 @@ public class DeployServiceImpl implements DeployService {
     private Map<Intent.State, DeployExecutor> executorMap;
     private static StateMachineEngineService engineService;
     private static DeployService deployService;
-    private static StateMachineRendererService rendererService;
 
     private DeployServiceImpl(StateMachineEngineService engineService) {
         executorMap = new HashMap<>();
         populateExecutorMap();
         this.engineService = engineService;
-        this.rendererService = new StateMachineRendererExecutor(this);
     }
 
     private void populateExecutorMap() {
-        executorMap.put(Intent.State.DEPLOYING, new DeployExecutor() {
-            @Override
-            public void execute() {
-                rendererService.deploy();
-            }
-        });
+        executorMap.put(Intent.State.DEPLOYING, () -> engineService.changeTransactionState(Intent.State.DEPLOYING.toString()));
 
-        executorMap.put(Intent.State.UNDEPLOYED, new DeployExecutor() {
-            @Override
-            public void execute() {
-                rendererService.undeploy();
-                cancel();
-            }
+        executorMap.put(Intent.State.UNDEPLOYED, () -> {
+            engineService.changeTransactionState(Intent.State.UNDEPLOYED.toString());
+            cancel();
         });
     }
 
@@ -68,12 +56,10 @@ public class DeployServiceImpl implements DeployService {
         deployExecutor.execute();
     }
 
-    @Override
     public void onSuccess() {
         engineService.changeState(Intent.State.DEPLOYED);
     }
 
-    @Override
     public void onError(String message) {
         LOG.error(message);
         engineService.changeState(Intent.State.DEPLOYFAILED);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Hewlett Packard Enterprise Development LP.  All rights reserved.
+ * Copyright (c) 2015 Hewlett Packard Enterprise Development LP, Serro LCC and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -9,10 +9,12 @@ package org.opendaylight.nic.impl;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransaction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransactionBuilder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -41,14 +43,21 @@ public class IntentStateMachineExecutor implements IntentStateMachineExecutorSer
     }
 
     @Override
-    public void createTransaction(Intent intent, EventType receivedEvent) {
-        //TODO: Create transaction on MD-SAL
+    public void createTransaction(final String intentId, final EventType receivedEvent) {
+        final IntentStateTransaction transaction = new IntentStateTransactionBuilder()
+                .setExecuting(true)
+                .setIntentId(intentId)
+                .setCurrentState("UNDEPLOYED")
+                .setReceivedEvent(receivedEvent.toString()).build();
+        final StateMachineEngineService engineService =
+                new StateMachineEngineImpl(new TransactionHandlerServiceImpl(dataBroker));
+        engineService.pushTransaction(transaction);
+        engineService.execute(transaction);
     }
 
     @Override
-    public void removeTransactions(Uuid intentId, EventType receivedEvent) {
+    public void removeTransactions(String intentId, EventType receivedEvent) {
         //TODO: Use the queue on MD-SAL to remove ready transactions
-        //tagged with this intentId
     }
 
     @Override

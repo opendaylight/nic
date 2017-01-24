@@ -8,8 +8,8 @@
 package org.opendaylight.nic.engine;
 
 
-import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransaction;
 
 /**
  * Service to handle state changes
@@ -18,13 +18,21 @@ public interface StateMachineEngineService {
 
     /**
      * Execute State Machine
-     * @param state
-     * @param eventType
+     * @param transaction
      */
-    void execute(Intent.State state, EventType eventType);
+    void execute(IntentStateTransaction transaction);
     /**
      * Change current state to a given state
      * @param currentState
      */
     void changeState(Intent.State currentState);
+    /**
+     * Push transaction to MDSAL based on a new state
+     * @param newState
+     */
+    void changeTransactionState(String newState);
+    /**
+     * Push transaction to MDSAL
+     */
+    void pushTransaction(IntentStateTransaction transaction);
 }
