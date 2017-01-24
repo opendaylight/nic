@@ -128,7 +128,7 @@ public class MPLSExecutor implements ActionStrategy {
 
     private boolean containsLinkNodeId(final EndPointGroup endPointGroup, final NodeId linkNodeId) {
         final String nodeIdValue = extractNodeId(endPointGroup).getValue();
-        return linkNodeId.equals(nodeIdValue);
+        return linkNodeId.getValue().equals(nodeIdValue);
     }
 
     private List<Link> extractPathByFlowAction(final Intent intent,
@@ -185,11 +185,11 @@ public class MPLSExecutor implements ActionStrategy {
 
     private boolean isProtectedOrSlowRoute(Constraints constraints) {
         boolean result = false;
-        if (FailoverConstraint.class.isAssignableFrom(constraints.getClass())) {
+        if (FailoverConstraint.class.isAssignableFrom(constraints.getConstraints().getImplementedInterface())) {
             final FailoverConstraint failoverConstraint = (FailoverConstraint) constraints.getConstraints();
             final FailoverType failoverType = failoverConstraint.getFailoverConstraint().getFailoverSelector();
-            result = failoverType != null ? equals(FailoverType.SlowReroute) : false;
-        } else if (ProtectionConstraint.class.isAssignableFrom(constraints.getClass())) {
+            result = failoverType != null ? failoverType.equals(FailoverType.SlowReroute) : false;
+        } else if (ProtectionConstraint.class.isAssignableFrom(constraints.getConstraints().getImplementedInterface())) {
             final ProtectionConstraint protectionConstraint = (ProtectionConstraint) constraints.getConstraints();
             result = protectionConstraint.getProtectionConstraint().isIsProtected();
         }
