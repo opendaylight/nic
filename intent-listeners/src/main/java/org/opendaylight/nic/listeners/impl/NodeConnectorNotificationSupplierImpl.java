@@ -11,7 +11,7 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.nic.listeners.api.LinkDeleted;
 import org.opendaylight.nic.listeners.api.LinkUp;
 import org.opendaylight.nic.listeners.api.NicNotification;

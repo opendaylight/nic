@@ -17,7 +17,7 @@ import org.opendaylight.nic.engine.impl.DeployFailedServiceImpl;
 import org.opendaylight.nic.engine.impl.DeployServiceImpl;
 import org.opendaylight.nic.impl.StateMachineEngineImpl;
 import org.opendaylight.nic.impl.StateMachineRendererExecutor;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent;
 
 import java.util.concurrent.Future;
@@ -25,7 +25,6 @@ import java.util.concurrent.Future;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * JUnit test for {@link StateMachineEngineImpl}

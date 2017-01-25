@@ -8,7 +8,7 @@
 package org.opendaylight.nic.engine;
 
 
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 /**

@@ -14,7 +14,7 @@ import org.opendaylight.nic.engine.impl.DisableServiceImpl;
 import org.opendaylight.nic.engine.impl.UndeployFailedServiceImpl;
 import org.opendaylight.nic.engine.impl.UndeployServiceImpl;
 import org.opendaylight.nic.engine.service.EngineService;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 import java.util.HashMap;
