@@ -9,7 +9,7 @@
 package org.opendaylight.nic.listeners.impl;
 
 import org.opendaylight.nic.listeners.api.EventRegistryService;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IEventService;
 import org.osgi.framework.BundleContext;

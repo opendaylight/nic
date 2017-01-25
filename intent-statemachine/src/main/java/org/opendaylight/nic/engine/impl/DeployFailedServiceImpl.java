@@ -11,7 +11,7 @@ import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DeployFailedService;
 import org.opendaylight.nic.engine.service.StateMachineRendererService;
 import org.opendaylight.nic.impl.StateMachineRendererExecutor;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
 public class DeployFailedServiceImpl implements DeployFailedService {

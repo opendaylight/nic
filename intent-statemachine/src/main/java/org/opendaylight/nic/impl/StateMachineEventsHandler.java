@@ -11,7 +11,7 @@ package org.opendaylight.nic.impl;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IntentAdded;
 import org.opendaylight.nic.listeners.api.IntentUpdated;

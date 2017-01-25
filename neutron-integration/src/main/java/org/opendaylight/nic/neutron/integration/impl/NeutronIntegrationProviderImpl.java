@@ -11,7 +11,7 @@ package org.opendaylight.nic.neutron.integration.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
-import org.opendaylight.nic.listeners.api.EventType;
+import org.opendaylight.nic.utils.EventType;
 
 /**
  * Provider implementation for integrating Neutron sec groups
