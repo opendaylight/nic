@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
+import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.NotificationSupplierDefinition;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
@@ -62,6 +63,10 @@ public class ListenerProviderImplTest {
      * Stubbed instance of IntentCommonService to perform unit testing.
      */
     private IntentCommonService mockIntentCommonService;
+    /**
+     * Stubbed instance of IntentStateMachineExecutorService to perform unit testing.
+     */
+    private IntentStateMachineExecutorService mockStateMachineExecutorService;
 
 
     @Before
@@ -75,11 +80,13 @@ public class ListenerProviderImplTest {
         mockFlowService = mock(OFRendererFlowService.class);
         mockGraphService = mock(OFRendererGraphService.class);
         mockIntentCommonService = mock(IntentCommonService.class);
+        mockStateMachineExecutorService = mock(IntentStateMachineExecutorService.class);
         provider = PowerMockito.spy(new ListenerProviderImpl(mockDataBroker,
                 mockNotificationService,
                 mockFlowService,
                 mockGraphService,
-                mockIntentCommonService));
+                mockIntentCommonService,
+                mockStateMachineExecutorService));
     }
 
 

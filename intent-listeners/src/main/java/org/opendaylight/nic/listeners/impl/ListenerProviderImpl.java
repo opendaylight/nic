@@ -13,6 +13,7 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
+import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.utils.MdsalUtils;
@@ -41,6 +42,7 @@ public class ListenerProviderImpl implements AutoCloseable {
     private NotificationService notificationService;
     private OFRendererFlowService flowService;
     private IntentCommonService intentCommonService;
+    private IntentStateMachineExecutorService stateMachineExecutorService;
     private OFRendererGraphService graphService;
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
     private MdsalUtils mdsalUtils;
@@ -58,7 +60,8 @@ public class ListenerProviderImpl implements AutoCloseable {
                                 NotificationService notificationService,
                                 OFRendererFlowService flowService,
                                 OFRendererGraphService graphService,
-                                IntentCommonService intentCommonService) {
+                                IntentCommonService intentCommonService,
+                                IntentStateMachineExecutorService stateMachineExecutorService) {
         Preconditions.checkNotNull(db);
         Preconditions.checkNotNull(notificationService);
         Preconditions.checkNotNull(flowService);
@@ -69,6 +72,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         this.graphService = graphService;
         this.mdsalUtils = new MdsalUtils(db);
         this.intentCommonService = intentCommonService;
+        this.stateMachineExecutorService = stateMachineExecutorService;
     }
 
     public void start() {
@@ -92,7 +96,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
-        IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(intentCommonService);
+        IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(intentCommonService, stateMachineExecutorService);
         IntentNBINotificationSubscriberImpl intentNBIListener = new IntentNBINotificationSubscriberImpl(flowService);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
         serviceRegistry.registerEventListener((IEventService) intentNBISupp, intentNBIListener);

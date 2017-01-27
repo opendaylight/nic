@@ -31,23 +31,13 @@ public class UndeployFailedServiceImpl implements UndeployFailedService {
     }
 
     @Override
-    public void execute(EventType eventType) {
+    public void execute(final EventType eventType) {
         if(retries < MAX_RETRY) {
             retries++;
             engineService.changeState(Intent.State.UNDEPLOYING);
         } else {
             cancelRetry();
         }
-    }
-
-    @Override
-    public void onSuccess() {
-        //DO NOTHING
-    }
-
-    @Override
-    public void onError(String message) {
-        //DO NOTHING
     }
 
     @Override
