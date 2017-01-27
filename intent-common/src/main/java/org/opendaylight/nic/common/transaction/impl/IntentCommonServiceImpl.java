@@ -11,7 +11,7 @@ package org.opendaylight.nic.common.transaction.impl;
 import org.opendaylight.nic.common.model.FlowAction;
 import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
-import org.opendaylight.nic.utils.FlowDataUtils;
+import org.opendaylight.nic.common.utils.FlowDataUtils;
 import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;

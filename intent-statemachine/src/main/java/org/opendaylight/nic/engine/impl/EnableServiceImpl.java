@@ -29,17 +29,7 @@ public class EnableServiceImpl implements EnableService {
     }
 
     @Override
-    public void execute(EventType eventType) {
+    public void execute(final EventType eventType) {
         engineService.changeState(Intent.State.UNDEPLOYED);
-    }
-
-    @Override
-    public void onSuccess() {
-        //DO NOTHING
-    }
-
-    @Override
-    public void onError(String message) {
-        //DO NOTHING
     }
 }
