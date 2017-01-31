@@ -60,6 +60,8 @@ public enum EventType {
     /** Graph Edge Removed*/
     GRAPH_EDGE_DELETED,
     /** Graph Edge Updated*/
-    GRAPH_EDGE_UPDATED
+    GRAPH_EDGE_UPDATED,
+    /** New transaction created*/
+    INTENT_STATE_TRANSACTION
 
 }

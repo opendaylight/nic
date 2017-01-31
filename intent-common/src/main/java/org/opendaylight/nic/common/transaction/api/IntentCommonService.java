@@ -12,7 +12,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 
 public interface IntentCommonService {
 
-    public void resolveAndApply(final Intent intent);
+    void resolveAndApply(final Intent intent);
 
-    public void resolveAndRemove(final Intent intent);
+    void resolveAndRemove(final Intent intent);
+
+    void resolveAndApply(final String intentId);
 }

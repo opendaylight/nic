@@ -73,9 +73,11 @@ public class DeployServiceImpl implements DeployService {
     public Intent.State getNextState(EventType eventType) {
         Intent.State result;
         switch (eventType) {
+            case INTENT_ADDED:
             case NODE_ADDED:
                 result = Intent.State.DEPLOYING;
                 break;
+            case INTENT_REMOVED:
             case NODE_REMOVED:
                 result = Intent.State.UNDEPLOYED;
                 break;

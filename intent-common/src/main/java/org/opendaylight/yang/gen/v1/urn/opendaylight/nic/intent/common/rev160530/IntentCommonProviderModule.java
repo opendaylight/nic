@@ -23,8 +23,9 @@ public class IntentCommonProviderModule extends org.opendaylight.yang.gen.v1.urn
     @Override
     public java.lang.AutoCloseable createInstance() {
         LOG.info("\nStarting Intent-Common module.");
-        final IntentCommonProviderService commonProvider = new IntentCommonProviderServiceImpl();
+        final IntentCommonProviderService commonProvider = new IntentCommonProviderServiceImpl(getDataBrokerDependency());
         commonProvider.start();
+
         return commonProvider;
     }
 

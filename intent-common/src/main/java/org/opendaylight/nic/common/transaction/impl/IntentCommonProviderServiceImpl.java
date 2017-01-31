@@ -8,8 +8,10 @@
 
 package org.opendaylight.nic.common.transaction.impl;
 
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.common.transaction.TransactionResult;
 import org.opendaylight.nic.common.transaction.api.*;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
@@ -17,11 +19,13 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
 
     final IntentTransactionRegistryService registryService;
     final IntentTransactionNotifier notifierService;
+    final DataBroker dataBroker;
     protected BundleContext context;
 
-    public IntentCommonProviderServiceImpl() {
+    public IntentCommonProviderServiceImpl(final DataBroker dataBroker) {
         registryService = new IntentTransactionRegisterImpl();
         notifierService = new IntentTransactionNotifierImpl(registryService);
+        this.dataBroker = dataBroker;
     }
 
     @Override
@@ -62,7 +66,7 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
 
     @Override
     public IntentCommonService retrieveCommonServiceInstance() {
-        return new IntentCommonServiceImpl();
+        return new IntentCommonServiceImpl(dataBroker);
     }
 
     @Override

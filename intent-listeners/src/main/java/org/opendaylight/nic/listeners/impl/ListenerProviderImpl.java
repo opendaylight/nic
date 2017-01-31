@@ -25,6 +25,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.Fl
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.IntentStateTransactions;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,21 +94,27 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new NeutronSecRuleNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<Link, TopologyLinkUp, TopologyLinkDeleted, NicNotification> linkSupp =
                 new TopologyLinkNotificationSupplierImpl(db);
+        NotificationSupplierForSingleItem<IntentStateTransactions, IntentStateChanged> intentStateTransactionSupp =
+                new TransactionStateNotificationSuplierImpl(db);
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
-        IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(intentCommonService, stateMachineExecutorService);
+        IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(intentCommonService,
+                stateMachineExecutorService);
         IntentNBINotificationSubscriberImpl intentNBIListener = new IntentNBINotificationSubscriberImpl(flowService);
-        serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
-        serviceRegistry.registerEventListener((IEventService) intentNBISupp, intentNBIListener);
-        NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
-        serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
         EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =
                 new EndpointDiscoveryNotificationSubscriberImpl();
-        serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
+        NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
         TopologyLinkNotificationSubscriberImpl topologyLinkNotifSubscriber =
                 new TopologyLinkNotificationSubscriberImpl(graphService, mdsalUtils);
+        TransactionStateNotificationSubscriberImpl stateNotificationSubscriber =
+                new TransactionStateNotificationSubscriberImpl(intentCommonService);
+        serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
+        serviceRegistry.registerEventListener((IEventService) intentNBISupp, intentNBIListener);
+        serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
+        serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
         serviceRegistry.registerEventListener((IEventService) linkSupp, topologyLinkNotifSubscriber);
+        serviceRegistry.registerEventListener((IEventService) intentStateTransactionSupp, stateNotificationSubscriber);
 
         supplierList = new ArrayList<>();
         supplierList.add(nodeSupp);
@@ -117,6 +124,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(secGroupSupp);
         supplierList.add(secRulesSupp);
         supplierList.add(linkSupp);
+        supplierList.add(intentStateTransactionSupp);
     }
 
     @Override

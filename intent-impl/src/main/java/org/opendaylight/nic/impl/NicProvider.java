@@ -24,6 +24,7 @@ import org.opendaylight.nic.graph.api.CompilerGraphException;
 import org.opendaylight.nic.graph.api.CompilerGraphFactory;
 import org.opendaylight.nic.graph.api.InputGraph;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.IntentDefinitions;
 import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.IntentDefinitionsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
@@ -71,7 +72,6 @@ public class NicProvider implements NicConsoleProvider {
         this.mappingSvc = mappingSvc;
     }
 
-    public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
     public static final InstanceIdentifier<IntentDefinitions> INTENTS_NBI_IID = InstanceIdentifier.builder(IntentDefinitions.class).build();
 
     @Override
@@ -145,7 +145,7 @@ public class NicProvider implements NicConsoleProvider {
 
         // Put the Intents operational data into the MD-SAL data store
         WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
-        tx.put(LogicalDatastoreType.OPERATIONAL, INTENTS_IID, intents);
+        tx.put(LogicalDatastoreType.OPERATIONAL, IntentUtils.INTENTS_IID, intents);
 
         // Perform the tx.submit asynchronously
         Futures.addCallback(tx.submit(), new FutureCallback<Void>() {
@@ -175,7 +175,7 @@ public class NicProvider implements NicConsoleProvider {
 
         // Place default config data in data store tree
         WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
-        tx.put(LogicalDatastoreType.CONFIGURATION, INTENTS_IID, intents);
+        tx.put(LogicalDatastoreType.CONFIGURATION, IntentUtils.INTENTS_IID, intents);
         // Perform the tx.submit synchronously
         tx.submit();
 
@@ -200,7 +200,7 @@ public class NicProvider implements NicConsoleProvider {
 
             // Place default config data in data store tree
             WriteTransaction tx = dataBroker.newWriteOnlyTransaction();
-            tx.put(LogicalDatastoreType.CONFIGURATION, INTENTS_IID, intents);
+            tx.put(LogicalDatastoreType.CONFIGURATION, IntentUtils.INTENTS_IID, intents);
             // Perform the tx.submit synchronously
             tx.submit();
         } catch (Exception e) {
@@ -261,7 +261,7 @@ public class NicProvider implements NicConsoleProvider {
         try {
             ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
             Optional<Intents> intents = tx.read((isConfigurationDatastore) ? LogicalDatastoreType.CONFIGURATION
-                    : LogicalDatastoreType.OPERATIONAL, INTENTS_IID).checkedGet();
+                    : LogicalDatastoreType.OPERATIONAL, IntentUtils.INTENTS_IID).checkedGet();
 
             if (intents.isPresent()) {
                 listOfIntents = intents.get().getIntent();

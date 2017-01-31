@@ -47,12 +47,12 @@ public class TransactionHandlerServiceImpl implements TransactionHandlerService 
         transactions.add(transaction);
         final IntentStateTransactions buildedTransactions = new IntentStateTransactionsBuilder()
                 .setIntentStateTransaction(transactions).build();
-        writeTransaction.put(LogicalDatastoreType.OPERATIONAL, INTENT_STATE_TRANSACTION_IDENTIFIER, buildedTransactions);
+        writeTransaction.put(LogicalDatastoreType.CONFIGURATION, INTENT_STATE_TRANSACTION_IDENTIFIER, buildedTransactions);
 
         Futures.addCallback(writeTransaction.submit(), new FutureCallback<Void>() {
             @Override
             public void onSuccess(@Nullable Void aVoid) {
-                LOG.info("\nTransaction pushed with success!");
+                LOG.info("\n####Transaction pushed with success!");
             }
 
             @Override
@@ -85,7 +85,7 @@ public class TransactionHandlerServiceImpl implements TransactionHandlerService 
 
         try {
             ReadOnlyTransaction readOnlyTransaction = dataBroker.newReadOnlyTransaction();
-            Optional<IntentStateTransactions> transactions = readOnlyTransaction.read(LogicalDatastoreType.OPERATIONAL,
+            Optional<IntentStateTransactions> transactions = readOnlyTransaction.read(LogicalDatastoreType.CONFIGURATION,
                     INTENT_STATE_TRANSACTION_IDENTIFIER).checkedGet();
             if (transactions.isPresent()) {
                 result = transactions.get().getIntentStateTransaction();
