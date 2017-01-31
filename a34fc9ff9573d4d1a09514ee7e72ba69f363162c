@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fafc7978_5a5fbe0e",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 6761
+      },
+      "writtenOn": "2017-01-31T17:31:43Z",
+      "side": 1,
+      "message": "Because the ArrayList will throw an IndexOutOfBoundsException if we try to put an element in a position which is higher than the size of the array:\n\nIf we create an ArrayList and try to add(3, objectoToBeInserted), which 3 is the index, this will generate an IndexOutOfBoundsException.\n\nArrayList Documentation:\nThrows an IndexOutOfBoundsException - if the index is out of range (index \u003c 0 || index \u003e size()).\n\nIf is desired to use ArrayList, we need to set the size of it manually when we are creating it.",
+      "parentUuid": "fafc7978_2858d455",
+      "range": {
+        "startLine": 142,
+        "startChar": 14,
+        "endLine": 142,
+        "endChar": 29
+      },
+      "revId": "a34fc9ff9573d4d1a09514ee7e72ba69f363162c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafc7978_28061421",
         "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-24T15:21:52Z",
       "side": 1,
       "message": "It should be inserted in a FINAL parameter",
+      "range": {
+        "startLine": 151,
+        "startChar": 30,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "a34fc9ff9573d4d1a09514ee7e72ba69f363162c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fafc7978_ba9b4ac8",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6761
+      },
+      "writtenOn": "2017-01-31T17:31:43Z",
+      "side": 1,
+      "message": "sure",
+      "parentUuid": "fafc7978_28061421",
       "range": {
         "startLine": 151,
         "startChar": 30,
