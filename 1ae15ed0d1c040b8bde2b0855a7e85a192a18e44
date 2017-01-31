@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_d401f13a",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 6761
+      },
+      "writtenOn": "2017-01-31T17:31:43Z",
+      "side": 1,
+      "message": "Alright, do we have any codestyle xml file for the IDE\u0027s like eclipse, Intellij, etc?",
+      "parentUuid": "3a65312a_1b2f1ca3",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_5b187484",
         "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-10-27T17:32:27Z",
       "side": 1,
       "message": "I don\u0027t see the point removing this validation, since the mapping service is used to translate items declared in the Intent command. If there\u0027s no data then an exception should be raised.",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_14fc093e",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 6761
+      },
+      "writtenOn": "2017-01-31T17:31:43Z",
+      "side": 1,
+      "message": "Well i think this is was discussed on the mail list. Since this is an validation method, it should not raise an exception.",
+      "parentUuid": "3a65312a_5b187484",
       "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "3a65312a_d45d714a",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 6761
+      },
+      "writtenOn": "2017-01-31T17:31:43Z",
+      "side": 1,
+      "message": "Check the reply about the \"order comment\"",
+      "parentUuid": "3a65312a_7b173052",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a65312a_fb02200a",
         "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2016-10-27T17:32:27Z",
       "side": 1,
       "message": "Why do you need order here?",
+      "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a65312a_b45a754e",
+        "filename": "utils/src/main/java/org/opendaylight/nic/utils/IntentUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 6761
+      },
+      "writtenOn": "2017-01-31T17:31:43Z",
+      "side": 1,
+      "message": "When we recover the source and destination, we recover by using the index. You can check on IntentUtils the constants:\nSRC_END_POINT_GROUP_INDEX \u003d 0;\nDST_END_POINT_GROUP_INDEX \u003d 1;\n\nI can try to see other way to implement this, right now, i just copied the idea from an existent code on method extractEndPointGroup(final Intent intent)",
+      "parentUuid": "3a65312a_fb02200a",
       "revId": "1ae15ed0d1c040b8bde2b0855a7e85a192a18e44",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
