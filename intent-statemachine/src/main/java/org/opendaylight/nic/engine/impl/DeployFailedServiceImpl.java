@@ -9,8 +9,6 @@ package org.opendaylight.nic.engine.impl;
 
 import org.opendaylight.nic.engine.StateMachineEngineService;
 import org.opendaylight.nic.engine.service.DeployFailedService;
-import org.opendaylight.nic.engine.service.StateMachineRendererService;
-import org.opendaylight.nic.impl.StateMachineRendererExecutor;
 import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 
@@ -18,7 +16,6 @@ public class DeployFailedServiceImpl implements DeployFailedService {
 
     private static DeployFailedService deployFailedService;
     private static StateMachineEngineService engineService;
-    private static StateMachineRendererService rendererService;
 
     private int retries = 0;
 
@@ -27,7 +24,6 @@ public class DeployFailedServiceImpl implements DeployFailedService {
 
     private DeployFailedServiceImpl(StateMachineEngineService engineService) {
         this.engineService = engineService;
-        rendererService = new StateMachineRendererExecutor(this);
 
     }
 
@@ -39,7 +35,7 @@ public class DeployFailedServiceImpl implements DeployFailedService {
     }
 
     @Override
-    public void execute(EventType eventType) {
+    public void execute(final EventType eventType) {
         if (retries < MAX_RETRY) {
             retries++;
             engineService.changeState(Intent.State.DEPLOYING);
@@ -48,12 +44,10 @@ public class DeployFailedServiceImpl implements DeployFailedService {
         }
     }
 
-    @Override
     public void onSuccess() {
         //DO NOTHING
     }
 
-    @Override
     public void onError(String message) {
         engineService.changeState(Intent.State.DEPLOYFAILED);
     }
