@@ -12,6 +12,7 @@ import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IntentLimiterAdded;
+import org.opendaylight.nic.listeners.api.IntentLimiterRemoved;
 import org.opendaylight.nic.listeners.api.NicNotification;
 import org.opendaylight.nic.utils.EventType;
 import org.slf4j.Logger;
@@ -34,8 +35,15 @@ public class IntentLimiterNotificationSubscriberImpl implements IEventListener<N
         if (IntentLimiterAdded.class.isInstance(event)) {
             IntentLimiterAdded addedEvent = (IntentLimiterAdded) event;
             final String intentId = addedEvent.getIntent().getId().toString();
-            stateMachineExecutorService.createTransaction(intentId, EventType.INTENT_LIMITER_ADDED);
+//            stateMachineExecutorService.createTransaction(intentId, EventType.INTENT_LIMITER_ADDED);
             intentCommonService.resolveAndApply(addedEvent.getIntent());
+        }
+
+        if (IntentLimiterRemoved.class.isInstance(event)) {
+            IntentLimiterRemoved removedEvent = (IntentLimiterRemoved) event;
+            final String intentId = removedEvent.getIntent().getId().toString();
+//            stateMachineExecutorService.createTransaction(intentId, EventType.INTENT_LIMITER_REMOVED);
+            intentCommonService.resolveAndRemove(removedEvent.getIntent());
         }
     }
 }

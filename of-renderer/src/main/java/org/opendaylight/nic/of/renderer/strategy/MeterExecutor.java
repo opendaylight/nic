@@ -11,6 +11,8 @@ package org.opendaylight.nic.of.renderer.strategy;
 import com.google.common.collect.Lists;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.nic.of.renderer.api.MeterQueueService;
+import org.opendaylight.nic.of.renderer.impl.MeterQueueServiceImpl;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
@@ -31,6 +33,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter.meter.band.headers.MeterBandHeaderKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter.meter.band.headers.meter.band.header.MeterBandTypesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.Dataflow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.meterid.queue.types.rev170316.MeteridObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.binding.KeyedInstanceIdentifier;
 import org.slf4j.Logger;
@@ -45,10 +48,13 @@ public class MeterExecutor {
 
     private DataBroker dataBroker;
     private MdsalUtils mdsalUtils;
+    private MeterQueueService meterQueueService;
 
     public MeterExecutor(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
         this.mdsalUtils = new MdsalUtils(dataBroker);
+        this.meterQueueService = new MeterQueueServiceImpl(dataBroker);
+        meterQueueService.initService();
     }
 
     public MeterId createMeter(Dataflow dataflow) {
@@ -56,10 +62,13 @@ public class MeterExecutor {
         MeterBandHeaderBuilder meterBandHeaderBuilder = new MeterBandHeaderBuilder();
         MeterBuilder meterBuilder = new MeterBuilder();
 
-        final MeterId meterId = new MeterId(1L);
+        final MeteridObject meteridObject = meterQueueService.getNextMeterId();
+        final long meterIdLong = meteridObject.getValue();
+        final MeterId meterId = new MeterId(meterIdLong);
 
         MeterFlags meterFlags = new MeterFlags(false, true, false, false);
         meterBuilder.setKey(new MeterKey(meterId));
+        meterBuilder.setMeterId(meterId);
         meterBuilder.setFlags(meterFlags);
 
         int bandKey = 0;
@@ -89,6 +98,22 @@ public class MeterExecutor {
             mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, instanceIdentifier, meterBuilder.build());
         }
         return meterBuilder.build().getMeterId();
+    }
+
+    public boolean removeMeter(final Dataflow dataflow) {
+        boolean result = false;
+        final long id = dataflow.getMeterId();
+        final MeterId meterId = new MeterId(id);
+        final Map<Node, List<NodeConnector>> nodeListMap = TopologyUtils.getNodes(dataBroker);
+        for (Map.Entry<Node, List<NodeConnector>> entry : nodeListMap.entrySet()) {
+            final InstanceIdentifier<Meter> instanceIdentifier = retrieveMeterIdentifier(meterId,
+                    entry.getKey());
+           result = mdsalUtils.delete(LogicalDatastoreType.CONFIGURATION, instanceIdentifier);
+        }
+        if (result) {
+            meterQueueService.releaseMeterId(id);
+        }
+        return result;
     }
 
     private InstanceIdentifier<Meter> retrieveMeterIdentifier(final MeterId meterId, Node node) {

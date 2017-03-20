@@ -12,6 +12,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
 
+import java.util.Map;
+
 public interface OFRendererFlowService {
 
     /**
@@ -35,5 +37,7 @@ public interface OFRendererFlowService {
      */
     void pushLLDPFlow(NodeId nodeId, FlowAction flowAction);
 
-    void pushFlowData(Dataflow dataFlow);
+    Map<Boolean, Dataflow> pushDataFlow(Dataflow dataFlow);
+
+    void pushDataFlow(NodeId nodeId, Dataflow dataflow);
 }

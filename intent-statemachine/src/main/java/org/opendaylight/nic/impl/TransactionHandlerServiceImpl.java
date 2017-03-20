@@ -40,7 +40,7 @@ public class TransactionHandlerServiceImpl implements TransactionHandlerService 
     }
 
     @Override
-    public void sendTransaction(IntentStateTransaction transaction) {
+    public void sendTransaction(final IntentStateTransaction transaction) {
         final List<IntentStateTransaction> transactions = listStateTransactions();
         final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
 
@@ -52,7 +52,7 @@ public class TransactionHandlerServiceImpl implements TransactionHandlerService 
         Futures.addCallback(writeTransaction.submit(), new FutureCallback<Void>() {
             @Override
             public void onSuccess(@Nullable Void aVoid) {
-                LOG.info("\n####Transaction pushed with success!");
+                LOG.info("\nTransaction pushed with success!");
             }
 
             @Override

@@ -90,6 +90,22 @@ module dataflow {
             }
             mandatory true;
         }
+
+        leaf status {
+            type enumeration {
+                enum "SUCCESS";
+                enum "ERROR";
+                enum "PROCESSING";
+            }
+            mandatory true;
+            description "Defines the current status of a Data flow processing.";
+        }
+
+        leaf meter-id {
+            type uint8;
+            mandatory true;
+            description "Represents the uniquely meter ID for each Dataflow.";
+        }
     }
 
     container dataflows {

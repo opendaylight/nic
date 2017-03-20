@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
+import org.opendaylight.nic.common.transaction.impl.IntentCommonServiceImpl;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.EventRegistryService;
 import org.opendaylight.nic.listeners.api.NotificationSupplierDefinition;
@@ -117,6 +118,12 @@ public class ListenerProviderImplTest {
                 mock(EndpointDiscoveredNotificationSupplierImpl.class);
         TopologyLinkNotificationSupplierImpl mockLinkSupp =
                 mock(TopologyLinkNotificationSupplierImpl.class);
+        IntentCommonServiceImpl intentCommonServiceMock =
+                mock(IntentCommonServiceImpl.class);
+        IntentLimiterNotificationSupplierImpl mockIntentLimiterSupp =
+                mock(IntentLimiterNotificationSupplierImpl.class);
+        TransactionStateNotificationSuplierImpl mockTransactionStateSupp =
+                mock(TransactionStateNotificationSuplierImpl.class);
 
         PowerMockito.whenNew(NodeNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockNodeSupp);
@@ -134,6 +141,12 @@ public class ListenerProviderImplTest {
                 withAnyArguments().thenReturn(mockEndpointResolver);
         PowerMockito.whenNew(TopologyLinkNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockLinkSupp);
+        PowerMockito.whenNew(IntentCommonServiceImpl.class).
+                withAnyArguments().thenReturn(intentCommonServiceMock);
+        PowerMockito.whenNew(IntentLimiterNotificationSupplierImpl.class).
+                withAnyArguments().thenReturn(mockIntentLimiterSupp);
+        PowerMockito.whenNew(TransactionStateNotificationSuplierImpl.class).
+                withAnyArguments().thenReturn(mockTransactionStateSupp);
 
         provider.start();
 
@@ -148,7 +161,7 @@ public class ListenerProviderImplTest {
                 eq(mockEndpointResolver), Mockito.any(EndpointDiscoveryNotificationSubscriberImpl.class));
         verify(mockRegistryServiceImpl).registerEventListener(
                 eq(mockLinkSupp), Mockito.any(TopologyLinkNotificationSubscriberImpl.class));
-        verify(mockSupplierList,times(7)).add(Mockito.any(NotificationSupplierDefinition.class));
+        verify(mockSupplierList,times(9)).add(Mockito.any(NotificationSupplierDefinition.class));
 
     }
 }

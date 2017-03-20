@@ -40,15 +40,13 @@ public class IntentNotificationSubscriberImpl implements IEventListener<NicNotif
     public void handleEvent(NicNotification event) {
         if (IntentAdded.class.isInstance(event)) {
             IntentAdded addedEvent = (IntentAdded) event;
-            final String intentIdStr = addedEvent.getIntent().getId().toString();
             intentCommonService.resolveAndApply(addedEvent.getIntent());
-            stateMachineExecutorService.createTransaction(intentIdStr, EventType.INTENT_ADDED);
+//            stateMachineExecutorService.createTransaction(intentIdStr, EventType.INTENT_ADDED);
         }
         if (IntentRemoved.class.isInstance(event)) {
             IntentRemoved deleteEvent = (IntentRemoved) event;
-            final String intentIdStr = deleteEvent.getIntent().getId().toString();
             intentCommonService.resolveAndRemove(deleteEvent.getIntent());
-            stateMachineExecutorService.removeTransactions(intentIdStr, EventType.INTENT_REMOVED);
+//            stateMachineExecutorService.removeTransactions(intentIdStr, EventType.INTENT_REMOVED);
         }
     }
 }

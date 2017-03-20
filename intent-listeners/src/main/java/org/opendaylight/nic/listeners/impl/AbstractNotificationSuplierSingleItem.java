@@ -47,22 +47,20 @@ abstract class AbstractNotificationSuplierSingleItem<O extends DataObject,
         super(db, clazz, datastoreType);
         final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         final ServiceReference<?> serviceReference = context.getServiceReference(EventRegistryService.class);
-        LOG.info("\n#### Subscribing to listen for transaction creation.");
         eventRegistryService = (EventRegistryService) context.getService(serviceReference);
     }
 
     @Override
     public void onDataChanged(final AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> dataChanged) {
         Preconditions.checkNotNull(dataChanged);
-        Map<InstanceIdentifier<?>, DataObject> changeAsMap = dataChanged.getCreatedData();
-        LOG.info("\n####Notification of a new transaction: {}", dataChanged.toString());
+        Map<InstanceIdentifier<?>, DataObject> changeAsMap =
+                (!dataChanged.getCreatedData().isEmpty() ? dataChanged.getCreatedData() : dataChanged.getUpdatedData());
         if (dataChanged != null && !(changeAsMap.isEmpty())) {
             for (final Map.Entry<InstanceIdentifier<?>, DataObject> createDataObj : changeAsMap.entrySet()) {
                 if (clazz.isAssignableFrom(createDataObj.getKey().getTargetType())) {
                     final InstanceIdentifier<O> ii = createDataObj.getKey().firstIdentifierOf(clazz);
                     final N notif = dataChangedNotification((O) createDataObj.getValue(), ii);
                     if (notif != null) {
-                        LOG.info("\n####NicNotification for single item created");
                         if (getImplClass().isInstance(notif)) {
                             Set<IEventListener<?>> eventListeners =
                                     eventRegistryService.getEventListeners(getEventType());

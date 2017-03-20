@@ -8,11 +8,9 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
-import com.google.common.collect.Lists;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.strategy.MeterExecutor;
-import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
@@ -34,7 +32,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instru
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.InstructionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
@@ -52,7 +49,6 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class OFRuleWithMeterManager {
@@ -71,9 +67,10 @@ public class OFRuleWithMeterManager {
         this.meterExecutor = new MeterExecutor(dataBroker);
     }
 
-    public void createFlow(Dataflow dataFlow) {
+    public FlowBuilder createFlow(final Dataflow dataFlow,
+                                  final MeterId meterId) {
 
-        final MeterId meterId = meterExecutor.createMeter(dataFlow);
+        final Short id = dataFlow.getMeterId();
         final FlowModFlags flowModFlags = new FlowModFlags(false, false, false, false, false);
         final FlowId flowId = new FlowId(dataFlow.getId().toString());
         final FlowKey flowKey = new FlowKey(flowId);
@@ -91,7 +88,17 @@ public class OFRuleWithMeterManager {
         flowBuilder.setFlags(flowModFlags);
         flowBuilder.setKey(flowKey);
 
-        sendRule(flowBuilder);
+        return flowBuilder;
+    }
+
+    public MeterId createMeter(final Dataflow dataflow) {
+        final Short id = dataflow.getMeterId();
+        final MeterId meterId = (id != 0 ? new MeterId(id.longValue()) : meterExecutor.createMeter(dataflow));
+        return meterId;
+    }
+
+    public boolean removeMeter(final Dataflow dataflow) {
+        return meterExecutor.removeMeter(dataflow);
     }
 
     private Match createMatch(Ipv4Prefix ipv4Prefix) {
@@ -130,15 +137,18 @@ public class OFRuleWithMeterManager {
         return instructionsBuilder.build();
     }
 
-    private void sendRule(final FlowBuilder flowBuilder) {
-        final Map<Node, List<NodeConnector>> nodeMap = TopologyUtils.getNodes(dataBroker);
-        for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
-            final NodeId nodeId = entry.getKey().getId();
-            final NodeBuilder nodeBuilder = new NodeBuilder();
-            nodeBuilder.setId(nodeId);
-            nodeBuilder.setKey(new NodeKey(nodeId));
-            mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder), flowBuilder.build());
-        }
+    public boolean sendToMdsal(final FlowBuilder flowBuilder, final NodeId nodeId) {
+        final NodeBuilder nodeBuilder = new NodeBuilder();
+        nodeBuilder.setId(nodeId);
+        nodeBuilder.setKey(new NodeKey(nodeId));
+        return mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder), flowBuilder.build());
+    }
+
+    public boolean removeFromMdsal(final FlowBuilder flowBuilder, final NodeId nodeId) {
+        final NodeBuilder nodeBuilder = new NodeBuilder();
+        nodeBuilder.setId(nodeId);
+        nodeBuilder.setKey(new NodeKey(nodeId));
+        return mdsalUtils.delete(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder));
     }
 
     private InstanceIdentifier<Flow> retrieveIdentifier(final NodeBuilder nodeBuilder,

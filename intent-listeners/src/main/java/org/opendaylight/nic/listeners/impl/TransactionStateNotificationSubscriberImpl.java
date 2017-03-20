@@ -35,7 +35,6 @@ public class TransactionStateNotificationSubscriberImpl implements IEventListene
         final IntentStateChanged stateChanged = (IntentStateChanged) event;
         final IntentStateTransactions transactions = stateChanged.getIntentStateTransaction();
         //TODO: Call CommonService
-        LOG.info("\n#### Transactions event comes to here: {}", transactions.toString());
         final List<IntentStateTransaction> stateTransactions = transactions.getIntentStateTransaction();
         final IntentStateTransaction transaction = stateTransactions.iterator().next();
         intentCommonService.resolveAndApply(transaction.getIntentId());

@@ -84,7 +84,6 @@ public class IntentLimiterAddShellCommand extends OsgiCommandSupport {
         intentLimiterBuilder.setSourceIp(new Ipv4Prefix(dropPacketsFrom));
         intentLimiterBuilder.setBandwidthLimit(Long.valueOf(bandLimit.split("-")[0]));
         intentLimiterBuilder.setBandwidthLimitType(BandwidthCap.valueOf(bandLimit.split("-")[1].toUpperCase()));
-        LOG.info("\n### Result: {}", intentLimiterBuilder.build().toString());
 
         nicConsoleProvider.addIntent(intentLimiterBuilder.build());
         return intentLimiterBuilder.build();

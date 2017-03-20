@@ -107,7 +107,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         IntentNBINotificationSubscriberImpl intentNBIListener = new IntentNBINotificationSubscriberImpl(flowService);
         EndpointDiscoveryNotificationSubscriberImpl endpointDiscoverySubscriber =
                 new EndpointDiscoveryNotificationSubscriberImpl();
-        NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(flowService);
+        NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(intentCommonService);
         TopologyLinkNotificationSubscriberImpl topologyLinkNotifSubscriber =
                 new TopologyLinkNotificationSubscriberImpl(graphService, mdsalUtils);
         TransactionStateNotificationSubscriberImpl stateNotificationSubscriber =
