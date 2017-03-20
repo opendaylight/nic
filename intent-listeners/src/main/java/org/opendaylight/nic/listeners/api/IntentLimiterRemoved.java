@@ -6,8 +6,11 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.common.model;
+package org.opendaylight.nic.listeners.api;
 
-public enum FlowType {
-    L2, L3
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
+
+public interface IntentLimiterRemoved extends NicNotification {
+
+    IntentLimiter getIntent();
 }

@@ -1,0 +1,37 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module meter-id-queue {
+    namespace "urn:opendaylight:nic:renderer:api:meteridqueue";
+    prefix "meter-id-queue";
+
+    revision 2017-03-14 {
+        description "First revision.";
+    }
+
+    leaf device-reference {
+        type enumeration {
+            enum "PICA8" {
+                description "Defines that the device in use is a PICA8, where the MAX of meters is 256.";
+                value 256;
+            }
+            enum "OTHER" {
+                value 2000;
+            }
+        }
+    }
+
+    container meter-id-queue {
+        leaf-list free {
+            type uint8;
+        }
+
+        leaf-list in-use {
+            type uint8;
+        }
+    }
+}

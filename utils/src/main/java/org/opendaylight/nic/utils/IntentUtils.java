@@ -9,6 +9,8 @@ package org.opendaylight.nic.utils;
 
 import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentsLimiter;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
@@ -50,6 +52,7 @@ public class IntentUtils {
     private static final String END_POINT_NULL_MESSAGE = "EndPoint does not exist in EndPointGroups.";
 
     public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
+    public static final InstanceIdentifier<IntentsLimiter> INTENTS_LIMITER_IDD = InstanceIdentifier.builder(IntentsLimiter.class).build();
 
     private IntentUtils() {
     }

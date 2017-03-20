@@ -50,6 +50,7 @@
         <feature version="${mdsal.version}">odl-mdsal-broker</feature>
         <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/renderer-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>

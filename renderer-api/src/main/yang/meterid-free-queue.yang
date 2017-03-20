@@ -1,0 +1,32 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module meterid-free-queue {
+    namespace "urn:opendaylight:nic:renderer:api:meterid:free:queue";
+    prefix "meterid-free-queue";
+
+    import meterid-queue-types { prefix types; revision-date 2017-03-16; }
+
+    revision 2017-03-15 {
+        description "Initial revision.";
+    }
+
+    grouping meterid-free-queue {
+        leaf id {
+            type types:meterid-object;
+            mandatory true;
+            description "Defines the MeterId to be used.";
+        }
+    }
+
+    container meterid-free-queues {
+        list meterid-free-queue {
+            key "id";
+            uses meterid-free-queue;
+        }
+    }
+}

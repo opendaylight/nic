@@ -5,9 +5,12 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.common.model;
 
-public enum FlowAction {
-    //TODO: Add some other action capabilities
-    ALLOW, BLOCK,
+package org.opendaylight.nic.listeners.api;
+
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
+
+public interface IntentLimiterAdded extends NicNotification {
+
+    IntentLimiter getIntent();
 }

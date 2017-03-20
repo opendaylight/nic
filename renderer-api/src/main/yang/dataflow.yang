@@ -1,0 +1,101 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module dataflow {
+    namespace "urn:opendaylight:nic:renderer:api:dataflow";
+    prefix "dataflow";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import ietf-yang-types { prefix "yang"; }
+    import ietf-inet-types { prefix "inet"; }
+
+    revision 2017-03-09 {
+        description "Second revision.";
+    }
+
+    grouping dataflow {
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifier for dataflow";
+        }
+
+        leaf source-ip-address {
+            type inet:ipv4-prefix;
+        }
+
+        leaf dest-ip-address {
+            type inet:ip-address;
+        }
+
+        leaf flow-type {
+            type enumeration {
+                enum "L2";
+                enum "L3";
+            }
+        }
+
+        leaf is-flow-meter {
+            type boolean;
+        }
+
+
+
+        leaf flow-action {
+            type enumeration {
+                enum "ALLOW";
+                enum "BLOCK";
+                enum "DROP";
+            }
+        }
+
+        leaf renderer-action {
+            type enumeration {
+                enum "ADD";
+                enum "REMOVE";
+            }
+        }
+
+        leaf bandwidth-rate {
+            type uint32;
+            mandatory true;
+            description "Defines the bandwidth rate to be applied at meter creation.";
+        }
+
+        leaf timeout {
+            type uint8;
+            mandatory true;
+            description "Defines the time where the rule will keep applied.";
+        }
+
+        leaf meter-flags {
+            type enumeration {
+                enum "METER_BURST";
+                enum "METER_KBPS";
+                enum "METER_PKTPS";
+                enum "METER_STATS";
+            }
+            mandatory true;
+        }
+
+        leaf dataflow-meter-band-type {
+            type enumeration {
+                enum "OFMBT_DROP";
+                enum "OFPMBT_DSCP_REMARK";
+                enum "OFMPB_MBT_EXPERIMENTER";
+            }
+            mandatory true;
+        }
+    }
+
+    container dataflows {
+        list dataflow {
+            key "id";
+            uses dataflow;
+        }
+    }
+}

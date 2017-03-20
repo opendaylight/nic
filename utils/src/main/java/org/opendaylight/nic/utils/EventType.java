@@ -62,6 +62,12 @@ public enum EventType {
     /** Graph Edge Updated*/
     GRAPH_EDGE_UPDATED,
     /** New transaction created*/
-    INTENT_STATE_TRANSACTION
+    INTENT_STATE_TRANSACTION,
+    /** New Intent limiter created*/
+    INTENT_LIMITER_ADDED,
+    /** Intent limiter updated*/
+    INTENT_LIMITER_UPDATED,
+    /** Intent limiter removed*/
+    INTENT_LIMITER_REMOVED
 
 }

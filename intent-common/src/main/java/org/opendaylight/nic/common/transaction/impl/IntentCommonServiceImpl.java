@@ -13,47 +13,52 @@ import com.google.common.collect.Lists;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.nic.common.model.FlowAction;
-import org.opendaylight.nic.common.model.FlowData;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
-import org.opendaylight.nic.common.utils.FlowDataUtils;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.utils.IntentUtils;
-import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.Dataflow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.Dataflow.DataflowMeterBandType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.DataflowBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
-//TODO: This class is WIP
 public class IntentCommonServiceImpl  implements IntentCommonService {
     private static final Logger LOG = LoggerFactory.getLogger(IntentCommonServiceImpl.class);
 
     private DataBroker dataBroker;
+    private OFRendererFlowService ofRendererFlowService;
 
     private IntentCommonServiceImpl() {}
 
-    public IntentCommonServiceImpl(final DataBroker dataBroker) {
+    public IntentCommonServiceImpl(final DataBroker dataBroker,
+                                   final OFRendererFlowService ofRendererFlowService) {
         this.dataBroker = dataBroker;
+        this.ofRendererFlowService = ofRendererFlowService;
     }
     @Override
     public void resolveAndApply(final Intent intent) {
-        try {
-            final EndPointGroup srcEndPoint = IntentUtils.extractSrcEndPointGroup(intent);
-            final EndPointGroup dstEndPoint = IntentUtils.extractDstEndPointGroup(intent);
+        LOG.info("\n##### Ready to apply intent!!!!");
+    }
 
-            final Action actionContainer = IntentUtils.getAction(intent);
-            final FlowData flowData = FlowDataUtils.generateFlowData(srcEndPoint, dstEndPoint, FlowAction.ALLOW);
-            LOG.info("\n##### Ready to apply intent!!!!");
-            //TODO: Find out some way to call a specific renderer and send this FlowData
+    @Override
+    public void resolveAndApply(IntentLimiter intentLimiter) {
+        try {
+            createFlowData(intentLimiter);
         } catch (IntentInvalidException e) {
-            //TODO: Add a valid exception
+            LOG.error(e.getMessage());
         }
+    }
+
+    @Override
+    public void resolveAndRemove(IntentLimiter intentLimiter) {
+
     }
 
     @Override
@@ -95,5 +100,22 @@ public class IntentCommonServiceImpl  implements IntentCommonService {
         }
         LOG.info("ListIntentsConfiguration: list of intents retrieved successfully");
         return listOfIntents;
+    }
+
+    private void createFlowData(IntentLimiter intent) throws IntentInvalidException {
+        final Ipv4Prefix sourceIp = intent.getSourceIp();
+        DataflowBuilder dataflowBuilder = new DataflowBuilder();
+        dataflowBuilder.setIsFlowMeter(true);
+        dataflowBuilder.setId(intent.getId());
+        dataflowBuilder.setTimeout(intent.getDuration());
+        dataflowBuilder.setDataflowMeterBandType(DataflowMeterBandType.OFMBTDROP);
+        dataflowBuilder.setMeterFlags(Dataflow.MeterFlags.METERKBPS);
+        dataflowBuilder.setSourceIpAddress(sourceIp);
+        dataflowBuilder.setRendererAction(Dataflow.RendererAction.ADD);
+        dataflowBuilder.setBandwidthRate(intent.getBandwidthLimit());
+        dataflowBuilder.setFlowType(Dataflow.FlowType.L3);
+
+        LOG.info("\n#### Creating FlowData for SRC: {}", sourceIp);
+        ofRendererFlowService.pushFlowData(dataflowBuilder.build());
     }
 }

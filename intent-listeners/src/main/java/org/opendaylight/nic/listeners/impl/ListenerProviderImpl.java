@@ -11,7 +11,6 @@ package org.opendaylight.nic.listeners.impl;
 import com.google.common.base.Preconditions;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.NotificationService;
-import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.*;
@@ -22,6 +21,7 @@ import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.intent.definitions.IntentDefinition;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
@@ -80,6 +80,8 @@ public class ListenerProviderImpl implements AutoCloseable {
         serviceRegistry = new EventRegistryServiceImpl();
 
         // Event providers
+        NotificationSupplierForItemRoot<IntentLimiter, IntentLimiterAdded, IntentLimiterRemoved, IntentLimiterUpdated> intentLimiterSupp =
+                new IntentLimiterNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<FlowCapableNode, NodeUp, NodeDeleted, NodeUpdated> nodeSupp =
                 new NodeNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<FlowCapableNodeConnector, LinkUp, LinkDeleted, NicNotification> connectorSupp =
@@ -99,6 +101,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
+        IntentLimiterNotificationSubscriberImpl intentLimiterListener = new IntentLimiterNotificationSubscriberImpl(intentCommonService, stateMachineExecutorService);
         IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(intentCommonService,
                 stateMachineExecutorService);
         IntentNBINotificationSubscriberImpl intentNBIListener = new IntentNBINotificationSubscriberImpl(flowService);
@@ -109,6 +112,7 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new TopologyLinkNotificationSubscriberImpl(graphService, mdsalUtils);
         TransactionStateNotificationSubscriberImpl stateNotificationSubscriber =
                 new TransactionStateNotificationSubscriberImpl(intentCommonService);
+        serviceRegistry.registerEventListener((IEventService) intentLimiterSupp, intentLimiterListener);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
         serviceRegistry.registerEventListener((IEventService) intentNBISupp, intentNBIListener);
         serviceRegistry.registerEventListener((IEventService) nodeSupp, nodeNotifSubscriber);
@@ -117,6 +121,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         serviceRegistry.registerEventListener((IEventService) intentStateTransactionSupp, stateNotificationSubscriber);
 
         supplierList = new ArrayList<>();
+        supplierList.add(intentLimiterSupp);
         supplierList.add(nodeSupp);
         supplierList.add(connectorSupp);
         supplierList.add(intentSupp);

@@ -49,4 +49,9 @@ module intent-actions {
         uses action;
         description "Indicates log in the traffic";
     }
+
+    grouping restrict {
+        uses action;
+        description "Indicates that the traffic will be restricted";
+    }
 }

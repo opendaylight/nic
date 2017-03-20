@@ -10,6 +10,7 @@ package org.opendaylight.nic.of.renderer.api;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
 
 public interface OFRendererFlowService {
 
@@ -33,4 +34,6 @@ public interface OFRendererFlowService {
      * @param flowAction The {@link FlowAction}
      */
     void pushLLDPFlow(NodeId nodeId, FlowAction flowAction);
+
+    void pushFlowData(Dataflow dataFlow);
 }

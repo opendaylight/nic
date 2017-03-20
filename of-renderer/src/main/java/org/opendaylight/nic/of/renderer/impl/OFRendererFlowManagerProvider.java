@@ -14,11 +14,7 @@ import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.Observer;
 import org.opendaylight.nic.of.renderer.api.Subject;
-import org.opendaylight.nic.of.renderer.strategy.ActionStrategy;
-import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
-import org.opendaylight.nic.of.renderer.strategy.MPLSExecutor;
-import org.opendaylight.nic.of.renderer.strategy.QoSExecutor;
-import org.opendaylight.nic.of.renderer.strategy.RedirectExecutor;
+import org.opendaylight.nic.of.renderer.strategy.*;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
@@ -29,6 +25,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -36,12 +33,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by saket on 8/19/15.
@@ -61,6 +53,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private QosConstraintManager qosConstraintManager;
     private Registration pktInRegistration;
     private RedirectFlowManager redirectFlowManager;
+    private OFRuleWithMeterManager ofRuleWithMeterManager;
     private Subject topic;
 
     private NotificationProviderService notificationProviderService;
@@ -91,17 +84,19 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
         this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager, graphService);
         this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
+        this.ofRuleWithMeterManager = new OFRuleWithMeterManager(dataBroker);
     }
 
     @Override
     public void pushIntentFlow(final Intent intent, final FlowAction flowAction) {
         // TODO: Extend to support other actions
-        LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
+        LOG.info("\n### Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
 
         // Creates QoS configuration and stores profile in the Data Store.
         if (intent.getQosConfig() != null) {
             return;
         }
+
         //TODO: Change to use Command Pattern
         try {
             ActionStrategy actionStrategy = null;
@@ -121,7 +116,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
             actionStrategy.execute(intent, flowAction);
         } catch (IntentInvalidException ie) {
-            //TODO: Implement an action for Exception cases
+//            TODO: Implement an action for Exception cases
         }
     }
 
@@ -188,6 +183,15 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     @Override
     public void pushLLDPFlow(final NodeId nodeId, final FlowAction flowAction) {
         lldpFlowManager.pushFlow(nodeId, flowAction);
+    }
+
+    @Override
+    public void pushFlowData(Dataflow dataFlow) {
+        LOG.info("\n#### Pushing dataFlow: {}", dataFlow.toString());
+        if(dataFlow.isIsFlowMeter()) {
+            ofRuleWithMeterManager.createFlow(dataFlow);
+            LOG.info("\n### Flow with meter created with success!!!!");
+        }
     }
 
     /**

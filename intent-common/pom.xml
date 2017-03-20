@@ -48,13 +48,23 @@
         </dependency>
         <!-- Intent dependencies -->
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>intent-api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>of-renderer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>renderer-api</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

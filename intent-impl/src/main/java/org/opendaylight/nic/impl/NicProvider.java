@@ -9,6 +9,7 @@
 package org.opendaylight.nic.impl;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.CheckedFuture;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -27,6 +28,9 @@ import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.IntentDefinitions;
 import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.IntentDefinitionsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentsLimiter;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentsLimiterBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.IntentsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
@@ -62,6 +66,7 @@ public class NicProvider implements NicConsoleProvider {
     public static final String ACTION_MIRROR = "MIRROR";
     public static final String ACTION_LOG = "LOG";
     public static final String CONSTRAINT_QOS = "QOS";
+    public static final String ACTION_RESTRICT = "RESTRICT";
     public static final String CONSTRAINT_CLASSIFIER = "CLASSIFIER";
 
     protected DataBroker dataBroker;
@@ -211,6 +216,27 @@ public class NicProvider implements NicConsoleProvider {
     }
 
     @Override
+    public boolean addIntent(IntentLimiter intentLimiter) {
+        boolean result = false;
+        IntentsLimiter intentsLimiter;
+        List<IntentLimiter> limiterList = listIntentLimiters();
+
+        try {
+            limiterList.add(intentLimiter);
+            intentsLimiter = new IntentsLimiterBuilder().setIntentLimiter(limiterList).build();
+
+            WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
+            writeTransaction.put(LogicalDatastoreType.CONFIGURATION, IntentUtils.INTENTS_LIMITER_IDD, intentsLimiter);
+
+            writeTransaction.submit();
+            result = true;
+        } catch (Exception e) {
+            LOG.error("addIntent: failed: {}", e);
+        }
+        return result;
+    }
+
+    @Override
     public boolean addIntents(Intents intents) {
         // TODO MultiAdd will be added in a further commit
         return false;
@@ -277,6 +303,21 @@ public class NicProvider implements NicConsoleProvider {
             listOfIntents = new ArrayList<Intent>();
         }
         LOG.info("ListIntentsConfiguration: list of intents retrieved successfully");
+        return listOfIntents;
+    }
+
+    private List<IntentLimiter> listIntentLimiters() {
+        List<IntentLimiter> listOfIntents = Lists.newArrayList();
+        try {
+            ReadOnlyTransaction readOnlyTransaction = dataBroker.newReadOnlyTransaction();
+            Optional<IntentsLimiter> intents = readOnlyTransaction.read(LogicalDatastoreType.CONFIGURATION,
+                    IntentUtils.INTENTS_LIMITER_IDD).checkedGet();
+
+            if(intents.isPresent()) {
+                listOfIntents = intents.get().getIntentLimiter();
+            }
+        } catch (Exception e) {
+        }
         return listOfIntents;
     }
 
