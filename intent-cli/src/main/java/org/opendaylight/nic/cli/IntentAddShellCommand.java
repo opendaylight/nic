@@ -25,6 +25,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.block.BlockBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.log.LogBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.redirect.RedirectBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.restrict.RestrictBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.classification.constraint.ClassificationConstraintBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.qos.constraint.QosConstraintBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup;
@@ -74,7 +75,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
     @Option(name = "-a",
             aliases = { "--actions" },
-            description = "Action to be performed.\n-a / --actions BLOCK/ALLOW/LOG",
+            description = "Action to be performed.\n-a / --actions BLOCK/ALLOW/LOG/RESTRICT",
             required = true,
             multiValued = true)
     List<String> actions = new ArrayList<String>(Arrays.asList(NicProvider.ACTION_BLOCK));
@@ -161,6 +162,9 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
             } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_LOG)) {
                 action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
                         .LogBuilder().setLog(new LogBuilder().build()).build();
+            } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_RESTRICT)) {
+                action = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
+                        .RestrictBuilder().setRestrict(new RestrictBuilder().build()).build();
             } else if (intentAction.equalsIgnoreCase(NicProvider.ACTION_REDIRECT)) {
                 Redirect actionRedirect = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action
                         .RedirectBuilder().setRedirect(new RedirectBuilder().setServiceName(serviceName).build()).build();

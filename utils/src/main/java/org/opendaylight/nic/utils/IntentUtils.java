@@ -9,6 +9,9 @@ package org.opendaylight.nic.utils;
 
 import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentsLimiter;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Subjects;
@@ -18,6 +21,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.sub
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroupSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointSelector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yangtools.yang.binding.DataObject;
+import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +51,9 @@ public class IntentUtils {
     private static final String INVALID_SUBJECT_MESSAGE = "Subject is not specified for Intent ID: ";
     private static final String NO_END_POINT_FOUND_MESSAGE = "No EndPoint found for Intent ID: ";
     private static final String END_POINT_NULL_MESSAGE = "EndPoint does not exist in EndPointGroups.";
+
+    public static final InstanceIdentifier<Intents> INTENTS_IID = InstanceIdentifier.builder(Intents.class).build();
+    public static final InstanceIdentifier<IntentsLimiter> INTENTS_LIMITER_IDD = InstanceIdentifier.builder(IntentsLimiter.class).build();
 
     private IntentUtils() {
     }

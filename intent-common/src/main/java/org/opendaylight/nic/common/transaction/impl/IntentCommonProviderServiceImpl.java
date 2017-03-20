@@ -1,34 +1,35 @@
 /*
- * Copyright (c) 2016 Yrineu Rodrigues and others. All rights reserved.
+ * Copyright (c) 2017 Serro LCC. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.transaction.impl;
 
-import org.opendaylight.nic.transaction.TransactionResult;
-import org.opendaylight.nic.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.transaction.api.IntentTransactionListener;
-import org.opendaylight.nic.transaction.api.IntentTransactionNotifier;
-import org.opendaylight.nic.transaction.api.IntentTransactionRegistryService;
-import org.opendaylight.nic.transaction.api.IntentTransactionResultListener;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+package org.opendaylight.nic.common.transaction.impl;
+
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.common.transaction.TransactionResult;
+import org.opendaylight.nic.common.transaction.api.*;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
-/**
- * Created by yrineu on 30/06/16.
- */
 public class IntentCommonProviderServiceImpl implements IntentCommonProviderService {
 
     final IntentTransactionRegistryService registryService;
     final IntentTransactionNotifier notifierService;
+    final DataBroker dataBroker;
+    final OFRendererFlowService ofRendererFlowService;
     protected BundleContext context;
 
-    public IntentCommonProviderServiceImpl() {
+    public IntentCommonProviderServiceImpl(final DataBroker dataBroker,
+                                           final OFRendererFlowService ofRendererFlowService) {
         registryService = new IntentTransactionRegisterImpl();
         notifierService = new IntentTransactionNotifierImpl(registryService);
+        this.dataBroker = dataBroker;
+        this.ofRendererFlowService = ofRendererFlowService;
     }
 
     @Override
@@ -48,12 +49,12 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
     }
 
     @Override
-    public void notifyResults(Uuid intentId, TransactionResult result) {
+    public void notifyResults(String intentId, TransactionResult result) {
         notifierService.notifyResults(intentId, result);
     }
 
     @Override
-    public void notifyExecutors(Uuid intentId) {
+    public void notifyExecutors(String intentId) {
         notifierService.notifyExecutors(intentId);
     }
 
@@ -65,6 +66,11 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
     @Override
     public void unregisterForResults(IntentTransactionResultListener resultListener) {
         registryService.unregisterForResults(resultListener);
+    }
+
+    @Override
+    public IntentCommonService retrieveCommonServiceInstance() {
+        return new IntentCommonServiceImpl(dataBroker, ofRendererFlowService);
     }
 
     @Override

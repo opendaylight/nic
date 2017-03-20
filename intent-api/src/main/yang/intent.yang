@@ -124,6 +124,12 @@ module intent {
                         uses actions:log;
                     }
                 }
+
+                case restrict {
+                    container restrict {
+                        uses actions:restrict;
+                    }
+                }
             }
 
             description "List of action references to apply to the connections between
