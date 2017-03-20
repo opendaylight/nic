@@ -1,7 +1,7 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.common.rev160530;
 
-import org.opendaylight.nic.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.transaction.impl.IntentCommonProviderServiceImpl;
+import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
+import org.opendaylight.nic.common.transaction.impl.IntentCommonProviderServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +22,10 @@ public class IntentCommonProviderModule extends org.opendaylight.yang.gen.v1.urn
 
     @Override
     public java.lang.AutoCloseable createInstance() {
-        LOG.info("Starting Intent-Common module.");
-        final IntentCommonProviderService commonProvider = new IntentCommonProviderServiceImpl();
+        LOG.info("\nStarting Intent-Common module.");
+        final IntentCommonProviderService commonProvider = new IntentCommonProviderServiceImpl(getDataBrokerDependency());
         commonProvider.start();
+
         return commonProvider;
     }
 

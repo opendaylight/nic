@@ -17,9 +17,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>intent-api</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.opendaylight.mdsal.model</groupId>
+            <artifactId>ietf-yang-types-20130715</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller.model</groupId>
+            <artifactId>model-inventory</artifactId>
+            <version>1.5.0-SNAPSHOT</version>
         </dependency>
         <!-- Testing Dependencies -->
         <dependency>
@@ -41,6 +45,17 @@
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- Intent dependencies -->
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>intent-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>utils</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
