@@ -1,0 +1,29 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module meterid-queue-types {
+    namespace "urn:opendaylight:nic:renderer:api:meterid:queue:types";
+    prefix "meter-id-queue-types";
+
+    revision 2017-03-16 {
+        description "Initial revision.";
+    }
+
+    leaf switch-type {
+        type enumeration {
+            enum "PICA8" {
+                value "256";
+                description "Represents the number of meters available for Pica8 switches.";
+            }
+        }
+    }
+
+    typedef meterid-object {
+        type uint8;
+        description "Defines the meter ID to be used.";
+    }
+}
