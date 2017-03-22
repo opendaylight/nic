@@ -27,6 +27,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <openflowplugin.version>0.5.0-SNAPSHOT</openflowplugin.version>
     <sfc.version>0.6.0-SNAPSHOT</sfc.version>
     <jung2.version>2.0.1</jung2.version>
+    <genius.version>0.3.0-SNAPSHOT</genius.version>
   </properties>
 
   <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
@@ -64,6 +65,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <groupId>org.opendaylight.sfc</groupId>
     <artifactId>odl-sfc-provider</artifactId>
     <version>${sfc.version}</version>
+    <type>xml</type>
+    <classifier>features</classifier>
+  </dependency>
+  <dependency>
+    <groupId>org.opendaylight.genius</groupId>
+    <artifactId>odl-genius-api</artifactId>
+    <version>${genius.version}</version>
     <type>xml</type>
     <classifier>features</classifier>
   </dependency>

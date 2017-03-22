@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Hewlett Packard Enterprise Development LP.  All rights reserved.
+ * Copyright (c) 2015 Hewlett Packard Enterprise Development LP, Serro LCC and others.  All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
@@ -7,21 +7,22 @@
  */
 package org.opendaylight.nic.impl;
 
+import com.google.common.util.concurrent.CheckedFuture;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.engine.StateMachine;
+import org.opendaylight.nic.engine.utils.StateMachineUtils;
 import org.opendaylight.nic.utils.EventType;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransaction;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransactionBuilder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
-//TODO: In the future, this class must use the MD-SAL to execute transactions
 public class IntentStateMachineExecutor implements IntentStateMachineExecutorService {
     private static final Logger LOG = LoggerFactory.getLogger(IntentStateMachineExecutor.class);
 
@@ -41,20 +42,44 @@ public class IntentStateMachineExecutor implements IntentStateMachineExecutorSer
     }
 
     @Override
-    public void createTransaction(Intent intent, EventType receivedEvent) {
-        //TODO: Create transaction on MD-SAL
+    public synchronized CheckedFuture<Void, TransactionCommitFailedException> createTransaction(
+            final String intentId,
+            final EventType receivedEvent) {
+        final IntentStateTransaction transaction = new IntentStateTransactionBuilder()
+                .setIntentId(intentId)
+                .setDeployAttempts(StateMachineUtils.MAX_ATTEMPTS)
+                .setUndeployAttempts(StateMachineUtils.MAX_ATTEMPTS)
+                .setCurrentState(StateMachineUtils.INITIAL_STATE)
+                .setReceivedEvent(receivedEvent.toString()).build();
+        final StateMachine engineService =
+                new StateMachineEngineImpl(new TransactionHandlerServiceImpl(dataBroker));
+        final CheckedFuture<Void, TransactionCommitFailedException> checkedFuture = engineService.pushTransaction(transaction);
+        return checkedFuture;
     }
 
     @Override
-    public void removeTransactions(Uuid intentId, EventType receivedEvent) {
-        //TODO: Use the queue on MD-SAL to remove ready transactions
-        //tagged with this intentId
+    public synchronized CheckedFuture<Void, TransactionCommitFailedException> goToNextTransaction(String intentId, EventType eventType){
+        final StateMachine engineService = getEngineService();
+        final IntentStateTransaction transaction = engineService.retrieveTransaction(intentId);
+        final IntentStateTransaction newTransaction =
+                StateMachineUtils.buildNewTransactionBy(transaction, Intent.State.valueOf(transaction.getCurrentState()), eventType);
+        return engineService.execute(newTransaction);
     }
 
     @Override
-    public List<Intent> getUndeployedIntents(IpAddress ipAddress) {
-        //TODO: Return all Undeployed Intents from the queue that does match with this IPAddress
-        return null;
+    public synchronized void removeTransactions(String intentId, EventType receivedEvent) {
+        final StateMachine engineService = getEngineService();
+        final IntentStateTransaction transaction = engineService.retrieveTransaction(intentId);
+        engineService.execute(new IntentStateTransactionBuilder(transaction).setReceivedEvent(receivedEvent.name()).build());
+    }
+
+    @Override
+    public synchronized boolean canEvaluateAttempt(String id, EventType eventType) {
+        return getEngineService().canExecute(id, eventType);
+    }
+
+    private StateMachine getEngineService() {
+        return new StateMachineEngineImpl(new TransactionHandlerServiceImpl(dataBroker));
     }
 
     @Override

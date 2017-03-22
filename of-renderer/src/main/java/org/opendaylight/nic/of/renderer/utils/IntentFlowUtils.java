@@ -13,6 +13,7 @@ import org.opendaylight.nic.of.renderer.impl.OFRendererConstants;
 import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
 import org.opendaylight.nic.of.renderer.model.PortFlow;
 import org.opendaylight.nic.utils.FlowAction;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv6Prefix;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.PortNumber;
@@ -56,6 +57,14 @@ public class IntentFlowUtils {
         }
     }
 
+    public static void isValidIpv4Address(final String ipAddress) {
+        try {
+            new Ipv4Address(ipAddress);
+        } catch (IllegalArgumentException iae) {
+            throw new InvalidIntentParameterException(iae.getMessage());
+        }
+    }
+
     public static MacAddress extractSrcMacAddress(final List<String> endPointGroups) {
         final String srcMacAddress = extractEndPoint(endPointGroups, OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
         isValidMacAddress(srcMacAddress);
@@ -66,6 +75,18 @@ public class IntentFlowUtils {
         final String dstMacAddress = extractEndPoint(endPointGroups, OFRendererConstants.DST_END_POINT_GROUP_INDEX);
         isValidMacAddress(dstMacAddress);
         return new MacAddress(dstMacAddress);
+    }
+
+    public static Ipv4Address extractSrcIpAddress(final List<String> endPointGroups) {
+        final String srcIpv4Address = extractEndPoint(endPointGroups, OFRendererConstants.SRC_END_POINT_GROUP_INDEX);
+        isValidIpv4Address(srcIpv4Address);
+        return new Ipv4Address(srcIpv4Address);
+    }
+
+    public static Ipv4Address extractDstIpAddress(final List<String> endPointGroups) {
+        final String dstIpv4Address = extractEndPoint(endPointGroups, OFRendererConstants.DST_END_POINT_GROUP_INDEX);
+        isValidIpv4Address(dstIpv4Address);
+        return new Ipv4Address(dstIpv4Address);
     }
 
     private static String extractEndPoint(final List<String> endPointGroups, int endPointIndex) {

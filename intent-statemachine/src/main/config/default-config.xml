@@ -27,8 +27,4 @@
             </modules>
         </data>
     </configuration>
-
-    <required-capabilities>
-           <capability>urn:opendaylight:nic:listeners?module=intent-listeners&amp;revision=2015-09-16</capability>
-    </required-capabilities>
 </snapshot>
