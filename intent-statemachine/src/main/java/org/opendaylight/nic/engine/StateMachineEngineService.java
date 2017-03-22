@@ -10,6 +10,9 @@ package org.opendaylight.nic.engine;
 
 import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransaction;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Service to handle state changes
@@ -17,14 +20,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 public interface StateMachineEngineService {
 
     /**
-     * Execute State Machine
-     * @param state
-     * @param eventType
+     * Verify if can execute action based on remaining attempts
+     * @param id the Intent ID as {@link String}
+     * @param eventType the {@link EventType}
+     * @return a {@link Boolean} value
      */
-    void execute(Intent.State state, EventType eventType);
-    /**
-     * Change current state to a given state
-     * @param currentState
-     */
-    void changeState(Intent.State currentState);
+    boolean canExecute(String id, EventType eventType);
 }

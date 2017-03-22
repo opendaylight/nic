@@ -106,6 +106,18 @@ module dataflow {
             mandatory true;
             description "Represents the uniquely meter ID for each Dataflow.";
         }
+
+        leaf creation-time {
+            type string;
+            mandatory true;
+            description "Defines the creation time in miliseconds for each Dataflow.";
+        }
+
+        leaf is-refreshable {
+            type boolean;
+            mandatory true;
+            description "Defines if this Dataflow contains delay configs to refresh network configurations in a given interval time.";
+        }
     }
 
     container dataflows {

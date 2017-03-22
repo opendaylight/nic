@@ -8,12 +8,8 @@
 package org.opendaylight.nic.engine.service;
 
 /**
- * Service to handle failures on Intent deploy
+ * Service to handle failures at Intent deployment process
  */
 public interface DeployFailedService extends EngineService {
 
-    /**
-     * Cancel attempts to change to the Deployed state
-     */
-    void cancelRetry();
 }

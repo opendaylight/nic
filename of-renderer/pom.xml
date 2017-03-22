@@ -22,6 +22,7 @@
         <pitest.version>1.1.4</pitest.version>
         <liblldp.version>0.13.0-SNAPSHOT</liblldp.version>
         <sfc.version>0.6.0-SNAPSHOT</sfc.version>
+        <genius.version>0.3.0-SNAPSHOT</genius.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->
@@ -114,6 +115,28 @@
             <groupId>org.opendaylight.sfc</groupId>
             <artifactId>sfc-provider</artifactId>
             <version>${sfc.version}</version>
+        </dependency>
+        <!-- Genius dependencies -->
+        <dependency>
+            <groupId>org.opendaylight.genius</groupId>
+            <artifactId>mdsalutil-api</artifactId>
+            <version>${genius.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.genius</groupId>
+            <artifactId>idmanager-api</artifactId>
+            <version>${genius.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.genius</groupId>
+            <artifactId>interfacemanager-api</artifactId>
+            <version>${genius.version}</version>
+        </dependency>
+        <!-- NIC Dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>renderer-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
