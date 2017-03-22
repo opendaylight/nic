@@ -1,0 +1,111 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module intent-limiter {
+    namespace "urn:opendaylight:intent:limiter";
+    prefix "intent-limiter";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import ietf-yang-types { prefix "yang"; }
+    import ietf-inet-types { prefix "inet"; }
+
+    revision 2017-03-09 {
+        description "Initial revision.";
+    }
+
+    revision 2017-03-10 {
+            description "Second revision.";
+        }
+
+    grouping intent-limiter {
+        description "An intent limiter specifies a rate-limiter for a given node during a given
+        time and interval.";
+
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifies the intent. ie: UUID";
+        }
+
+        leaf source-ip {
+            type inet:ipv4-prefix;
+            mandatory true;
+            description "Represents the IP Address of the node where the rate limiter will be applied.";
+        }
+
+        leaf action {
+            type enumeration {
+                enum "DROP";
+            }
+            mandatory true;
+            description "Represents the action that should be taken by OpenFlow meters. ie: drop";
+        }
+
+        leaf duration {
+            type uint8;
+            mandatory true;
+            description "Represents the duration of the OpenFlow rule. ie: 10-minutes";
+        }
+
+        leaf interval {
+            type uint8;
+            mandatory true;
+            description "Represents the interval that the OpenFlow rule should be applied. ie: 6-hours";
+        }
+
+        leaf duration-type {
+            type timing-type;
+            mandatory true;
+            description "Represents the time granularity for duration. ie: HOURS; MINUTES or SECONDS.";
+        }
+
+        leaf interval-type {
+            type timing-type;
+            mandatory true;
+            description "Represents the interval granularity for interval.";
+        }
+
+        leaf bandwidth-limit {
+            type uint32;
+            mandatory true;
+            description "Represents the bandwidth limit to be applied.";
+        }
+
+        leaf bandwidth-limit-type {
+            type bandwidth-cap;
+            mandatory true;
+            description "Represents the Bandwidth limit that will be used by the rate-limiter.";
+        }
+
+        typedef bandwidth-cap {
+            type enumeration {
+                enum "KBPS";
+                enum "MBPS";
+                enum "GBPS";
+            }
+        }
+
+        typedef timing-type {
+            type enumeration {
+                enum "HOURS";
+                enum "MINUTES";
+                enum "SECONDS";
+                enum "DAYS";
+                enum "WEEKS";
+                enum "MONTHS";
+                enum "YEARS";
+            }
+        }
+    }
+
+    container intents-limiter {
+        list intent-limiter {
+            key "id";
+            uses intent-limiter;
+        }
+    }
+}

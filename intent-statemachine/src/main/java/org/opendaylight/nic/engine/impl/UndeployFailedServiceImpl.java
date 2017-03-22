@@ -7,23 +7,30 @@
  */
 package org.opendaylight.nic.engine.impl;
 
-import org.opendaylight.nic.engine.StateMachineEngineService;
+import com.google.common.util.concurrent.CheckedFuture;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.nic.engine.StateMachine;
 import org.opendaylight.nic.engine.service.UndeployFailedService;
+import org.opendaylight.nic.engine.utils.StateMachineUtils;
 import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intent.State.*;
 
 public class UndeployFailedServiceImpl implements UndeployFailedService {
+    private static final Logger LOG = LoggerFactory.getLogger(UndeployFailedServiceImpl.class);
 
-    private static StateMachineEngineService engineService;
+    private static StateMachine engineService;
     private static UndeployFailedService undeployFailedService;
-    private int retries = 0;
-    private final int MAX_RETRY = 5;
 
-    private UndeployFailedServiceImpl(StateMachineEngineService engineService) {
+    private UndeployFailedServiceImpl(final StateMachine engineService) {
         this.engineService = engineService;
     }
 
-    public static UndeployFailedService getInstance(StateMachineEngineService engineService) {
+    public static UndeployFailedService getInstance(StateMachine engineService) {
         if(undeployFailedService == null) {
             undeployFailedService = new UndeployFailedServiceImpl(engineService);
         }
@@ -31,27 +38,34 @@ public class UndeployFailedServiceImpl implements UndeployFailedService {
     }
 
     @Override
-    public void execute(EventType eventType) {
-        if(retries < MAX_RETRY) {
-            retries++;
-            engineService.changeState(Intent.State.UNDEPLOYING);
-        } else {
-            cancelRetry();
+    public CheckedFuture<Void, TransactionCommitFailedException> execute(final EventType eventType,
+                                                                         final IntentStateTransaction transaction) {
+        StateMachineUtils.waitTransactionFinish();
+        final IntentStateTransaction transactionVerified;
+        final Intent.State newState = getNextState(eventType);
+        transactionVerified = StateMachineUtils.buildNewTransactionBy(transaction,
+                newState,
+                eventType);
+        return engineService.changeTransactionState(transactionVerified);
+    }
+
+    private Intent.State getNextState(final EventType eventType) {
+        Intent.State result;
+
+        switch (eventType) {
+            case INTENT_REMOVE_ATTEMPT:
+                result = UNDEPLOYING;
+                break;
+            case INTENT_BEING_DISABLED:
+                result = DISABLING;
+                break;
+            case INTENT_REMOVE_RETRY_WITH_MAX_ATTEMPTS:
+                result = UNDEPLOYFAILED;
+                break;
+            default:
+                result = DISABLING;
+                break;
         }
-    }
-
-    @Override
-    public void onSuccess() {
-        //DO NOTHING
-    }
-
-    @Override
-    public void onError(String message) {
-        //DO NOTHING
-    }
-
-    @Override
-    public void cancelRetry() {
-        engineService.changeState(Intent.State.DISABLING);
+        return result;
     }
 }

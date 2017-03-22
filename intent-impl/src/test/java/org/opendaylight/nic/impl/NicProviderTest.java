@@ -25,6 +25,7 @@ import org.junit.runner.RunWith;
 import org.junit.Test;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
+import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.yangtools.yang.binding.KeyedInstanceIdentifier;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -164,7 +165,7 @@ public class NicProviderTest {
         verify(mockDataBroker, times(1)).newWriteOnlyTransaction();
         verify(mockWriteTransaction, times(1)).put(
                 eq(LogicalDatastoreType.OPERATIONAL),
-                eq(NicProvider.INTENTS_IID), isA(Intents.class));
+                eq(IntentUtils.INTENTS_IID), isA(Intents.class));
         verify(mockWriteTransaction, times(1)).submit();
         verify(mockListenableFuture, times(1)).addListener(isA(Runnable.class), isA(Executor.class));
     }
@@ -183,7 +184,7 @@ public class NicProviderTest {
         verify(mockDataBroker, times(3)).newWriteOnlyTransaction();
         verify(mockWriteTransaction, times(2)).put(
             eq(LogicalDatastoreType.CONFIGURATION),
-            eq(NicProvider.INTENTS_IID), isA(Intents.class));
+            eq(IntentUtils.INTENTS_IID), isA(Intents.class));
         verify(mockWriteTransaction, times(1)).delete(
             eq(LogicalDatastoreType.CONFIGURATION),
             isA(KeyedInstanceIdentifier.class));
@@ -207,7 +208,7 @@ public class NicProviderTest {
         verify(mockDataBroker, times(1)).newWriteOnlyTransaction();
         verify(mockWriteTransaction, times(1)).put(
                 eq(LogicalDatastoreType.CONFIGURATION),
-                eq(NicProvider.INTENTS_IID), isA(Intents.class));
+                eq(IntentUtils.INTENTS_IID), isA(Intents.class));
         verify(mockWriteTransaction, times(1)).submit();
         /**
          * Here verifying addIntent() should return false if unable to add given
@@ -216,14 +217,14 @@ public class NicProviderTest {
          */
         doThrow(new RuntimeException()).when(mockWriteTransaction).put(
                 eq(LogicalDatastoreType.CONFIGURATION),
-                eq(NicProvider.INTENTS_IID), isA(Intents.class));
+                eq(IntentUtils.INTENTS_IID), isA(Intents.class));
         expectedResult = false;
         actualResult = nicProvider.addIntent(mockIntent);
         assertEquals(expectedResult, actualResult);
         verify(mockDataBroker, times(2)).newWriteOnlyTransaction();
         verify(mockWriteTransaction, times(2)).put(
                 eq(LogicalDatastoreType.CONFIGURATION),
-                eq(NicProvider.INTENTS_IID), isA(Intents.class));
+                eq(IntentUtils.INTENTS_IID), isA(Intents.class));
         verify(mockWriteTransaction, times(1)).submit();
     }
 
@@ -284,7 +285,7 @@ public class NicProviderTest {
         when(mockOptional.get()).thenReturn(mockIntents);
         when(mockCheckedFuture.checkedGet()).thenReturn(mockOptional);
         when(mockReadOnlyTransaction.read(LogicalDatastoreType.CONFIGURATION,
-                NicProvider.INTENTS_IID)).thenReturn(mockCheckedFuture);
+                IntentUtils.INTENTS_IID)).thenReturn(mockCheckedFuture);
         Intents mockIntentsTwo = mock(Intents.class);
         Optional mockOptionalTwo = mock(Optional.class);
         CheckedFuture mockCheckedFutureTwo = mock(CheckedFuture.class);
@@ -293,7 +294,7 @@ public class NicProviderTest {
         when(mockOptionalTwo.get()).thenReturn(mockIntentsTwo);
         when(mockCheckedFutureTwo.checkedGet()).thenReturn(mockOptionalTwo);
         when(mockReadOnlyTransaction.read(LogicalDatastoreType.OPERATIONAL,
-                NicProvider.INTENTS_IID)).thenReturn(mockCheckedFutureTwo);
+                IntentUtils.INTENTS_IID)).thenReturn(mockCheckedFutureTwo);
         /**
          * Here verifying listIntents() should return list of Intents from
          * configuration data store if isConfigurationDatastore is true.
@@ -302,7 +303,7 @@ public class NicProviderTest {
         assertEquals(mockListOfIntentsForConfiguration, actualListOfIntents);
         verify(mockDataBroker, times(1)).newReadOnlyTransaction();
         verify(mockReadOnlyTransaction, times(1)).read(
-                LogicalDatastoreType.CONFIGURATION, NicProvider.INTENTS_IID);
+                LogicalDatastoreType.CONFIGURATION, IntentUtils.INTENTS_IID);
         verify(mockCheckedFuture, times(1)).checkedGet();
         verify(mockOptional, times(1)).isPresent();
         verify(mockOptional, times(1)).get();
@@ -315,7 +316,7 @@ public class NicProviderTest {
         assertEquals(mockListOfIntentsForOperational, actualListOfIntents);
         verify(mockDataBroker, times(2)).newReadOnlyTransaction();
         verify(mockReadOnlyTransaction, times(1)).read(
-                LogicalDatastoreType.OPERATIONAL, NicProvider.INTENTS_IID);
+                LogicalDatastoreType.OPERATIONAL, IntentUtils.INTENTS_IID);
         verify(mockCheckedFutureTwo, times(1)).checkedGet();
         verify(mockOptionalTwo, times(1)).isPresent();
         verify(mockOptionalTwo, times(1)).get();
@@ -325,7 +326,7 @@ public class NicProviderTest {
          * raised when reading Intents from specific data store.
          */
         doThrow(new RuntimeException()).when(mockReadOnlyTransaction).read(
-                LogicalDatastoreType.CONFIGURATION, NicProvider.INTENTS_IID);
+                LogicalDatastoreType.CONFIGURATION, IntentUtils.INTENTS_IID);
         actualListOfIntents = nicProvider.listIntents(true);
         assertEquals(new ArrayList<>(), actualListOfIntents);
         assertTrue(actualListOfIntents.isEmpty());
@@ -348,7 +349,7 @@ public class NicProviderTest {
         when(mockCheckedFuture.checkedGet()).thenReturn(mockOptional);
         when(mockOptional.isPresent()).thenReturn(false);
         when(mockReadOnlyTransaction.read(LogicalDatastoreType.CONFIGURATION,
-                NicProvider.INTENTS_IID)).thenReturn(mockCheckedFuture);
+                IntentUtils.INTENTS_IID)).thenReturn(mockCheckedFuture);
         /**
          * Here verifying listIntents() should return list of Intents from
          * configuration data store if isConfigurationDatastore is true.
@@ -356,7 +357,7 @@ public class NicProviderTest {
         actualListOfIntents = nicProvider.listIntents(true);
         verify(mockDataBroker, times(1)).newReadOnlyTransaction();
         verify(mockReadOnlyTransaction, times(1)).read(
-                LogicalDatastoreType.CONFIGURATION, NicProvider.INTENTS_IID);
+                LogicalDatastoreType.CONFIGURATION, IntentUtils.INTENTS_IID);
         verify(mockCheckedFuture, times(1)).checkedGet();
         verify(mockOptional, times(1)).isPresent();
         assertTrue(actualListOfIntents.isEmpty());

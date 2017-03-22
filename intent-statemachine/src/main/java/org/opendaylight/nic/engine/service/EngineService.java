@@ -7,15 +7,21 @@
  */
 package org.opendaylight.nic.engine.service;
 
+import com.google.common.util.concurrent.CheckedFuture;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.utils.EventType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransaction;
 
 /**
  * Service to handle State Machine behaviors and events
  */
-public interface EngineService extends StateMachineRendererListener{
+public interface EngineService {
 
     /**
      * Starts State Machine execution
+     * @param eventType the {@link EventType}
+     * @param transaction the {@link IntentStateTransaction}
+     * @return {@link CheckedFuture}
      */
-    void execute(EventType eventType);
+    CheckedFuture<Void, TransactionCommitFailedException> execute(EventType eventType, IntentStateTransaction transaction);
 }

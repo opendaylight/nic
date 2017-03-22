@@ -74,7 +74,7 @@ public class IntentAddShellCommand extends OsgiCommandSupport {
 
     @Option(name = "-a",
             aliases = { "--actions" },
-            description = "Action to be performed.\n-a / --actions BLOCK/ALLOW/LOG",
+            description = "Action to be performed.\n-a / --actions BLOCK/ALLOW/LOG/RESTRICT",
             required = true,
             multiValued = true)
     List<String> actions = new ArrayList<String>(Arrays.asList(NicProvider.ACTION_BLOCK));

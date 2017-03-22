@@ -1,9 +1,16 @@
-module intent-transaction {
-    namespace "urn:opendaylight:nic:intent:transaction";
-    prefix "intent-transaction";
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LCC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module intent-state-transaction {
+    namespace "urn:opendaylight:nic:intent:state:transaction";
+    prefix "intent-state-transaction";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
-    import received-event { prefix event; revision-date 2015-12-02; }
+    import config { prefix config; revision-date 2013-04-05; }
+    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
 
     description
         "This module represents a transaction to represent Intent sate change based on events.";
@@ -12,30 +19,53 @@ module intent-transaction {
         description "Initial revision.";
     }
 
-    grouping intent-transaction {
+    identity intent-state-transaction {
+        base config:module-type;
+        config:java-name-prefix IntentStateTransactionProvider;
+    }
 
+    grouping intent-state-transaction {
         leaf intent-id {
-            type types:uuid;
+            type string;
             mandatory true;
             description "Intent identifier.";
         }
 
         leaf received-event {
-            type event:received-event;
+            type string;
             mandatory true;
             description "Wrapper for received Intent or Network event.";
         }
 
         leaf executing {
             type boolean;
-            mandatory true;
+            mandatory false;
             description "Defines if this transaction is executing.";
         }
 
-        leaf event-timestamp {
-            type uint32;
+        leaf current-state {
+            type string;
             mandatory true;
-            description "Defines the timestamp of the received event.";
+            description "Defines the current state of a given Intent.";
+        }
+
+        leaf deploy-attempts {
+            type uint8;
+            mandatory true;
+            description "Defines the quantity of deploy attempts.";
+        }
+
+        leaf undeploy-attempts {
+            type uint8;
+            mandatory true;
+            description "Defines the quantity of undeploy attempts.";
+        }
+    }
+
+    container intent-state-transactions {
+        list intent-state-transaction {
+            key "intent-id";
+            uses intent-state-transaction;
         }
     }
 }
