@@ -7,12 +7,9 @@
  */
 package org.opendaylight.nic.engine;
 
+import com.google.common.util.concurrent.CheckedFuture;
+import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.utils.EventType;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.IpAddress;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
-
-import java.util.List;
 
 /**
  * Service to handle State Machine transactions
@@ -26,22 +23,33 @@ public interface IntentStateMachineExecutorService extends AutoCloseable {
 
     /**
      * Create a new transaction for a given Intent based in a given event
-     * @param intent
-     * @param receivedEvent Event received by event-listener
+     * @param intentId the Intent ID as {@link String}
+     * @param receivedEvent the received event as {@link EventType}
+     * @return {@link CheckedFuture}
      */
-    void createTransaction(Intent intent, EventType receivedEvent);
+    CheckedFuture<Void, TransactionCommitFailedException> createTransaction(String intentId, EventType receivedEvent);
+
+    /**
+     * Send Intent to the next transaction. Usually this method is called when try to
+     * evaluate an renderer action.
+     * @param intentId the IntentID as {@link String}
+     * @param eventType the {@link EventType}
+     * @return {@link CheckedFuture}
+     */
+    CheckedFuture<Void, TransactionCommitFailedException> goToNextTransaction(String intentId, EventType eventType);
 
     /**
      * Remove a transaction for a given Intent
-     * @param intentId
-     * @param receivedEvent
+     * @param intentId the Intent ID as {@link String}
+     * @param receivedEvent the {@link EventType}
      */
-    void removeTransactions(Uuid intentId, EventType receivedEvent);
+    void removeTransactions(String intentId, EventType receivedEvent);
 
     /**
-     * Retrieve all undeployed Intents for a given IpAddress
-     * @param ipAddress
-     * @return
+     * Verify if a give Transaction still have Deploy or Undeploy attempts
+     * @param id the Intent ID as {@link String}
+     * @param eventType the {@link EventType}
+     * @return a {@link Boolean} value
      */
-    List<Intent> getUndeployedIntents(IpAddress ipAddress);
+    boolean canEvaluateAttempt(String id, EventType eventType);
 }

@@ -26,11 +26,6 @@
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
-            <artifactId>intent-listeners</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>

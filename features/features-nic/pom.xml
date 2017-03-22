@@ -36,6 +36,7 @@
         <neutron.version>0.9.0-SNAPSHOT</neutron.version>
         <odl.ovsdb.version>1.5.0-SNAPSHOT</odl.ovsdb.version>
         <sfc.version>0.6.0-SNAPSHOT</sfc.version>
+        <genius.version>0.3.0-SNAPSHOT</genius.version>
     </properties>
 
     <dependencies>
@@ -95,6 +96,14 @@
             <groupId>org.opendaylight.openflowplugin</groupId>
             <artifactId>features-openflowplugin</artifactId>
             <version>${openflowplugin.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+        <!-- Genius dependencies -->
+        <dependency>
+            <groupId>org.opendaylight.genius</groupId>
+            <artifactId>genius-features</artifactId>
+            <version>${genius.version}</version>
             <classifier>features</classifier>
             <type>xml</type>
         </dependency>

@@ -27,14 +27,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 <dependencies>
   <dependency>
     <groupId>${project.groupId}</groupId>
-    <artifactId>odl-nic-listeners</artifactId>
+    <artifactId>odl-nic-core-mdsal</artifactId>
     <version>${project.version}</version>
     <type>xml</type>
     <classifier>features</classifier>
   </dependency>
   <dependency>
-    <groupId>org.opendaylight.nic</groupId>
-    <artifactId>intent-impl</artifactId>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>intent-statemachine</artifactId>
     <version>${project.version}</version>
   </dependency>
 </dependencies>

@@ -47,8 +47,8 @@ module intent {
                         enum "UNDEPLOYING";
                         enum "DEPLOYING";
                         enum "DEPLOYED";
-                        enum "DEPLOY_FAILED";
-                        enum "UNDEPLOY_FAILED";
+                        enum "DEPLOYFAILED";
+                        enum "UNDEPLOYFAILED";
                         enum "DISABLING";
                         enum "DISABLED";
                     }

@@ -71,6 +71,7 @@
         <module>pipeline-manager</module>
         <module>mapped-objects-model</module>
         <module>bgp-renderer</module>
+        <module>renderer-api</module>
     </modules>
 
     <build>
