@@ -26,6 +26,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
@@ -37,7 +38,6 @@ import org.opendaylight.nic.of.renderer.strategy.QoSExecutor;
 import org.opendaylight.nic.of.renderer.strategy.RedirectExecutor;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
-import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Actions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
@@ -154,6 +154,12 @@ public class OFRendererFlowManagerProviderTest {
     @Mock
     private Bundle bundle;
 
+    @Mock
+    private OFRuleWithMeterManager ofRuleWithMeterManagerMock;
+
+    @Mock
+    private WriteTransaction writeTransactionMock;
+
     private OFRendererFlowManagerProvider ofRendererFlowManagerProvider;
 
     private final String DEFAULT_STR_UUID = UUID.randomUUID().toString();
@@ -163,6 +169,8 @@ public class OFRendererFlowManagerProviderTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+
+        when(dataBroker.newWriteOnlyTransaction()).thenReturn(writeTransactionMock);
 
         when(bundle.getBundleContext()).thenReturn(bundleContext);
 

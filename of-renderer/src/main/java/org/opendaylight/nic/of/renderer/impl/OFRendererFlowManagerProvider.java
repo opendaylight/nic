@@ -8,27 +8,34 @@
 package org.opendaylight.nic.of.renderer.impl;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.Observer;
 import org.opendaylight.nic.of.renderer.api.Subject;
-import org.opendaylight.nic.of.renderer.strategy.ActionStrategy;
-import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
-import org.opendaylight.nic.of.renderer.strategy.MPLSExecutor;
-import org.opendaylight.nic.of.renderer.strategy.QoSExecutor;
-import org.opendaylight.nic.of.renderer.strategy.RedirectExecutor;
+import org.opendaylight.nic.of.renderer.strategy.*;
+import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
+import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.DataflowBuilder;
 import org.opendaylight.yangtools.concepts.Registration;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -36,12 +43,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by saket on 8/19/15.
@@ -61,7 +63,9 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private QosConstraintManager qosConstraintManager;
     private Registration pktInRegistration;
     private RedirectFlowManager redirectFlowManager;
+    private OFRuleWithMeterManager ofRuleWithMeterManager;
     private Subject topic;
+    private MdsalUtils mdsalUtils;
 
     private NotificationProviderService notificationProviderService;
 
@@ -91,17 +95,20 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
         this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager, graphService);
         this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
+        this.ofRuleWithMeterManager = new OFRuleWithMeterManager(dataBroker);
+        this.mdsalUtils = new MdsalUtils(dataBroker);
     }
 
     @Override
     public void pushIntentFlow(final Intent intent, final FlowAction flowAction) {
         // TODO: Extend to support other actions
-        LOG.info("Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
+        LOG.info("\n### Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
 
         // Creates QoS configuration and stores profile in the Data Store.
         if (intent.getQosConfig() != null) {
             return;
         }
+
         //TODO: Change to use Command Pattern
         try {
             ActionStrategy actionStrategy = null;
@@ -121,7 +128,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
             actionStrategy.execute(intent, flowAction);
         } catch (IntentInvalidException ie) {
-            //TODO: Implement an action for Exception cases
+//            TODO: Implement an action for Exception cases
         }
     }
 
@@ -188,6 +195,62 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     @Override
     public void pushLLDPFlow(final NodeId nodeId, final FlowAction flowAction) {
         lldpFlowManager.pushFlow(nodeId, flowAction);
+    }
+
+    @Override
+    public Map<Boolean, Dataflow> pushDataFlow(Dataflow dataFlow) {
+        Map<Boolean, Dataflow> result = new HashMap<>();
+        if(dataFlow.isIsFlowMeter()) {
+            switch (dataFlow.getRendererAction()) {
+                case ADD:
+                    result = sendDataflow(dataFlow);
+                    break;
+                case REMOVE:
+                    result = removeDataflow(dataFlow);
+                    break;
+            }
+        }
+        return result;
+    }
+
+    private Map<Boolean, Dataflow> sendDataflow(final Dataflow dataflow) {
+        boolean result = false;
+        final MeterId meterId = ofRuleWithMeterManager.createMeter(dataflow);
+        final FlowBuilder flowBuilder = ofRuleWithMeterManager.createFlow(dataflow, meterId);
+        final Map<Node, List<NodeConnector>> nodeMap = TopologyUtils.getNodes(dataBroker);
+        for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
+            result = ofRuleWithMeterManager.sendToMdsal(flowBuilder, entry.getKey().getId());
+        }
+        final HashMap<Boolean, Dataflow> toReturn = new HashMap<>();
+        final DataflowBuilder dataflowBuilder = new DataflowBuilder();
+        dataflowBuilder.fieldsFrom(dataflow);
+        dataflowBuilder.setMeterId(meterId.getValue().shortValue());
+        toReturn.put(result, dataflowBuilder.build());
+        return toReturn;
+    }
+
+    private Map<Boolean, Dataflow> removeDataflow(final Dataflow dataflow) {
+        boolean resultForOfRule = false;
+        boolean resultForMeter = false;
+        final MeterId meterId = ofRuleWithMeterManager.createMeter(dataflow);
+        final FlowBuilder flowBuilder = ofRuleWithMeterManager.createFlow(dataflow, meterId);
+        final Map<Node, List<NodeConnector>> nodeMap = TopologyUtils.getNodes(dataBroker);
+        for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
+            resultForOfRule = ofRuleWithMeterManager.removeFromMdsal(flowBuilder, entry.getKey().getId());
+        }
+        if (resultForOfRule) {
+            resultForMeter = ofRuleWithMeterManager.removeMeter(dataflow);
+        }
+        final HashMap<Boolean, Dataflow> toReturn = new HashMap<>();
+        toReturn.put((resultForMeter && resultForOfRule), dataflow);
+        return toReturn;
+    }
+
+    @Override
+    public void pushDataFlow(final NodeId nodeId, final Dataflow dataflow) {
+        final MeterId meterId = ofRuleWithMeterManager.createMeter(dataflow);
+        final FlowBuilder flowBuilder = ofRuleWithMeterManager.createFlow(dataflow, meterId);
+        ofRuleWithMeterManager.sendToMdsal(flowBuilder, nodeId);
     }
 
     /**
