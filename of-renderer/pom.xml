@@ -115,6 +115,12 @@
             <artifactId>sfc-provider</artifactId>
             <version>${sfc.version}</version>
         </dependency>
+        <!-- NIC Dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>renderer-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

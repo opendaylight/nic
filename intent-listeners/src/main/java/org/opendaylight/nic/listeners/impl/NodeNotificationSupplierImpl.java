@@ -57,7 +57,7 @@ public class NodeNotificationSupplierImpl extends
         //TODO: Create a builder for NodeUp notification
         NodeUp nodeUpNotif = new NodeUpImpl(flowCapableNodeUpdated.getIpAddress(),
                 IidFactory.getNodeId(ii));
-        LOG.info("NicNotification created for Node up: IP", nodeUpNotif.getIp());
+        LOG.info("\nNicNotification created for Node up: IP", nodeUpNotif.getIp());
         return nodeUpNotif;
     }
 
@@ -68,7 +68,7 @@ public class NodeNotificationSupplierImpl extends
         final NodeRemovedBuilder delNodeNotifBuilder = new NodeRemovedBuilder();
         delNodeNotifBuilder.setNodeRef(new NodeRef(path));
         NodeDeleted nodeDeleted = new NodeDeletedImpl(delNodeNotifBuilder.getNodeRef());
-        LOG.info("NicNotification created for Node deleted");
+        LOG.info("\nNicNotification created for Node deleted");
         return nodeDeleted;
     }
 
