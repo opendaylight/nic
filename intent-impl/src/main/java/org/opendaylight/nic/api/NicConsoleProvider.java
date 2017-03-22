@@ -10,6 +10,7 @@ package org.opendaylight.nic.api;
 
 import java.util.List;
 
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
@@ -17,6 +18,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
 public interface NicConsoleProvider extends AutoCloseable {
 
     boolean addIntent(Intent intent);
+
+    boolean addIntent(IntentLimiter intentLimiter);
 
     boolean addIntents(Intents intents);
 
