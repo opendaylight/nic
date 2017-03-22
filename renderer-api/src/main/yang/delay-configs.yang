@@ -1,0 +1,43 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module delay-config {
+    namespace "urn:opendaylight:nic:renderer:api:delay:config";
+    prefix "delay-config";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import ietf-yang-types { prefix "yang"; }
+    import ietf-inet-types { prefix "inet"; }
+
+    revision 2017-03-27 {
+        description "Second revision.";
+    }
+
+    grouping delay-config {
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifier, it's the same of Dataflow.";
+        }
+        leaf delay {
+            type uint32;
+        }
+
+        leaf time-unit {
+            type string;
+        }
+        description "Defines the delay timestamp to refresh network configurations.";
+    }
+
+    container delay-configs {
+        list delay-config {
+            key "id";
+            uses delay-config;
+        }
+    }
+}
+

@@ -56,7 +56,7 @@ public class NeutronIntegrationProviderImplTest {
     @Test
     public void testStart() {
         /**
-         * Verify start() should register Security group and Security rules
+         * Verify start() should registerForAction Security group and Security rules
          * listeners with the EventRegistryService.
          */
         provider.start();

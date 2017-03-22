@@ -70,6 +70,7 @@
         <module>distribution</module>
         <module>pipeline-manager</module>
         <module>mapped-objects-model</module>
+        <module>renderer-api</module>
     </modules>
 
     <build>

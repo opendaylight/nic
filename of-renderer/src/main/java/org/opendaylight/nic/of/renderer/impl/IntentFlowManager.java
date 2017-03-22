@@ -50,8 +50,6 @@ public class IntentFlowManager extends AbstractFlowManager {
     private FlowStatisticsListener flowStatisticsListener;
     private Intent intent;
     private String flowName = "";
-    private static AtomicInteger PRIORITY = new AtomicInteger(1);
-    private static AtomicInteger FLOW_ID_INC = new AtomicInteger();
     private static final int RADIX = 10;
 
     private static final String CONSTRAINTS_NOT_FOUND_EXCEPTION = "Constraints not found! ";

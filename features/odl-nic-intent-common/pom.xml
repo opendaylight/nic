@@ -33,6 +33,25 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <classifier>features</classifier>
   </dependency>
   <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>odl-nic-intent-statemachine</artifactId>
+    <version>${project.version}</version>
+    <type>xml</type>
+    <classifier>features</classifier>
+  </dependency>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>odl-nic-renderer-of</artifactId>
+    <version>${project.version}</version>
+    <type>xml</type>
+    <classifier>features</classifier>
+  </dependency>
+  <dependency>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>utils</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>intent-common</artifactId>
     <version>${project.version}</version>
