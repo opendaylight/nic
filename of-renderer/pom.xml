@@ -5,23 +5,23 @@
     <parent>
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>config-parent</artifactId>
-        <version>0.5.3-SNAPSHOT</version>
+        <version>0.5.4-SNAPSHOT</version>
         <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>of-renderer</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.4-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <properties>
         <jung2.version>2.0.1</jung2.version>
-        <openflowplugin.version>0.3.3-SNAPSHOT</openflowplugin.version>
-        <mdsal.version>1.4.3-SNAPSHOT</mdsal.version>
+        <openflowplugin.version>0.3.4-SNAPSHOT</openflowplugin.version>
+        <mdsal.version>1.4.4-SNAPSHOT</mdsal.version>
         <pitest.version>1.1.4</pitest.version>
-        <liblldp.version>0.11.3-SNAPSHOT</liblldp.version>
-        <sfc.version>0.3.3-SNAPSHOT</sfc.version>
+        <liblldp.version>0.11.4-SNAPSHOT</liblldp.version>
+        <sfc.version>0.3.4-SNAPSHOT</sfc.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->
