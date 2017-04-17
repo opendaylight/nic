@@ -20,84 +20,116 @@
  <version>1.3.0-SNAPSHOT</version>
  <packaging>pom</packaging>
 
+ <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+
  <prerequisites>
   <maven>3.1.1</maven>
  </prerequisites>
 
  <dependencyManagement>
   <dependencies>
+   <!--Karaf 4-->
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>intent-api</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>intent-impl</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>intent-cli</artifactId>
-    <version>${project.version}</version>
-   </dependency>
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>gbp-renderer</artifactId>
-    <version>${project.version}</version>
-   </dependency>
+   <!--<dependency>-->
+    <!--<groupId>${project.groupId}</groupId>-->
+    <!--<artifactId>intent-cli</artifactId>-->
+    <!--<classifier>features</classifier>-->
+    <!--<type>xml</type>-->
+    <!--<version>${project.version}</version>-->
+   <!--</dependency>-->
+   <!--<dependency>-->
+    <!--<groupId>${project.groupId}</groupId>-->
+    <!--<artifactId>gbp-renderer</artifactId>-->
+    <!--<classifier>features</classifier>-->
+    <!--<type>xml</type>-->
+    <!--<version>${project.version}</version>-->
+   <!--</dependency>-->
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>vtn-renderer</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>nemo-renderer</artifactId>
-    <version>${project.version}</version>
-   </dependency>
+   <!--<dependency>-->
+    <!--<groupId>${project.groupId}</groupId>-->
+    <!--<artifactId>nemo-renderer</artifactId>-->
+    <!--<classifier>features</classifier>-->
+    <!--<type>xml</type>-->
+    <!--<version>${project.version}</version>-->
+   <!--</dependency>-->
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>of-renderer</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>pipeline-manager</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>intent-listeners</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
   <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>intent-statemachine</artifactId>
+   <classifier>features</classifier>
+   <type>xml</type>
     <version>${project.version}</version>
   </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>neutron-integration</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>intent-mapping</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>intent-graph</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>mapped-objects-model</artifactId>
+    <classifier>features</classifier>
+    <type>xml</type>
     <version>${project.version}</version>
    </dependency>
+   <!--Karaf 3-->
    <dependency>
-    <groupId>org.opendaylight.nic</groupId>
+    <groupId>${project.groupId}</groupId>
     <artifactId>features-nic</artifactId>
     <classifier>features</classifier>
     <type>xml</type>

@@ -104,4 +104,17 @@
    <scope>test</scope>
   </dependency>
  </dependencies>
+
+ <build>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.aries.blueprint</groupId>
+    <artifactId>blueprint-maven-plugin</artifactId>
+   </plugin>
+   <plugin>
+    <groupId>org.eclipse.xtend</groupId>
+    <artifactId>xtend-maven-plugin</artifactId>
+   </plugin>
+  </plugins>
+ </build>
 </project>
