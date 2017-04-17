@@ -19,7 +19,7 @@
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
     <prerequisites>
-        <maven>3.1.1</maven>
+        <maven>3.2</maven>
     </prerequisites>
 
     <dependencyManagement>
@@ -63,13 +63,13 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-install-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<skip>true</skip>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

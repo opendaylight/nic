@@ -24,6 +24,19 @@
   <modules>
     <module>features-nic</module>
     <module>features4-nic</module>
+    <module>odl-nic-core-hazelcast</module>
+    <module>odl-nic-core-mdsal</module>
+    <module>odl-nic-console</module>
+    <module>odl-nic-renderer-vtn</module>
+    <module>odl-nic-renderer-gbp</module>
+    <module>odl-nic-renderer-of</module>
+    <module>odl-nic-renderer-nemo</module>
+    <module>odl-nic-pipeline-manager</module>
+    <module>odl-nic-listeners</module>
+    <module>odl-nic-neutron-integration</module>
+    <module>odl-nic-intent-statemachine</module>
+    <module>odl-nic-graph</module>
+    <module>odl-nic-intent-common</module>
   </modules>
 
   <scm>
@@ -32,5 +45,4 @@
     <tag>HEAD</tag>
     <url>https://git.opendaylight.org/gerrit/gitweb?p=nic.git;a=summary</url>
   </scm>
-
 </project>
