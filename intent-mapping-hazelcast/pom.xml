@@ -24,6 +24,7 @@
 
  <properties>
   <karaf.cellar.version>3.0.3</karaf.cellar.version>
+  <hazelcast.version>3.4.2</hazelcast.version>
  </properties>
 
  <dependencies>
@@ -57,7 +58,7 @@
   <dependency>
    <groupId>org.apache.karaf.cellar</groupId>
    <artifactId>org.apache.karaf.cellar.hazelcast</artifactId>
-   <version>${karaf.cellar.version}</version>
+   <version>3.0.3</version>
   </dependency>
  </dependencies>
 </project>
