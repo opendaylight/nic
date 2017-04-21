@@ -24,6 +24,7 @@
 
  <properties>
   <karaf.cellar.version>3.0.3</karaf.cellar.version>
+  <hazelcast.version>3.4.2</hazelcast.version>
  </properties>
 
  <dependencies>

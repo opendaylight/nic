@@ -23,24 +23,6 @@
     <repository>mvn:org.opendaylight.ovsdb/southbound-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.sfc/features-sfc/{{VERSION}}/xml/features</repository>
 
-    <!-- Core feature using Hazelcast backend engine -->
-    <feature name='odl-nic-core-hazelcast' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core using Hazelcast mapping service'>
-        <feature version="${mdsal.version}">odl-restconf</feature>
-        <feature version="${mdsal.version}">odl-mdsal-apidocs</feature>
-        <feature version="${mdsal.version}">odl-mdsal-broker</feature>
-        <feature version="${hazelcast.version}">hazelcast</feature>
-        <bundle>mvn:org.opendaylight.controller.model/model-inventory/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
-         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/87-intent-mapping-hazelcast.xml"> mvn:org.opendaylight.nic/intent-mapping-hazelcast/{{VERSION}}/xml/config</configfile>
-        <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config</configfile>
-    </feature>
-
     <!-- Core feature using MD-SAL backend engine -->
     <feature name='odl-nic-core-mdsal' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core using MD-SAL mapping service'>
         <feature version="${openflowplugin.version}">odl-openflowplugin-southbound</feature>
@@ -61,13 +43,15 @@
     </feature>
 
     <!-- CLI feature -->
-    <feature name='odl-nic-console' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: CLI'>
-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
-        <bundle>mvn:org.opendaylight.nic/intent-cli/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
-    </feature>
+    <!--<feature name='odl-nic-console' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: CLI'>-->
+        <!--<feature version="${project.version}">odl-nic-core-mdsal</feature>-->
+        <!--<bundle>mvn:org.opendaylight.nic/intent-cli/{{VERSION}}</bundle>-->
+        <!--<bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>-->
+        <!--<bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>-->
+        <!--<configfile finalname="etc/opendaylight/karaf/88-nic-console.xml">mvn:org.opendaylight.nic/intent-cli/{{VERSION}}/xml/config</configfile>-->
+    <!--</feature>-->
 
-    <!-- VTN Renderer -->
+    <!--&lt;!&ndash; VTN Renderer &ndash;&gt;-->
     <feature name='odl-nic-renderer-vtn' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: VTN Renderer'>
         <feature version="${project.version}">odl-nic-core-mdsal</feature>
         <feature version="${feature.vtn-manager.version}">odl-vtn-manager</feature>
@@ -76,12 +60,12 @@
     </feature>
 
     <!-- GBP Renderer -->
-    <feature name='odl-nic-renderer-gbp' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
-        <feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-base</feature>
-        <bundle>mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}/xml/config</configfile>
-    </feature>
+    <!--<feature name='odl-nic-renderer-gbp' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>-->
+        <!--<feature version="${project.version}">odl-nic-core-mdsal</feature>-->
+        <!--<feature version="${groupbasedpolicy.version}">odl-groupbasedpolicy-base</feature>-->
+        <!--<bundle>mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}</bundle>-->
+        <!--<configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}/xml/config</configfile>-->
+    <!--</feature>-->
 
     <!-- OF Renderer -->
     <feature name='odl-nic-renderer-of' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
@@ -97,13 +81,13 @@
     </feature>
 
     <!-- NEMO Renderer -->
-    <feature name='odl-nic-renderer-nemo' version='${project.version}'  description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>
-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
-        <feature version="${nemo.version}">odl-nemo-engine</feature>
-        <bundle>mvn:joda-time/joda-time/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}/xml/config</configfile>
-    </feature>
+    <!--<feature name='odl-nic-renderer-nemo' version='${project.version}'  description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>-->
+        <!--<feature version="${project.version}">odl-nic-core-mdsal</feature>-->
+        <!--<feature version="${nemo.version}">odl-nemo-engine</feature>-->
+        <!--<bundle>mvn:joda-time/joda-time/{{VERSION}}</bundle>-->
+        <!--<bundle>mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}</bundle>-->
+        <!--<configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}/xml/config</configfile>-->
+    <!--</feature>-->
 
     <!-- Pipeline Manager -->
     <feature name='odl-nic-pipeline-manager' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Pipeline Manager'>

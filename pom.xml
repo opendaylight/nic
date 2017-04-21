@@ -54,13 +54,13 @@
         <module>intent-impl</module>
         <module>utils</module>
         <module>intent-common</module>
-        <module>intent-cli</module>
+        <!--<module>intent-cli</module>-->
         <module>intent-compiler</module>
-        <module>intent-mapping-hazelcast</module>
+        <!--<module>intent-mapping-hazelcast</module>-->
         <module>intent-mapping-mdsal</module>
-        <module>gbp-renderer</module>
+        <!--<module>gbp-renderer</module>-->
         <module>vtn-renderer</module>
-        <module>nemo-renderer</module>
+        <!--<module>nemo-renderer</module>-->
         <module>of-renderer</module>
         <module>intent-listeners</module>
         <module>neutron-integration</module>

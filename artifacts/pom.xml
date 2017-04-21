@@ -43,20 +43,20 @@
     <type>xml</type>
     <version>${project.version}</version>
    </dependency>
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>intent-cli</artifactId>
-    <classifier>features</classifier>
-    <type>xml</type>
-    <version>${project.version}</version>
-   </dependency>
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>gbp-renderer</artifactId>
-    <classifier>features</classifier>
-    <type>xml</type>
-    <version>${project.version}</version>
-   </dependency>
+   <!--<dependency>-->
+    <!--<groupId>${project.groupId}</groupId>-->
+    <!--<artifactId>intent-cli</artifactId>-->
+    <!--<classifier>features</classifier>-->
+    <!--<type>xml</type>-->
+    <!--<version>${project.version}</version>-->
+   <!--</dependency>-->
+   <!--<dependency>-->
+    <!--<groupId>${project.groupId}</groupId>-->
+    <!--<artifactId>gbp-renderer</artifactId>-->
+    <!--<classifier>features</classifier>-->
+    <!--<type>xml</type>-->
+    <!--<version>${project.version}</version>-->
+   <!--</dependency>-->
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>vtn-renderer</artifactId>
@@ -64,13 +64,13 @@
     <type>xml</type>
     <version>${project.version}</version>
    </dependency>
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>nemo-renderer</artifactId>
-    <classifier>features</classifier>
-    <type>xml</type>
-    <version>${project.version}</version>
-   </dependency>
+   <!--<dependency>-->
+    <!--<groupId>${project.groupId}</groupId>-->
+    <!--<artifactId>nemo-renderer</artifactId>-->
+    <!--<classifier>features</classifier>-->
+    <!--<type>xml</type>-->
+    <!--<version>${project.version}</version>-->
+   <!--</dependency>-->
    <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>of-renderer</artifactId>

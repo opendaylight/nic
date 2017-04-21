@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) Serro LLC. All rights reserved.
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.opendaylight.odlparent</groupId>
+    <artifactId>single-feature-parent</artifactId>
+    <version>1.9.0-SNAPSHOT</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>org.opendaylight.nic</groupId>
+  <artifactId>odl-nic-renderer-vtn</artifactId>
+  <version>1.4.0-SNAPSHOT</version>
+  <packaging>feature</packaging>
+
+  <properties>
+    <feature.vtn-manager.version>0.7.0-SNAPSHOT</feature.vtn-manager.version>
+  </properties>
+
+  <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+
+<dependencies>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>odl-nic-core-mdsal</artifactId>
+    <version>${project.version}</version>
+    <type>xml</type>
+    <classifier>features</classifier>
+  </dependency>
+  <dependency>
+    <groupId>org.opendaylight.vtn</groupId>
+    <artifactId>odl-vtn-manager</artifactId>
+    <version>${feature.vtn-manager.version}</version>
+    <type>xml</type>
+    <classifier>features</classifier>
+  </dependency>
+  <dependency>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>vtn-renderer</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+</dependencies>
+</project>
