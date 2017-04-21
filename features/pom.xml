@@ -7,30 +7,42 @@
      and is available at http://www.eclipse.org/legal/epl-v10.html
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.opendaylight.odlparent</groupId>
-    <artifactId>odlparent-lite</artifactId>
-    <version>1.9.0-SNAPSHOT</version>
-    <relativePath/>
-  </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.opendaylight.odlparent</groupId>
+        <artifactId>odlparent-lite</artifactId>
+        <version>1.8.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
 
-  <groupId>org.opendaylight.nic</groupId>
-  <artifactId>features-aggreator</artifactId>
-  <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
-  <version>1.4.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>features-aggreator</artifactId>
+    <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+    <version>1.4.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-  <modules>
-    <module>features-nic</module>
-    <module>features4-nic</module>
-  </modules>
+    <modules>
+        <module>features-nic</module>
+        <module>features4-nic</module>
+        <module>odl-nic-core-hazelcast</module>
+        <module>odl-nic-core-mdsal</module>
+        <module>odl-nic-console</module>
+        <module>odl-nic-renderer-vtn</module>
+        <module>odl-nic-renderer-gbp</module>
+        <module>odl-nic-renderer-of</module>
+        <module>odl-nic-renderer-nemo</module>
+        <module>odl-nic-pipeline-manager</module>
+        <module>odl-nic-listeners</module>
+        <module>odl-nic-neutron-integration</module>
+        <module>odl-nic-intent-statemachine</module>
+        <module>odl-nic-graph</module>
+        <module>odl-nic-intent-common</module>
+    </modules>
 
-  <scm>
-    <connection>scm:git:ssh://git.opendaylight.org:29418/nic.git</connection>
-    <developerConnection>scm:git:ssh://git.opendaylight.org:29418/nic.git</developerConnection>
-    <tag>HEAD</tag>
-    <url>https://git.opendaylight.org/gerrit/gitweb?p=nic.git;a=summary</url>
-  </scm>
-
+    <scm>
+        <connection>scm:git:ssh://git.opendaylight.org:29418/nic.git</connection>
+        <developerConnection>scm:git:ssh://git.opendaylight.org:29418/nic.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://git.opendaylight.org/gerrit/gitweb?p=nic.git;a=summary</url>
+    </scm>
 </project>
