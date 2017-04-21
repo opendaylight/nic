@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>feature-repo-parent</artifactId>
-        <version>1.9.0-SNAPSHOT</version>
+        <version>1.8.0-SNAPSHOT</version>
         <relativePath />
     </parent>
 
@@ -27,4 +27,91 @@
 
     <name>OpendayLight :: NIC :: ${project.artifactId}</name>
 
+    <!--Features-->
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-core-hazelcast</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-core-mdsal</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-console</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-renderer-vtn</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-renderer-gbp</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-renderer-of</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-renderer-nemo</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-pipeline-manager</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-listeners</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-intent-statemachine</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-graph</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-intent-common</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

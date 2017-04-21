@@ -11,17 +11,16 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>features-parent</artifactId>
-    <version>1.9.0-SNAPSHOT</version>
-    <relativePath />
+    <version>1.8.0-SNAPSHOT</version>
+    <relativePath/>
   </parent>
 
-    <groupId>org.opendaylight.nic</groupId>
-    <artifactId>features-nic</artifactId>
-    <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
-    <version>1.4.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+  <groupId>org.opendaylight.nic</groupId>
+  <artifactId>features-nic</artifactId>
+  <name>${project.artifactId}</name>
+  <version>1.4.0-SNAPSHOT</version>
 
-    <properties>
+  <properties>
     <jung2.version>2.0.1</jung2.version>
     <feature.vtn-manager.version>0.7.0-SNAPSHOT</feature.vtn-manager.version>
     <nemo.version>1.3.0-SNAPSHOT</nemo.version>
