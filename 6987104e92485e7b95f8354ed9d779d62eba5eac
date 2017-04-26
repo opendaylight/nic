@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_b59ca810",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-04-26T15:17:24Z",
+      "side": 1,
+      "message": "All of the above are ordinary jar artifacts, as opposed to Karaf 4 feature artifacts.",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 16
+      },
+      "revId": "6987104e92485e7b95f8354ed9d779d62eba5eac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_558bbcc2",
+        "filename": "features/features4-nic/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2046
+      },
+      "writtenOn": "2017-04-26T15:17:24Z",
+      "side": 1,
+      "message": "These are the blocks to be added to artifacts/pom.xml (which can be imported here so version lines can be skipped here).",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "6987104e92485e7b95f8354ed9d779d62eba5eac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
