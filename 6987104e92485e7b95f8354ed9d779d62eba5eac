@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da01753e_1025c25b",
+        "filename": "artifacts/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2017-04-26T16:38:14Z",
+      "side": 1,
+      "message": "Can I assume that we can remove lines 31 to 129?",
+      "parentUuid": "da01753e_b59ca810",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 16
+      },
+      "revId": "6987104e92485e7b95f8354ed9d779d62eba5eac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da01753e_558bbcc2",
         "filename": "features/features4-nic/pom.xml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-26T15:17:24Z",
       "side": 1,
       "message": "These are the blocks to be added to artifacts/pom.xml (which can be imported here so version lines can be skipped here).",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "6987104e92485e7b95f8354ed9d779d62eba5eac",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_b03316aa",
+        "filename": "features/features4-nic/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2017-04-26T16:38:14Z",
+      "side": 1,
+      "message": "If we remove the version line, the following error will appear:\n\n\u0027dependencies.dependency.version\u0027 for org.opendaylight.nic:odl-nic-core-mdsal:xml:features is missing. @ line 32, column 21",
+      "parentUuid": "da01753e_558bbcc2",
       "range": {
         "startLine": 37,
         "startChar": 21,
