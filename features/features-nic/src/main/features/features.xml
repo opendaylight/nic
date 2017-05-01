@@ -69,6 +69,16 @@
         <!--<configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}/xml/config</configfile>-->
     <!--</feature>-->
 
+    <!-- NIC Basics-->
+    <feature name='odl-nic-basics' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Group Based Policy Renderer'>
+    <feature version="${project.version}">odl-nic-core-mdsal</feature>
+    <feature version="${project.version}">odl-nic-renderer-of</feature>
+    <feature version="${project.version}">odl-nic-intent-statemachine</feature>
+    <feature version="${project.version}">odl-nic-intent-common</feature>
+    <feature version="${project.version}">odl-nic-listeners</feature>
+    <!--<configfile finalname="etc/opendaylight/karaf/90-bgp-renderer.xml">mvn:org.opendaylight.nic/gbp-renderer/{{VERSION}}/xml/config</configfile>-->
+    </feature>
+
     <!-- OF Renderer -->
     <feature name='odl-nic-renderer-of' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Renderer'>
         <feature version="${project.version}">odl-nic-core-mdsal</feature>

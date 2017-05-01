@@ -34,6 +34,7 @@
         <module>odl-nic-renderer-vtn</module>
         <module>odl-nic-neutron-integration</module>
         <module>odl-nic-graph</module>
+        <module>odl-nic-basics</module>
     </modules>
 
     <scm>
