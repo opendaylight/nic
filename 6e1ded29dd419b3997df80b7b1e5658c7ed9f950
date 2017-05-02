@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba068154_8ab61f89",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/transaction/service/lifecycle/IntentLifeCycleManagement.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2017-05-02T16:34:53Z",
+      "side": 1,
+      "message": "Isn\u0027t there too much \u0027logic\u0027 in this constructor?",
+      "revId": "6e1ded29dd419b3997df80b7b1e5658c7ed9f950",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
