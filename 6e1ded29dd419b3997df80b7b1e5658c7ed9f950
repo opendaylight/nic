@@ -16,6 +16,24 @@
       "revId": "6e1ded29dd419b3997df80b7b1e5658c7ed9f950",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_4a63971a",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/transaction/service/lifecycle/IntentLifeCycleManagement.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2017-05-02T16:41:20Z",
+      "side": 1,
+      "message": "What\u0027s your suggestion? A start() method?\nIt\u0027s possible, I don\u0027t see a problem, I can send a new patch with that.",
+      "parentUuid": "ba068154_8ab61f89",
+      "revId": "6e1ded29dd419b3997df80b7b1e5658c7ed9f950",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
