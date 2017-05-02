@@ -34,6 +34,24 @@
       "revId": "6e1ded29dd419b3997df80b7b1e5658c7ed9f950",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_aa08432e",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/transaction/service/lifecycle/IntentLifeCycleManagement.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2017-05-02T17:00:49Z",
+      "side": 1,
+      "message": "You could pass a parameter (EventExecutor) to this class. So, you would be able to mock it and ease things while testing.",
+      "parentUuid": "ba068154_4a63971a",
+      "revId": "6e1ded29dd419b3997df80b7b1e5658c7ed9f950",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
