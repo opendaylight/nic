@@ -16,6 +16,24 @@
       "revId": "562359956c6bf81f65629d9d931df58e99de4ddc",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba068154_6a72dbe6",
+        "filename": "intent-common/src/main/java/org/opendaylight/nic/common/transaction/service/lifecycle/IntentLifeCycleManagement.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3741
+      },
+      "writtenOn": "2017-05-02T16:41:20Z",
+      "side": 1,
+      "message": "Agreed, what do you suggest?",
+      "parentUuid": "ba068154_0aad0f89",
+      "revId": "562359956c6bf81f65629d9d931df58e99de4ddc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
