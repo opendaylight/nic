@@ -21,7 +21,14 @@
         <bgp.version>0.8.0-SNAPSHOT</bgp.version>
     </properties>
 
+    <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>renderer-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>${mdsal.model.groupId}</groupId>
             <artifactId>ietf-yang-types-20130715</artifactId>

@@ -23,6 +23,7 @@
     <version>1.4.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
+    <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
     <dependencies>
         <dependency>

@@ -1,4 +1,8 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.bgp.renderer.rev170501;
+
+import org.opendaylight.bgp.api.BGPRendererService;
+import org.opendaylight.bgp.impl.BGPRouteServiceImpl;
+
 public class BGPRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.opendaylight.nic.bgp.renderer.rev170501.AbstractBGPRendererProviderModule {
     public BGPRendererProviderModule(org.opendaylight.controller.config.api.ModuleIdentifier identifier, org.opendaylight.controller.config.api.DependencyResolver dependencyResolver) {
         super(identifier, dependencyResolver);
@@ -15,8 +19,8 @@ public class BGPRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.
 
     @Override
     public java.lang.AutoCloseable createInstance() {
-        // TODO:implement
-        throw new java.lang.UnsupportedOperationException();
+        final BGPRendererService rendererService = new BGPRouteServiceImpl(getDataBrokerDependency());
+        rendererService.start();
+        return rendererService;
     }
-
 }
