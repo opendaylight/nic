@@ -31,6 +31,11 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <dependencies>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>renderer-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>${mdsal.model.groupId}</groupId>
             <artifactId>ietf-yang-types-20130715</artifactId>
         </dependency>

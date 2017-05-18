@@ -29,7 +29,6 @@
         <mdsal.version>1.6.0-SNAPSHOT</mdsal.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.mdsal.model</groupId>

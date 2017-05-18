@@ -59,5 +59,6 @@ public class BGPDataFlowListernerImpl implements BGPDataFlowListenerService {
     @Override
     public void stop() {
         dataflowListenerRegistration.close();
+        bgpRendererService.close();
     }
 }
