@@ -8,9 +8,12 @@
 
 package org.opendaylight.nic.bgp.impl;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
+import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.nic.bgp.api.BGPRendererService;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.AsNumber;
@@ -38,8 +41,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.bgp.type
 import org.opendaylight.yang.gen.v1.urn.opendaylight.params.xml.ns.yang.bgp.types.rev130919.next.hop.c.next.hop.ipv4.next.hop._case.Ipv4NextHopBuilder;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.binding.KeyedInstanceIdentifier;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -47,11 +50,9 @@ import java.util.List;
  * Created by yrineu on 17/05/17.
  */
 public class BGPRouteServiceImpl implements BGPRendererService {
-
+    private static final Logger LOG = LoggerFactory.getLogger(BGPRouteServiceImpl.class);
 
     private DataBroker dataBroker;
-    private BundleContext context;
-    private ServiceRegistration<BGPRendererService> serviceServiceRegistration;
     private static final String APPLICATION_RIB_ID = "example-app-rib";
 
     public BGPRouteServiceImpl(final DataBroker dataBroker) {
@@ -132,5 +133,24 @@ public class BGPRouteServiceImpl implements BGPRendererService {
         mdsalUtils.put(LogicalDatastoreType.CONFIGURATION,
                 retrieveIpv4Identifier().child(Ipv4Route.class,
                         ipv4RouteKey), route);
+    }
+
+    @Override
+    public void close() {
+        evaluateCleanup();
+    }
+
+    private void evaluateCleanup() {
+        final InstanceIdentifier<Ipv4Routes> ipv4RouteIdentifier = retrieveIpv4Identifier();
+        final ReadOnlyTransaction readOnlyTransaction = dataBroker.newReadOnlyTransaction();
+        try {
+            final Optional<Ipv4Routes> result = readOnlyTransaction.read(
+                    LogicalDatastoreType.CONFIGURATION, ipv4RouteIdentifier).checkedGet();
+            if (result.isPresent()) {
+                dataBroker.newWriteOnlyTransaction().delete(LogicalDatastoreType.CONFIGURATION, ipv4RouteIdentifier);
+            }
+        } catch (ReadFailedException e) {
+            LOG.error("\nUnable to evaluate cleanup at shutdown. {}", e.getMessage());
+        }
     }
 }
