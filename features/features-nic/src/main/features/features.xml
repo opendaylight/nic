@@ -60,6 +60,15 @@
         <configfile finalname="etc/opendaylight/karaf/88-intent-impl.xml">mvn:org.opendaylight.nic/intent-impl/{{VERSION}}/xml/config</configfile>
     </feature>
 
+    <!-- Install main NIC features -->
+    <feature name='odl-nic-all' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Install all basic features'>
+        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+        <feature version="${project.version}">odl-nic-renderer-of</feature>
+        <feature version="${project.version}">odl-nic-intent-statemachine</feature>
+        <feature version="${project.version}">odl-nic-intent-common</feature>
+        <feature version="${project.version}">odl-nic-listeners</feature>
+    </feature>
+
     <!-- CLI feature -->
     <!--<feature name='odl-nic-console' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: CLI'>-->
         <!--<feature version="${project.version}">odl-nic-core-mdsal</feature>-->
