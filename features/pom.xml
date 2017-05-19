@@ -26,6 +26,7 @@
         <module>odl-nic-core-mdsal</module>
         <module>odl-nic-pipeline-manager</module>
         <module>odl-nic-renderer-of</module>
+        <module>odl-nic-renderer-bgp</module>
         <module>odl-nic-intent-statemachine</module>
         <module>odl-nic-intent-common</module>
         <module>odl-nic-listeners</module>

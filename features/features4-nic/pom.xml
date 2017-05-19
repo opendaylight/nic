@@ -64,6 +64,13 @@
             <classifier>features</classifier>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-renderer-bgp</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>${project.groupId}</groupId>-->
             <!--<artifactId>odl-nic-renderer-nemo</artifactId>-->

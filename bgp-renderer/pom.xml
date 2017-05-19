@@ -58,6 +58,16 @@
             <version>${bgp.version}</version>
         </dependency>
         <dependency>
+            <groupId>${bgp.groupId}</groupId>
+            <artifactId>bgpcep-artifacts</artifactId>
+            <version>${bgp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.bgpcep</groupId>
+            <artifactId>odl-bgpcep-pcep-topology</artifactId>
+            <version>${bgp.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
