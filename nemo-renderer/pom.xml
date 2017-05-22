@@ -10,17 +10,17 @@
   <parent>
     <groupId>org.opendaylight.controller</groupId>
     <artifactId>config-parent</artifactId>
-    <version>0.6.0-SNAPSHOT</version>
+    <version>0.6.0-Carbon</version>
     <relativePath />
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opendaylight.nic</groupId>
   <artifactId>nemo-renderer</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.3.0-Carbon</version>
   <packaging>bundle</packaging>
   <properties>
-    <openflowplugin.version>0.4.0-SNAPSHOT</openflowplugin.version>
-    <nemo.version>1.2.0-SNAPSHOT</nemo.version>
+    <openflowplugin.version>0.4.0-Carbon</openflowplugin.version>
+    <nemo.version>1.2.0-Carbon</nemo.version>
   </properties>
   <dependencies>
     <!-- project specific dependencies -->
