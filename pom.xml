@@ -72,6 +72,7 @@
         <module>mapped-objects-model</module>
         <module>bgp-renderer</module>
         <module>renderer-api</module>
+        <module>pub-sub-manager</module>
     </modules>
 
     <build>
