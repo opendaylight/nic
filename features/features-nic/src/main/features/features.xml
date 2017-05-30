@@ -151,4 +151,14 @@
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/95-intent-common.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
     </feature>
+    <!-- Intent Common feature -->
+    <feature name='odl-nic-pubsub' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Pub and Sub module'>
+        <feature version="${project.version}">odl-nic-core-mdsal</feature>
+        <feature version="${project.version}">odl-nic-intent-common</feature>
+        <feature version="#{project.version}">odl-nic-intent-statemachine</feature>
+        <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/intent-common/{{VERSION}}</bundle>
+        <bundle>mvn:org.opendaylight.nic/pub-sub-manager/{{VERSION}}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/96-pub-sub-manager.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
+    </feature>
 </features>

@@ -113,5 +113,12 @@
             <classifier>features</classifier>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>odl-nic-pubsub</artifactId>
+            <type>xml</type>
+            <classifier>features</classifier>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

@@ -35,6 +35,7 @@
         <module>odl-nic-neutron-integration</module>
         <module>odl-nic-graph</module>
         <module>odl-nic-all</module>
+        <module>odl-nic-pubsub</module>
     </modules>
 
     <scm>
