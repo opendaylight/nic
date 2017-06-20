@@ -23,6 +23,7 @@
     <repository>mvn:org.opendaylight.ovsdb/southbound-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.sfc/features-sfc/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.genius/genius-features/{{VERSION}}/xml/features</repository>
+    <repository>mvn:org.opendaylight.bgpcep/features-bgp/${project.version}/xml/features</repository>
 
     <!-- Core feature using MD-SAL backend engine -->
     <feature name='odl-nic-core-mdsal' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Core using MD-SAL mapping service'>
@@ -150,5 +151,15 @@
         <bundle>mvn:org.opendaylight.nic/intent-common/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/95-intent-common.xml">mvn:org.opendaylight.nic/intent-common/{{VERSION}}/xml/config</configfile>
+    </feature>
+
+
+    <!-- BGP Renderer -->
+    <feature name='odl-nic-bgp-renderer' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: BGP Renderer'>
+        <feature version="${project.version}">odl-restconf-all</feature>
+        <feature version="${netconf.version}">odl-netconf-connector-all</feature>
+        <feature version="${bgp.version}">odl-bgpcep-bgp</feature>
+        <bundle>mvn:org.opendaylight.nic/bgp-renderer/${project.version}</bundle>
+        <configfile finalname="etc/opendaylight/karaf/96-bgp-renderer.xml">mvn:org.opendaylight.nic/bgp-renderer/${project.version}/xml/config</configfile>
     </feature>
 </features>

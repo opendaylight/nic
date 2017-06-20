@@ -120,6 +120,18 @@
         <!-- project specific dependencies -->
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
+            <artifactId>bgp-renderer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>bgp-renderer</artifactId>
+            <version>${project.version}</version>
+            <classifier>config</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
             <artifactId>intent-api</artifactId>
             <version>${project.version}</version>
         </dependency>
