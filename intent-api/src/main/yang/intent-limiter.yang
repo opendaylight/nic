@@ -81,6 +81,13 @@ module intent-limiter {
             description "Represents the Bandwidth limit that will be used by the rate-limiter.";
         }
 
+        leaf apply-immediately {
+            type boolean;
+            mandatory true;
+            description "Specify if that Intent must be applied immediately or must wait for an external
+            action from PubSubManager module.";
+        }
+
         typedef bandwidth-cap {
             type enumeration {
                 enum "KBPS";

@@ -11,8 +11,6 @@ module pub-sub-manager {
     prefix "pub-sub-manager";
 
     import config { prefix config; revision-date 2013-04-05; }
-    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
-    import opendaylight-sal-binding-broker-impl { prefix sal-broker; revision-date 2013-10-28;}
 
     description
         "Publish and Subscribe module for external applications get noticed about NIC events.";
@@ -21,23 +19,8 @@ module pub-sub-manager {
         description "Initial revision.";
     }
 
-    identity pub-sub-manager {
-        base config:module-type;
-
-        config:java-name-prefix PubSubManagerProvider;
+    identity pub-sub-manager-interface {
+        base config:service-type;
+        config:java-class "org.opendaylight.nic.pubsub.api.PubSubService";
     }
-
-    augment "/config:modules/config:module/config:configuration" {
-                case pub-sub-manager {
-                    when "/config:modules/config:module/config:type = 'pub-sub-manager'";
-                    container data-broker {
-                        uses config:service-ref {
-                            refine type {
-                                mandatory true;
-                                config:required-identity mdsal:binding-async-data-broker;
-                            }
-                        }
-                    }
-                }
-            }
 }

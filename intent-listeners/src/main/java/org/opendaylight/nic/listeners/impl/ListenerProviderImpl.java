@@ -15,6 +15,8 @@ import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.*;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
+import org.opendaylight.nic.pubsub.api.PubSubService;
+import org.opendaylight.nic.pubsub.manager.PubSubServiceImpl;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 
@@ -47,6 +49,7 @@ public class ListenerProviderImpl implements AutoCloseable {
     private OFRendererGraphService graphService;
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
     private MdsalUtils mdsalUtils;
+    private PubSubService pubSubService;
 
     /**
      * Provider constructor set all needed final parameters
@@ -80,6 +83,8 @@ public class ListenerProviderImpl implements AutoCloseable {
 
     public void start() {
         serviceRegistry = new EventRegistryServiceImpl();
+        pubSubService = new PubSubServiceImpl(db, intentCommonService);
+        pubSubService.start();
 
         // Event providers
         NotificationSupplierForItemRoot<IntentLimiter, IntentLimiterAdded, IntentLimiterRemoved, IntentLimiterUpdated> intentLimiterSupp =
@@ -103,7 +108,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
-        IntentLimiterNotificationSubscriberImpl intentLimiterListener = new IntentLimiterNotificationSubscriberImpl(intentCommonService);
+        IntentLimiterNotificationSubscriberImpl intentLimiterListener = new IntentLimiterNotificationSubscriberImpl(intentCommonService, pubSubService);
         IntentNotificationSubscriberImpl intentListener = new IntentNotificationSubscriberImpl(intentCommonService,
                 stateMachineExecutorService);
         IntentNBINotificationSubscriberImpl intentNBIListener = new IntentNBINotificationSubscriberImpl(flowService);
@@ -137,6 +142,7 @@ public class ListenerProviderImpl implements AutoCloseable {
     @Override
     public void close() throws Exception {
         endpointResolver.close();
+        pubSubService.close();
         for (NotificationSupplierDefinition<?> supplier : supplierList) {
             if (supplier != null) {
                 supplier.close();

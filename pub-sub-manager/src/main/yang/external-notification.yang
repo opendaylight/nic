@@ -12,8 +12,6 @@ module external-notification {
 
     import intent-types { prefix types; revision-date 2015-01-22; }
     import config { prefix config; revision-date 2013-04-05; }
-    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
-    import opendaylight-sal-binding-broker-impl { prefix sal-broker; revision-date 2013-10-28;}
 
     description
         "This service expose a REST API to receive alerts from an external application.";
@@ -27,12 +25,6 @@ module external-notification {
             type types:uuid;
             mandatory true;
             description "Uniquely identifier for external notifications.";
-        }
-
-        leaf external-url {
-            type string;
-            mandatory false;
-            description "External URL to be notified for mitigated actions.";
         }
 
         leaf device-ip {

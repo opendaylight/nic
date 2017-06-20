@@ -13,6 +13,7 @@ import org.opendaylight.nic.listeners.api.IEventListener;
 import org.opendaylight.nic.listeners.api.IntentLimiterAdded;
 import org.opendaylight.nic.listeners.api.IntentLimiterRemoved;
 import org.opendaylight.nic.listeners.api.NicNotification;
+import org.opendaylight.nic.pubsub.api.PubSubService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,16 +21,23 @@ public class IntentLimiterNotificationSubscriberImpl implements IEventListener<N
 
     private static final Logger LOG = LoggerFactory.getLogger(IntentLimiterNotificationSubscriberImpl.class);
     private IntentCommonService intentCommonService;
+    private final PubSubService pubSubService;
 
-    public IntentLimiterNotificationSubscriberImpl(IntentCommonService intentCommonService) {
+    public IntentLimiterNotificationSubscriberImpl(IntentCommonService intentCommonService,
+                                                   PubSubService pubSubService) {
         this.intentCommonService = intentCommonService;
+        this.pubSubService = pubSubService;
     }
 
     @Override
     public void handleEvent(NicNotification event) {
         if (IntentLimiterAdded.class.isInstance(event)) {
             IntentLimiterAdded addedEvent = (IntentLimiterAdded) event;
-            intentCommonService.resolveAndApply(addedEvent.getIntent());
+            if (addedEvent.getIntent().isApplyImmediately()) {
+                intentCommonService.resolveAndApply(addedEvent.getIntent());
+            } else {
+                pubSubService.notifyIntentCreated(addedEvent.getIntent());
+            }
         }
 
         if (IntentLimiterRemoved.class.isInstance(event)) {

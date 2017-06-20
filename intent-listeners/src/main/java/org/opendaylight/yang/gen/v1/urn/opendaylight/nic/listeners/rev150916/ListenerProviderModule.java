@@ -6,6 +6,7 @@ import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.impl.ListenerProviderImpl;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
+import org.opendaylight.nic.pubsub.api.PubSubService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -42,6 +43,7 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
                 getServiceReference(IntentCommonProviderService.class);
         ServiceReference<?> stateMachineExecutorServiceReference = context.
                 getServiceReference(IntentStateMachineExecutorService.class);
+
         OFRendererGraphService graphService = (OFRendererGraphService) context
                 .getService(graphServiceReference);
         IntentCommonProviderService intentCommonProviderService = (IntentCommonProviderService) context

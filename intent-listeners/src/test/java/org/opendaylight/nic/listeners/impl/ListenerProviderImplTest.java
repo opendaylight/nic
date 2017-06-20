@@ -64,7 +64,6 @@ public class ListenerProviderImplTest {
      */
     private IntentStateMachineExecutorService mockStateMachineExecutorService;
 
-
     @Before
     public void setup() throws Exception {
         /**
