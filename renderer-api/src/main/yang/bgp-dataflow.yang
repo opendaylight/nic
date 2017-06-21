@@ -1,0 +1,66 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module bgp-dataflow {
+    namespace "urn:opendaylight:nic:renderer:api:bgp:dataflow";
+    prefix "bgp-dataflow";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import ietf-yang-types { prefix "yang"; }
+    import ietf-inet-types { prefix "inet"; }
+
+    revision 2017-05-18 {
+        description "First revision.";
+    }
+
+    grouping bgp-dataflow {
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifier for gbp-dataflow";
+        }
+
+        leaf prefix {
+            type inet:ipv4-prefix;
+            mandatory true;
+            description "Route prefix.";
+        }
+
+        leaf path-id {
+            type uint32;
+            mandatory true;
+            description "Route path ID.";
+        }
+
+        leaf global-ip {
+            type inet:ipv4-address;
+            mandatory true;
+            description "Route Global IP";
+        }
+
+        leaf originator-ip {
+            type inet:ipv4-address;
+            mandatory true;
+            description "Route Originator IP";
+        }
+
+        list as-numbers {
+            key "as-number";
+            leaf as-number {
+                type inet:as-number;
+            }
+            description "Authonomous System numbers.";
+        }
+    }
+
+    container bgp-dataflows {
+        list bgp-dataflow {
+            key "id";
+            uses bgp-dataflow;
+        }
+    }
+}
