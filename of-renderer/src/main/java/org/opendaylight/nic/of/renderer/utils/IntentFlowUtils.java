@@ -7,11 +7,9 @@
  */
 package org.opendaylight.nic.of.renderer.utils;
 
-import org.opendaylight.nic.neutron.NeutronSecurityRule;
 import org.opendaylight.nic.of.renderer.exception.InvalidIntentParameterException;
 import org.opendaylight.nic.of.renderer.impl.OFRendererConstants;
 import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
-import org.opendaylight.nic.of.renderer.model.PortFlow;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
@@ -175,17 +173,5 @@ public class IntentFlowUtils {
             return null;
         }
         return matchBuilder;
-    }
-
-    public static PortFlow extractPortFlow(final NeutronSecurityRule securityRule, final List<String> endPointgroups) {
-        Integer portMin = securityRule.getSecurityRulePortMin();
-        Integer portMax = securityRule.getSecurityRulePortMax();
-        String etherType = securityRule.getSecurityRuleEthertype();
-        String protocol = securityRule.getSecurityRuleProtocol();
-        String direction = securityRule.getSecurityRuleDirection();
-
-        final PortFlow portFlow = new PortFlow(portMax, portMin, protocol, etherType, direction, endPointgroups);
-        portFlow.validate();
-        return portFlow;
     }
 }
