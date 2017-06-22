@@ -58,7 +58,11 @@
         <module>intent-compiler</module>
         <module>intent-mapping-mdsal</module>
         <!--<module>gbp-renderer</module>-->
+<<<<<<< 6ab51e1101329330c457e2c2ef4c66fdb76066b5
         <module>vtn-renderer</module>
+=======
+        <!--<module>nemo-renderer</module>-->
+>>>>>>> Remove VTN Renderer
         <module>of-renderer</module>
         <module>intent-listeners</module>
         <module>neutron-integration</module>
