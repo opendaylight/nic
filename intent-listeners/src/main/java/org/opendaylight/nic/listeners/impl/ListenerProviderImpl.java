@@ -14,10 +14,9 @@ import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.*;
+import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.utils.MdsalUtils;
-import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
-
 import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.intent.definitions.IntentDefinition;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
@@ -27,6 +26,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.IntentStateTransactions;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +44,6 @@ public class ListenerProviderImpl implements AutoCloseable {
     private OFRendererFlowService flowService;
     private IntentCommonService intentCommonService;
     private IntentStateMachineExecutorService stateMachineExecutorService;
-    private OFRendererGraphService graphService;
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
     private MdsalUtils mdsalUtils;
 
@@ -53,7 +52,6 @@ public class ListenerProviderImpl implements AutoCloseable {
      * @param db The {@link DataBroker}
      * @param notificationService The {@link NotificationService} used with pub-sub pattern
      * @param flowService The {@link OFRendererFlowService} used to render and push OF Rules
-     * @param graphService The {@link OFRendererGraphService} used to represent and solve a
      * @param intentCommonService The {@link IntentCommonService} used to translate Intents into FlowData for renders
      *                            Network-Topology.
      * @param stateMachineExecutorService The {@link IntentStateMachineExecutorService} used to change the state of
@@ -62,7 +60,6 @@ public class ListenerProviderImpl implements AutoCloseable {
     public ListenerProviderImpl(final DataBroker db,
                                 NotificationService notificationService,
                                 OFRendererFlowService flowService,
-                                OFRendererGraphService graphService,
                                 IntentCommonService intentCommonService,
                                 IntentStateMachineExecutorService stateMachineExecutorService) {
         Preconditions.checkNotNull(db);
@@ -72,7 +69,6 @@ public class ListenerProviderImpl implements AutoCloseable {
         this.db = db;
         this.notificationService = notificationService;
         this.flowService = flowService;
-        this.graphService = graphService;
         this.mdsalUtils = new MdsalUtils(db);
         this.intentCommonService = intentCommonService;
         this.stateMachineExecutorService = stateMachineExecutorService;
@@ -111,7 +107,7 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new EndpointDiscoveryNotificationSubscriberImpl();
         NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(intentCommonService);
         TopologyLinkNotificationSubscriberImpl topologyLinkNotifSubscriber =
-                new TopologyLinkNotificationSubscriberImpl(graphService, mdsalUtils);
+                new TopologyLinkNotificationSubscriberImpl(mdsalUtils);
         TransactionStateNotificationSubscriberImpl stateNotificationSubscriber =
                 new TransactionStateNotificationSubscriberImpl(intentCommonService);
         serviceRegistry.registerEventListener((IEventService) intentLimiterSupp, intentLimiterListener);

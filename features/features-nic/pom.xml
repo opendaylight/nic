@@ -154,11 +154,6 @@
         <!--</dependency>-->
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
-            <artifactId>intent-compiler</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
             <artifactId>vtn-renderer</artifactId>
             <version>${project.version}</version>
         </dependency>

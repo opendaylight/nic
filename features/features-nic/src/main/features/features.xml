@@ -35,8 +35,6 @@
         <bundle>mvn:org.opendaylight.nic/intent-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/renderer-api/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-impl/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intent-compiler/{{VERSION}}</bundle>
-        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/utils/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-interface/{{VERSION}}</bundle>
         <bundle>mvn:org.opendaylight.nic/intent-mapping-mdsal/{{VERSION}}</bundle>
@@ -132,13 +130,6 @@
         <feature version="${project.version}">odl-nic-core-mdsal</feature>
         <bundle>mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/93-intent-statemachine.xml">mvn:org.opendaylight.nic/intent-statemachine/{{VERSION}}/xml/config</configfile>
-    </feature>
-
-    <!-- Graph feature -->
-    <feature name='odl-nic-graph' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: Intent Graph'>
-        <feature version="${project.version}">odl-nic-core-mdsal</feature>
-        <bundle>mvn:org.opendaylight.nic/intent-graph/{{VERSION}}</bundle>
-        <configfile finalname="etc/opendaylight/karaf/94-intent-graph.xml">mvn:org.opendaylight.nic/intent-graph/{{VERSION}}/xml/config</configfile>
     </feature>
 
     <!-- Intent Common feature -->
