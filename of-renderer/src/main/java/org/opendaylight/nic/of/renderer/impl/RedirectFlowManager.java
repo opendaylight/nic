@@ -29,16 +29,16 @@ import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.nic.utils.MdsalUtils;
-import org.opendaylight.sfc.provider.api.SfcProviderServiceForwarderAPI;
-import org.opendaylight.sfc.provider.api.SfcProviderServiceFunctionAPI;
-import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.common.rev151017.SfName;
-import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.common.rev151017.SffDataPlaneLocatorName;
-import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sf.rev140701.service.function.base.SfDataPlaneLocator;
-import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sf.rev140701.service.functions.ServiceFunction;
-import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sff.rev140701.service.function.forwarder.base.SffDataPlaneLocator;
-import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.SffDataPlaneLocator1;
-import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.port.details.OfsPort;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Uri;
+//import org.opendaylight.sfc.provider.api.SfcProviderServiceForwarderAPI;
+//import org.opendaylight.sfc.provider.api.SfcProviderServiceFunctionAPI;
+//import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.common.rev151017.SfName;
+//import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.common.rev151017.SffDataPlaneLocatorName;
+//import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sf.rev140701.service.function.base.SfDataPlaneLocator;
+//import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sf.rev140701.service.functions.ServiceFunction;
+//import org.opendaylight.yang.gen.v1.urn.cisco.params.xml.ns.yang.sfc.sff.rev140701.service.function.forwarder.base.SffDataPlaneLocator;
+//import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.SffDataPlaneLocator1;
+//import org.opendaylight.yang.gen.v1.urn.ericsson.params.xml.ns.yang.sfc.sff.ofs.rev150408.port.details.OfsPort;
+//import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Uri;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
@@ -452,6 +452,7 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
      * To set the ingress and egress data to redirect cache
      * @param intent :intent
      */
+    @Deprecated
     private void addSfcNodeInfoToCache(Intent intent) {
         String intentId = intent.getId().getValue();
         RedirectNodeData redirectNodeData = redirectNodeCache.get(intentId);
@@ -471,39 +472,41 @@ public class RedirectFlowManager extends AbstractFlowManager implements PacketPr
     }
 
     /**
+     * NOTE: Waiting for SCF migration to odlparent 2.0.0 to enable this feature at NIC
      * To read the redirect SFC egress and ingress
      * @param serviceName : SFC Service name
      */
+    @Deprecated
     private String[] readRedirectSfcData(String serviceName) {
-        LOG.trace("Redirect SFC service name {}", serviceName);
-        String[] sfcDataList = new String[2];
-        if (serviceName == null) {
-            LOG.info("Unable to retrieve service info.");
-        } else {
-            SfName sfName = new SfName(serviceName);
-            ServiceFunction serviceFunction = SfcProviderServiceFunctionAPI.readServiceFunction(sfName);
-            List<SfDataPlaneLocator> listOfDPL = serviceFunction.getSfDataPlaneLocator();
-            for (SfDataPlaneLocator sfdpl : listOfDPL) {
-                if (sfdpl.getServiceFunctionForwarder() == null)
-                    continue;
-                String nodeId = sfdpl.getServiceFunctionForwarder().getValue();
-                if (SfcProviderServiceForwarderAPI
-                        .readServiceFunctionForwarder(sfdpl.getServiceFunctionForwarder()) == null)
-                    continue;
-                List<SffDataPlaneLocator> listOfSffdpl = SfcProviderServiceForwarderAPI
-                        .readServiceFunctionForwarder(sfdpl.getServiceFunctionForwarder()).getSffDataPlaneLocator();
-                for (SffDataPlaneLocator sffdpl : listOfSffdpl) {
-                    SffDataPlaneLocatorName sffdplName = sffdpl.getName();
-                    SffDataPlaneLocator1 sffdpl1 = sffdpl.getAugmentation(SffDataPlaneLocator1.class);
-                    OfsPort ofsPort = sffdpl1.getOfsPort();
-                    if (sffdplName.getValue().toUpperCase().equals("INGRESS"))
-                        sfcDataList[0] = nodeId + ":" + ofsPort.getPortId();
-                    else if (sffdplName.getValue().toUpperCase().equals("EGRESS"))
-                        sfcDataList[1] = nodeId + ":" + ofsPort.getPortId();
-                }
-            }
-        }
-        return sfcDataList;
+//        LOG.trace("Redirect SFC service name {}", serviceName);
+//        String[] sfcDataList = new String[2];
+//        if (serviceName == null) {
+//            LOG.info("Unable to retrieve service info.");
+//        } else {
+//            SfName sfName = new SfName(serviceName);
+//            ServiceFunction serviceFunction = SfcProviderServiceFunctionAPI.readServiceFunction(sfName);
+//            List<SfDataPlaneLocator> listOfDPL = serviceFunction.getSfDataPlaneLocator();
+//            for (SfDataPlaneLocator sfdpl : listOfDPL) {
+//                if (sfdpl.getServiceFunctionForwarder() == null)
+//                    continue;
+//                String nodeId = sfdpl.getServiceFunctionForwarder().getValue();
+//                if (SfcProviderServiceForwarderAPI
+//                        .readServiceFunctionForwarder(sfdpl.getServiceFunctionForwarder()) == null)
+//                    continue;
+//                List<SffDataPlaneLocator> listOfSffdpl = SfcProviderServiceForwarderAPI
+//                        .readServiceFunctionForwarder(sfdpl.getServiceFunctionForwarder()).getSffDataPlaneLocator();
+//                for (SffDataPlaneLocator sffdpl : listOfSffdpl) {
+//                    SffDataPlaneLocatorName sffdplName = sffdpl.getName();
+//                    SffDataPlaneLocator1 sffdpl1 = sffdpl.getAugmentation(SffDataPlaneLocator1.class);
+//                    OfsPort ofsPort = sffdpl1.getOfsPort();
+//                    if (sffdplName.getValue().toUpperCase().equals("INGRESS"))
+//                        sfcDataList[0] = nodeId + ":" + ofsPort.getPortId();
+//                    else if (sffdplName.getValue().toUpperCase().equals("EGRESS"))
+//                        sfcDataList[1] = nodeId + ":" + ofsPort.getPortId();
+//                }
+//            }
+//        }
+        return null;//sfcDataList;
     }
 
     /**
