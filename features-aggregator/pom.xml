@@ -31,7 +31,6 @@
         <module>odl-nic-listeners</module>
         <module>features-nic</module>
         <module>odl-nic-neutron-integration</module>
-        <module>odl-nic-graph</module>
         <module>odl-nic-all</module>
     </modules>
 

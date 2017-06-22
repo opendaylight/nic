@@ -14,7 +14,6 @@ import org.opendaylight.controller.md.sal.binding.api.NotificationService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.api.*;
-import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 
@@ -49,7 +48,6 @@ public class ListenerProviderImpl implements ListenerProviderService {
     private OFRendererFlowService flowService;
     private IntentCommonService intentCommonService;
     private IntentStateMachineExecutorService stateMachineExecutorService;
-    private OFRendererGraphService graphService;
     private EndpointDiscoveredNotificationSupplierImpl endpointResolver;
     private MdsalUtils mdsalUtils;
 
@@ -58,7 +56,6 @@ public class ListenerProviderImpl implements ListenerProviderService {
      * @param db The {@link DataBroker}
      * @param notificationService The {@link NotificationService} used with pub-sub pattern
      * @param flowService The {@link OFRendererFlowService} used to render and push OF Rules
-     * @param graphService The {@link OFRendererGraphService} used to represent and solve a
      * @param intentCommonService The {@link IntentCommonService} used to translate Intents into FlowData for renders
      *                            Network-Topology.
      * @param stateMachineExecutorService The {@link IntentStateMachineExecutorService} used to change the state of
@@ -67,7 +64,6 @@ public class ListenerProviderImpl implements ListenerProviderService {
     public ListenerProviderImpl(final DataBroker db,
                                 NotificationService notificationService,
                                 OFRendererFlowService flowService,
-                                OFRendererGraphService graphService,
                                 IntentCommonService intentCommonService,
                                 IntentStateMachineExecutorService stateMachineExecutorService) {
         Preconditions.checkNotNull(db);
@@ -77,7 +73,6 @@ public class ListenerProviderImpl implements ListenerProviderService {
         this.db = db;
         this.notificationService = notificationService;
         this.flowService = flowService;
-        this.graphService = graphService;
         this.mdsalUtils = new MdsalUtils(db);
         this.intentCommonService = intentCommonService;
         this.stateMachineExecutorService = stateMachineExecutorService;
@@ -119,7 +114,7 @@ public class ListenerProviderImpl implements ListenerProviderService {
                 new EndpointDiscoveryNotificationSubscriberImpl();
         NodeNotificationSubscriberImpl nodeNotifSubscriber = new NodeNotificationSubscriberImpl(intentCommonService);
         TopologyLinkNotificationSubscriberImpl topologyLinkNotifSubscriber =
-                new TopologyLinkNotificationSubscriberImpl(graphService, mdsalUtils);
+                new TopologyLinkNotificationSubscriberImpl(mdsalUtils);
         TransactionStateNotificationSubscriberImpl stateNotificationSubscriber =
                 new TransactionStateNotificationSubscriberImpl(intentCommonService);
         IntentIspPrefixNotificationSubscriberImpl intentIspSubscriber = new IntentIspPrefixNotificationSubscriberImpl(intentCommonService);

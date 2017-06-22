@@ -80,7 +80,6 @@ public class ListenerProviderImplTest {
         provider = PowerMockito.spy(new ListenerProviderImpl(mockDataBroker,
                 mockNotificationService,
                 mockFlowService,
-                mockGraphService,
                 mockIntentCommonService,
                 mockStateMachineExecutorService));
     }
