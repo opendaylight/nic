@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>odlparent-lite</artifactId>
-        <version>1.9.0</version>
+        <version>2.0.0</version>
         <relativePath/>
     </parent>
 
@@ -30,7 +30,6 @@
         <module>odl-nic-intent-common</module>
         <module>odl-nic-listeners</module>
         <module>features-nic</module>
-        <module>features4-nic</module>
         <module>odl-nic-renderer-vtn</module>
         <module>odl-nic-neutron-integration</module>
         <module>odl-nic-graph</module>
