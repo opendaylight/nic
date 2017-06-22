@@ -105,10 +105,6 @@ public class ListenerProviderImplTest {
                 mock(IntentNotificationSupplierImpl.class);
         IntentNBINotificationSupplierImpl mockIntentNBISupp =
                 mock(IntentNBINotificationSupplierImpl.class);
-        NeutronSecGroupNotificationSupplierImpl mockSecGroupsSupp =
-                mock(NeutronSecGroupNotificationSupplierImpl.class);
-        NeutronSecRuleNotificationSupplierImpl mockSecRulesSupp =
-                mock(NeutronSecRuleNotificationSupplierImpl.class);
         EndpointDiscoveredNotificationSupplierImpl mockEndpointResolver =
                 mock(EndpointDiscoveredNotificationSupplierImpl.class);
         TopologyLinkNotificationSupplierImpl mockLinkSupp =
@@ -128,10 +124,6 @@ public class ListenerProviderImplTest {
                 withAnyArguments().thenReturn(mockIntentSupp);
         PowerMockito.whenNew(IntentNBINotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockIntentNBISupp);
-        PowerMockito.whenNew(NeutronSecGroupNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockSecGroupsSupp);
-        PowerMockito.whenNew(NeutronSecRuleNotificationSupplierImpl.class).
-                withAnyArguments().thenReturn(mockSecRulesSupp);
         PowerMockito.whenNew(EndpointDiscoveredNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockEndpointResolver);
         PowerMockito.whenNew(TopologyLinkNotificationSupplierImpl.class).
