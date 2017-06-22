@@ -23,8 +23,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.Fl
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.IntentStateTransactions;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
 import java.util.ArrayList;
@@ -92,10 +90,6 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new IntentNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<IntentDefinition, IntentNBIAdded, IntentNBIRemoved, IntentNBIUpdated> intentNBISupp =
                 new IntentNBINotificationSupplierImpl(db);
-        NotificationSupplierForItemRoot<SecurityGroup, SecurityGroupAdded, SecurityGroupDeleted, SecurityGroupUpdated> secGroupSupp =
-                new NeutronSecGroupNotificationSupplierImpl(db);
-        NotificationSupplierForItemRoot<SecurityRule, SecurityRuleAdded, SecurityRuleDeleted, SecurityRuleUpdated> secRulesSupp =
-                new NeutronSecRuleNotificationSupplierImpl(db);
         NotificationSupplierForItemRoot<Link, TopologyLinkUp, TopologyLinkDeleted, NicNotification> linkSupp =
                 new TopologyLinkNotificationSupplierImpl(db);
         NotificationSupplierForSingleItem<IntentStateTransactions, IntentStateChanged> intentStateTransactionSupp =
@@ -128,8 +122,6 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(connectorSupp);
         supplierList.add(intentSupp);
         supplierList.add(intentNBISupp);
-        supplierList.add(secGroupSupp);
-        supplierList.add(secRulesSupp);
         supplierList.add(linkSupp);
         supplierList.add(intentStateTransactionSupp);
     }

@@ -140,13 +140,4 @@ public class IntentFlowManagerTest {
         intentFlowManager.setAction(allowAction);
         intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
     }
-
-    @Test (expected = InvalidParameterException.class)
-    public void testPushPortFlowWithouConstraintsShouldDoNothing() {
-        endPointGroups.add(SRC_PORT);
-        endPointGroups.add(DST_PORT);
-
-        intentFlowManager.setAction(allowAction);
-        intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
-    }
 }
