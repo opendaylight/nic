@@ -60,7 +60,6 @@
         <module>intent-mapping-mdsal</module>
         <!--<module>gbp-renderer</module>-->
         <module>vtn-renderer</module>
-        <!--<module>nemo-renderer</module>-->
         <module>of-renderer</module>
         <module>intent-listeners</module>
         <module>neutron-integration</module>

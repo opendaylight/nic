@@ -17,7 +17,6 @@
     <repository>mvn:org.opendaylight.openflowplugin/features-openflowplugin/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.vtn/features-vtn-manager/{{VERSION}}/xml/features</repository>
     <repository> mvn:org.opendaylight.groupbasedpolicy/features-groupbasedpolicy/{{VERSION}}/xml/features</repository>
-    <repository>mvn:org.opendaylight.nemo/nemo-features/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.apache.karaf.cellar/apache-karaf-cellar/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.neutron/features-neutron/{{VERSION}}/xml/features</repository>
     <repository>mvn:org.opendaylight.ovsdb/southbound-features/{{VERSION}}/xml/features</repository>
@@ -93,15 +92,6 @@
         <bundle>mvn:org.opendaylight.nic/mapped-objects-model/{{VERSION}}</bundle>
         <configfile finalname="etc/opendaylight/karaf/91-of-renderer.xml">mvn:org.opendaylight.nic/of-renderer/{{VERSION}}/xml/config</configfile>
     </feature>
-
-    <!-- NEMO Renderer -->
-    <!--<feature name='odl-nic-renderer-nemo' version='${project.version}'  description='OpenDaylight :: Network Intent Composition :: NEMO Renderer'>-->
-        <!--<feature version="${project.version}">odl-nic-core-mdsal</feature>-->
-        <!--<feature version="${nemo.version}">odl-nemo-engine</feature>-->
-        <!--<bundle>mvn:joda-time/joda-time/{{VERSION}}</bundle>-->
-        <!--<bundle>mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}</bundle>-->
-        <!--<configfile finalname="etc/opendaylight/karaf/92-nemo-renderer.xml">mvn:org.opendaylight.nic/nemo-renderer/{{VERSION}}/xml/config</configfile>-->
-    <!--</feature>-->
 
     <!-- Pipeline Manager -->
     <feature name='odl-nic-pipeline-manager' version='${project.version}' description='OpenDaylight :: Network Intent Composition :: OpenFlow Pipeline Manager'>
