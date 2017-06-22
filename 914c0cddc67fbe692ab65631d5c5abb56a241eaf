@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2559ec_fbf8504b",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2017-06-22T23:45:50Z",
+      "side": 1,
+      "message": "I don\u0027t think the name of this flow will be unique right?\nWhat happens if you have more than one flow per intent between the same endpoints groups?",
+      "revId": "914c0cddc67fbe692ab65631d5c5abb56a241eaf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
