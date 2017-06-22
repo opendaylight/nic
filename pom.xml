@@ -63,7 +63,6 @@
         <!--<module>nemo-renderer</module>-->
         <module>of-renderer</module>
         <module>intent-listeners</module>
-        <module>neutron-integration</module>
         <module>intent-statemachine</module>
         <module>features</module>
         <module>artifacts</module>
