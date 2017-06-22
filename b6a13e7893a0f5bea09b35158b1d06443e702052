@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2559ec_5b635c1a",
+        "filename": "bgp-renderer/src/main/java/org/opendaylight/bgp/impl/BGPRouteServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2017-06-22T23:51:20Z",
+      "side": 1,
+      "message": "Nothing to be done during close?",
+      "revId": "b6a13e7893a0f5bea09b35158b1d06443e702052",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
