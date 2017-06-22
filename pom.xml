@@ -56,7 +56,6 @@
         <module>intent-common</module>
         <!--<module>intent-cli</module>-->
         <module>intent-compiler</module>
-        <!--<module>intent-mapping-hazelcast</module>-->
         <module>intent-mapping-mdsal</module>
         <!--<module>gbp-renderer</module>-->
         <!--<module>vtn-renderer</module>-->
