@@ -5,19 +5,19 @@
     <parent>
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>config-parent</artifactId>
-        <version>0.5.4-SNAPSHOT</version>
+        <version>0.5.5-SNAPSHOT</version>
         <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>neutron-integration</artifactId>
-    <version>1.2.4-SNAPSHOT</version>
+    <version>1.2.5-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <properties>
-        <mdsal.version>1.4.4-SNAPSHOT</mdsal.version>
-        <neutron.version>0.7.4-SNAPSHOT</neutron.version>
+        <mdsal.version>1.4.5-SNAPSHOT</mdsal.version>
+        <neutron.version>0.7.5-SNAPSHOT</neutron.version>
     </properties>
     <dependencies>
         <!-- project specific dependency -->

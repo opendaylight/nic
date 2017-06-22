@@ -12,19 +12,19 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.5.4-SNAPSHOT</version>
+  <version>0.5.5-SNAPSHOT</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>utils</artifactId>
- <version>1.2.4-SNAPSHOT</version>
+ <version>1.2.5-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
  <properties>
-  <liblldp.version>0.11.4-SNAPSHOT</liblldp.version>
-  <openflowplugin.version>0.3.4-SNAPSHOT</openflowplugin.version>
+  <liblldp.version>0.11.5-SNAPSHOT</liblldp.version>
+  <openflowplugin.version>0.3.5-SNAPSHOT</openflowplugin.version>
  </properties>
 
  <dependencies>
