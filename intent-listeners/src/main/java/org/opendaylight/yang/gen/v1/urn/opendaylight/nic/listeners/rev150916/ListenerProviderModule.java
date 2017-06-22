@@ -1,11 +1,9 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.listeners.rev150916;
 
 import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
-import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.listeners.impl.ListenerProviderImpl;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
-import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -36,14 +34,10 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
                 getServiceReference(OFRendererFlowService.class);
         OFRendererFlowService flowService = (OFRendererFlowService) context.
                 getService(ofServiceReference);
-        ServiceReference<?> graphServiceReference = context.
-                getServiceReference(OFRendererGraphService.class);
         ServiceReference<?> intentCommonReference = context.
                 getServiceReference(IntentCommonProviderService.class);
         ServiceReference<?> stateMachineExecutorServiceReference = context.
                 getServiceReference(IntentStateMachineExecutorService.class);
-        OFRendererGraphService graphService = (OFRendererGraphService) context
-                .getService(graphServiceReference);
         IntentCommonProviderService intentCommonProviderService = (IntentCommonProviderService) context
                 .getService(intentCommonReference);
         IntentStateMachineExecutorService stateMachineExecutorService = (IntentStateMachineExecutorService) context
@@ -52,7 +46,6 @@ public class ListenerProviderModule extends org.opendaylight.yang.gen.v1.urn.ope
         final ListenerProviderImpl provider = new ListenerProviderImpl(getDataBrokerDependency(),
                 getNotificationAdapterDependency(),
                 flowService,
-                graphService,
                 intentCommonProviderService.retrieveCommonServiceInstance(),
                 stateMachineExecutorService);
         provider.start();
