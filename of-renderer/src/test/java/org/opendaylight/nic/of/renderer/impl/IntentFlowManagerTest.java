@@ -27,7 +27,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +57,6 @@ public class IntentFlowManagerTest {
 
     private static final String SRC_END_POINT = "60:6c:66:8b:bb:e5";
     private static final String DST_END_POINT = "60:6c:66:8b:bb:e6";
-    private static final String SRC_PORT = "01";
-    private static final String DST_PORT = "02";
     private static final String INTENT_ID = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
 
     @Before
@@ -136,15 +133,6 @@ public class IntentFlowManagerTest {
     public void testPushAddAllowFlow() {
         endPointGroups.add(SRC_END_POINT);
         endPointGroups.add(DST_END_POINT);
-
-        intentFlowManager.setAction(allowAction);
-        intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
-    }
-
-    @Test (expected = InvalidParameterException.class)
-    public void testPushPortFlowWithouConstraintsShouldDoNothing() {
-        endPointGroups.add(SRC_PORT);
-        endPointGroups.add(DST_PORT);
 
         intentFlowManager.setAction(allowAction);
         intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
