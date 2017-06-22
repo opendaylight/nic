@@ -11,7 +11,7 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent-lite</artifactId>
-    <version>1.9.0</version>
+    <version>2.0.0</version>
     <relativePath/>
   </parent>
 
@@ -128,13 +128,13 @@
     <version>${project.version}</version>
    </dependency>
    <!--Karaf 3-->
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>features-nic</artifactId>
-    <classifier>features</classifier>
-    <type>xml</type>
-    <version>${project.version}</version>
-   </dependency>
+   <!--<dependency>-->
+    <!--<groupId>${project.groupId}</groupId>-->
+    <!--<artifactId>features-nic</artifactId>-->
+    <!--<classifier>features</classifier>-->
+    <!--<type>xml</type>-->
+    <!--<version>${project.version}</version>-->
+   <!--</dependency>-->
   </dependencies>
  </dependencyManagement>
 

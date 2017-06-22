@@ -14,7 +14,7 @@
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>odlparent</artifactId>
-    <version>1.9.0</version>
+    <version>2.0.0</version>
     <relativePath/>
   </parent>
 
@@ -55,7 +55,7 @@
         <module>utils</module>
         <module>intent-common</module>
         <!--<module>intent-cli</module>-->
-        <module>intent-compiler</module>
+        <!--<module>intent-compiler</module>-->
         <!--<module>intent-mapping-hazelcast</module>-->
         <module>intent-mapping-mdsal</module>
         <!--<module>gbp-renderer</module>-->
