@@ -14,8 +14,10 @@
         <groupId>org.opendaylight.controller</groupId>
         <artifactId>config-parent</artifactId>
         <version>0.7.0-SNAPSHOT</version>
-        <relativePath />
+        <relativePath/>
     </parent>
+
+    <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
