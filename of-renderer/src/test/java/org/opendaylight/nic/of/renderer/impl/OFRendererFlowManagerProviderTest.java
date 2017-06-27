@@ -246,7 +246,7 @@ public class OFRendererFlowManagerProviderTest {
         when(bundleContext.registerService(OFRendererFlowService.class,
                 ofRendererFlowManagerProvider, null))
                         .thenReturn(serviceRegistration);
-        ofRendererFlowManagerProvider.init();
+        ofRendererFlowManagerProvider.start();
         ofRendererFlowManagerProvider.close();
     }
 
@@ -266,7 +266,7 @@ public class OFRendererFlowManagerProviderTest {
 
         when(intent.getConstraints()).thenReturn(contraintsList);
 
-        ofRendererFlowManagerProvider.init();
+        ofRendererFlowManagerProvider.start();
 
         Assert.assertTrue(ofRendererFlowManagerProvider.isQoS(intent));
     }
@@ -287,7 +287,7 @@ public class OFRendererFlowManagerProviderTest {
 
         when(intent.getConstraints()).thenReturn(contraintsList);
 
-        ofRendererFlowManagerProvider.init();
+        ofRendererFlowManagerProvider.start();
         Assert.assertFalse(ofRendererFlowManagerProvider.isQoS(intent));
     }
 
@@ -308,7 +308,7 @@ public class OFRendererFlowManagerProviderTest {
 
         when(intent.getConstraints()).thenReturn(contraintsList);
 
-        ofRendererFlowManagerProvider.init();
+        ofRendererFlowManagerProvider.start();
         Assert.assertFalse(ofRendererFlowManagerProvider.isQoS(intent));
     }
 
@@ -438,7 +438,7 @@ public class OFRendererFlowManagerProviderTest {
 
         when(intent.getConstraints()).thenReturn(contraintsList);
 
-        ofRendererFlowManagerProvider.init();
+        ofRendererFlowManagerProvider.start();
 
         when(intent.getQosConfig()).thenReturn(null);
 
@@ -489,7 +489,7 @@ public class OFRendererFlowManagerProviderTest {
         PowerMockito.whenNew(RedirectExecutor.class).withAnyArguments()
                 .thenReturn(redirectExecutor);
 
-        ofRendererFlowManagerProvider.init();
+        ofRendererFlowManagerProvider.start();
 
         when(intent.getQosConfig()).thenReturn(null);
 
@@ -529,7 +529,7 @@ public class OFRendererFlowManagerProviderTest {
         PowerMockito.doNothing().when(defaultExecutor).execute(intent,
                 flowAction);
 
-        ofRendererFlowManagerProvider.init();
+        ofRendererFlowManagerProvider.start();
 
         when(intent.getQosConfig()).thenReturn(null);
 

@@ -19,6 +19,11 @@ import java.util.concurrent.Future;
 public interface MeterQueueService {
 
     /**
+     * Start Meter Queue services
+     */
+    void start();
+
+    /**
      * Get the next {@link org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId} value
      * using the Genius's {@link org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService}
      * @param dataflowId
@@ -35,4 +40,9 @@ public interface MeterQueueService {
      * @return the {@link Future} as response
      */
     Future<RpcResult<Void>> releaseMeterId(String id);
+
+    /**
+     * Stop Meter Queue services
+     */
+    void stop();
 }

@@ -88,7 +88,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         this.idManagerService = idManagerService;
     }
 
-    public void init() {
+    @Override
+    public void start() {
         LOG.info("OF Renderer Provider Session Initiated");
         // Register this service with karaf
         final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
@@ -323,5 +324,14 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
 
         return contentMap == null ? new HashMap<>() : contentMap;
+    }
+
+    @Override
+    public void stop() {
+        try {
+            close();
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
     }
 }

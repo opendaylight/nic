@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
+import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.nic.of.renderer.api.MeterQueueService;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.AllocateIdInputBuilder;
@@ -33,6 +34,11 @@ public class MeterQueueServiceImpl implements MeterQueueService {
 
     public MeterQueueServiceImpl(final IdManagerService idManagerService) {
         this.idManagerService = idManagerService;
+    }
+
+    @Override
+    public void start() {
+        //TODO: Implement a startup action for Meters
     }
 
     @Override
@@ -66,5 +72,10 @@ public class MeterQueueServiceImpl implements MeterQueueService {
             LOG.error(e.getMessage());
         }
         return releaseResult;
+    }
+
+    @Override
+    public void stop() {
+        //TODO: Implement functionality to release all Meter IDs
     }
 }
