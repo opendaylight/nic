@@ -1,0 +1,109 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module ethernet-service-types {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:network:mapping:ethernet:service:type";
+    prefix "ethernet-service-types";
+
+    revision "2017-06-14" {
+        description "Initial revision";
+    }
+
+    grouping ethernet-service-types {
+        description "Represents the variety of Internet connection types.";
+    }
+
+    grouping isp {
+        description "Represents an Internet Service Provider.";
+    }
+
+    grouping dia {
+        description "Represents a Direct Internet Access.";
+    }
+
+    grouping point-to-point {
+        description "Represents a Point-to-Point ethernet service. ";
+
+        leaf type {
+            type enumeration {
+                enum "CIRCUIT" {
+                    value "0";
+                }
+
+                enum "EPL" {
+                    value "1";
+                }
+            }
+        }
+    }
+
+    grouping metro-ethernet {
+        description "Represents a Metro Ethernet service.";
+    }
+
+    grouping multi-point-l2 {
+        description "Represents a Multi Point Layer 2 service.";
+
+        leaf multi-point-type {
+            type enumeration {
+                enum "VPLS" {
+                    value "0";
+                }
+
+                enum "EVPN" {
+                    value "1";
+                }
+            }
+        }
+
+    }
+
+    grouping internet-exchange {
+        description "Represents an Internet Exchange service.";
+    }
+
+    grouping optical {
+        description "Represents an Optical service.";
+
+        leaf optical-type {
+            type enumeration {
+                enum "DWDM" {
+                    value "0";
+                }
+
+                enum "CWDM" {
+                    value "1";
+                }
+            }
+        }
+
+        leaf protection {
+            type enumeration {
+                enum "PROTECTED" {
+                    value "0";
+                }
+
+                enum "UNPROTECTED" {
+                    value "1";
+                }
+            }
+        }
+
+        leaf optical-property {
+            type enumeration {
+                enum "DARK-FIBER" {
+                    value "0";
+                }
+
+                enum "LAMBDA" {
+                    value "1";
+                }
+            }
+        }
+    }
+}

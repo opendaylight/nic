@@ -44,12 +44,13 @@ public class BGPDataFlowListernerImpl implements BGPDataFlowListenerService {
         final DataTreeIdentifier dataTreeIdentifier = new DataTreeIdentifier(
                 LogicalDatastoreType.CONFIGURATION,
                 Utils.BGP_DATAFLOW_IDENTIFIER);
+        LOG.info("\n##### Registering to listen for BGP DataFlows.");
         this.dataflowListenerRegistration = dataBroker.registerDataTreeChangeListener(dataTreeIdentifier, this);
     }
 
     @Override
     public void onDataTreeChanged(@Nonnull Collection<DataTreeModification<BgpDataflow>> collection) {
-        LOG.info("\nBGPDataflow received.");
+        LOG.info("\n### BGP Dataflow received.");
         collection.iterator().forEachRemaining(consumer -> {
             final BgpDataflow bgpDataflow = consumer.getRootNode().getDataAfter();
             bgpRendererService.advertiseRoute(bgpDataflow);
@@ -59,5 +60,6 @@ public class BGPDataFlowListernerImpl implements BGPDataFlowListenerService {
     @Override
     public void stop() {
         dataflowListenerRegistration.close();
+        bgpRendererService.stop();
     }
 }

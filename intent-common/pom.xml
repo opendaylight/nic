@@ -80,5 +80,15 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <artifactId>intent-statemachine</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>network-mapping</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>bgp-renderer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

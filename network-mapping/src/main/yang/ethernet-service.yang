@@ -1,0 +1,117 @@
+//---------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//---------------------------------------------------------------------------
+module ethernet-service {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:network:mapping:ethernet:service";
+    prefix "ethernet-service";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import ietf-inet-types { prefix "inet"; }
+    import router-info { prefix router-info; revision-date 2017-06-13; }
+    import ethernet-service-types { prefix ethernet-service-types; revision-date 2017-06-14; }
+    import router-info { prefix router-info; revision-date 2017-06-13; }
+
+    description
+        "This section contains information about Ethernet Services. ISP (Internet Service Provider) or DIA (Direct
+        Internet Access).";
+
+    revision "2017-06-13" {
+        description "Initial revision.";
+    }
+
+    grouping ethernet-service {
+
+        leaf router-group-id {
+            type types:uuid;
+            mandatory true;
+            description "Defines the group of routers used by this Ethernet Service.";
+        }
+
+        leaf name {
+            type string;
+            mandatory true;
+            description "Ethernet Service Name";
+        }
+
+        leaf circuit-id {
+            type string;
+            mandatory true;
+            description "Company specific identifier. Basic Telecon ID formats: AAAAA/BBBBBB/CCCCCCCCCCC/DDDDDDDDDDD";
+        }
+
+        leaf asn {
+            type string;
+            mandatory true;
+            description "Autonomous System Number.";
+        }
+
+        leaf service-speed {
+            type uint32;
+            mandatory true;
+            description "ISP Service speed in Gigabytes.";
+        }
+
+        list isp-service-type {
+            key "order";
+            leaf order {
+                type uint8;
+            }
+
+            choice ethernet-service-types {
+                case isp {
+                        container isp {
+                            uses ethernet-service-types:isp;
+                        }
+                    }
+
+                    case dia {
+                        container dia {
+                            uses ethernet-service-types:dia;
+                        }
+                    }
+
+                    case point-to-point {
+                        container point-to-point {
+                            uses ethernet-service-types:point-to-point;
+                        }
+                    }
+
+                    case metro-ethernet {
+                        container metro-ethernet {
+                            uses ethernet-service-types:metro-ethernet;
+                        }
+                    }
+
+                    case multi-point-l2 {
+                        container multi-point-l2 {
+                            uses ethernet-service-types:multi-point-l2;
+                        }
+                    }
+
+                    case internet-exchange {
+                        container internet-exchange {
+                            uses ethernet-service-types:internet-exchange;
+                        }
+                    }
+
+                    case optical {
+                        container optical {
+                            uses ethernet-service-types:optical;
+                        }
+                    }
+            }
+        }
+    }
+
+    container ethernet-services {
+        list ethernet-service {
+            key "name";
+            uses ethernet-service;
+        }
+    }
+}

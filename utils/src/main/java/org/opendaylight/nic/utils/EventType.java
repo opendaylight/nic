@@ -107,5 +107,11 @@ public enum EventType {
     /** Indicates a new attempt to remove a given Intent */
     INTENT_REMOVE_ATTEMPT,
     /** Indicates that a given Intent was removed with inconsistencies */
-    INTENT_DISABLED_WITH_INCONSISTENCIES
+    INTENT_DISABLED_WITH_INCONSISTENCIES,
+    /** Indicates that a given Intent for Internet Service Providers was created */
+    INTENT_ISP_ADDED,
+    /** Indicates that a given Intent for Internet Service Providers was updated */
+    INTENT_ISP_UPDATED,
+    /** Indicates that a given Intent for Internet Service Providers was removed */
+    INTENT_ISP_REMOVED
 }

@@ -10,6 +10,7 @@ package org.opendaylight.nic.common.transaction.utils;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.CheckedFuture;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
@@ -17,17 +18,34 @@ import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.nic.bgp.utils.Utils;
 import org.opendaylight.nic.common.transaction.exception.RemoveDataflowException;
-import org.opendaylight.nic.utils.exceptions.PushDataflowException;
 import org.opendaylight.nic.common.transaction.exception.RemoveDelayconfigException;
 import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
+import org.opendaylight.nic.utils.exceptions.PushDataflowException;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.IntentIspPrefixes;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentsLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.EthernetServices;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetServiceKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.RouterGroups;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroupKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.RouterInfos;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfo;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfoKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.Dataflows;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.DataflowsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
@@ -37,13 +55,13 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.conf
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.DelayConfigsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfigKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class CommonUtils {
@@ -51,6 +69,9 @@ public class CommonUtils {
     private static final Logger LOG = LoggerFactory.getLogger(CommonUtils.class);
     private final InstanceIdentifier<Dataflows> DATAFLOW_IID = InstanceIdentifier.create(Dataflows.class);
     private final InstanceIdentifier<DelayConfigs> DELAY_CONFIGS_IID = InstanceIdentifier.create(DelayConfigs.class);
+    private final InstanceIdentifier<EthernetServices> ETHERNET_SERVICES_IID = InstanceIdentifier.create(EthernetServices.class);
+    private final InstanceIdentifier<RouterGroups> ROUTER_GROUPS_IID = InstanceIdentifier.create(RouterGroups.class);
+    private final InstanceIdentifier<RouterInfos> ROUTER_INFO_IID = InstanceIdentifier.create(RouterInfos.class);
     private DataBroker dataBroker;
 
     public CommonUtils(DataBroker dataBroker) {
@@ -101,6 +122,34 @@ public class CommonUtils {
         intentLimiters.forEach(intentLimiter -> {
             if (intentLimiter.getId().getValue().equals(id)) {
                 result.add(intentLimiter);
+            }
+        });
+        return result.iterator().next();
+    }
+
+    public List<IntentIspPrefix> retrieveIntentIspPrefixes() {
+        List<IntentIspPrefix> listOfIntents = Lists.newArrayList();
+        try {
+            ReadOnlyTransaction tx = dataBroker.newReadOnlyTransaction();
+            Optional<IntentIspPrefixes> intents = tx.read(LogicalDatastoreType.CONFIGURATION,
+                    IntentUtils.INTENT_ISP_PREFIX_IID).checkedGet();
+            if (intents.isPresent()) {
+                listOfIntents = intents.get().getIntentIspPrefix();
+            } else {
+                LOG.error("\nIntentISPPrefixes was empty!");
+            }
+        } catch (Exception e) {
+            LOG.error("\nList IntentIspPrefixes failed: {}", e.getMessage());
+        }
+        return listOfIntents;
+    }
+
+    public IntentIspPrefix retrieveIntentIspPrefix(final String id) {
+        final List<IntentIspPrefix> intentIspPrefixes = retrieveIntentIspPrefixes();
+        List<IntentIspPrefix> result = Lists.newArrayList();
+        intentIspPrefixes.forEach(intentIspPrefix -> {
+            if (intentIspPrefix.getId().getValue().equals(id)) {
+                result.add(intentIspPrefix);
             }
         });
         return result.iterator().next();
@@ -243,6 +292,116 @@ public class CommonUtils {
         dataflowBuilder.setStatus(Dataflow.Status.PROCESSING);
         dataflowBuilder.setIsRefreshable(true);
         return dataflowBuilder.build();
+    }
+
+    public Map<Ipv4Address, BgpDataflow> createBGPDataFlow(final IntentIspPrefix intent) throws IntentInvalidException {
+        final EthernetService ethernetService = retrieveEthernetServiceBy(intent.getIspName());
+        final Map<Ipv4Address, BgpDataflow> bgpDataflowByPeerIp = Maps.newConcurrentMap();
+
+        retrieveRouterInfosByRouterGroup(ethernetService.getRouterGroupId().getValue()).forEach(routerInfo -> {
+            BgpDataflowBuilder dataflowBuilder = new BgpDataflowBuilder();
+            dataflowBuilder.setId(intent.getId());
+            dataflowBuilder.setPrefix(intent.getPrefix());
+            dataflowBuilder.setGlobalIp(Ipv4Address.getDefaultInstance(routerInfo.getServicePeerIp()));
+            dataflowBuilder.setPathId(routerInfo.getPeerPathId());
+
+            bgpDataflowByPeerIp.put(Ipv4Address.getDefaultInstance(
+                    routerInfo.getServicePeerIp()), dataflowBuilder.build());
+        });
+        return bgpDataflowByPeerIp;
+    }
+
+    public BgpDataflows retrieveBgpDataflowTree() {
+        BgpDataflows result = null;
+        try {
+            final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+            Optional<BgpDataflows> bgpDataflowsOptional = transaction.read(
+                    LogicalDatastoreType.CONFIGURATION,
+                    Utils.BGP_DATAFLOW_IDENTIFIER).checkedGet();
+            if (bgpDataflowsOptional.isPresent()) {
+                result = bgpDataflowsOptional.get();
+            }
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public void pushBgpDataflow(final BgpDataflow bgpDataflow) {
+        try {
+            final BgpDataflows bgpDataflowTree = retrieveBgpDataflowTree();
+            bgpDataflowTree.getBgpDataflow().add(bgpDataflow);
+            final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
+            writeTransaction.put(LogicalDatastoreType.CONFIGURATION, Utils.BGP_DATAFLOW_IDENTIFIER, bgpDataflowTree);
+            writeTransaction.submit();
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
+    }
+
+    public EthernetService retrieveEthernetServiceBy(final String name) {
+        EthernetService result = null;
+        final InstanceIdentifier<EthernetService> identifier = ETHERNET_SERVICES_IID
+                .child(EthernetService.class, new EthernetServiceKey(name));
+        try {
+            final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+            final Optional<EthernetService> ethernetServiceOptional = transaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            if (ethernetServiceOptional.isPresent()) {
+                result = ethernetServiceOptional.get();
+            }
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public List<EthernetService> retrieveEthernetServices() {
+        final List<EthernetService> result = Lists.newArrayList();
+        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+        try {
+            Optional<EthernetServices> optional = transaction.read(
+                    LogicalDatastoreType.CONFIGURATION,
+                    ETHERNET_SERVICES_IID).checkedGet();
+            if (optional.isPresent()) {
+                result.addAll(optional.get().getEthernetService());
+            }
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public List<RouterInfo> retrieveRouterInfosByRouterGroup(final String id) {
+        List<RouterInfo> result = Lists.newArrayList();
+        final InstanceIdentifier<RouterGroup> identifier = ROUTER_GROUPS_IID
+                .child(RouterGroup.class, new RouterGroupKey(Uuid.getDefaultInstance(id)));
+        ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+        try {
+            final Optional<RouterGroup> routerGroupOptional = transaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            final RouterGroup routerGroup = routerGroupOptional.get();
+            routerGroup.getRoutersId().forEach(routerId ->
+                    result.add(retrieveRouterInfoBy(routerId.getRouterId().getValue())));
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    private RouterInfo retrieveRouterInfoBy(final String id) {
+        RouterInfo result = null;
+        final InstanceIdentifier<RouterInfo> identifier = ROUTER_INFO_IID
+                .child(RouterInfo.class, new RouterInfoKey(Uuid.getDefaultInstance(id)));
+        ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+        try {
+            final Optional<RouterInfo> routerInfoOptional = transaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            result = routerInfoOptional.get();
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
     }
 
     public static void waitUnlock() {

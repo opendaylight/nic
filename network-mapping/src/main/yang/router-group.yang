@@ -1,0 +1,36 @@
+//---------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//---------------------------------------------------------------------------
+module router-group {
+    yang-version 1;
+    namespace "urn:opendaylight:nic:network:mapping:router:group";
+    prefix "router-group";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+
+    grouping router-group {
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifier for Router Group.";
+        }
+
+        list routers-id {
+            key "router-id";
+            leaf router-id {
+                type types:uuid;
+            }
+        }
+    }
+
+    container router-groups {
+        list router-group {
+            key "id";
+            uses router-group;
+        }
+    }
+}

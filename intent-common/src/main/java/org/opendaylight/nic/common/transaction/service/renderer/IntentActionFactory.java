@@ -42,7 +42,12 @@ public class IntentActionFactory {
         return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
     }
 
-    public OFRendererService buildBasicRendererService() {
+    public IntentLifeCycleService buildIntentIspPrefixService() {
+        final RendererService rendererService = new BGPServiceImpl(commonUtils);
+        return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
+    }
+
+    public OFRendererService buildBasicOFRendererService() {
         if (ofRendererService == null) {
             ofRendererService = new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService);
         }

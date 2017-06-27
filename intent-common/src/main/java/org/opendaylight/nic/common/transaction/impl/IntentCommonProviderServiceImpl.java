@@ -9,7 +9,8 @@
 package org.opendaylight.nic.common.transaction.impl;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.common.transaction.api.*;
+import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
+import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.osgi.framework.BundleContext;
@@ -24,6 +25,7 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
     protected BundleContext context;
     private ServiceRegistration<IntentCommonProviderService> commonServiceRegistration;
     private IntentCommonService commonService;
+
 
     public IntentCommonProviderServiceImpl(final DataBroker dataBroker,
                                            final OFRendererFlowService ofRendererFlowService,
@@ -41,7 +43,10 @@ public class IntentCommonProviderServiceImpl implements IntentCommonProviderServ
 
     @Override
     public IntentCommonService retrieveCommonServiceInstance() {
-        commonService = new IntentCommonServiceManager(dataBroker, ofRendererFlowService, stateMachineService);
+        commonService = new IntentCommonServiceManager(
+                dataBroker,
+                ofRendererFlowService,
+                stateMachineService);
         commonService.init();
         return commonService;
     }
