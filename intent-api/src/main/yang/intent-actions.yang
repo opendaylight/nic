@@ -49,4 +49,14 @@ module intent-actions {
         uses action;
         description "Indicates log in the traffic";
     }
+
+    grouping should-enter {
+        uses action;
+        description "Indicates traffic should enter to a given device.";
+    }
+
+    grouping should-exit {
+        uses action;
+        description "Indicates traffic should exit from a given device.";
+    }
 }

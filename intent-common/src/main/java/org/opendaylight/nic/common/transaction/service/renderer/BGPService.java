@@ -6,16 +6,13 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.bgp.api;
+package org.opendaylight.nic.common.transaction.service.renderer;
 
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
 
 /**
- * Service to manage BGP
+ * Created by yrineu on 19/06/17.
  */
-public interface BGPRendererService {
+public interface BGPService extends RendererService<BgpDataflow> {
 
-    void advertiseRoute(BgpDataflow bgpDataflow);
-
-    void stop();
 }

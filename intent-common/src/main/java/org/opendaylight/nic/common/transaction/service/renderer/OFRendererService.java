@@ -9,11 +9,12 @@ package org.opendaylight.nic.common.transaction.service.renderer;
 
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
 
 /**
  * Service for OpenFlow renderer
  */
-public interface OFRendererService extends RendererService {
+public interface OFRendererService extends RendererService<Dataflow> {
 
     /**
      * Create LLDP flows using the OpenFlow renderer

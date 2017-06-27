@@ -23,9 +23,9 @@ public interface IntentCommonService {
     /**
      * Extract and apply IntentLimiter. That Intent is used to
      * create Intents with meters
-     * @param intentLimiter
+     * @param intent as an {@link Object}
      */
-    void resolveAndApply(final IntentLimiter intentLimiter);
+    void resolveAndApply(final Object intent);
 
     /**
      * Apply Intents for a given NodeId

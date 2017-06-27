@@ -1,5 +1,6 @@
 package org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.common.rev160530;
 
+import org.opendaylight.nic.bgp.api.BGPRendererService;
 import org.opendaylight.nic.common.transaction.api.IntentCommonProviderService;
 import org.opendaylight.nic.common.transaction.impl.IntentCommonProviderServiceImpl;
 import org.opendaylight.nic.engine.IntentStateMachineExecutorService;

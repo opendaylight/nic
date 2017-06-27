@@ -21,6 +21,7 @@ import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.yang.gen.v1.urn.onf.intent.nbi.rev160920.intent.definitions.IntentDefinition;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNodeConnector;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.groups.attributes.security.groups.SecurityGroup;
@@ -100,6 +101,8 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new TopologyLinkNotificationSupplierImpl(db);
         NotificationSupplierForSingleItem<IntentStateTransactions, IntentStateChanged> intentStateTransactionSupp =
                 new TransactionStateNotificationSuplierImpl(db);
+        NotificationSupplierForItemRoot<IntentIspPrefix, IntentIspPrefixAdded, IntentIspPrefixRemoved, IntentIspPrefixUpdated> intentIspSupp =
+                new IntentIspPrefixNotificationSupplierImpl(db);
         endpointResolver = new EndpointDiscoveredNotificationSupplierImpl(notificationService);
 
         // Event listeners
@@ -114,6 +117,7 @@ public class ListenerProviderImpl implements AutoCloseable {
                 new TopologyLinkNotificationSubscriberImpl(graphService, mdsalUtils);
         TransactionStateNotificationSubscriberImpl stateNotificationSubscriber =
                 new TransactionStateNotificationSubscriberImpl(intentCommonService);
+        IntentIspPrefixNotificationSubscriberImpl intentIspSubscriber = new IntentIspPrefixNotificationSubscriberImpl(intentCommonService);
         serviceRegistry.registerEventListener((IEventService) intentLimiterSupp, intentLimiterListener);
         serviceRegistry.registerEventListener((IEventService) intentSupp, intentListener);
         serviceRegistry.registerEventListener((IEventService) intentNBISupp, intentNBIListener);
@@ -121,6 +125,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         serviceRegistry.registerEventListener(endpointResolver, endpointDiscoverySubscriber);
         serviceRegistry.registerEventListener((IEventService) linkSupp, topologyLinkNotifSubscriber);
         serviceRegistry.registerEventListener((IEventService) intentStateTransactionSupp, stateNotificationSubscriber);
+        serviceRegistry.registerEventListener((IEventService) intentIspSupp, intentIspSubscriber);
 
         supplierList = new ArrayList<>();
         supplierList.add(intentLimiterSupp);
@@ -132,6 +137,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(secRulesSupp);
         supplierList.add(linkSupp);
         supplierList.add(intentStateTransactionSupp);
+        supplierList.add(intentIspSupp);
     }
 
     @Override

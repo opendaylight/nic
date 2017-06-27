@@ -10,11 +10,12 @@ package org.opendaylight.nic.common.transaction.service.renderer;
 
 import org.opendaylight.nic.common.transaction.exception.RendererServiceException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
+import org.opendaylight.yangtools.yang.binding.DataObject;
 
 /**
  * Abstract renderer service
  */
-public interface RendererService {
+public interface RendererService<T extends DataObject>{
 
     /**
      * Evaluate an action for Intent
@@ -41,5 +42,5 @@ public interface RendererService {
      * {@link org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentLimiter}
      * @param dataflow the {@link Dataflow}
      */
-    void execute(Dataflow dataflow);
+    void execute(T dataflow);
 }

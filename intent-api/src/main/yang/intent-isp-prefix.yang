@@ -1,0 +1,70 @@
+//---------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//---------------------------------------------------------------------------
+module intent-isp-prefix {
+    yang-version 1;
+    namespace "urn:opendaylight:intent:isp:prefix";
+    prefix "intent-isp-prefix";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import ietf-inet-types { prefix "inet"; }
+    import intent-actions { prefix actions; revision-date 2015-01-22; }
+
+    description
+        "Represents an Intent to manipulate routes through different Internet Service Providers. This Intent depends of
+         Internet Service Provider information. Please, make sure to populate information regarding ISPs before.";
+
+    revision 2017-06-15 {
+        description "Initial revision";
+    }
+
+    grouping intent-isp-prefix {
+        leaf id {
+            type types:uuid;
+            mandatory true;
+            description "Uniquely identifier for Intent-ISP";
+        }
+
+        leaf isp-name {
+            type string;
+            mandatory true;
+            description "ISP identifier.";
+        }
+
+        leaf prefix {
+            type inet:ipv4-prefix;
+            mandatory true;
+        }
+
+        list actions {
+            key "order";
+            leaf order {
+                type uint8;
+            }
+            choice action {
+                case should-enter {
+                    container should-enter {
+                        uses actions:should-enter;
+                    }
+                }
+                case should-exit {
+                    container should-exit {
+                        uses actions:should-exit;
+                    }
+                }
+            }
+            description "Defines the action that should be taken by this Intent. (Should-Enter/Should-Exit)";
+        }
+    }
+
+    container intent-isp-prefixes {
+        list intent-isp-prefix {
+            key "id";
+            uses intent-isp-prefix;
+        }
+    }
+}

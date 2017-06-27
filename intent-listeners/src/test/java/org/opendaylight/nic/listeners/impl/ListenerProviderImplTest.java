@@ -119,6 +119,8 @@ public class ListenerProviderImplTest {
                 mock(IntentLimiterNotificationSupplierImpl.class);
         TransactionStateNotificationSuplierImpl mockTransactionStateSupp =
                 mock(TransactionStateNotificationSuplierImpl.class);
+        IntentIspPrefixNotificationSupplierImpl mockIspPrefixSupp =
+                mock(IntentIspPrefixNotificationSupplierImpl.class);
 
         PowerMockito.whenNew(NodeNotificationSupplierImpl.class).
                 withAnyArguments().thenReturn(mockNodeSupp);
@@ -142,6 +144,8 @@ public class ListenerProviderImplTest {
                 withAnyArguments().thenReturn(mockIntentLimiterSupp);
         PowerMockito.whenNew(TransactionStateNotificationSuplierImpl.class).
                 withAnyArguments().thenReturn(mockTransactionStateSupp);
+        PowerMockito.whenNew(IntentIspPrefixNotificationSupplierImpl.class).
+                withAnyArguments().thenReturn(mockIspPrefixSupp);
 
         provider.start();
 
@@ -156,7 +160,7 @@ public class ListenerProviderImplTest {
                 eq(mockEndpointResolver), Mockito.any(EndpointDiscoveryNotificationSubscriberImpl.class));
         verify(mockRegistryServiceImpl).registerEventListener(
                 eq(mockLinkSupp), Mockito.any(TopologyLinkNotificationSubscriberImpl.class));
-        verify(mockSupplierList,times(9)).add(Mockito.any(NotificationSupplierDefinition.class));
+        verify(mockSupplierList,times(10)).add(Mockito.any(NotificationSupplierDefinition.class));
 
     }
 }

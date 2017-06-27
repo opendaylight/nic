@@ -73,6 +73,7 @@
         <module>bgp-renderer</module>
         <module>renderer-api</module>
         <module>pub-sub-manager</module>
+        <module>network-mapping</module>
     </modules>
 
     <build>
