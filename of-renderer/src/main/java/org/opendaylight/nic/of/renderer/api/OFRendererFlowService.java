@@ -18,6 +18,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.Meter
 public interface OFRendererFlowService {
 
     /**
+     * Start OFRenderer Flow Services
+     */
+    void start();
+
+    /**
      * Push OF rules to add an Intent
      * @param intent The {@link Intent} that has been created
      * @param flowAction The {@link FlowAction} (Add or Remove)
@@ -69,4 +74,9 @@ public interface OFRendererFlowService {
      * @throws PushDataflowException
      */
     void removeMeter(Long meterId, String dataflowId) throws PushDataflowException;
+
+    /**
+     * Stop OF Renderer services.
+     */
+    void stop();
 }

@@ -35,7 +35,7 @@ public class OFRendererProviderModule extends org.opendaylight.yang.gen.v1.urn.o
                         getIntentMappingInterfaceDependency(),
                         getNotificationServiceDependency(),
                         idManagerService);
-        provider.init();
+        provider.start();
         return () -> provider.close();
     }
 
