@@ -36,13 +36,13 @@
                 <type>xml</type>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>intent-impl</artifactId>
-                <classifier>features</classifier>
-                <type>xml</type>
-                <version>${project.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>${project.groupId}</groupId>-->
+                <!--<artifactId>intent-impl</artifactId>-->
+                <!--<classifier>features</classifier>-->
+                <!--<type>xml</type>-->
+                <!--<version>${project.version}</version>-->
+            <!--</dependency>-->
             <!--<dependency>-->
             <!--<groupId>${project.groupId}</groupId>-->
             <!--<artifactId>intent-cli</artifactId>-->
@@ -85,13 +85,13 @@
                 <type>xml</type>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>intent-mapping</artifactId>
-                <classifier>features</classifier>
-                <type>xml</type>
-                <version>${project.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>${project.groupId}</groupId>-->
+                <!--<artifactId>intent-mapping</artifactId>-->
+                <!--<classifier>features</classifier>-->
+                <!--<type>xml</type>-->
+                <!--<version>${project.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>intent-graph</artifactId>
@@ -99,13 +99,13 @@
                 <type>xml</type>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>mapped-objects-model</artifactId>
-                <classifier>features</classifier>
-                <type>xml</type>
-                <version>${project.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>${project.groupId}</groupId>-->
+                <!--<artifactId>mapped-objects-model</artifactId>-->
+                <!--<classifier>features</classifier>-->
+                <!--<type>xml</type>-->
+                <!--<version>${project.version}</version>-->
+            <!--</dependency>-->
             <!--Karaf 3-->
             <dependency>
                 <groupId>${project.groupId}</groupId>
