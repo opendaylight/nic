@@ -57,7 +57,6 @@
         <!--<module>intent-cli</module>-->
         <module>intent-compiler</module>
         <module>intent-mapping-mdsal</module>
-        <!--<module>gbp-renderer</module>-->
         <module>of-renderer</module>
         <module>intent-listeners</module>
         <module>neutron-integration</module>
