@@ -34,7 +34,7 @@ public class IntentStateMachineExecutor implements IntentStateMachineExecutorSer
     }
 
     @Override
-    public void init() {
+    public void start() {
         LOG.info("Intent State Machine Session Initiated.");
         BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
         nicStateMachineServiceRegistration = context.registerService(IntentStateMachineExecutorService.class, this, null);
@@ -85,5 +85,14 @@ public class IntentStateMachineExecutor implements IntentStateMachineExecutorSer
     @Override
     public void close() throws Exception {
         nicStateMachineServiceRegistration.unregister();
+    }
+
+    @Override
+    public void stop() {
+        try {
+            close();
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
     }
 }
