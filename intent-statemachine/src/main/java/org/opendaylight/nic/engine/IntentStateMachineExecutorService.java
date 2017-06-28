@@ -19,7 +19,7 @@ public interface IntentStateMachineExecutorService extends AutoCloseable {
     /**
      * Init Intent State Machine executor service
      */
-    void init();
+    void start();
 
     /**
      * Create a new transaction for a given Intent based in a given event
@@ -52,4 +52,9 @@ public interface IntentStateMachineExecutorService extends AutoCloseable {
      * @return a {@link Boolean} value
      */
     boolean canEvaluateAttempt(String id, EventType eventType);
+
+    /**
+     * Stop State Machine processes.
+     */
+    void stop();
 }

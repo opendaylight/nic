@@ -24,7 +24,7 @@ public class IntentStateMachineProviderModule extends org.opendaylight.yang.gen.
     public java.lang.AutoCloseable createInstance() {
         LOG.info("Creating Intent State Machine");
         final IntentStateMachineExecutorService executorService = new IntentStateMachineExecutor(getDataBrokerDependency());
-        executorService.init();
+        executorService.start();
         return executorService;
     }
 
