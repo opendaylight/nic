@@ -27,13 +27,17 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712
 import org.opendaylight.yang.gen.v1.urn.opendaylight.neutron.secgroups.rev150712.security.rules.attributes.security.rules.SecurityRule;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.IntentStateTransactions;
 import org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.network.topology.topology.Link;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Provider Implementation for NIC events
  */
-public class ListenerProviderImpl implements AutoCloseable {
+public class ListenerProviderImpl implements ListenerProviderService {
+    private static final Logger LOG = LoggerFactory.getLogger(ListenerProviderImpl.class);
 
     private final DataBroker db;
 
@@ -78,6 +82,7 @@ public class ListenerProviderImpl implements AutoCloseable {
         this.stateMachineExecutorService = stateMachineExecutorService;
     }
 
+    @Override
     public void start() {
         serviceRegistry = new EventRegistryServiceImpl();
 
@@ -132,6 +137,15 @@ public class ListenerProviderImpl implements AutoCloseable {
         supplierList.add(secRulesSupp);
         supplierList.add(linkSupp);
         supplierList.add(intentStateTransactionSupp);
+    }
+
+    @Override
+    public void stop() {
+        try {
+            close();
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+        }
     }
 
     @Override
