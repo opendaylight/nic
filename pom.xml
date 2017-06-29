@@ -62,7 +62,6 @@
         <module>neutron-integration</module>
         <module>intent-statemachine</module>
         <module>features-aggregator</module>
-        <module>artifacts</module>
         <module>distribution</module>
         <module>pipeline-manager</module>
         <module>mapped-objects-model</module>
