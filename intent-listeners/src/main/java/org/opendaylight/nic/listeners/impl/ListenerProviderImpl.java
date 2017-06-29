@@ -42,7 +42,7 @@ public class ListenerProviderImpl implements ListenerProviderService {
 
     private final DataBroker db;
 
-    /* Supplier List property help for easy close method implementation and testing */
+    /* Supplier List property help for easy stop method implementation and testing */
     private List<NotificationSupplierDefinition<?>> supplierList;
     private EventRegistryServiceImpl serviceRegistry = null;
     private NotificationService notificationService;

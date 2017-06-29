@@ -27,6 +27,7 @@ public class BGPServiceImpl implements BGPService {
 
     private final CommonUtils commonUtils;
 
+    //TODO: Inject BGPRenderer service using blueprint
     protected BGPServiceImpl(final CommonUtils commonUtils) {
         this.commonUtils = commonUtils;
     }
@@ -45,7 +46,7 @@ public class BGPServiceImpl implements BGPService {
 
     @Override
     public void evaluateRollBack(String id) throws RendererServiceException {
-        LOG.info("\n#### Trying to evaluate Rollback");
+        LOG.info("\nTrying to evaluate Rollback");
         //TODO: Implement RollBack
     }
 

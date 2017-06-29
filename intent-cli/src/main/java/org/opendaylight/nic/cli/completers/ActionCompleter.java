@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.apache.karaf.shell.console.Completer;
 import org.apache.karaf.shell.console.completer.StringsCompleter;
-import org.opendaylight.nic.impl.NicProvider;
+import org.opendaylight.nic.engine.impl.NicProvider;
 
 /**
  * <p>

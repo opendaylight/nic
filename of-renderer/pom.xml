@@ -22,6 +22,18 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+    <description>
+        This module is responsible to interact with devices
+        over OpenFlow protocol.
+
+        [Project specific dependencies]
+        This module is a dependency of:
+        - intent-common
+
+        This module depends of:
+        - intent-api
+        - renderer-api
+    </description>
 
     <properties>
         <jung2.version>2.0.1</jung2.version>
@@ -39,12 +51,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <artifactId>intent-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>intent-mapping-interface</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- openflowplugin dependency -->
         <dependency>
             <groupId>org.opendaylight.openflowplugin.model</groupId>
             <artifactId>model-flow-service</artifactId>
@@ -65,11 +71,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>mapped-objects-model</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- controller dependencies -->
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
@@ -86,6 +87,19 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <dependency>
             <groupId>org.opendaylight.mdsal.model</groupId>
             <artifactId>ietf-topology</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-binding-broker-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.mdsal.model</groupId>
+            <artifactId>ietf-interfaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- External Dependencies -->
         <dependency>
@@ -113,17 +127,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <artifactId>powermock-api-mockito</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- SFC Dependencies -->
-        <!--<dependency>-->
-        <!--<groupId>org.opendaylight.sfc</groupId>-->
-        <!--<artifactId>sfc-model</artifactId>-->
-        <!--<version>${sfc.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.opendaylight.sfc</groupId>-->
-        <!--<artifactId>sfc-provider</artifactId>-->
-        <!--<version>${sfc.version}</version>-->
-        <!--</dependency>-->
         <!-- Genius dependencies -->
         <dependency>
             <groupId>org.opendaylight.genius</groupId>
@@ -148,20 +151,21 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         </dependency>
     </dependencies>
 
+    <!--Build Dependencies-->
     <build>
         <plugins>
             <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <version>${pitest.version}</version>
-                <configuration>
-                    <targetClasses>
-                        <param>org.opendaylight.nic.of.renderer.impl.IntentFlowManager</param>
-                    </targetClasses>
-                    <targetTests>
-                        <param>org.opendaylight.nic.of.renderer.impl.IntentFlowManagerTest</param>
-                    </targetTests>
-                </configuration>
+                <groupId>org.apache.aries.blueprint</groupId>
+                <artifactId>blueprint-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
             </plugin>
         </plugins>
     </build>

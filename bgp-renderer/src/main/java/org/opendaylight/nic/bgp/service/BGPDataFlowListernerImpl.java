@@ -34,23 +34,24 @@ public class BGPDataFlowListernerImpl implements BGPDataFlowListenerService {
     private final BGPRendererService bgpRendererService;
     private ListenerRegistration<DataTreeChangeListener> dataflowListenerRegistration;
 
-    public BGPDataFlowListernerImpl(final DataBroker dataBroker) {
+    public BGPDataFlowListernerImpl(final DataBroker dataBroker,
+                                    final BGPRendererService bgpRendererService) {
         this.dataBroker = dataBroker;
-        this.bgpRendererService = new BGPRouteServiceImpl(dataBroker);
+        this.bgpRendererService = bgpRendererService;
     }
 
     @Override
     public void start() {
+        LOG.info("\nBGP Session Initiated");
         final DataTreeIdentifier dataTreeIdentifier = new DataTreeIdentifier(
                 LogicalDatastoreType.CONFIGURATION,
                 Utils.BGP_DATAFLOW_IDENTIFIER);
-        LOG.info("\n##### Registering to listen for BGP DataFlows.");
         this.dataflowListenerRegistration = dataBroker.registerDataTreeChangeListener(dataTreeIdentifier, this);
     }
 
     @Override
     public void onDataTreeChanged(@Nonnull Collection<DataTreeModification<BgpDataflow>> collection) {
-        LOG.info("\n### BGP Dataflow received.");
+        LOG.info("\nBGP Dataflow received.");
         collection.iterator().forEachRemaining(consumer -> {
             final BgpDataflow bgpDataflow = consumer.getRootNode().getDataAfter();
             bgpRendererService.advertiseRoute(bgpDataflow);

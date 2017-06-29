@@ -22,6 +22,18 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+    <description>
+        This module contains all intents as YANG modules.
+
+        [Project specific dependencies]
+        This module is a dependency of:
+        - intent-common
+        - of-renderer
+        - intent-state-machine
+
+        This module depends of:
+        N/A
+    </description>
 
     <properties>
         <mdsal.version>1.6.0-SNAPSHOT</mdsal.version>

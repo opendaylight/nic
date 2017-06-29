@@ -14,19 +14,21 @@ import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycle
 import org.opendaylight.nic.common.transaction.service.renderer.IntentActionFactory;
 import org.opendaylight.nic.common.transaction.service.renderer.OFRendererService;
 import org.opendaylight.nic.common.transaction.utils.CommonUtils;
-import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.engine.api.IntentStateMachineExecutorService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by yrineu on 10/04/17.
  */
 public class IntentCommonServiceManager implements IntentCommonService {
-
+    private static final Logger LOG = LoggerFactory.getLogger(IntentCommonServiceManager.class);
     private final IntentActionFactory intentActionFactory;
 
     public IntentCommonServiceManager(final DataBroker dataBroker,
@@ -36,6 +38,12 @@ public class IntentCommonServiceManager implements IntentCommonService {
                 new CommonUtils(dataBroker),
                 ofRendererFlowService,
                 stateMachineExecutorService);
+    }
+
+    @Override
+    public void start() {
+        LOG.info("\nIntent Common session Initiated.");
+        //TODO: Apply all configuration at the startup
     }
 
     @Override
@@ -91,11 +99,6 @@ public class IntentCommonServiceManager implements IntentCommonService {
     public void createLLDPFlow(NodeId nodeId) {
         final OFRendererService ofRendererService = intentActionFactory.buildBasicOFRendererService();
         ofRendererService.evaluateLLDPFlow(nodeId);
-    }
-
-    @Override
-    public void init() {
-        //TODO: Apply all configuration at the startup
     }
 
     @Override

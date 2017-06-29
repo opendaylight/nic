@@ -29,6 +29,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
+    <!-- External dependencies -->
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.openflowplugin</groupId>
@@ -71,40 +72,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <artifactId>model-inventory</artifactId>
             <version>${mdsal.version}</version>
         </dependency>
+
+        <!-- Project specific dependencies -->
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>intent-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.opendaylight.nic</groupId>-->
-            <!--<artifactId>intent-impl</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>intent-compiler</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>intent-graph</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.opendaylight.nic</groupId>-->
-            <!--<artifactId>intent-mapping-interface</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.opendaylight.nic</groupId>-->
-            <!--<artifactId>intent-mapping-mdsal</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
     </dependencies>
 </project>

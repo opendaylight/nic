@@ -15,6 +15,23 @@
     <version>1.4.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
+    <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+    <description>
+        This module is responsible to create a map of the network state
+        to be used at Intent creation moment.
+
+        [Project specific dependencies]
+        This module is a dependency of:
+        - intent-common
+
+        This module depends of:
+        - intent-api
+    </description>
+
+    <properties>
+        <mdsal.version>1.6.0-SNAPSHOT</mdsal.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.opendaylight.mdsal.model</groupId>
@@ -23,7 +40,7 @@
         <dependency>
             <groupId>org.opendaylight.controller.model</groupId>
             <artifactId>model-inventory</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
+            <version>${mdsal.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -39,7 +56,7 @@
         <dependency>
             <groupId>org.opendaylight.controller.model</groupId>
             <artifactId>model-inventory</artifactId>
-            <version>1.6.0-SNAPSHOT</version>
+            <version>${mdsal.version}</version>
         </dependency>
     </dependencies>
 </project>

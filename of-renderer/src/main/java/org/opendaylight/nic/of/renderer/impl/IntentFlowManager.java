@@ -7,11 +7,8 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
-import com.google.gson.Gson;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.neutron.NeutronSecurityRule;
 import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
-import org.opendaylight.nic.of.renderer.model.PortFlow;
 import org.opendaylight.nic.of.renderer.utils.IntentFlowUtils;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
@@ -26,33 +23,24 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.Output
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Instructions;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.MatchBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.Constraints;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Allow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Log;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.ClassificationConstraint;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
-import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
     private List<String> endPointGroups = null;
     private Action action = null;
     private static final Logger LOG = LoggerFactory.getLogger(IntentFlowManager.class);
-    private FlowStatisticsListener flowStatisticsListener;
     private Intent intent;
     private String flowName = "";
     private static final int RADIX = 10;
-
-    private static final String CONSTRAINTS_NOT_FOUND_EXCEPTION = "Constraints not found! ";
 
     public void setEndPointGroups(List<String> endPointGroups) {
         this.endPointGroups = endPointGroups;
@@ -68,7 +56,6 @@ public class IntentFlowManager extends AbstractFlowManager {
 
     IntentFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
         super(dataBroker, pipelineManager);
-        flowStatisticsListener = new FlowStatisticsListener(dataBroker);
     }
 
     @Override
@@ -83,9 +70,6 @@ public class IntentFlowManager extends AbstractFlowManager {
                 final MacAddress dstMacAddress = IntentFlowUtils.extractDstMacAddress(endPointGroups);
 
                 pushFlowsByMacAddress(srcMacAddress, dstMacAddress, nodeId, flowAction);
-                break;
-            case PORT_BASED:
-                pushFlowsByPortNumber(nodeId, flowAction);
                 break;
             case UNKNOWN:
                 String actionClass = action.getClass().getName();
@@ -107,54 +91,11 @@ public class IntentFlowManager extends AbstractFlowManager {
             Instructions buildedInstructions = createOutputInstructions(OutputPortValues.NORMAL);
             flowBuilder.setInstructions(buildedInstructions);
 
-        } else if (action instanceof Log) {
-            // Logs the statistics data and return.
-            String flowIdName = readDataTransaction(nodeId, flowBuilder);
-            if (flowIdName != null) {
-                flowStatisticsListener.registerFlowStatisticsListener(dataBroker, nodeId, flowIdName);
-            }
         } else {
             String actionClass = action.getClass().getName();
             LOG.error("Invalid action: {}", actionClass);
         }
             writeDataTransaction(nodeId, flowBuilder, flowAction);
-    }
-
-    private void pushFlowsByPortNumber(final NodeId nodeId, final FlowAction flowAction) {
-        for (Constraints cons : intent.getConstraints()) {
-            /**
-             * Code block for security rules flow matches
-             */
-            if(cons.getConstraints() instanceof ClassificationConstraint) {
-                ClassificationConstraint portConstraint = (ClassificationConstraint) cons.getConstraints();
-                pushPortFlows(portConstraint, nodeId, flowAction);
-            }
-        }
-    }
-
-    private void pushPortFlows(final ClassificationConstraint portConstraint,
-                               final NodeId nodeId,
-                               final FlowAction flowAction) {
-        String portObject = "";
-        try {
-            portObject = portConstraint.getClassificationConstraint().getClassifier();
-        } catch (NullPointerException npe) {
-            throw new InvalidParameterException(CONSTRAINTS_NOT_FOUND_EXCEPTION + npe.getMessage());
-        }
-
-        Gson gson = new Gson();
-        final NeutronSecurityRule securityRule = gson.fromJson(portObject, NeutronSecurityRule.class);
-        final PortFlow portFlow = IntentFlowUtils.extractPortFlow(securityRule, endPointGroups);
-        final Set<MatchBuilder> matchBuilders = portFlow.createPortRangeMatchBuilder();
-
-        for(MatchBuilder matchBuilder : matchBuilders) {
-            final String flowIdStr = intent.getId().toString();
-            final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder, new FlowId(flowIdStr));
-            final Instructions builtInstructions = createOutputInstructions(OutputPortValues.NORMAL);
-            flowBuilder.setInstructions(builtInstructions);
-            flowName = portFlow.getFlowName(intent.getId().getValue());
-            writeDataTransaction(nodeId, flowBuilder, flowAction);
-        }
     }
 
     private FlowBuilder createFlowBuilder(final MatchBuilder matchBuilder, final FlowId flowId) {

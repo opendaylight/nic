@@ -36,20 +36,6 @@
             <classifier>features</classifier>
             <version>${project.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>${project.groupId}</groupId>-->
-            <!--<artifactId>odl-nic-console</artifactId>-->
-            <!--<type>xml</type>-->
-            <!--<classifier>features</classifier>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>${project.groupId}</groupId>-->
-            <!--<artifactId>odl-nic-renderer-gbp</artifactId>-->
-            <!--<type>xml</type>-->
-            <!--<classifier>features</classifier>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>odl-nic-renderer-of</artifactId>
@@ -57,37 +43,9 @@
             <classifier>features</classifier>
             <version>${project.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>${project.groupId}</groupId>-->
-            <!--<artifactId>odl-nic-renderer-nemo</artifactId>-->
-            <!--<type>xml</type>-->
-            <!--<classifier>features</classifier>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>odl-nic-pipeline-manager</artifactId>
-            <type>xml</type>
-            <classifier>features</classifier>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-nic-listeners</artifactId>
-            <type>xml</type>
-            <classifier>features</classifier>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-nic-intent-statemachine</artifactId>
-            <type>xml</type>
-            <classifier>features</classifier>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-nic-graph</artifactId>
             <type>xml</type>
             <classifier>features</classifier>
             <version>${project.version}</version>

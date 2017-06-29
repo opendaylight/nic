@@ -40,7 +40,6 @@ public class IntentFlowManagerTest {
 
     private DataBroker dataBroker;
     private PipelineManager pipelineManager;
-    private FlowStatisticsListener flowStatisticsListener;
     private Intent intent;
     private IntentFlowManager intentFlowManager;
     private NodeId nodeId;
@@ -66,7 +65,6 @@ public class IntentFlowManagerTest {
     public void setUp() {
         dataBroker = mock(DataBroker.class);
         pipelineManager = mock(PipelineManager.class);
-        flowStatisticsListener = mock(FlowStatisticsListener.class);
         endPointGroups = spy(new ArrayList<String>());
         blockAction = mock(Action.class, withSettings().extraInterfaces(Block.class));
         allowAction = mock(Action.class, withSettings().extraInterfaces(Allow.class));
@@ -136,15 +134,6 @@ public class IntentFlowManagerTest {
     public void testPushAddAllowFlow() {
         endPointGroups.add(SRC_END_POINT);
         endPointGroups.add(DST_END_POINT);
-
-        intentFlowManager.setAction(allowAction);
-        intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
-    }
-
-    @Test (expected = InvalidParameterException.class)
-    public void testPushPortFlowWithouConstraintsShouldDoNothing() {
-        endPointGroups.add(SRC_PORT);
-        endPointGroups.add(DST_PORT);
 
         intentFlowManager.setAction(allowAction);
         intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
