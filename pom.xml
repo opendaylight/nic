@@ -13,14 +13,14 @@
 
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
-    <artifactId>odlparent</artifactId>
+    <artifactId>odlparent-lite</artifactId>
     <version>2.0.0</version>
     <relativePath/>
   </parent>
 
     <groupId>org.opendaylight.nic</groupId>
     <version>1.4.0-SNAPSHOT</version>
-    <artifactId>nic-aggregator</artifactId>
+    <artifactId>nic</artifactId>
     <name>nic</name>
     <packaging>pom</packaging>
 
@@ -49,7 +49,7 @@
     <modules>
         <!-- Well-known -->
         <module>intent-api</module>
-        <module>intent-graph</module>
+        <!--<module>intent-graph</module>-->
         <!--<module>intent-mapping-interface</module>-->
         <!--<module>intent-impl</module>-->
         <module>utils</module>
@@ -58,18 +58,17 @@
         <module>intent-compiler</module>
         <!--<module>gbp-renderer</module>-->
         <module>of-renderer</module>
-        <module>intent-listeners</module>
-        <module>neutron-integration</module>
+        <!--<module>intent-listeners</module>-->
+        <!--<module>neutron-integration</module>-->
         <module>intent-statemachine</module>
-        <module>features</module>
-        <module>artifacts</module>
         <module>distribution</module>
         <module>pipeline-manager</module>
-        <module>mapped-objects-model</module>
+        <!--<module>mapped-objects-model</module>-->
         <module>bgp-renderer</module>
         <module>renderer-api</module>
         <module>pub-sub-manager</module>
         <module>network-mapping</module>
+        <module>features-aggregator</module>
     </modules>
 
     <build>
