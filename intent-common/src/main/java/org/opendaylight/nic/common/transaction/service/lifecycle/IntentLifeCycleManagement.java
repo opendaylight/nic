@@ -13,11 +13,10 @@ import org.opendaylight.nic.common.transaction.service.action.add.IntentAddActio
 import org.opendaylight.nic.common.transaction.service.action.remove.IntentRemoveAction;
 import org.opendaylight.nic.common.transaction.service.renderer.RendererService;
 import org.opendaylight.nic.common.transaction.utils.CommonUtils;
-import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.engine.api.IntentStateMachineExecutorService;
 import org.opendaylight.nic.utils.EventType;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;

@@ -11,9 +11,9 @@ package org.opendaylight.nic.engine;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-import org.opendaylight.nic.engine.service.TransactionHandlerService;
-import org.opendaylight.nic.impl.StateMachineEngineImpl;
-import org.opendaylight.nic.impl.TransactionHandlerServiceImpl;
+import org.opendaylight.nic.engine.api.TransactionHandlerService;
+import org.opendaylight.nic.engine.impl.StateMachineEngineImpl;
+import org.opendaylight.nic.engine.impl.TransactionHandlerServiceImpl;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.intent.state.transaction.rev151203.intent.state.transactions.IntentStateTransaction;
 
 import java.util.UUID;

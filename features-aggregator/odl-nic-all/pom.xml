@@ -22,26 +22,42 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <version>1.4.0-SNAPSHOT</version>
     <packaging>feature</packaging>
 
+    <properties>
+        <bgp.version>0.8.0-SNAPSHOT</bgp.version>
+        <genius.version>0.3.0-SNAPSHOT</genius.version>
+        <openflowplugin.version>0.5.0-SNAPSHOT</openflowplugin.version>
+    </properties>
+
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
     <dependencies>
+        <!-- External dependencies -->
+        <dependency>
+            <groupId>org.opendaylight.bgpcep</groupId>
+            <artifactId>features-bgp</artifactId>
+            <version>${bgp.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.openflowplugin</groupId>
+            <artifactId>features-openflowplugin</artifactId>
+            <version>${openflowplugin.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.genius</groupId>
+            <artifactId>genius-features</artifactId>
+            <version>${genius.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+
+        <!-- Project specific features -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>odl-nic-core-mdsal</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-nic-renderer-of</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>odl-nic-intent-statemachine</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
@@ -55,10 +71,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>odl-nic-listeners</artifactId>
+            <artifactId>odl-nic-all</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>${project.groupId}</groupId>-->
+            <!--<artifactId>odl-nic-listeners</artifactId>-->
+            <!--<version>${project.version}</version>-->
+            <!--<type>xml</type>-->
+            <!--<classifier>features</classifier>-->
+        <!--</dependency>-->
     </dependencies>
 </project>

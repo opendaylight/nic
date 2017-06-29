@@ -15,7 +15,7 @@ import org.apache.karaf.shell.console.OsgiCommandSupport;
 import org.opendaylight.nic.api.NicConsoleProvider;
 import org.opendaylight.nic.constraints.ClassifierConstraint;
 import org.opendaylight.nic.constraints.QualityOfServiceConstraint;
-import org.opendaylight.nic.impl.NicProvider;
+import org.opendaylight.nic.engine.impl.NicProvider;
 import org.opendaylight.nic.mapped.MappedObject;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.utils.IntentUtils;

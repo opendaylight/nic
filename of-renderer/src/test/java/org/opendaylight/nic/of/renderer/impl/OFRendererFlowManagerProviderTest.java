@@ -19,7 +19,6 @@ import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,12 +27,10 @@ import org.mockito.MockitoAnnotations;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
-import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.Subject;
 import org.opendaylight.nic.of.renderer.strategy.ActionStrategy;
 import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
-import org.opendaylight.nic.of.renderer.strategy.MPLSExecutor;
 import org.opendaylight.nic.of.renderer.strategy.QoSExecutor;
 import org.opendaylight.nic.of.renderer.strategy.RedirectExecutor;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
@@ -135,13 +132,7 @@ public class OFRendererFlowManagerProviderTest {
     private Uuid uuidMock;
 
     @Mock
-    private IntentMappingService intentMappingService;
-
-    @Mock
     private IdManagerService idManagerService;
-
-    @Mock
-    private MPLSExecutor mplsExecutor;
 
     @Mock
     private ActionStrategy actionStrategy;
@@ -189,8 +180,7 @@ public class OFRendererFlowManagerProviderTest {
         initIntentWithSourceAndDestination();
 
         ofRendererFlowManagerProvider = spy(
-                new OFRendererFlowManagerProvider(dataBroker, pipelineManager,
-                        intentMappingService, notificationProviderService, idManagerService));
+                new OFRendererFlowManagerProvider(dataBroker, pipelineManager, idManagerService));
         PowerMockito
                 .when(FrameworkUtil.class, "getBundle",
                         ofRendererFlowManagerProvider.getClass())
@@ -313,56 +303,6 @@ public class OFRendererFlowManagerProviderTest {
     }
 
     @Test
-    public void testIsMPLSWithNoMappingForDestination()
-            throws IntentInvalidException {
-        Map<String, String> mapSource = new HashMap<>();
-        mapSource.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        Map<String, String> mapDestination = new HashMap<>();
-        mapDestination.put(dstEndPointGroup.getName(), "");
-
-        when(intentMappingService.get(sourceEndPointGroup.getName()))
-                .thenReturn(mapSource);
-        when(intentMappingService.get(dstEndPointGroup.getName()))
-                .thenReturn(mapDestination);
-
-        Assert.assertFalse(ofRendererFlowManagerProvider.isMPLS(intent));
-    }
-
-    @Test
-    public void testIsMPLSWithNoMappingForSource()
-            throws IntentInvalidException {
-        Map<String, String> mapSource = new HashMap<>();
-        mapSource.put(sourceEndPointGroup.getName(), "");
-
-        Map<String, String> mapDestination = new HashMap<>();
-        mapDestination.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        when(intentMappingService.get(sourceEndPointGroup.getName()))
-                .thenReturn(mapSource);
-        when(intentMappingService.get(dstEndPointGroup.getName()))
-                .thenReturn(mapDestination);
-
-        Assert.assertFalse(ofRendererFlowManagerProvider.isMPLS(intent));
-    }
-
-    @Test
-    public void testIsMPLS() throws IntentInvalidException {
-        Map<String, String> mapSource = new HashMap<>();
-        mapSource.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        Map<String, String> mapDestination = new HashMap<>();
-        mapDestination.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        when(intentMappingService.get(sourceEndPointGroup.getName()))
-                .thenReturn(mapSource);
-        when(intentMappingService.get(dstEndPointGroup.getName()))
-                .thenReturn(mapDestination);
-
-        Assert.assertTrue(ofRendererFlowManagerProvider.isMPLS(intent));
-    }
-
-    @Test
     public void testUpdateWithQoSConfiguration() throws Exception {
         when(subject.getUpdate(ofRendererFlowManagerProvider))
                 .thenReturn(intent);
@@ -384,156 +324,4 @@ public class OFRendererFlowManagerProviderTest {
             throws IntentInvalidException {
         ofRendererFlowManagerProvider.pushIntentFlow(intent, flowAction);
     }
-
-    @Ignore
-    @Test
-    public void testPushIntentMPLS() throws Exception {
-        Map<String, String> mapSource = new HashMap<>();
-        mapSource.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        Map<String, String> mapDestination = new HashMap<>();
-        mapDestination.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        when(intentMappingService.get(sourceEndPointGroup.getName()))
-                .thenReturn(mapSource);
-        when(intentMappingService.get(dstEndPointGroup.getName()))
-                .thenReturn(mapDestination);
-
-        when(intent.getQosConfig()).thenReturn(null);
-
-        PowerMockito.whenNew(MPLSExecutor.class).withAnyArguments()
-                .thenReturn(mplsExecutor);
-
-        PowerMockito.doNothing().when(actionStrategy).execute(intent,
-                flowAction);
-
-        ofRendererFlowManagerProvider.pushIntentFlow(intent, flowAction);
-    }
-
-    @Ignore
-    @Test
-    public void testPushIntentQoS() throws Exception {
-        Map<String, String> mapSource = new HashMap<>();
-        mapSource.put(sourceEndPointGroup.getName(), "");
-
-        Map<String, String> mapDestination = new HashMap<>();
-        mapDestination.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        when(intentMappingService.get(sourceEndPointGroup.getName()))
-                .thenReturn(mapSource);
-        when(intentMappingService.get(dstEndPointGroup.getName()))
-                .thenReturn(mapDestination);
-
-        when(actions.getAction()).thenReturn(redirect);
-
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraintBuilder()
-                .setQosConstraint(
-                        new QosConstraintBuilder().setQosName("test").build())
-                .build();
-
-        when(constraints.getConstraints()).thenReturn(constraint);
-
-        List<Constraints> contraintsList = spy(new ArrayList<>());
-        contraintsList.add(constraints);
-
-        when(intent.getConstraints()).thenReturn(contraintsList);
-
-        ofRendererFlowManagerProvider.start();
-
-        when(intent.getQosConfig()).thenReturn(null);
-
-        PowerMockito.whenNew(QoSExecutor.class).withAnyArguments()
-                .thenReturn(qoSExecutor);
-
-        PowerMockito.doNothing().when(qoSExecutor).execute(intent, flowAction);
-
-        ofRendererFlowManagerProvider.pushIntentFlow(intent, flowAction);
-    }
-
-    @Ignore
-    @Test
-    public void testPushIntentRedirect() throws Exception {
-        Map<String, String> mapSource = new HashMap<>();
-        mapSource.put(sourceEndPointGroup.getName(), "");
-
-        Map<String, String> mapDestination = new HashMap<>();
-        mapDestination.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        when(intentMappingService.get(sourceEndPointGroup.getName()))
-                .thenReturn(mapSource);
-        when(intentMappingService.get(dstEndPointGroup.getName()))
-                .thenReturn(mapDestination);
-
-        when(actions.getAction()).thenReturn(redirect);
-
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraintBuilder()
-                .setQosConstraint(
-                        new QosConstraintBuilder().setQosName(null).build())
-                .build();
-
-        when(constraints.getConstraints()).thenReturn(constraint);
-
-        List<Constraints> contraintsList = spy(new ArrayList<>());
-        contraintsList.add(constraints);
-
-        when(intent.getConstraints()).thenReturn(contraintsList);
-
-        PowerMockito.whenNew(RedirectFlowManager.class).withAnyArguments()
-                .thenReturn(redirectFlowManager);
-        PowerMockito.doNothing().when(redirectFlowManager)
-                .redirectFlowConstruction(intent, flowAction);
-
-        PowerMockito.doNothing().when(redirectFlowManager)
-                .redirectFlowConstruction(intent, flowAction);
-
-        PowerMockito.whenNew(RedirectExecutor.class).withAnyArguments()
-                .thenReturn(redirectExecutor);
-
-        ofRendererFlowManagerProvider.start();
-
-        when(intent.getQosConfig()).thenReturn(null);
-
-        ofRendererFlowManagerProvider.pushIntentFlow(intent, flowAction);
-    }
-
-    @Ignore
-    @Test
-    public void testPushIntentDefault() throws Exception {
-        Map<String, String> mapSource = new HashMap<>();
-        mapSource.put(sourceEndPointGroup.getName(), "");
-
-        Map<String, String> mapDestination = new HashMap<>();
-        mapDestination.put(OFRendererConstants.MPLS_LABEL_KEY, "");
-
-        when(intentMappingService.get(sourceEndPointGroup.getName()))
-                .thenReturn(mapSource);
-        when(intentMappingService.get(dstEndPointGroup.getName()))
-                .thenReturn(mapDestination);
-
-        when(actions.getAction()).thenReturn(action);
-
-        org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraint = new org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraintBuilder()
-                .setQosConstraint(
-                        new QosConstraintBuilder().setQosName(null).build())
-                .build();
-
-        when(constraints.getConstraints()).thenReturn(constraint);
-
-        List<Constraints> contraintsList = spy(new ArrayList<>());
-        contraintsList.add(constraints);
-
-        when(intent.getConstraints()).thenReturn(contraintsList);
-
-        PowerMockito.whenNew(DefaultExecutor.class).withAnyArguments()
-                .thenReturn(defaultExecutor);
-        PowerMockito.doNothing().when(defaultExecutor).execute(intent,
-                flowAction);
-
-        ofRendererFlowManagerProvider.start();
-
-        when(intent.getQosConfig()).thenReturn(null);
-
-        ofRendererFlowManagerProvider.pushIntentFlow(intent, flowAction);
-    }
-
 }

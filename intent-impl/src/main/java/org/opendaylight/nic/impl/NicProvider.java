@@ -6,7 +6,7 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.impl;
+package org.opendaylight.nic.engine.impl;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;

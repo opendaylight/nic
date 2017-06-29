@@ -9,9 +9,7 @@ package org.opendaylight.nic.of.renderer.impl;
 
 import com.google.gson.Gson;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.neutron.NeutronSecurityRule;
 import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
-import org.opendaylight.nic.of.renderer.model.PortFlow;
 import org.opendaylight.nic.of.renderer.utils.IntentFlowUtils;
 import org.opendaylight.nic.of.renderer.utils.MatchUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
@@ -39,8 +37,6 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
@@ -132,6 +128,7 @@ public class IntentFlowManager extends AbstractFlowManager {
         }
     }
 
+    @Deprecated
     private void pushPortFlows(final ClassificationConstraint portConstraint,
                                final NodeId nodeId,
                                final FlowAction flowAction) {
@@ -143,18 +140,18 @@ public class IntentFlowManager extends AbstractFlowManager {
         }
 
         Gson gson = new Gson();
-        final NeutronSecurityRule securityRule = gson.fromJson(portObject, NeutronSecurityRule.class);
-        final PortFlow portFlow = IntentFlowUtils.extractPortFlow(securityRule, endPointGroups);
-        final Set<MatchBuilder> matchBuilders = portFlow.createPortRangeMatchBuilder();
+//        final NeutronSecurityRule securityRule = gson.fromJson(portObject, NeutronSecurityRule.class);
+//        final PortFlow portFlow = IntentFlowUtils.extractPortFlow(securityRule, endPointGroups);
+//        final Set<MatchBuilder> matchBuilders = portFlow.createPortRangeMatchBuilder();
 
-        for(MatchBuilder matchBuilder : matchBuilders) {
-            final String flowIdStr = intent.getId().toString();
-            final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder, new FlowId(flowIdStr));
-            final Instructions builtInstructions = createOutputInstructions(OutputPortValues.NORMAL);
-            flowBuilder.setInstructions(builtInstructions);
-            flowName = portFlow.getFlowName(intent.getId().getValue());
-            writeDataTransaction(nodeId, flowBuilder, flowAction);
-        }
+//        for(MatchBuilder matchBuilder : matchBuilders) {
+//            final String flowIdStr = intent.getId().toString();
+//            final FlowBuilder flowBuilder = createFlowBuilder(matchBuilder, new FlowId(flowIdStr));
+//            final Instructions builtInstructions = createOutputInstructions(OutputPortValues.NORMAL);
+//            flowBuilder.setInstructions(builtInstructions);
+//            flowName = portFlow.getFlowName(intent.getId().getValue());
+//            writeDataTransaction(nodeId, flowBuilder, flowAction);
+//        }
     }
 
     private FlowBuilder createFlowBuilder(final MatchBuilder matchBuilder, final FlowId flowId) {

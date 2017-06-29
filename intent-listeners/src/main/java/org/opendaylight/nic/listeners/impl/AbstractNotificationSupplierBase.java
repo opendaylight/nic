@@ -20,7 +20,7 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
 /**
  * Public abstract basic Supplier implementation contains code for a make Supplier instance,
  * registration Supplier like {@link org.opendaylight.controller.md.sal.binding.api.DataChangeListener}
- * and close method. In additional case, it contains help methods for all Supplier implementations.
+ * and stop method. In additional case, it contains help methods for all Supplier implementations.
  *
  * @param <O> - data tree item Object extends {@link DataObject}
  */

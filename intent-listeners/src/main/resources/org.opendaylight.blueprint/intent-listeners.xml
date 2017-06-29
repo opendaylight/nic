@@ -20,7 +20,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <reference id="intentCommonService"
                interface="org.opendaylight.nic.common.transaction.api.IntentCommonService"/>
     <reference id="intentStateMachineExecutorService"
-               interface="org.opendaylight.nic.engine.IntentStateMachineExecutorService"/>
+               interface="org.opendaylight.nic.engine.api.IntentStateMachineExecutorService"/>
 
     <bean id="listenerProvider"
           class="org.opendaylight.nic.listeners.impl.ListenerProviderImpl"

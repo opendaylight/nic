@@ -25,6 +25,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
 <dependencies>
+  <!-- Internal dependencies -->
   <dependency>
     <groupId>${project.groupId}</groupId>
     <artifactId>odl-nic-core-mdsal</artifactId>
@@ -32,28 +33,51 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <type>xml</type>
     <classifier>features</classifier>
   </dependency>
-  <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>odl-nic-intent-statemachine</artifactId>
-    <version>${project.version}</version>
-    <type>xml</type>
-    <classifier>features</classifier>
-  </dependency>
-  <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>odl-nic-renderer-of</artifactId>
-    <version>${project.version}</version>
-    <type>xml</type>
-    <classifier>features</classifier>
-  </dependency>
+
+  <!-- Project specific dependencies -->
   <dependency>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>utils</artifactId>
     <version>${project.version}</version>
   </dependency>
   <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>intent-api</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>pipeline-manager</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>intent-common</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>intent-statemachine</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>of-renderer</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>bgp-renderer</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>of-renderer</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>network-mapping</artifactId>
     <version>${project.version}</version>
   </dependency>
 </dependencies>

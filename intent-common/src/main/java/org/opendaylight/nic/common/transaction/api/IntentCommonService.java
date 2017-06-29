@@ -15,6 +15,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 public interface IntentCommonService {
 
     /**
+     * Init all Intent processes
+     */
+    void start();
+
+    /**
      * Extract and apply Intents
      * @param intent
      */
@@ -56,11 +61,6 @@ public interface IntentCommonService {
      * @param nodeId
      */
     void createLLDPFlow(final NodeId nodeId);
-
-    /**
-     * Init all Intent processes
-     */
-    void init();
 
     /**
      * Stop all Intent processes
