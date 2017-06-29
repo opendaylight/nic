@@ -28,6 +28,7 @@
              into startup.properties and the feature repo itself is not installed -->
             <groupId>org.apache.karaf.features</groupId>
             <artifactId>framework</artifactId>
+            <version>${karaf.version}</version>
             <type>kar</type>
         </dependency>
 

@@ -13,7 +13,7 @@
 
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
-    <artifactId>odlparent</artifactId>
+    <artifactId>odlparent-lite</artifactId>
     <version>2.0.0</version>
     <relativePath/>
   </parent>
@@ -61,7 +61,7 @@
         <module>intent-listeners</module>
         <module>neutron-integration</module>
         <module>intent-statemachine</module>
-        <module>features</module>
+        <module>features-aggregator</module>
         <module>artifacts</module>
         <module>distribution</module>
         <module>pipeline-manager</module>
