@@ -24,6 +24,20 @@
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+    <description>
+        This module is responsible to create a bridge between Intent-common
+        module and renderers. There are yang modules specified inside
+        this module.
+
+        [Project specific dependencies]
+        This module is a dependency of:
+        - bgp-renderer
+        - of-renderer
+        - intent-common
+
+        This module depends of:
+        - intent-api
+    </description>
 
     <properties>
         <mdsal.version>1.6.0-SNAPSHOT</mdsal.version>

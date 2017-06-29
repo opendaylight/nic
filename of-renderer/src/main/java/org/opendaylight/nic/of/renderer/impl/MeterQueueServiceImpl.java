@@ -8,7 +8,6 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
-import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.nic.of.renderer.api.MeterQueueService;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.AllocateIdInputBuilder;
@@ -28,7 +27,7 @@ public class MeterQueueServiceImpl implements MeterQueueService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MeterQueueServiceImpl.class);
 
-    private final IdManagerService idManagerService;
+    private IdManagerService idManagerService;
 
     private static final String METER_ID_POOL_NAME = "METERS";
 

@@ -10,9 +10,7 @@ package org.opendaylight.nic.pipeline_manager;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 
-public interface PipelineManager extends AutoCloseable {
-    @Override
-    void close() throws Exception;
+public interface PipelineManager {
 
     /**
      * Sets the table ID to the first table which supports the flow.
@@ -21,4 +19,9 @@ public interface PipelineManager extends AutoCloseable {
      * @return true if any suitable table has been found or false otherwise
      */
     boolean setTableId(NodeId nodeId, FlowBuilder flowBuilder);
+
+    /**
+     * Stop all Pipeline Manager services
+     */
+    void stop();
 }

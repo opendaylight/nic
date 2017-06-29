@@ -13,9 +13,7 @@ import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.exception.DataflowCreationException;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
 import org.opendaylight.nic.of.renderer.exception.MeterRemovalExeption;
-import org.opendaylight.nic.of.renderer.exception.PushFlowFlorAllDevicesException;
 import org.opendaylight.nic.of.renderer.strategy.MeterExecutor;
-import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
@@ -35,12 +33,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instru
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.instruction.meter._case.MeterBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.Instruction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.InstructionBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.AllocateIdInputBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.AllocateIdOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
@@ -58,7 +53,6 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -163,18 +157,6 @@ public class OFRuleWithMeterManager {
         nodeBuilder.setId(nodeId);
         nodeBuilder.setKey(new NodeKey(nodeId));
         return mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder), flowBuilder.build());
-    }
-
-    public void pushFlowForAllDevices(final FlowBuilder flowBuilder) throws PushFlowFlorAllDevicesException {
-        final Set<Boolean> results = new HashSet<>();
-        final Map<Node, List<NodeConnector>> nodeMap = TopologyUtils.getNodes(dataBroker);
-        for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
-            final boolean result = sendToMdsal(flowBuilder, entry.getKey().getId());
-            results.add(result);
-        }
-        if (!results.contains(true)) {
-            throw new PushFlowFlorAllDevicesException(nodeMap.entrySet().toString());
-        }
     }
 
     public boolean removeFromMdsal(final FlowBuilder flowBuilder, final NodeId nodeId) {

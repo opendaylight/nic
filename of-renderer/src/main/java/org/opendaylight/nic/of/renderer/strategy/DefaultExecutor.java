@@ -42,8 +42,7 @@ public class DefaultExecutor implements ActionStrategy {
             throw new IntentInvalidException(INTENT_NULL_MESSAGE);
         }
         final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
-        Action actionContainer = null;
-        actionContainer = IntentUtils.getAction(intent);
+        Action actionContainer = IntentUtils.getAction(intent);
 
         intentFlowManager.setEndPointGroups(endPointGroups);
         intentFlowManager.setAction(actionContainer);

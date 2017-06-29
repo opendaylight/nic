@@ -16,23 +16,25 @@
     <version>1.4.0-SNAPSHOT</version>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+    <description>
+        This module is responsible to create a publish and subscribe
+        mechanism for external applications. With that, any external application
+        can subscribe to listen about Intent state events.
+
+        [Project specific dependencies]
+        This module is a dependency of:
+        N/A
+
+        This module depends of:
+        - intent-common
+    </description>
 
     <properties>
         <mdsal.model.groupId>org.opendaylight.mdsal.model</mdsal.model.groupId>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>intent-statemachine</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>intent-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
+        <!-- External dependencies -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -45,6 +47,19 @@
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
         </dependency>
+
+        <!-- Project specific dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>intent-statemachine</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>intent-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>intent-common</artifactId>

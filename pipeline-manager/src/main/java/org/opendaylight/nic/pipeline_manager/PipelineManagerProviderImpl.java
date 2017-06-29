@@ -62,19 +62,14 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
     private ListenerRegistration<DataChangeListener> nodesListener;
 
 
-    public PipelineManagerProviderImpl(DataBroker dataBroker) {
+    public PipelineManagerProviderImpl(final DataBroker dataBroker) {
+        LOG.info("\nPipeline Manager service Initiated");
         this.dataBroker = dataBroker;
         final InstanceIdentifier<Nodes> nodesIdentifier = InstanceIdentifier.create(Nodes.class);
         nodesListener = dataBroker.registerDataChangeListener(
                 LogicalDatastoreType.OPERATIONAL,
                 nodesIdentifier, this, AsyncDataBroker.DataChangeScope.SUBTREE); // FIXME: Try to listen to the Node changes only instead of subtree
         LOG.info("new Pipeline Manager created: {}", this);
-    }
-
-    @Override
-    public void close() throws Exception {
-        nodesListener.close();
-        LOG.info("Pipeline Manager destroyed: {}", this);
     }
 
     @Override
@@ -317,4 +312,10 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
         return Collections.emptyList();
     }
 
+
+    @Override
+    public void stop() {
+        nodesListener.close();
+        LOG.info("Pipeline Manager destroyed: {}", this);
+    }
 }

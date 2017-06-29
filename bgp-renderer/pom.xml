@@ -40,6 +40,20 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <version>1.6.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-binding-broker-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.mdsal.model</groupId>
+            <artifactId>ietf-interfaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>${mdsal.model.groupId}</groupId>
             <artifactId>ietf-topology</artifactId>
         </dependency>
@@ -84,4 +98,34 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+
+    <!--Build Dependencies-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.aries.blueprint</groupId>
+                <artifactId>blueprint-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <!-- This bundle works with Karaf 3 and 4.0, see https://wiki.opendaylight.org/view/Karaf_4_migration#Karaf_CLI_commands -->
+                        <Import-Package>
+                            org.apache.karaf.shell.commands.*;version="[3.0.0,4.1)",
+                            org.apache.karaf.shell.console.*;version="[3.0.0,4.1)",
+                            org.apache.karaf.shell.*;version="[3.0.0,4.1)",
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

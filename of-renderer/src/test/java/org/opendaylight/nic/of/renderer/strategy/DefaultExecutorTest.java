@@ -32,18 +32,12 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by yrineu on 07/08/16.
@@ -78,10 +72,6 @@ public class DefaultExecutorTest {
     private Optional<Nodes> nodesOptionalMock;
     @Mock
     private Nodes nodeListMock;
-    @Mock
-    private NodeId nodeIdMock;
-    @Mock
-    private Set<Map.Entry<Node, List<NodeConnector>>> entrySetMock;
 
     @Before
     public void setUp() throws IntentInvalidException, ReadFailedException {

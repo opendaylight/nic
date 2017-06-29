@@ -12,7 +12,15 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.in
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 
+/**
+ * This service is responsible for Intent Life Cycle Management
+ */
 public interface IntentCommonService {
+
+    /**
+     * Init all Intent processes
+     */
+    void start();
 
     /**
      * Extract and apply Intents
@@ -56,11 +64,6 @@ public interface IntentCommonService {
      * @param nodeId
      */
     void createLLDPFlow(final NodeId nodeId);
-
-    /**
-     * Init all Intent processes
-     */
-    void init();
 
     /**
      * Stop all Intent processes

@@ -8,43 +8,36 @@
 package org.opendaylight.nic.of.renderer.impl;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
-import org.opendaylight.nic.mapping.api.IntentMappingService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
-import org.opendaylight.nic.of.renderer.api.OFRendererGraphService;
 import org.opendaylight.nic.of.renderer.api.Observer;
 import org.opendaylight.nic.of.renderer.api.Subject;
 import org.opendaylight.nic.of.renderer.exception.DataflowCreationException;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
-import org.opendaylight.nic.of.renderer.strategy.*;
+import org.opendaylight.nic.of.renderer.strategy.ActionStrategy;
+import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
-import org.opendaylight.nic.utils.MdsalUtils;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.nic.utils.exceptions.PushDataflowException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.constraints.QosConstraint;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.EndPointGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow;
-import org.opendaylight.yangtools.concepts.Registration;
 import org.opendaylight.yangtools.yang.common.RpcResult;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -56,56 +49,31 @@ import java.util.concurrent.TimeoutException;
 public class OFRendererFlowManagerProvider implements OFRendererFlowService, Observer, AutoCloseable {
 
     private static final Logger LOG = LoggerFactory.getLogger(OFRendererFlowManagerProvider.class);
-    private Set<ServiceRegistration<?>> serviceRegistration;
     private IntentFlowManager intentFlowManager;
     private ArpFlowManager arpFlowManager;
     private LldpFlowManager lldpFlowManager;
-    private IntentMappingService intentMappingService;
     private DataBroker dataBroker;
     private final PipelineManager pipelineManager;
-    private OFRendererGraphService graphService;
-    private MplsIntentFlowManager mplsIntentFlowManager;
-    private QosConstraintManager qosConstraintManager;
-    private Registration pktInRegistration;
-    private RedirectFlowManager redirectFlowManager;
     private OFRuleWithMeterManager ofRuleWithMeterManager;
     private Subject topic;
-    private MdsalUtils mdsalUtils;
     private IdManagerService idManagerService;
 
-    private NotificationProviderService notificationProviderService;
 
     public OFRendererFlowManagerProvider(final DataBroker dataBroker,
                                          final PipelineManager pipelineManager,
-                                         final IntentMappingService intentMappingService,
-                                         final NotificationProviderService notificationProviderService,
                                          final IdManagerService idManagerService) {
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
-        this.serviceRegistration = new HashSet<ServiceRegistration<?>>();
-        this.intentMappingService = intentMappingService;
-        this.notificationProviderService = notificationProviderService;
         this.idManagerService = idManagerService;
     }
 
     @Override
     public void start() {
         LOG.info("OF Renderer Provider Session Initiated");
-        // Register this service with karaf
-        final BundleContext context = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
-        graphService = new NetworkGraphManager();
-        graphService.register(this);
-        mplsIntentFlowManager = new MplsIntentFlowManager(dataBroker, pipelineManager);
-        serviceRegistration.add(context.registerService(OFRendererFlowService.class, this, null));
-        serviceRegistration.add(context.registerService(OFRendererGraphService.class, graphService, null));
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
         arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
         lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
-        qosConstraintManager = new QosConstraintManager(dataBroker, pipelineManager);
-        this.redirectFlowManager = new RedirectFlowManager(dataBroker, pipelineManager, graphService);
-        this.pktInRegistration = notificationProviderService.registerNotificationListener(redirectFlowManager);
         this.ofRuleWithMeterManager = new OFRuleWithMeterManager(dataBroker, idManagerService);
-        this.mdsalUtils = new MdsalUtils(dataBroker);
     }
 
     @Override
@@ -120,21 +88,8 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
         //TODO: Change to use Command Pattern
         try {
-            ActionStrategy actionStrategy = null;
-
-            if (isMPLS(intent)) {
-                actionStrategy = new MPLSExecutor(mplsIntentFlowManager,
-                        intentMappingService, graphService);
-            } else if (isQoS(intent)) {
-                actionStrategy = new QoSExecutor(qosConstraintManager,
-                        dataBroker);
-            } else if (isRedirect(intent)) {
-                actionStrategy = new RedirectExecutor(redirectFlowManager);
-            } else {
-                actionStrategy = new DefaultExecutor(intentFlowManager,
-                        dataBroker);
-            }
-
+            ActionStrategy actionStrategy = new DefaultExecutor(intentFlowManager,
+                    dataBroker);
             actionStrategy.execute(intent, flowAction);
         } catch (IntentInvalidException ie) {
 //            TODO: Implement an action for Exception cases
@@ -152,27 +107,6 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         return (Redirect.class.isInstance(actionContainer));
     }
 
-    protected boolean isMPLS(final Intent intent) throws IntentInvalidException {
-        final EndPointGroup source = IntentUtils.extractSrcEndPointGroup(intent);
-        final EndPointGroup target = IntentUtils.extractDstEndPointGroup(intent);
-        final Map<String, String> sourceContent = getMappingServiceContent(source);
-        final Map<String, String> targetContent = getMappingServiceContent(target);
-        return (sourceContent.containsKey(OFRendererConstants.MPLS_LABEL_KEY)
-                && targetContent.containsKey(OFRendererConstants.MPLS_LABEL_KEY));
-    }
-
-    public boolean isQoS(final Intent intent) {
-        Action actionContainer = null;
-        try {
-            actionContainer = IntentUtils.getAction(intent);
-        } catch (IntentInvalidException e) {
-            LOG.error(e.getMessage());
-            throw new NoSuchElementException(e.getMessage());
-        }
-        final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);
-        return (checkQosConstraint(intent, actionContainer, endPointGroups));
-    }
-
     //FIXME move to a utility class
     @Override
     public void pushARPFlow(final NodeId nodeId, final FlowAction flowAction) {
@@ -181,24 +115,15 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
     @Override
     public void close() throws Exception {
-        if (redirectFlowManager != null) {
-            redirectFlowManager.close();
-        }
-        if (pktInRegistration != null) {
-            pktInRegistration.close();
-        }
-        for (ServiceRegistration<?> service: serviceRegistration) {
-            if (service != null) {
-                service.unregister();
-            }
-        }
+        //TODO:Provide implementation for a cleanup
     }
 
     /**
      * Push a LLDP flow onto an Inventory {@link NodeId} so that
      * OpenDaylight can know how the devices are connected to each others.
      * This function is necessary for OF protocols above 1.0
-     * @param nodeId The Inventory {@link NodeId}
+     *
+     * @param nodeId     The Inventory {@link NodeId}
      * @param flowAction The {@link FlowAction} to push
      */
     @Override
@@ -271,36 +196,6 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
     }
 
-    /**
-     * Checks the Constraint name is present in the constraint container.
-     * @param intent  Intent
-     * @param actionContainer Action
-     * @param endPointGroups List of Endpoints
-     * @return boolean
-     */
-    private boolean checkQosConstraint(final Intent intent,
-                                       final Action actionContainer,
-                                       final List<String> endPointGroups) {
-        //Check for constrain name in the intent.
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
-                    = intent.getConstraints().get(0).getConstraints();
-        if (!constraintContainer.getImplementedInterface().isAssignableFrom(QosConstraint.class)) {
-            return false;
-        }
-        final String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
-        LOG.info("QosConstraint is set to: {}", qosName);
-        if (qosName != null) {
-            //Set the values to QosConstraintManager
-            qosConstraintManager.setQosName(qosName);
-            qosConstraintManager.setEndPointGroups(endPointGroups);
-            qosConstraintManager.setAction(actionContainer);
-            qosConstraintManager.setConstraint(constraintContainer);
-        } else {
-            LOG.trace("QoS Name is not set");
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public void update() {
@@ -313,17 +208,6 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     @Override
     public void setSubject(final Subject sub) {
         this.topic = sub;
-    }
-
-    private Map<String, String> getMappingServiceContent(final EndPointGroup endPointGroup) {
-        Map<String, String> contentMap = null;
-
-        if (endPointGroup != null && endPointGroup.getEndPointGroup() != null){
-            final String endPointGroupName = endPointGroup.getEndPointGroup().getName();
-            contentMap = intentMappingService.get(endPointGroupName);
-        }
-
-        return contentMap == null ? new HashMap<>() : contentMap;
     }
 
     @Override

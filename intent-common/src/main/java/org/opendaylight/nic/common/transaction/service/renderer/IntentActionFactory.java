@@ -11,7 +11,7 @@ package org.opendaylight.nic.common.transaction.service.renderer;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleManagement;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleService;
 import org.opendaylight.nic.common.transaction.utils.CommonUtils;
-import org.opendaylight.nic.engine.IntentStateMachineExecutorService;
+import org.opendaylight.nic.engine.api.IntentStateMachineExecutorService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.schedule.ScheduleService;
 import org.opendaylight.schedule.ScheduleServiceManager;

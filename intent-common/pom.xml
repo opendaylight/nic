@@ -22,6 +22,22 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+    <description>
+        This module is responsible to handle changes on Intent tree
+        and interact with 'intent-state-machine' and renderers to
+        keep track of state changes and apply network changes.
+
+        [Project specific dependencies]
+        This module is a dependency of:
+        N/A
+
+        This module depends of:
+        - bgp-renderer
+        - of-renderer
+        - intent-state-machine
+        - intent-api
+        - renderer-api
+    </description>
 
     <dependencies>
         <dependency>
@@ -32,6 +48,19 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <groupId>org.opendaylight.controller.model</groupId>
             <artifactId>model-inventory</artifactId>
             <version>1.6.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>sal-binding-broker-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.opendaylight.mdsal.model</groupId>
+            <artifactId>ietf-interfaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- Testing Dependencies -->
         <dependency>
@@ -91,4 +120,34 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+
+    <!--Build Dependencies-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.aries.blueprint</groupId>
+                <artifactId>blueprint-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <!-- This bundle works with Karaf 3 and 4.0, see https://wiki.opendaylight.org/view/Karaf_4_migration#Karaf_CLI_commands -->
+                        <Import-Package>
+                            org.apache.karaf.shell.commands.*;version="[3.0.0,4.1)",
+                            org.apache.karaf.shell.console.*;version="[3.0.0,4.1)",
+                            org.apache.karaf.shell.*;version="[3.0.0,4.1)",
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
