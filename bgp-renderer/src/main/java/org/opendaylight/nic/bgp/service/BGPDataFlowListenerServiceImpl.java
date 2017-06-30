@@ -14,7 +14,6 @@ import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
 import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.bgp.api.BGPRendererService;
-import org.opendaylight.nic.bgp.impl.BGPRouteServiceImpl;
 import org.opendaylight.nic.bgp.utils.Utils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
@@ -27,15 +26,15 @@ import java.util.Collection;
 /**
  * Created by yrineu on 20/06/17.
  */
-public class BGPDataFlowListernerImpl implements BGPDataFlowListenerService {
-    private static final Logger LOG = LoggerFactory.getLogger(BGPDataFlowListernerImpl.class);
+public class BGPDataFlowListenerServiceImpl implements BGPDataFlowListenerService {
+    private static final Logger LOG = LoggerFactory.getLogger(BGPDataFlowListenerServiceImpl.class);
 
     private final DataBroker dataBroker;
     private final BGPRendererService bgpRendererService;
     private ListenerRegistration<DataTreeChangeListener> dataflowListenerRegistration;
 
-    public BGPDataFlowListernerImpl(final DataBroker dataBroker,
-                                    final BGPRendererService bgpRendererService) {
+    public BGPDataFlowListenerServiceImpl(final DataBroker dataBroker,
+                                          final BGPRendererService bgpRendererService) {
         this.dataBroker = dataBroker;
         this.bgpRendererService = bgpRendererService;
     }

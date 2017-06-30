@@ -15,7 +15,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.datafl
  */
 public interface BGPRendererService {
 
+    /**
+     * Advertise route based in a {@link BgpDataflow}
+     * @param bgpDataflow the {@link BgpDataflow}
+     */
     void advertiseRoute(BgpDataflow bgpDataflow);
 
+    /**
+     * Stop all BGP renderer services
+     */
     void stop();
 }

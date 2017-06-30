@@ -49,18 +49,14 @@ import java.util.List;
 /**
  * Created by yrineu on 17/05/17.
  */
-public class BGPRouteServiceImpl implements BGPRendererService {
-    private static final Logger LOG = LoggerFactory.getLogger(BGPRouteServiceImpl.class);
+public class BGPRendererServiceImpl implements BGPRendererService {
+    private static final Logger LOG = LoggerFactory.getLogger(BGPRendererServiceImpl.class);
 
     private DataBroker dataBroker;
     private static final String APPLICATION_RIB_ID = "example-app-rib";
 
-    public BGPRouteServiceImpl(final DataBroker dataBroker) {
+    public BGPRendererServiceImpl(final DataBroker dataBroker) {
         this.dataBroker = dataBroker;
-    }
-
-    private BGPRouteServiceImpl() {
-        //Do Nothing
     }
 
     @Override

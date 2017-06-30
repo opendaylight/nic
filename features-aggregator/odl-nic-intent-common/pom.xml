@@ -71,11 +71,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>intent-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>intent-statemachine</artifactId>
             <version>${project.version}</version>
@@ -92,12 +87,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>of-renderer</artifactId>
+            <artifactId>network-mapping</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>network-mapping</artifactId>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>intent-common</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

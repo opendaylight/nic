@@ -47,10 +47,8 @@ public class IntentActionFactory {
         return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
     }
 
-    public OFRendererService buildBasicOFRendererService() {
-        if (ofRendererService == null) {
-            ofRendererService = new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService);
-        }
-        return ofRendererService;
+    public IntentLifeCycleService buildBasicOFRendererService() {
+        final RendererService rendererService = new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService);
+        return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
     }
 }

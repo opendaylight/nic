@@ -40,7 +40,7 @@ public class StateMachineEngineImpl implements StateMachine {
     @Override
     public void start() {
         LOG.info("\nState Machine service Initiated");
-//        populate();
+        populate();
     }
 
     private void populate() {

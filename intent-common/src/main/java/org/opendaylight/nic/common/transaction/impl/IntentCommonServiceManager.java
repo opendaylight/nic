@@ -12,7 +12,6 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleService;
 import org.opendaylight.nic.common.transaction.service.renderer.IntentActionFactory;
-import org.opendaylight.nic.common.transaction.service.renderer.OFRendererService;
 import org.opendaylight.nic.common.transaction.utils.CommonUtils;
 import org.opendaylight.nic.engine.api.IntentStateMachineExecutorService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
@@ -20,7 +19,6 @@ import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,11 +31,15 @@ public class IntentCommonServiceManager implements IntentCommonService {
 
     public IntentCommonServiceManager(final DataBroker dataBroker,
                                       final OFRendererFlowService ofRendererFlowService,
-                                      final IntentStateMachineExecutorService stateMachineExecutorService) {
+                                      final IntentStateMachineExecutorService intentStateMachineExecutorService) {
         this.intentActionFactory = new IntentActionFactory(
                 new CommonUtils(dataBroker),
                 ofRendererFlowService,
-                stateMachineExecutorService);
+                intentStateMachineExecutorService);
+    }
+
+    private interface IntentAction {
+        void doExecute(String intentId, IntentLifeCycleService service);
     }
 
     @Override
@@ -47,13 +49,24 @@ public class IntentCommonServiceManager implements IntentCommonService {
     }
 
     @Override
-    public void resolveAndApply(Intent intent) {
-        final OFRendererService ofRendererService = intentActionFactory.buildBasicOFRendererService();
-        ofRendererService.applyIntent(intent);
+    public void resolveAndApply(Object intent) {
+        executeAction(intent, (intentId, service) -> {
+            if (intentId != null && service != null) {
+                service.startTransaction(intentId, EventType.INTENT_CREATED);
+            }
+        });
     }
 
     @Override
-    public void resolveAndApply(Object intent) {
+    public void resolveAndRemove(Object intent) {
+        executeAction(intent, (intentId, service) -> {
+            if (intentId != null && service != null) {
+                service.startTransaction(intentId, EventType.INTENT_REMOVED);
+            }
+        });
+    }
+
+    private void executeAction(final Object intent, final IntentAction action) {
         String intentId = null;
         IntentLifeCycleService lifeCycleService = null;
         if (IntentLimiter.class.isInstance(intent)) {
@@ -67,38 +80,14 @@ public class IntentCommonServiceManager implements IntentCommonService {
             intentId = intentIspPrefix.getId().getValue();
             lifeCycleService = intentActionFactory.buildIntentIspPrefixService();
         }
-        if (intentId != null && lifeCycleService != null) {
-            lifeCycleService.startTransaction(intentId, EventType.INTENT_CREATED);
+
+        if (Intent.class.isInstance(intent)) {
+            final Intent intentFirewall = (Intent) intent;
+            intentId = intentFirewall.getId().getValue();
+            lifeCycleService = intentActionFactory.buildBasicOFRendererService();
         }
-    }
 
-    @Override
-    public void resolveAndApply(NodeId nodeId) {
-        //TODO: Implement the NodeUp event
-    }
-
-    @Override
-    public void resolveAndRemove(IntentLimiter intentLimiter) {
-        final IntentLifeCycleService lifeCycleService = intentActionFactory.buildIntentLimiterService();
-        lifeCycleService.startTransaction(intentLimiter.getId().getValue(), EventType.INTENT_REMOVED);
-    }
-
-    @Override
-    public void resolveAndRemove(Intent intent) {
-        final OFRendererService ofRendererService = intentActionFactory.buildBasicOFRendererService();
-        ofRendererService.removeIntent(intent);
-    }
-
-    @Override
-    public void createARPFlow(NodeId nodeId) {
-        final OFRendererService ofRendererService = intentActionFactory.buildBasicOFRendererService();
-        ofRendererService.evaluateArpFlows(nodeId);
-    }
-
-    @Override
-    public void createLLDPFlow(NodeId nodeId) {
-        final OFRendererService ofRendererService = intentActionFactory.buildBasicOFRendererService();
-        ofRendererService.evaluateLLDPFlow(nodeId);
+        action.doExecute(intentId, lifeCycleService);
     }
 
     @Override

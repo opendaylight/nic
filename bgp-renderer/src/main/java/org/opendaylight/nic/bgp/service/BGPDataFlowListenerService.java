@@ -12,11 +12,18 @@ import org.opendaylight.controller.md.sal.binding.api.DataTreeChangeListener;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
 
 /**
- * Created by yrineu on 20/06/17.
+ * Service responsible to handle changes on BGP Dataflow tree
  */
 public interface BGPDataFlowListenerService extends DataTreeChangeListener<BgpDataflow> {
 
+    /**
+     * Start listener service for
+     * {@link org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows}
+     */
     void start();
 
+    /**
+     * Stop listener services.
+     */
     void stop();
 }

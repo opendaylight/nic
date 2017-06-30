@@ -12,11 +12,17 @@ import org.opendaylight.controller.md.sal.binding.api.DataTreeChangeListener;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 
 /**
- * Created by yrineu on 28/06/17.
+ * This service is responsible to handle Intent events.
  */
 public interface IntentTreeChangesListener<T extends DataObject> extends DataTreeChangeListener<T> {
 
+    /**
+     * Start intent listener services
+     */
     void start();
 
+    /**
+     * Stop Intent listener services
+     */
     void stop();
 }
