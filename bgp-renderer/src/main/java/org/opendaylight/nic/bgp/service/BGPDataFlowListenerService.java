@@ -9,16 +9,16 @@
 package org.opendaylight.nic.bgp.service;
 
 import org.opendaylight.controller.md.sal.binding.api.DataTreeChangeListener;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows;
 
 /**
  * Service responsible to handle changes on BGP Dataflow tree
  */
-public interface BGPDataFlowListenerService extends DataTreeChangeListener<BgpDataflow> {
+public interface BGPDataFlowListenerService extends DataTreeChangeListener<BgpDataflows> {
 
     /**
      * Start listener service for
-     * {@link org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows}
+     * {@link BgpDataflows}
      */
     void start();
 
