@@ -112,6 +112,7 @@ public class MdsalUtils {
             result = true;
         } catch (TransactionCommitFailedException e) {
             LOG.warn("Failed to put {} ", path, e);
+            e.printStackTrace();
         }
         return result;
     }

@@ -8,13 +8,11 @@
 
 package org.opendaylight.nic.bgp.service;
 
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.DataTreeChangeListener;
-import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
-import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
+import org.opendaylight.controller.md.sal.binding.api.*;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.bgp.api.BGPRendererService;
 import org.opendaylight.nic.bgp.utils.Utils;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.slf4j.Logger;
@@ -49,11 +47,12 @@ public class BGPDataFlowListenerServiceImpl implements BGPDataFlowListenerServic
     }
 
     @Override
-    public void onDataTreeChanged(@Nonnull Collection<DataTreeModification<BgpDataflow>> collection) {
+    public void onDataTreeChanged(@Nonnull Collection<DataTreeModification<BgpDataflows>> collection) {
         LOG.info("\nBGP Dataflow received.");
         collection.iterator().forEachRemaining(consumer -> {
-            final BgpDataflow bgpDataflow = consumer.getRootNode().getDataAfter();
-            bgpRendererService.advertiseRoute(bgpDataflow);
+            final DataObjectModification<BgpDataflows> objectModification = consumer.getRootNode();
+            final BgpDataflows bgpDataflowTree = objectModification.getDataAfter();
+            bgpDataflowTree.getBgpDataflow().forEach(bgpDataflow -> bgpRendererService.advertiseRoute(bgpDataflow));
         });
     }
 

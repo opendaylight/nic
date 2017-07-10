@@ -37,9 +37,10 @@ public class BGPServiceImpl implements BGPService {
         final IntentIspPrefix intentIspPrefix = commonUtils.retrieveIntentIspPrefix(id);
         try {
             final Map<Ipv4Address, BgpDataflow> bgpDataFlowMap = commonUtils.createBGPDataFlow(intentIspPrefix);
-            bgpDataFlowMap.entrySet().forEach(entry -> commonUtils.pushBgpDataflow(entry.getValue()));
+            final BgpDataflow bgpDataFlow = bgpDataFlowMap.entrySet().iterator().next().getValue();
+            commonUtils.pushBgpDataflow(bgpDataFlow);
         } catch (IntentInvalidException e) {
-            LOG.error(e.getMessage());
+            LOG.info(e.getMessage());
             throw new RendererServiceException(e.getMessage());
         }
     }

@@ -49,7 +49,6 @@ public class IntentBGPListener extends AbstractListener<IntentIspPrefixes>
 
     @Override
     public void handleIntentCreated(IntentIspPrefixes intents) {
-        LOG.info("\n#### Creating IntentISPPrefix");
         intents.getIntentIspPrefix().forEach(intent -> intentCommonService.resolveAndApply(intent));
     }
 

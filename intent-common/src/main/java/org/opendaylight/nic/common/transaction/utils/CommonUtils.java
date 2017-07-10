@@ -24,6 +24,7 @@ import org.opendaylight.nic.common.transaction.exception.RemoveDelayconfigExcept
 import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.nic.utils.exceptions.PushDataflowException;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.AsNumber;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.IntentIspPrefixes;
@@ -44,6 +45,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfoKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflowsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflow.AsNumbers;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflow.AsNumbersBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.Dataflows;
@@ -88,12 +92,12 @@ public class CommonUtils {
             if (intents.isPresent()) {
                 listOfIntents = intents.get().getIntent();
             } else {
-                LOG.info("Intent tree was empty!");
+                LOG.debug("Intent tree was empty!");
             }
         } catch (Exception e) {
             LOG.error("ListIntents: failed: {}", e.getMessage(), e);
         }
-        LOG.info("ListIntentsConfiguration: list of intents retrieved successfully");
+        LOG.debug("ListIntentsConfiguration: list of intents retrieved successfully");
         return listOfIntents;
     }
 
@@ -107,7 +111,7 @@ public class CommonUtils {
             if (intents.isPresent()) {
                 listOfIntents = intents.get().getIntentLimiter();
             } else {
-                LOG.info("\nIntentLimiter tree was empty!");
+                LOG.debug("\nIntentLimiter tree was empty!");
             }
         } catch (Exception e) {
             LOG.error("\nListIntents: failed: {}", e.getMessage(), e);
@@ -301,9 +305,15 @@ public class CommonUtils {
         retrieveRouterInfosByRouterGroup(ethernetService.getRouterGroupId().getValue()).forEach(routerInfo -> {
             BgpDataflowBuilder dataflowBuilder = new BgpDataflowBuilder();
             dataflowBuilder.setId(intent.getId());
+            dataflowBuilder.setOriginatorIp(Ipv4Address.getDefaultInstance(routerInfo.getServicePeerIp()));
             dataflowBuilder.setPrefix(intent.getPrefix());
             dataflowBuilder.setGlobalIp(Ipv4Address.getDefaultInstance(routerInfo.getServicePeerIp()));
             dataflowBuilder.setPathId(routerInfo.getPeerPathId());
+            final List<AsNumbers> asNumbers = Lists.newArrayList();
+            final AsNumbersBuilder asNumbersBuilder = new AsNumbersBuilder();
+            asNumbersBuilder.setAsNumber(AsNumber.getDefaultInstance(routerInfo.getAsn().toString()));
+            asNumbers.add(asNumbersBuilder.build());
+            dataflowBuilder.setAsNumbers(asNumbers);
 
             bgpDataflowByPeerIp.put(Ipv4Address.getDefaultInstance(
                     routerInfo.getServicePeerIp()), dataflowBuilder.build());
@@ -321,8 +331,13 @@ public class CommonUtils {
             if (bgpDataflowsOptional.isPresent()) {
                 result = bgpDataflowsOptional.get();
             }
+            if (result == null) {
+                final BgpDataflowsBuilder bgpDataflowsBuilder = new BgpDataflowsBuilder();
+                bgpDataflowsBuilder.setBgpDataflow(Lists.newArrayList());
+                result = bgpDataflowsBuilder.build();
+            }
         } catch (ReadFailedException e) {
-            LOG.error(e.getMessage());
+            LOG.error("\nError when try to retrieve BGP DataFlow Tree: {}",e.getMessage());
         }
         return result;
     }
@@ -333,9 +348,9 @@ public class CommonUtils {
             bgpDataflowTree.getBgpDataflow().add(bgpDataflow);
             final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
             writeTransaction.put(LogicalDatastoreType.CONFIGURATION, Utils.BGP_DATAFLOW_IDENTIFIER, bgpDataflowTree);
-            writeTransaction.submit();
-        } catch (Exception e) {
-            LOG.error(e.getMessage());
+            writeTransaction.submit().checkedGet();
+        } catch (TransactionCommitFailedException e) {
+            LOG.error("\nError when try to push BGP dataflow: {}", e.getMessage());
         }
     }
 
@@ -351,7 +366,7 @@ public class CommonUtils {
                 result = ethernetServiceOptional.get();
             }
         } catch (ReadFailedException e) {
-            LOG.error(e.getMessage());
+            LOG.error("\nError when try to retrieve Ethernet Services by Name {}",e.getMessage());
         }
         return result;
     }
