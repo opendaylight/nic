@@ -22,18 +22,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
-    <description>
-        This module is responsible to interact with devices
-        over OpenFlow protocol.
-
-        [Project specific dependencies]
-        This module is a dependency of:
-        - intent-common
-
-        This module depends of:
-        - intent-api
-        - renderer-api
-    </description>
 
     <properties>
         <jung2.version>2.0.1</jung2.version>

@@ -20,7 +20,7 @@ import java.util.Collection;
 public abstract class AbstractListener <T extends DataObject> {
 
     public void handleIntentTreeEvent(Collection<DataTreeModification<T>> collection) {
-        collection.iterator().forEachRemaining(intentTree -> {
+        collection.forEach(intentTree -> {
             final DataObjectModification<T> objectModification = intentTree.getRootNode();
             final T intents = objectModification.getDataAfter();
             switch (intentTree.getRootNode().getModificationType()) {

@@ -19,6 +19,7 @@ import org.opendaylight.nic.utils.EventType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.vlan.rev170724.intent.vlans.IntentVlan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +60,7 @@ public class IntentCommonServiceManager implements IntentCommonService {
 
     @Override
     public void resolveAndRemove(Object intent) {
+        LOG.info("\n### New Intent created");
         executeAction(intent, (intentId, service) -> {
             if (intentId != null && service != null) {
                 service.startTransaction(intentId, EventType.INTENT_REMOVED);
@@ -85,6 +87,12 @@ public class IntentCommonServiceManager implements IntentCommonService {
             final Intent intentFirewall = (Intent) intent;
             intentId = intentFirewall.getId().getValue();
             lifeCycleService = intentActionFactory.buildBasicOFRendererService();
+        }
+
+        if (IntentVlan.class.isInstance(intent)) {
+            final IntentVlan intentVlan = (IntentVlan) intent;
+            intentId = intentVlan.getName();
+            lifeCycleService = intentActionFactory.buildEvpnService();
         }
 
         action.doExecute(intentId, lifeCycleService);

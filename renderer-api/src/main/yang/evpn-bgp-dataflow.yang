@@ -1,0 +1,61 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module evpn-bgp-dataflow {
+    namespace "urn:opendaylight:nic:renderer:api:evpn:bgp:dataflow";
+    prefix "evpn-bgp-dataflow";
+
+    revision 2017-07-25 {
+        description "Initial revision.";
+    }
+
+    grouping neighbor {
+        leaf neighbor-ip {
+            type string;
+        }
+    }
+
+    grouping evpn-bgp-dataflow {
+        leaf switch-name {
+            type string;
+            mandatory true;
+            description "Defines the switch name where this BGP configuration will be applied.";
+        }
+
+        leaf group-name {
+            type string;
+            mandatory true;
+            description "Defines the group name of this BGP session.";
+        }
+
+        leaf group-type {
+            type enumeration {
+                enum "INTERNAL" {
+                    value 0;
+                }
+            }
+        }
+
+        leaf local-address {
+            type string;
+            mandatory true;
+            description "Defines the local IP address of this BGP session.";
+        }
+
+        list neighbors {
+            key "neighbor-ip";
+            uses neighbor;
+        }
+    }
+
+    container evpn-bgp-dataflows {
+        list evpn-bgp-dataflow {
+            key "switch-name";
+            uses evpn-bgp-dataflow;
+        }
+    }
+}

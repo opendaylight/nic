@@ -34,7 +34,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.in
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.vlan.rev170724.intent.vlans.IntentVlan;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.vlan.rev170724.intent.vlans.IntentVlanKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.group.rev170724._switch.groups.SwitchGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.group.rev170724._switch.groups.SwitchGroupKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711.SwitchName;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711._switch.infos.SwitchInfo;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711._switch.infos.SwitchInfoKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.EthernetServices;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetServiceKey;
@@ -44,6 +51,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.RouterInfos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfoKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.vlan.group.rev170724.vlan.groups.VlanGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.vlan.group.rev170724.vlan.groups.VlanGroupKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.vlan.info.rev170721.VlanName;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.vlan.info.rev170721.vlan.infos.VlanInfo;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.vlan.info.rev170721.vlan.infos.VlanInfoKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflowsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflow.AsNumbers;
@@ -59,6 +71,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.conf
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.DelayConfigsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfigKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.rev170724.EvpnDataflows;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.rev170724.EvpnDataflowsBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.rev170724.evpn.dataflows.EvpnDataflow;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -417,6 +432,123 @@ public class CommonUtils {
             LOG.error(e.getMessage());
         }
         return result;
+    }
+
+    public IntentVlan retrieveIntentVlans(final String id) {
+        IntentVlan result = null;
+        final InstanceIdentifier<IntentVlan> identifier = InstanceIdentifierUtils.INTENT_VLANS_IDENTIFIER
+                .child(IntentVlan.class, new IntentVlanKey(id));
+        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+
+        try {
+            final Optional<IntentVlan> intentVlanOptional = transaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            result = intentVlanOptional.get();
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public VlanGroup retrieveVlanGroup(final String id) {
+        VlanGroup result = null;
+        final InstanceIdentifier<VlanGroup> identifier = InstanceIdentifierUtils.VLAN_GROUPS_IDENTIFIER
+                .child(VlanGroup.class, new VlanGroupKey(id));
+        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+
+        try {
+            final Optional<VlanGroup> vlanGroupOptional = transaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            result = vlanGroupOptional.get();
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public SwitchGroup retrieveSwitchGroup(final String id) {
+        SwitchGroup result = null;
+        final InstanceIdentifier<SwitchGroup> identifier = InstanceIdentifierUtils.SWITCH_GROUPS_IDENTIFIER
+                .child(SwitchGroup.class, new SwitchGroupKey(id));
+        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+
+        try {
+            final Optional<SwitchGroup> switchGroupOptional = transaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            result = switchGroupOptional.get();
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public SwitchInfo retrieveSwitchInfo(final String id) {
+        SwitchInfo result = null;
+        final InstanceIdentifier<SwitchInfo> identifier = InstanceIdentifierUtils.SWITCH_INFOS_IDENTIFIER
+                .child(SwitchInfo.class, new SwitchInfoKey(new SwitchName(id)));
+        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+        try {
+            final Optional<SwitchInfo> switchInfoOptional = transaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            result = switchInfoOptional.get();
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public Map<String, Integer> retrieveVlanNameById(final Set<String> vlanNames) {
+        final Map<String, Integer> vlanNameById = Maps.newConcurrentMap();
+        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
+        vlanNames.forEach(vlanName -> {
+            final InstanceIdentifier<VlanInfo> identifier = InstanceIdentifierUtils.VLANINFOS_IDENTIFIER
+                    .child(VlanInfo.class, new VlanInfoKey(new VlanName(vlanName)));
+            try {
+                final Optional<VlanInfo> vlanInfoOptional = transaction
+                        .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+                vlanNameById.put(vlanName, vlanInfoOptional.get().getVlanId().intValue());
+            } catch (ReadFailedException e) {
+                LOG.error(e.getMessage());
+            }
+        });
+        return vlanNameById;
+    }
+
+    public EvpnDataflows retrieveEvpnDataflowsTree() {
+        EvpnDataflows result = null;
+        final InstanceIdentifier<EvpnDataflows> identifier = InstanceIdentifierUtils.EVPN_DATAFLOWS_IDENTIFIER;
+        final ReadOnlyTransaction readOnlyTransaction = dataBroker.newReadOnlyTransaction();
+        try {
+            final Optional<EvpnDataflows> evpnDataflowsOptional = readOnlyTransaction
+                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
+            if (evpnDataflowsOptional.isPresent()) {
+                result = evpnDataflowsOptional.get();
+            }
+        } catch (ReadFailedException e) {
+            LOG.error(e.getMessage());
+        }
+        return result;
+    }
+
+    public void pushEvpnDataflow(final EvpnDataflow evpnDataflow) {
+        EvpnDataflows evpnDataflows = retrieveEvpnDataflowsTree();
+        final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
+        if (evpnDataflows == null) {
+            final EvpnDataflowsBuilder evpnDataflowsBuilder = new EvpnDataflowsBuilder();
+            evpnDataflowsBuilder.setEvpnDataflow(Lists.newArrayList(evpnDataflow));
+            evpnDataflows = evpnDataflowsBuilder.build();
+        } else {
+            evpnDataflows.getEvpnDataflow().add(evpnDataflow);
+        }
+        writeTransaction.put(
+                LogicalDatastoreType.CONFIGURATION,
+                InstanceIdentifierUtils.EVPN_DATAFLOWS_IDENTIFIER,
+                evpnDataflows);
+        try {
+            writeTransaction.submit().checkedGet();
+        } catch (TransactionCommitFailedException e) {
+            LOG.error(e.getMessage());
+        }
     }
 
     public static void waitUnlock() {

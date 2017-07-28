@@ -22,19 +22,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
-    <description>
-        This module is responsible to interact with network devices using
-        the BGP protocol.
-
-        [Project specific dependencies]
-        This module is a dependency of:
-        - intent-common
-
-        This module depends of:
-        - renderer-api
-        - utils
-        - intent-api
-    </description>
 
     <properties>
         <mdsal.model.groupId>org.opendaylight.mdsal.model</mdsal.model.groupId>
@@ -114,24 +101,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

@@ -1,0 +1,43 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module intent-vlan {
+    namespace "urn:opendaylight:intent:vlan";
+    prefix intent-vlan;
+
+    revision 2017-07-24 {
+        description "Initial revision.";
+    }
+
+    grouping intent-vlan {
+
+        leaf name {
+            type string;
+            mandatory true;
+            description "Uniquely identifier of this Intent.";
+        }
+
+        leaf vlan-group {
+            type string;
+            mandatory true;
+            description "VLAN Group where this Intent will be applied.";
+        }
+
+        leaf host-name {
+            type string;
+            mandatory true;
+            description "Defines the host connected to a given switch interface.";
+        }
+    }
+
+    container intent-vlans {
+        list intent-vlan {
+            key "name";
+            uses intent-vlan;
+        }
+    }
+}

@@ -1,0 +1,55 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module switch-group {
+    namespace "urn:opendaylight:nic:network:mapping:switch:group";
+    prefix "switch-group";
+
+    import host-info { prefix host-info; revision-date 2017-07-24; }
+    import switch-info { prefix switch-info; revision-date 2017-07-11; }
+
+    revision 2017-07-24 {
+        description "Initial revision.";
+    }
+
+    grouping host-by-interface {
+
+        leaf host-name {
+            type host-info:host-name;
+        }
+
+        leaf interface-name {
+            type string;
+        }
+    }
+
+    grouping switch-group {
+
+        leaf switch-group-name {
+            type string;
+            mandatory true;
+            description "The uniquely identifier of a switch group.";
+        }
+
+        leaf switch-name {
+            type switch-info:switch-name;
+        }
+
+        list host-by-interface-list {
+            key "host-name";
+            uses host-by-interface;
+        }
+
+    }
+
+    container switch-groups {
+        list switch-group {
+            key "switch-group-name";
+            uses switch-group;
+        }
+    }
+}

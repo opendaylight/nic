@@ -60,6 +60,8 @@
         <module>renderer-api</module>
         <module>pub-sub-manager</module>
         <module>network-mapping</module>
+        <module>rpc-renderer</module>
+        <!--<module>nic-cli</module>-->
     </modules>
 
     <build>
