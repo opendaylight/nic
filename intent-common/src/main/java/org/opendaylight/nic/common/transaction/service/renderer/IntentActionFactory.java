@@ -51,4 +51,9 @@ public class IntentActionFactory {
         final RendererService rendererService = new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService);
         return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
     }
+
+    public IntentLifeCycleService buildEvpnService() {
+        final RendererService rendererService = new RPCRenderer(commonUtils);
+        return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
+    }
 }

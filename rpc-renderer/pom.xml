@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) Serro LLC. All rights reserved.
+This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v1.0 which accompanies this distribution,
+and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.opendaylight.controller</groupId>
+        <artifactId>config-parent</artifactId>
+        <version>0.7.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.opendaylight.nic</groupId>
+    <artifactId>rpc-renderer</artifactId>
+    <version>1.4.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+
+    <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.opendaylight.controller</groupId>
+            <artifactId>config-api</artifactId>
+        </dependency>
+
+        <!-- Project specific dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>renderer-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>network-mapping</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- External dependencies -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-json-org</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
+        <!-- Testing Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>1.17</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.7</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.aries.blueprint</groupId>
+                <artifactId>blueprint-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <!-- This bundle works with Karaf 3 and 4.0, see https://wiki.opendaylight.org/view/Karaf_4_migration#Karaf_CLI_commands -->
+                        <Import-Package>
+                            *,
+                            com.sun.jersey.spi.container.servlet,
+                            org.eclipse.jetty.servlets;version="[8.1,10)",
+                            org.opendaylight.aaa.shiro.filters,
+                            org.opendaylight.aaa.shiro.realm,
+                            org.opendaylight.aaa.shiro.web.env,
+                            org.apache.shiro.web.env
+                            org.apache.karaf.shell.commands.*;version="[3.0.0,4.1)",
+                            org.apache.karaf.shell.console.*;version="[3.0.0,4.1)",
+                            org.apache.karaf.shell.*;version="[3.0.0,4.1)",
+                            *
+                        </Import-Package>
+                        <Web-ContextPath>/nic</Web-ContextPath>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.felix</groupId>-->
+                <!--<artifactId>maven-bundle-plugin</artifactId>-->
+                <!--<version>${bundle.plugin.version}</version>-->
+                <!--<extensions>true</extensions>-->
+                <!--<configuration>-->
+                    <!--<instructions>-->
+                        <!--<Import-Package>-->
+                            <!--*,-->
+                            <!--com.sun.jersey.spi.container.servlet,-->
+                            <!--org.eclipse.jetty.servlets;version="[8.1,10)",-->
+                            <!--org.opendaylight.aaa.shiro.filters,-->
+                            <!--org.opendaylight.aaa.shiro.realm,-->
+                            <!--org.opendaylight.aaa.shiro.web.env,-->
+                            <!--org.apache.shiro.web.env-->
+                        <!--</Import-Package>-->
+                        <!--<Web-ContextPath>/nic</Web-ContextPath>-->
+                    <!--</instructions>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
+
+</project>
