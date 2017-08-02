@@ -9,9 +9,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>org.opendaylight.controller</groupId>
-        <artifactId>config-parent</artifactId>
-        <version>0.7.0-SNAPSHOT</version>
+        <groupId>org.opendaylight.mdsal</groupId>
+        <artifactId>binding-parent</artifactId>
+        <version>0.11.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -35,9 +35,17 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         N/A
     </description>
 
-    <properties>
-        <mdsal.version>1.6.0-SNAPSHOT</mdsal.version>
-    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.opendaylight.controller</groupId>
+                <artifactId>mdsal-artifacts</artifactId>
+                <version>1.6.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -47,7 +55,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <dependency>
             <groupId>org.opendaylight.controller.model</groupId>
             <artifactId>model-inventory</artifactId>
-            <version>${mdsal.version}</version>
         </dependency>
     </dependencies>
 </project>

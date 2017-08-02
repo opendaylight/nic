@@ -10,9 +10,9 @@
  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
  <parent>
-  <groupId>org.opendaylight.controller</groupId>
-  <artifactId>config-parent</artifactId>
-  <version>0.7.0-SNAPSHOT</version>
+  <groupId>org.opendaylight.mdsal</groupId>
+  <artifactId>binding-parent</artifactId>
+  <version>0.11.0-SNAPSHOT</version>
   <relativePath />
  </parent>
 
@@ -29,6 +29,18 @@
   <openflowplugin.version>0.5.0-SNAPSHOT</openflowplugin.version>
  </properties>
 
+ <dependencyManagement>
+  <dependencies>
+   <dependency>
+    <groupId>org.opendaylight.controller</groupId>
+    <artifactId>mdsal-artifacts</artifactId>
+    <version>1.6.0-SNAPSHOT</version>
+    <type>pom</type>
+    <scope>import</scope>
+   </dependency>
+  </dependencies>
+ </dependencyManagement>
+
  <dependencies>
  <!-- project specific dependency -->
    <dependency>
@@ -41,6 +53,10 @@
     <groupId>org.opendaylight.controller</groupId>
     <artifactId>liblldp</artifactId>
     <version>${liblldp.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>org.opendaylight.controller</groupId>
+   <artifactId>sal-binding-api</artifactId>
   </dependency>
   <!-- openflowplugin dependency -->
   <dependency>

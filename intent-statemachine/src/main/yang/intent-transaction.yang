@@ -9,19 +9,11 @@ module intent-state-transaction {
     namespace "urn:opendaylight:nic:intent:state:transaction";
     prefix "intent-state-transaction";
 
-    import config { prefix config; revision-date 2013-04-05; }
-    import opendaylight-md-sal-binding { prefix mdsal; revision-date 2013-10-28; }
-
     description
         "This module represents a transaction to represent Intent sate change based on events.";
 
     revision 2015-12-03 {
         description "Initial revision.";
-    }
-
-    identity intent-state-transaction {
-        base config:module-type;
-        config:java-name-prefix IntentStateTransactionProvider;
     }
 
     grouping intent-state-transaction {
