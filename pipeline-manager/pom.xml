@@ -21,16 +21,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
-    <description>
-        This module is responsible to read configurations on Switches OpenFlow capable.
-
-        [Project specific dependencies]
-        This module is a dependency of:
-        - of-renderer
-
-        This module depends of:
-        N/A
-    </description>
 
     <properties>
         <openflowplugin.version>0.5.0-SNAPSHOT</openflowplugin.version>

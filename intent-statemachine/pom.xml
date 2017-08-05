@@ -18,18 +18,6 @@
     </parent>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
-    <description>
-        This module is responsible to keep tracking of Intent states.
-        For more information, please, visit our wiki.
-        (https://wiki.opendaylight.org/view/Network_Intent_Composition:State_Machine)
-
-        [Project specific dependencies]
-        This module is a dependency of:
-        - intent-common
-
-        This module depends of:
-        - intent-api
-    </description>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
