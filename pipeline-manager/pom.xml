@@ -24,7 +24,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
     <properties>
         <openflowplugin.version>0.5.0-SNAPSHOT</openflowplugin.version>
-        <openflowjava.version>0.10.0-SNAPSHOT</openflowjava.version>
+        <openflowjava.version>0.5.0-SNAPSHOT</openflowjava.version>
     </properties>
 
     <dependencyManagement>
@@ -75,7 +75,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <version>${openflowplugin.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.opendaylight.openflowjava</groupId>
+            <groupId>org.opendaylight.openflowplugin.openflowjava</groupId>
             <artifactId>openflow-protocol-api</artifactId>
             <version>${openflowjava.version}</version>
         </dependency>
