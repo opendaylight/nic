@@ -25,7 +25,6 @@
         <module>odl-nic-core-mdsal</module>
         <module>odl-nic-intent-common</module>
         <module>features-nic</module>
-        <module>odl-nic-all</module>
     </modules>
 
     <scm>
