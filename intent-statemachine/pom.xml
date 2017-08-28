@@ -39,7 +39,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.opendaylight.nic</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>utils</artifactId>
             <version>${project.version}</version>
         </dependency>

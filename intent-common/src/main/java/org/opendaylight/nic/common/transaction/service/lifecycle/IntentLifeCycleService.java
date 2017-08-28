@@ -15,6 +15,8 @@ import org.opendaylight.nic.utils.EventType;
  */
 public interface IntentLifeCycleService {
 
+    void start();
+
     /**
      * Start the life cycle management process to a given Intent
      * @param id the {@link org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid}

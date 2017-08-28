@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.common.transaction.service.renderer;
 
+import com.google.common.collect.Maps;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleManagement;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleService;
 import org.opendaylight.nic.common.transaction.utils.CommonUtils;
@@ -15,6 +16,13 @@ import org.opendaylight.nic.engine.api.IntentStateMachineExecutorService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.schedule.ScheduleService;
 import org.opendaylight.schedule.ScheduleServiceManager;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.evpn.rev170724.intent.evpns.IntentEvpn;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
+import org.opendaylight.yangtools.yang.binding.DataObject;
+
+import java.util.Map;
 
 /**
  * Created by yrineu on 07/04/17.
@@ -27,28 +35,51 @@ public class IntentActionFactory {
     private final IntentStateMachineExecutorService stateMachineExecutorService;
     private OFRendererService ofRendererService;
 
-    public IntentActionFactory (final CommonUtils commonUtils,
-                                final OFRendererFlowService ofRendererFlowService,
-                                final IntentStateMachineExecutorService stateMachineExecutorService) {
+    private Map<Class<? extends DataObject>, IntentLifeCycleService> lifecycleServiceByIntentType;
+
+    public void start() {
+        lifecycleServiceByIntentType = Maps.newConcurrentMap();
+    }
+
+    public IntentActionFactory(final CommonUtils commonUtils,
+                               final OFRendererFlowService ofRendererFlowService,
+                               final IntentStateMachineExecutorService stateMachineExecutorService) {
         this.commonUtils = commonUtils;
         this.ofRendererFlowService = ofRendererFlowService;
         this.scheduleService = new ScheduleServiceManager();
         this.stateMachineExecutorService = stateMachineExecutorService;
     }
 
-    public IntentLifeCycleService buildIntentLimiterService() {
-        final RendererService rendererService = new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService);
-        scheduleService.setRendererService(rendererService);
-        return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
+    public synchronized IntentLifeCycleService buildIntentLimiterService() {
+        return startService(IntentLimiter.class, new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService));
     }
 
-    public IntentLifeCycleService buildIntentIspPrefixService() {
-        final RendererService rendererService = new BGPServiceImpl(commonUtils);
-        return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
+    public synchronized IntentLifeCycleService buildIntentIspPrefixService() {
+        return startService(IntentIspPrefix.class, new BGPServiceImpl(commonUtils));
     }
 
-    public IntentLifeCycleService buildBasicOFRendererService() {
-        final RendererService rendererService = new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService);
-        return new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
+    public synchronized IntentLifeCycleService buildBasicOFRendererService() {
+        return startService(Intent.class, new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService));
+    }
+
+    public synchronized IntentLifeCycleService buildEvpnService() {
+        return startService(IntentEvpn.class, new RPCRenderer(commonUtils));
+    }
+
+    private IntentLifeCycleService startService(final Class<? extends DataObject> intentClass,
+                                                final RendererService rendererService) {
+        IntentLifeCycleService lifeCycleService = lifecycleServiceByIntentType.get(intentClass);
+        if (lifeCycleService == null) {
+            scheduleService.setRendererService(rendererService);
+            lifeCycleService = new IntentLifeCycleManagement(stateMachineExecutorService, rendererService);
+            lifecycleServiceByIntentType.put(intentClass, lifeCycleService);
+        }
+        lifeCycleService.start();
+        System.gc();
+        return lifeCycleService;
+    }
+
+    public void stop() {
+        lifecycleServiceByIntentType.clear();
     }
 }

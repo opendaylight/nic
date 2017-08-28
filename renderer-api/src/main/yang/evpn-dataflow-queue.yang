@@ -1,0 +1,38 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module evpn-dataflow-queue {
+    namespace "urn:opendaylight:nic:renderer:api:evpn:dataflow:queue";
+    prefix "evpn-dataflow-queue";
+
+    import evpn-dataflow { prefix evpn-dataflow; revision-date 2017-07-24; }
+
+    revision 2017-08-07 {
+        description "First revision.";
+    }
+
+    grouping evpn-dataflow-queue {
+
+        leaf id {
+            type string;
+            mandatory true;
+            description "Uniquely identifier of a Evpn dataflow queue";
+        }
+
+        list evpn-dataflows {
+            key "id";
+            uses evpn-dataflow:evpn-dataflow;
+        }
+    }
+
+    container evpn-dataflow-queues {
+        list evpn-dataflow-queue {
+            key "id";
+            uses evpn-dataflow-queue;
+        }
+    }
+}

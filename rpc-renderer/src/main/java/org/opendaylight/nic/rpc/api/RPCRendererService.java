@@ -6,23 +6,19 @@
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.opendaylight.nic.common.transaction.service.listeners;
+package org.opendaylight.nic.rpc.api;
 
 import org.opendaylight.controller.md.sal.binding.api.DataTreeChangeListener;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.queue.rev170807.EvpnDataflowQueues;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.queue.rev170807.evpn.dataflow.queues.EvpnDataflowQueue;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 
 /**
- * This service is responsible to handle Intent events.
+ * Created by yrineu on 14/07/17.
  */
-public interface IntentTreeChangesListener<T extends DataObject> extends DataTreeChangeListener<T> {
+public interface RPCRendererService<T extends DataObject> extends DataTreeChangeListener<T> {
 
-    /**
-     * Start intent listener services
-     */
     void start();
 
-    /**
-     * Stop Intent listener services
-     */
     void stop();
 }
