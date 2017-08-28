@@ -1,0 +1,67 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2015 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module service-mapping {
+    namespace "urn:opendaylight:nic:network:mapping:service:mapping";
+    prefix "service-mapping";
+
+   import host-info { prefix host-info; revision-date 2017-07-24; }
+   import host-interface { prefix host-interface; revision-date 2017-07-31; }
+   import bridge-info { prefix bridge-info; revision-date 2017-07-31; }
+
+    revision 2017-08-01 {
+        description "Initial revision.";
+    }
+
+    grouping service-mapping {
+        leaf service-name {
+            type string;
+            mandatory true;
+            description "Defines the Network service name.";
+        }
+
+        list host-names {
+            key "host-name";
+            leaf host-name {
+                type host-info:host-name;
+            }
+
+            choice host-names {
+                case host-name {
+                    container host-name {
+                        uses host-info:host-interface;
+                    }
+                }
+            }
+        }
+
+        leaf host-interface {
+            type host-interface:interface-name;
+            mandatory true;
+            description "Defines the host interface associated with a given Host.";
+        }
+
+        leaf vlan-id {
+            type uint32;
+            mandatory true;
+            description "Defines the VLAN ID associated with a given service.";
+        }
+
+        leaf bridge-name {
+            type bridge-info:bridge-name;
+            mandatory true;
+            description "Defines the bridge associated with a given host interface and service.";
+        }
+    }
+
+    container service-mappings {
+        list service-mapping {
+            key "service-name";
+            uses service-mapping;
+        }
+    }
+}
