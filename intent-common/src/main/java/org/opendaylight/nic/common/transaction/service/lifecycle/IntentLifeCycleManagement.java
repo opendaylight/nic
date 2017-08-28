@@ -8,6 +8,7 @@
 
 package org.opendaylight.nic.common.transaction.service.lifecycle;
 
+import com.google.common.collect.Maps;
 import org.opendaylight.nic.common.transaction.service.IntentService;
 import org.opendaylight.nic.common.transaction.service.action.add.IntentAddAction;
 import org.opendaylight.nic.common.transaction.service.action.remove.IntentRemoveAction;
@@ -44,10 +45,15 @@ public class IntentLifeCycleManagement implements IntentLifeCycleRegister, Inten
                                      final RendererService rendererService) {
         this.stateMachineExecutorService = stateMachineExecutorService;
         this.lifeCycleListeners = ConcurrentHashMap.newKeySet();
-        this.executorByEvent = new HashMap<>();
+        this.executorByEvent = Maps.newConcurrentMap();
         this.rendererService = rendererService;
-        //TODO: Remove this too logic from this constructor
-        populateEventHandler();
+    }
+
+    @Override
+    public void start() {
+        if (executorByEvent.isEmpty()) {
+            populateEventHandler();
+        }
     }
 
     private void populateEventHandler() {
@@ -170,7 +176,7 @@ public class IntentLifeCycleManagement implements IntentLifeCycleRegister, Inten
     }
 
     @Override
-    public void startTransaction(final String id,
+    public synchronized void startTransaction(final String id,
                                  final EventType eventType) {
         switch (eventType) {
             case INTENT_CREATED:

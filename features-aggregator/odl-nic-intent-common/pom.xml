@@ -95,5 +95,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <artifactId>intent-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opendaylight.nic</groupId>
+            <artifactId>rpc-renderer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

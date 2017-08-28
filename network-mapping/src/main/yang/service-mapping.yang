@@ -1,0 +1,84 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2015 Ciena, Hewlett-Packard, Inocybe and others.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module service-mapping {
+    namespace "urn:opendaylight:nic:network:mapping:service:mapping";
+    prefix "service-mapping";
+
+   import host-info { prefix host-info; revision-date 2017-07-24; }
+   import host-interface { prefix host-interface; revision-date 2017-07-31; }
+   import bridge-info { prefix bridge-info; revision-date 2017-07-31; }
+   import ietf-inet-types { prefix "inet"; }
+
+    revision 2017-08-01 {
+        description "Initial revision.";
+    }
+
+    grouping service-mapping {
+
+        leaf id {
+            type string;
+            mandatory true;
+            description "Defines the unique identifier for a Service Mapping.";
+        }
+
+        leaf host-name {
+            type string;
+            mandatory true;
+            description "Defines the Host name.";
+        }
+
+        leaf service-name {
+            type string;
+            mandatory true;
+            description "Defines the Service name associated with a given host bridge.";
+        }
+
+        leaf vlan-id {
+            type uint32;
+            mandatory true;
+            description "Defines the VLAN ID associated to a given bridge.";
+        }
+
+        leaf host-interface {
+            type string;
+            mandatory true;
+            description "Defines the host interface associated with a given service.";
+        }
+
+        leaf host-bridge {
+            type string;
+            mandatory true;
+            description "Defines the bridge name for a given Host Interface.";
+        }
+
+        leaf host-ip {
+            type inet:ip-address;
+            mandatory true;
+            description "Defines the Host IP Address.";
+        }
+
+        leaf subnet-mask {
+            type string;
+            mandatory true;
+            description "Defines the Subnet Mask.";
+        }
+
+        leaf gateway-ip {
+            type inet:ip-address;
+            mandatory true;
+            description "Defines the Host Gateway address.";
+        }
+    }
+
+    container service-mappings {
+        list service-mapping {
+            key "id";
+            uses service-mapping;
+        }
+    }
+}
