@@ -55,6 +55,21 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <argument ref="intentCommonService"/>
     </bean>
 
+    <bean id="intentVlanTreeChangeListener"
+          class="org.opendaylight.nic.common.transaction.service.listeners.IntentVlanListener"
+          activation="eager"
+          init-method="start" destroy-method="stop">
+        <argument ref="dataBroker"/>
+        <argument ref="intentCommonService"/>
+    </bean>
+
+    <bean id="hostInfoListener"
+          class="org.opendaylight.nic.common.transaction.service.listeners.HostInfoListener"
+          activation="eager"
+          init-method="start" destroy-method="stop">
+        <argument ref="dataBroker"/>
+    </bean>
+
     <service ref="intentCommonService"
              activation="eager"
              interface="org.opendaylight.nic.common.transaction.api.IntentCommonService"/>

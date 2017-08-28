@@ -15,7 +15,7 @@ import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.common.transaction.api.IntentCommonService;
 import org.opendaylight.nic.common.transaction.utils.InstanceIdentifierUtils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentsLimiter;
-import org.opendaylight.yangtools.concepts.ListenerRegistration;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,17 +25,13 @@ import java.util.Collection;
 /**
  * Created by yrineu on 28/06/17.
  */
-public class IntentLimiterListener extends AbstractListener<IntentsLimiter>
-        implements IntentTreeChangesListener<IntentsLimiter> {
+public class IntentLimiterListener extends AbstractListener<IntentsLimiter, IntentLimiter> {
     private static final Logger LOG = LoggerFactory.getLogger(IntentLimiterListener.class);
-    private final DataBroker dataBroker;
     private final IntentCommonService intentCommonService;
-    private ListenerRegistration<IntentLimiterListener> registration;
 
     public IntentLimiterListener(final DataBroker dataBroker,
                                  final IntentCommonService intentCommonService) {
-        super();
-        this.dataBroker = dataBroker;
+        super(dataBroker);
         this.intentCommonService = intentCommonService;
     }
 
@@ -44,31 +40,31 @@ public class IntentLimiterListener extends AbstractListener<IntentsLimiter>
         LOG.info("\nIntentLimiterListener started with success");
         final DataTreeIdentifier<IntentsLimiter> dataTreeIdentifier = new DataTreeIdentifier<>(
                 LogicalDatastoreType.CONFIGURATION, InstanceIdentifierUtils.INTENTS_LIMITER_IDENTIFIER);
-        registration = dataBroker.registerDataTreeChangeListener(dataTreeIdentifier, this);
+        super.registerForDataTreeChanges(dataTreeIdentifier);
     }
 
     @Override
-    public void handleIntentCreated(IntentsLimiter intents) {
+    public void handleTreeCreated(IntentsLimiter intents) {
         intents.getIntentLimiter().forEach(intent -> intentCommonService.resolveAndApply(intent));
     }
 
     @Override
-    public void handleIntentUpdated(IntentsLimiter intents) {
+    public void handleSubTreeChange(IntentsLimiter intentsBefore, IntentsLimiter intentsAfter) {
         //TODO: Implement an update for IntentLimiters
     }
 
     @Override
-    public void handleIntentRemoved(IntentsLimiter intents) {
+    public void handleTreeRemoved(IntentsLimiter intents) {
         intents.getIntentLimiter().forEach(intent -> intentCommonService.resolveAndRemove(intent));
     }
 
     @Override
     public void onDataTreeChanged(@Nonnull Collection<DataTreeModification<IntentsLimiter>> collection) {
-        super.handleIntentTreeEvent(collection);
+        super.handleTreeEvent(collection);
     }
 
     @Override
     public void stop() {
-        registration.close();
+        super.closeDataTreeRegistration();
     }
 }

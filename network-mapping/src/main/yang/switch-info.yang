@@ -1,0 +1,95 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module switch-info {
+    namespace "urn:opendaylight:nic:network:mapping:switch:info";
+    prefix "switch-info";
+
+    import intent-types { prefix types; revision-date 2015-01-22; }
+    import ietf-inet-types { prefix "inet"; }
+
+    revision 2017-07-11 {
+        description "Initial revision.";
+    }
+
+    typedef switch-name {
+        type string;
+    }
+
+    grouping switch-info {
+
+        leaf name {
+            type switch-name;
+            mandatory true;
+        }
+
+        leaf vendor {
+            type string;
+            description "Device vendor name.";
+            mandatory false;
+        }
+
+        leaf model {
+            type string;
+            description "Device model.";
+            mandatory false;
+        }
+
+        leaf device-function {
+            type enumeration {
+                enum "SPINE" {
+                    value "0";
+                }
+                enum "LEAF" {
+                    value "1";
+                }
+                enum "BORDER" {
+                    value "2";
+                }
+            }
+            mandatory false;
+            description "Defines the device function: LEAF, SPINE or BORDER.";
+        }
+
+        leaf loopback-ip {
+            type string;
+            mandatory true;
+            description "Defines the Loopback IP address.";
+        }
+
+        leaf http-ip {
+            type string;
+            mandatory true;
+            description "IPv4 address used for HTTP requests.";
+        }
+
+        leaf http-port {
+            type string;
+            mandatory true;
+            description "HTTP port used for requests.";
+        }
+
+        leaf http-user {
+            type string;
+            mandatory true;
+            description "Authorized user for HTTP requests";
+        }
+
+        leaf http-password {
+            type string;
+            mandatory true;
+            description "Password used for HTTP requests.";
+        }
+    }
+
+    container switch-infos {
+        list switch-info {
+            key "name";
+            uses switch-info;
+        }
+    }
+}

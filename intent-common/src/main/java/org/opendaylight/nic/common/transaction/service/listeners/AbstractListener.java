@@ -8,30 +8,41 @@
 
 package org.opendaylight.nic.common.transaction.service.listeners;
 
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.DataObjectModification;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
 import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
+import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by yrineu on 30/06/17.
  */
-public abstract class AbstractListener <T extends DataObject> {
+public abstract class AbstractListener<T extends DataObject, E extends DataObject>
+        implements NicDataTreeChangesListener<T> {
 
-    public void handleIntentTreeEvent(Collection<DataTreeModification<T>> collection) {
-        collection.iterator().forEachRemaining(intentTree -> {
-            final DataObjectModification<T> objectModification = intentTree.getRootNode();
-            final T intents = objectModification.getDataAfter();
-            switch (intentTree.getRootNode().getModificationType()) {
+    private DataBroker dataBroker;
+    private ListenerRegistration registration;
+
+    AbstractListener(final DataBroker dataBroker) {
+        this.dataBroker = dataBroker;
+    }
+
+    public void handleTreeEvent(Collection<DataTreeModification<T>> collection) {
+        collection.forEach(dataTree -> {
+            final DataObjectModification<T> objectModification = dataTree.getRootNode();
+            switch (dataTree.getRootNode().getModificationType()) {
                 case WRITE:
-                    handleIntentCreated(intents);
+                    handleTreeCreated(objectModification.getDataAfter());
                     break;
                 case SUBTREE_MODIFIED:
-                    handleIntentUpdated(intents);
+                    handleSubTreeChange(objectModification.getDataBefore(), objectModification.getDataAfter());
                     break;
                 case DELETE:
-                    handleIntentRemoved(intents);
+                    handleTreeRemoved(objectModification.getDataBefore());
                     break;
             }
         });
@@ -39,20 +50,39 @@ public abstract class AbstractListener <T extends DataObject> {
 
     /**
      * Handle Intent created
-     * @param intent a {@link T}
+     *
+     * @param data a {@link T}
      */
-    abstract void handleIntentCreated(T intent);
+    abstract void handleTreeCreated(T data);
 
     /**
      * Handle Intent updated
-     * @param intent a {@link T}
+     *
+     * @param before a {@link T}
+     * @param after  a {@link T}
      */
-    abstract void handleIntentUpdated(T intent);
+    abstract void handleSubTreeChange(T before, T after);
 
     /**
      * Handle Intent removed
+     *
      * @param intent a {@link T}
      */
-    abstract void handleIntentRemoved(T intent);
+    abstract void handleTreeRemoved(T intent);
 
+    boolean isSubTreeElementAdded(final List<E> before, final List<E> after) {
+        return (before.size() < after.size());
+    }
+
+    boolean isSubTreeElementRemoved(final List<E> before, final List<E> after) {
+        return (before.size() > after.size());
+    }
+
+    void registerForDataTreeChanges(final DataTreeIdentifier<T> identifier) {
+        registration = dataBroker.registerDataTreeChangeListener(identifier, this);
+    }
+
+    void closeDataTreeRegistration() {
+        registration.close();
+    }
 }
