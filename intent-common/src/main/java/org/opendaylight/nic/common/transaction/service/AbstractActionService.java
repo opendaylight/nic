@@ -8,13 +8,13 @@
 
 package org.opendaylight.nic.common.transaction.service;
 
+import com.google.common.collect.Sets;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentActionListener;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleListener;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleRegister;
 import org.opendaylight.nic.common.transaction.service.lifecycle.IntentLifeCycleService;
 import org.opendaylight.nic.common.transaction.service.renderer.RendererService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -31,7 +31,7 @@ public class AbstractActionService {
                            final RendererService rendererService) {
         this.lifeCycleService = lifeCycleService;
         this.lifeCycleRegister = (IntentLifeCycleRegister) lifeCycleService;
-        this.actionListeners = new HashSet<>();
+        this.actionListeners = Sets.newConcurrentHashSet();
         this.rendererService = rendererService;
     }
 

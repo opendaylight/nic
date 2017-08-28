@@ -17,6 +17,10 @@
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
+    <properties>
+        <mdsal.model.groupId>org.opendaylight.mdsal.model</mdsal.model.groupId>
+    </properties>
+
     <dependencies>
         <!-- External dependencies -->
         <dependency>
@@ -26,10 +30,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
         </dependency>
 
         <!-- Project specific dependencies -->
