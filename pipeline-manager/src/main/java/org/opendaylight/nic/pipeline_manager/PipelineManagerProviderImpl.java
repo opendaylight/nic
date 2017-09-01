@@ -8,12 +8,17 @@
 package org.opendaylight.nic.pipeline_manager;
 
 import com.google.common.base.Optional;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.controller.md.sal.binding.api.DataChangeListener;
+import org.opendaylight.controller.md.sal.binding.api.DataObjectModification;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeChangeListener;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
-import org.opendaylight.controller.md.sal.common.api.data.AsyncDataBroker;
-import org.opendaylight.controller.md.sal.common.api.data.AsyncDataChangeEvent;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.openflowplugin.openflow.md.core.sal.convertor.match.MatchConvertorImpl;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
@@ -50,35 +55,33 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
-public class PipelineManagerProviderImpl implements DataChangeListener, PipelineManager {
+public class PipelineManagerProviderImpl implements DataTreeChangeListener<Node>, PipelineManager {
     private static final Logger LOG = LoggerFactory.getLogger(PipelineManagerProviderImpl.class);
-    private DataBroker dataBroker;
-    private ListenerRegistration<DataChangeListener> nodesListener;
+    private final DataBroker dataBroker;
+    private final ListenerRegistration<?> nodeListener;
 
 
     public PipelineManagerProviderImpl(final DataBroker dataBroker) {
         LOG.info("\nPipeline Manager service Initiated");
         this.dataBroker = dataBroker;
-        final InstanceIdentifier<Nodes> nodesIdentifier = InstanceIdentifier.create(Nodes.class);
-        nodesListener = dataBroker.registerDataChangeListener(
-                LogicalDatastoreType.OPERATIONAL,
-                nodesIdentifier, this, AsyncDataBroker.DataChangeScope.SUBTREE); // FIXME: Try to listen to the Node changes only instead of subtree
+        final InstanceIdentifier<Node> nodeIdentifier = InstanceIdentifier.create(Nodes.class).child(Node.class);
+        nodeListener = dataBroker.registerDataTreeChangeListener(new DataTreeIdentifier<>(
+                LogicalDatastoreType.OPERATIONAL, nodeIdentifier), this);
         LOG.info("new Pipeline Manager created: {}", this);
     }
 
     @Override
-    public void onDataChanged(AsyncDataChangeEvent<InstanceIdentifier<?>, DataObject> change) {
-        Map<InstanceIdentifier<?>, DataObject> createdData = change.getCreatedData();
-        for (Map.Entry<InstanceIdentifier<?>, DataObject> entry : createdData.entrySet()) {
-            if (entry.getValue() instanceof Node) {
-                Node node = (Node) entry.getValue();
-                createPipeline(node);
+    public void onDataTreeChanged(Collection<DataTreeModification<Node>> changes) {
+        for (DataTreeModification<Node> change: changes) {
+            final DataObjectModification<Node> rootNode = change.getRootNode();
+            switch (rootNode.getModificationType()) {
+                case WRITE:
+                    if (rootNode.getDataBefore() == null) {
+                        createPipeline(rootNode.getDataAfter());
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -87,8 +90,9 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
         List<Table> tableList = getTableList(node);
         for (Table table : tableList) {
             List<Short> nextIds = getNextTablesMiss(node.getId(), table.getId());
-            if (nextIds.isEmpty())
+            if (nextIds.isEmpty()) {
                 break;
+            }
             Short nextId = Collections.min(nextIds);
             Short currentId = table.getId();
             addFlowGoto(node, currentId, nextId);
@@ -184,12 +188,7 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
     private List<Table> getTableList(Node node) {
         FlowCapableNode flowCapableNode = node.getAugmentation(FlowCapableNode.class);
         List<Table> tableList = flowCapableNode.getTable();
-        Collections.sort(tableList, new Comparator<Table>() {
-            @Override
-            public int compare(Table o1, Table o2) {
-                return o1.getId().compareTo(o2.getId());
-            }
-        });
+        Collections.sort(tableList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
         return tableList;
     }
 
@@ -205,8 +204,9 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     private boolean isInstructionsSupported(List<TableFeatureProperties> tableFeaturePropertiesList, List<Instruction> instructions) {
         for (Instruction instruction : instructions) {
-            if (!isInstructionSupported(tableFeaturePropertiesList, instruction))
+            if (!isInstructionSupported(tableFeaturePropertiesList, instruction)) {
                 return false;
+            }
         }
         return true;
     }
@@ -242,8 +242,9 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     private boolean isActionSupported(List<Action> supportedApplyActions, Action action) {
         for (Action supportedApplyAction : supportedApplyActions) {
-            if (supportedApplyAction.getAction().getImplementedInterface().equals(action.getAction().getImplementedInterface()))
+            if (supportedApplyAction.getAction().getImplementedInterface().equals(action.getAction().getImplementedInterface())) {
                 return true;
+            }
         }
 
         return false;
@@ -251,8 +252,9 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     private boolean isFieldSupported(Class<? extends MatchField> field, List<SetFieldMatch> supportedFields) {
         for (SetFieldMatch supportedField : supportedFields) {
-            if (isFieldMatch(field, supportedField.getMatchType()))
+            if (isFieldMatch(field, supportedField.getMatchType())) {
                 return true;
+            }
         }
 
         return false;
@@ -266,8 +268,9 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
         MatchConvertorImpl matchConvertor = new MatchConvertorImpl();
         List<MatchEntry> matchEntryList = matchConvertor.convert(match, null);
         for (MatchEntry matchEntry : matchEntryList) {
-            if (!isFieldSupported(matchEntry.getOxmMatchField(), supportedMatchList))
+            if (!isFieldSupported(matchEntry.getOxmMatchField(), supportedMatchList)) {
                 return false;
+            }
         }
         return true;
     }
@@ -315,7 +318,7 @@ public class PipelineManagerProviderImpl implements DataChangeListener, Pipeline
 
     @Override
     public void stop() {
-        nodesListener.close();
+        nodeListener.close();
         LOG.info("Pipeline Manager destroyed: {}", this);
     }
 }
