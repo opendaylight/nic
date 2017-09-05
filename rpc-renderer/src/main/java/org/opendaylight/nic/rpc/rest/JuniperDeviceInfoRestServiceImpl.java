@@ -8,11 +8,17 @@
 
 package org.opendaylight.nic.rpc.rest;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.opendaylight.nic.rpc.model.juniper.information.device.SwitchInformation;
+import org.opendaylight.nic.rpc.model.juniper.information.evpn.DatabaseInfo;
+import org.opendaylight.nic.rpc.utils.RESTUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,48 +26,34 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.PasswordAuthentication;
-import java.net.URL;
+import java.net.*;
+import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by yrineu on 17/07/17.
  */
 public class JuniperDeviceInfoRestServiceImpl extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(JuniperDeviceInfoRestServiceImpl.class);
     private static final long serialVersionUID = 1L;
 
     private final String BASE_URL = "http://$ip:3000/rpc$parameters";
     private final static String USER_AGENT = "Mozilla/5.0";
-    private final static String CONTENT_TYPE = "application/xml";
+    private final static String CONTENT_TYPE_XML = "application/xml";
+    private final static String CONTENT_TYPE_JSON = "application/json";
     private final static String ACCEPT = "application/json";
     private final static String UTF_8 = "UTF-8";
     private final static String AUTHORIZATION = "Authorization";
 
+    private final static String ODL_USER = "admin";
+    private final static String ODL_PASS = "admin";
+
     private final static String GET_REQUEST = "GET";
 
-    private JuniperRestService juniperRestService;
-
-    private static final Logger LOG = LoggerFactory.getLogger(JuniperDeviceInfoRestServiceImpl.class);
-
     public JuniperDeviceInfoRestServiceImpl() throws ServletException {
-        ServletContext context = super.getServletContext();
-        LOG.info("\n### Rest initialized with success: {}!", context);
-        authenticator();
-    }
-
-    /**
-     * Stats a new servlet with the following URL:
-     * http://"odl-ip":8181/nic
-     *
-     * @throws ServletException when NIC can't init the servlet.
-     */
-    @Override
-    public void init() throws ServletException {
-        LOG.info("\nJuniper device info REST Service initialized.");
         super.init();
+        LOG.info("\n### Rest initialized with success!");
     }
-//
 
     /**
      * GET request used to retrieve Interface names for a given Juniper device
@@ -77,23 +69,72 @@ public class JuniperDeviceInfoRestServiceImpl extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp) throws ServletException, IOException {
+        LOG.info("\n#### Get request received: {}", req.toString());
 //        RestValidations.validateReceivedRequest(req.getRequestURI());
-        final String hostName = req.getRequestURI().split("/")[2];
-        final String requestedUrl = "http://localhost:8181/restconf/config/switch-group:switch-groups";
+        final String targetMacAddress = req.getRequestURI().split("/")[2];
+        final String switchInfosURLRequest = "http://localhost:8181/restconf/config/switch-info:switch-infos";
+        authenticator(ODL_USER, ODL_PASS);
 
-        final HttpURLConnection connection = retrieveConnectionBase(requestedUrl);
+        final HttpURLConnection connection = retrieveConnectionBase(switchInfosURLRequest, CONTENT_TYPE_XML);
         connection.setRequestMethod(GET_REQUEST);
         String output;
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuffer switchInfos = new StringBuffer();
         final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
         while ((output = reader.readLine()) != null) {
-            buffer.append(output);
+            switchInfos.append(output);
         }
         reader.close();
-        Gson gson = new Gson();
-        final String response = gson.toJson(buffer.toString());
-        createSuccessResponseWith(response, resp);
+        final JsonParser jsonParser = new JsonParser();
+        final JsonElement element = jsonParser.parse(switchInfos.toString());
+
+        final Set<SwitchInformation> switchInformationSet = SwitchInformation.extractSwitchInformation(element.getAsJsonObject());
+        final ConcurrentMap<SwitchInformation, BufferedReader> connections = retrieveSwitchConnections(switchInformationSet);
+        final ConcurrentMap<SwitchInformation, String> evpnInfoBySwitch = Maps.newConcurrentMap();
+
+        connections.entrySet().forEach(entry -> {
+            final StringBuffer evpnData = new StringBuffer();
+            try {
+                String line;
+                while ((line = entry.getValue().readLine()) != null) {
+                    evpnData.append(line);
+                }
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+            }
+            evpnInfoBySwitch.put(entry.getKey(), evpnData.toString());
+        });
+
+        final Set<DatabaseInfo> response = Sets.newConcurrentHashSet();
+        evpnInfoBySwitch.entrySet().forEach(entry -> {
+            final SwitchInformation switchInformation = entry.getKey();
+            final DatabaseInfo databaseInfo = new DatabaseInfo(switchInformation.getSwitchName(), targetMacAddress);
+            databaseInfo.extractEvpnInfoToJson(entry.getValue());
+            response.add(databaseInfo);
+        });
+        final Gson jsonResponse = new Gson();
+        createSuccessResponseWith(jsonResponse.toJson(response), resp);
+    }
+
+    private ConcurrentMap<SwitchInformation, BufferedReader> retrieveSwitchConnections(final Set<SwitchInformation> switchInformationSet) {
+        final ConcurrentMap<SwitchInformation, BufferedReader> resultedConnections = Maps.newConcurrentMap();
+        final String requestedRPC = "get-evpn-database-information";
+        switchInformationSet.forEach(switchInformation -> {
+            LOG.info("\n### Collecting information from: {}", switchInformation.getHttpIp());
+            final String switchUrl = RESTUtils.buildDeviceURLRequest(
+                    switchInformation.getHttpIp(), switchInformation.getHttpPort(), requestedRPC);
+            authenticator(switchInformation.getHttpUser(), switchInformation.getHttpPassword());
+            final HttpURLConnection connection = retrieveConnectionBase(switchUrl, CONTENT_TYPE_JSON);
+            try {
+                connection.setRequestMethod(GET_REQUEST);
+                final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                LOG.info("\n### Response from {}: {}", switchUrl, reader.lines());
+                resultedConnections.put(switchInformation, reader);
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+            }
+        });
+        return resultedConnections;
     }
 
     private HttpServletResponse createSuccessResponseWith(final String output,
@@ -110,24 +151,23 @@ public class JuniperDeviceInfoRestServiceImpl extends HttpServlet {
     }
 
 
-    protected void authenticator() {
-        final String admin = "admin";
+    protected synchronized void authenticator(final String user, final String pass) {
         Authenticator.setDefault(new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(admin, admin.toCharArray());
+                return new PasswordAuthentication(user, pass.toCharArray());
             }
 
         });
     }
 
-    private HttpURLConnection retrieveConnectionBase(final String requestedUrl) {
+    private HttpURLConnection retrieveConnectionBase(final String requestedUrl, final String contentType) {
         HttpURLConnection connection = null;
         try {
             final URL url = new URL(requestedUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("User-Agent", USER_AGENT);
             connection.setRequestProperty("Accept-Language", ACCEPT);
-            connection.setRequestProperty("Content-Type", CONTENT_TYPE);
+            connection.setRequestProperty("Content-Type", CONTENT_TYPE_XML);
         } catch (IOException e) {
             LOG.error(e.getMessage());
         }
