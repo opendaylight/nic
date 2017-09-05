@@ -55,7 +55,6 @@ public class RPCRenderer implements RendererService {
         intentEvpn.getEvpnServices().forEach(evpnService -> targetVlans.add(evpnService.getVlanName()));
 
         final List<EvpnDataflows> evpnDataflows = rpcRendererUtils.extractEvpnDataflows(targetVlans);
-        LOG.info("\n### EvpnDataflows: {}", evpnDataflows.toString());
         if (!evpnDataflows.isEmpty()) {
             queueBuilder.getEvpnDataflows().addAll(evpnDataflows);
         }

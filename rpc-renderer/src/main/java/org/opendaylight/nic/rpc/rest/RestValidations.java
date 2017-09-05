@@ -9,7 +9,7 @@
 package org.opendaylight.nic.rpc.rest;
 
 import org.opendaylight.nic.rpc.exception.JuniperRestException;
-import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.MacAddress;
 
 /**
  * Created by yrineu on 19/07/17.
@@ -17,8 +17,7 @@ import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.
 public class RestValidations {
 
     private final static String BASE_ERROR_MESSAGE = "Invalid request received: $request. " +
-            "Request must follow the pattern: http://<odl-ip>:<odl-port>/nic/<juniper-device-ipv4>";
-    private final static String IPV4_PATTERN = "'\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}\\b'";
+            "Request must follow the pattern: http://<odl-ip>:<odl-port>/nic/<mac-address>";
 
     public static void validateReceivedRequest(final String request) {
         if (request == null) {
@@ -26,12 +25,12 @@ public class RestValidations {
             throw new JuniperRestException(NULL_REQUEST_MESSAGE);
         }
 
-        final String INVALID_IP_ADDRESS_FORMAT_MESSAGE = BASE_ERROR_MESSAGE.replace("$request", request);
+        final String INVALID_MAC_ADDRESS_FORMAT_MESSAGE = BASE_ERROR_MESSAGE.replace("$request", request);
         try {
-            final String deviceIp = request.split("/")[2];
-            Ipv4Address.getDefaultInstance(deviceIp);
+            final String receivedMacAddress = request.split("/")[2];
+            MacAddress.getDefaultInstance(receivedMacAddress);
         } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
-            throw new JuniperRestException(INVALID_IP_ADDRESS_FORMAT_MESSAGE);
+            throw new JuniperRestException(INVALID_MAC_ADDRESS_FORMAT_MESSAGE);
         }
     }
 }

@@ -51,7 +51,7 @@ public class IntentCommonServiceManager implements IntentCommonService {
 
     @Override
     public void resolveAndApply(Object intent) {
-        LOG.info("\n### Intent added: {}", intent.toString());
+        LOG.debug("\nIntent added: {}", intent.toString());
         executeAction(intent, (intentId, service) -> {
             if (intentId != null && service != null) {
                 service.startTransaction(intentId, EventType.INTENT_CREATED);
@@ -61,7 +61,7 @@ public class IntentCommonServiceManager implements IntentCommonService {
 
     @Override
     public void resolveAndRemove(Object intent) {
-        LOG.info("\n### Intent removed: {}", intent.toString());
+        LOG.debug("\nIntent removed: {}", intent.toString());
         executeAction(intent, (intentId, service) -> {
             if (intentId != null && service != null) {
                 service.startTransaction(intentId, EventType.INTENT_REMOVED);

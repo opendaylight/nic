@@ -49,7 +49,7 @@ public class InterfaceDetailsRendererService implements RPCRendererService<Switc
 
     @Override
     public void start() {
-        LOG.info("\n#### InterfaceDetailsRendererService initialized with success");
+        LOG.info("\nInterfaceDetailsRendererService initialized with success");
         final DataTreeIdentifier dataTreeIdentifier = new DataTreeIdentifier(
                 LogicalDatastoreType.CONFIGURATION, InstanceIdentifierUtils.SWITCH_INTERFACES_STATUS_IDENTIFIER);
         registration = dataBroker.registerDataTreeChangeListener(dataTreeIdentifier, this);
@@ -74,7 +74,6 @@ public class InterfaceDetailsRendererService implements RPCRendererService<Switc
 //                    LOG.info("\n### Subtree modified - Before: {}, After {}", objectModification.getDataBefore(), objectModification.getDataAfter());
                     break;
                 case DELETE:
-                    LOG.info("\n### Subtree deleted: {}", objectModification.getDataBefore());
                     break;
             }
         });

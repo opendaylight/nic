@@ -74,7 +74,6 @@ public class HostInfoListener extends AbstractListener<HostInfos, HostInfo> {
 
     @Override
     void handleTreeRemoved(HostInfos hostInfos) {
-        LOG.info("\n#### HostInfos removed.");
     }
 
     @Override

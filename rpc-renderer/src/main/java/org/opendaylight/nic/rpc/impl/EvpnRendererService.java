@@ -65,10 +65,8 @@ public class EvpnRendererService implements RPCRendererService<EvpnDataflowQueue
     public void onDataTreeChanged(@Nonnull Collection<DataTreeModification<EvpnDataflowQueues>> collection) {
         collection.iterator().forEachRemaining(evpnDataflowTree -> {
             final DataObjectModification<EvpnDataflowQueues> modification = evpnDataflowTree.getRootNode();
-            LOG.info("\n### EvpnDataflowQueue received.");
             switch (modification.getModificationType()) {
                 case WRITE:
-                    LOG.info("\n### Sending configuration for a WRITE on EvpnTree.");
                     juniperRestService.sendConfiguration(modification.getDataAfter().getEvpnDataflowQueue(), false);
                     break;
                 case SUBTREE_MODIFIED:
@@ -91,7 +89,6 @@ public class EvpnRendererService implements RPCRendererService<EvpnDataflowQueue
                     break;
                 case DELETE:
                     final EvpnDataflowQueues removedQueue = evpnDataflowTree.getRootNode().getDataBefore();
-                    LOG.info("\n### Sending configuration for a DELETE on EvpnTree.");
                     juniperRestService.sendConfiguration(removedQueue.getEvpnDataflowQueue(), true);
                     break;
             }

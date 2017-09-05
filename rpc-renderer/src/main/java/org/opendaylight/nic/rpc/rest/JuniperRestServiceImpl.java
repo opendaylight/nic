@@ -76,7 +76,6 @@ public class JuniperRestServiceImpl implements JuniperRestService {
 
     @Override
     public <T extends DataObject> void sendConfiguration(List<T> dataflowList, Boolean isADeleteSchema) {
-        LOG.info("\n### Received a list of: {}", dataflowList.toString());
         dataflowList.forEach((T dataFlow) -> {
             if (dataFlow instanceof EvpnDataflowQueue) {
                 final EvpnDataflowQueue evpnQueue = (EvpnDataflowQueue) dataFlow;
@@ -106,19 +105,14 @@ public class JuniperRestServiceImpl implements JuniperRestService {
                                                   final EvpnDataflow evpnDataflow,
                                                   final Boolean isADeleteSchema) {
         final ConfigurationFactory configFactory = getConfigFactory(queueId);
-//        final String loopbackIp = evpnDataflow.getLoopbackIp();
 
         final Map<String, Integer> vlanNameById = extractVlanNameById(evpnDataflow.getVlanInfo());
         final Set<Integer> vlanIds = Sets.newConcurrentHashSet();
         vlanIds.addAll(vlanNameById.values());
 
         final Configuration configuration = new Configuration();
-//        if (!isADeleteSchema) {
-//            configuration.configureSwitchOptions(loopbackIp);
-//        }
         configuration.configureEvpn(vlanIds);
         configuration.configurePolicyCommunityAccept(vlanIds);
-//        configuration.configureVxlans(vlanNameById);
 
         final DeviceDetails deviceDetails = new DeviceDetails(
                 evpnDataflow.getHttpIp(),
@@ -193,7 +187,7 @@ public class JuniperRestServiceImpl implements JuniperRestService {
         if (configFactory == null) {
             configFactory = new ConfigurationFactory();
         } else {
-            LOG.info("\n### ConfigFactoryQueue found for ID: {}", queueId);
+            LOG.debug("\nConfigFactoryQueue found for ID: {}", queueId);
         }
         return configFactory;
     }
@@ -204,7 +198,7 @@ public class JuniperRestServiceImpl implements JuniperRestService {
                                                          final String password) {
         HttpURLConnection connection = null;
         try {
-            LOG.info("\n#### HttpConnection not found, creating a new one.");
+            LOG.debug("\nHttpConnection not found, creating a new one.");
             String URL = BASE_URL.replace("$ip", httpIp);
             URL = URL.replace("$port", httpPort);
             URL = URL.replace("$parameters", STOP_ON_ERROR);
@@ -255,7 +249,6 @@ public class JuniperRestServiceImpl implements JuniperRestService {
 
         @Override
         public void run() {
-            LOG.info("\n### Running thread for: {}", queueId);
             final ConfigurationFactory configFactory = configFactoryByQueueId.remove(queueId);
             if (configFactory != null) {
                 final Map<DeviceDetails, String> commitByDevice = taskAction.evaluateTask(configFactory);
@@ -267,12 +260,9 @@ public class JuniperRestServiceImpl implements JuniperRestService {
                             deviceDetails.getUserName(),
                             deviceDetails.getPassword());
                     try {
-                    LOG.info("\n#####");
-                    LOG.info("\n#### DeviceIP: {}, \n#####Commit: {}", deviceDetails.getHttpIp(), commit);
-                    LOG.info("\n#####");
                         connection.getOutputStream().write(commit.getBytes(StandardCharsets.UTF_8));
                         connection.getOutputStream().close();
-                        LOG.info("\nResponse Info: {}", connection.getResponseCode());
+                        LOG.deub("\nResponse Info: {}", connection.getResponseCode());
                         LOG.info("\nResponse message: {}", connection.getResponseMessage());
                     } catch (IOException e) {
                         LOG.error(e.getMessage());

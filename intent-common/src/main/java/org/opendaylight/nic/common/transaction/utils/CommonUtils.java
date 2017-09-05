@@ -544,7 +544,6 @@ public class CommonUtils {
                 evpnDataflowQueue);
         try {
             writeTransaction.submit().checkedGet();
-            LOG.info("\n### Submitting Evpn Dataflow Queues tree update");
         } catch (TransactionCommitFailedException e) {
             LOG.error(e.getMessage());
         }
