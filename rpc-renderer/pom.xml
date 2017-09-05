@@ -138,10 +138,10 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
                 <groupId>org.apache.aries.blueprint</groupId>
                 <artifactId>blueprint-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.eclipse.xtend</groupId>
-                <artifactId>xtend-maven-plugin</artifactId>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.eclipse.xtend</groupId>-->
+                <!--<artifactId>xtend-maven-plugin</artifactId>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
