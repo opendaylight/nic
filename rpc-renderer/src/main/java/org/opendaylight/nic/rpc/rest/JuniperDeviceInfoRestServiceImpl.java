@@ -8,7 +8,15 @@
 
 package org.opendaylight.nic.rpc.rest;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.opendaylight.nic.rpc.model.juniper.information.device.SwitchInformation;
+import org.opendaylight.nic.rpc.model.juniper.information.evpn.DatabaseInfo;
+import org.opendaylight.nic.rpc.utils.RESTUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +32,14 @@ import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by yrineu on 17/07/17.
  */
 public class JuniperDeviceInfoRestServiceImpl extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(JuniperDeviceInfoRestServiceImpl.class);
     private static final long serialVersionUID = 1L;
 
     private final String BASE_URL = "http://$ip:3000/rpc$parameters";
@@ -41,8 +52,6 @@ public class JuniperDeviceInfoRestServiceImpl extends HttpServlet {
     private final static String GET_REQUEST = "GET";
 
     private JuniperRestService juniperRestService;
-
-    private static final Logger LOG = LoggerFactory.getLogger(JuniperDeviceInfoRestServiceImpl.class);
 
     public JuniperDeviceInfoRestServiceImpl() throws ServletException {
         ServletContext context = super.getServletContext();
@@ -78,22 +87,61 @@ public class JuniperDeviceInfoRestServiceImpl extends HttpServlet {
     protected void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp) throws ServletException, IOException {
 //        RestValidations.validateReceivedRequest(req.getRequestURI());
-        final String hostName = req.getRequestURI().split("/")[2];
-        final String requestedUrl = "http://localhost:8181/restconf/config/switch-group:switch-groups";
+        final String targetMacAddress = req.getRequestURI().split("/")[2];
+        final String switchInfosURLRequest = "http://localhost:8181/restconf/config/switch-group:switch-groups";
 
-        final HttpURLConnection connection = retrieveConnectionBase(requestedUrl);
+        final HttpURLConnection connection = retrieveConnectionBase(switchInfosURLRequest);
         connection.setRequestMethod(GET_REQUEST);
         String output;
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuffer switchInfos = new StringBuffer();
         final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
         while ((output = reader.readLine()) != null) {
-            buffer.append(output);
+            switchInfos.append(output);
         }
         reader.close();
-        Gson gson = new Gson();
-        final String response = gson.toJson(buffer.toString());
-        createSuccessResponseWith(response, resp);
+        final JsonParser jsonParser = new JsonParser();
+        final JsonElement element = jsonParser.parse(switchInfos.toString());
+
+        final Set<SwitchInformation> switchInformationSet = SwitchInformation.extractSwitchInformation(element.getAsJsonObject());
+        final ConcurrentMap<SwitchInformation, HttpURLConnection> connections = retrieveSwitchConnections(switchInformationSet);
+        final ConcurrentMap<SwitchInformation, String> evpnInfoBySwitch = Maps.newConcurrentMap();
+
+        connections.entrySet().forEach(entry -> {
+            final StringBuffer evpnData = new StringBuffer();
+            try {
+                String line;
+                final BufferedReader evpnDataReader = new BufferedReader(new InputStreamReader(entry.getValue().getInputStream()));
+                while ((line = evpnDataReader.readLine()) != null) {
+                    evpnData.append(line);
+                }
+            } catch (IOException e) {
+                LOG.error(e.getMessage());
+            }
+            evpnInfoBySwitch.put(entry.getKey(), evpnData.toString());
+        });
+
+        final Set<DatabaseInfo> response = Sets.newConcurrentHashSet();
+        evpnInfoBySwitch.entrySet().forEach(entry -> {
+            final SwitchInformation switchInformation = entry.getKey();
+            final DatabaseInfo databaseInfo = new DatabaseInfo(switchInformation.getSwitchName(), targetMacAddress);
+            databaseInfo.extractEvpnInfoToJson(entry.getValue());
+            response.add(databaseInfo);
+        });
+        final Gson jsonResponse = new Gson();
+        createSuccessResponseWith(jsonResponse.toJson(response), resp);
+    }
+
+    private ConcurrentMap<SwitchInformation, HttpURLConnection> retrieveSwitchConnections(final Set<SwitchInformation> switchInformationSet) {
+        final ConcurrentMap<SwitchInformation, HttpURLConnection> resultedConnections = Maps.newConcurrentMap();
+        final String requestedRPC = "get-evpn-database-information";
+        switchInformationSet.forEach(switchInformation -> {
+            final String switchUrl = RESTUtils.buildDeviceURLRequest(
+                    switchInformation.getHttpIp(), switchInformation.getHttpPort(), requestedRPC);
+            final HttpURLConnection connection = retrieveConnectionBase(switchUrl);
+            resultedConnections.put(switchInformation, connection);
+        });
+        return resultedConnections;
     }
 
     private HttpServletResponse createSuccessResponseWith(final String output,
