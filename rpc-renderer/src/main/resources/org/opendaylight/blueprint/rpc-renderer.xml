@@ -47,13 +47,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <argument ref="juniperRestService"/>
     </bean>
 
-    <!--<bean id="rpcRendererServlet"-->
-          <!--class="org.opendaylight.nic.rpc.rest.JuniperDeviceInfoRestServiceImpl"-->
-          <!--activation="eager"-->
-          <!--init-method="start" destroy-method="stop">-->
-        <!--<property name="juniperRestService" ref="juniperRestService"/>-->
-    <!--</bean>-->
-
     <service ref="evpnRendererService"
              activation="eager"
              interface="org.opendaylight.nic.rpc.api.RPCRendererService"/>
