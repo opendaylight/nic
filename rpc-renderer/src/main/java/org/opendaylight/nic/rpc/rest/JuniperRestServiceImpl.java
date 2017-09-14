@@ -262,7 +262,7 @@ public class JuniperRestServiceImpl implements JuniperRestService {
                     try {
                         connection.getOutputStream().write(commit.getBytes(StandardCharsets.UTF_8));
                         connection.getOutputStream().close();
-                        LOG.deub("\nResponse Info: {}", connection.getResponseCode());
+                        LOG.debug("\nResponse Info: {}", connection.getResponseCode());
                         LOG.info("\nResponse message: {}", connection.getResponseMessage());
                     } catch (IOException e) {
                         LOG.error(e.getMessage());

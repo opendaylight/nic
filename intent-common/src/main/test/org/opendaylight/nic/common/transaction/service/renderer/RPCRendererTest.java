@@ -14,13 +14,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.nic.common.transaction.exception.RendererServiceException;
-import org.opendaylight.nic.common.transaction.service.renderer.RPCRenderer;
 import org.opendaylight.nic.common.transaction.utils.CommonUtils;
+import org.opendaylight.protocol.util.Ipv4Util;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
+import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.evpn.rev170724.intent.evpn.EvpnServices;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.evpn.rev170724.intent.evpns.IntentEvpn;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711.SwitchName;
@@ -135,11 +135,17 @@ public class RPCRendererTest {
         when(vlanNameMock.getValue()).thenReturn(VLAN_NAME);
         when(bridgesMock.getVlanId()).thenReturn(VLAN_ID);
 
-        service = Mockito.spy(new RPCRenderer(commonUtils));
+//        service = Mockito.spy(new RPCRenderer(commonUtils));
     }
 
     @Test
     public void test() throws RendererServiceException {
 //        service.evaluateAction(INTENT_NAME);
+        Ipv4Address ipv4Address = Ipv4Address.getDefaultInstance("10.0.0.1");
+        Ipv4Util.incrementIpv4Address("10.0.0.1");
+        System.out.println(Ipv4Util.incrementIpv4Prefix(new Ipv4Prefix("1.0.0.255/16")));
+
+        System.out.println(Ipv4Util.incrementIpv4Address("10.0.0.255"));
+
     }
 }

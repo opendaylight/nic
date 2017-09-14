@@ -23,6 +23,9 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <properties>
         <mdsal.groupId>org.opendaylight.mdsal.model</mdsal.groupId>
+        <genius.groupId>org.opendaylight.genius</genius.groupId>
+
+        <genius.version>0.3.0-SNAPSHOT</genius.version>
     </properties>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
@@ -129,6 +132,28 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.7</version>
+        </dependency>
+
+        <!-- Genius dependencies -->
+        <dependency>
+            <groupId>${genius.groupId}</groupId>
+            <artifactId>mdsalutil-api</artifactId>
+            <version>${genius.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${genius.groupId}</groupId>
+            <artifactId>idmanager-api</artifactId>
+            <version>${genius.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${genius.groupId}</groupId>
+            <artifactId>interfacemanager-api</artifactId>
+            <version>${genius.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${genius.groupId}</groupId>
+            <artifactId>itm-api</artifactId>
+            <version>${genius.version}</version>
         </dependency>
     </dependencies>
 

@@ -14,6 +14,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711.SwitchInfos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.host.info.rev170724.HostInfos;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.pod.info.rev700101.PodInfos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.ServiceMappings;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api._switch._interface.status.rev170811.SwitchInterfacesStatus;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.queue.rev170807.EvpnDataflowQueues;
@@ -42,4 +43,6 @@ public class InstanceIdentifierUtils {
             InstanceIdentifier.builder(ServiceMappings.class).build();
     public static final InstanceIdentifier<SwitchInterfacesStatus> SWITCH_INTERFACES_STATUS_IDENTIFIER =
             InstanceIdentifier.create(SwitchInterfacesStatus.class);
+    public static final InstanceIdentifier<PodInfos> POD_INFOS_IDENTIFIER =
+            InstanceIdentifier.create(PodInfos.class);
 }

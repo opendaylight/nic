@@ -48,6 +48,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.etherne
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetServiceKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.host.info.rev170724.HostInfos;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.pod.info.rev700101.pod.infos.PodInfo;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.pod.info.rev700101.pod.infos.PodInfoKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.RouterGroups;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroup;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroupKey;
@@ -55,8 +57,8 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfoKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.ServiceMappings;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.ServiceMappingsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.service.mappings.ServiceMapping;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.service.mappings.ServiceMappingKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api._switch._interface.status.rev170811.SwitchInterfacesStatus;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api._switch._interface.status.rev170811.SwitchInterfacesStatusBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api._switch._interface.status.rev170811._switch.interfaces.status.SwitchInterfaceStatus;
@@ -532,6 +534,26 @@ public class CommonUtils {
             LOG.error(e.getMessage());
         }
         return result;
+    }
+
+    public ServiceMapping retrieveServiceMappingById(final String id) {
+        final InstanceIdentifier<ServiceMapping> identifier = InstanceIdentifierUtils.SERVICE_MAPPINGS_IDENTIFIER
+                .child(ServiceMapping.class, new ServiceMappingKey(id));
+        ServiceMapping serviceMapping = null;
+        try {
+            serviceMapping = retrieve(identifier);
+        } catch (NoDatamodelFindException e) {
+            LOG.error(e.getMessage());
+        }
+        return serviceMapping;
+    }
+
+    public void removePodInfo(final String podInfoId) {
+        final InstanceIdentifier<PodInfo> identifier = InstanceIdentifierUtils.POD_INFOS_IDENTIFIER
+                .child(PodInfo.class, new PodInfoKey(podInfoId));
+        final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
+        writeTransaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
+        writeTransaction.submit();
     }
 
     public void pushEvpnDataflowQueue(final EvpnDataflowQueue evpnDataflowQueue) {
