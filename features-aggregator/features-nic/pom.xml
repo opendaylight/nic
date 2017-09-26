@@ -22,7 +22,7 @@
 
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>features-nic</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.1-SNAPSHOT</version>
     <packaging>feature</packaging>
 
     <name>OpendayLight :: NIC :: ${project.artifactId}</name>
