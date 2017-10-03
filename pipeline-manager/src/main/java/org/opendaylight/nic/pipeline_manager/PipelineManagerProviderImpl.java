@@ -20,7 +20,7 @@ import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
-import org.opendaylight.openflowplugin.openflow.md.core.sal.convertor.match.MatchConvertorImpl;
+import org.opendaylight.openflowplugin.openflow.md.core.sal.convertor.match.MatchConvertor;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.list.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowCapableNode;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
@@ -265,7 +265,7 @@ public class PipelineManagerProviderImpl implements DataTreeChangeListener<Node>
     }
 
     private boolean isMatchSupported(List<SetFieldMatch> supportedMatchList, Match match) {
-        MatchConvertorImpl matchConvertor = new MatchConvertorImpl();
+        MatchConvertor matchConvertor = new MatchConvertor();
         List<MatchEntry> matchEntryList = matchConvertor.convert(match, null);
         for (MatchEntry matchEntry : matchEntryList) {
             if (!isFieldSupported(matchEntry.getOxmMatchField(), supportedMatchList)) {
