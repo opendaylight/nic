@@ -8,12 +8,6 @@
 
 package org.opendaylight.nic.bgp.service.rest;
 
-import org.opendaylight.nic.bgp.exception.BgpRestOperationException;
-import org.opendaylight.nic.bgp.service.parser.BgpDataflowParser;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflow;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -22,19 +16,24 @@ import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import org.opendaylight.nic.bgp.exception.BgpRestOperationException;
+import org.opendaylight.nic.bgp.service.parser.BgpDataflowParser;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by yrineu on 10/07/17.
  */
 public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
 
-    private final static Logger LOG = LoggerFactory.getLogger(BgpPrefixRESTServices.class);
-    private final static String USER_AGENT = "Mozilla/5.0";
-    private final static String ACCEPT_LANGUAGE = "en-US,en;q=0.5";
-    private final static String CONTENT_TYPE = "application/json";
+    private static final Logger LOG = LoggerFactory.getLogger(BgpPrefixRESTServices.class);
+    private static final String USER_AGENT = "Mozilla/5.0";
+    private static final String ACCEPT_LANGUAGE = "en-US,en;q=0.5";
+    private static final String CONTENT_TYPE = "application/json";
 
-    private final static String POST = "POST";
-    private final static String GET = "GET";
+    private static final String POST = "post";
+    private static final String GET = "get";
 
     private static int SUCCESS = 200;
 
@@ -53,9 +52,9 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
     }
 
     @Override
-    public String GET() {
-        final String URL = "http://localhost:8181/restconf/operational/bgp-rib:bgp-rib/rib/bgp-example/loc-rib/" +
-                "tables/bgp-types:ipv4-address-family/bgp-types:unicast-subsequent-address-family/ipv4-routes";
+    public String get() {
+        final String URL = "http://localhost:8181/restconf/operational/bgp-rib:bgp-rib/rib/bgp-example/loc-rib/"
+                + "tables/bgp-types:ipv4-address-family/bgp-types:unicast-subsequent-address-family/ipv4-routes";
         try {
             final HttpURLConnection connection = retrieveConnectionBase(URL);
             connection.setRequestMethod(GET);
@@ -69,9 +68,7 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
                     buffer.append(output);
                 }
                 reader.close();
-                System.out.println(buffer.toString());
             }
-
         } catch (IOException e) {
             LOG.info("\nError: {}", e.getMessage());
         }
@@ -79,12 +76,12 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
     }
 
     @Override
-    public void POST(BgpDataflow dataFlow) {
+    public void post(BgpDataflow dataFlow) {
         try {
-            String PATH = "http://localhost:8181/restconf/config/bgp-rib:application-rib/%s/tables/" +
-                    "bgp-types:ipv4-address-family/bgp-types:unicast-subsequent-address-family";
-            PATH = PATH.replace("%s", dataFlow.getGlobalIp().getValue());
-            final HttpURLConnection connection = retrieveConnectionBase(PATH);
+            String path = "http://localhost:8181/restconf/config/bgp-rib:application-rib/%s/tables/"
+                    + "bgp-types:ipv4-address-family/bgp-types:unicast-subsequent-address-family";
+            path = path.replace("%s", dataFlow.getGlobalIp().getValue());
+            final HttpURLConnection connection = retrieveConnectionBase(path);
             connection.setRequestMethod(POST);
 
             final String postJsonData = BgpDataflowParser.fromBgpDataFlow(dataFlow);
@@ -95,7 +92,8 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
             outputStream.flush();
             outputStream.close();
 
-            final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            final BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
             String output;
             final StringBuffer response = new StringBuffer();
 
@@ -108,18 +106,18 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
             if (responseCode == SUCCESS) {
                 LOG.info("\n BGP prefix advertised with success.");
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOG.error("\nError: {}", e.getMessage());
         }
     }
 
     @Override
-    public void DELETE(BgpDataflow dataFlow) {
+    public void delete(BgpDataflow dataFlow) {
         //TODO: Implement the delete REST call.
     }
 
     @Override
-    public BgpDataflow PUT(BgpDataflow dataFlow) {
+    public BgpDataflow put(BgpDataflow dataFlow) {
         //TODO: Implement update
         return null;
     }
@@ -133,7 +131,7 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
             connection.setRequestProperty("Accept-Language", ACCEPT_LANGUAGE);
             connection.setRequestProperty("Content-Type", CONTENT_TYPE);
         } catch (IOException e) {
-            throw new BgpRestOperationException(e.getMessage());
+            throw new BgpRestOperationException(e.getMessage(), e);
         }
         return connection;
     }

@@ -8,12 +8,14 @@
 
 package org.opendaylight.nic.bgp.exception;
 
+import java.io.IOException;
+
 /**
  * Created by yrineu on 10/07/17.
  */
 public class BgpRestOperationException extends RuntimeException {
 
-    public BgpRestOperationException(final String message) {
+    public BgpRestOperationException(final String message, IOException exception) {
         super("Error when try to evaluate a BGP REST operation. " + message);
     }
 }

@@ -45,16 +45,15 @@ public class BGPRendererServiceImpl implements BGPRendererService {
 
     @Override
     public void advertiseRoute(BgpDataflow bgpDataflow) {
-
         final RESTService bgpPrefixRESTServices = new BgpPrefixRESTServices();
-        bgpPrefixRESTServices.POST(bgpDataflow);
+        bgpPrefixRESTServices.post(bgpDataflow);
     }
 
     private InstanceIdentifier<Ipv4Routes> retrieveIpv4Identifier() {
         final ApplicationRibKey applicationRibKey = new ApplicationRibKey(new ApplicationRibId(APPLICATION_RIB_ID));
         final TablesKey tablesKey = new TablesKey(Ipv4AddressFamily.class, UnicastSubsequentAddressFamily.class);
-        final InstanceIdentifier tableIdentifier = KeyedInstanceIdentifier.builder(ApplicationRib.class, applicationRibKey)
-                .child(Tables.class, tablesKey).build();
+        final InstanceIdentifier tableIdentifier = KeyedInstanceIdentifier
+                .builder(ApplicationRib.class, applicationRibKey).child(Tables.class, tablesKey).build();
         return tableIdentifier.child(Ipv4Routes.class);
     }
 
@@ -62,8 +61,8 @@ public class BGPRendererServiceImpl implements BGPRendererService {
         final InstanceIdentifier<Ipv4Routes> ipv4RouteIdentifier = retrieveIpv4Identifier();
         final ReadOnlyTransaction readOnlyTransaction = dataBroker.newReadOnlyTransaction();
         try {
-            final Optional<Ipv4Routes> result = readOnlyTransaction.read(
-                    LogicalDatastoreType.CONFIGURATION, ipv4RouteIdentifier).checkedGet();
+            final Optional<Ipv4Routes> result = readOnlyTransaction
+                    .read(LogicalDatastoreType.CONFIGURATION, ipv4RouteIdentifier).checkedGet();
             if (result.isPresent()) {
                 dataBroker.newWriteOnlyTransaction().delete(LogicalDatastoreType.CONFIGURATION, ipv4RouteIdentifier);
             }

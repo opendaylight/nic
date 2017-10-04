@@ -8,18 +8,20 @@
 
 package org.opendaylight.nic.bgp.service;
 
-import org.opendaylight.controller.md.sal.binding.api.*;
+import java.util.Collection;
+import javax.annotation.Nonnull;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.controller.md.sal.binding.api.DataObjectModification;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeChangeListener;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeIdentifier;
+import org.opendaylight.controller.md.sal.binding.api.DataTreeModification;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.bgp.api.BGPRendererService;
 import org.opendaylight.nic.bgp.utils.Utils;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflows.BgpDataflow;
 import org.opendaylight.yangtools.concepts.ListenerRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import java.util.Collection;
 
 /**
  * Created by yrineu on 20/06/17.
@@ -31,8 +33,7 @@ public class BGPDataFlowListenerServiceImpl implements BGPDataFlowListenerServic
     private final BGPRendererService bgpRendererService;
     private ListenerRegistration<DataTreeChangeListener> dataflowListenerRegistration;
 
-    public BGPDataFlowListenerServiceImpl(final DataBroker dataBroker,
-                                          final BGPRendererService bgpRendererService) {
+    public BGPDataFlowListenerServiceImpl(final DataBroker dataBroker, final BGPRendererService bgpRendererService) {
         this.dataBroker = dataBroker;
         this.bgpRendererService = bgpRendererService;
     }
@@ -40,9 +41,8 @@ public class BGPDataFlowListenerServiceImpl implements BGPDataFlowListenerServic
     @Override
     public void start() {
         LOG.info("\nBGP Session Initiated");
-        final DataTreeIdentifier dataTreeIdentifier = new DataTreeIdentifier(
-                LogicalDatastoreType.CONFIGURATION,
-                Utils.BGP_DATAFLOW_IDENTIFIER);
+        final DataTreeIdentifier dataTreeIdentifier = new DataTreeIdentifier(LogicalDatastoreType.CONFIGURATION,
+                                                                             Utils.BGP_DATAFLOW_IDENTIFIER);
         this.dataflowListenerRegistration = dataBroker.registerDataTreeChangeListener(dataTreeIdentifier, this);
     }
 

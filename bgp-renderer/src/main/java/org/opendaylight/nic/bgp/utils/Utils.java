@@ -14,8 +14,10 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 /**
  * Created by yrineu on 20/06/17.
  */
-public class Utils {
+public final class Utils {
+    private Utils() {
+    }
 
-    public static final InstanceIdentifier<BgpDataflows> BGP_DATAFLOW_IDENTIFIER =
-            InstanceIdentifier.builder(BgpDataflows.class).build();
+    public static final InstanceIdentifier<BgpDataflows> BGP_DATAFLOW_IDENTIFIER = InstanceIdentifier
+            .builder(BgpDataflows.class).build();
 }
