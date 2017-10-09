@@ -33,17 +33,6 @@ import static org.powermock.api.mockito.PowerMockito.when;
 public class TopologyUtilsTests {
 
     @Test
-    public void testextractTopologyNodeId(){
-        String nodeConnectorId = "openflow2:1";
-
-        org.opendaylight.yang.gen.v1.urn
-                .tbd.params.xml.ns.yang.network
-                .topology.rev131021.NodeId nodeId = TopologyUtils.extractTopologyNodeId(nodeConnectorId);
-
-        assertNotNull(nodeId);
-    }
-
-    @Test
     public void testGetNodes() throws ReadFailedException {
         List<NodeConnector> connectors = new ArrayList<>();
         List<Node> nodess = new ArrayList<>();
