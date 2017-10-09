@@ -17,7 +17,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.datafl
 /**
  * Created by yrineu on 10/07/17.
  */
-public final class BgpDataflowParser {
+public class BgpDataflowParser {
 
     private static final String BGP_INET_IPV4_ROUTES = "bgp-inet:ipv4-routes";
     private static final String PREFIX = "prefix";
@@ -34,9 +34,6 @@ public final class BgpDataflowParser {
 
     private static final String ORIGIN_IGP = "igp";
     private static final String FIXED_PREF = "100";
-
-    private BgpDataflowParser() {
-    }
 
     public static String fromBgpDataFlow(final BgpDataflow bgpDataflow) {
         final ObjectMapper objectMapper = createObjectMapper();

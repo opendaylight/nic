@@ -11,17 +11,18 @@ package org.opendaylight.nic.bgp.api;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflow;
 
 /**
- * Service to manage BGP.
+ * Service to manage BGP
  */
 public interface BGPRendererService {
 
     /**
-     * Advertise route based in a {@link BgpDataflow} @param bgpDataflow the {@link BgpDataflow}.
+     * Advertise route based in a {@link BgpDataflow}
+     * @param bgpDataflow the {@link BgpDataflow}
      */
     void advertiseRoute(BgpDataflow bgpDataflow);
 
     /**
-     * Stop all BGP renderer services.
+     * Stop all BGP renderer services
      */
     void stop();
 }

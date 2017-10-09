@@ -15,11 +15,11 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
  */
 public interface RESTService<T extends DataObject> {
 
-    String get();
+    String GET();
 
-    void post(T dataFlow);
+    void POST(T dataFlow);
 
-    void delete(T dataFlow);
+    void DELETE(T dataFlow);
 
-    T put(T dataFlow);
+    T PUT(T dataFlow);
 }
