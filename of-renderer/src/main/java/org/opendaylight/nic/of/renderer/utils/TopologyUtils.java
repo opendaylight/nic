@@ -14,7 +14,6 @@ import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
-import org.opendaylight.nic.utils.exceptions.IntentElementNotFoundException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
@@ -23,7 +22,6 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,29 +33,7 @@ public class TopologyUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(TopologyUtils.class);
 
-    private static final String NODE_ID_NOT_FOUND_MSG = "NodeId not found for node connector ID: ";
-
     private TopologyUtils() {}
-
-    /**
-     * Derivate a {@link org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId}
-     * from a {@link NodeConnector}.
-     * @param nodeConnectorId The Inventory NodeConnectorId
-     * @return NodeId contained in Network-Topology
-     */
-    public static org.opendaylight.yang.gen.v1.urn
-            .tbd.params.xml.ns.yang.network
-            .topology.rev131021.NodeId extractTopologyNodeId(String nodeConnectorId) {
-        List<String> split = Arrays.asList(nodeConnectorId.split(":"));
-        if(split.isEmpty()) {
-            throw new IntentElementNotFoundException(NODE_ID_NOT_FOUND_MSG + nodeConnectorId);
-        }
-        return new org.opendaylight.yang.gen.v1.urn
-                .tbd.params.xml.ns.yang.network
-                .topology.rev131021.NodeId(split.get(0) +
-                ":" +
-                split.get(1));
-    }
 
     /**
      * Retrieve all the {@link Node} along with a list of their
