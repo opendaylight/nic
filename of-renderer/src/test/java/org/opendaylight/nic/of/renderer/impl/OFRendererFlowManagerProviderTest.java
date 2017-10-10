@@ -7,6 +7,13 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,19 +43,11 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
-
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
-
 /**
  * Created by yrineu on 30/05/16.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ FrameworkUtil.class })
+@PrepareForTest({FrameworkUtil.class})
 public class OFRendererFlowManagerProviderTest {
 
     @Mock
@@ -61,7 +60,9 @@ public class OFRendererFlowManagerProviderTest {
     private EndPointGroup source;
 
     @Mock
-    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup sourceEndPointGroup;
+    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
+            .EndPointGroup
+            sourceEndPointGroup;
 
     @Mock
     private Subjects subjectsSource;
@@ -70,7 +71,9 @@ public class OFRendererFlowManagerProviderTest {
     private EndPointGroup destination;
 
     @Mock
-    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group.EndPointGroup dstEndPointGroup;
+    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.subjects.subject.end.point.group
+            .EndPointGroup
+            dstEndPointGroup;
 
     @Mock
     private Subjects subjectsDestination;
@@ -113,7 +116,7 @@ public class OFRendererFlowManagerProviderTest {
 
     private OFRendererFlowManagerProvider ofRendererFlowManagerProvider;
 
-    private final String DEFAULT_STR_UUID = UUID.randomUUID().toString();
+    private static final String DEFAULT_STR_UUID = UUID.randomUUID().toString();
 
     private FlowAction flowAction = FlowAction.ADD_FLOW;
 
@@ -133,9 +136,7 @@ public class OFRendererFlowManagerProviderTest {
 
         ofRendererFlowManagerProvider = spy(
                 new OFRendererFlowManagerProvider(dataBroker, pipelineManager, idManagerService));
-        PowerMockito
-                .when(FrameworkUtil.class, "getBundle",
-                        ofRendererFlowManagerProvider.getClass())
+        PowerMockito.when(FrameworkUtil.class, "getBundle", ofRendererFlowManagerProvider.getClass())
                 .thenReturn(bundle);
     }
 
@@ -179,17 +180,15 @@ public class OFRendererFlowManagerProviderTest {
 
     @Test
     public void testInitAndClose() throws Exception {
-        when(bundleContext.registerService(OFRendererFlowService.class,
-                ofRendererFlowManagerProvider, null))
-                        .thenReturn(serviceRegistration);
+        when(bundleContext.registerService(OFRendererFlowService.class, ofRendererFlowManagerProvider, null))
+                .thenReturn(serviceRegistration);
         ofRendererFlowManagerProvider.start();
         ofRendererFlowManagerProvider.close();
     }
 
     @Test
     public void testUpdateWithQoSConfiguration() throws Exception {
-        when(subject.getUpdate(ofRendererFlowManagerProvider))
-                .thenReturn(intent);
+        when(subject.getUpdate(ofRendererFlowManagerProvider)).thenReturn(intent);
 
         ofRendererFlowManagerProvider.setSubject(subject);
         ofRendererFlowManagerProvider.update();
@@ -204,8 +203,7 @@ public class OFRendererFlowManagerProviderTest {
     }
 
     @Test
-    public void testPushIntentFlowWithQoSConfiguration()
-            throws IntentInvalidException {
+    public void testPushIntentFlowWithQoSConfiguration() throws IntentInvalidException {
         ofRendererFlowManagerProvider.pushIntentFlow(intent, flowAction);
     }
 }

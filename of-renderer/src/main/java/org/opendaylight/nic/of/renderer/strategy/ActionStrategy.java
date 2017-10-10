@@ -14,7 +14,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 
 /**
  * Strategy to represent different actions
- * for renderer based in Intent and FlowAction
+ * for renderer based in Intent and FlowAction.
  */
 public interface ActionStrategy {
 

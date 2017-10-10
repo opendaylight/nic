@@ -9,11 +9,11 @@ package org.opendaylight.nic.of.renderer.api;
 
 public interface Observer {
     /**
-     * Update the observer, used by subject
+     * Update the observer, used by subject.
      */
     void update();
 
-    /** Attach with subject to observe
+    /** Attach with subject to observe.
      * @param sub Subject
      */
     void setSubject(Subject sub);

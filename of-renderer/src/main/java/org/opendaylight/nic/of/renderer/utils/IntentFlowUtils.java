@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.of.renderer.utils;
 
+import java.util.List;
 import org.opendaylight.nic.of.renderer.exception.InvalidIntentParameterException;
 import org.opendaylight.nic.of.renderer.impl.OFRendererConstants;
 import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
@@ -20,12 +21,10 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.M
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 /**
  * Created by yrineu on 02/06/16.
  */
-public class IntentFlowUtils {
+public final class IntentFlowUtils {
 
     private static final String INVALID_END_POINT_MESSAGE = "EndPoint list null or empty.";
     private static final String INVALID_FLOW_ACTION_MESSAGE = "Invalid Action: ";
@@ -33,15 +32,18 @@ public class IntentFlowUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(IntentFlowUtils.class);
 
+    private IntentFlowUtils() {
+    }
+
     public static void validate(final List<String> endPointGroups) {
-        if(endPointGroups == null || endPointGroups.isEmpty()) {
+        if (endPointGroups == null || endPointGroups.isEmpty()) {
             LOG.error("EndPoints cannot be null or empty.");
             throw new InvalidIntentParameterException(INVALID_END_POINT_MESSAGE);
         }
     }
 
     public static void validate(final FlowAction flowAction) {
-        if(flowAction == null) {
+        if (flowAction == null) {
             LOG.error("FlowAction cannot be null.");
             throw new InvalidIntentParameterException(INVALID_FLOW_ACTION_MESSAGE + flowAction);
         }

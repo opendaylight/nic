@@ -7,6 +7,13 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.Observer;
@@ -35,14 +42,6 @@ import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 /**
  * Created by saket on 8/19/15.
  */
@@ -59,8 +58,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private IdManagerService idManagerService;
 
 
-    public OFRendererFlowManagerProvider(final DataBroker dataBroker,
-                                         final PipelineManager pipelineManager,
+    public OFRendererFlowManagerProvider(final DataBroker dataBroker, final PipelineManager pipelineManager,
                                          final IdManagerService idManagerService) {
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
@@ -88,8 +86,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
 
         //TODO: Change to use Command Pattern
         try {
-            ActionStrategy actionStrategy = new DefaultExecutor(intentFlowManager,
-                    dataBroker);
+            ActionStrategy actionStrategy = new DefaultExecutor(intentFlowManager, dataBroker);
             actionStrategy.execute(intent, flowAction);
         } catch (IntentInvalidException ie) {
 //            TODO: Implement an action for Exception cases
@@ -143,12 +140,24 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
                     case REMOVE:
                         result = removeDataflow(dataFlow);
                         break;
+                    default:
+                        break;
                 }
             }
         } catch (ExecutionException e) {
             throw new PushDataflowException(e.getMessage());
         }
         return result;
+    }
+
+    @Override
+    public void pushDataFlow(final NodeId nodeId, final Dataflow dataflow) {
+        try {
+            final FlowBuilder flowBuilder = ofRuleWithMeterManager.createFlow(dataflow);
+            ofRuleWithMeterManager.sendToMdsal(flowBuilder, nodeId);
+        } catch (DataflowCreationException me) {
+            LOG.error(me.getMessage());
+        }
     }
 
     public Dataflow sendDataflow(final Dataflow dataflow) throws ExecutionException {
@@ -169,16 +178,6 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         }
         removeMeter(dataflow.getMeterId().longValue(), dataflowId);
         return dataflow;
-    }
-
-    @Override
-    public void pushDataFlow(final NodeId nodeId, final Dataflow dataflow) {
-        try {
-            final FlowBuilder flowBuilder = ofRuleWithMeterManager.createFlow(dataflow);
-            ofRuleWithMeterManager.sendToMdsal(flowBuilder, nodeId);
-        } catch (DataflowCreationException me) {
-            LOG.error(me.getMessage());
-        }
     }
 
     @Override
@@ -211,6 +210,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     }
 
     @Override
+    @SuppressWarnings("checkstyle:IllegalCatch")
     public void stop() {
         try {
             close();

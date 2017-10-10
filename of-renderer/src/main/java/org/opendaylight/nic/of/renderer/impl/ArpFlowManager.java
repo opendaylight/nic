@@ -9,7 +9,6 @@ package org.opendaylight.nic.of.renderer.impl;
 
 import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
@@ -56,9 +55,11 @@ public class ArpFlowManager extends AbstractFlowManager {
          * Use following code for specific ARP REQUEST or REPLY packet capture
          * ArpMatch arpMatch = FlowUtils.createArpMatch();
          */
-        final Match match = new MatchBuilder().setEthernetMatch(ethernetMatch).build();//.setLayer3Match(arpMatch).build();
+        final Match match = new MatchBuilder().setEthernetMatch(ethernetMatch)
+                .build();//.setLayer3Match(arpMatch).build();
         arpFlow.setMatch(match);
-        final Instructions instructions = createOutputInstructions(OutputPortValues.CONTROLLER, OutputPortValues.NORMAL);
+        final Instructions instructions = createOutputInstructions(OutputPortValues.CONTROLLER,
+                                                                   OutputPortValues.NORMAL);
         arpFlow.setInstructions(instructions);
         final String flowName = createFlowName();
         arpFlow.setFlowName(flowName);

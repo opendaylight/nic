@@ -8,6 +8,11 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicLong;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.exception.DataflowCreationException;
@@ -51,53 +56,42 @@ import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigInteger;
-import java.util.*;
-import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicLong;
-
 public class OFRuleWithMeterManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(OFRuleWithMeterManager.class);
     private final MdsalUtils mdsalUtils;
     private final DataBroker dataBroker;
     private final MeterExecutor meterExecutor;
-    private final Long OFP_NO_BUFFER = Long.valueOf(4294967295L);
+    private static final Long OFP_NO_BUFFER = Long.valueOf(4294967295L);
     private final AtomicLong flowCookieInc = new AtomicLong(0x3a00000000000000L);
-    private final Long ETHER_TYPE = 0x0800L;
+    private static final Long ETHER_TYPE = 0x0800L;
     private final IdManagerService idManagerService;
 
-    protected OFRuleWithMeterManager(final DataBroker dataBroker,
-                                     final IdManagerService idManagerService) {
+    protected OFRuleWithMeterManager(final DataBroker dataBroker, final IdManagerService idManagerService) {
         this.dataBroker = dataBroker;
         this.mdsalUtils = new MdsalUtils(dataBroker);
         this.meterExecutor = new MeterExecutor(dataBroker, idManagerService);
         this.idManagerService = idManagerService;
-
     }
 
     public FlowBuilder createFlow(final Dataflow dataFlow) throws DataflowCreationException {
         FlowBuilder flowBuilder = new FlowBuilder();
-        try {
-            final FlowModFlags flowModFlags = new FlowModFlags(false, false, false, false, false);
-            final FlowId flowId = new FlowId(dataFlow.getId().toString());
-            final FlowKey flowKey = new FlowKey(flowId);
-            final MeterId meterId = new MeterId(dataFlow.getMeterId().longValue());
+        final FlowModFlags flowModFlags = new FlowModFlags(false, false, false, false, false);
+        final FlowId flowId = new FlowId(dataFlow.getId().toString());
+        final FlowKey flowKey = new FlowKey(flowId);
+        final MeterId meterId = new MeterId(dataFlow.getMeterId().longValue());
 
-            flowBuilder.setFlowName("NIC_METER" + meterId.getValue());
-            flowBuilder.setId(new FlowId(Long.toString(flowBuilder.hashCode())));
-            flowBuilder.setMatch(createMatch(dataFlow.getSourceIpAddress()));
-            flowBuilder.setInstructions(createInstruction(meterId));
-            flowBuilder.setPriority(OFRendererConstants.DEFAULT_PRIORITY);
-            flowBuilder.setCookie(new FlowCookie(BigInteger.valueOf(flowCookieInc.getAndIncrement())));
-            flowBuilder.setBufferId(OFP_NO_BUFFER);
-            flowBuilder.setHardTimeout((int) dataFlow.getTimeout());
-            flowBuilder.setIdleTimeout((int) dataFlow.getTimeout());
-            flowBuilder.setFlags(flowModFlags);
-            flowBuilder.setKey(flowKey);
-        } catch (Exception e) {
-            throw new DataflowCreationException(e.getMessage());
-        }
+        flowBuilder.setFlowName("NIC_METER" + meterId.getValue());
+        flowBuilder.setId(new FlowId(Long.toString(flowBuilder.hashCode())));
+        flowBuilder.setMatch(createMatch(dataFlow.getSourceIpAddress()));
+        flowBuilder.setInstructions(createInstruction(meterId));
+        flowBuilder.setPriority(OFRendererConstants.DEFAULT_PRIORITY);
+        flowBuilder.setCookie(new FlowCookie(BigInteger.valueOf(flowCookieInc.getAndIncrement())));
+        flowBuilder.setBufferId(OFP_NO_BUFFER);
+        flowBuilder.setHardTimeout((int) dataFlow.getTimeout());
+        flowBuilder.setIdleTimeout((int) dataFlow.getTimeout());
+        flowBuilder.setFlags(flowModFlags);
+        flowBuilder.setKey(flowKey);
 
         return flowBuilder;
     }
@@ -112,7 +106,8 @@ public class OFRuleWithMeterManager {
         return meterExecutor.createMeter(id, dropRate);
     }
 
-    public Future<RpcResult<Void>> removeMeter(final Long meterId, final String dataflowId) throws MeterRemovalExeption {
+    public Future<RpcResult<Void>> removeMeter(final Long meterId,
+                                               final String dataflowId) throws MeterRemovalExeption {
         return meterExecutor.removeMeter(meterId, dataflowId);
     }
 
@@ -139,10 +134,8 @@ public class OFRuleWithMeterManager {
         MeterBuilder meterBuilder = new MeterBuilder();
         meterBuilder.setMeterId(meterId);
 
-        Instruction instruction = new InstructionBuilder()
-                .setOrder(0)
-                .setInstruction(new MeterCaseBuilder()
-                        .setMeter(meterBuilder.build()).build()).build();
+        Instruction instruction = new InstructionBuilder().setOrder(0)
+                .setInstruction(new MeterCaseBuilder().setMeter(meterBuilder.build()).build()).build();
 
         List<Instruction> instructions = new ArrayList<>();
         instructions.add(instruction);
@@ -156,7 +149,8 @@ public class OFRuleWithMeterManager {
         final NodeBuilder nodeBuilder = new NodeBuilder();
         nodeBuilder.setId(nodeId);
         nodeBuilder.setKey(new NodeKey(nodeId));
-        return mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder), flowBuilder.build());
+        return mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder),
+                              flowBuilder.build());
     }
 
     public boolean removeFromMdsal(final FlowBuilder flowBuilder, final NodeId nodeId) {
@@ -166,15 +160,13 @@ public class OFRuleWithMeterManager {
         return mdsalUtils.delete(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder));
     }
 
-    private InstanceIdentifier<Flow> retrieveIdentifier(final NodeBuilder nodeBuilder,
-                                                        final FlowBuilder flowBuilder) {
+    private InstanceIdentifier<Flow> retrieveIdentifier(final NodeBuilder nodeBuilder, final FlowBuilder flowBuilder) {
         flowBuilder.setTableId(OFRendererConstants.FALLBACK_TABLE_ID);
-        InstanceIdentifier<org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
-                .child(Node.class, nodeBuilder.getKey())
-                .augmentation(FlowCapableNode.class)
-                .child(Table.class, new TableKey(flowBuilder.getTableId()))
-                .child(org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow.class, flowBuilder.getKey())
-                .build();
+        InstanceIdentifier<org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow>
+                flowIID = InstanceIdentifier.builder(Nodes.class).child(Node.class, nodeBuilder.getKey())
+                .augmentation(FlowCapableNode.class).child(Table.class, new TableKey(flowBuilder.getTableId()))
+                .child(org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow.class,
+                       flowBuilder.getKey()).build();
         return flowIID;
     }
 }

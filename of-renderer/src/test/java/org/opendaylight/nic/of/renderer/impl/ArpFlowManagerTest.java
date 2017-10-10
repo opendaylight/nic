@@ -7,29 +7,31 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
 import com.google.common.util.concurrent.CheckedFuture;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
+import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
 import org.powermock.api.support.membermodification.MemberMatcher;
 import org.powermock.api.support.membermodification.MemberModifier;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by yrineu on 30/05/16.
@@ -63,7 +65,7 @@ public class ArpFlowManagerTest {
     public void testCreateArpReplyControllerFlow() {
         flowBuilder = arpFlowManager.createArpReplyToControllerFlow();
         Assert.assertEquals(flowBuilder.getPriority().intValue(),
-                OFRendererConstants.ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY);
+                            OFRendererConstants.ARP_REPLY_TO_CONTROLLER_FLOW_PRIORITY);
         Assert.assertEquals(flowBuilder.getIdleTimeout().intValue(), 0);
         Assert.assertEquals(flowBuilder.getHardTimeout().intValue(), 0);
         Assert.assertNotNull(flowBuilder.getCookie());
@@ -77,10 +79,10 @@ public class ArpFlowManagerTest {
 
     @Test
     public void testPushFlow() {
-        MemberModifier.suppress(MemberMatcher.method(LldpFlowManager.class, "writeDataTransaction",
-                NodeId.class, FlowBuilder.class, FlowAction.class));
+        MemberModifier.suppress(MemberMatcher.method(LldpFlowManager.class, "writeDataTransaction", NodeId.class,
+                                                     FlowBuilder.class, FlowAction.class));
         arpFlowManager.pushFlow(nodeId, flowAction);
-        Mockito.verify(arpFlowManager).writeDataTransaction(any(NodeId.class),
-                any(FlowBuilder.class), any(FlowAction.class));
+        Mockito.verify(arpFlowManager)
+                .writeDataTransaction(any(NodeId.class), any(FlowBuilder.class), any(FlowAction.class));
     }
 }

@@ -7,6 +7,8 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.math.BigInteger;
+import java.util.List;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.model.IntentEndPointType;
 import org.opendaylight.nic.of.renderer.utils.IntentFlowUtils;
@@ -29,9 +31,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.In
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigInteger;
-import java.util.List;
 
 public class IntentFlowManager extends AbstractFlowManager {
 
@@ -75,7 +74,8 @@ public class IntentFlowManager extends AbstractFlowManager {
                 String actionClass = action.getClass().getName();
                 LOG.error("Invalid action: {}", actionClass);
                 break;
-
+            default:
+                break;
         }
     }
 
@@ -95,7 +95,7 @@ public class IntentFlowManager extends AbstractFlowManager {
             String actionClass = action.getClass().getName();
             LOG.error("Invalid action: {}", actionClass);
         }
-            writeDataTransaction(nodeId, flowBuilder, flowAction);
+        writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
     private FlowBuilder createFlowBuilder(final MatchBuilder matchBuilder, final FlowId flowId) {

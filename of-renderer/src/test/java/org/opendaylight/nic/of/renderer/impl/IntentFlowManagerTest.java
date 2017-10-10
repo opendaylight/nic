@@ -7,7 +7,14 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
+
 import com.google.common.util.concurrent.CheckedFuture;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
@@ -26,12 +33,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.con
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
-
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
 
 /**
  * Created by yrineu on 31/05/16.
@@ -52,8 +53,8 @@ public class IntentFlowManagerTest {
     private CheckedFuture<Void, TransactionCommitFailedException> future;
     private Constraints classificationConstraint;
     private List<Constraints> classificationConstraints;
-    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.
-            rev150122.intent.constraints.Constraints innerConstraints;
+    private org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints
+            innerConstraints;
 
     private static final String SRC_END_POINT = "60:6c:66:8b:bb:e5";
     private static final String DST_END_POINT = "60:6c:66:8b:bb:e6";
@@ -76,9 +77,10 @@ public class IntentFlowManagerTest {
         matchBuilder = mock(MatchBuilder.class);
         future = mock(CheckedFuture.class);
         classificationConstraint = mock(Constraints.class,
+                                        withSettings().extraInterfaces(ClassificationConstraint.class));
+        innerConstraints = mock(
+                org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints.class,
                 withSettings().extraInterfaces(ClassificationConstraint.class));
-        innerConstraints = mock(org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122
-                .intent.constraints.Constraints.class, withSettings().extraInterfaces(ClassificationConstraint.class));
         classificationConstraints = spy(new ArrayList<>());
         classificationConstraints.add(classificationConstraint);
 
@@ -93,19 +95,19 @@ public class IntentFlowManagerTest {
         intentFlowManager.setIntent(intent);
     }
 
-    @Test (expected = InvalidIntentParameterException.class)
+    @Test(expected = InvalidIntentParameterException.class)
     public void testWithoutEndPointGroups() {
         intentFlowManager.setAction(blockAction);
         intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
     }
 
-    @Test (expected = InvalidIntentParameterException.class)
+    @Test(expected = InvalidIntentParameterException.class)
     public void testShouldDoNothingWhenActionIsNull() {
         intentFlowManager.setAction(null);
         intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
     }
 
-    @Test (expected = InvalidIntentParameterException.class)
+    @Test(expected = InvalidIntentParameterException.class)
     public void testShouldDoNothingWhenEndPointGroupsIsNull() {
         intentFlowManager.setEndPointGroups(null);
         intentFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);

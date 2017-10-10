@@ -9,6 +9,11 @@
 package org.opendaylight.nic.of.renderer.strategy;
 
 import com.google.common.collect.Lists;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Future;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.api.MeterQueueService;
@@ -36,18 +41,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter.meter.band.headers.MeterBandHeaderKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter.meter.band.headers.meter.band.header.MeterBandTypesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.Dataflow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.meterid.queue.types.rev170316.MeteridObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.binding.KeyedInstanceIdentifier;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Future;
 
 public class MeterExecutor {
 
@@ -57,8 +55,7 @@ public class MeterExecutor {
     private final MdsalUtils mdsalUtils;
     private MeterQueueService meterQueueService;
 
-    public MeterExecutor(final DataBroker dataBroker,
-                         final IdManagerService idManagerService) {
+    public MeterExecutor(final DataBroker dataBroker, final IdManagerService idManagerService) {
         this.dataBroker = dataBroker;
         this.mdsalUtils = new MdsalUtils(dataBroker);
         this.meterQueueService = new MeterQueueServiceImpl(idManagerService);
@@ -69,8 +66,8 @@ public class MeterExecutor {
     }
 
     public MeterId createMeter(final String id, final long dropRate) throws MeterCreationExeption {
-        MeterBandHeadersBuilder meterBandHeadersBuilder = new MeterBandHeadersBuilder();
-        MeterBandHeaderBuilder meterBandHeaderBuilder = new MeterBandHeaderBuilder();
+        final MeterBandHeadersBuilder meterBandHeadersBuilder = new MeterBandHeadersBuilder();
+        final MeterBandHeaderBuilder meterBandHeaderBuilder = new MeterBandHeaderBuilder();
         MeterBuilder meterBuilder = new MeterBuilder();
 
         final long meterIdLong = meterQueueService.getNextMeterId(id);
@@ -81,7 +78,7 @@ public class MeterExecutor {
         meterBuilder.setMeterId(meterId);
         meterBuilder.setFlags(meterFlags);
 
-        int bandKey = 0;
+        final int bandKey = 0;
         DropBuilder dropBuilder = new DropBuilder();
         dropBuilder.setDropBurstSize(0L);
         dropBuilder.setDropRate(dropRate);
@@ -90,7 +87,7 @@ public class MeterExecutor {
         meterBandTypesBuilder.setFlags(new MeterBandType(true, false, false));
 
         Drop drop = dropBuilder.build();
-        BandId bandId = new BandId((long)bandKey);
+        BandId bandId = new BandId((long) bandKey);
         meterBandHeaderBuilder.setBandBurstSize(drop.getDropBurstSize());
         meterBandHeaderBuilder.setBandRate(drop.getDropRate());
         meterBandHeaderBuilder.setKey(new MeterBandHeaderKey(bandId));
@@ -105,8 +102,7 @@ public class MeterExecutor {
         final Set<Boolean> metersCreationResults = new HashSet<>();
 
         for (Map.Entry<Node, List<NodeConnector>> entry : nodeListMap.entrySet()) {
-            final InstanceIdentifier<Meter> instanceIdentifier = retrieveMeterIdentifier(meterId,
-                    entry.getKey());
+            final InstanceIdentifier<Meter> instanceIdentifier = retrieveMeterIdentifier(meterId, entry.getKey());
             final boolean result = mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, instanceIdentifier, meter);
             metersCreationResults.add(result);
         }
@@ -123,8 +119,7 @@ public class MeterExecutor {
         final Future<RpcResult<Void>> releaseMeterResult = meterQueueService.releaseMeterId(dataflowId);
         final Map<Node, List<NodeConnector>> nodeListMap = TopologyUtils.getNodes(dataBroker);
         for (Map.Entry<Node, List<NodeConnector>> entry : nodeListMap.entrySet()) {
-            final InstanceIdentifier<Meter> instanceIdentifier = retrieveMeterIdentifier(id,
-                    entry.getKey());
+            final InstanceIdentifier<Meter> instanceIdentifier = retrieveMeterIdentifier(id, entry.getKey());
             result = mdsalUtils.delete(LogicalDatastoreType.CONFIGURATION, instanceIdentifier);
         }
         if (!result) {
@@ -134,18 +129,10 @@ public class MeterExecutor {
     }
 
     private InstanceIdentifier<Meter> retrieveMeterIdentifier(final MeterId meterId, Node node) {
-        KeyedInstanceIdentifier<Meter, MeterKey> flowIID = null;
-        try {
-            final InstanceIdentifier<Node> nodePath = InstanceIdentifier
-                    .create(Nodes.class)
-                    .child(Node.class, node.getKey());
-            flowIID = nodePath
-                    .augmentation(FlowCapableNode.class)
-                    .child(Meter.class, new MeterKey(meterId));
-
-        } catch (Exception e) {
-            LOG.error(e.getMessage());
-        }
+        final InstanceIdentifier<Node> nodePath = InstanceIdentifier.create(Nodes.class)
+                .child(Node.class, node.getKey());
+        KeyedInstanceIdentifier<Meter, MeterKey> flowIID = nodePath.augmentation(FlowCapableNode.class)
+                .child(Meter.class, new MeterKey(meterId));
         return flowIID.builder().build();
     }
 }

@@ -8,6 +8,8 @@
 
 package org.opendaylight.nic.of.renderer.strategy;
 
+import java.util.List;
+import java.util.Map;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.impl.IntentFlowManager;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
@@ -18,9 +20,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.act
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yrineu on 01/03/16.
@@ -38,7 +37,7 @@ public class DefaultExecutor implements ActionStrategy {
 
     @Override
     public void execute(final Intent intent, final FlowAction flowAction) throws IntentInvalidException {
-        if(intent == null) {
+        if (intent == null) {
             throw new IntentInvalidException(INTENT_NULL_MESSAGE);
         }
         final List<String> endPointGroups = IntentUtils.extractEndPointGroup(intent);

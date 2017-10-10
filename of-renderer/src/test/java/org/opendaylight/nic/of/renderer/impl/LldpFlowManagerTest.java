@@ -50,12 +50,15 @@ public class LldpFlowManagerTest {
 
     @Test
     public void testPushFlow() throws Exception {
-        MemberModifier.suppress(MemberMatcher.method(LldpFlowManager.class, "writeDataTransaction", NodeId.class, FlowBuilder.class, FlowAction.class));
+        MemberModifier.suppress(MemberMatcher.method(LldpFlowManager.class, "writeDataTransaction", NodeId.class,
+                                                     FlowBuilder.class, FlowAction.class));
         MemberModifier.suppress(MemberMatcher.method(LldpFlowManager.class, "createLldpReplyToControllerFlow"));
 
-        when(lldpFlowManager.writeDataTransaction(any(NodeId.class), any(FlowBuilder.class), any(FlowAction.class))).thenReturn(true);
+        when(lldpFlowManager.writeDataTransaction(any(NodeId.class), any(FlowBuilder.class), any(FlowAction.class)))
+                .thenReturn(true);
         NodeId nodeId = mock(NodeId.class);
         lldpFlowManager.pushFlow(nodeId, FlowAction.ADD_FLOW);
-        Mockito.verify(lldpFlowManager).writeDataTransaction(any(NodeId.class), any(FlowBuilder.class), any(FlowAction.class));
+        Mockito.verify(lldpFlowManager)
+                .writeDataTransaction(any(NodeId.class), any(FlowBuilder.class), any(FlowAction.class));
     }
 }

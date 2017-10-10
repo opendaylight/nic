@@ -8,41 +8,43 @@
 
 package org.opendaylight.nic.of.renderer.api;
 
+import java.util.concurrent.Future;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 
-import java.util.concurrent.Future;
-
 /**
- * Service used to allocate or release a {@link org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId}
+ * Service used to allocate or release a
+ * {@link org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId}.
  */
 public interface MeterQueueService {
 
     /**
-     * Start Meter Queue services
+     * Start Meter Queue services.
      */
     void start();
 
     /**
      * Get the next {@link org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId} value
-     * using the Genius's {@link org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService}
-     * @param dataflowId
+     * using the Genius's
+     * {@link org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService}.
+     *
+     * @param dataflowId data flow id
      * @return an ID as {@link Long}
-     * @throws MeterCreationExeption
      */
     long getNextMeterId(String dataflowId) throws MeterCreationExeption;
 
     /**
      * Release the value for a given key, the key is defined by the
      * {@link org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.dataflows.Dataflow}
-     * ID as {@link String}
-     * @param id
+     * ID as {@link String}.
+     *
+     * @param id id
      * @return the {@link Future} as response
      */
     Future<RpcResult<Void>> releaseMeterId(String id);
 
     /**
-     * Stop Meter Queue services
+     * Stop Meter Queue services.
      */
     void stop();
 }

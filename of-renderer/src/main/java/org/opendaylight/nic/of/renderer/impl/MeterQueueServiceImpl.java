@@ -8,6 +8,10 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.opendaylight.nic.of.renderer.api.MeterQueueService;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.AllocateIdInputBuilder;
@@ -17,11 +21,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class MeterQueueServiceImpl implements MeterQueueService {
 
@@ -55,7 +54,9 @@ public class MeterQueueServiceImpl implements MeterQueueService {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             LOG.error(e.getMessage());
         }
-        if (null == allocatedId) throw new MeterCreationExeption();
+        if (null == allocatedId) {
+            throw new MeterCreationExeption();
+        }
         return allocatedId.getIdValue();
     }
 

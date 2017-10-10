@@ -10,6 +10,11 @@ package org.opendaylight.nic.of.renderer.strategy;
 
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,8 +41,6 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.util.*;
 
 /**
  * Created by yrineu on 07/08/16.
@@ -90,14 +93,15 @@ public class DefaultExecutorTest {
         Mockito.when(TopologyUtils.getNodes(dataBrokerMock)).thenReturn(nodeConnectorsByNode);
         Mockito.when(dataBrokerMock.newReadOnlyTransaction()).thenReturn(readOnlyTransactionMock);
         Mockito.when(InstanceIdentifier.create(Nodes.class)).thenReturn(instanceIdentifierMock);
-        Mockito.when(readOnlyTransactionMock.read(LogicalDatastoreType.OPERATIONAL, instanceIdentifierMock)).thenReturn(checkedFutureMock);
+        Mockito.when(readOnlyTransactionMock.read(LogicalDatastoreType.OPERATIONAL, instanceIdentifierMock))
+                .thenReturn(checkedFutureMock);
         Mockito.when(checkedFutureMock.checkedGet()).thenReturn(nodesOptionalMock);
         Mockito.when(nodesOptionalMock.get()).thenReturn(nodeListMock);
 
         defaultExecutorMock = new DefaultExecutor(intentFlowManagerMock, dataBrokerMock);
     }
 
-    @Test (expected = IntentInvalidException.class)
+    @Test(expected = IntentInvalidException.class)
     public void testShouldThrowsNoSuchElementExceptionWhenExecuteIntent() throws IntentInvalidException {
         defaultExecutorMock.execute(null, FlowAction.ADD_FLOW);
     }

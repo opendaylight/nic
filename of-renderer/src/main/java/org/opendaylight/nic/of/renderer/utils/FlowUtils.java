@@ -30,13 +30,13 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026
 /**
  * Contains methods creating flow part for ARP flow.
  */
-public class FlowUtils {
+public final class FlowUtils {
 
     private FlowUtils() {
     }
 
     /**
-     * Creates {@link EthernetMatch} containing ARP ether-type and the given destination MAC address
+     * Creates {@link EthernetMatch} containing ARP ether-type and the given destination MAC address.
      * @return EthernetMatch
      */
     public static EthernetMatch createEthernetMatch() {
@@ -47,7 +47,7 @@ public class FlowUtils {
 
 
     /**
-     * Creates {@link Action} representing output to the controller
+     * Creates {@link Action} representing output to the controller.
      * @param order the order for the action
      * @return Action
      */
@@ -63,8 +63,9 @@ public class FlowUtils {
     }
 
     /**
-     * @param order An integer representing the order of the Action
-     * withinin the table.
+     * Create output normal.
+     *
+     * @param order An integer representing the order of the Action withinin the table.
      * @return Action with an order
      */
     public static Action createOutputNormal(int order) {
@@ -79,9 +80,9 @@ public class FlowUtils {
     }
 
     /**
+     * Creates set field destination MAC.
      *
-     * @param order An integer representing the order of the Action
-     * within the table.
+     * @param order An integer representing the order of the Action within the table.
      * @param macAddress Destination MAC address
      * @return Action with an order
      */
@@ -99,8 +100,8 @@ public class FlowUtils {
         SetFieldBuilder setFieldBuilder = new SetFieldBuilder();
         setFieldBuilder.setEthernetMatch(ethernetMatch);
         SetField setField = setFieldBuilder.build();
-        org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.Action acction = new SetFieldCaseBuilder().
-                setSetField(setField).build();
+        org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.Action acction =
+                new SetFieldCaseBuilder().setSetField(setField).build();
         ab.setOrder(order).setKey(new ActionKey(order)).setAction(acction);
         action = ab.build();
         return action;

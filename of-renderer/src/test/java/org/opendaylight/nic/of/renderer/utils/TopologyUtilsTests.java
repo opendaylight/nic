@@ -8,8 +8,17 @@
 
 package org.opendaylight.nic.of.renderer.utils;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.powermock.api.mockito.PowerMockito.when;
+
 import com.google.common.base.Optional;
 import com.google.common.util.concurrent.CheckedFuture;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
@@ -20,25 +29,14 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.powermock.api.mockito.PowerMockito.when;
-
 public class TopologyUtilsTests {
 
     @Test
-    public void testextractTopologyNodeId(){
+    public void testextractTopologyNodeId() {
         String nodeConnectorId = "openflow2:1";
 
-        org.opendaylight.yang.gen.v1.urn
-                .tbd.params.xml.ns.yang.network
-                .topology.rev131021.NodeId nodeId = TopologyUtils.extractTopologyNodeId(nodeConnectorId);
+        org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.rev131021.NodeId nodeId = TopologyUtils
+                .extractTopologyNodeId(nodeConnectorId);
 
         assertNotNull(nodeId);
     }
@@ -55,8 +53,8 @@ public class TopologyUtilsTests {
         when(node1.getNodeConnector()).thenReturn(connectors);
         nodess.add(node1);
 
-        org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes nodes =
-                mock(org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes.class);
+        org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes nodes = mock(
+                org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes.class);
 
         DataBroker dataBroker = mock(DataBroker.class);
         ReadOnlyTransaction tx = mock(ReadOnlyTransaction.class);

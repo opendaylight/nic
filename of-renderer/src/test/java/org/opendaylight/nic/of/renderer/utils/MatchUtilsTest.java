@@ -8,6 +8,11 @@
 
 package org.opendaylight.nic.of.renderer.utils;
 
+import static org.junit.Assert.assertNotNull;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,12 +27,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeCon
 import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherType;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv4Match;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.layer._3.match.Ipv6Match;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
-
-import static org.junit.Assert.assertNotNull;
 
 public class MatchUtilsTest {
 
@@ -45,10 +44,11 @@ public class MatchUtilsTest {
     @Mock
     private Ipv4Prefix ipv4PrefixMock;
 
-    private final Long SRC_END_POINT = 5L;
-    private final Long IN_PORT = 2L;
-    private final Integer VLAN_ID = 100;
-    private final BigInteger TUNNEL_ID = BigInteger.TEN;
+    private static final Long SRC_END_POINT = 5L;
+    private static final Long IN_PORT = 2L;
+    private static final Integer VLAN_ID = 100;
+    private static final BigInteger TUNNEL_ID = BigInteger.TEN;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -58,8 +58,7 @@ public class MatchUtilsTest {
     public void callPrivateConstructorsForCodeCoverage() throws SecurityException, NoSuchMethodException,
             IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Class<?>[] classesToConstruct = {MatchUtils.class};
-        for(Class<?> clazz : classesToConstruct)
-        {
+        for (Class<?> clazz : classesToConstruct) {
             Constructor<?> constructor = clazz.getDeclaredConstructor();
             constructor.setAccessible(true);
             assertNotNull(constructor.newInstance());
@@ -104,28 +103,28 @@ public class MatchUtilsTest {
     }
 
     @Test
-    public void testCreateSetSrcTcpMatch(){
+    public void testCreateSetSrcTcpMatch() {
         PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
         result = MatchUtils.createSetSrcTcpMatch(matchBuilderMock, tcpPort);
         Assert.assertNotNull(result);
     }
 
     @Test
-    public void testCreateSetDstTcpMatch(){
+    public void testCreateSetDstTcpMatch() {
         PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
         result = MatchUtils.createSetDstTcpMatch(matchBuilderMock, tcpPort);
         Assert.assertNotNull(result);
     }
 
     @Test
-    public void testCreateSetSrcUdpMatch(){
+    public void testCreateSetSrcUdpMatch() {
         PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
         result = MatchUtils.createSetSrcUdpMatch(matchBuilderMock, tcpPort);
         Assert.assertNotNull(result);
     }
 
     @Test
-    public void testCreateSetDstUdpMatch(){
+    public void testCreateSetDstUdpMatch() {
         PortNumber tcpPort = PortNumber.getDefaultInstance("8080");
         result = MatchUtils.createSetDstUdpMatch(matchBuilderMock, tcpPort);
         Assert.assertNotNull(result);
@@ -178,10 +177,10 @@ public class MatchUtilsTest {
 
     @Test
     public void testCreateICMPv4Match() {
-        result = MatchUtils.createICMPv4Match(matchBuilderMock, (short)1, (short)2);
+        result = MatchUtils.createICMPv4Match(matchBuilderMock, (short) 1, (short) 2);
         Assert.assertNotNull(result);
 
-        result = MatchUtils.createICMPv4Match(matchBuilderMock, (short)0, (short)0);
+        result = MatchUtils.createICMPv4Match(matchBuilderMock, (short) 0, (short) 0);
         Assert.assertNotNull(result);
     }
 
@@ -193,7 +192,7 @@ public class MatchUtilsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testShouldThrowsIllegalArgumentException() {
-        MatchUtils.createICMPv4Match(matchBuilderMock, (short)-1, (short)-2);
+        MatchUtils.createICMPv4Match(matchBuilderMock, (short) -1, (short) -2);
     }
 
     @Test(expected = NullPointerException.class)
@@ -213,7 +212,7 @@ public class MatchUtilsTest {
         MatchUtils.createEthMatch(null, null, null);
         MatchUtils.createTunnelIDMatch(matchBuilderMock, null);
         MatchUtils.createTunnelIDMatch(null, TUNNEL_ID);
-        MatchUtils.createICMPv4Match(null, (short)1, (short) 2);
+        MatchUtils.createICMPv4Match(null, (short) 1, (short) 2);
         MatchUtils.createDstL3IPv4Match(matchBuilderMock, null);
         MatchUtils.createDstL3IPv4Match(null, ipv4PrefixMock);
     }
@@ -233,8 +232,8 @@ public class MatchUtilsTest {
 
     @Test
     public void testCreateIPv4Match() {
-        long IPV4_LONG = 0x800;
-        EtherType ethType = new EtherType(IPV4_LONG);
+        final long ipv4Long = 0x800;
+        EtherType ethType = new EtherType(ipv4Long);
 
         MatchBuilder matchBuilder = new MatchBuilder();
         Ipv4Prefix src = new Ipv4Prefix("10.0.0.1/8");
@@ -289,8 +288,8 @@ public class MatchUtilsTest {
 
     @Test
     public void testCreateIPv6Match() {
-        long IPV6_LONG = 0x86DD;
-        EtherType ethType = new EtherType(IPV6_LONG);
+        final long ipv6Long = 0x86DD;
+        EtherType ethType = new EtherType(ipv6Long);
 
         MatchBuilder matchBuilder = new MatchBuilder();
         Ipv6Prefix src = new Ipv6Prefix("2001:db8:a0b:12f0::1/24");

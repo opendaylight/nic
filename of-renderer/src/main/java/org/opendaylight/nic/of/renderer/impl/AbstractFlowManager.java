@@ -9,6 +9,7 @@ package org.opendaylight.nic.of.renderer.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import java.util.List;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
@@ -37,8 +38,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.N
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.NodeKey;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 
-import java.util.List;
-
 public abstract class AbstractFlowManager {
 
     /**
@@ -60,7 +59,8 @@ public abstract class AbstractFlowManager {
      * the Node object in the inventory. 3. FlowProgrammer module of
      * OpenFlowPlugin picks up this data change and eventually program the
      * switch.
-     * @param nodeId The OpenDaylight Inventory OpenFlow {@link NodeId}
+     *
+     * @param nodeId     The OpenDaylight Inventory OpenFlow {@link NodeId}
      * @param flowAction The {@link FlowAction}
      */
     abstract void pushFlow(NodeId nodeId, FlowAction flowAction);
@@ -68,6 +68,7 @@ public abstract class AbstractFlowManager {
     /**
      * Creates a set of Instruction based on the port values
      * received.
+     *
      * @param portValues Represents ports (example LOCAL, CONTROLLER, etc) {@link OutputPortValues}}
      * @return OpenFlow Flow Instructions
      */
@@ -95,9 +96,10 @@ public abstract class AbstractFlowManager {
     /**
      * Writes a Flow with a flow action on the Configuration
      * data store so that it can be applied to an OF switch.
-     * @param nodeId The {@link NodeId} of the OF Switch
+     *
+     * @param nodeId      The {@link NodeId} of the OF Switch
      * @param flowBuilder The {@link FlowBuilder} that is built and submitted
-     * @param flowAction The {@link FlowAction} the flow action (ADD or REMOVE)
+     * @param flowAction  The {@link FlowAction} the flow action (ADD or REMOVE)
      * @return A boolean representing the transaction result
      */
     protected boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder, FlowAction flowAction) {
@@ -114,16 +116,12 @@ public abstract class AbstractFlowManager {
         final TableKey tableKey = new TableKey(flowBuilder.getTableId());
 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
-                .child(Node.class, nodeBuilder.getKey())
-                .augmentation(FlowCapableNode.class)
-                .child(Table.class, tableKey)
-                .child(Flow.class, flowKey)
-                .build();
+                .child(Node.class, nodeBuilder.getKey()).augmentation(FlowCapableNode.class)
+                .child(Table.class, tableKey).child(Flow.class, flowKey).build();
 
         if (flowAction == FlowAction.ADD_FLOW) {
             result = mdsal.put(LogicalDatastoreType.CONFIGURATION, flowIID, flowBuilder.build());
-        }
-        else if(flowAction == FlowAction.REMOVE_FLOW) {
+        } else if (flowAction == FlowAction.REMOVE_FLOW) {
             result = mdsal.delete(LogicalDatastoreType.CONFIGURATION, flowIID);
         }
 
