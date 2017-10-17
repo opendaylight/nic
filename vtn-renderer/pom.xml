@@ -12,18 +12,18 @@
  <parent>
   <groupId>org.opendaylight.controller</groupId>
   <artifactId>config-parent</artifactId>
-  <version>0.6.2-SNAPSHOT</version>
+  <version>0.6.3-SNAPSHOT</version>
   <relativePath />
  </parent>
 
  <modelVersion>4.0.0</modelVersion>
  <groupId>org.opendaylight.nic</groupId>
  <artifactId>vtn-renderer</artifactId>
- <version>1.3.2-SNAPSHOT</version>
+ <version>1.3.3-SNAPSHOT</version>
  <packaging>bundle</packaging>
 
  <properties>
-   <vtn.version>0.6.2-SNAPSHOT</vtn.version>
+   <vtn.version>0.6.3-SNAPSHOT</vtn.version>
  </properties>
 
  <dependencies>
