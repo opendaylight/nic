@@ -18,7 +18,7 @@
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>features-aggregator</artifactId>
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.1</version>
     <packaging>pom</packaging>
 
     <modules>

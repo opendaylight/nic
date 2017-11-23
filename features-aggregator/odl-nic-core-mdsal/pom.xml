@@ -19,12 +19,12 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>odl-nic-core-mdsal</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.1</version>
     <packaging>feature</packaging>
 
     <properties>
-        <openflowplugin.version>0.5.1-SNAPSHOT</openflowplugin.version>
-        <mdsal.version>1.6.1-SNAPSHOT</mdsal.version>
+        <openflowplugin.version>0.5.1</openflowplugin.version>
+        <mdsal.version>1.6.1</mdsal.version>
     </properties>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
