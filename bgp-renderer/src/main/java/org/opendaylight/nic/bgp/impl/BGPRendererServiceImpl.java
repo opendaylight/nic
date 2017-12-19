@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class BGPRendererServiceImpl implements BGPRendererService {
     private static final Logger LOG = LoggerFactory.getLogger(BGPRendererServiceImpl.class);
 
-    private DataBroker dataBroker;
+    private final DataBroker dataBroker;
     private static final String APPLICATION_RIB_ID = "example-app-rib";
 
     public BGPRendererServiceImpl(final DataBroker dataBroker) {
