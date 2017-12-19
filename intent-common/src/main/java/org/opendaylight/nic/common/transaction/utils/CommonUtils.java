@@ -12,6 +12,10 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.CheckedFuture;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.ReadOnlyTransaction;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
@@ -38,9 +42,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.Meter
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.EthernetServices;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetServiceKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.RouterGroups;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroup;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroupKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.norev.RouterGroups;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.norev.router.groups.RouterGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.norev.router.groups.RouterGroupKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.RouterInfos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfoKey;
@@ -63,11 +67,6 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 public class CommonUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommonUtils.class);
@@ -76,7 +75,7 @@ public class CommonUtils {
     private final InstanceIdentifier<EthernetServices> ETHERNET_SERVICES_IID = InstanceIdentifier.create(EthernetServices.class);
     private final InstanceIdentifier<RouterGroups> ROUTER_GROUPS_IID = InstanceIdentifier.create(RouterGroups.class);
     private final InstanceIdentifier<RouterInfos> ROUTER_INFO_IID = InstanceIdentifier.create(RouterInfos.class);
-    private DataBroker dataBroker;
+    private final DataBroker dataBroker;
 
     public CommonUtils(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
@@ -239,7 +238,7 @@ public class CommonUtils {
 
     public void saveDelayConfig(final DelayConfig delayConfig) {
         final DelayConfigs delayConfigs = retrieveDelayConfigs();
-        final DelayConfigsBuilder delayConfigsBuilder = (delayConfigs != null ? new DelayConfigsBuilder(delayConfigs) : new DelayConfigsBuilder());
+        final DelayConfigsBuilder delayConfigsBuilder = delayConfigs != null ? new DelayConfigsBuilder(delayConfigs) : new DelayConfigsBuilder();
         final List<DelayConfig> delayConfigList = delayConfigsBuilder.getDelayConfig();
         if (null != delayConfigList) {
             delayConfigList.add(delayConfig);

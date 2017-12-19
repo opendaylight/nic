@@ -23,6 +23,7 @@ MANIFEST.MF
 .settings
 .classpath
 target/
+target-ide/
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -58,3 +59,4 @@ yang-yen-sal
 yang-gen-config
 
 maven-metadata-local.xml
+.factorypath
