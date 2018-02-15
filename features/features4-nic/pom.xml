@@ -16,13 +16,13 @@
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>feature-repo-parent</artifactId>
-        <version>1.8.3-SNAPSHOT</version>
+        <version>1.8.3-Carbon</version>
         <relativePath />
     </parent>
 
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>features4-nic</artifactId>
-    <version>1.3.3-SNAPSHOT</version>
+    <version>1.3.3-Carbon</version>
     <packaging>feature</packaging>
 
     <name>OpendayLight :: NIC :: ${project.artifactId}</name>
