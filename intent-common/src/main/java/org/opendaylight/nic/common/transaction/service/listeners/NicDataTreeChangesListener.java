@@ -14,7 +14,7 @@ import org.opendaylight.yangtools.yang.binding.DataObject;
 /**
  * This service is responsible to handle Intent events.
  */
-public interface IntentTreeChangesListener<T extends DataObject> extends DataTreeChangeListener<T> {
+public interface NicDataTreeChangesListener<T extends DataObject> extends DataTreeChangeListener<T> {
 
     /**
      * Start intent listener services

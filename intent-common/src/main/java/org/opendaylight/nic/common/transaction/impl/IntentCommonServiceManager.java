@@ -16,6 +16,7 @@ import org.opendaylight.nic.common.transaction.utils.CommonUtils;
 import org.opendaylight.nic.engine.api.IntentStateMachineExecutorService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.utils.EventType;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.evpn.rev170724.intent.evpns.IntentEvpn;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -45,11 +46,12 @@ public class IntentCommonServiceManager implements IntentCommonService {
     @Override
     public void start() {
         LOG.info("\nIntent Common session Initiated.");
-        //TODO: Apply all configuration at the startup
+        intentActionFactory.start();
     }
 
     @Override
     public void resolveAndApply(Object intent) {
+        LOG.info("\n### Intent added: {}", intent.toString());
         executeAction(intent, (intentId, service) -> {
             if (intentId != null && service != null) {
                 service.startTransaction(intentId, EventType.INTENT_CREATED);
@@ -59,6 +61,7 @@ public class IntentCommonServiceManager implements IntentCommonService {
 
     @Override
     public void resolveAndRemove(Object intent) {
+        LOG.info("\n### Intent removed: {}", intent.toString());
         executeAction(intent, (intentId, service) -> {
             if (intentId != null && service != null) {
                 service.startTransaction(intentId, EventType.INTENT_REMOVED);
@@ -87,11 +90,17 @@ public class IntentCommonServiceManager implements IntentCommonService {
             lifeCycleService = intentActionFactory.buildBasicOFRendererService();
         }
 
+        if (IntentEvpn.class.isInstance(intent)) {
+            final IntentEvpn intentEvpn = (IntentEvpn) intent;
+            intentId = intentEvpn.getIntentEvpnName();
+            lifeCycleService = intentActionFactory.buildEvpnService();
+        }
+
         action.doExecute(intentId, lifeCycleService);
     }
 
     @Override
     public void stop() {
-        //TODO: Make a cleanup at the shutdown
+        intentActionFactory.stop();
     }
 }
