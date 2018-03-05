@@ -34,6 +34,18 @@
             <groupId>org.opendaylight.mdsal.model</groupId>
             <artifactId>ietf-yang-types-20130715</artifactId>
         </dependency>
+
+        <!-- External dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- Project specific dependencies -->
         <dependency>
             <groupId>org.opendaylight.controller.model</groupId>
             <artifactId>model-inventory</artifactId>
