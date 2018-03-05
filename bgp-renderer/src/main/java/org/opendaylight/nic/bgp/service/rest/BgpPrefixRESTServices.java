@@ -55,6 +55,7 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
     public String get() {
         final String URL = "http://localhost:8181/restconf/operational/bgp-rib:bgp-rib/rib/bgp-example/loc-rib/"
                 + "tables/bgp-types:ipv4-address-family/bgp-types:unicast-subsequent-address-family/ipv4-routes";
+        String result = "";
         try {
             final HttpURLConnection connection = retrieveConnectionBase(URL);
             connection.setRequestMethod(GET);
@@ -68,11 +69,12 @@ public class BgpPrefixRESTServices implements RESTService<BgpDataflow> {
                     buffer.append(output);
                 }
                 reader.close();
+                result = buffer.toString();
             }
         } catch (IOException e) {
-            LOG.info("\nError: {}", e.getMessage());
+            LOG.error("\nError: {}", e.getMessage());
         }
-        return null;
+        return result;
     }
 
     @Override

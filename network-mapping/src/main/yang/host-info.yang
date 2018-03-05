@@ -1,0 +1,74 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module host-info {
+    namespace "urn:opendaylight:nic:network:mapping:host:info";
+    prefix "host-info";
+
+    import host-interface { prefix host-interface; revision-date 2017-07-31; }
+    import switch-info { prefix switch-info; revision-date 2017-07-11; }
+    import ietf-inet-types { prefix "inet"; }
+
+    revision 2017-07-24 {
+        description "Initial revision.";
+    }
+
+    typedef host-name {
+        type string;
+    }
+
+    grouping host-interface {
+        leaf interface-name {
+            type host-interface:interface-name;
+        }
+    }
+
+    grouping host-info {
+
+        leaf host-name {
+            type host-name;
+            mandatory true;
+            description "Uniquely identifier of a given Host.";
+        }
+
+        leaf switch-name {
+            type switch-info:switch-name;
+            mandatory true;
+            description "Defines the switch where this service will be applied.";
+        }
+
+        leaf ip-address {
+            type inet:ip-address;
+            mandatory true;
+            description "Defines the Host IP Address.";
+        }
+
+        leaf subnet-mask {
+            type string;
+            mandatory true;
+            description "Defines the Host subnet mask.";
+        }
+
+        leaf gateway-ip {
+            type inet:ip-address;
+            mandatory true;
+            description "Defines the Host Gateway address.";
+        }
+
+        list host-interfaces {
+            key "interface-name";
+            uses host-interface:host-interface;
+        }
+    }
+
+    container host-infos {
+        list host-info {
+            key "host-name";
+            uses host-info;
+        }
+    }
+}

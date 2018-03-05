@@ -1,0 +1,73 @@
+//-------------------------------------------------------------------------------------
+// Copyright (c) 2017 Serro LLC.  All rights reserved.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Eclipse Public License v1.0 which accompanies this distribution,
+// and is available at http://www.eclipse.org/legal/epl-v10.html
+//-------------------------------------------------------------------------------------
+module evpn-dataflow {
+    namespace "urn:opendaylight:nic:renderer:api:evpn:dataflow";
+    prefix "evpn-dataflow";
+
+    revision 2017-07-24 {
+        description "First revision.";
+    }
+
+    grouping vlan-info {
+        leaf vlan-name {
+            type string;
+        }
+
+        leaf vlan-id {
+            type uint32;
+        }
+    }
+
+    grouping evpn-dataflow {
+
+        leaf id {
+            type string;
+            mandatory true;
+            description "Uniquely identifier of a Evpn dataflow.";
+        }
+
+        list vlan-info {
+            key "vlan-name";
+            uses vlan-info;
+        }
+
+        leaf http-ip {
+            type string;
+        }
+
+        leaf http-port {
+            type string;
+        }
+
+        leaf user-name {
+            type string;
+        }
+
+        leaf password {
+            type string;
+        }
+
+        leaf interface-name {
+            type string;
+            mandatory true;
+            description "Defines the Interface name where configs will be applied.";
+        }
+
+        leaf loopback-ip {
+            type string;
+            mandatory true;
+            description "Defines the Switch Loopback IP where this EVPN will be configured.";
+        }
+
+        leaf ospf-id {
+            type string;
+            mandatory false;
+            description "Defines the OSPF and EVPN BGP Id, usually it's the Switch name where this EVPN will be configured.";
+        }
+    }
+}
