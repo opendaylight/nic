@@ -46,7 +46,7 @@ public class JuniperDeviceInfoRestServiceImpl extends HttpServlet {
 
     public JuniperDeviceInfoRestServiceImpl() throws ServletException {
         ServletContext context = super.getServletContext();
-        LOG.info("\n### Rest initialized with success: {}!", context);
+        LOG.info("\n[NIC] Rest initialized with success: {}!", context);
         authenticator();
     }
 

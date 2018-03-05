@@ -34,7 +34,7 @@ public class SwitchInfoRendererService extends AbstractRendererService<SwitchInf
 
     @Override
     public void start() {
-        LOG.info("\n### SwitchInfos listener started with success!");
+        LOG.info("\nSwitchInfos listener started with success!");
         final DataTreeIdentifier identifier = new DataTreeIdentifier(
                 LogicalDatastoreType.CONFIGURATION, InstanceIdentifierUtils.SWITCH_INFOS_IDENTIFIER);
         super.registerListener(identifier);
@@ -46,12 +46,12 @@ public class SwitchInfoRendererService extends AbstractRendererService<SwitchInf
             final DataObjectModification<SwitchInfos> modification = tree.getRootNode();
             switch (modification.getModificationType()) {
                 case WRITE:
-                    LOG.info("\n### SwitchInfo tree created received");
+                    LOG.debug("\n[NIC] SwitchInfo tree created received");
                     final SwitchInfos switchInfos = modification.getDataAfter();
                     super.getJuniperRestService().sendConfiguration(switchInfos.getSwitchInfo(), false);
                     break;
                 case SUBTREE_MODIFIED:
-                    LOG.info("\n### SwitchInfo tree modified");
+                    LOG.info("\n[NIC] SwitchInfo tree modified");
                     final SwitchInfos before = modification.getDataBefore();
                     final SwitchInfos after = modification.getDataAfter();
 

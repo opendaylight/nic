@@ -49,7 +49,7 @@ public class InterfaceDetailsRendererService implements RPCRendererService<Switc
 
     @Override
     public void start() {
-        LOG.info("\n#### InterfaceDetailsRendererService initialized with success");
+        LOG.info("\n[NIC] InterfaceDetailsRendererService initialized with success");
         final DataTreeIdentifier dataTreeIdentifier = new DataTreeIdentifier(
                 LogicalDatastoreType.CONFIGURATION, InstanceIdentifierUtils.SWITCH_INTERFACES_STATUS_IDENTIFIER);
         registration = dataBroker.registerDataTreeChangeListener(dataTreeIdentifier, this);
@@ -63,7 +63,6 @@ public class InterfaceDetailsRendererService implements RPCRendererService<Switc
                 case WRITE:
                     final SwitchInterfacesStatus interfacesStaus = objectModification.getDataAfter();
                     juniperRestService.sendConfiguration(interfacesStaus.getSwitchInterfaceStatus(), false);
-//                    LOG.info("\n### Subtree write: {}", objectModification.getDataAfter());
                     break;
                 case SUBTREE_MODIFIED:
                     final SwitchInterfacesStatus before = objectModification.getDataBefore();
@@ -71,10 +70,9 @@ public class InterfaceDetailsRendererService implements RPCRendererService<Switc
 
                     before.getSwitchInterfaceStatus().addAll(after.getSwitchInterfaceStatus());
                     juniperRestService.sendConfiguration(before.getSwitchInterfaceStatus(), false);
-//                    LOG.info("\n### Subtree modified - Before: {}, After {}", objectModification.getDataBefore(), objectModification.getDataAfter());
                     break;
                 case DELETE:
-                    LOG.info("\n### Subtree deleted: {}", objectModification.getDataBefore());
+                    LOG.debug("\n[NIC] Subtree deleted: {}", objectModification.getDataBefore());
                     break;
             }
         });

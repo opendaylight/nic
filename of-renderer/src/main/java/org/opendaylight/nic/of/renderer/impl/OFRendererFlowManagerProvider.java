@@ -79,7 +79,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     @Override
     public void pushIntentFlow(final Intent intent, final FlowAction flowAction) {
         // TODO: Extend to support other actions
-        LOG.info("\n### Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
+        LOG.debug("\n[NIC] Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
 
         // Creates QoS configuration and stores profile in the Data Store.
         if (intent.getQosConfig() != null) {
@@ -93,6 +93,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
             actionStrategy.execute(intent, flowAction);
         } catch (IntentInvalidException ie) {
 //            TODO: Implement an action for Exception cases
+            LOG.error(ie.getMessage());
         }
     }
 

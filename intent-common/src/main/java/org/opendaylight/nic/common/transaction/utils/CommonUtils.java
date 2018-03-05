@@ -543,7 +543,7 @@ public class CommonUtils {
                 evpnDataflowQueue);
         try {
             writeTransaction.submit().checkedGet();
-            LOG.info("\n### Submitting Evpn Dataflow Queues tree update");
+            LOG.debug("\n[NIC] Submitting Evpn Dataflow Queues tree update");
         } catch (TransactionCommitFailedException e) {
             LOG.error(e.getMessage());
         }
@@ -567,7 +567,6 @@ public class CommonUtils {
         try {
             SwitchInterfacesStatus switchInterfacesStatus = retrieve(identifier);
             if (switchInterfacesStatus != null) {
-//                switchInterfacesStatus.getSwitchInterfaceStatus().clear();
             } else {
                 final SwitchInterfacesStatusBuilder builder = new SwitchInterfacesStatusBuilder();
                 builder.setSwitchInterfaceStatus(Lists.newArrayList());
