@@ -12,6 +12,10 @@ module router-group {
 
     import intent-types { prefix types; revision-date 2015-01-22; }
 
+    revision 2017-07-31 {
+        description "Initial revision.";
+    }
+
     grouping router-group {
         leaf id {
             type types:uuid;

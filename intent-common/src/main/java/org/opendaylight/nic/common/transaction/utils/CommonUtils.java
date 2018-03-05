@@ -52,9 +52,9 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.etherne
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetServiceKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.host.info.rev170724.HostInfos;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.RouterGroups;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroup;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroupKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev170731.RouterGroups;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev170731.router.groups.RouterGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev170731.router.groups.RouterGroupKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.RouterInfos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfoKey;
