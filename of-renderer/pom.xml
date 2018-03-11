@@ -30,10 +30,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <liblldp.version>0.14.0-SNAPSHOT</liblldp.version>
         <sfc.version>0.7.0-SNAPSHOT</sfc.version>
         <genius.version>0.4.0-SNAPSHOT</genius.version>
+        <mdsal.version>1.7.0-SNAPSHOT</mdsal.version>
 
         <genius.groupId>org.opendaylight.genius</genius.groupId>
         <ofplugin.model.groupId>org.opendaylight.openflowplugin.model</ofplugin.model.groupId>
         <mdsal.groupId>org.opendaylight.mdsal.model</mdsal.groupId>
+        <controller.model.groupId>org.opendaylight.controller.model</controller.model.groupId>
+        <controller.groupId>org.opendaylight.controller</controller.groupId>
     </properties>
 
     <dependencyManagement>
@@ -80,6 +83,25 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <groupId>org.opendaylight.controller</groupId>
             <artifactId>liblldp</artifactId>
             <version>${liblldp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${controller.model.groupId}</groupId>
+            <artifactId>model-parent</artifactId>
+            <version>${mdsal.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>${controller.groupId}</groupId>
+            <artifactId>mdsal-artifacts</artifactId>
+            <version>${mdsal.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>${controller.groupId}</groupId>
+            <artifactId>sal-binding-broker-impl</artifactId>
+            <version>${mdsal.version}</version>
         </dependency>
         <!-- Controller Third party Graph library -->
         <dependency>

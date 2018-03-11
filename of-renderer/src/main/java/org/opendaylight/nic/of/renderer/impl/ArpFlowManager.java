@@ -11,6 +11,8 @@ import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.of.renderer.listener.NetworkEventsService;
+import org.opendaylight.nic.of.renderer.listener.TopologyListener;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
@@ -26,12 +28,20 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.M
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
 
-public class ArpFlowManager extends AbstractFlowManager {
+public class ArpFlowManager extends AbstractFlowManager implements TopologyListener {
 
     private final AtomicLong flowCookie = new AtomicLong();
+    private final NetworkEventsService networkEventsService;
 
-    public ArpFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
+    public ArpFlowManager(final DataBroker dataBroker,
+                          final PipelineManager pipelineManager,
+                          final NetworkEventsService networkEventsService) {
         super(dataBroker, pipelineManager);
+        this.networkEventsService = networkEventsService;
+    }
+
+    public void start() {
+        networkEventsService.register(this);
     }
 
     @Override
@@ -39,7 +49,7 @@ public class ArpFlowManager extends AbstractFlowManager {
         // Creating Flow object
         final FlowBuilder flowBuilder = createArpReplyToControllerFlow();
         // Write to MD-SAL
-        writeDataTransaction(nodeId, flowBuilder, flowAction);
+        super.writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
     protected FlowBuilder createArpReplyToControllerFlow() {
@@ -74,5 +84,15 @@ public class ArpFlowManager extends AbstractFlowManager {
         sb.append(OFRendererConstants.ARP_REPLY_TO_CONTROLLER_FLOW_NAME);
         sb.append("_EthernetType_").append(flowCookie.get());
         return sb.toString();
+    }
+
+    @Override
+    public void onSwitchAdd(NodeId switchAdded) {
+        pushFlow(switchAdded, FlowAction.ADD_FLOW);
+    }
+
+    @Override
+    public void onSwitchRemoved(NodeId switchRemoved) {
+        pushFlow(switchRemoved, FlowAction.REMOVE_FLOW);
     }
 }

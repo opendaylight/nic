@@ -16,7 +16,6 @@ import org.opendaylight.nic.engine.api.IntentStateMachineExecutorService;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.schedule.ScheduleService;
 import org.opendaylight.schedule.ScheduleServiceManager;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.evpn.rev170724.intent.evpns.IntentEvpn;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.intents.limiter.IntentLimiter;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -33,7 +32,6 @@ public class IntentActionFactory {
     private final OFRendererFlowService ofRendererFlowService;
     private final ScheduleService scheduleService;
     private final IntentStateMachineExecutorService stateMachineExecutorService;
-    private OFRendererService ofRendererService;
 
     private Map<Class<? extends DataObject>, IntentLifeCycleService> lifecycleServiceByIntentType;
 
@@ -60,10 +58,6 @@ public class IntentActionFactory {
 
     public synchronized IntentLifeCycleService buildBasicOFRendererService() {
         return startService(Intent.class, new OFRendererServiceImpl(commonUtils, ofRendererFlowService, scheduleService));
-    }
-
-    public synchronized IntentLifeCycleService buildEvpnService() {
-        return startService(IntentEvpn.class, new RPCRenderer(commonUtils));
     }
 
     private IntentLifeCycleService startService(final Class<? extends DataObject> intentClass,

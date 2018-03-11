@@ -17,7 +17,7 @@ public class PushDataflowException extends ExecutionException {
 
     private static final String ERROR_MESSAGE = "Impossible to push dataflow with ID: ";
 
-    public PushDataflowException(String message) {
-        super(ERROR_MESSAGE + message);
+    public PushDataflowException(final Exception cause) {
+        super(ERROR_MESSAGE + cause.getMessage());
     }
 }

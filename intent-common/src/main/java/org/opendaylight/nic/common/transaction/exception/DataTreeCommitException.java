@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class DataTreeCommitException extends ExecutionException {
 
-    public DataTreeCommitException(final String message) {
-        super(message);
+    public DataTreeCommitException(final Exception exception) {
+        super(exception.getCause().getMessage());
     }
 }

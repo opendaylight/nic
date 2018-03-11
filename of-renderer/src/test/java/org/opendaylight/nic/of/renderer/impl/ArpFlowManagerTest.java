@@ -13,23 +13,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.binding.api.WriteTransaction;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
+import org.opendaylight.nic.of.renderer.listener.NetworkEventsService;
 import org.opendaylight.nic.of.renderer.utils.FlowUtils;
+import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
-import org.opendaylight.controller.md.sal.binding.api.DataBroker;
-import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.flow.Match;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatch;
 import org.powermock.api.support.membermodification.MemberMatcher;
 import org.powermock.api.support.membermodification.MemberModifier;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by yrineu on 30/05/16.
@@ -41,6 +44,7 @@ public class ArpFlowManagerTest {
     private ArpFlowManager arpFlowManager;
     private DataBroker dataBroker;
     private PipelineManager pipelineManager;
+    private NetworkEventsService networkEventsService;
     private FlowBuilder flowBuilder;
     private NodeId nodeId;
     private FlowAction flowAction;
@@ -51,11 +55,12 @@ public class ArpFlowManagerTest {
     public void setUp() throws TransactionCommitFailedException {
         dataBroker = mock(DataBroker.class);
         pipelineManager = mock(PipelineManager.class);
+        networkEventsService = mock(NetworkEventsService.class);
         nodeId = mock(NodeId.class);
         writeTransaction = mock(WriteTransaction.class);
         when(dataBroker.newWriteOnlyTransaction()).thenReturn(writeTransaction);
         when(writeTransaction.submit()).thenReturn(future);
-        arpFlowManager = spy(new ArpFlowManager(dataBroker, pipelineManager));
+        arpFlowManager = spy(new ArpFlowManager(dataBroker, pipelineManager, networkEventsService));
         flowAction = FlowAction.ADD_FLOW;
     }
 

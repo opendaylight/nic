@@ -12,6 +12,8 @@ import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
+import org.opendaylight.nic.of.renderer.listener.NetworkEventsService;
+import org.opendaylight.nic.of.renderer.listener.TopologyListener;
 import org.opendaylight.nic.pipeline_manager.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.FlowId;
@@ -28,12 +30,20 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.l2.types.rev130827.EtherTyp
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.ethernet.match.fields.EthernetTypeBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.model.match.types.rev131026.match.EthernetMatchBuilder;
 
-public class LldpFlowManager extends AbstractFlowManager {
+public class LldpFlowManager extends AbstractFlowManager implements TopologyListener {
 
     private final AtomicLong flowCookie = new AtomicLong();
+    private final NetworkEventsService networkEventsService;
 
-    LldpFlowManager(DataBroker dataBroker, PipelineManager pipelineManager) {
+    LldpFlowManager(final DataBroker dataBroker,
+                    final PipelineManager pipelineManager,
+                    final NetworkEventsService networkEventsService) {
         super(dataBroker, pipelineManager);
+        this.networkEventsService = networkEventsService;
+    }
+
+    public void start() {
+        networkEventsService.register(this);
     }
 
     @Override
@@ -47,7 +57,7 @@ public class LldpFlowManager extends AbstractFlowManager {
     @Override
     void pushFlow(NodeId nodeId, FlowAction flowAction) {
         FlowBuilder flowBuilder = createLldpReplyToControllerFlow();
-        writeDataTransaction(nodeId, flowBuilder, flowAction);
+        super.writeDataTransaction(nodeId, flowBuilder, flowAction);
     }
 
     private FlowBuilder createLldpReplyToControllerFlow() {
@@ -70,5 +80,15 @@ public class LldpFlowManager extends AbstractFlowManager {
         lldpFlow.setId(flowId);
         lldpFlow.setKey(new FlowKey(flowId));
         return lldpFlow;
+    }
+
+    @Override
+    public void onSwitchAdd(NodeId switchAdded) {
+        pushFlow(switchAdded, FlowAction.ADD_FLOW);
+    }
+
+    @Override
+    public void onSwitchRemoved(NodeId switchRemoved) {
+        pushFlow(switchRemoved, FlowAction.REMOVE_FLOW);
     }
 }

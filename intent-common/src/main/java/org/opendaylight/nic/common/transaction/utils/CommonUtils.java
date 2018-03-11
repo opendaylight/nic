@@ -24,7 +24,6 @@ import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.bgp.utils.Utils;
 import org.opendaylight.nic.common.transaction.exception.DataTreeCommitException;
-import org.opendaylight.nic.common.transaction.exception.NoDatamodelFindException;
 import org.opendaylight.nic.common.transaction.exception.RemoveDataflowException;
 import org.opendaylight.nic.common.transaction.exception.RemoveDelayconfigException;
 import org.opendaylight.nic.utils.IntentUtils;
@@ -33,8 +32,6 @@ import org.opendaylight.nic.utils.exceptions.PushDataflowException;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.AsNumber;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Address;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.inet.types.rev130715.Ipv4Prefix;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.evpn.rev170724.intent.evpns.IntentEvpn;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.evpn.rev170724.intent.evpns.IntentEvpnKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.IntentIspPrefixes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.isp.prefix.rev170615.intent.isp.prefixes.IntentIspPrefix;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentsLimiter;
@@ -43,27 +40,15 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.Intents;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.types.rev150122.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711.SwitchInfos;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711.SwitchInfosBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711.SwitchName;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711._switch.infos.SwitchInfo;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping._switch.info.rev170711._switch.infos.SwitchInfoKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.EthernetServices;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.ethernet.service.rev170613.ethernet.services.EthernetServiceKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.host.info.rev170724.HostInfos;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.RouterGroups;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroup;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.rev700101.router.groups.RouterGroupKey;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.norev.RouterGroups;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.norev.router.groups.RouterGroup;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.group.norev.router.groups.RouterGroupKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.RouterInfos;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfo;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.router.info.rev170613.router.infos.RouterInfoKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.ServiceMappings;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.ServiceMappingsBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.network.mapping.service.mapping.rev170801.service.mappings.ServiceMapping;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api._switch._interface.status.rev170811.SwitchInterfacesStatus;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api._switch._interface.status.rev170811.SwitchInterfacesStatusBuilder;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api._switch._interface.status.rev170811._switch.interfaces.status.SwitchInterfaceStatus;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflows;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.BgpDataflowsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.bgp.dataflow.rev170518.bgp.dataflow.AsNumbers;
@@ -79,8 +64,6 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.conf
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.DelayConfigsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfigKey;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.queue.rev170807.evpn.dataflow.queues.EvpnDataflowQueue;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.evpn.dataflow.queue.rev170807.evpn.dataflow.queues.EvpnDataflowQueueKey;
 import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
@@ -89,12 +72,17 @@ import org.slf4j.LoggerFactory;
 public class CommonUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommonUtils.class);
-    private final InstanceIdentifier<Dataflows> DATAFLOW_IID = InstanceIdentifier.create(Dataflows.class);
-    private final InstanceIdentifier<DelayConfigs> DELAY_CONFIGS_IID = InstanceIdentifier.create(DelayConfigs.class);
-    private final InstanceIdentifier<EthernetServices> ETHERNET_SERVICES_IID = InstanceIdentifier.create(EthernetServices.class);
-    private final InstanceIdentifier<RouterGroups> ROUTER_GROUPS_IID = InstanceIdentifier.create(RouterGroups.class);
-    private final InstanceIdentifier<RouterInfos> ROUTER_INFO_IID = InstanceIdentifier.create(RouterInfos.class);
+    private static final InstanceIdentifier<Dataflows> DATAFLOW_IID = InstanceIdentifier.create(Dataflows.class);
+    private static final InstanceIdentifier<DelayConfigs> DELAY_CONFIGSIID = InstanceIdentifier
+            .create(DelayConfigs.class);
+    private static final InstanceIdentifier<EthernetServices> ETHERNET_SERVICES_IID = InstanceIdentifier
+            .create(EthernetServices.class);
+    private static final InstanceIdentifier<RouterInfos> ROUTER_INFO_IID = InstanceIdentifier
+            .create(RouterInfos.class);
+    private static final InstanceIdentifier<RouterGroups> ROUTER_GROUPS_IID = InstanceIdentifier
+            .create(RouterGroups.class);
     private final DataBroker dataBroker;
+
 
     public CommonUtils(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
@@ -112,7 +100,7 @@ public class CommonUtils {
             } else {
                 LOG.debug("Intent tree was empty!");
             }
-        } catch (Exception e) {
+        } catch (ReadFailedException e) {
             LOG.error("ListIntents: failed: {}", e.getMessage(), e);
         }
         LOG.debug("ListIntentsConfiguration: list of intents retrieved successfully");
@@ -131,7 +119,7 @@ public class CommonUtils {
             } else {
                 LOG.debug("\nIntentLimiter tree was empty!");
             }
-        } catch (Exception e) {
+        } catch (ReadFailedException e) {
             LOG.error("\nListIntents: failed: {}", e.getMessage(), e);
         }
         LOG.info("\nListIntentsConfiguration: list of intents retrieved successfully");
@@ -160,7 +148,7 @@ public class CommonUtils {
             } else {
                 LOG.error("\nIntentISPPrefixes was empty!");
             }
-        } catch (Exception e) {
+        } catch (ReadFailedException e) {
             LOG.error("\nList IntentIspPrefixes failed: {}", e.getMessage());
         }
         return listOfIntents;
@@ -206,7 +194,7 @@ public class CommonUtils {
         try {
             ReadOnlyTransaction read = dataBroker.newReadOnlyTransaction();
             Optional<DelayConfigs> configs = read.read(LogicalDatastoreType.CONFIGURATION,
-                    DELAY_CONFIGS_IID).checkedGet();
+                    DELAY_CONFIGSIID).checkedGet();
             if (configs.isPresent()) {
                 result = configs.get();
             }
@@ -250,14 +238,15 @@ public class CommonUtils {
         try {
             checkedFuture.checkedGet();
         } catch (TransactionCommitFailedException e) {
-            LOG.error(e.getMessage());
-            throw new PushDataflowException(e.getMessage());
+            LOG.error(e.getCause().getMessage());
+            throw new PushDataflowException(e);
         }
     }
 
     public void saveDelayConfig(final DelayConfig delayConfig) {
         final DelayConfigs delayConfigs = retrieveDelayConfigs();
-        final DelayConfigsBuilder delayConfigsBuilder = delayConfigs != null ? new DelayConfigsBuilder(delayConfigs) : new DelayConfigsBuilder();
+        final DelayConfigsBuilder delayConfigsBuilder = delayConfigs != null
+                ? new DelayConfigsBuilder(delayConfigs) : new DelayConfigsBuilder();
         final List<DelayConfig> delayConfigList = delayConfigsBuilder.getDelayConfig();
         if (null != delayConfigList) {
             delayConfigList.add(delayConfig);
@@ -266,45 +255,33 @@ public class CommonUtils {
             delayConfigsBuilder.setDelayConfig(Lists.newArrayList(delayConfig));
         }
         final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
-        writeTransaction.put(LogicalDatastoreType.CONFIGURATION, DELAY_CONFIGS_IID, delayConfigsBuilder.build());
+        writeTransaction.put(LogicalDatastoreType.CONFIGURATION, DELAY_CONFIGSIID, delayConfigsBuilder.build());
         writeTransaction.submit();
     }
 
     public void removeDelayConfig(final String delayConfigId) throws RemoveDelayconfigException {
         final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
-        final InstanceIdentifier<DelayConfig> identifier = InstanceIdentifier.create(DelayConfigs.class).
-                child(DelayConfig.class, new DelayConfigKey(Uuid.getDefaultInstance(delayConfigId)));
+        final InstanceIdentifier<DelayConfig> identifier = InstanceIdentifier.create(DelayConfigs.class)
+                .child(DelayConfig.class, new DelayConfigKey(Uuid.getDefaultInstance(delayConfigId)));
         writeTransaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
         CheckedFuture<Void, TransactionCommitFailedException> checkedFuture = writeTransaction.submit();
         try {
             checkedFuture.checkedGet();
         } catch (TransactionCommitFailedException e) {
-            throw new RemoveDelayconfigException(e.getMessage());
+            throw new RemoveDelayconfigException(e);
         }
     }
 
     public void removeDataFlow(final String dataflowId) throws RemoveDataflowException {
-        final InstanceIdentifier<Dataflow> identifier = InstanceIdentifier.create(Dataflows.class).
-                child(Dataflow.class, new DataflowKey(Uuid.getDefaultInstance(dataflowId)));
+        final InstanceIdentifier<Dataflow> identifier = InstanceIdentifier.create(Dataflows.class)
+                .child(Dataflow.class, new DataflowKey(Uuid.getDefaultInstance(dataflowId)));
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
         CheckedFuture<Void, TransactionCommitFailedException> checkedFuture = transaction.submit();
         try {
             checkedFuture.checkedGet();
         } catch (TransactionCommitFailedException e) {
-            throw new RemoveDataflowException(e.getMessage());
-        }
-    }
-
-    public void removeEvpnDataFlow(final String evpnDataflowId) throws RemoveDataflowException {
-        final InstanceIdentifier<EvpnDataflowQueue> identifier = InstanceIdentifierUtils.EVPN_DATAFLOW_QUEUES_IDENTIFIER
-                .child(EvpnDataflowQueue.class, new EvpnDataflowQueueKey(evpnDataflowId));
-        final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
-        writeTransaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
-        try {
-            writeTransaction.submit().checkedGet();
-        } catch (TransactionCommitFailedException e) {
-            throw new RemoveDataflowException(e.getMessage());
+            throw new RemoveDataflowException(e);
         }
     }
 
@@ -449,181 +426,6 @@ public class CommonUtils {
         return result;
     }
 
-    public IntentEvpn retrieveIntentVlans(final String id) {
-        IntentEvpn result = null;
-        final InstanceIdentifier<IntentEvpn> identifier = InstanceIdentifierUtils.INTENT_EVPN_IDENTIFIER
-                .child(IntentEvpn.class, new IntentEvpnKey(id));
-        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
-
-        try {
-            final Optional<IntentEvpn> intentVlanOptional = transaction
-                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
-            result = intentVlanOptional.get();
-        } catch (ReadFailedException e) {
-            LOG.error(e.getMessage());
-        }
-        return result;
-    }
-
-    public HostInfos retrieveHostInfos() {
-        HostInfos result = null;
-        try {
-            result = retrieve(InstanceIdentifierUtils.HOST_INFOS_IDENTIFIER);
-        } catch (NoDatamodelFindException e) {
-            LOG.error(e.getMessage());
-        }
-        return result;
-    }
-
-    public SwitchInfos retrieveSwitchInfos() {
-        SwitchInfos result = null;
-        final InstanceIdentifier<SwitchInfos> identifier = InstanceIdentifierUtils.SWITCH_INFOS_IDENTIFIER
-                .builder().build();
-        try {
-            result = retrieve(identifier);
-            if (result == null) {
-                result = new SwitchInfosBuilder().build();
-            }
-        } catch (NoDatamodelFindException e) {
-            LOG.error(e.getMessage());
-        }
-        return result;
-    }
-//
-//    public SwitchInfo retrieveSwitchInfo(final String id) {
-//        SwitchInfo result = null;
-//        final InstanceIdentifier<SwitchInfo> identifier = InstanceIdentifierUtils.SWITCH_INFOS_IDENTIFIER
-//                .child(SwitchInfo.class, new SwitchInfoKey(new SwitchName(id)));
-//        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
-//        try {
-//            final Optional<SwitchInfo> switchInfoOptional = transaction
-//                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
-//            result = switchInfoOptional.get();
-//        } catch (ReadFailedException e) {
-//            LOG.error(e.getMessage());
-//        }
-//        return result;
-//    }
-
-    public SwitchInfo retrieveSwitchInfo(final String id) {
-        final InstanceIdentifier<SwitchInfo> identifier = InstanceIdentifierUtils.SWITCH_INFOS_IDENTIFIER
-                .child(SwitchInfo.class, new SwitchInfoKey(new SwitchName(id))).builder().build();
-        SwitchInfo result = null;
-        try {
-            result = retrieve(identifier);
-        } catch (NoDatamodelFindException e) {
-            LOG.error(e.getMessage());
-        }
-        return result;
-    }
-
-    public ServiceMappings retrieveServiceMappings() {
-        ServiceMappings result = null;
-        final InstanceIdentifier<ServiceMappings> identifier = InstanceIdentifierUtils.SERVICE_MAPPINGS_IDENTIFIER;
-        final ReadOnlyTransaction readOnlyTransaction = dataBroker.newReadOnlyTransaction();
-        try {
-            final Optional<ServiceMappings> serviceMappingsOptional = readOnlyTransaction
-                    .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
-            if (serviceMappingsOptional.isPresent()) {
-                result = serviceMappingsOptional.get();
-            }
-        } catch (ReadFailedException e) {
-            LOG.error(e.getMessage());
-        }
-        return result;
-    }
-
-    public void pushEvpnDataflowQueue(final EvpnDataflowQueue evpnDataflowQueue) {
-        final InstanceIdentifier<EvpnDataflowQueue> identifier = InstanceIdentifierUtils.EVPN_DATAFLOW_QUEUES_IDENTIFIER
-                .child(EvpnDataflowQueue.class, evpnDataflowQueue.getKey()).builder().build();
-        final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
-        writeTransaction.put(
-                LogicalDatastoreType.CONFIGURATION,
-                identifier,
-                evpnDataflowQueue);
-        try {
-            writeTransaction.submit().checkedGet();
-            LOG.info("\n### Submitting Evpn Dataflow Queues tree update");
-        } catch (TransactionCommitFailedException e) {
-            LOG.error(e.getMessage());
-        }
-    }
-
-    public SwitchInterfacesStatus retrieveSwitchsInterfaceStatus() {
-        SwitchInterfacesStatus result = null;
-        try {
-            result = retrieve(InstanceIdentifierUtils.SWITCH_INTERFACES_STATUS_IDENTIFIER);
-            if (result == null) {
-                result = new SwitchInterfacesStatusBuilder().build();
-            }
-        } catch (NoDatamodelFindException e) {
-            LOG.error(e.getMessage());
-        }
-        return result;
-    }
-
-    public void updateSwitchInterfaceStatusTree(final List<SwitchInterfaceStatus> interfaceStatusList) {
-        final InstanceIdentifier<SwitchInterfacesStatus> identifier = InstanceIdentifierUtils.SWITCH_INTERFACES_STATUS_IDENTIFIER;
-        try {
-            SwitchInterfacesStatus switchInterfacesStatus = retrieve(identifier);
-            if (switchInterfacesStatus != null) {
-//                switchInterfacesStatus.getSwitchInterfaceStatus().clear();
-            } else {
-                final SwitchInterfacesStatusBuilder builder = new SwitchInterfacesStatusBuilder();
-                builder.setSwitchInterfaceStatus(Lists.newArrayList());
-                switchInterfacesStatus = builder.build();
-            }
-            switchInterfacesStatus.getSwitchInterfaceStatus().addAll(interfaceStatusList);
-            mergeTree(identifier, switchInterfacesStatus);
-        } catch (NoDatamodelFindException | DataTreeCommitException e) {
-            LOG.error(e.getMessage());
-        }
-    }
-
-    public EvpnDataflowQueue retrieveEvpnDataflowQueue(final String id) {
-        EvpnDataflowQueue result = null;
-        final InstanceIdentifier<EvpnDataflowQueue> identifier = InstanceIdentifierUtils.EVPN_DATAFLOW_QUEUES_IDENTIFIER
-                .child(EvpnDataflowQueue.class, new EvpnDataflowQueueKey(id));
-        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
-        try {
-            final Optional<EvpnDataflowQueue> optional = transaction.read(
-                    LogicalDatastoreType.CONFIGURATION,
-                    identifier).checkedGet();
-            if (optional.isPresent()) {
-                result = optional.get();
-            }
-        } catch (ReadFailedException e) {
-            LOG.error(e.getMessage());
-        }
-        return result;
-    }
-
-    public void pushServiceMapping(final ServiceMappings serviceMappings) {
-        final InstanceIdentifier<ServiceMappings> identifier = InstanceIdentifierUtils.SERVICE_MAPPINGS_IDENTIFIER;
-        try {
-            putTree(identifier, serviceMappings);
-        } catch (DataTreeCommitException e) {
-            LOG.error(e.getMessage());
-        }
-    }
-
-    private <T extends DataObject> T retrieve(final InstanceIdentifier<T> genericIdentifier)
-            throws NoDatamodelFindException {
-        T result = null;
-        final ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
-        try {
-            final Optional<T> optional = transaction.read(
-                    LogicalDatastoreType.CONFIGURATION,
-                    genericIdentifier.builder().build()).checkedGet();
-            if (optional.isPresent()) {
-                result = optional.get();
-            }
-        } catch (ReadFailedException e) {
-            throw new NoDatamodelFindException(e.getMessage());
-        }
-        return result;
-    }
-
     private <T extends DataObject> void putTree(final InstanceIdentifier<T> identifier,
                                                 final T tree) throws DataTreeCommitException {
         final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
@@ -631,7 +433,7 @@ public class CommonUtils {
         try {
             writeTransaction.submit().checkedGet();
         } catch (TransactionCommitFailedException e) {
-            throw new DataTreeCommitException(e.getMessage());
+            throw new DataTreeCommitException(e);
         }
     }
 
@@ -642,7 +444,7 @@ public class CommonUtils {
         try {
             writeTransaction.submit().checkedGet();
         } catch (TransactionCommitFailedException e) {
-            throw new DataTreeCommitException(e.getMessage());
+            throw new DataTreeCommitException(e);
         }
     }
 
