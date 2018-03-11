@@ -15,7 +15,7 @@ public class RemoveDelayconfigException extends Exception {
 
     private static final String ERROR_MESSAGE = "Error when try to remove delay configs: ";
 
-    public RemoveDelayconfigException(String message) {
-        super(ERROR_MESSAGE + message);
+    public RemoveDelayconfigException(final Exception exception) {
+        super(ERROR_MESSAGE + exception.getCause().getMessage());
     }
 }

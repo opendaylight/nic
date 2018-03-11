@@ -15,7 +15,7 @@ public class RemoveDataflowException extends Exception {
 
     private static final String ERROR_MESSAGE = "Error when try to remove dataflow: ";
 
-    public RemoveDataflowException(String message) {
-        super(ERROR_MESSAGE + message);
+    public RemoveDataflowException(final Exception exception) {
+        super(ERROR_MESSAGE + exception.getCause().getMessage());
     }
 }

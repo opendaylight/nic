@@ -13,6 +13,8 @@ import org.opendaylight.nic.of.renderer.api.Observer;
 import org.opendaylight.nic.of.renderer.api.Subject;
 import org.opendaylight.nic.of.renderer.exception.DataflowCreationException;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
+import org.opendaylight.nic.of.renderer.listener.NetworkEvents;
+import org.opendaylight.nic.of.renderer.listener.NetworkEventsService;
 import org.opendaylight.nic.of.renderer.strategy.ActionStrategy;
 import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
@@ -57,6 +59,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private OFRuleWithMeterManager ofRuleWithMeterManager;
     private Subject topic;
     private IdManagerService idManagerService;
+    final NetworkEventsService networkEventsService;
 
 
     public OFRendererFlowManagerProvider(final DataBroker dataBroker,
@@ -65,21 +68,26 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
         this.dataBroker = dataBroker;
         this.pipelineManager = pipelineManager;
         this.idManagerService = idManagerService;
+        this.networkEventsService = new NetworkEvents(dataBroker);
     }
 
     @Override
     public void start() {
         LOG.info("OF Renderer Provider Session Initiated");
+        networkEventsService.start();
         intentFlowManager = new IntentFlowManager(dataBroker, pipelineManager);
-        arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager);
-        lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager);
+        arpFlowManager = new ArpFlowManager(dataBroker, pipelineManager, networkEventsService);
+        lldpFlowManager = new LldpFlowManager(dataBroker, pipelineManager, networkEventsService);
         this.ofRuleWithMeterManager = new OFRuleWithMeterManager(dataBroker, idManagerService);
+
+        arpFlowManager.start();
+        lldpFlowManager.start();
     }
 
     @Override
     public void pushIntentFlow(final Intent intent, final FlowAction flowAction) {
         // TODO: Extend to support other actions
-        LOG.info("\n### Intent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
+        LOG.info("\nIntent: {}, FlowAction: {}", intent.toString(), flowAction.getValue());
 
         // Creates QoS configuration and stores profile in the Data Store.
         if (intent.getQosConfig() != null) {
@@ -146,7 +154,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
                 }
             }
         } catch (ExecutionException e) {
-            throw new PushDataflowException(e.getMessage());
+            throw new PushDataflowException(e);
         }
         return result;
     }
@@ -192,7 +200,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
             final Future<RpcResult<Void>> releaseResult = ofRuleWithMeterManager.removeMeter(meterId, dataflowId);
             releaseResult.get(5, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            throw new PushDataflowException(e.getMessage());
+            throw new PushDataflowException(e);
         }
     }
 
@@ -214,6 +222,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     public void stop() {
         try {
             close();
+            networkEventsService.close();
         } catch (Exception e) {
             LOG.error(e.getMessage());
         }
