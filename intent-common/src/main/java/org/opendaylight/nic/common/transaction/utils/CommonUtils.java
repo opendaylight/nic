@@ -23,6 +23,7 @@ import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
 import org.opendaylight.controller.md.sal.common.api.data.TransactionCommitFailedException;
 import org.opendaylight.nic.bgp.utils.Utils;
+import org.opendaylight.nic.common.transaction.exception.DataTreeCommitException;
 import org.opendaylight.nic.common.transaction.exception.RemoveDataflowException;
 import org.opendaylight.nic.common.transaction.exception.RemoveDelayconfigException;
 import org.opendaylight.nic.utils.IntentUtils;
@@ -63,6 +64,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.conf
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.DelayConfigsBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfig;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.delay.config.rev170327.delay.configs.DelayConfigKey;
+import org.opendaylight.yangtools.yang.binding.DataObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,12 +72,17 @@ import org.slf4j.LoggerFactory;
 public class CommonUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(CommonUtils.class);
-    private final InstanceIdentifier<Dataflows> DATAFLOW_IID = InstanceIdentifier.create(Dataflows.class);
-    private final InstanceIdentifier<DelayConfigs> DELAY_CONFIGS_IID = InstanceIdentifier.create(DelayConfigs.class);
-    private final InstanceIdentifier<EthernetServices> ETHERNET_SERVICES_IID = InstanceIdentifier.create(EthernetServices.class);
-    private final InstanceIdentifier<RouterGroups> ROUTER_GROUPS_IID = InstanceIdentifier.create(RouterGroups.class);
-    private final InstanceIdentifier<RouterInfos> ROUTER_INFO_IID = InstanceIdentifier.create(RouterInfos.class);
+    private static final InstanceIdentifier<Dataflows> DATAFLOW_IID = InstanceIdentifier.create(Dataflows.class);
+    private static final InstanceIdentifier<DelayConfigs> DELAY_CONFIGSIID = InstanceIdentifier
+            .create(DelayConfigs.class);
+    private static final InstanceIdentifier<EthernetServices> ETHERNET_SERVICES_IID = InstanceIdentifier
+            .create(EthernetServices.class);
+    private static final InstanceIdentifier<RouterInfos> ROUTER_INFO_IID = InstanceIdentifier
+            .create(RouterInfos.class);
+    private static final InstanceIdentifier<RouterGroups> ROUTER_GROUPS_IID = InstanceIdentifier
+            .create(RouterGroups.class);
     private final DataBroker dataBroker;
+
 
     public CommonUtils(DataBroker dataBroker) {
         this.dataBroker = dataBroker;
@@ -93,7 +100,7 @@ public class CommonUtils {
             } else {
                 LOG.debug("Intent tree was empty!");
             }
-        } catch (Exception e) {
+        } catch (ReadFailedException e) {
             LOG.error("ListIntents: failed: {}", e.getMessage(), e);
         }
         LOG.debug("ListIntentsConfiguration: list of intents retrieved successfully");
@@ -112,7 +119,7 @@ public class CommonUtils {
             } else {
                 LOG.debug("\nIntentLimiter tree was empty!");
             }
-        } catch (Exception e) {
+        } catch (ReadFailedException e) {
             LOG.error("\nListIntents: failed: {}", e.getMessage(), e);
         }
         LOG.info("\nListIntentsConfiguration: list of intents retrieved successfully");
@@ -141,7 +148,7 @@ public class CommonUtils {
             } else {
                 LOG.error("\nIntentISPPrefixes was empty!");
             }
-        } catch (Exception e) {
+        } catch (ReadFailedException e) {
             LOG.error("\nList IntentIspPrefixes failed: {}", e.getMessage());
         }
         return listOfIntents;
@@ -187,7 +194,7 @@ public class CommonUtils {
         try {
             ReadOnlyTransaction read = dataBroker.newReadOnlyTransaction();
             Optional<DelayConfigs> configs = read.read(LogicalDatastoreType.CONFIGURATION,
-                    DELAY_CONFIGS_IID).checkedGet();
+                    DELAY_CONFIGSIID).checkedGet();
             if (configs.isPresent()) {
                 result = configs.get();
             }
@@ -231,14 +238,15 @@ public class CommonUtils {
         try {
             checkedFuture.checkedGet();
         } catch (TransactionCommitFailedException e) {
-            LOG.error(e.getMessage());
-            throw new PushDataflowException(e.getMessage());
+            LOG.error(e.getCause().getMessage());
+            throw new PushDataflowException(e);
         }
     }
 
     public void saveDelayConfig(final DelayConfig delayConfig) {
         final DelayConfigs delayConfigs = retrieveDelayConfigs();
-        final DelayConfigsBuilder delayConfigsBuilder = delayConfigs != null ? new DelayConfigsBuilder(delayConfigs) : new DelayConfigsBuilder();
+        final DelayConfigsBuilder delayConfigsBuilder = delayConfigs != null
+                ? new DelayConfigsBuilder(delayConfigs) : new DelayConfigsBuilder();
         final List<DelayConfig> delayConfigList = delayConfigsBuilder.getDelayConfig();
         if (null != delayConfigList) {
             delayConfigList.add(delayConfig);
@@ -247,33 +255,33 @@ public class CommonUtils {
             delayConfigsBuilder.setDelayConfig(Lists.newArrayList(delayConfig));
         }
         final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
-        writeTransaction.put(LogicalDatastoreType.CONFIGURATION, DELAY_CONFIGS_IID, delayConfigsBuilder.build());
+        writeTransaction.put(LogicalDatastoreType.CONFIGURATION, DELAY_CONFIGSIID, delayConfigsBuilder.build());
         writeTransaction.submit();
     }
 
     public void removeDelayConfig(final String delayConfigId) throws RemoveDelayconfigException {
         final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
-        final InstanceIdentifier<DelayConfig> identifier = InstanceIdentifier.create(DelayConfigs.class).
-                child(DelayConfig.class, new DelayConfigKey(Uuid.getDefaultInstance(delayConfigId)));
+        final InstanceIdentifier<DelayConfig> identifier = InstanceIdentifier.create(DelayConfigs.class)
+                .child(DelayConfig.class, new DelayConfigKey(Uuid.getDefaultInstance(delayConfigId)));
         writeTransaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
         CheckedFuture<Void, TransactionCommitFailedException> checkedFuture = writeTransaction.submit();
         try {
             checkedFuture.checkedGet();
         } catch (TransactionCommitFailedException e) {
-            throw new RemoveDelayconfigException(e.getMessage());
+            throw new RemoveDelayconfigException(e);
         }
     }
 
     public void removeDataFlow(final String dataflowId) throws RemoveDataflowException {
-        final InstanceIdentifier<Dataflow> identifier = InstanceIdentifier.create(Dataflows.class).
-                child(Dataflow.class, new DataflowKey(Uuid.getDefaultInstance(dataflowId)));
+        final InstanceIdentifier<Dataflow> identifier = InstanceIdentifier.create(Dataflows.class)
+                .child(Dataflow.class, new DataflowKey(Uuid.getDefaultInstance(dataflowId)));
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
         CheckedFuture<Void, TransactionCommitFailedException> checkedFuture = transaction.submit();
         try {
             checkedFuture.checkedGet();
         } catch (TransactionCommitFailedException e) {
-            throw new RemoveDataflowException(e.getMessage());
+            throw new RemoveDataflowException(e);
         }
     }
 
@@ -336,7 +344,7 @@ public class CommonUtils {
                 result = bgpDataflowsBuilder.build();
             }
         } catch (ReadFailedException e) {
-            LOG.error("\nError when try to retrieve BGP DataFlow Tree: {}",e.getMessage());
+            LOG.error("\nError when try to retrieve BGP DataFlow Tree: {}", e.getMessage());
         }
         return result;
     }
@@ -365,7 +373,7 @@ public class CommonUtils {
                 result = ethernetServiceOptional.get();
             }
         } catch (ReadFailedException e) {
-            LOG.error("\nError when try to retrieve Ethernet Services by Name {}",e.getMessage());
+            LOG.error("\nError when try to retrieve Ethernet Services by Name {}", e.getMessage());
         }
         return result;
     }
@@ -416,6 +424,28 @@ public class CommonUtils {
             LOG.error(e.getMessage());
         }
         return result;
+    }
+
+    private <T extends DataObject> void putTree(final InstanceIdentifier<T> identifier,
+                                                final T tree) throws DataTreeCommitException {
+        final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
+        writeTransaction.put(LogicalDatastoreType.CONFIGURATION, identifier, tree);
+        try {
+            writeTransaction.submit().checkedGet();
+        } catch (TransactionCommitFailedException e) {
+            throw new DataTreeCommitException(e);
+        }
+    }
+
+    private <T extends DataObject> void mergeTree(final InstanceIdentifier<T> identifier,
+                                                  final T tree) throws DataTreeCommitException {
+        final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
+        writeTransaction.merge(LogicalDatastoreType.CONFIGURATION, identifier, tree);
+        try {
+            writeTransaction.submit().checkedGet();
+        } catch (TransactionCommitFailedException e) {
+            throw new DataTreeCommitException(e);
+        }
     }
 
     public static void waitUnlock() {

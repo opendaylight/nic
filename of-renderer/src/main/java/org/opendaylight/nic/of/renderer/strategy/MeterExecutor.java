@@ -108,6 +108,7 @@ public class MeterExecutor {
             final InstanceIdentifier<Meter> instanceIdentifier = retrieveMeterIdentifier(meterId,
                     entry.getKey());
             final boolean result = mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, instanceIdentifier, meter);
+            LOG.debug("\nMeter creation finished with ");
             metersCreationResults.add(result);
         }
         //If only one meter was created with success, the result is true.

@@ -66,7 +66,6 @@ public class OFRendererServiceImpl implements OFRendererService {
             throw new RendererServiceException(e.getMessage());
         }
     }
-
     private MeterId createMeter(final String id, final Long bandwidtLimit) throws RendererServiceException {
         try {
             return ofRendererFlowService.createMeter(id, bandwidtLimit);

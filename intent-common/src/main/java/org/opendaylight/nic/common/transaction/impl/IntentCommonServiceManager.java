@@ -45,11 +45,12 @@ public class IntentCommonServiceManager implements IntentCommonService {
     @Override
     public void start() {
         LOG.info("\nIntent Common session Initiated.");
-        //TODO: Apply all configuration at the startup
+        intentActionFactory.start();
     }
 
     @Override
     public void resolveAndApply(Object intent) {
+        LOG.info("\nIntent added: {}", intent.toString());
         executeAction(intent, (intentId, service) -> {
             if (intentId != null && service != null) {
                 service.startTransaction(intentId, EventType.INTENT_CREATED);
@@ -59,6 +60,7 @@ public class IntentCommonServiceManager implements IntentCommonService {
 
     @Override
     public void resolveAndRemove(Object intent) {
+        LOG.info("\nIntent removed: {}", intent.toString());
         executeAction(intent, (intentId, service) -> {
             if (intentId != null && service != null) {
                 service.startTransaction(intentId, EventType.INTENT_REMOVED);
@@ -92,6 +94,6 @@ public class IntentCommonServiceManager implements IntentCommonService {
 
     @Override
     public void stop() {
-        //TODO: Make a cleanup at the shutdown
+        intentActionFactory.stop();
     }
 }

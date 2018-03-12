@@ -8,14 +8,14 @@
 
 package org.opendaylight.nic.common.transaction.exception;
 
+import java.util.concurrent.ExecutionException;
+
 /**
- * Created by yrineu on 28/03/17.
+ * Created by yrineu on 18/08/17.
  */
-public class RemoveDataflowException extends Exception {
+public class NoDatamodelFindException extends ExecutionException {
 
-    private static final String ERROR_MESSAGE = "Error when try to remove dataflow: ";
-
-    public RemoveDataflowException(final Exception exception) {
-        super(ERROR_MESSAGE + exception.getCause().getMessage());
+    public NoDatamodelFindException(final String message) {
+        super(message);
     }
 }
