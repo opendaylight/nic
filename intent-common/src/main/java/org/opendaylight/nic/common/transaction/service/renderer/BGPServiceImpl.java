@@ -33,8 +33,8 @@ public class BGPServiceImpl implements BGPService {
     }
 
     @Override
-    public void evaluateAction(String id) throws RendererServiceException {
-        final IntentIspPrefix intentIspPrefix = commonUtils.retrieveIntentIspPrefix(id);
+    public void evaluateAction(String intentId) throws RendererServiceException {
+        final IntentIspPrefix intentIspPrefix = commonUtils.retrieveIntentIspPrefix(intentId);
         try {
             final Map<Ipv4Address, BgpDataflow> bgpDataFlowMap = commonUtils.createBGPDataFlow(intentIspPrefix);
             final BgpDataflow bgpDataFlow = bgpDataFlowMap.entrySet().iterator().next().getValue();
@@ -58,6 +58,6 @@ public class BGPServiceImpl implements BGPService {
 
     @Override
     public void execute(BgpDataflow dataflow) {
-//        rendererService.advertiseRoute(dataflow);
+        //DO_NOTHING
     }
 }

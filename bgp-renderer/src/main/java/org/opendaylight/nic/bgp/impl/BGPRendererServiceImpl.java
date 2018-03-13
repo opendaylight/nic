@@ -49,6 +49,11 @@ public class BGPRendererServiceImpl implements BGPRendererService {
         bgpPrefixRESTServices.post(bgpDataflow);
     }
 
+    @Override
+    public void remoteRoute(BgpDataflow bgpDatalow) {
+        //TODO: Provide removeRoute implementation
+    }
+
     private InstanceIdentifier<Ipv4Routes> retrieveIpv4Identifier() {
         final ApplicationRibKey applicationRibKey = new ApplicationRibKey(new ApplicationRibId(APPLICATION_RIB_ID));
         final TablesKey tablesKey = new TablesKey(Ipv4AddressFamily.class, UnicastSubsequentAddressFamily.class);

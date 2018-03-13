@@ -51,11 +51,11 @@ public class OFRendererServiceImpl implements OFRendererService {
     }
 
     @Override
-    public synchronized void evaluateAction(String id) throws RendererServiceException {
+    public synchronized void evaluateAction(String intentId) throws RendererServiceException {
         try {
-            final IntentLimiter intentLimiter = commonUtils.retrieveIntentLimiter(id);
+            final IntentLimiter intentLimiter = commonUtils.retrieveIntentLimiter(intentId);
             final Long bandwidtLimit = intentLimiter.getBandwidthLimit();
-            final MeterId meterId = createMeter(id, bandwidtLimit);
+            final MeterId meterId = createMeter(intentId, bandwidtLimit);
             final Dataflow dataflow = commonUtils.createFlowData(intentLimiter, meterId);
 
             sendFlows(dataflow);

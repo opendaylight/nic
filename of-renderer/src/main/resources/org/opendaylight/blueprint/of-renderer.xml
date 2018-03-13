@@ -14,7 +14,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                availability="mandatory"
                activation="eager"/>
     <reference id="pipelineManager"
-               interface="org.opendaylight.nic.pipeline_manager.PipelineManager"
+               interface="org.opendaylight.nic.of.renderer.pipeline.PipelineManager"
                availability="mandatory"
                activation="eager"/>
 
