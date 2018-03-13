@@ -42,18 +42,35 @@ public class BGPDataFlowListenerServiceImpl implements BGPDataFlowListenerServic
     public void start() {
         LOG.info("\nBGP Session Initiated");
         final DataTreeIdentifier dataTreeIdentifier = new DataTreeIdentifier(LogicalDatastoreType.CONFIGURATION,
-                                                                             Utils.BGP_DATAFLOW_IDENTIFIER);
+                Utils.BGP_DATAFLOW_IDENTIFIER);
         this.dataflowListenerRegistration = dataBroker.registerDataTreeChangeListener(dataTreeIdentifier, this);
     }
 
     @Override
     public void onDataTreeChanged(@Nonnull Collection<DataTreeModification<BgpDataflows>> collection) {
         LOG.info("\nBGP Dataflow received.");
-        collection.iterator().forEachRemaining(consumer -> {
-            final DataObjectModification<BgpDataflows> objectModification = consumer.getRootNode();
-            final BgpDataflows bgpDataflowTree = objectModification.getDataAfter();
-            bgpDataflowTree.getBgpDataflow().forEach(bgpDataflow -> bgpRendererService.advertiseRoute(bgpDataflow));
-        });
+        collection.iterator().forEachRemaining(this::handleTreeChangeEvent);
+    }
+
+    //TODO: Controll those calls using a threadpool.
+    private void handleTreeChangeEvent(final DataTreeModification<BgpDataflows> bgpDataFlows) {
+        final DataObjectModification<BgpDataflows> modification = bgpDataFlows.getRootNode();
+        BgpDataflows removedDataflows = modification.getDataBefore();
+        BgpDataflows addedDataflows = modification.getDataAfter();
+        switch (modification.getModificationType()) {
+            case WRITE:
+                addedDataflows.getBgpDataflow().forEach(bgpRendererService::advertiseRoute);
+                break;
+            case SUBTREE_MODIFIED:
+                removedDataflows.getBgpDataflow().forEach(bgpRendererService::remoteRoute);
+                addedDataflows.getBgpDataflow().forEach(bgpRendererService::advertiseRoute);
+                break;
+            case DELETE:
+                removedDataflows.getBgpDataflow().forEach(bgpRendererService::remoteRoute);
+                break;
+            default:
+                LOG.warn("\nNo actions for this BGP Dataflow change: {}", bgpDataFlows.getRootPath().toString());
+        }
     }
 
     @Override

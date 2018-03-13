@@ -19,10 +19,11 @@ public interface RendererService<T extends DataObject>{
 
     /**
      * Evaluate an action for Intent
-     * @param id the {@link org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentLimiter} ID
+     * This method will create the data flow defined at Renderer API
+     * @param intentId the {@link org.opendaylight.yang.gen.v1.urn.opendaylight.intent.limiter.rev170310.IntentLimiter} ID
      * @throws RendererServiceException in case of failure when try to apply that Intent
      */
-    void evaluateAction(String id) throws RendererServiceException;
+    void evaluateAction(String intentId) throws RendererServiceException;
 
     /**
      * Evaluate rollback in case of failure

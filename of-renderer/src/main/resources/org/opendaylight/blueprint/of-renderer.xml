@@ -13,10 +13,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                interface="org.opendaylight.controller.md.sal.binding.api.DataBroker"
                availability="mandatory"
                activation="eager"/>
-    <reference id="pipelineManager"
-               interface="org.opendaylight.nic.pipeline_manager.PipelineManager"
-               availability="mandatory"
-               activation="eager"/>
 
     <odl:rpc-service id="idManagerService"
                      interface="org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService"/>
@@ -26,6 +22,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
           activation="eager"
           init-method="start" destroy-method="stop">
         <argument ref="idManagerService"/>
+    </bean>
+
+    <bean id="pipelineManager"
+          class="org.opendaylight.nic.of.renderer.pipeline.PipelineManagerProviderImpl"
+          activation="eager"
+          init-method="start" destroy-method="stop">
+        <argument ref="dataBroker"/>
     </bean>
 
     <bean id="ofRendererFlowService"

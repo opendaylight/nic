@@ -5,7 +5,7 @@
  * terms of the Eclipse Public License v1.0 which accompanies this distribution,
  * and is available at http://www.eclipse.org/legal/epl-v10.html
  */
-package org.opendaylight.nic.pipeline_manager;
+package org.opendaylight.nic.of.renderer.pipeline;
 
 import com.google.common.base.Optional;
 import java.util.Collection;
@@ -58,12 +58,16 @@ import org.slf4j.LoggerFactory;
 public class PipelineManagerProviderImpl implements DataTreeChangeListener<Node>, PipelineManager {
     private static final Logger LOG = LoggerFactory.getLogger(PipelineManagerProviderImpl.class);
     private final DataBroker dataBroker;
-    private final ListenerRegistration<?> nodeListener;
+    private ListenerRegistration<?> nodeListener;
 
 
     public PipelineManagerProviderImpl(final DataBroker dataBroker) {
         LOG.info("\nPipeline Manager service Initiated");
         this.dataBroker = dataBroker;
+    }
+
+    @Override
+    public void start() {
         final InstanceIdentifier<Node> nodeIdentifier = InstanceIdentifier.create(Nodes.class).child(Node.class);
         nodeListener = dataBroker.registerDataTreeChangeListener(new DataTreeIdentifier<>(
                 LogicalDatastoreType.OPERATIONAL, nodeIdentifier), this);

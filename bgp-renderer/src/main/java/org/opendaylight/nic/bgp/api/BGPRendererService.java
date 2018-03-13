@@ -21,6 +21,11 @@ public interface BGPRendererService {
     void advertiseRoute(BgpDataflow bgpDataflow);
 
     /**
+     * Remove a given route advertised before  @param bgpDatalow the {@link BgpDataflow}.
+     */
+    void remoteRoute(BgpDataflow bgpDatalow);
+
+    /**
      * Stop all BGP renderer services.
      */
     void stop();

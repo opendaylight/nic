@@ -18,7 +18,7 @@ import org.opendaylight.nic.of.renderer.listener.NetworkEventsService;
 import org.opendaylight.nic.of.renderer.strategy.ActionStrategy;
 import org.opendaylight.nic.of.renderer.strategy.DefaultExecutor;
 import org.opendaylight.nic.of.renderer.utils.TopologyUtils;
-import org.opendaylight.nic.pipeline_manager.PipelineManager;
+import org.opendaylight.nic.of.renderer.pipeline.PipelineManager;
 import org.opendaylight.nic.utils.FlowAction;
 import org.opendaylight.nic.utils.IntentUtils;
 import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
