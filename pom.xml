@@ -56,8 +56,19 @@
         <module>intent-statemachine</module>
         <module>features</module>
         <module>artifacts</module>
-        <module>distribution</module>
         <module>pipeline-manager</module>
         <module>mapped-objects-model</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>karaf</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>distribution</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>
