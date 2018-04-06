@@ -52,13 +52,24 @@
         <module>of-renderer</module>
         <module>intent-statemachine</module>
         <module>features-aggregator</module>
-        <module>karaf</module>
         <module>pipeline-manager</module>
         <module>bgp-renderer</module>
         <module>renderer-api</module>
         <module>pub-sub-manager</module>
         <module>network-mapping</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>karaf</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>karaf</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <build>
         <pluginManagement>
