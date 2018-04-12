@@ -24,7 +24,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
   <properties>
     <jung2.version>2.0.1</jung2.version>
-    <feature.vtn-manager.version>0.6.4-SNAPSHOT</feature.vtn-manager.version>
     <nemo.version>1.2.4-SNAPSHOT</nemo.version>
     <groupbasedpolicy.version>0.5.4-SNAPSHOT</groupbasedpolicy.version>
     <openflowplugin.version>0.4.4-SNAPSHOT</openflowplugin.version>

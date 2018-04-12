@@ -24,7 +24,6 @@
 
     <properties>
         <jung2.version>2.0.1</jung2.version>
-        <feature.vtn-manager.version>0.6.4-SNAPSHOT</feature.vtn-manager.version>
         <nemo.version>1.2.4-SNAPSHOT</nemo.version>
         <groupbasedpolicy.version>0.5.4-SNAPSHOT</groupbasedpolicy.version>
         <openflowplugin.version>0.4.4-SNAPSHOT</openflowplugin.version>
@@ -63,13 +62,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.opendaylight.vtn</groupId>
-            <artifactId>features-vtn-manager</artifactId>
-            <version>${feature.vtn-manager.version}</version>
-            <classifier>features</classifier>
-            <type>xml</type>
-        </dependency>
         <dependency>
             <groupId>org.opendaylight.nemo</groupId>
             <artifactId>nemo-features</artifactId>
@@ -139,11 +131,6 @@
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
             <artifactId>intent-compiler</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>vtn-renderer</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -222,13 +209,6 @@
         <dependency>
             <groupId>org.opendaylight.nic</groupId>
             <artifactId>intent-mapping-mdsal</artifactId>
-            <version>${project.version}</version>
-            <classifier>config</classifier>
-            <type>xml</type>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.nic</groupId>
-            <artifactId>vtn-renderer</artifactId>
             <version>${project.version}</version>
             <classifier>config</classifier>
             <type>xml</type>

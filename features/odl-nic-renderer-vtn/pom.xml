@@ -17,14 +17,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <relativePath/>
   </parent>
 
-  <groupId>org.opendaylight.nic</groupId>
-  <artifactId>odl-nic-renderer-vtn</artifactId>
-  <version>1.3.4-SNAPSHOT</version>
-  <packaging>feature</packaging>
-
-  <properties>
-    <feature.vtn-manager.version>0.6.4-SNAPSHOT</feature.vtn-manager.version>
-  </properties>
   <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
 <dependencies>
@@ -34,18 +26,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <version>${project.version}</version>
     <type>xml</type>
     <classifier>features</classifier>
-  </dependency>
-  <dependency>
-    <groupId>org.opendaylight.vtn</groupId>
-    <artifactId>odl-vtn-manager</artifactId>
-    <version>${feature.vtn-manager.version}</version>
-    <type>xml</type>
-    <classifier>features</classifier>
-  </dependency>
-  <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>vtn-renderer</artifactId>
-    <version>${project.version}</version>
   </dependency>
 </dependencies>
 </project>

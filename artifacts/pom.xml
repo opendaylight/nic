@@ -57,13 +57,6 @@
    <!--<type>xml</type>-->
    <!--<version>${project.version}</version>-->
    <!--</dependency>-->
-   <dependency>
-    <groupId>${project.groupId}</groupId>
-    <artifactId>vtn-renderer</artifactId>
-    <classifier>features</classifier>
-    <type>xml</type>
-    <version>${project.version}</version>
-   </dependency>
    <!--<dependency>-->
    <!--<groupId>${project.groupId}</groupId>-->
    <!--<artifactId>nemo-renderer</artifactId>-->
