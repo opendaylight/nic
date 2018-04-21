@@ -13,28 +13,28 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <parent>
     <groupId>org.opendaylight.odlparent</groupId>
     <artifactId>single-feature-parent</artifactId>
-    <version>1.8.4-SNAPSHOT</version>
+    <version>1.8.4-Carbon</version>
     <relativePath/>
   </parent>
 
   <groupId>org.opendaylight.nic</groupId>
   <artifactId>odl-nic-core-mdsal</artifactId>
-  <version>1.3.4-SNAPSHOT</version>
+  <version>1.3.4-Carbon</version>
   <packaging>feature</packaging>
 
   <properties>
     <jung2.version>2.0.1</jung2.version>
-    <nemo.version>1.2.4-SNAPSHOT</nemo.version>
-    <groupbasedpolicy.version>0.5.4-SNAPSHOT</groupbasedpolicy.version>
-    <openflowplugin.version>0.4.4-SNAPSHOT</openflowplugin.version>
-    <mdsal.version>1.5.4-SNAPSHOT</mdsal.version>
-    <restconf.version>1.5.4-SNAPSHOT</restconf.version>
-    <yangtools.version>1.1.4-SNAPSHOT</yangtools.version>
+    <nemo.version>1.2.4-Carbon</nemo.version>
+    <groupbasedpolicy.version>0.5.4-Carbon</groupbasedpolicy.version>
+    <openflowplugin.version>0.4.4-Carbon</openflowplugin.version>
+    <mdsal.version>1.5.4-Carbon</mdsal.version>
+    <restconf.version>1.5.4-Carbon</restconf.version>
+    <yangtools.version>1.1.4-Carbon</yangtools.version>
     <karaf.cellar.version>3.0.3</karaf.cellar.version>
     <hazelcast.version>3.4.2</hazelcast.version>
-    <neutron.version>0.8.4-SNAPSHOT</neutron.version>
-    <odl.ovsdb.version>1.4.4-SNAPSHOT</odl.ovsdb.version>
-    <sfc.version>0.5.4-SNAPSHOT</sfc.version>
+    <neutron.version>0.8.4-Carbon</neutron.version>
+    <odl.ovsdb.version>1.4.4-Carbon</odl.ovsdb.version>
+    <sfc.version>0.5.4-Carbon</sfc.version>
   </properties>
 
   <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
@@ -78,7 +78,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
   <dependency>
     <groupId>org.opendaylight.controller.model</groupId>
     <artifactId>model-inventory</artifactId>
-    <version>1.5.4-SNAPSHOT</version>
+    <version>1.5.4-Carbon</version>
   </dependency>
 
   <!--Project specific dependencies-->
