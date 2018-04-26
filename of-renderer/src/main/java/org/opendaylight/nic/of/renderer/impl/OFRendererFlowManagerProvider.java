@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import java.util.Objects;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.sal.binding.api.NotificationProviderService;
 import org.opendaylight.nic.mapping.api.IntentMappingService;
@@ -200,25 +201,25 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     private boolean checkQosConstraint(final Intent intent,
                                        final Action actionContainer,
                                        final List<String> endPointGroups) {
+        boolean result = false;
         //Check for constrain name in the intent.
-        final org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
+        if (Objects.nonNull(intent.getConstraints()) && !intent.getConstraints().isEmpty()) {
+            final org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.constraints.Constraints constraintContainer
                     = intent.getConstraints().get(0).getConstraints();
-        if (!constraintContainer.getImplementedInterface().isAssignableFrom(QosConstraint.class)) {
-            return false;
+            if (constraintContainer.getImplementedInterface().isAssignableFrom(QosConstraint.class)) {
+                final String qosName = ((QosConstraint) constraintContainer).getQosConstraint().getQosName();
+                LOG.info("QosConstraint is set to: {}", qosName);
+                if (qosName != null) {
+                    //Set the values to QosConstraintManager
+                    qosConstraintManager.setQosName(qosName);
+                    qosConstraintManager.setEndPointGroups(endPointGroups);
+                    qosConstraintManager.setAction(actionContainer);
+                    qosConstraintManager.setConstraint(constraintContainer);
+                    result = true;
+                }
+            }
         }
-        final String qosName = ((QosConstraint)constraintContainer).getQosConstraint().getQosName();
-        LOG.info("QosConstraint is set to: {}", qosName);
-        if (qosName != null) {
-            //Set the values to QosConstraintManager
-            qosConstraintManager.setQosName(qosName);
-            qosConstraintManager.setEndPointGroups(endPointGroups);
-            qosConstraintManager.setAction(actionContainer);
-            qosConstraintManager.setConstraint(constraintContainer);
-        } else {
-            LOG.trace("QoS Name is not set");
-            return false;
-        }
-        return true;
+        return result;
     }
 
     @Override
