@@ -11,14 +11,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <parent>
         <groupId>org.opendaylight.mdsal</groupId>
         <artifactId>binding-parent</artifactId>
-        <version>0.11.3-SNAPSHOT</version>
+        <version>0.11.3</version>
         <relativePath/>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>intent-common</artifactId>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.4.3</version>
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
@@ -28,7 +28,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <dependency>
                 <groupId>org.opendaylight.controller</groupId>
                 <artifactId>mdsal-artifacts</artifactId>
-                <version>1.6.3-SNAPSHOT</version>
+                <version>1.6.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -43,7 +43,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <dependency>
             <groupId>org.opendaylight.controller.model</groupId>
             <artifactId>model-inventory</artifactId>
-            <version>1.6.3-SNAPSHOT</version>
+            <version>1.6.3</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>

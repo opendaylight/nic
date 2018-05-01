@@ -19,7 +19,7 @@
 
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>features-nic</artifactId>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.4.3</version>
     <packaging>feature</packaging>
 
     <name>OpendayLight :: NIC :: ${project.artifactId}</name>

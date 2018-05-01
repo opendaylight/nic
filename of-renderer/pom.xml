@@ -11,25 +11,25 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <parent>
         <groupId>org.opendaylight.mdsal</groupId>
         <artifactId>binding-parent</artifactId>
-        <version>0.11.3-SNAPSHOT</version>
+        <version>0.11.3</version>
         <relativePath/>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>of-renderer</artifactId>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.4.3</version>
     <packaging>bundle</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
     <properties>
         <jung2.version>2.0.1</jung2.version>
-        <openflowplugin.version>0.5.3-SNAPSHOT</openflowplugin.version>
+        <openflowplugin.version>0.5.3</openflowplugin.version>
         <pitest.version>1.1.4</pitest.version>
-        <liblldp.version>0.13.3-SNAPSHOT</liblldp.version>
-        <sfc.version>0.6.3-SNAPSHOT</sfc.version>
-        <genius.version>0.3.3-SNAPSHOT</genius.version>
+        <liblldp.version>0.13.3</liblldp.version>
+        <sfc.version>0.6.3</sfc.version>
+        <genius.version>0.3.3</genius.version>
 
         <genius.groupId>org.opendaylight.genius</genius.groupId>
         <ofplugin.model.groupId>org.opendaylight.openflowplugin.model</ofplugin.model.groupId>
@@ -41,7 +41,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <dependency>
                 <groupId>org.opendaylight.controller</groupId>
                 <artifactId>mdsal-artifacts</artifactId>
-                <version>1.6.3-SNAPSHOT</version>
+                <version>1.6.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

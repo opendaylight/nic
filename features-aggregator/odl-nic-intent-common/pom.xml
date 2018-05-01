@@ -17,13 +17,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>odl-nic-intent-common</artifactId>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.4.3</version>
     <packaging>feature</packaging>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
     <properties>
-        <genius.version>0.3.3-SNAPSHOT</genius.version>
+        <genius.version>0.3.3</genius.version>
 
         <genius.groupId>org.opendaylight.genius</genius.groupId>
     </properties>
