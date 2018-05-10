@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.opendaylight.mdsal</groupId>
         <artifactId>binding-parent</artifactId>
-        <version>0.11.3-SNAPSHOT</version>
+        <version>0.11.4-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
     <groupId>org.opendaylight.nic</groupId>
     <artifactId>pub-sub-manager</artifactId>
     <packaging>bundle</packaging>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.4.4-SNAPSHOT</version>
 
     <name>OpenDaylight :: NIC :: ${project.artifactId}</name>
 
