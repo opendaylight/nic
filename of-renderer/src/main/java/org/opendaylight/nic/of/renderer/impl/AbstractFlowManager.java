@@ -103,9 +103,9 @@ public abstract class AbstractFlowManager {
     protected boolean writeDataTransaction(NodeId nodeId, FlowBuilder flowBuilder, FlowAction flowAction) {
         boolean result = false;
         final NodeBuilder nodeBuilder = new NodeBuilder();
-        final FlowKey flowKey = new FlowKey(flowBuilder.getKey());
+        final FlowKey flowKey = new FlowKey(flowBuilder.key());
         nodeBuilder.setId(nodeId);
-        nodeBuilder.setKey(new NodeKey(nodeBuilder.getId()));
+        nodeBuilder.withKey(new NodeKey(nodeBuilder.getId()));
 
         MdsalUtils mdsal = new MdsalUtils(dataBroker);
         if (!pipelineManager.setTableId(nodeId, flowBuilder)) {
@@ -114,7 +114,7 @@ public abstract class AbstractFlowManager {
         final TableKey tableKey = new TableKey(flowBuilder.getTableId());
 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
-                .child(Node.class, nodeBuilder.getKey())
+                .child(Node.class, nodeBuilder.key())
                 .augmentation(FlowCapableNode.class)
                 .child(Table.class, tableKey)
                 .child(Flow.class, flowKey)

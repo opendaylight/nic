@@ -10,9 +10,7 @@ module ethernet-service {
     namespace "urn:opendaylight:nic:network:mapping:ethernet:service";
     prefix "ethernet-service";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
     import ietf-inet-types { prefix "inet"; }
-    import router-info { prefix router-info; revision-date 2017-06-13; }
     import ethernet-service-types { prefix ethernet-service-types; revision-date 2017-06-14; }
     import router-info { prefix router-info; revision-date 2017-06-13; }
 
@@ -27,7 +25,7 @@ module ethernet-service {
     grouping ethernet-service {
 
         leaf router-group-id {
-            type types:uuid;
+            type string;
             mandatory true;
             description "Defines the group of routers used by this Ethernet Service.";
         }

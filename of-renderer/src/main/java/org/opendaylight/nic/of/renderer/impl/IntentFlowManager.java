@@ -105,7 +105,7 @@ public class IntentFlowManager extends AbstractFlowManager {
         final BigInteger cookieId = new BigInteger("20", RADIX);
 
         flowBuilder.setId(flowId);
-        flowBuilder.setKey(key);
+        flowBuilder.withKey(key);
         flowBuilder.setFlowName(flowName);
         flowBuilder.setCookie(new FlowCookie(cookieId));
         flowBuilder.setCookieMask(new FlowCookie(cookieId));

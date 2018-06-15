@@ -53,7 +53,7 @@ public class FlowUtils {
      */
     public static Action createSendToControllerAction(int order) {
         return new ActionBuilder().setOrder(order)
-            .setKey(new ActionKey(order))
+            .withKey(new ActionKey(order))
             .setAction(
                     new OutputActionCaseBuilder().setOutputAction(
                             new OutputActionBuilder().setMaxLength(0xffff)
@@ -69,7 +69,7 @@ public class FlowUtils {
      */
     public static Action createOutputNormal(int order) {
         return new ActionBuilder().setOrder(order)
-                .setKey(new ActionKey(order))
+                .withKey(new ActionKey(order))
                 .setAction(
                         new OutputActionCaseBuilder().setOutputAction(
                                 new OutputActionBuilder().setMaxLength(0xffff)
@@ -101,7 +101,7 @@ public class FlowUtils {
         SetField setField = setFieldBuilder.build();
         org.opendaylight.yang.gen.v1.urn.opendaylight.action.types.rev131112.action.Action acction = new SetFieldCaseBuilder().
                 setSetField(setField).build();
-        ab.setOrder(order).setKey(new ActionKey(order)).setAction(acction);
+        ab.setOrder(order).withKey(new ActionKey(order)).setAction(acction);
         action = ab.build();
         return action;
     }

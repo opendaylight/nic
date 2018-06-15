@@ -10,7 +10,6 @@ module router-info {
     namespace "urn:opendaylight:nic:network:mapping:router:info";
     prefix "router-info";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
     import ietf-inet-types { prefix "inet"; }
 
     revision "2017-06-13" {
@@ -19,8 +18,8 @@ module router-info {
 
     grouping router-info {
 
-        leaf id {
-            type types:uuid;
+        leaf router-info-id {
+            type string;
             mandatory true;
             description "Uniquely identifier for Router Info.";
         }
@@ -80,7 +79,7 @@ module router-info {
 
     container router-infos {
         list router-info {
-            key "id";
+            key "router-info-id";
             uses router-info;
         }
     }

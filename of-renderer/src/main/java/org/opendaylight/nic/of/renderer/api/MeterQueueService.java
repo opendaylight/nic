@@ -8,10 +8,11 @@
 
 package org.opendaylight.nic.of.renderer.api;
 
-import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
-import org.opendaylight.yangtools.yang.common.RpcResult;
-
+import com.google.common.util.concurrent.ListenableFuture;
 import java.util.concurrent.Future;
+import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.ReleaseIdOutput;
+import org.opendaylight.yangtools.yang.common.RpcResult;
 
 /**
  * Service used to allocate or release a {@link org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.MeterId}
@@ -39,7 +40,7 @@ public interface MeterQueueService {
      * @param id
      * @return the {@link Future} as response
      */
-    Future<RpcResult<Void>> releaseMeterId(String id);
+    ListenableFuture<RpcResult<ReleaseIdOutput>> releaseMeterId(String id);
 
     /**
      * Stop Meter Queue services

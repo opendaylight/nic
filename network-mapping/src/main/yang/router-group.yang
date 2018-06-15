@@ -10,11 +10,9 @@ module router-group {
     namespace "urn:opendaylight:nic:network:mapping:router:group";
     prefix "router-group";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
-
     grouping router-group {
-        leaf id {
-            type types:uuid;
+        leaf router-group-id {
+            type string;
             mandatory true;
             description "Uniquely identifier for Router Group.";
         }
@@ -22,14 +20,14 @@ module router-group {
         list routers-id {
             key "router-id";
             leaf router-id {
-                type types:uuid;
+                type string;
             }
         }
     }
 
     container router-groups {
         list router-group {
-            key "id";
+            key "router-group-id";
             uses router-group;
         }
     }

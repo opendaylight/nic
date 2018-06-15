@@ -80,7 +80,7 @@ public class FlowUtilsTest {
 
         when(ab.setOrder(any(Integer.class))).thenReturn(ab);
         PowerMockito.whenNew(ActionKey.class).withAnyArguments().thenReturn(mock(ActionKey.class));
-        when(ab.setKey(any(ActionKey.class))).thenReturn(ab);
+        when(ab.withKey(any(ActionKey.class))).thenReturn(ab);
 
         SetFieldCaseBuilder setFieldCaseBuilder = mock(SetFieldCaseBuilder.class);
         PowerMockito.whenNew(SetFieldCaseBuilder.class).withNoArguments().thenReturn(setFieldCaseBuilder);

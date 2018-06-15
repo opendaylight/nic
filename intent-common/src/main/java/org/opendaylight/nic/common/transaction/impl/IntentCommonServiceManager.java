@@ -73,13 +73,13 @@ public class IntentCommonServiceManager implements IntentCommonService {
         IntentLifeCycleService lifeCycleService = null;
         if (IntentLimiter.class.isInstance(intent)) {
             final IntentLimiter intentLimiter = (IntentLimiter) intent;
-            intentId = intentLimiter.getId().getValue();
+            intentId = intentLimiter.getId();
             lifeCycleService = intentActionFactory.buildIntentLimiterService();
         }
 
         if (IntentIspPrefix.class.isInstance(intent)) {
             final IntentIspPrefix intentIspPrefix = (IntentIspPrefix) intent;
-            intentId = intentIspPrefix.getId().getValue();
+            intentId = intentIspPrefix.getId();
             lifeCycleService = intentActionFactory.buildIntentIspPrefixService();
         }
 

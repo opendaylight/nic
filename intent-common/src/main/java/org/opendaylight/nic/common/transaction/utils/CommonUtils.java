@@ -130,7 +130,7 @@ public class CommonUtils {
         final List<IntentLimiter> intentLimiters = retrieveIntentLimiters();
         List<IntentLimiter> result = Lists.newArrayList();
         intentLimiters.forEach(intentLimiter -> {
-            if (intentLimiter.getId().getValue().equals(id)) {
+            if (intentLimiter.getId().equals(id)) {
                 result.add(intentLimiter);
             }
         });
@@ -158,7 +158,7 @@ public class CommonUtils {
         final List<IntentIspPrefix> intentIspPrefixes = retrieveIntentIspPrefixes();
         List<IntentIspPrefix> result = Lists.newArrayList();
         intentIspPrefixes.forEach(intentIspPrefix -> {
-            if (intentIspPrefix.getId().getValue().equals(id)) {
+            if (intentIspPrefix.getId().equals(id)) {
                 result.add(intentIspPrefix);
             }
         });
@@ -208,7 +208,7 @@ public class CommonUtils {
         DelayConfigs configs = retrieveDelayConfigs();
         final Set<DelayConfig> delayConfigs = new HashSet<>();
         configs.getDelayConfig().forEach(delayConfig -> {
-            if (delayConfig.getId().getValue().equals(id)) {
+            if (delayConfig.getId().equals(id)) {
                 delayConfigs.add(delayConfig);
             }
         });
@@ -219,7 +219,7 @@ public class CommonUtils {
         Dataflow result = null;
         final List<Dataflow> dataflows = retrieveDataflowList();
         for (Dataflow dataflow : dataflows) {
-            if (dataflow.getId().getValue().equals(intentLimiterId)) {
+            if (dataflow.getId().equals(intentLimiterId)) {
                 result = dataflow;
                 break;
             }
@@ -262,7 +262,7 @@ public class CommonUtils {
     public void removeDelayConfig(final String delayConfigId) throws RemoveDelayconfigException {
         final WriteTransaction writeTransaction = dataBroker.newWriteOnlyTransaction();
         final InstanceIdentifier<DelayConfig> identifier = InstanceIdentifier.create(DelayConfigs.class)
-                .child(DelayConfig.class, new DelayConfigKey(Uuid.getDefaultInstance(delayConfigId)));
+                .child(DelayConfig.class, new DelayConfigKey(delayConfigId));
         writeTransaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
         CheckedFuture<Void, TransactionCommitFailedException> checkedFuture = writeTransaction.submit();
         try {
@@ -274,7 +274,7 @@ public class CommonUtils {
 
     public void removeDataFlow(final String dataflowId) throws RemoveDataflowException {
         final InstanceIdentifier<Dataflow> identifier = InstanceIdentifier.create(Dataflows.class)
-                .child(Dataflow.class, new DataflowKey(Uuid.getDefaultInstance(dataflowId)));
+                .child(Dataflow.class, new DataflowKey(dataflowId));
         final WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
         transaction.delete(LogicalDatastoreType.CONFIGURATION, identifier);
         CheckedFuture<Void, TransactionCommitFailedException> checkedFuture = transaction.submit();
@@ -309,7 +309,7 @@ public class CommonUtils {
         final EthernetService ethernetService = retrieveEthernetServiceBy(intent.getIspName());
         final Map<Ipv4Address, BgpDataflow> bgpDataflowByPeerIp = Maps.newConcurrentMap();
 
-        retrieveRouterInfosByRouterGroup(ethernetService.getRouterGroupId().getValue()).forEach(routerInfo -> {
+        retrieveRouterInfosByRouterGroup(ethernetService.getRouterGroupId()).forEach(routerInfo -> {
             BgpDataflowBuilder dataflowBuilder = new BgpDataflowBuilder();
             dataflowBuilder.setId(intent.getId());
             dataflowBuilder.setOriginatorIp(Ipv4Address.getDefaultInstance(routerInfo.getServicePeerIp()));
@@ -397,14 +397,14 @@ public class CommonUtils {
     public List<RouterInfo> retrieveRouterInfosByRouterGroup(final String id) {
         List<RouterInfo> result = Lists.newArrayList();
         final InstanceIdentifier<RouterGroup> identifier = ROUTER_GROUPS_IID
-                .child(RouterGroup.class, new RouterGroupKey(Uuid.getDefaultInstance(id)));
+                .child(RouterGroup.class, new RouterGroupKey(id));
         ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
         try {
             final Optional<RouterGroup> routerGroupOptional = transaction
                     .read(LogicalDatastoreType.CONFIGURATION, identifier).checkedGet();
             final RouterGroup routerGroup = routerGroupOptional.get();
             routerGroup.getRoutersId().forEach(routerId ->
-                    result.add(retrieveRouterInfoBy(routerId.getRouterId().getValue())));
+                    result.add(retrieveRouterInfoBy(routerId.getRouterId())));
         } catch (ReadFailedException e) {
             LOG.error(e.getMessage());
         }
@@ -414,7 +414,7 @@ public class CommonUtils {
     private RouterInfo retrieveRouterInfoBy(final String id) {
         RouterInfo result = null;
         final InstanceIdentifier<RouterInfo> identifier = ROUTER_INFO_IID
-                .child(RouterInfo.class, new RouterInfoKey(Uuid.getDefaultInstance(id)));
+                .child(RouterInfo.class, new RouterInfoKey(id));
         ReadOnlyTransaction transaction = dataBroker.newReadOnlyTransaction();
         try {
             final Optional<RouterInfo> routerInfoOptional = transaction

@@ -74,7 +74,7 @@ public class ArpFlowManager extends AbstractFlowManager implements TopologyListe
         arpFlow.setFlowName(flowName);
         final FlowId flowId = new FlowId(flowName);
         arpFlow.setId(flowId);
-        arpFlow.setKey(new FlowKey(flowId));
+        arpFlow.withKey(new FlowKey(flowId));
         return arpFlow;
     }
 
