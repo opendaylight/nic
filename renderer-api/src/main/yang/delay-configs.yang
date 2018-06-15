@@ -9,7 +9,6 @@ module delay-config {
     namespace "urn:opendaylight:nic:renderer:api:delay:config";
     prefix "delay-config";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
     import ietf-yang-types { prefix "yang"; }
     import ietf-inet-types { prefix "inet"; }
 
@@ -19,7 +18,7 @@ module delay-config {
 
     grouping delay-config {
         leaf id {
-            type types:uuid;
+            type string;
             mandatory true;
             description "Uniquely identifier, it's the same of Dataflow.";
         }

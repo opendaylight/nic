@@ -9,6 +9,12 @@
 package org.opendaylight.nic.of.renderer.strategy;
 
 import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.ListenableFuture;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Future;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.api.MeterQueueService;
@@ -22,6 +28,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.me
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.meters.MeterBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.meters.MeterKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.ReleaseIdOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.node.NodeConnector;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
@@ -36,18 +43,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter.meter.band.headers.MeterBandHeaderKey;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.meter.types.rev130918.meter.meter.band.headers.meter.band.header.MeterBandTypesBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.dataflow.rev170309.Dataflow;
-import org.opendaylight.yang.gen.v1.urn.opendaylight.nic.renderer.api.meterid.queue.types.rev170316.MeteridObject;
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.binding.KeyedInstanceIdentifier;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Future;
 
 public class MeterExecutor {
 
@@ -65,7 +65,7 @@ public class MeterExecutor {
     }
 
     public MeterId createMeter(final Dataflow dataflow) throws MeterCreationExeption {
-        return createMeter(dataflow.getId().getValue(), dataflow.getBandwidthRate());
+        return createMeter(dataflow.getId(), dataflow.getBandwidthRate());
     }
 
     public MeterId createMeter(final String id, final long dropRate) throws MeterCreationExeption {
@@ -77,7 +77,7 @@ public class MeterExecutor {
         final MeterId meterId = new MeterId(meterIdLong);
 
         MeterFlags meterFlags = new MeterFlags(false, true, false, false);
-        meterBuilder.setKey(new MeterKey(meterId));
+        meterBuilder.withKey(new MeterKey(meterId));
         meterBuilder.setMeterId(meterId);
         meterBuilder.setFlags(meterFlags);
 
@@ -93,7 +93,7 @@ public class MeterExecutor {
         BandId bandId = new BandId((long)bandKey);
         meterBandHeaderBuilder.setBandBurstSize(drop.getDropBurstSize());
         meterBandHeaderBuilder.setBandRate(drop.getDropRate());
-        meterBandHeaderBuilder.setKey(new MeterBandHeaderKey(bandId));
+        meterBandHeaderBuilder.withKey(new MeterBandHeaderKey(bandId));
         meterBandHeaderBuilder.setBandId(bandId);
         meterBandHeaderBuilder.setMeterBandTypes(meterBandTypesBuilder.build());
         meterBandHeaderBuilder.setBandType(drop);
@@ -118,10 +118,10 @@ public class MeterExecutor {
         return meter.getMeterId();
     }
 
-    public Future<RpcResult<Void>> removeMeter(final Long meterId, String dataflowId) throws MeterRemovalExeption {
+    public ListenableFuture<RpcResult<ReleaseIdOutput>> removeMeter(final Long meterId, String dataflowId) throws MeterRemovalExeption {
         boolean result = false;
         final MeterId id = new MeterId(meterId);
-        final Future<RpcResult<Void>> releaseMeterResult = meterQueueService.releaseMeterId(dataflowId);
+        final ListenableFuture<RpcResult<ReleaseIdOutput>> releaseMeterResult = meterQueueService.releaseMeterId(dataflowId);
         final Map<Node, List<NodeConnector>> nodeListMap = TopologyUtils.getNodes(dataBroker);
         for (Map.Entry<Node, List<NodeConnector>> entry : nodeListMap.entrySet()) {
             final InstanceIdentifier<Meter> instanceIdentifier = retrieveMeterIdentifier(id,
@@ -139,7 +139,7 @@ public class MeterExecutor {
         try {
             final InstanceIdentifier<Node> nodePath = InstanceIdentifier
                     .create(Nodes.class)
-                    .child(Node.class, node.getKey());
+                    .child(Node.class, node.key());
             flowIID = nodePath
                     .augmentation(FlowCapableNode.class)
                     .child(Meter.class, new MeterKey(meterId));

@@ -10,7 +10,6 @@ module intent-isp-prefix {
     namespace "urn:opendaylight:intent:isp:prefix";
     prefix "intent-isp-prefix";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
     import ietf-inet-types { prefix "inet"; }
     import intent-actions { prefix actions; revision-date 2015-01-22; }
 
@@ -24,7 +23,7 @@ module intent-isp-prefix {
 
     grouping intent-isp-prefix {
         leaf id {
-            type types:uuid;
+            type string;
             mandatory true;
             description "Uniquely identifier for Intent-ISP";
         }

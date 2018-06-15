@@ -82,7 +82,7 @@ public class ScheduleServiceManager implements ScheduleService {
         timer.scheduleAtFixedRate(new Executor(dataflow),
                 initialDelay,
                 delay);
-        timers.put(dataflow.getId().getValue(), timer);
+        timers.put(dataflow.getId(), timer);
     }
 
     private long calcInterval(final long pastDate) {

@@ -79,7 +79,7 @@ public class OFRendererServiceImpl implements OFRendererService {
         try {
             return ofRendererFlowService.pushDataFlow(dataflow);
         } catch (PushDataflowException e) {
-            removeMeter(dataflow.getId().getValue(), dataflow.getMeterId().longValue());
+            removeMeter(dataflow.getId(), dataflow.getMeterId().longValue());
             LOG.error(e.getMessage());
             throw new RendererServiceException(e.getMessage());
         }

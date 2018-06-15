@@ -19,7 +19,7 @@ module dataflow {
 
     grouping dataflow {
         leaf id {
-            type types:uuid;
+            type string;
             mandatory true;
             description "Uniquely identifier for dataflow";
         }
