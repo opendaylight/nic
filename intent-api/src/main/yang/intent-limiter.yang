@@ -9,7 +9,6 @@ module intent-limiter {
     namespace "urn:opendaylight:intent:limiter";
     prefix "intent-limiter";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
     import ietf-yang-types { prefix "yang"; }
     import ietf-inet-types { prefix "inet"; }
 
@@ -26,7 +25,7 @@ module intent-limiter {
         time and interval.";
 
         leaf id {
-            type types:uuid;
+            type string;
             mandatory true;
             description "Uniquely identifies the intent. ie: UUID";
         }

@@ -7,6 +7,7 @@
  */
 package org.opendaylight.nic.of.renderer.impl;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.nic.of.renderer.api.OFRendererFlowService;
 import org.opendaylight.nic.of.renderer.api.Observer;
@@ -25,6 +26,7 @@ import org.opendaylight.nic.utils.exceptions.IntentInvalidException;
 import org.opendaylight.nic.utils.exceptions.PushDataflowException;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.FlowBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.ReleaseIdOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.Action;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intent.actions.action.Redirect;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.intent.rev150122.intents.Intent;
@@ -169,7 +171,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     }
 
     private Dataflow removeDataflow(final Dataflow dataflow) throws ExecutionException {
-        final String dataflowId = dataflow.getId().getValue();
+        final String dataflowId = dataflow.getId();
         final FlowBuilder flowBuilder = ofRuleWithMeterManager.createFlow(dataflow);
         final Map<Node, List<NodeConnector>> nodeMap = TopologyUtils.getNodes(dataBroker);
         for (Map.Entry<Node, List<NodeConnector>> entry : nodeMap.entrySet()) {
@@ -197,7 +199,7 @@ public class OFRendererFlowManagerProvider implements OFRendererFlowService, Obs
     @Override
     public void removeMeter(final Long meterId, final String dataflowId) throws PushDataflowException {
         try {
-            final Future<RpcResult<Void>> releaseResult = ofRuleWithMeterManager.removeMeter(meterId, dataflowId);
+            final ListenableFuture<RpcResult<ReleaseIdOutput>> releaseResult = ofRuleWithMeterManager.removeMeter(meterId, dataflowId);
             releaseResult.get(5, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             throw new PushDataflowException(e);

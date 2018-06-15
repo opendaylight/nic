@@ -8,12 +8,14 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import org.opendaylight.nic.of.renderer.api.MeterQueueService;
 import org.opendaylight.nic.of.renderer.exception.MeterCreationExeption;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.AllocateIdInputBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.AllocateIdOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.ReleaseIdInputBuilder;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.ReleaseIdOutput;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,11 +62,11 @@ public class MeterQueueServiceImpl implements MeterQueueService {
     }
 
     @Override
-    public Future<RpcResult<Void>> releaseMeterId(final String id) {
+    public ListenableFuture<RpcResult<ReleaseIdOutput>> releaseMeterId(final String id) {
         final ReleaseIdInputBuilder inputBuilder = new ReleaseIdInputBuilder();
         inputBuilder.setPoolName(METER_ID_POOL_NAME.toLowerCase());
         inputBuilder.setIdKey(id);
-        Future<RpcResult<Void>> releaseResult = idManagerService.releaseId(inputBuilder.build());
+        ListenableFuture<RpcResult<ReleaseIdOutput>> releaseResult = idManagerService.releaseId(inputBuilder.build());
         try {
             releaseResult.get();
         } catch (InterruptedException | ExecutionException e) {

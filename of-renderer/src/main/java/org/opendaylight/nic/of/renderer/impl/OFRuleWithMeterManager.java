@@ -8,6 +8,11 @@
 
 package org.opendaylight.nic.of.renderer.impl;
 
+import com.google.common.util.concurrent.ListenableFuture;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.nic.of.renderer.exception.DataflowCreationException;
@@ -34,6 +39,7 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instru
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.Instruction;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.flow.types.rev131026.instruction.list.InstructionBuilder;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.IdManagerService;
+import org.opendaylight.yang.gen.v1.urn.opendaylight.genius.idmanager.rev160406.ReleaseIdOutput;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.NodeId;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.Nodes;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.inventory.rev130819.nodes.Node;
@@ -50,11 +56,6 @@ import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigInteger;
-import java.util.*;
-import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class OFRuleWithMeterManager {
 
@@ -80,7 +81,7 @@ public class OFRuleWithMeterManager {
         FlowBuilder flowBuilder = new FlowBuilder();
         try {
             final FlowModFlags flowModFlags = new FlowModFlags(false, false, false, false, false);
-            final FlowId flowId = new FlowId(dataFlow.getId().toString());
+            final FlowId flowId = new FlowId(dataFlow.getId());
             final FlowKey flowKey = new FlowKey(flowId);
             final MeterId meterId = new MeterId(dataFlow.getMeterId().longValue());
 
@@ -94,7 +95,7 @@ public class OFRuleWithMeterManager {
             flowBuilder.setHardTimeout((int) dataFlow.getTimeout());
             flowBuilder.setIdleTimeout((int) dataFlow.getTimeout());
             flowBuilder.setFlags(flowModFlags);
-            flowBuilder.setKey(flowKey);
+            flowBuilder.withKey(flowKey);
         } catch (Exception e) {
             throw new DataflowCreationException(e.getMessage());
         }
@@ -112,11 +113,11 @@ public class OFRuleWithMeterManager {
         return meterExecutor.createMeter(id, dropRate);
     }
 
-    public Future<RpcResult<Void>> removeMeter(final Long meterId, final String dataflowId) throws MeterRemovalExeption {
+    public ListenableFuture<RpcResult<ReleaseIdOutput>> removeMeter(final Long meterId, final String dataflowId) throws MeterRemovalExeption {
         return meterExecutor.removeMeter(meterId, dataflowId);
     }
 
-    private Match createMatch(Ipv4Prefix ipv4Prefix) {
+    private Match createMatch(final Ipv4Prefix ipv4Prefix) {
         final Ipv4MatchBuilder ipv4MatchBuilder = new Ipv4MatchBuilder();
         ipv4MatchBuilder.setIpv4Source(ipv4Prefix);
 
@@ -155,14 +156,14 @@ public class OFRuleWithMeterManager {
     public boolean sendToMdsal(final FlowBuilder flowBuilder, final NodeId nodeId) {
         final NodeBuilder nodeBuilder = new NodeBuilder();
         nodeBuilder.setId(nodeId);
-        nodeBuilder.setKey(new NodeKey(nodeId));
+        nodeBuilder.withKey(new NodeKey(nodeId));
         return mdsalUtils.put(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder), flowBuilder.build());
     }
 
     public boolean removeFromMdsal(final FlowBuilder flowBuilder, final NodeId nodeId) {
         final NodeBuilder nodeBuilder = new NodeBuilder();
         nodeBuilder.setId(nodeId);
-        nodeBuilder.setKey(new NodeKey(nodeId));
+        nodeBuilder.withKey(new NodeKey(nodeId));
         return mdsalUtils.delete(LogicalDatastoreType.CONFIGURATION, retrieveIdentifier(nodeBuilder, flowBuilder));
     }
 
@@ -170,10 +171,10 @@ public class OFRuleWithMeterManager {
                                                         final FlowBuilder flowBuilder) {
         flowBuilder.setTableId(OFRendererConstants.FALLBACK_TABLE_ID);
         InstanceIdentifier<org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
-                .child(Node.class, nodeBuilder.getKey())
+                .child(Node.class, nodeBuilder.key())
                 .augmentation(FlowCapableNode.class)
                 .child(Table.class, new TableKey(flowBuilder.getTableId()))
-                .child(org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow.class, flowBuilder.getKey())
+                .child(org.opendaylight.yang.gen.v1.urn.opendaylight.flow.inventory.rev130819.tables.table.Flow.class, flowBuilder.key())
                 .build();
         return flowIID;
     }

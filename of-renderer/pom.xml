@@ -11,7 +11,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
     <parent>
         <groupId>org.opendaylight.mdsal</groupId>
         <artifactId>binding-parent</artifactId>
-        <version>0.12.0-SNAPSHOT</version>
+        <version>0.13.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -25,13 +25,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
 
     <properties>
         <jung2.version>2.0.1</jung2.version>
-        <openflowplugin.version>0.6.0-SNAPSHOT</openflowplugin.version>
+        <openflowplugin.version>0.7.0-SNAPSHOT</openflowplugin.version>
         <pitest.version>1.1.4</pitest.version>
-        <liblldp.version>0.14.0-SNAPSHOT</liblldp.version>
+        <liblldp.version>0.14.3-SNAPSHOT</liblldp.version>
         <sfc.version>0.7.0-SNAPSHOT</sfc.version>
-        <genius.version>0.4.0-SNAPSHOT</genius.version>
-        <mdsal.version>1.7.0-SNAPSHOT</mdsal.version>
-        <openflowjava.version>0.6.0-SNAPSHOT</openflowjava.version>
+        <genius.version>0.5.0-SNAPSHOT</genius.version>
+        <mdsal.version>0.13.0-SNAPSHOT</mdsal.version>
+        <mdsal.model.version>1.8.0-SNAPSHOT</mdsal.model.version>
+        <openflowjava.version>0.7.0-SNAPSHOT</openflowjava.version>
 
         <genius.groupId>org.opendaylight.genius</genius.groupId>
         <ofplugin.model.groupId>org.opendaylight.openflowplugin.model</ofplugin.model.groupId>
@@ -45,7 +46,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
             <dependency>
                 <groupId>org.opendaylight.controller</groupId>
                 <artifactId>mdsal-artifacts</artifactId>
-                <version>1.7.0-SNAPSHOT</version>
+                <version>1.8.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -83,21 +84,21 @@ and is available at http://www.eclipse.org/legal/epl-v10.html INTERNAL
         <dependency>
             <groupId>${controller.model.groupId}</groupId>
             <artifactId>model-parent</artifactId>
-            <version>${mdsal.version}</version>
+            <version>${mdsal.model.version}</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
         <dependency>
             <groupId>${controller.groupId}</groupId>
             <artifactId>mdsal-artifacts</artifactId>
-            <version>${mdsal.version}</version>
+            <version>${mdsal.model.version}</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
         <dependency>
             <groupId>${controller.groupId}</groupId>
             <artifactId>sal-binding-broker-impl</artifactId>
-            <version>${mdsal.version}</version>
+            <version>${mdsal.model.version}</version>
         </dependency>
 
         <!-- Pipeline manager dependencies -->

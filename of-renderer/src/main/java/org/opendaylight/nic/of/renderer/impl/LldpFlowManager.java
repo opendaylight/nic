@@ -78,7 +78,7 @@ public class LldpFlowManager extends AbstractFlowManager implements TopologyList
         lldpFlow.setInstructions(instructions);
         FlowId flowId = new FlowId(createFlowName());
         lldpFlow.setId(flowId);
-        lldpFlow.setKey(new FlowKey(flowId));
+        lldpFlow.withKey(new FlowKey(flowId));
         return lldpFlow;
     }
 

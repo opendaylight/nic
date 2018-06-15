@@ -9,7 +9,6 @@ module bgp-dataflow {
     namespace "urn:opendaylight:nic:renderer:api:bgp:dataflow";
     prefix "bgp-dataflow";
 
-    import intent-types { prefix types; revision-date 2015-01-22; }
     import ietf-yang-types { prefix "yang"; }
     import ietf-inet-types { prefix "inet"; }
 
@@ -19,7 +18,7 @@ module bgp-dataflow {
 
     grouping bgp-dataflow {
         leaf id {
-            type types:uuid;
+            type string;
             mandatory true;
             description "Uniquely identifier for gbp-dataflow";
         }

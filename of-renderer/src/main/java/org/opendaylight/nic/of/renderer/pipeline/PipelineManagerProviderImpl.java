@@ -120,11 +120,11 @@ public class PipelineManagerProviderImpl implements DataTreeChangeListener<Node>
         String flowIdStr = "PipelineManager";
         final FlowId flowId = new FlowId(flowIdStr);
         final FlowKey key = new FlowKey(flowId);
-        flowBuilder.setKey(key);
+        flowBuilder.withKey(key);
 
         InstanceIdentifier<Flow> flowIID = InstanceIdentifier.builder(Nodes.class)
                 .child(Node.class, new NodeKey(node.getId())).augmentation(FlowCapableNode.class)
-                .child(Table.class, new TableKey(flowBuilder.getTableId())).child(Flow.class, flowBuilder.getKey())
+                .child(Table.class, new TableKey(flowBuilder.getTableId())).child(Flow.class, flowBuilder.key())
                 .build();
 
         WriteTransaction transaction = dataBroker.newWriteOnlyTransaction();
@@ -138,7 +138,7 @@ public class PipelineManagerProviderImpl implements DataTreeChangeListener<Node>
         if (node == null) {
             return Collections.emptyList();
         }
-        FlowCapableNode flowCapableNode = node.getAugmentation(FlowCapableNode.class);
+        FlowCapableNode flowCapableNode =  node.augmentation(FlowCapableNode.class);
         List<TableFeatures> features = flowCapableNode.getTableFeatures();
         if (features == null || features.isEmpty()) {
             return Collections.emptyList();
@@ -190,7 +190,7 @@ public class PipelineManagerProviderImpl implements DataTreeChangeListener<Node>
     }
 
     private List<Table> getTableList(Node node) {
-        FlowCapableNode flowCapableNode = node.getAugmentation(FlowCapableNode.class);
+        FlowCapableNode flowCapableNode = node.augmentation(FlowCapableNode.class);
         List<Table> tableList = flowCapableNode.getTable();
         Collections.sort(tableList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
         return tableList;
