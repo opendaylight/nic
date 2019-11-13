@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_4c63d31a",
+        "filename": "features/pom.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T21:30:24Z",
+      "side": 1,
+      "message": "this can be removed",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_6c680ff6",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T21:30:24Z",
+      "side": 1,
+      "message": "why do you need that?",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_0c6ddb04",
+        "filename": "intent-api/.gitignore",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T21:30:24Z",
+      "side": 1,
+      "message": "please remove .gitingore",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 8
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_cc76e3d8",
+        "filename": "intent-mapping-mdsal/src/main/config/default-config.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T21:30:24Z",
+      "side": 1,
+      "message": "is this service needed?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_ec739fe5",
+        "filename": "intent-mapping-mdsal/src/main/yang/intent-mapping-mdsal-impl.yang",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T21:30:24Z",
+      "side": 1,
+      "message": "is this needed?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_8c80eb8c",
+        "filename": "intent-mapping-mdsal/src/main/yang/intent-mapping-mdsal-impl.yang",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T21:30:24Z",
+      "side": 1,
+      "message": "why do we need this?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 5
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_ac7da7b3",
+        "filename": "intent-mapping/.gitignore",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T21:30:24Z",
+      "side": 1,
+      "message": "please remove",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 8
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
