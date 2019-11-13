@@ -82,6 +82,29 @@
     },
     {
       "key": {
+        "uuid": "9ab8dda7_f6360ee7",
+        "filename": "mapping/api/src/main/yang/mapping.yang",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "Can be taken off since it is present in *impl.yang file",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "11eb5ec9766c16551e359d512d263415f9dd5cdb",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ab8dda7_1b12eb62",
         "filename": "mapping/api/src/main/yang/mapping.yang",
         "patchSetId": 1
