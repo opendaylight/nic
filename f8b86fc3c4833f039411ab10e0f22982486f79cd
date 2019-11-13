@@ -122,6 +122,23 @@
     },
     {
       "key": {
+        "uuid": "7aade967_0912ad62",
+        "filename": "mapping/api/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:21:59Z",
+      "side": 1,
+      "message": "please fix the incorrect indentation",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_e97391e5",
         "filename": "mapping/api/src/main/yang/mapping.yang",
         "patchSetId": 9
@@ -150,6 +167,23 @@
       "writtenOn": "2015-11-12T17:19:38Z",
       "side": 1,
       "message": "Whitespace",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_c90b352a",
+        "filename": "mapping/api/src/main/yang/mapping.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:22:28Z",
+      "side": 1,
+      "message": "missing key for inner-key",
       "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
