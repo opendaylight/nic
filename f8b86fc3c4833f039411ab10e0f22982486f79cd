@@ -139,6 +139,23 @@
     },
     {
       "key": {
+        "uuid": "7aade967_ac19277b",
+        "filename": "mapping/api/src/main/yang/mapping.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "please include copyright header",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_e97391e5",
         "filename": "mapping/api/src/main/yang/mapping.yang",
         "patchSetId": 9
@@ -218,6 +235,24 @@
       "writtenOn": "2015-11-12T17:19:38Z",
       "side": 1,
       "message": "please include a carriage return after \"others.\"",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_8c1c6b6c",
+        "filename": "mapping/artifacts/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "duplicate text",
+      "parentUuid": "7aade967_a97d99b3",
       "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -326,6 +361,24 @@
     },
     {
       "key": {
+        "uuid": "7aade967_ec0f1f2d",
+        "filename": "mapping/features/src/main/features/features.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "duplicate text",
+      "parentUuid": "7aade967_2940c955",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_a9f8394a",
         "filename": "mapping/features/src/main/features/features.xml",
         "patchSetId": 9
@@ -371,6 +424,24 @@
       "writtenOn": "2015-11-12T17:19:38Z",
       "side": 1,
       "message": "please include a carriage return after \"others.\"",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_cc126358",
+        "filename": "mapping/impl/src/main/config/default-config.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "duplicate text",
+      "parentUuid": "7aade967_6936c105",
       "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -496,6 +567,24 @@
     },
     {
       "key": {
+        "uuid": "7aade967_0c095b2c",
+        "filename": "mapping/it/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "duplicate text",
+      "parentUuid": "7aade967_a954b921",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_89577d26",
         "filename": "mapping/it/src/test/java/org/opendaylight/nic/it/MappingIT.java",
         "patchSetId": 9
@@ -524,6 +613,24 @@
       "writtenOn": "2015-11-12T17:19:38Z",
       "side": 1,
       "message": "please include a carriage return after \"others.\"",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_4cff5302",
+        "filename": "mapping/karaf/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "duplicate text",
+      "parentUuid": "7aade967_0944ed72",
       "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
@@ -575,6 +682,24 @@
       "writtenOn": "2015-11-12T17:19:38Z",
       "side": 1,
       "message": "please include a carriage return after \"others.\"",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_6c048f15",
+        "filename": "mapping/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "duplicate text",
+      "parentUuid": "7aade967_c92495c8",
       "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
