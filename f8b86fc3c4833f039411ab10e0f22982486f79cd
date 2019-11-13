@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "7aade967_cc402338",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T17:53:44Z",
+      "side": 1,
+      "message": "why do we need those?",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 58
+      },
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_29ed298c",
         "filename": "mapping/.gitignore",
         "patchSetId": 9
@@ -116,6 +139,29 @@
       "writtenOn": "2015-11-12T17:19:38Z",
       "side": 1,
       "message": "indentation, please use 2 lines",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_2c5c5725",
+        "filename": "mapping/api/pom.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T17:53:44Z",
+      "side": 1,
+      "message": "use binding-parent parent:\n\n \u003cparent\u003e\n  \u003cgroupId\u003eorg.opendaylight.mdsal\u003c/groupId\u003e\n  \u003cartifactId\u003ebinding-parent\u003c/artifactId\u003e\n  \u003cversion\u003e0.8.0-SNAPSHOT\u003c/version\u003e\n  \u003crelativePath /\u003e\n \u003c/parent\u003e",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 26
+      },
       "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
