@@ -482,6 +482,23 @@
     },
     {
       "key": {
+        "uuid": "7aade967_2c0e9735",
+        "filename": "mapping/impl/src/main/yang/mapping-impl.yang",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-11-12T17:25:14Z",
+      "side": 1,
+      "message": "Please include copyright header",
+      "revId": "f8b86fc3c4833f039411ab10e0f22982486f79cd",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_69c1e1e3",
         "filename": "mapping/impl/src/main/yang/mapping-impl.yang",
         "patchSetId": 9
