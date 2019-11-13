@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_e19e2656",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-16T20:53:31Z",
+      "side": 1,
+      "message": "Can you add this in the interface ?",
+      "revId": "bcbf072ec78db56805e7570b380ec0f1a5d7bd94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_81a3b29d",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-16T20:53:31Z",
+      "side": 1,
+      "message": "Idem",
+      "revId": "bcbf072ec78db56805e7570b380ec0f1a5d7bd94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_a1a02e91",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-16T20:53:31Z",
+      "side": 1,
+      "message": "Idem",
+      "revId": "bcbf072ec78db56805e7570b380ec0f1a5d7bd94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_41adba87",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1950
+      },
+      "writtenOn": "2015-12-16T20:53:31Z",
+      "side": 1,
+      "message": "Who\u0027s going to use this private function ?",
+      "revId": "bcbf072ec78db56805e7570b380ec0f1a5d7bd94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
