@@ -22,6 +22,30 @@
       "revId": "30ce0d650566694abfd87e2714ac20d6f449764e",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_513cb52f",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "Hi Saket. The MappingMdsalProvider is not registered as a bundle in karaf, maybe i will need to add this to the provider so that I can access the reference to the running bundle from the OF-renderer provider class instead of instantiating it.",
+      "parentUuid": "7aade967_d1942539",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 68
+      },
+      "revId": "30ce0d650566694abfd87e2714ac20d6f449764e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
