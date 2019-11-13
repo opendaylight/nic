@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_db746f9e",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "maybe you unintentionally removed lines 320-324\n\nhttps://github.com/opendaylight/nic/blob/master/of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java#L320",
+      "range": {
+        "startLine": 330,
+        "startChar": 67,
+        "endLine": 330,
+        "endChar": 69
+      },
+      "revId": "f4816a548bb25ff10d8b2ea903ce9c208d27576a",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
