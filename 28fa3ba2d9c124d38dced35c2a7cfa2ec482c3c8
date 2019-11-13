@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_0cbb60e6",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-12-23T20:59:34Z",
+      "side": 1,
+      "message": "What does it mean? A constraint may have size?",
+      "range": {
+        "startLine": 51,
+        "startChar": 28,
+        "endLine": 51,
+        "endChar": 58
+      },
+      "revId": "28fa3ba2d9c124d38dced35c2a7cfa2ec482c3c8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_6cee94ee",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-12-23T20:59:34Z",
+      "side": 1,
+      "message": "Since we can have multiples constraints, this validation doesn\u0027t seem ok.",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 104
+      },
+      "revId": "28fa3ba2d9c124d38dced35c2a7cfa2ec482c3c8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
