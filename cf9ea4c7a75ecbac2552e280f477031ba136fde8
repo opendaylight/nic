@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_c9b9d5ea",
+        "filename": "intent-mapping-mdsal/src/main/config/default-config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "Probably needs the intent-mapping-mdsal-impl as a capability too, instead of replacing it add intent-mapping-interface as a third capability.",
+      "revId": "cf9ea4c7a75ecbac2552e280f477031ba136fde8",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_c636a503",
         "filename": "pom.xml",
         "patchSetId": 4
