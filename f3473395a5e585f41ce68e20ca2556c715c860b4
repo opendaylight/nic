@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_0f82ad00",
+        "filename": "intent-mapping-mdsal/src/main/yang/intent-mapping-mdsal.yang",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3795
+      },
+      "writtenOn": "2015-11-12T23:20:00Z",
+      "side": 1,
+      "message": "Is this value supposed to be a string? Are you thinking about storing the different kind of objects (Endpoints for instance) as strings in here? Or are going to define another yang model per object so that this inner-map value supports polymorphism?",
+      "revId": "f3473395a5e585f41ce68e20ca2556c715c860b4",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
