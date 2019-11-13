@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1aa4ed85_21bc3ebb",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "This class extends AbstractFlowManager class.. I did not add it to the abstract class since all the child classes will need to implement it, moreover it is specific to Mpls intents.",
+      "parentUuid": "1aa4ed85_e19e2656",
+      "revId": "bcbf072ec78db56805e7570b380ec0f1a5d7bd94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa4ed85_81a3b29d",
         "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
         "patchSetId": 2
@@ -64,6 +82,24 @@
       "writtenOn": "2015-12-16T20:53:31Z",
       "side": 1,
       "message": "Who\u0027s going to use this private function ?",
+      "revId": "bcbf072ec78db56805e7570b380ec0f1a5d7bd94",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c1b0cadf",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "This will be used from inside OFRendererFlowManagerProvider.",
+      "parentUuid": "1aa4ed85_41adba87",
       "revId": "bcbf072ec78db56805e7570b380ec0f1a5d7bd94",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
