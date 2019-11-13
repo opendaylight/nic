@@ -1,0 +1,331 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_5354ab53",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "carrier return",
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_7351a761",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "please add modifier",
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_334b2fb2",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "make those final",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 80
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f39a7713",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "this can be remove in favor of lin5 95",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 55
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d395fbe4",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "no need to instantiate this here, createFlowBuilder() will return you an instance.\nThis can be remove. The reference can be taken line 153",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 52
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_53db4bed",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "this is fine although a bit surprising, I would expect the method to return matchBuilder instead of passing it as argument and instantiate it line 79.\n\nCould you make this change here:\nhttps://github.com/opendaylight/nic/blob/master/of-renderer/src/main/java/org/opendaylight/nic/of/renderer/utils/MatchUtils.java#l994l1013\nso you create MatchBuilder instance within the method and return it?\n\nLet me know what you think",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 77
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_139393fb",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "no need to instantiate Short here, simply do Short bos \u003d 1;",
+      "range": {
+        "startLine": 104,
+        "startChar": 24,
+        "endLine": 104,
+        "endChar": 45
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_d3bc1b6f",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "please add a log at WARN level as we shouldn\u0027t get here",
+      "range": {
+        "startLine": 109,
+        "startChar": 13,
+        "endLine": 110,
+        "endChar": 45
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b3bb9f71",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "no need to hold that in a var, this can be directly pass as argument of the log",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 61
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_73ad2731",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "comments above also apply here",
+      "range": {
+        "startLine": 125,
+        "startChar": 9,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_13aab319",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 177,
+        "startChar": 9,
+        "endLine": 177,
+        "endChar": 24
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_936d4307",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/MplsIntentFlowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "you could pass the first element in the StringBuilder() constructor for performance",
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_8609832e",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "the implementation is too complex and can be simpler:\n\nMap\u003cString, Map\u003cString, String\u003e\u003e subjectsMapping \u003d new HashMap\u003cString, Map\u003cString, String\u003e\u003e();\nfor (String id : endPointGroups) {\n  Map\u003cString, String\u003e values \u003d intentMappingService.get(id); // note #get doesn\u0027t throw exception and does return an initialize map https://github.com/opendaylight/nic/blob/master/intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java#l152\n  if( values.size \u003e0 ) {\n    subjectsMapping.put(id, values);\n  } else {\n    LOG.warn(\"No key found for {\" + id + \"} in IntentMappingService\");\n  }\n}",
+      "range": {
+        "startLine": 127,
+        "startChar": 45,
+        "endLine": 127,
+        "endChar": 66
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_737447cf",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "the log should be formatted like this:\nLog.warn(\"No key found for {} in IntentMappingService\", id)",
+      "range": {
+        "startLine": 134,
+        "startChar": 25,
+        "endLine": 134,
+        "endChar": 80
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_f336f702",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-12-17T14:11:39Z",
+      "side": 1,
+      "message": "how innerKeys is different to values?",
+      "range": {
+        "startLine": 138,
+        "startChar": 36,
+        "endLine": 138,
+        "endChar": 45
+      },
+      "revId": "b61f0ed2e55fb5540e9f629963fd87fe10bd791f",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
