@@ -190,6 +190,29 @@
     },
     {
       "key": {
+        "uuid": "bada0100_013fcd26",
+        "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/MplsEgressLabel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "what is the need to have two MplsEgressLabel and MplsIngressLabel? you could use one class MplsLabel?",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_61ec99c8",
         "filename": "intent-mapping/src/main/java/org/opendaylight/nic/mapping/api/MplsEgressLabel.java",
         "patchSetId": 5
@@ -343,6 +366,29 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "bada0100_016d8d32",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 124,
+        "endChar": 15
+      },
+      "revId": "067ab6a3e3b15c62bfa374792265562a144418c6",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_016d8d32",
+        "filename": "intent-mapping/src/test/java/org/opendaylight/nic/mapping/impl/HazelcastMappingServiceImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "could also add a testcase for add() method",
       "range": {
         "startLine": 124,
         "startChar": 8,
