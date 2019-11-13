@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "da33351e_8fee338a",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Observer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "Please change the copyright",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 37
+      },
+      "revId": "1ea0a7de14abb84268d0d883be78e19b3884b04c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da33351e_2f00c7a9",
         "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Observer.java",
         "patchSetId": 5
@@ -35,6 +58,52 @@
         "startChar": 4,
         "endLine": 14,
         "endChar": 10
+      },
+      "revId": "1ea0a7de14abb84268d0d883be78e19b3884b04c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_6ff3ef73",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/api/Subject.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "Please change the copyright",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 42
+      },
+      "revId": "1ea0a7de14abb84268d0d883be78e19b3884b04c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_efd7ffbd",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/NetworkGraphManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "ProtectedLinks might have to be cleared to avoid duplicate paths in the list..",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 57
       },
       "revId": "1ea0a7de14abb84268d0d883be78e19b3884b04c",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
