@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_7131c30a",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/IntentFlowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-30T15:53:29Z",
+      "side": 1,
+      "message": "please create javadoc",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 70
+      },
+      "revId": "b4ed4cc0a8923770327878672b6d66cb8dacec20",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
