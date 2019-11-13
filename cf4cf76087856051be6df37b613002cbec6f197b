@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_d1962a94",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:52:38Z",
+      "side": 1,
+      "message": "add a space",
+      "revId": "cf4cf76087856051be6df37b613002cbec6f197b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_71edf624",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:52:38Z",
+      "side": 1,
+      "message": "maybe this can be set a TRACE level",
+      "range": {
+        "startLine": 114,
+        "startChar": 28,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "cf4cf76087856051be6df37b613002cbec6f197b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_11f4c2f0",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:52:38Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 118,
+        "startChar": 28,
+        "endLine": 118,
+        "endChar": 32
+      },
+      "revId": "cf4cf76087856051be6df37b613002cbec6f197b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_b18b6e67",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:52:38Z",
+      "side": 1,
+      "message": "likewise",
+      "revId": "cf4cf76087856051be6df37b613002cbec6f197b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_51ea3a10",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2016-01-05T17:52:38Z",
+      "side": 1,
+      "message": "what if the intent only have one constraint?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "cf4cf76087856051be6df37b613002cbec6f197b",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
