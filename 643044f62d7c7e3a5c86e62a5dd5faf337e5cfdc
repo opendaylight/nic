@@ -180,6 +180,29 @@
     },
     {
       "key": {
+        "uuid": "7aade967_7a1433f5",
+        "filename": "intent-mapping-interface/config/default-config.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "should be intent-mapping-interface.\nYou also don\u0027t have a provider class right?",
+      "range": {
+        "startLine": 18,
+        "startChar": 78,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "643044f62d7c7e3a5c86e62a5dd5faf337e5cfdc",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_7a467325",
         "filename": "intent-mapping-interface/src/main/java/org/opendaylight/nic/api/IntentMappingService.java",
         "patchSetId": 7
