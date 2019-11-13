@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_d1942539",
+        "filename": "of-renderer/src/main/java/org/opendaylight/nic/of/renderer/impl/OFRendererFlowManagerProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4671
+      },
+      "writtenOn": "2015-11-19T00:28:59Z",
+      "side": 1,
+      "message": "Hi Rashmi. Is it necessary to instantiate since this has already been registered as a karaf bundle and instantiated in MappingMdsalImplModule:createInstance()? Maybe you can use something like this similar to OFRenderer:\n        BundleContext context \u003d FrameworkUtil.getBundle(this.getClass()).getBundleContext();\n        ServiceReference\u003c?\u003e serviceReference \u003d context.\n                getServiceReference(OFRendererFlowService.class);\n        OFRendererFlowService flowService \u003d (OFRendererFlowService) context.\n                getService(serviceReference);",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 68
+      },
+      "revId": "30ce0d650566694abfd87e2714ac20d6f449764e",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
