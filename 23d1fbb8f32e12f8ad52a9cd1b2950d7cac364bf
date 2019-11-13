@@ -16,6 +16,24 @@
       "revId": "23d1fbb8f32e12f8ad52a9cd1b2950d7cac364bf",
       "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_dbe8a07e",
+        "filename": "intent-api/src/main/yang/intent-constraints.yang",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_5be590a6",
+      "revId": "23d1fbb8f32e12f8ad52a9cd1b2950d7cac364bf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
     }
   ]
 }
