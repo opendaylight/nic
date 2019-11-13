@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_cc5d834a",
+        "filename": "features/pom.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "okay.. so we use version 1.3.0-SNAPSHOT?",
+      "parentUuid": "7aade967_4c63d31a",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_6c680ff6",
         "filename": "features/src/main/features/features.xml",
         "patchSetId": 10
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_4c31930a",
+        "filename": "intent-mapping-mdsal/src/main/config/default-config.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "will delete it, thnx",
+      "parentUuid": "7aade967_cc76e3d8",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_ec739fe5",
         "filename": "intent-mapping-mdsal/src/main/yang/intent-mapping-mdsal-impl.yang",
         "patchSetId": 10
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_0c44fb72",
+        "filename": "intent-mapping-mdsal/src/main/yang/intent-mapping-mdsal-impl.yang",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "no actually it is not, will take this off...",
+      "parentUuid": "7aade967_ec739fe5",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_8c80eb8c",
         "filename": "intent-mapping-mdsal/src/main/yang/intent-mapping-mdsal-impl.yang",
         "patchSetId": 10
@@ -128,6 +200,30 @@
       "writtenOn": "2015-11-12T21:30:24Z",
       "side": 1,
       "message": "why do we need this?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 5
+      },
+      "revId": "92fb3ba2c226bf64f0db95906335e556d9942444",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_2c49b78b",
+        "filename": "intent-mapping-mdsal/src/main/yang/intent-mapping-mdsal-impl.yang",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5153
+      },
+      "writtenOn": "2019-11-13T21:42:34Z",
+      "side": 1,
+      "message": "this was in the intent-mapping module, not really sure what it does. will make a note of it and remove this for now..",
+      "parentUuid": "7aade967_8c80eb8c",
       "range": {
         "startLine": 52,
         "startChar": 0,
