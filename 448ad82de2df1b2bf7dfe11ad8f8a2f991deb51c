@@ -1,0 +1,120 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_af3039e9",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T22:11:47Z",
+      "side": 1,
+      "message": "why do you need this?",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 83
+      },
+      "revId": "448ad82de2df1b2bf7dfe11ad8f8a2f991deb51c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_4f9bc5c9",
+        "filename": "features/src/main/features/features.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T22:13:41Z",
+      "side": 1,
+      "message": "this will fail your build as you don\u0027t have the repository anymore",
+      "parentUuid": "7aade967_af3039e9",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 83
+      },
+      "revId": "448ad82de2df1b2bf7dfe11ad8f8a2f991deb51c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_af47d94a",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T22:11:47Z",
+      "side": 1,
+      "message": "you might want to register a listener for mappings here",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "448ad82de2df1b2bf7dfe11ad8f8a2f991deb51c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_2f5c4925",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/nic/mapping/mdsal/impl/MappingMdsalProvider.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T22:11:47Z",
+      "side": 1,
+      "message": "is the mapping really has an operational state? isn\u0027t it mostly configuration?",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "448ad82de2df1b2bf7dfe11ad8f8a2f991deb51c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_ef64f1e6",
+        "filename": "intent-mapping-mdsal/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/intent/mapping/mdsal/impl/rev151111/MappingMdsalImplModule.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3675
+      },
+      "writtenOn": "2015-11-12T22:11:47Z",
+      "side": 1,
+      "message": "return the provider, also register the provider to the broker:\nsee https://github.com/opendaylight/armoury/blob/master/catalog-impl/src/main/java/org/opendaylight/yang/gen/v1/urn/opendaylight/params/xml/ns/yang/catalog/impl/rev141210/CatalogModule.java#l28-L30 for example",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "448ad82de2df1b2bf7dfe11ad8f8a2f991deb51c",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
