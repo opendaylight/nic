@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa4ed85_5be590a6",
+        "filename": "intent-api/src/main/yang/intent-constraints.yang",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3500
+      },
+      "writtenOn": "2015-12-22T21:05:19Z",
+      "side": 1,
+      "message": "Please remove whitespaces",
+      "revId": "23d1fbb8f32e12f8ad52a9cd1b2950d7cac364bf",
+      "serverId": "7fc14799-209e-464c-9743-7a06c2c21a81",
+      "unresolved": false
+    }
+  ]
+}
