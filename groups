@@ -1,4 +1,5 @@
 # UUID                                                             	Group Name
 #
+697611dcfbefcd4bb5ae92fe94da0b6172a6783e                           	saml/odl-gerrit-nic-committers
 c9025ab9ddc1e3171919e085449f22c54f8f7b54                           	GitHub Replication
 ldap:cn=odl-gerrit-nic-committers,ou=Groups,dc=freestandards,dc=org	ldap/odl-gerrit-nic-committers
